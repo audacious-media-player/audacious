@@ -1,6 +1,6 @@
 /*
  * prefs-pluginlist-model.cc
- * Copyright 2014 William Pitcock
+ * Copyright 2014-2017 John Lindgren and William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,24 +20,104 @@
 #include "prefs-pluginlist-model.h"
 
 #include <QIcon>
+
+#include <libaudcore/i18n.h>
 #include <libaudcore/plugins.h>
+#include <libaudcore/runtime.h>
 
 namespace audqt {
 
-PluginListModel::PluginListModel (QObject * parent, PluginType category_id) : QAbstractListModel (parent),
-    m_list (aud_plugin_list (category_id))
-{
+struct PluginCategory {
+    PluginType type;
+    const char * name;
+};
 
+static const PluginCategory categories[] = {
+    { PluginType::General,   N_("General") },
+    { PluginType::Effect,    N_("Effect") },
+    { PluginType::Vis,       N_("Visualization") },
+    { PluginType::Input,     N_("Input") },
+    { PluginType::Playlist,  N_("Playlist") },
+    { PluginType::Transport, N_("Transport") }
+};
+
+static constexpr int n_categories = aud::n_elems (categories);
+
+// The model hierarchy is as follows:
+//
+// Root (invalid index)
+//  + General category (index with row 0, null internal pointer)
+//     + General plugin (index with row 0, internal pointer to PluginHandle)
+//     + General plugin (index with row 1, internal pointer to PluginHandle)
+//     + General plugin ...
+//  + Effect category (index with row 1, null internal pointer)
+//     + Effect plugin ...
+//  + More categories ...
+
+QModelIndex PluginListModel::index (int row, int column, const QModelIndex & parent) const
+{
+    // is parent the root node?
+    if (! parent.isValid ())
+        return createIndex (row, column, nullptr);
+
+    // is parent a plugin node?
+    if (parent.internalPointer () != nullptr)
+        return QModelIndex ();
+
+    // parent must be a category node
+    int cat = parent.row ();
+    if (cat < 0 || cat >= n_categories)
+        return QModelIndex ();
+
+    auto & list = aud_plugin_list (categories[cat].type);
+    if (row < 0 || row >= list.len ())
+        return QModelIndex ();
+
+    return createIndex (row, column, list[row]);
 }
 
-PluginListModel::~PluginListModel ()
+// for a plugin node, return the category node
+// for all other nodes, return an invalid index
+QModelIndex PluginListModel::parent (const QModelIndex & child) const
 {
+    auto p = pluginForIndex (child);
+    return p ? indexForType (aud_plugin_get_type (p)) : QModelIndex ();
+}
 
+// retrieve the PluginHandle from a plugin node
+PluginHandle * PluginListModel::pluginForIndex (const QModelIndex & index) const
+{
+    return (PluginHandle *) index.internalPointer ();
+}
+
+// look up the category node for a given plugin type
+QModelIndex PluginListModel::indexForType (PluginType type) const
+{
+    for (int cat = 0; cat < n_categories; cat ++)
+    {
+        if (categories[cat].type == type)
+            return createIndex (cat, 0, nullptr);
+    }
+
+    return QModelIndex ();
 }
 
 int PluginListModel::rowCount (const QModelIndex & parent) const
 {
-    return m_list.len ();
+    // for the root node, return the # of categories
+    if (! parent.isValid ())
+        return n_categories;
+
+    // for a plugin node, return 0 (no children)
+    if (parent.internalPointer () != nullptr)
+        return 0;
+
+    // for a category node, return the # of plugins
+    int cat = parent.row ();
+    if (cat < 0 || cat >= n_categories)
+        return 0;
+
+    return aud_plugin_list (categories[cat].type).len ();
 }
 
 int PluginListModel::columnCount (const QModelIndex & parent) const
@@ -45,18 +125,22 @@ int PluginListModel::columnCount (const QModelIndex & parent) const
     return NumColumns;
 }
 
-QVariant PluginListModel::headerData (int section, Qt::Orientation orientation, int role) const
-{
-    return QVariant ();
-}
-
 QVariant PluginListModel::data (const QModelIndex & index, int role) const
 {
-    int row = index.row ();
-    if (row < 0 || row >= m_list.len ())
-        return QVariant ();
+    auto p = pluginForIndex (index);
 
-    PluginHandle * p = m_list[row];
+    if (! p) // category node?
+    {
+        if (role != Qt::DisplayRole || index.column () != 0)
+            return QVariant ();
+
+        int cat = index.row ();
+        if (cat < 0 || cat >= n_categories)
+            return QVariant ();
+
+        return QString (_(categories[cat].name));
+    }
+
     bool enabled = aud_plugin_get_enabled (p);
 
     switch (index.column ())
@@ -87,15 +171,14 @@ QVariant PluginListModel::data (const QModelIndex & index, int role) const
 
 bool PluginListModel::setData (const QModelIndex &index, const QVariant &value, int role)
 {
-    int row = index.row ();
-    if (row < 0 || row >= m_list.len ())
+    if (role != Qt::CheckStateRole)
         return false;
 
-    if (role == Qt::CheckStateRole)
-    {
-        aud_plugin_enable (m_list[row], value.toUInt () != Qt::Unchecked);
-    }
+    auto p = pluginForIndex (index);
+    if (! p)
+        return false;
 
+    aud_plugin_enable (p, value.toUInt () != Qt::Unchecked);
     emit dataChanged (index, index.sibling (index.row (), NumColumns - 1));
     return true;
 }
@@ -103,35 +186,6 @@ bool PluginListModel::setData (const QModelIndex &index, const QVariant &value, 
 Qt::ItemFlags PluginListModel::flags (const QModelIndex & index) const
 {
     return (Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-}
-
-bool PluginListModel::insertRows (int row, int count, const QModelIndex & parent)
-{
-    int last = row + count - 1;
-    beginInsertRows (parent, row, last);
-    endInsertRows ();
-    return true;
-}
-
-bool PluginListModel::removeRows (int row, int count, const QModelIndex & parent)
-{
-    int last = row + count - 1;
-    beginRemoveRows (parent, row, last);
-    endRemoveRows ();
-    return true;
-}
-
-void PluginListModel::updateRows (int row, int count)
-{
-    int bottom = row + count - 1;
-    auto topLeft = createIndex (row, 0);
-    auto bottomRight = createIndex (bottom, columnCount () - 1);
-    emit dataChanged (topLeft, bottomRight);
-}
-
-void PluginListModel::updateRow (int row)
-{
-    updateRows (row, 1);
 }
 
 } // namespace audqt

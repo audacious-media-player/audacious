@@ -116,11 +116,6 @@ struct Category {
     const char * name;
 };
 
-struct PluginCategory {
-    PluginType type;
-    const char * name;
-};
-
 struct TitleFieldTag {
     const char * name;
     const char * tag;
@@ -143,15 +138,6 @@ static const Category categories[] = {
     { "playlist.png", N_("Playlist")} ,
     { "info.png", N_("Song Info") },
     { "plugins.png", N_("Plugins") }
-};
-
-static const PluginCategory plugin_categories[] = {
-    { PluginType::General, N_("General") },
-    { PluginType::Effect, N_("Effect") },
-    { PluginType::Vis, N_("Visualization") },
-    { PluginType::Input, N_("Input") },
-    { PluginType::Playlist, N_("Playlist") },
-    { PluginType::Transport, N_("Transport") }
 };
 
 static const TitleFieldTag title_field_tags[] = {
@@ -214,10 +200,10 @@ static void iface_combo_changed ();
 static void * iface_create_prefs_box ();
 
 static const PreferencesWidget appearance_page_widgets[] = {
-    WidgetLabel (N_("<b>Interface Settings</b>")),
-    WidgetCombo (N_("Interface plugin:"),
+    WidgetCombo (N_("Interface:"),
         WidgetInt (iface_combo_selected, iface_combo_changed),
         {0, iface_combo_fill}),
+    WidgetSeparator ({true}),
     WidgetCustomQt (iface_create_prefs_box)
 };
 
@@ -411,6 +397,8 @@ static void * create_titlestring_table ()
 {
     QWidget * w = new QWidget;
     QGridLayout * l = new QGridLayout (w);
+    l->setContentsMargins (0, 0, 0, 0);
+    l->setSpacing (sizes.TwoPt);
 
     QLabel * lbl = new QLabel (_("Title format:"), w);
     l->addWidget (lbl, 0, 0);
@@ -437,13 +425,12 @@ static void * create_titlestring_table ()
             cbox->setCurrentIndex (i);
     }
 
-    QObject::connect (le, &QLineEdit::textChanged, [=] (const QString & text) {
+    QObject::connect (le, & QLineEdit::textChanged, [] (const QString & text) {
         aud_set_str (nullptr, "generic_title_format", text.toUtf8 ().data ());
     });
 
-    QObject::connect (cbox,
-                      static_cast <void (QComboBox::*) (int)> (&QComboBox::currentIndexChanged),
-                      [=] (int idx) {
+    void (QComboBox::* signal) (int) = & QComboBox::currentIndexChanged;
+    QObject::connect (cbox, signal, [le] (int idx) {
         if (idx < TITLESTRING_NPRESETS)
             le->setText (titlestring_presets [idx]);
     });
@@ -452,7 +439,6 @@ static void * create_titlestring_table ()
     QPushButton * btn_mnu = new QPushButton (w);
     btn_mnu->setFixedWidth (btn_mnu->sizeHint ().height ());
     btn_mnu->setIcon (QIcon::fromTheme ("list-add"));
-    btn_mnu->setIconSize (QSize (16, 16));
     l->addWidget (btn_mnu, 1, 2);
 
     QMenu * mnu_fields = new QMenu (w);
@@ -494,10 +480,7 @@ static void iface_fill_prefs_box ()
     Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PluginType::Iface));
     if (header && header->info.prefs)
     {
-        QVBoxLayout * vbox = new QVBoxLayout (iface_prefs_box);
-
-        vbox->setContentsMargins (0, 0, 0, 0);
-        vbox->setSpacing (4);
+        auto vbox = make_vbox (iface_prefs_box, sizes.TwoPt);
         prefs_populate (vbox, header->info.prefs->widgets, header->info.domain);
     }
 }
@@ -546,64 +529,48 @@ static void output_bit_depth_changed ()
 static void create_category (QStackedWidget * notebook, ArrayRef<PreferencesWidget> widgets)
 {
     QWidget * w = new QWidget;
-    QVBoxLayout * vbox = new QVBoxLayout (w);
-
-    vbox->setContentsMargins (0, 0, 0, 0);
-    vbox->setSpacing (4);
+    auto vbox = make_vbox (w, sizes.TwoPt);
     prefs_populate (vbox, widgets, nullptr);
     vbox->addStretch (1);
 
     notebook->addWidget (w);
 }
 
-static void create_plugin_category_page (PluginType category_id, const char * category_name, QTabWidget * parent)
-{
-    QTreeView * view = new QTreeView;
-    QHeaderView * header = view->header ();
+static QTreeView * s_plugin_view;
+static PluginListModel * s_plugin_model;
 
-    view->setIndentation (0);
-    view->setModel (new PluginListModel (view, category_id));
-    view->setSelectionMode (view->NoSelection);
+static void create_plugin_category (QStackedWidget * parent)
+{
+    s_plugin_view = new QTreeView (parent);
+    s_plugin_model = new PluginListModel (s_plugin_view);
+
+    s_plugin_view->setModel (s_plugin_model);
+    s_plugin_view->setSelectionMode (QTreeView::NoSelection);
+
+    auto header = s_plugin_view->header ();
 
     header->hide ();
     header->setSectionResizeMode (header->ResizeToContents);
     header->setStretchLastSection (false);
 
-    parent->addTab (view, category_name);
+    parent->addWidget (s_plugin_view);
 
-    QObject::connect (view, & QAbstractItemView::clicked,
-     [category_id] (const QModelIndex & index)
+    QObject::connect (s_plugin_view, & QAbstractItemView::clicked, [] (const QModelIndex & index)
     {
-        int row = index.row ();
-        auto & list = aud_plugin_list (category_id);
-
-        if (row < 0 || row >= list.len () || ! aud_plugin_get_enabled (list[row]))
+        auto p = s_plugin_model->pluginForIndex (index);
+        if (! p)
             return;
 
         switch (index.column ())
         {
         case PluginListModel::AboutColumn:
-            plugin_about (list[row]);
+            plugin_about (p);
             break;
         case PluginListModel::SettingsColumn:
-            plugin_prefs (list[row]);
+            plugin_prefs (p);
             break;
         }
     });
-}
-
-static QTabWidget * plugin_tabs = nullptr;
-
-static void create_plugin_category (QStackedWidget * parent)
-{
-    plugin_tabs = new QTabWidget;
-
-    for (const PluginCategory & w : plugin_categories)
-    {
-        create_plugin_category_page (w.type, _(w.name), plugin_tabs);
-    }
-
-    parent->addWidget (plugin_tabs);
 }
 
 static QStackedWidget * s_category_notebook = nullptr;
@@ -621,20 +588,21 @@ PrefsWindow::PrefsWindow () :
     output_combo_selected = aud_plugin_list (PluginType::Output)
      .find (aud_plugin_get_current (PluginType::Output));
 
-    setWindowTitle (_("Audacious Settings"));
     setAttribute (Qt::WA_DeleteOnClose);
-
-    QVBoxLayout * vbox_parent = new QVBoxLayout (this);
-    vbox_parent->setSpacing (0);
-    vbox_parent->setContentsMargins (0, 0, 0, 0);
+    setWindowTitle (_("Audacious Settings"));
+    setContentsMargins (0, 0, 0, 0);
 
     QToolBar * toolbar = new QToolBar;
     toolbar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
-    vbox_parent->addWidget (toolbar);
 
     QWidget * child = new QWidget;
-    QVBoxLayout * child_vbox = new QVBoxLayout (child);
+    child->setContentsMargins (margins.FourPt);
+
+    auto vbox_parent = make_vbox (this);
+    vbox_parent->addWidget (toolbar);
     vbox_parent->addWidget (child);
+
+    auto child_vbox = make_vbox (child);
 
     s_category_notebook = new QStackedWidget;
     child_vbox->addWidget (s_category_notebook);
@@ -664,10 +632,10 @@ PrefsWindow::PrefsWindow () :
         QAction * a = new QAction (ico, translate_str (categories[i].name), toolbar);
 
         toolbar->addAction (a);
-
         mapper->setMapping (a, i);
 
-        QObject::connect (a, & QAction::triggered, mapper, static_cast <void (QSignalMapper::*)()>(& QSignalMapper::map));
+        void (QSignalMapper::* slot) () = & QSignalMapper::map;
+        QObject::connect (a, & QAction::triggered, mapper, slot);
     }
 
     output_setup ();
@@ -733,7 +701,7 @@ void PrefsWindow::record_update ()
     if (p)
     {
         bool enabled = aud_drct_get_record_enabled ();
-        auto text = str_printf (_("Record audio stream using %s"), aud_plugin_get_name (p));
+        auto text = str_printf (_("Enable audio stream recording with %s"), aud_plugin_get_name (p));
 
         record_checkbox->setEnabled (true);
         record_checkbox->setText ((const char *) text);
@@ -783,10 +751,14 @@ EXPORT void prefswin_show_plugin_page (PluginType type)
     {
         prefswin_show_page (CATEGORY_PLUGINS, false);
 
-        for (const PluginCategory & category : plugin_categories)
+        s_plugin_view->collapseAll ();
+
+        auto index = s_plugin_model->indexForType (type);
+        if (index.isValid ())
         {
-            if (category.type == type)
-                plugin_tabs->setCurrentIndex (& category - plugin_categories);
+            s_plugin_view->expand (index);
+            s_plugin_view->scrollTo (index, QTreeView::PositionAtTop);
+            s_plugin_view->setCurrentIndex (index);
         }
 
         window_bring_to_front (PrefsWindow::get_instance ());

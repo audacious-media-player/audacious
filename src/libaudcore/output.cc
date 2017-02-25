@@ -245,7 +245,7 @@ static void setup_secondary (bool new_input)
     String error;
     if (! sop->open_audio (FMT_FLOAT, rate, channels, error))
     {
-        aud_ui_show_error (error ? (const char *) error : _("Error opening output stream"));
+        aud_ui_show_error (error ? (const char *) error : _("Error recording output stream"));
         return;
     }
 
@@ -439,7 +439,9 @@ bool output_open_audio (const String & filename, const Tuple & tuple,
 
     setup_effects ();
     setup_output (true);
-    setup_secondary (true);
+
+    if (aud_get_bool (0, "record"))
+        setup_secondary (true);
 
     UNLOCK_ALL;
     return true;
@@ -673,7 +675,9 @@ static void output_reset (OutputReset type, OutputPlugin * op)
             setup_effects ();
 
         setup_output (false);
-        setup_secondary (false);
+
+        if (aud_get_bool (0, "record"))
+            setup_secondary (false);
     }
 
     s_resetting = false;
@@ -750,29 +754,33 @@ bool output_plugin_set_secondary (PluginHandle * plugin)
     if (sop && ! sop->init ())
         sop = nullptr;
 
-    if (s_input)
+    if (s_input && aud_get_bool (0, "record"))
         setup_secondary (false);
 
     UNLOCK_MINOR;
     return (! plugin || sop);
 }
 
-static void record_stream_changed (void *, void *)
+static void record_settings_changed (void *, void *)
 {
     LOCK_MINOR;
 
-    if (s_input)
+    if (s_input && aud_get_bool (0, "record"))
         setup_secondary (false);
+    else
+        cleanup_secondary ();
 
     UNLOCK_MINOR;
 }
 
 void output_init ()
 {
-    hook_associate ("set record_stream", record_stream_changed, nullptr);
+    hook_associate ("set record", record_settings_changed, nullptr);
+    hook_associate ("set record_stream", record_settings_changed, nullptr);
 }
 
 void output_cleanup ()
 {
-    hook_dissociate ("set record_stream", record_stream_changed, nullptr);
+    hook_dissociate ("set record", record_settings_changed);
+    hook_dissociate ("set record_stream", record_settings_changed);
 }

@@ -205,7 +205,7 @@ EXPORT bool aud_file_write_tuple (const char * filename,
         success = false;
 
     if (success)
-        aud_playlist_rescan_file (filename);
+        Playlist::rescan_file (filename);
 
     return success;
 }

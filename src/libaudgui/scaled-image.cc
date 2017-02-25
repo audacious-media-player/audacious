@@ -33,12 +33,12 @@ static GdkPixbuf * get_scaled (GtkWidget * widget, int maxwidth, int maxheight)
     {
         if (width * maxheight > height * maxwidth)
         {
-            height = height * maxwidth / width;
+            height = aud::rescale (height, width, maxwidth);
             width = maxwidth;
         }
         else
         {
-            width = width * maxheight / height;
+            width = aud::rescale (width, height, maxheight);
             height = maxheight;
         }
     }
@@ -49,12 +49,10 @@ static GdkPixbuf * get_scaled (GtkWidget * widget, int maxwidth, int maxheight)
     {
         if (gdk_pixbuf_get_width (scaled) == width && gdk_pixbuf_get_height (scaled) == height)
             return scaled;
-
-        g_object_unref (scaled);
     }
 
     scaled = gdk_pixbuf_scale_simple (unscaled, width, height, GDK_INTERP_BILINEAR);
-    g_object_set_data ((GObject *) widget, "pixbuf-scaled", scaled);
+    g_object_set_data_full ((GObject *) widget, "pixbuf-scaled", scaled, g_object_unref);
 
     return scaled;
 }
@@ -80,25 +78,13 @@ static gboolean draw_cb (GtkWidget * widget, cairo_t * cr)
 
 EXPORT void audgui_scaled_image_set (GtkWidget * widget, GdkPixbuf * pixbuf)
 {
-    GdkPixbuf * old;
-
-    if ((old = (GdkPixbuf *) g_object_get_data ((GObject *) widget, "pixbuf-unscaled")))
-        g_object_unref (old);
-    if ((old = (GdkPixbuf *) g_object_get_data ((GObject *) widget, "pixbuf-scaled")))
-        g_object_unref (old);
-
     if (pixbuf)
         g_object_ref (pixbuf);
 
-    g_object_set_data ((GObject *) widget, "pixbuf-unscaled", pixbuf);
-    g_object_set_data ((GObject *) widget, "pixbuf-scaled", nullptr);
+    g_object_set_data_full ((GObject *) widget, "pixbuf-unscaled", pixbuf, g_object_unref);
+    g_object_set_data_full ((GObject *) widget, "pixbuf-scaled", nullptr, g_object_unref);
 
     gtk_widget_queue_draw (widget);
-}
-
-static void destroy_cb (GtkWidget * widget)
-{
-    audgui_scaled_image_set (widget, nullptr);
 }
 
 EXPORT GtkWidget * audgui_scaled_image_new (GdkPixbuf * pixbuf)
@@ -106,7 +92,6 @@ EXPORT GtkWidget * audgui_scaled_image_new (GdkPixbuf * pixbuf)
     GtkWidget * widget = gtk_drawing_area_new ();
 
     g_signal_connect (widget, "draw", (GCallback) draw_cb, nullptr);
-    g_signal_connect (widget, "destroy", (GCallback) destroy_cb, nullptr);
 
     audgui_scaled_image_set (widget, pixbuf);
 

@@ -69,6 +69,10 @@ void aud_drct_get_ab_repeat (int & a, int & b);
 
 /* --- RECORDING CONTROL --- */
 
+/* Note that the behavior of these functions has changed in Audacious 3.9;
+ * "enabled" now means only that a plugin has been selected for recording.
+ * The "record" config option is now used to start/stop recording. */
+
 /* Returns the output plugin that will be used for recording, or null if none is
  * available.  Connect to the "enable record" hook to monitor changes. */
 PluginHandle * aud_drct_get_record_plugin ();
@@ -77,8 +81,8 @@ PluginHandle * aud_drct_get_record_plugin ();
  * "enable record" hook to monitor changes. */
 bool aud_drct_get_record_enabled ();
 
-/* Enables or disables output recording.  If playback is active, recording
- * begins immediately.  Returns true on success, otherwise false. */
+/* Enables or disables output recording (but does not actually start recording).
+ * Returns true on success, otherwise false. */
 bool aud_drct_enable_record (bool enable);
 
 /* --- VOLUME CONTROL --- */

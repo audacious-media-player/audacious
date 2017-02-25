@@ -44,7 +44,7 @@ class InfoWindow : public QDialog
 public:
     InfoWindow (QWidget * parent = nullptr);
 
-    void fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
+    void fillInfo (const char * filename, const Tuple & tuple,
      PluginHandle * decoder, bool updating_enabled);
 
 private:
@@ -61,12 +61,13 @@ private:
 InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
 {
     setWindowTitle (_("Song Info"));
+    setContentsMargins (margins.TwoPt);
 
-    auto hbox = new QHBoxLayout;
+    auto hbox = make_hbox (nullptr);
     hbox->addWidget (& m_image);
     hbox->addWidget (& m_infowidget);
 
-    auto vbox = new QVBoxLayout (this);
+    auto vbox = make_vbox (this);
     vbox->addLayout (hbox);
 
     auto bbox = new QDialogButtonBox (QDialogButtonBox::Save | QDialogButtonBox::Close, this);
@@ -82,23 +83,23 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     QObject::connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
 }
 
-void InfoWindow::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
+void InfoWindow::fillInfo (const char * filename, const Tuple & tuple,
  PluginHandle * decoder, bool updating_enabled)
 {
     m_filename = String (filename);
     displayImage (filename);
-    m_infowidget.fillInfo (playlist, entry, filename, tuple, decoder, updating_enabled);
+    m_infowidget.fillInfo (filename, tuple, decoder, updating_enabled);
 }
 
 void InfoWindow::displayImage (const char * filename)
 {
     if (! strcmp_safe (filename, m_filename))
-        m_image.setPixmap (art_request (filename));
+        m_image.setPixmap (art_request (filename, 2 * sizes.OneInch, 2 * sizes.OneInch));
 }
 
 static InfoWindow * s_infowin = nullptr;
 
-static void show_infowin (int playlist, int entry, const char * filename,
+static void show_infowin (const char * filename,
  const Tuple & tuple, PluginHandle * decoder, bool can_write)
 {
     if (! s_infowin)
@@ -111,22 +112,20 @@ static void show_infowin (int playlist, int entry, const char * filename,
         });
     }
 
-    s_infowin->fillInfo (playlist, entry, filename, tuple, decoder, can_write);
-    s_infowin->resize (700, 300);
+    s_infowin->fillInfo (filename, tuple, decoder, can_write);
+    s_infowin->resize (6 * sizes.OneInch, 3 * sizes.OneInch);
     window_bring_to_front (s_infowin);
 }
 
-EXPORT void infowin_show (int playlist, int entry)
+EXPORT void infowin_show (Playlist playlist, int entry)
 {
-    String filename = aud_playlist_entry_get_filename (playlist, entry);
+    String filename = playlist.entry_filename (entry);
     if (! filename)
         return;
 
     String error;
-    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry,
-     Playlist::Wait, & error);
-    Tuple tuple = decoder ? aud_playlist_entry_get_tuple (playlist, entry,
-     Playlist::Wait, & error) : Tuple ();
+    PluginHandle * decoder = playlist.entry_decoder (entry, Playlist::Wait, & error);
+    Tuple tuple = decoder ? playlist.entry_tuple (entry, Playlist::Wait, & error) : Tuple ();
 
     if (decoder && tuple.valid () && ! aud_custom_infowin (filename, decoder))
     {
@@ -135,7 +134,7 @@ EXPORT void infowin_show (int playlist, int entry)
          ! tuple.is_set (Tuple::StartTime);
 
         tuple.delete_fallbacks ();
-        show_infowin (playlist, entry, filename, tuple, decoder, can_write);
+        show_infowin (filename, tuple, decoder, can_write);
     }
     else
         infowin_hide ();
@@ -147,15 +146,12 @@ EXPORT void infowin_show (int playlist, int entry)
 
 EXPORT void infowin_show_current ()
 {
-    int playlist = aud_playlist_get_playing ();
-    int position;
+    auto playlist = Playlist::playing_playlist ();
+    if (playlist == Playlist ())
+        playlist = Playlist::active_playlist ();
 
-    if (playlist == -1)
-        playlist = aud_playlist_get_active ();
-
-    position = aud_playlist_get_position (playlist);
-
-    if (position == -1)
+    int position = playlist.get_position ();
+    if (position < 0)
         return;
 
     infowin_show (playlist, position);

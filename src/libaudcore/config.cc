@@ -118,66 +118,53 @@ struct ConfigItem {
     String value;
 };
 
-struct ConfigNode {
-    MultiHash::Node node;
-    ConfigItem item;
-};
+struct ConfigNode;
 
-struct ConfigOp {
+// combined Data and Operation class
+struct ConfigOp
+{
     OpType type;
     const char * section;
     const char * key;
     String value;
     unsigned hash;
     bool result;
+
+    ConfigNode * add (const ConfigOp *);
+    bool found (ConfigNode * node);
 };
 
-struct SaveState {
-    Index<ConfigItem> list;
+struct ConfigNode : public MultiHash::Node, public ConfigItem
+{
+    bool match (const ConfigOp * op) const
+        { return ! strcmp (section, op->section) && ! strcmp (key, op->key); }
 };
 
-static int item_compare (const ConfigItem & a, const ConfigItem & b)
+typedef MultiHash_T<ConfigNode, ConfigOp> ConfigTable;
+
+static ConfigTable s_defaults, s_config;
+static volatile bool s_modified;
+
+ConfigNode * ConfigOp::add (const ConfigOp *)
 {
-    if (a.section == b.section)
-        return strcmp (a.key, b.key);
-    else
-        return strcmp (a.section, b.section);
-}
-
-static bool config_node_match (const MultiHash::Node * node0, const void * data)
-{
-    const ConfigNode * node = (const ConfigNode *) node0;
-    const ConfigOp * op = (const ConfigOp *) data;
-
-    return ! strcmp (node->item.section, op->section) && ! strcmp (node->item.key, op->key);
-}
-
-static MultiHash defaults (config_node_match);
-static MultiHash config (config_node_match);
-
-static volatile bool modified;
-
-static MultiHash::Node * add_cb (const void * data, void * state)
-{
-    ConfigOp * op = (ConfigOp *) state;
-
-    switch (op->type)
+    switch (type)
     {
     case OP_IS_DEFAULT:
-        op->result = ! op->value[0]; /* empty string is default */
+        result = ! value[0]; /* empty string is default */
         return nullptr;
 
     case OP_SET:
-        op->result = true;
-        modified = true;
+        result = true;
+        s_modified = true;
+        // fall-through
 
     case OP_SET_NO_FLAG:
     {
         ConfigNode * node = new ConfigNode;
-        node->item.section = String (op->section);
-        node->item.key = String (op->key);
-        node->item.value = op->value;
-        return (MultiHash::Node *) node;
+        node->section = String (section);
+        node->key = String (key);
+        node->value = value;
+        return node;
     }
 
     default:
@@ -185,33 +172,32 @@ static MultiHash::Node * add_cb (const void * data, void * state)
     }
 }
 
-static bool action_cb (MultiHash::Node * node0, void * state)
+bool ConfigOp::found (ConfigNode * node)
 {
-    ConfigNode * node = (ConfigNode *) node0;
-    ConfigOp * op = (ConfigOp *) state;
-
-    switch (op->type)
+    switch (type)
     {
     case OP_IS_DEFAULT:
-        op->result = ! strcmp (node->item.value, op->value);
+        result = ! strcmp (node->value, value);
         return false;
 
     case OP_GET:
-        op->value = node->item.value;
+        value = node->value;
         return false;
 
     case OP_SET:
-        op->result = !! strcmp (node->item.value, op->value);
-        if (op->result)
-            modified = true;
+        result = !! strcmp (node->value, value);
+        if (result)
+            s_modified = true;
+        // fall-through
 
     case OP_SET_NO_FLAG:
-        node->item.value = op->value;
+        node->value = value;
         return false;
 
     case OP_CLEAR:
-        op->result = true;
-        modified = true;
+        result = true;
+        s_modified = true;
+        // fall-through
 
     case OP_CLEAR_NO_FLAG:
         delete node;
@@ -222,14 +208,14 @@ static bool action_cb (MultiHash::Node * node0, void * state)
     }
 }
 
-static bool config_op_run (ConfigOp * op, MultiHash * table)
+static bool config_op_run (ConfigOp & op, ConfigTable & table)
 {
-    if (! op->hash)
-        op->hash = str_calc_hash (op->section) + str_calc_hash (op->key);
+    if (! op.hash)
+        op.hash = str_calc_hash (op.section) + str_calc_hash (op.key);
 
-    op->result = false;
-    table->lookup (op, op->hash, add_cb, action_cb, op);
-    return op->result;
+    op.result = false;
+    table.lookup (& op, op.hash, op);
+    return op.result;
 }
 
 class ConfigParser : public IniParser
@@ -246,7 +232,7 @@ private:
             return;
 
         ConfigOp op = {OP_SET_NO_FLAG, section, key, String (value)};
-        config_op_run (& op, & config);
+        config_op_run (op, s_config);
     }
 };
 
@@ -272,27 +258,26 @@ void config_load ()
     }
 }
 
-static bool add_to_save_list (MultiHash::Node * node0, void * state0)
-{
-    ConfigNode * node = (ConfigNode *) node0;
-    SaveState * state = (SaveState *) state0;
-
-    state->list.append (node->item);
-
-    modified = false;
-
-    return false;
-}
-
 void config_save ()
 {
-    if (! modified)
+    if (! s_modified)
         return;
 
-    SaveState state = SaveState ();
+    Index<ConfigItem> list;
 
-    config.iterate (add_to_save_list, & state);
-    state.list.sort (item_compare);
+    s_config.iterate ([&] (ConfigNode * node) {
+        list.append (* node);
+
+        s_modified = false;  // must be inside MultiHash lock
+        return false;
+    });
+
+    list.sort ([] (const ConfigItem & a, const ConfigItem & b) {
+        if (a.section == b.section)
+            return strcmp (a.key, b.key);
+        else
+            return strcmp (a.section, b.section);
+    });
 
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     path.insert (-1, "/config");
@@ -303,7 +288,7 @@ void config_save ()
     if (! file)
         goto FAILED;
 
-    for (const ConfigItem & item : state.list)
+    for (const ConfigItem & item : list)
     {
         if (item.section != current_heading)
         {
@@ -339,15 +324,14 @@ EXPORT void aud_config_set_defaults (const char * section, const char * const * 
             break;
 
         ConfigOp op = {OP_SET_NO_FLAG, section, name, String (value)};
-        config_op_run (& op, & defaults);
+        config_op_run (op, s_defaults);
     }
 }
 
 void config_cleanup ()
 {
-    ConfigOp op = {OP_CLEAR_NO_FLAG};
-    config.iterate (action_cb, & op);
-    defaults.iterate (action_cb, & op);
+    s_config.clear ();
+    s_defaults.clear ();
 }
 
 EXPORT void aud_set_str (const char * section, const char * name, const char * value)
@@ -355,10 +339,10 @@ EXPORT void aud_set_str (const char * section, const char * name, const char * v
     assert (name && value);
 
     ConfigOp op = {OP_IS_DEFAULT, section ? section : DEFAULT_SECTION, name, String (value)};
-    bool is_default = config_op_run (& op, & defaults);
+    bool is_default = config_op_run (op, s_defaults);
 
     op.type = is_default ? OP_CLEAR : OP_SET;
-    bool changed = config_op_run (& op, & config);
+    bool changed = config_op_run (op, s_config);
 
     if (changed && ! section)
         event_queue (str_concat ({"set ", name}), nullptr);
@@ -369,10 +353,10 @@ EXPORT String aud_get_str (const char * section, const char * name)
     assert (name);
 
     ConfigOp op = {OP_GET, section ? section : DEFAULT_SECTION, name};
-    config_op_run (& op, & config);
+    config_op_run (op, s_config);
 
     if (! op.value)
-        config_op_run (& op, & defaults);
+        config_op_run (op, s_defaults);
 
     return op.value ? op.value : String ("");
 }
@@ -385,6 +369,11 @@ EXPORT void aud_set_bool (const char * section, const char * name, bool value)
 EXPORT bool aud_get_bool (const char * section, const char * name)
 {
     return ! strcmp (aud_get_str (section, name), "TRUE");
+}
+
+EXPORT void aud_toggle_bool (const char * section, const char * name)
+{
+    aud_set_bool (section, name, ! aud_get_bool (section, name));
 }
 
 EXPORT void aud_set_int (const char * section, const char * name, int value)

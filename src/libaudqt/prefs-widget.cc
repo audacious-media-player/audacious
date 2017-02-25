@@ -116,9 +116,7 @@ IntegerWidget::IntegerWidget (const PreferencesWidget * parent, const char * dom
     HookableWidget (parent, domain),
     m_spinner (new QSpinBox)
 {
-    auto layout = new QHBoxLayout (this);
-    layout->setContentsMargins (0, 0, 0, 0);
-    layout->setSpacing (4);
+    auto layout = make_hbox (this);
 
     if (parent->label)
         layout->addWidget (new QLabel (translate_str (parent->label, domain)));
@@ -155,9 +153,7 @@ DoubleWidget::DoubleWidget (const PreferencesWidget * parent, const char * domai
     HookableWidget (parent, domain),
     m_spinner (new QDoubleSpinBox)
 {
-    auto layout = new QHBoxLayout (this);
-    layout->setContentsMargins (0, 0, 0, 0);
-    layout->setSpacing (4);
+    auto layout = make_hbox (this);
 
     if (parent->label)
         layout->addWidget (new QLabel (translate_str (parent->label, domain)));
@@ -194,9 +190,7 @@ StringWidget::StringWidget (const PreferencesWidget * parent, const char * domai
     HookableWidget (parent, domain),
     m_lineedit (new QLineEdit)
 {
-    auto layout = new QHBoxLayout (this);
-    layout->setContentsMargins (0, 0, 0, 0);
-    layout->setSpacing (4);
+    auto layout = make_hbox (this);
 
     if (parent->label)
         layout->addWidget (new QLabel (translate_str (parent->label, domain)));
@@ -224,9 +218,7 @@ ComboBoxWidget::ComboBoxWidget (const PreferencesWidget * parent, const char * d
     HookableWidget (parent, domain),
     m_combobox (new QComboBox)
 {
-    auto layout = new QHBoxLayout (this);
-    layout->setContentsMargins (0, 0, 0, 0);
-    layout->setSpacing (4);
+    auto layout = make_hbox (this);
 
     if (parent->label)
         layout->addWidget (new QLabel (translate_str (parent->label, domain)));
@@ -324,12 +316,9 @@ BoxWidget::BoxWidget (const PreferencesWidget * parent, const char * domain, boo
 {
     QBoxLayout * layout;
     if (parent->data.box.horizontal)
-        layout = new QHBoxLayout (this);
+        layout = make_hbox (this, sizes.TwoPt);
     else
-        layout = new QVBoxLayout (this);
-
-    layout->setContentsMargins (0, 0, 0, 0);
-    layout->setSpacing (4);
+        layout = make_vbox (this, sizes.TwoPt);
 
     prefs_populate (layout, parent->data.box.widgets, domain);
 
@@ -341,10 +330,7 @@ BoxWidget::BoxWidget (const PreferencesWidget * parent, const char * domain, boo
 TableWidget::TableWidget (const PreferencesWidget * parent, const char * domain)
 {
     // TODO: proper table layout
-    auto layout = new QVBoxLayout (this);
-    layout->setContentsMargins (0, 0, 0, 0);
-    layout->setSpacing (4);
-
+    auto layout = make_vbox (this, sizes.TwoPt);
     prefs_populate (layout, parent->data.table.widgets, domain);
 }
 
@@ -353,10 +339,9 @@ NotebookWidget::NotebookWidget (const PreferencesWidget * parent, const char * d
     for (const NotebookTab & tab : parent->data.notebook.tabs)
     {
         auto widget = new QWidget (this);
-        auto layout = new QVBoxLayout (widget);
-        layout->setContentsMargins (4, 4, 4, 4);
-        layout->setSpacing (4);
+        widget->setContentsMargins (margins.FourPt);
 
+        auto layout = make_vbox (widget, sizes.TwoPt);
         prefs_populate (layout, tab.widgets, domain);
         layout->addStretch (1);
 

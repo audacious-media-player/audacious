@@ -314,6 +314,37 @@ EXPORT StringBuf str_tolower_utf8 (const char * str)
     return buf;
 }
 
+EXPORT StringBuf str_toupper (const char * str)
+{
+    StringBuf buf (strlen (str));
+    char * set = buf;
+
+    while (* str)
+        * set ++ = g_ascii_toupper (* str ++);
+
+    return buf;
+}
+
+EXPORT StringBuf str_toupper_utf8 (const char * str)
+{
+    StringBuf buf (6 * strlen (str));
+    char * set = buf;
+    gunichar c;
+
+    while ((c = g_utf8_get_char (str)))
+    {
+        if (c < 128)
+            * set ++ = g_ascii_toupper (c);
+        else
+            set += g_unichar_to_utf8 (g_unichar_toupper (c), set);
+
+        str = g_utf8_next_char (str);
+    }
+
+    buf.resize (set - buf);
+    return buf;
+}
+
 EXPORT void str_replace_char (char * string, char old_c, char new_c)
 {
     while ((string = strchr (string, old_c)))
@@ -1057,15 +1088,20 @@ EXPORT StringBuf double_array_to_str (const double * array, int count)
 
 EXPORT StringBuf str_format_time (int64_t milliseconds)
 {
+    bool neg = milliseconds < 0;
+
+    if (neg)
+        milliseconds *= -1;
+
     int hours = milliseconds / 3600000;
     int minutes = milliseconds / 60000;
     int seconds = (milliseconds / 1000) % 60;
 
     if (hours && aud_get_bool (nullptr, "show_hours"))
-        return str_printf ("%d:%02d:%02d", hours, minutes % 60, seconds);
+        return str_printf ("%s%d:%02d:%02d", neg ? "- " : "",  hours, minutes % 60, seconds);
     else
     {
         bool zero = aud_get_bool (nullptr, "leading_zero");
-        return str_printf (zero ? "%02d:%02d" : "%d:%02d", minutes, seconds);
+        return str_printf (zero ? "%s%02d:%02d" : "%s%d:%02d", neg ? "- " : "", minutes, seconds);
     }
 }

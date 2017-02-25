@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#define AUD_GLIB_INTEGRATION
 #include "internal.h"
 #include "libaudgui.h"
 #include "preset-browser.h"
@@ -35,9 +36,8 @@ static void browser_response (GtkWidget * dialog, int response, void * data)
 {
     if (response == GTK_RESPONSE_ACCEPT)
     {
-        char * filename = gtk_file_chooser_get_uri ((GtkFileChooser *) dialog);
+        CharPtr filename (gtk_file_chooser_get_uri ((GtkFileChooser *) dialog));
         ((FilebrowserCallback) data) (filename);
-        g_free (filename);
     }
 
     gtk_widget_destroy (dialog);

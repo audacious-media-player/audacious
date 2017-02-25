@@ -98,11 +98,24 @@ inline T from_ptr (void * v)
     return u.t;
 }
 
-// C-style callback to delete a C++ object
-// =======================================
+// Function wrappers (or "casts") for interaction with C-style APIs
+// ================================================================
+
 template<class T>
 void delete_obj (void * obj)
-    { delete (T *) obj; }
+    { (void) sizeof (T); delete (T *) obj; }
+
+template<class T>
+void delete_typed (T * obj)
+    { (void) sizeof (T); delete obj; }
+
+template<class T, void (* func) (void *)>
+void typed_func (T * obj)
+    { func (obj); }
+
+template<class T, void (T::* func) ()>
+static void obj_member (void * obj)
+    { (((T *) obj)->* func) (); }
 
 // Wrapper class allowing enumerations to be used as array indexes;
 // the enumeration must begin with zero and have a "count" constant

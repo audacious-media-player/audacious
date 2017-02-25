@@ -22,9 +22,11 @@
 
 #include <QComboBox>
 #include <QDialog>
+#include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QPushButton>
 #include <QTreeView>
 #include <QWidget>
 
@@ -57,6 +59,7 @@ public:
     LogEntryModel (QObject * parent = nullptr) :
         QAbstractListModel (parent) {}
 
+    void cleanup ();
 protected:
     int rowCount (const QModelIndex & parent = QModelIndex ()) const
         { return m_entries.len (); }
@@ -73,6 +76,16 @@ private:
     HookReceiver<LogEntryModel, const LogEntry *>
      log_hook {"audqt log entry", this, & LogEntryModel::addEntry};
 };
+
+void LogEntryModel::cleanup ()
+{
+    if (m_entries.len () > 0)
+    {
+        beginRemoveRows (QModelIndex (), 0, m_entries.len () - 1);
+        m_entries.remove (0, m_entries.len ());
+        endRemoveRows ();
+    }
+}
 
 /* log entry model */
 void LogEntryModel::addEntry (const LogEntry * entry)
@@ -166,14 +179,7 @@ public:
     LogEntryInspector (QWidget * parent = nullptr);
 
 private:
-    QVBoxLayout m_layout;
-    QTreeView * m_view;
-
-    QWidget m_bottom_container;
-    QHBoxLayout m_bottom_layout;
-
     QComboBox m_level_combobox;
-    QLabel m_level_label;
 
     void setLogLevel (audlog::Level level);
 };
@@ -182,21 +188,15 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     QDialog (parent)
 {
     setWindowTitle (_("Log Inspector"));
-    setLayout (& m_layout);
+    setContentsMargins (margins.TwoPt);
 
-    m_view = new QTreeView (this);
-    m_view->setModel (s_model.get ());
+    auto view = new QTreeView (this);
+    view->setModel (s_model.get ());
 
-    m_view->setAllColumnsShowFocus (true);
-    m_view->setIndentation (0);
-    m_view->setUniformRowHeights (true);
-
-    m_layout.addWidget (m_view);
-
-    m_bottom_layout.setContentsMargins (0, 0, 0, 0);
-
-    m_level_label.setText (_("Log Level:"));
-    m_bottom_layout.addWidget (& m_level_label);
+    view->setAllColumnsShowFocus (true);
+    view->setIndentation (0);
+    view->setUniformRowHeights (true);
+    view->scrollToBottom ();
 
     m_level_combobox.addItem (_("Debug"), audlog::Debug);
     m_level_combobox.addItem (_("Info"), audlog::Info);
@@ -209,12 +209,30 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
                       static_cast <void (QComboBox::*) (int)> (&QComboBox::currentIndexChanged),
                       [this] (int idx) { setLogLevel ((audlog::Level) idx); });
 
-    m_bottom_layout.addWidget (& m_level_combobox);
+    auto btnbox = new QDialogButtonBox (this);
 
-    m_bottom_container.setLayout (& m_bottom_layout);
-    m_layout.addWidget (& m_bottom_container);
+    auto btn1 = btnbox->addButton (translate_str (N_("Cl_ear")), QDialogButtonBox::ActionRole);
+    btn1->setIcon (QIcon::fromTheme ("edit-clear-all"));
+    btn1->setAutoDefault (false);
+    QObject::connect (btn1, & QPushButton::clicked, [] () {
+        s_model.get ()->cleanup ();
+    });
 
-    resize (800, 350);
+    auto btn2 = btnbox->addButton (QDialogButtonBox::Close);
+    btn2->setText (translate_str (N_("_Close")));
+    btn2->setAutoDefault (false);
+    QObject::connect (btn2, & QPushButton::clicked, this, & QDialog::close);
+
+    auto hbox = make_hbox (nullptr);
+    hbox->addWidget (new QLabel (_("Log Level:"), this));
+    hbox->addWidget (& m_level_combobox);
+    hbox->addWidget (btnbox);
+
+    auto vbox = make_vbox (this);
+    vbox->addWidget (view);
+    vbox->addLayout (hbox);
+
+    resize (6 * sizes.OneInch, 3 * sizes.OneInch);
 }
 
 static LogEntryInspector * s_inspector = nullptr;

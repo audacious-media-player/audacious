@@ -118,8 +118,8 @@ const KeywordMatches * JumpToTrackCache::search_within
  */
 void JumpToTrackCache::init ()
 {
-    int playlist = aud_playlist_get_active ();
-    int entries = aud_playlist_entry_count (playlist);
+    auto playlist = Playlist::active_playlist ();
+    int entries = playlist.n_entries ();
 
     // the empty string will match all playlist entries
     KeywordMatches & k = * add (String (""), KeywordMatches ());
@@ -130,9 +130,9 @@ void JumpToTrackCache::init ()
     {
         KeywordMatch & item = k[entry];
         item.entry = entry;
-        item.path = String (uri_to_display (aud_playlist_entry_get_filename (playlist, entry)));
+        item.path = String (uri_to_display (playlist.entry_filename (entry)));
 
-        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::NoWait);
+        Tuple tuple = playlist.entry_tuple (entry, Playlist::NoWait);
         item.title = tuple.get_str (Tuple::Title);
         item.artist = tuple.get_str (Tuple::Artist);
         item.album = tuple.get_str (Tuple::Album);

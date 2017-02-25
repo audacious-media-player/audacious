@@ -233,19 +233,19 @@ static void end_cb (void *)
     song_finished = true;
     hook_call ("playback end", nullptr);
 
-    int playlist = aud_playlist_get_playing ();
+    PlaylistEx playlist = Playlist::playing_playlist ();
 
     auto do_stop = [playlist] ()
     {
-        aud_playlist_play (-1);
-        aud_playlist_set_position (playlist, aud_playlist_get_position (playlist));
+        aud_drct_stop ();
+        playlist.set_position (playlist.get_position ());
     };
 
     auto do_next = [playlist] ()
     {
-        if (! playlist_next_song (playlist, aud_get_bool (nullptr, "repeat")))
+        if (! playlist.next_song (aud_get_bool (nullptr, "repeat")))
         {
-            aud_playlist_set_position (playlist, -1);
+            playlist.set_position (-1);
             hook_call ("playlist end reached", nullptr);
         }
     };

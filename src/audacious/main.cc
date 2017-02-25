@@ -21,8 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>  /* for g_get_current_dir, g_path_is_absolute */
-
+#define AUD_GLIB_INTEGRATION
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
@@ -81,8 +80,7 @@ static const struct {
 
 static bool parse_options (int argc, char * * argv)
 {
-    char * cur = g_get_current_dir ();
-    bool success = true;
+    CharPtr cur (g_get_current_dir ());
 
 #ifdef _WIN32
     Index<String> args = get_argv_utf8 ();
@@ -134,8 +132,7 @@ static bool parse_options (int argc, char * * argv)
             if (! found)
             {
                 fprintf (stderr, _("Unknown option: %s\n"), arg);
-                success = false;
-                goto OUT;
+                return false;
             }
         }
         else  /* short form */
@@ -157,8 +154,7 @@ static bool parse_options (int argc, char * * argv)
                 if (! found)
                 {
                     fprintf (stderr, _("Unknown option: -%c\n"), arg[c]);
-                    success = false;
-                    goto OUT;
+                    return false;
                 }
             }
         }
@@ -174,9 +170,7 @@ static bool parse_options (int argc, char * * argv)
     if (options.qt)
         aud_set_mainloop_type (MainloopType::Qt);
 
-OUT:
-    g_free (cur);
-    return success;
+    return true;
 }
 
 static void print_help ()
@@ -330,7 +324,7 @@ static void main_cleanup ()
 static bool check_should_quit ()
 {
     return options.quit_after_play && ! aud_drct_get_playing () &&
-     ! aud_playlist_add_in_progress (-1);
+     ! Playlist::add_in_progress_any ();
 }
 
 static void maybe_quit ()

@@ -54,14 +54,13 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
                 /* create new layout for child widgets */
                 if (dynamic_cast<QHBoxLayout *> (parent_layout))
-                    layout = new QHBoxLayout;
+                    layout = make_hbox (nullptr, sizes.TwoPt);
                 else
                 {
-                    layout = new QVBoxLayout;
-                    layout->setContentsMargins (12, 0, 0, 0);
+                    layout = make_vbox (nullptr, sizes.TwoPt);
+                    layout->setContentsMargins (sizes.EightPt, 0, 0, 0);
                 }
 
-                layout->setSpacing (parent_layout->spacing ());
                 parent_layout->addLayout (layout);
 
                 orig_layout = layout;
@@ -117,16 +116,15 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
             if (strstr (w.label, "<b>"))
             {
-                /* double spacing above a header */
+                /* extra spacing above a header */
                 if (orig_layout->itemAt (0))
-                    orig_layout->addSpacing (orig_layout->spacing ());
+                    orig_layout->addSpacing (sizes.EightPt);
 
                 orig_layout->addWidget (label);
 
                 /* create indented layout below header */
-                layout = new QVBoxLayout;
-                layout->setContentsMargins (12, 0, 0, 0);
-                layout->setSpacing (orig_layout->spacing ());
+                layout = make_vbox (nullptr, sizes.TwoPt);
+                layout->setContentsMargins (sizes.EightPt, 0, 0, 0);
                 orig_layout->addLayout (layout);
             }
             else
@@ -203,7 +201,11 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
             QFrame * f = new QFrame;
             f->setFrameShape (w.data.separator.horizontal ? QFrame::HLine : QFrame::VLine);
             f->setFrameShadow (QFrame::Sunken);
+
+            layout->addSpacing (sizes.FourPt);
             layout->addWidget (f);
+            layout->addSpacing (sizes.FourPt);
+
             break;
         }
 

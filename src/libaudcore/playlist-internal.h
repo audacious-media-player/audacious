@@ -33,33 +33,44 @@ struct DecodeInfo
     String error;
 };
 
+/* extended handle for accessing internal playlist functions */
+class PlaylistEx : public Playlist
+{
+public:
+    PlaylistEx (Playlist playlist = Playlist ()) :
+        Playlist (playlist) {}
+
+    int stamp () const;
+
+    static Playlist insert_with_stamp (int at, int stamp);
+
+    bool get_modified () const;
+    void set_modified (bool modified) const;
+
+    bool insert_flat_playlist (const char * filename) const;
+    void insert_flat_items (int at, Index<PlaylistAddItem> && items) const;
+
+    bool prev_song () const;
+    bool next_song (bool repeat) const;
+};
+
 /* playlist.cc */
 void playlist_init ();
 void playlist_enable_scan (bool enable);
 void playlist_end ();
 
-void playlist_insert_with_id (int at, int id);
-void playlist_set_modified (int playlist, bool modified);
-bool playlist_get_modified (int playlist);
-
 void playlist_load_state ();
 void playlist_save_state ();
-
-void playlist_entry_insert_batch_raw (int playlist, int at, Index<PlaylistAddItem> && items);
-
-bool playlist_prev_song (int playlist);
-bool playlist_next_song (int playlist, bool repeat);
 
 DecodeInfo playback_entry_read (int serial);
 void playback_entry_set_tuple (int serial, Tuple && tuple);
 
 /* playlist-cache.cc */
 void playlist_cache_load (Index<PlaylistAddItem> & items);
-void playlist_cache_clear ();
+void playlist_cache_clear (void * = nullptr);
 
 /* playlist-files.cc */
 bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items);
-bool playlist_insert_playlist_raw (int list, int at, const char * filename);
 
 /* playlist-utils.cc */
 void load_playlists ();

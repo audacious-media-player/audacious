@@ -57,14 +57,14 @@ VolumeButton::VolumeButton (QWidget * parent) :
     m_container = new QFrame (this, Qt::Popup);
     m_container->setFrameShape (QFrame::StyledPanel);
 
-    auto layout = new QVBoxLayout (m_container);
-    layout->setSpacing (0);
-    layout->setMargin (2);
-
     m_slider = new QSlider (Qt::Vertical, this);
+    m_slider->setMinimumHeight (audqt::sizes.OneInch);
     m_slider->setRange (0, 100);
     m_slider->setSingleStep (2);
     m_slider->setPageStep (20);
+
+    auto layout = make_vbox (m_container, sizes.TwoPt);
+    layout->setContentsMargins (margins.TwoPt);
 
     layout->addWidget (newSliderButton (5));
     layout->addWidget (m_slider);
@@ -87,11 +87,11 @@ void VolumeButton::updateIcon (int val)
 {
     if (val == 0)
         setIcon (QIcon::fromTheme ("audio-volume-muted"));
-    else if (val > 0 && val < 35)
+    else if (val < 34)
         setIcon (QIcon::fromTheme ("audio-volume-low"));
-    else if (val >= 35 && val < 70)
+    else if (val < 67)
         setIcon (QIcon::fromTheme ("audio-volume-medium"));
-    else if (val >= 70)
+    else
         setIcon (QIcon::fromTheme ("audio-volume-high"));
 
     setToolTip (QString ("%1 %").arg (val));

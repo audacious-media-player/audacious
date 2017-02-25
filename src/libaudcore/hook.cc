@@ -127,15 +127,15 @@ DONE:
     pthread_mutex_unlock (& mutex);
 }
 
-void leak_cb (const String & name, HookList & list, void *)
-{
-    AUDWARN ("Hook not disconnected: %s (%d)\n", (const char *) name, list.items.len ());
-}
-
 void hook_cleanup ()
 {
     pthread_mutex_lock (& mutex);
-    hooks.iterate (leak_cb, nullptr);
+
+    hooks.iterate ([] (const String & name, HookList & list) {
+        AUDWARN ("Hook not disconnected: %s (%d)\n", (const char *) name, list.items.len ());
+    });
+
     hooks.clear ();
+
     pthread_mutex_unlock (& mutex);
 }

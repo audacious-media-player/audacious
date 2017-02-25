@@ -66,18 +66,20 @@ public:
 class EqualizerSlider : public QWidget
 {
 public:
+    QSlider slider;
+
     EqualizerSlider (const char * label, QWidget * parent) :
         QWidget (parent),
         slider (Qt::Vertical)
     {
+        slider.setMinimumHeight (audqt::sizes.OneInch);
         slider.setRange (-AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN);
         slider.setTickInterval (AUD_EQ_MAX_GAIN >> 1);
         slider.setTickPosition (QSlider::TicksBothSides);
 
-        auto layout = new QVBoxLayout (this);
+        auto layout = audqt::make_vbox (this);
         auto value_label = new QLabel ("0");
 
-        layout->setContentsMargins (0, 0, 0, 0);
         layout->addWidget (new VLabel (label, this), 1, Qt::AlignCenter);
         layout->addWidget (& slider, 0, Qt::AlignCenter);
         layout->addWidget (value_label, 0, Qt::AlignCenter);
@@ -86,8 +88,6 @@ public:
             value_label->setText (QString::number (value));
         });
     }
-
-    QSlider slider;
 };
 
 class EqualizerWindow : public QDialog
@@ -118,7 +118,7 @@ EqualizerWindow::EqualizerWindow () :
      N_("4 kHz"), N_("8 kHz"), N_("16 kHz")};
 
     auto slider_container = new QWidget (this);
-    auto slider_layout = new QHBoxLayout (slider_container);
+    auto slider_layout = audqt::make_hbox (slider_container, audqt::sizes.TwoPt);
 
     m_preamp_slider = new EqualizerSlider (_("Preamp"), this);
     slider_layout->addWidget (m_preamp_slider);
@@ -134,11 +134,14 @@ EqualizerWindow::EqualizerWindow () :
         slider_layout->addWidget (m_sliders[i]);
     }
 
-    auto layout = new QVBoxLayout (this);
+    auto layout = audqt::make_vbox (this);
+    layout->setSizeConstraint (QLayout::SetFixedSize);
     layout->addWidget (& m_onoff_checkbox);
     layout->addWidget (slider_container);
 
     setWindowTitle (_("Equalizer"));
+    setContentsMargins (audqt::margins.EightPt);
+
     m_onoff_checkbox.setFocus ();
 
     updateActive ();
@@ -191,7 +194,6 @@ EXPORT void equalizer_show ()
     {
         s_equalizer = new EqualizerWindow;
         s_equalizer->setAttribute (Qt::WA_DeleteOnClose);
-        s_equalizer->layout ()->setSizeConstraint (QLayout::SetFixedSize);
 
         QObject::connect (s_equalizer, & QObject::destroyed, [] () {
             s_equalizer = nullptr;

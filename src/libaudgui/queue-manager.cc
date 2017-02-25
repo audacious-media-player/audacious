@@ -36,8 +36,8 @@ enum {
 
 static void get_value (void * user, int row, int column, GValue * value)
 {
-    int list = aud_playlist_get_active ();
-    int entry = aud_playlist_queue_get_entry (list, row);
+    auto list = Playlist::active_playlist ();
+    int entry = list.queue_get_entry (row);
 
     switch (column)
     {
@@ -45,7 +45,7 @@ static void get_value (void * user, int row, int column, GValue * value)
         g_value_set_int (value, 1 + entry);
         break;
     case COLUMN_TITLE:
-        Tuple tuple = aud_playlist_entry_get_tuple (list, entry, Playlist::NoWait);
+        Tuple tuple = list.entry_tuple (entry, Playlist::NoWait);
         g_value_set_string (value, tuple.get_str (Tuple::FormattedTitle));
         break;
     }
@@ -53,36 +53,36 @@ static void get_value (void * user, int row, int column, GValue * value)
 
 static bool get_selected (void * user, int row)
 {
-    int list = aud_playlist_get_active ();
-    return aud_playlist_entry_get_selected (list, aud_playlist_queue_get_entry (list, row));
+    auto list = Playlist::active_playlist ();
+    return list.entry_selected (list.queue_get_entry (row));
 }
 
 static void set_selected (void * user, int row, bool selected)
 {
-    int list = aud_playlist_get_active ();
-    aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, row), selected);
+    auto list = Playlist::active_playlist ();
+    list.select_entry (list.queue_get_entry (row), selected);
 }
 
 static void select_all (void * user, bool selected)
 {
-    int list = aud_playlist_get_active ();
-    int count = aud_playlist_queue_count (list);
+    auto list = Playlist::active_playlist ();
+    int count = list.n_queued ();
 
     for (int i = 0; i < count; i ++)
-        aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, i), selected);
+        list.select_entry (list.queue_get_entry (i), selected);
 }
 
 static void shift_rows (void * user, int row, int before)
 {
     Index<int> shift;
-    int list = aud_playlist_get_active ();
-    int count = aud_playlist_queue_count (list);
+    auto list = Playlist::active_playlist ();
+    int count = list.n_queued ();
 
     for (int i = 0; i < count; i ++)
     {
-        int entry = aud_playlist_queue_get_entry (list, i);
+        int entry = list.queue_get_entry (i);
 
-        if (aud_playlist_entry_get_selected (list, entry))
+        if (list.entry_selected (entry))
         {
             shift.append (entry);
 
@@ -91,10 +91,10 @@ static void shift_rows (void * user, int row, int before)
         }
     }
 
-    aud_playlist_queue_delete_selected (list);
+    list.queue_remove_selected ();
 
     for (int i = 0; i < shift.len (); i ++)
-        aud_playlist_queue_insert (list, before + i, shift[i]);
+        list.queue_insert (before + i, shift[i]);
 }
 
 static const AudguiListCallbacks callbacks = {
@@ -109,17 +109,17 @@ static const AudguiListCallbacks callbacks = {
 
 static void remove_selected (void *)
 {
-    int list = aud_playlist_get_active ();
-    int count = aud_playlist_queue_count (list);
+    auto list = Playlist::active_playlist ();
+    int count = list.n_queued ();
 
     for (int i = 0; i < count; )
     {
-        int entry = aud_playlist_queue_get_entry (list, i);
+        int entry = list.queue_get_entry (i);
 
-        if (aud_playlist_entry_get_selected (list, entry))
+        if (list.entry_selected (entry))
         {
-            aud_playlist_queue_delete (list, i, 1);
-            aud_playlist_entry_set_selected (list, entry, false);
+            list.queue_remove (i);
+            list.select_entry (entry, false);
             count --;
         }
         else
@@ -132,7 +132,7 @@ static void update_hook (void * data, void * user)
     GtkWidget * qm_list = (GtkWidget *) user;
 
     int oldrows = audgui_list_row_count (qm_list);
-    int newrows = aud_playlist_queue_count (aud_playlist_get_active ());
+    int newrows = Playlist::active_playlist ().n_queued ();
     int focus = audgui_list_get_focus (qm_list);
 
     audgui_list_update_rows (qm_list, 0, aud::min (oldrows, newrows));
@@ -183,7 +183,7 @@ static GtkWidget * create_queue_manager ()
      GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_box_pack_start ((GtkBox *) vbox, scrolled, true, true, 0);
 
-    int count = aud_playlist_queue_count (aud_playlist_get_active ());
+    int count = Playlist::active_playlist ().n_queued ();
     GtkWidget * qm_list = audgui_list_new (& callbacks, nullptr, count);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) qm_list, false);
     audgui_list_add_column (qm_list, nullptr, 0, G_TYPE_INT, 7);

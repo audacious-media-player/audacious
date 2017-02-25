@@ -20,6 +20,10 @@
 #ifndef LIBAUDCORE_OBJECTS_H
 #define LIBAUDCORE_OBJECTS_H
 
+#ifdef AUD_GLIB_INTEGRATION
+#include <glib.h>
+#endif
+
 #include <libaudcore/templates.h>
 
 // Stores array pointer together with deduced array length.
@@ -51,11 +55,7 @@ struct ArrayRef
 
 // Smart pointer.  Deletes object pointed to when the pointer goes out of scope.
 
-template<class T>
-void SmartPtrDelete (T * ptr)
-    { (void) sizeof (T); delete ptr; }
-
-template<class T, void (* deleter) (T *) = SmartPtrDelete>
+template<class T, void (* deleter) (T *) = aud::delete_typed>
 class SmartPtr
 {
 public:
@@ -71,6 +71,13 @@ public:
     {
         if (ptr) deleter (ptr);
         ptr = ptr2;
+    }
+
+    T * release ()
+    {
+        T * ptr2 = ptr;
+        ptr = nullptr;
+        return ptr2;
     }
 
     void clear ()
@@ -118,6 +125,20 @@ SmartPtr<T> SmartNew (Args && ... args)
     return SmartPtr<T> (aud::construct<T>::make (operator new (sizeof (T)),
      std::forward<Args> (args) ...));
 }
+
+// Convenience wrapper for a GLib-style string (char *).
+
+#ifdef AUD_GLIB_INTEGRATION
+class CharPtr : public SmartPtr<char, aud::typed_func<char, g_free>>
+{
+public:
+    using SmartPtr::SmartPtr;
+
+    // non-const operator omitted to prevent "CharPtr s; g_free(s);"
+    operator const char * () const
+        { return get (); }
+};
+#endif
 
 // Wrapper class for a string stored in the string pool.
 
@@ -174,30 +195,13 @@ public:
     unsigned hash () const
         { return raw_hash (raw); }
 
-    // raw interface
-    // avoid using where possible
-
-    static String from_raw (char * str)
-    {
-        String s;
-        s.raw = str;
-        return s;
-    }
-
-    char * to_raw ()
-    {
-        char * str = raw;
-        raw = nullptr;
-        return str;
-    }
-
+private:
     static char * raw_get (const char * str);
     static char * raw_ref (const char * str);
     static void raw_unref (char * str);
     static unsigned raw_hash (const char * str);
     static bool raw_equal (const char * str1, const char * str2);
 
-private:
     char * raw;
 };
 

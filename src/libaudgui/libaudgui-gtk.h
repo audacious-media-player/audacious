@@ -32,12 +32,26 @@ struct PreferencesWidget;
 
 typedef void (* AudguiCallback) (void * data);
 
+class AudguiPixbuf : public SmartPtr<GdkPixbuf, aud::typed_func<GdkPixbuf, g_object_unref>>
+{
+public:
+    using SmartPtr::SmartPtr;
+
+    int width ()
+        { return gdk_pixbuf_get_width (get ()); }
+    int height ()
+        { return gdk_pixbuf_get_height (get ()); }
+
+    AudguiPixbuf ref ()
+        { return AudguiPixbuf (get () ? (GdkPixbuf *) g_object_ref (get ()) : nullptr); }
+};
+
 /* pixbufs.c */
-GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size);
-GdkPixbuf * audgui_pixbuf_fallback ();
-void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size);
-GdkPixbuf * audgui_pixbuf_request (const char * filename, bool * queued = nullptr);
-GdkPixbuf * audgui_pixbuf_request_current (bool * queued = nullptr);
+AudguiPixbuf audgui_pixbuf_from_data (const void * data, int64_t size);
+AudguiPixbuf audgui_pixbuf_fallback ();
+void audgui_pixbuf_scale_within (AudguiPixbuf & pixbuf, int size);
+AudguiPixbuf audgui_pixbuf_request (const char * filename, bool * queued = nullptr);
+AudguiPixbuf audgui_pixbuf_request_current (bool * queued = nullptr);
 
 /* plugin-menu.c */
 GtkWidget * audgui_get_plugin_menu (AudMenuID id);

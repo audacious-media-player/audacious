@@ -21,6 +21,7 @@
 #include "internal.h"
 
 #include <assert.h>
+#include <glib.h>
 
 #include "drct.h"
 #include "hook.h"
@@ -126,8 +127,7 @@ EXPORT void aud_ui_show_error (const char * message)
     if (aud_get_headless_mode ())
         AUDERR ("%s\n", message);
     else
-        event_queue ("ui show error", String::raw_get (message),
-         (EventDestroyFunc) String::raw_unref);
+        event_queue ("ui show error", g_strdup (message), g_free);
 }
 
 PluginHandle * iface_plugin_get_current ()

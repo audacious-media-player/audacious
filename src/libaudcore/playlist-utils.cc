@@ -87,7 +87,7 @@ static int tuple_compare_length (const Tuple & a, const Tuple & b)
 static int tuple_compare_comment (const Tuple & a, const Tuple & b)
     { return tuple_compare_string (a, b, Tuple::Comment); }
 
-static const PlaylistStringCompareFunc filename_comparisons[] = {
+static const Playlist::StringCompareFunc filename_comparisons[] = {
     str_compare_encoded,  // path
     filename_compare_basename,  // filename
     nullptr,  // title
@@ -102,7 +102,7 @@ static const PlaylistStringCompareFunc filename_comparisons[] = {
     nullptr   // comment
 };
 
-static const PlaylistTupleCompareFunc tuple_comparisons[] = {
+static const Playlist::TupleCompareFunc tuple_comparisons[] = {
     nullptr,  // path
     nullptr,  // filename
     tuple_compare_title,
@@ -121,93 +121,93 @@ static_assert (aud::n_elems (filename_comparisons) == Playlist::n_sort_types &&
  aud::n_elems (tuple_comparisons) == Playlist::n_sort_types,
  "Update playlist comparison functions");
 
-EXPORT void aud_playlist_sort_by_scheme (int playlist, Playlist::SortType scheme)
+EXPORT void Playlist::sort_entries (SortType scheme) const
 {
     if (filename_comparisons[scheme])
-        aud_playlist_sort_by_filename (playlist, filename_comparisons[scheme]);
+        sort_by_filename (filename_comparisons[scheme]);
     else if (tuple_comparisons[scheme])
-        aud_playlist_sort_by_tuple (playlist, tuple_comparisons[scheme]);
+        sort_by_tuple (tuple_comparisons[scheme]);
 }
 
-EXPORT void aud_playlist_sort_selected_by_scheme (int playlist, Playlist::SortType scheme)
+EXPORT void Playlist::sort_selected (SortType scheme) const
 {
     if (filename_comparisons[scheme])
-        aud_playlist_sort_selected_by_filename (playlist, filename_comparisons[scheme]);
+        sort_selected_by_filename (filename_comparisons[scheme]);
     else if (tuple_comparisons[scheme])
-        aud_playlist_sort_selected_by_tuple (playlist, tuple_comparisons[scheme]);
+        sort_selected_by_tuple (tuple_comparisons[scheme]);
 }
 
 /* FIXME: this considers empty fields as duplicates */
-EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, Playlist::SortType scheme)
+EXPORT void Playlist::remove_duplicates (SortType scheme) const
 {
-    int entries = aud_playlist_entry_count (playlist);
+    int entries = n_entries ();
     if (entries < 1)
         return;
 
-    aud_playlist_select_all (playlist, false);
+    select_all (false);
 
     if (filename_comparisons[scheme])
     {
-        PlaylistStringCompareFunc compare = filename_comparisons[scheme];
+        StringCompareFunc compare = filename_comparisons[scheme];
 
-        aud_playlist_sort_by_filename (playlist, compare);
-        String last = aud_playlist_entry_get_filename (playlist, 0);
+        sort_by_filename (compare);
+        String last = entry_filename (0);
 
-        for (int count = 1; count < entries; count ++)
+        for (int i = 1; i < entries; i ++)
         {
-            String current = aud_playlist_entry_get_filename (playlist, count);
+            String current = entry_filename (i);
 
             if (compare (last, current) == 0)
-                aud_playlist_entry_set_selected (playlist, count, true);
+                select_entry (i, true);
 
             last = current;
         }
     }
     else if (tuple_comparisons[scheme])
     {
-        PlaylistTupleCompareFunc compare = tuple_comparisons[scheme];
+        TupleCompareFunc compare = tuple_comparisons[scheme];
 
-        aud_playlist_sort_by_tuple (playlist, compare);
-        Tuple last = aud_playlist_entry_get_tuple (playlist, 0);
+        sort_by_tuple (compare);
+        Tuple last = entry_tuple (0);
 
-        for (int count = 1; count < entries; count ++)
+        for (int i = 1; i < entries; i ++)
         {
-            Tuple current = aud_playlist_entry_get_tuple (playlist, count);
+            Tuple current = entry_tuple (i);
 
             if (last.valid () && current.valid () && compare (last, current) == 0)
-                aud_playlist_entry_set_selected (playlist, count, true);
+                select_entry (i, true);
 
             last = std::move (current);
         }
     }
 
-    aud_playlist_delete_selected (playlist);
+    remove_selected ();
 }
 
-EXPORT void aud_playlist_remove_failed (int playlist)
+EXPORT void Playlist::remove_unavailable () const
 {
-    int entries = aud_playlist_entry_count (playlist);
+    int entries = n_entries ();
 
-    aud_playlist_select_all (playlist, false);
+    select_all (false);
 
-    for (int count = 0; count < entries; count ++)
+    for (int i = 0; i < entries; i ++)
     {
-        String filename = aud_playlist_entry_get_filename (playlist, count);
+        String filename = entry_filename (i);
 
         /* use VFS_NO_ACCESS since VFS_EXISTS doesn't distinguish between
          * inaccessible files and URI schemes that don't support file_test() */
         if (VFSFile::test_file (filename, VFS_NO_ACCESS))
-            aud_playlist_entry_set_selected (playlist, count, true);
+            select_entry (i, true);
     }
 
-    aud_playlist_delete_selected (playlist);
+    remove_selected ();
 }
 
-EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & patterns)
+EXPORT void Playlist::select_by_patterns (const Tuple & patterns) const
 {
-    int entries = aud_playlist_entry_count (playlist);
+    int entries = n_entries ();
 
-    aud_playlist_select_all (playlist, true);
+    select_all (true);
 
     for (Tuple::Field field : {Tuple::Title, Tuple::Album, Tuple::Artist, Tuple::Basename})
     {
@@ -218,16 +218,16 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & pattern
          G_REGEX_CASELESS, (GRegexMatchFlags) 0, nullptr)))
             continue;
 
-        for (int entry = 0; entry < entries; entry ++)
+        for (int i = 0; i < entries; i ++)
         {
-            if (! aud_playlist_entry_get_selected (playlist, entry))
+            if (! entry_selected (i))
                 continue;
 
-            Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry);
+            Tuple tuple = entry_tuple (i);
             String string = tuple.get_str (field);
 
             if (! string || ! g_regex_match (regex, string, (GRegexMatchFlags) 0, nullptr))
-                aud_playlist_entry_set_selected (playlist, entry, false);
+                select_entry (i, false);
         }
 
         g_regex_unref (regex);
@@ -257,9 +257,9 @@ static void load_playlists_real ()
         if (! g_file_test (path, G_FILE_TEST_EXISTS))
             break;
 
-        aud_playlist_insert (count);
-        playlist_insert_playlist_raw (count, 0, filename_to_uri (path));
-        playlist_set_modified (count, true);
+        PlaylistEx playlist = Playlist::insert_playlist (count);
+        playlist.insert_flat_playlist (filename_to_uri (path));
+        playlist.set_modified (true);
     }
 
     /* unique ID-based naming scheme */
@@ -286,24 +286,19 @@ static void load_playlists_real ()
         if (! g_file_test (path, G_FILE_TEST_EXISTS))
             path.steal (filename_build ({folder, name2}));
 
-        playlist_insert_with_id (count + i, atoi (number));
-        playlist_insert_playlist_raw (count + i, 0, filename_to_uri (path));
-        playlist_set_modified (count + i, false);
-
-        if (g_str_has_suffix (path, ".xspf"))
-            playlist_set_modified (count + i, true);
+        PlaylistEx playlist = PlaylistEx::insert_with_stamp (count + i, atoi (number));
+        playlist.insert_flat_playlist (filename_to_uri (path));
+        playlist.set_modified (g_str_has_suffix (path, ".xspf"));
     }
 
 DONE:
-    if (! aud_playlist_count ())
-        aud_playlist_insert (0);
-
-    aud_playlist_set_active (0);
+    if (! Playlist::n_playlists ())
+        Playlist::insert_playlist (0);
 }
 
 static void save_playlists_real ()
 {
-    int lists = aud_playlist_count ();
+    int lists = Playlist::n_playlists ();
     const char * folder = aud_get_path (AudPath::PlaylistDir);
 
     /* save playlists */
@@ -313,15 +308,15 @@ static void save_playlists_real ()
 
     for (int i = 0; i < lists; i ++)
     {
-        int id = aud_playlist_get_unique_id (i);
-        StringBuf number = int_to_str (id);
+        PlaylistEx playlist = Playlist::by_index (i);
+        StringBuf number = int_to_str (playlist.stamp ());
         StringBuf name = str_concat ({number, ".audpl"});
 
-        if (playlist_get_modified (i))
+        if (playlist.get_modified ())
         {
             StringBuf path = filename_build ({folder, name});
-            aud_playlist_save (i, filename_to_uri (path), Playlist::NoWait);
-            playlist_set_modified (i, false);
+            playlist.save_to_file (filename_to_uri (path), Playlist::NoWait);
+            playlist.set_modified (false);
         }
 
         order.append (String (number));

@@ -154,10 +154,10 @@ static void iface_combo_changed ();
 static void * iface_create_prefs_box ();
 
 static const PreferencesWidget appearance_page_widgets[] = {
-    WidgetLabel (N_("<b>Interface Settings</b>")),
-    WidgetCombo (N_("Interface plugin:"),
+    WidgetCombo (N_("Interface:"),
         WidgetInt (iface_combo_selected, iface_combo_changed),
         {0, iface_combo_fill}),
+    WidgetSeparator ({true}),
     WidgetCustomGTK (iface_create_prefs_box)
 };
 
@@ -482,13 +482,10 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
          gettext (category.name), -1);
 
         StringBuf path = filename_build ({data_dir, "images", category.icon_path});
-        GdkPixbuf * img = gdk_pixbuf_new_from_file (path, nullptr);
+        AudguiPixbuf img (gdk_pixbuf_new_from_file (path, nullptr));
 
         if (img)
-        {
-            gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_ICON, img, -1);
-            g_object_unref (img);
-        }
+            gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_ICON, img.get (), -1);
     }
 
     g_object_unref (store);
@@ -742,7 +739,7 @@ static void record_update (void * = nullptr, void * = nullptr)
 
         gtk_widget_set_sensitive (record_checkbox, true);
         gtk_button_set_label ((GtkButton *) record_checkbox,
-         str_printf (_("Record audio stream using %s"), aud_plugin_get_name (p)));
+         str_printf (_("Enable audio stream recording with %s"), aud_plugin_get_name (p)));
         gtk_toggle_button_set_active ((GtkToggleButton *) record_checkbox, enabled);
         gtk_widget_set_sensitive (record_config_button, enabled && aud_plugin_has_configure (p));
         gtk_widget_set_sensitive (record_about_button, enabled && aud_plugin_has_about (p));

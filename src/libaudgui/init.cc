@@ -134,7 +134,7 @@ static void playlist_set_playing_cb (void *, void *)
 
 static void playlist_position_cb (void * list, void *)
 {
-    if (aud::from_ptr<int> (list) == aud_playlist_get_playing ())
+    if (aud::from_ptr<Playlist> (list) == Playlist::playing_playlist ())
         audgui_pixbuf_uncache ();
 }
 
@@ -149,7 +149,6 @@ EXPORT void audgui_init ()
 
     aud_config_set_defaults ("audgui", audgui_defaults);
 
-    record_init ();
     status_init ();
 
     hook_associate ("playlist set playing", playlist_set_playing_cb, nullptr);
@@ -168,7 +167,6 @@ EXPORT void audgui_cleanup ()
     hook_dissociate ("playlist set playing", playlist_set_playing_cb);
     hook_dissociate ("playlist position", playlist_position_cb);
 
-    record_cleanup ();
     status_cleanup ();
 
     for (int id = 0; id < AUDGUI_NUM_UNIQUE_WINDOWS; id ++)

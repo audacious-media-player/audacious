@@ -37,7 +37,7 @@ public:
     InfoWidget (QWidget * parent = nullptr);
     ~InfoWidget ();
 
-    void fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
+    void fillInfo (const char * filename, const Tuple & tuple,
      PluginHandle * decoder, bool updating_enabled);
     bool updateFile ();
 

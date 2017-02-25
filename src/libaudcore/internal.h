@@ -128,6 +128,18 @@ StringBuf strip_subtune (const char * filename);
 unsigned int32_hash (unsigned val);
 unsigned ptr_hash (const void * ptr);
 
+struct IntHashKey
+{
+    int val;
+
+    constexpr IntHashKey (int val) :
+        val (val) {}
+    operator int () const
+        { return val; }
+    unsigned hash () const
+        { return int32_hash (val); }
+};
+
 /* vis-runner.cc */
 void vis_runner_start_stop (bool playing, bool paused);
 void vis_runner_pass_audio (int time, const Index<float> & data, int channels, int rate);

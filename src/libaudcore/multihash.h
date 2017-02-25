@@ -1,6 +1,6 @@
 /*
  * multihash.h
- * Copyright 2013-2014 John Lindgren
+ * Copyright 2013-2017 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -29,11 +29,13 @@
 class HashBase
 {
 public:
-    /* Skeleton structure containing internal members of a hash node.  Actual
-     * node structures should be defined with Node as the first member. */
+    /* Skeleton structure containing internal members of a hash node (except for
+     * "refs", which is not used internally and included here only to fill an
+     * alignment gap).  Actual node structures should subclass Node. */
     struct Node {
         Node * next;
         unsigned hash;
+        unsigned refs;
     };
 
     /* Represents the location of a node within the table. */
@@ -143,6 +145,69 @@ private:
     HashBase channels[Channels];
 };
 
+/* Type-safe version using templates. */
+
+template<class Node_T, class Data_T>
+class MultiHash_T : private MultiHash
+{
+public:
+    // Required interfaces:
+    //
+    // class Node_T : public Node
+    // {
+    //     bool match (const Data_T * data) const;
+    // };
+    //
+    // class Operation
+    // {
+    //     Node_T * add (const Data_T * data);
+    //     bool found (Node_T * node);
+    // };
+
+    MultiHash_T () : MultiHash (match_cb) {}
+
+    void clear ()
+        { MultiHash::iterate (remove_cb, nullptr); }
+
+    template<class Op>
+    int lookup (const Data_T * data, unsigned hash, Op & op)
+        { return MultiHash::lookup (data, hash, WrapOp<Op>::add, WrapOp<Op>::found, & op); }
+
+    template<class F>
+    void iterate (F func)
+        { MultiHash::iterate (WrapIterate<F>::run, & func); }
+
+private:
+    static bool match_cb (const Node * node, const void * data)
+        { return (static_cast<const Node_T *> (node))->match
+                  (static_cast<const Data_T *> (data)); }
+
+    static bool remove_cb (Node * node, void *)
+    {
+        delete static_cast<Node_T *> (node);
+        return true;
+    }
+
+    template<class Op>
+    struct WrapOp {
+        static Node * add (const void * data, void * op)
+            { return (static_cast<Op *> (op))->add
+                      (static_cast<const Data_T *> (data)); }
+        static bool found (Node * node, void * op)
+            { return (static_cast<Op *> (op))->found
+                      (static_cast<Node_T *> (node)); }
+    };
+
+    template<class F>
+    struct WrapIterate {
+        static bool run (Node * node, void * func)
+            { return (* static_cast<F *> (func))
+                      (static_cast<Node_T *> (node)); }
+    };
+};
+
+/* Simpler single-thread hash table. */
+
 template<class Key, class Value>
 class SimpleHash : private HashBase
 {
@@ -156,14 +221,14 @@ public:
 
     Value * lookup (const Key & key)
     {
-        Node * node = (Node *) HashBase::lookup (match_cb, & key, key.hash ());
+        auto node = static_cast<Node *> (HashBase::lookup (match_cb, & key, key.hash ()));
         return node ? & node->value : nullptr;
     }
 
     Value * add (const Key & key, Value && value)
     {
         unsigned hash = key.hash ();
-        Node * node = (Node *) HashBase::lookup (match_cb, & key, hash);
+        auto node = static_cast<Node *> (HashBase::lookup (match_cb, & key, hash));
 
         if (node)
             node->value = std::move (value);
@@ -179,7 +244,7 @@ public:
     void remove (const Key & key)
     {
         NodeLoc loc;
-        Node * node = (Node *) HashBase::lookup (match_cb, & key, key.hash (), & loc);
+        auto node = static_cast<Node *> (HashBase::lookup (match_cb, & key, key.hash (), & loc));
 
         if (node)
         {
@@ -188,17 +253,15 @@ public:
         }
     }
 
-    void iterate (IterFunc func, void * state)
-    {
-        IterData data = {func, state};
-        HashBase::iterate (iterate_cb, & data);
-    }
-
     void clear ()
     {
         HashBase::iterate (remove_cb, nullptr);
         HashBase::clear ();
     }
+
+    template<class F>
+    void iterate (F func)
+        { HashBase::iterate (WrapIterate<F>::run, & func); }
 
 private:
     struct Node : public HashBase::Node
@@ -217,21 +280,26 @@ private:
     };
 
     static bool match_cb (const HashBase::Node * node, const void * data)
-        { return ((const Node *) node)->key == * (const Key *) data; }
+        { return (static_cast<const Node *> (node))->key ==
+                 * static_cast<const Key *> (data); }
 
     static bool remove_cb (HashBase::Node * node, void *)
     {
-        delete (Node *) node;
+        delete static_cast<Node *> (node);
         return true;
     }
 
-    static bool iterate_cb (HashBase::Node * node0, void * data0)
+    // C-style callback wrapping generic iteration functor
+    template<class F>
+    struct WrapIterate
     {
-        Node * node = (Node *) node0;
-        IterData * data = (IterData *) data0;
-        data->func (node->key, node->value, data->state);
-        return false;
-    }
+        static bool run (HashBase::Node * node_, void * func)
+        {
+            auto node = static_cast<Node *> (node_);
+            (* static_cast<F *> (func)) (node->key, node->value);
+            return false;
+        }
+    };
 };
 
 #endif /* LIBAUDCORE_MULTIHASH_H */

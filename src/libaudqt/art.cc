@@ -28,30 +28,36 @@
 
 namespace audqt {
 
-EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
+static QImage load_fallback ()
 {
-    const Index<char> * data = aud_art_request_data (filename);
-    QImage img;
+    static QImage fallback;
+    static bool loaded = false;
 
-    if (data)
-    {
-        img = QImage::fromData ((const uchar *) data->begin (), data->len ());
-
-        aud_art_unref (filename);
-    }
-    else
-    {
-        QString fallback = QString (filename_build
+    if (! loaded)
+        fallback.load ((const char *) filename_build
          ({aud_get_path (AudPath::DataDir), "images", "album.png"}));
 
-        img = QImage (fallback);
+    return fallback; // shallow copy
+}
+
+EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
+{
+    AudArtPtr art = aud_art_request (filename, AUD_ART_DATA);
+
+    auto data = art.data ();
+    auto img = data ? QImage::fromData ((const uchar *) data->begin (), data->len ()) : QImage ();
+
+    if (img.isNull ())
+    {
+        img = load_fallback ();
+        if (img.isNull ())
+            return QPixmap ();
     }
 
-    if (w == 0 && h == 0)
-    {
-        w = img.size ().width ();
-        h = img.size ().height ();
-    }
+    // return original image if requested size is zero,
+    // or original size is smaller than requested size
+    if ((w == 0 && h == 0) || ((unsigned) img.width () <= w && (unsigned) img.height () <= h))
+        return QPixmap::fromImage (img);
 
     if (! want_hidpi)
         return QPixmap::fromImage (img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation));

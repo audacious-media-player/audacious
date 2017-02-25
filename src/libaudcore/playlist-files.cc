@@ -26,7 +26,7 @@
 #include "plugins-internal.h"
 #include "runtime.h"
 
-EXPORT bool aud_filename_is_playlist (const char * filename)
+EXPORT bool Playlist::filename_is_playlist (const char * filename)
 {
     StringBuf ext = uri_get_extension (filename);
 
@@ -93,7 +93,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
 // All support for adding folders, cuesheets, subtunes, etc. is omitted here.
 // Additionally, in order to avoid heavy I/O at startup, failed entries are not
 // rescanned; they can be rescanned later by refreshing the playlist. */
-bool playlist_insert_playlist_raw (int list, int at, const char * filename)
+bool PlaylistEx::insert_flat_playlist (const char * filename) const
 {
     String title;
     Index<PlaylistAddItem> items;
@@ -101,26 +101,26 @@ bool playlist_insert_playlist_raw (int list, int at, const char * filename)
     if (! playlist_load (filename, title, items))
         return false;
 
-    if (title && ! aud_playlist_entry_count (list))
-        aud_playlist_set_title (list, title);
+    if (title)
+        set_title (title);
 
-    playlist_entry_insert_batch_raw (list, at, std::move (items));
+    insert_flat_items (0, std::move (items));
 
     return true;
 }
 
-EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMode mode)
+EXPORT bool Playlist::save_to_file (const char * filename, GetMode mode) const
 {
-    String title = aud_playlist_get_title (list);
+    String title = get_title ();
 
     Index<PlaylistAddItem> items;
-    items.insert (0, aud_playlist_entry_count (list));
+    items.insert (0, n_entries ());
 
     int i = 0;
     for (PlaylistAddItem & item : items)
     {
-        item.filename = aud_playlist_entry_get_filename (list, i);
-        item.tuple = aud_playlist_entry_get_tuple (list, i, mode);
+        item.filename = entry_filename (i);
+        item.tuple = entry_tuple (i, mode);
         item.tuple.delete_fallbacks ();
         i ++;
     }
@@ -153,7 +153,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMod
     return false;
 }
 
-EXPORT Index<Playlist::SaveFormat> aud_playlist_save_formats ()
+EXPORT Index<Playlist::SaveFormat> Playlist::save_formats ()
 {
     Index<Playlist::SaveFormat> formats;
 

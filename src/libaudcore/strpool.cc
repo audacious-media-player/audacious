@@ -1,6 +1,6 @@
 /*
  * strpool.c
- * Copyright 2011-2013 John Lindgren
+ * Copyright 2011-2017 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include <assert.h>
-#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -30,126 +28,87 @@
 
 #ifdef VALGRIND_FRIENDLY
 
-struct StrNode {
-    unsigned hash;
-    char magic;
-    char str[];
-};
-
-#define NODE_SIZE_FOR(s) (offsetof (StrNode, str) + strlen (s) + 1)
-#define NODE_OF(s) ((StrNode *) ((s) - offsetof (StrNode, str)))
+#include <glib.h>
 
 EXPORT char * String::raw_get (const char * str)
-{
-    if (! str)
-        return nullptr;
-
-    StrNode * node = (StrNode *) malloc (NODE_SIZE_FOR (str));
-    if (! node)
-        throw std::bad_alloc ();
-
-    node->magic = '@';
-    node->hash = str_calc_hash (str);
-
-    strcpy (node->str, str);
-    return node->str;
-}
-
+    { return g_strdup (str); }
 EXPORT char * String::raw_ref (const char * str)
-{
-    if (! str)
-        return nullptr;
-
-    StrNode * node = NODE_OF (str);
-    assert (node->magic == '@');
-    assert (str_calc_hash (str) == node->hash);
-
-    return raw_get (str);
-}
-
+    { return g_strdup (str); }
 EXPORT void String::raw_unref (char * str)
-{
-    if (! str)
-        return;
+    { g_free (str); }
 
-    StrNode * node = NODE_OF (str);
-    assert (node->magic == '@');
-    assert (str_calc_hash (str) == node->hash);
-
-    node->magic = 0;
-    free (node);
-}
+void string_leak_check () {}
 
 EXPORT unsigned String::raw_hash (const char * str)
-{
-    if (! str)
-        return 0;
-
-    StrNode * node = NODE_OF (str);
-    assert (node->magic == '@');
-
-    return str_calc_hash (str);
-}
-
+    { return str_calc_hash (str); }
 EXPORT bool String::raw_equal (const char * str1, const char * str2)
+    { return ! strcmp_safe (str1, str2); }
+
+#else // ! VALGRIND_FRIENDLY
+
+struct StrNode : public MultiHash::Node
 {
-    assert (! str1 || NODE_OF (str1)->magic == '@');
-    assert (! str2 || NODE_OF (str2)->magic == '@');
+    /* the characters of the string immediately follow the StrNode struct */
+    const char * str () const
+        { return reinterpret_cast<const char *> (this + 1); }
+    char * str ()
+        { return reinterpret_cast<char *> (this + 1); }
 
-    return ! strcmp_safe (str1, str2);
-}
+    static const StrNode * of (const char * s)
+        { return reinterpret_cast<const StrNode *> (s) - 1; }
+    static StrNode * of (char * s)
+        { return reinterpret_cast<StrNode *> (s) - 1; }
 
-EXPORT void string_leak_check ()
-{
-}
+    static StrNode * create (const char * s)
+    {
+        auto size = sizeof (StrNode) + strlen (s) + 1;
+        auto node = static_cast<StrNode *> (malloc (size));
+        if (! node)
+            throw std::bad_alloc ();
 
-#else /* ! VALGRIND_FRIENDLY */
+        strcpy (node->str (), s);
+        return node;
+    }
 
-struct StrNode {
-    MultiHash::Node base;
-    unsigned refs;
-    char magic;
-    char str[1];  // variable size
+    bool match (const char * data) const
+        { return data == str () || ! strcmp (data, str ()); }
 };
 
-#define NODE_SIZE_FOR(s) (offsetof (StrNode, str) + strlen (s) + 1)
-#define NODE_OF(s) ((StrNode *) ((s) - offsetof (StrNode, str)))
+static MultiHash_T<StrNode, char> strpool_table;
 
-static bool match_cb (const MultiHash::Node * node_, const void * data_)
+struct Getter
 {
-    const StrNode * node = (const StrNode *) node_;
-    const char * data = (const char *) data_;
+    StrNode * node;
 
-    return data == node->str || ! strcmp (data, node->str);
-}
+    StrNode * add (const char * data)
+    {
+        node = StrNode::create (data);
+        node->refs = 1;
+        return node;
+    }
 
-static MultiHash strpool_table (match_cb);
+    bool found (StrNode * node_)
+    {
+        node = node_;
+        __sync_fetch_and_add (& node->refs, 1);
+        return false;
+    }
+};
 
-static MultiHash::Node * add_cb (const void * data_, void * state)
+struct Remover
 {
-    const char * data = (const char *) data_;
+    StrNode * add (const char *)
+        { return nullptr; }
 
-    StrNode * node = (StrNode *) malloc (NODE_SIZE_FOR (data));
-    if (! node)
-        throw std::bad_alloc ();
+    bool found (StrNode * node)
+    {
+        if (! __sync_bool_compare_and_swap (& node->refs, 1, 0))
+            return false;
 
-    node->refs = 1;
-    node->magic = '@';
-    strcpy (node->str, data);
-
-    * ((char * *) state) = node->str;
-    return (MultiHash::Node *) node;
-}
-
-static bool ref_cb (MultiHash::Node * node_, void * state)
-{
-    StrNode * node = (StrNode *) node_;
-
-    __sync_fetch_and_add (& node->refs, 1);
-
-    * ((char * *) state) = node->str;
-    return false;
-}
+        free (node);
+        return true;
+    }
+};
 
 /* If the pool contains a copy of <str>, increments its reference count.
  * Otherwise, adds a copy of <str> to the pool with a reference count of one.
@@ -161,38 +120,24 @@ EXPORT char * String::raw_get (const char * str)
     if (! str)
         return nullptr;
 
-    char * ret = nullptr;
-    strpool_table.lookup (str, str_calc_hash (str), add_cb, ref_cb, & ret);
-    return ret;
+    Getter op;
+    strpool_table.lookup (str, str_calc_hash (str), op);
+    return op.node->str ();
 }
 
 /* Increments the reference count of <str>, where <str> is the address of a
  * string already in the pool.  Faster than calling raw_get() a second time.
  * Returns <str> for convenience.  If <str> is null, simply returns null with no
  * side effects. */
-EXPORT char * String::raw_ref (const char * str)
+EXPORT char * String::raw_ref (const char * str_)
 {
+    auto str = const_cast<char *> (str_);
     if (! str)
         return nullptr;
 
-    StrNode * node = NODE_OF (str);
-    assert (node->magic == '@');
-
+    auto node = StrNode::of (str);
     __sync_fetch_and_add (& node->refs, 1);
-
-    return (char *) str;
-}
-
-static bool remove_cb (MultiHash::Node * node_, void * state)
-{
-    StrNode * node = (StrNode *) node_;
-
-    if (! __sync_bool_compare_and_swap (& node->refs, 1, 0))
-        return false;
-
-    node->magic = 0;
-    free (node);
-    return true;
+    return str;
 }
 
 /* Decrements the reference count of <str>, where <str> is the address of a
@@ -204,13 +149,11 @@ EXPORT void String::raw_unref (char * str)
     if (! str)
         return;
 
-    StrNode * node = NODE_OF (str);
-    assert (node->magic == '@');
+    auto node = StrNode::of (str);
 
     while (1)
     {
-        int refs = __sync_fetch_and_add (& node->refs, 0);
-
+        unsigned refs = __sync_fetch_and_add (& node->refs, 0);
         if (refs > 1)
         {
             if (__sync_bool_compare_and_swap (& node->refs, refs, refs - 1))
@@ -218,49 +161,36 @@ EXPORT void String::raw_unref (char * str)
         }
         else
         {
-            int status = strpool_table.lookup (node->str, node->base.hash, nullptr,
-             remove_cb, nullptr);
-
-            assert (status & MultiHash::Found);
+            Remover op;
+            int status = strpool_table.lookup (str, node->hash, op);
+            if (! (status & MultiHash::Found))
+                throw std::bad_alloc ();
             if (status & MultiHash::Removed)
                 break;
         }
     }
 }
 
-static bool leak_cb (MultiHash::Node * node, void * state)
-{
-    AUDWARN ("String leaked: %s\n", ((StrNode *) node)->str);
-    return false;
-}
-
 void string_leak_check ()
 {
-    strpool_table.iterate (leak_cb, nullptr);
+    strpool_table.iterate ([] (const StrNode * node) {
+        AUDWARN ("String leaked: %s\n", node->str ());
+        return false;
+    });
 }
 
 /* Returns the cached hash value of a pooled string (or 0 for null). */
 EXPORT unsigned String::raw_hash (const char * str)
 {
-    if (! str)
-        return 0;
-
-    StrNode * node = NODE_OF (str);
-    assert (node->magic == '@');
-
-    return node->base.hash;
+    return str ? StrNode::of (str)->hash : 0;
 }
-
 
 /* Checks whether two pooled strings are equal.  Since the pool never contains
  * duplicate strings, this is a simple pointer comparison and thus much faster
  * than strcmp().  null is considered equal to null but not equal to any string. */
 EXPORT bool String::raw_equal (const char * str1, const char * str2)
 {
-    assert (! str1 || NODE_OF (str1)->magic == '@');
-    assert (! str2 || NODE_OF (str2)->magic == '@');
-
     return str1 == str2;
 }
 
-#endif /* ! VALGRIND_FRIENDLY */
+#endif // ! VALGRIND_FRIENDLY

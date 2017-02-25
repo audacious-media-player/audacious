@@ -20,6 +20,7 @@
 #include <stdlib.h>
 
 #include <QApplication>
+#include <QDesktopWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -34,6 +35,12 @@ namespace audqt {
 
 static int init_count;
 static QApplication * qapp;
+
+static PixelSizes sizes_local;
+static PixelMargins margins_local;
+
+EXPORT const PixelSizes & sizes = sizes_local;
+EXPORT const PixelMargins & margins = margins_local;
 
 EXPORT void init ()
 {
@@ -54,6 +61,16 @@ EXPORT void init ()
 
     qapp->setApplicationName (_("Audacious"));
     qapp->setWindowIcon (QIcon::fromTheme (app_name));
+
+    auto desktop = qapp->desktop ();
+    sizes_local.OneInch = aud::max (96, (desktop->logicalDpiX () + desktop->logicalDpiY ()) / 2);
+    sizes_local.TwoPt = aud::rescale (2, 72, sizes_local.OneInch);
+    sizes_local.FourPt = aud::rescale (4, 72, sizes_local.OneInch);
+    sizes_local.EightPt = aud::rescale (8, 72, sizes_local.OneInch);
+
+    margins_local.TwoPt = QMargins (sizes.TwoPt, sizes.TwoPt, sizes.TwoPt, sizes.TwoPt);
+    margins_local.FourPt = QMargins (sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
+    margins_local.EightPt = QMargins (sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
 
     log_init ();
 }
@@ -81,6 +98,22 @@ EXPORT void cleanup ()
     queue_manager_hide ();
 
     log_cleanup ();
+}
+
+EXPORT QHBoxLayout * make_hbox (QWidget * parent, int spacing)
+{
+    auto layout = new QHBoxLayout (parent);
+    layout->setContentsMargins (0, 0, 0, 0);
+    layout->setSpacing (spacing);
+    return layout;
+}
+
+EXPORT QVBoxLayout * make_vbox (QWidget * parent, int spacing)
+{
+    auto layout = new QVBoxLayout (parent);
+    layout->setContentsMargins (0, 0, 0, 0);
+    layout->setSpacing (spacing);
+    return layout;
 }
 
 EXPORT void enable_layout (QLayout * layout, bool enabled)

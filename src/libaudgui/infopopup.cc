@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
+#define AUD_GLIB_INTEGRATION
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
@@ -54,15 +55,14 @@ static GtkWidget * infopopup_queued;
 static bool infopopup_display_image (const char * filename)
 {
     bool queued;
-    GdkPixbuf * pb = audgui_pixbuf_request (filename, & queued);
+    AudguiPixbuf pb = audgui_pixbuf_request (filename, & queued);
     if (! pb)
         return ! queued;
 
-    audgui_pixbuf_scale_within (& pb, audgui_get_dpi ());
-    gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pb);
+    audgui_pixbuf_scale_within (pb, audgui_get_dpi ());
+    gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pb.get ());
     gtk_widget_show (widgets.image);
 
-    g_object_unref (pb);
     return true;
 }
 
@@ -108,9 +108,8 @@ static void infopopup_add_category (GtkWidget * grid, int position,
     gtk_widget_set_halign (* header, GTK_ALIGN_END);
     gtk_widget_set_halign (* label, GTK_ALIGN_START);
 
-    char * markup = g_markup_printf_escaped ("<span style=\"italic\">%s</span>", text);
+    CharPtr markup (g_markup_printf_escaped ("<span style=\"italic\">%s</span>", text));
     gtk_label_set_markup ((GtkLabel *) * header, markup);
-    g_free (markup);
 
     gtk_grid_attach ((GtkGrid *) grid, * header, 0, position, 1, 1);
     gtk_grid_attach ((GtkGrid *) grid, * label, 1, position, 1, 1);
@@ -267,10 +266,10 @@ static void infopopup_show (const char * filename, const Tuple & tuple)
         infopopup_queued = infopopup;
 }
 
-EXPORT void audgui_infopopup_show (int playlist, int entry)
+EXPORT void audgui_infopopup_show (Playlist playlist, int entry)
 {
-    String filename = aud_playlist_entry_get_filename (playlist, entry);
-    Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry);
+    String filename = playlist.entry_filename (entry);
+    Tuple tuple = playlist.entry_tuple (entry);
 
     if (filename && tuple.valid ())
         infopopup_show (filename, tuple);
@@ -278,11 +277,11 @@ EXPORT void audgui_infopopup_show (int playlist, int entry)
 
 EXPORT void audgui_infopopup_show_current ()
 {
-    int playlist = aud_playlist_get_playing ();
-    if (playlist < 0)
-        playlist = aud_playlist_get_active ();
+    auto playlist = Playlist::playing_playlist ();
+    if (playlist == Playlist ())
+        playlist = Playlist::active_playlist ();
 
-    int position = aud_playlist_get_position (playlist);
+    int position = playlist.get_position ();
     if (position < 0)
         return;
 

@@ -1,6 +1,6 @@
 /*
  * prefs-pluginlist-model.h
- * Copyright 2014 William Pitcock
+ * Copyright 2014-2017 John Lindgren and William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,15 +20,14 @@
 #ifndef PREFS_PLUGINLIST_MODEL_H
 #define PREFS_PLUGINLIST_MODEL_H
 
-#include <QAbstractListModel>
-#include <libaudcore/index.h>
+#include <QAbstractItemModel>
 
 enum class PluginType;
 class PluginHandle;
 
 namespace audqt {
 
-class PluginListModel : public QAbstractListModel
+class PluginListModel : public QAbstractItemModel
 {
 public:
     enum {
@@ -38,23 +37,20 @@ public:
         NumColumns
     };
 
-    PluginListModel (QObject * parent, PluginType category_id);
-    ~PluginListModel ();
+    using QAbstractItemModel::QAbstractItemModel;
 
-    int rowCount (const QModelIndex & parent = QModelIndex ()) const;
-    int columnCount (const QModelIndex & parent = QModelIndex ()) const;
+    QModelIndex index (int row, int column, const QModelIndex & parent) const;
+    QModelIndex parent (const QModelIndex & child) const;
+
+    PluginHandle * pluginForIndex (const QModelIndex & index) const;
+    QModelIndex indexForType (PluginType type) const;
+
+    int rowCount (const QModelIndex & parent) const;
+    int columnCount (const QModelIndex & parent) const;
+
     QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
-    QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-    bool setData (const QModelIndex & index, const QVariant & value, int role = Qt::DisplayRole);
-    Qt::ItemFlags flags (const QModelIndex & parent = QModelIndex ()) const;
-
-    bool insertRows (int row, int count, const QModelIndex & parent = QModelIndex ());
-    bool removeRows (int row, int count, const QModelIndex & parent = QModelIndex ());
-    void updateRows (int row, int count);
-    void updateRow (int row);
-
-private:
-    const Index<PluginHandle *> & m_list;
+    bool setData (const QModelIndex & index, const QVariant & value, int role);
+    Qt::ItemFlags flags (const QModelIndex & parent) const;
 };
 
 } // namespace audqt

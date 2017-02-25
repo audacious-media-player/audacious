@@ -38,10 +38,10 @@ typedef GDBusMethodInvocation Invoc;
 #define FINISH2(name, ...) \
  obj_audacious_complete_##name (obj, invoc, __VA_ARGS__)
 
-static int current_playlist ()
+static Playlist current_playlist ()
 {
-    int list = aud_playlist_get_playing ();
-    return (list >= 0) ? list : aud_playlist_get_active ();
+    auto list = Playlist::playing_playlist ();
+    return (list != Playlist ()) ? list : Playlist::active_playlist ();
 }
 
 #define CURRENT current_playlist ()
@@ -57,21 +57,21 @@ static Index<PlaylistAddItem> strv_to_index (const char * const * strv)
 
 static gboolean do_add (Obj * obj, Invoc * invoc, const char * file)
 {
-    aud_playlist_entry_insert (CURRENT, -1, file, Tuple (), false);
+    CURRENT.insert_entry (-1, file, Tuple (), false);
     FINISH (add);
     return true;
 }
 
 static gboolean do_add_list (Obj * obj, Invoc * invoc, const char * const * filenames)
 {
-    aud_playlist_entry_insert_batch (CURRENT, -1, strv_to_index (filenames), false);
+    CURRENT.insert_items (-1, strv_to_index (filenames), false);
     FINISH (add_list);
     return true;
 }
 
 static gboolean do_add_url (Obj * obj, Invoc * invoc, const char * url)
 {
-    aud_playlist_entry_insert (CURRENT, -1, url, Tuple (), false);
+    CURRENT.insert_entry (-1, url, Tuple (), false);
     FINISH (add_url);
     return true;
 }
@@ -97,22 +97,21 @@ static gboolean do_balance (Obj * obj, Invoc * invoc)
 
 static gboolean do_clear (Obj * obj, Invoc * invoc)
 {
-    int playlist = CURRENT;
-    aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
+    CURRENT.remove_all_entries ();
     FINISH (clear);
     return true;
 }
 
 static gboolean do_delete (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    aud_playlist_entry_delete (CURRENT, pos, 1);
+    CURRENT.remove_entry (pos);
     FINISH (delete);
     return true;
 }
 
 static gboolean do_delete_active_playlist (Obj * obj, Invoc * invoc)
 {
-    aud_playlist_delete (CURRENT);
+    CURRENT.remove_playlist ();
     FINISH (delete_active_playlist);
     return true;
 }
@@ -135,13 +134,13 @@ static gboolean do_equalizer_activate (Obj * obj, Invoc * invoc, gboolean active
 
 static gboolean do_get_active_playlist (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (get_active_playlist, CURRENT);
+    FINISH2 (get_active_playlist, CURRENT.index ());
     return true;
 }
 
 static gboolean do_get_active_playlist_name (Obj * obj, Invoc * invoc)
 {
-    String title = aud_playlist_get_title (CURRENT);
+    String title = CURRENT.get_title ();
     FINISH2 (get_active_playlist_name, title ? title : "");
     return true;
 }
@@ -180,7 +179,7 @@ static gboolean do_get_info (Obj * obj, Invoc * invoc)
 
 static gboolean do_get_playqueue_length (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (get_playqueue_length, aud_playlist_queue_count (CURRENT));
+    FINISH2 (get_playqueue_length, CURRENT.n_queued ());
     return true;
 }
 
@@ -207,14 +206,14 @@ static gboolean do_info (Obj * obj, Invoc * invoc)
 
 static gboolean do_jump (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    aud_playlist_set_position (CURRENT, pos);
+    CURRENT.set_position (pos);
     FINISH (jump);
     return true;
 }
 
 static gboolean do_length (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (length, aud_playlist_entry_count (CURRENT));
+    FINISH2 (length, CURRENT.n_entries ());
     return true;
 }
 
@@ -226,9 +225,7 @@ static gboolean do_main_win_visible (Obj * obj, Invoc * invoc)
 
 static gboolean do_new_playlist (Obj * obj, Invoc * invoc)
 {
-    int playlist = CURRENT + 1;
-    aud_playlist_insert (playlist);
-    aud_playlist_set_active (playlist);
+    Playlist::insert_playlist (CURRENT.index () + 1).activate ();
     aud_drct_stop ();
     FINISH (new_playlist);
     return true;
@@ -236,7 +233,7 @@ static gboolean do_new_playlist (Obj * obj, Invoc * invoc)
 
 static gboolean do_number_of_playlists (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (number_of_playlists, aud_playlist_count ());
+    FINISH2 (number_of_playlists, Playlist::n_playlists ());
     return true;
 }
 
@@ -276,7 +273,7 @@ static gboolean do_play (Obj * obj, Invoc * invoc)
 
 static gboolean do_play_active_playlist (Obj * obj, Invoc * invoc)
 {
-    aud_playlist_play (CURRENT);
+    CURRENT.start_playback ();
     FINISH (play_active_playlist);
     return true;
 }
@@ -296,7 +293,7 @@ static gboolean do_playing (Obj * obj, Invoc * invoc)
 
 static gboolean do_playlist_add (Obj * obj, Invoc * invoc, const char * list)
 {
-    aud_playlist_entry_insert (CURRENT, -1, list, Tuple (), false);
+    CURRENT.insert_entry (-1, list, Tuple (), false);
     FINISH (playlist_add);
     return true;
 }
@@ -310,40 +307,39 @@ static gboolean do_playlist_enqueue_to_temp (Obj * obj, Invoc * invoc, const cha
 
 static gboolean do_playlist_ins_url_string (Obj * obj, Invoc * invoc, const char * url, int pos)
 {
-    aud_playlist_entry_insert (CURRENT, pos, url, Tuple (), false);
+    CURRENT.insert_entry (pos, url, Tuple (), false);
     FINISH (playlist_ins_url_string);
     return true;
 }
 
 static gboolean do_playqueue_add (Obj * obj, Invoc * invoc, int pos)
 {
-    aud_playlist_queue_insert (CURRENT, -1, pos);
+    CURRENT.queue_insert (-1, pos);
     FINISH (playqueue_add);
     return true;
 }
 
 static gboolean do_playqueue_clear (Obj * obj, Invoc * invoc)
 {
-    int playlist = CURRENT;
-    aud_playlist_queue_delete (playlist, 0, aud_playlist_queue_count (playlist));
+    CURRENT.queue_remove_all ();
     FINISH (playqueue_clear);
     return true;
 }
 
 static gboolean do_playqueue_is_queued (Obj * obj, Invoc * invoc, int pos)
 {
-    bool queued = (aud_playlist_queue_find_entry (CURRENT, pos) >= 0);
+    bool queued = (CURRENT.queue_find_entry (pos) >= 0);
     FINISH2 (playqueue_is_queued, queued);
     return true;
 }
 
 static gboolean do_playqueue_remove (Obj * obj, Invoc * invoc, int pos)
 {
-    int playlist = CURRENT;
-    int qpos = aud_playlist_queue_find_entry (playlist, pos);
+    auto playlist = CURRENT;
+    int qpos = playlist.queue_find_entry (pos);
 
     if (qpos >= 0)
-        aud_playlist_queue_delete (playlist, qpos, 1);
+        playlist.queue_remove (qpos);
 
     FINISH (playqueue_remove);
     return true;
@@ -378,19 +374,19 @@ static gboolean do_plugin_is_enabled (Obj * obj, Invoc * invoc, const char * nam
 
 static gboolean do_position (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (position, aud_playlist_get_position (CURRENT));
+    FINISH2 (position, CURRENT.get_position ());
     return true;
 }
 
 static gboolean do_queue_get_list_pos (Obj * obj, Invoc * invoc, unsigned qpos)
 {
-    FINISH2 (queue_get_list_pos, aud_playlist_queue_get_entry (CURRENT, qpos));
+    FINISH2 (queue_get_list_pos, CURRENT.queue_get_entry (qpos));
     return true;
 }
 
 static gboolean do_queue_get_queue_pos (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    FINISH2 (queue_get_queue_pos, aud_playlist_queue_find_entry (CURRENT, pos));
+    FINISH2 (queue_get_queue_pos, CURRENT.queue_find_entry (pos));
     return true;
 }
 
@@ -434,13 +430,14 @@ static gboolean do_seek (Obj * obj, Invoc * invoc, unsigned pos)
     return true;
 }
 
-static gboolean do_set_active_playlist (Obj * obj, Invoc * invoc, int playlist)
+static gboolean do_set_active_playlist (Obj * obj, Invoc * invoc, int index)
 {
-    aud_playlist_set_active (playlist);
+    auto playlist = Playlist::by_index (index);
 
-    // check that the requested playlist exists before switching playback
-    if (aud_playlist_get_active () == playlist && aud_drct_get_playing ())
-        aud_playlist_play (playlist, aud_drct_get_paused ());
+    playlist.activate ();
+
+    if (aud_drct_get_playing ())
+        playlist.start_playback (aud_drct_get_paused ());
 
     FINISH (set_active_playlist);
     return true;
@@ -448,7 +445,7 @@ static gboolean do_set_active_playlist (Obj * obj, Invoc * invoc, int playlist)
 
 static gboolean do_set_active_playlist_name (Obj * obj, Invoc * invoc, const char * title)
 {
-    aud_playlist_set_title (CURRENT, title);
+    CURRENT.set_title (title);
     FINISH (set_active_playlist_name);
     return true;
 }
@@ -564,21 +561,21 @@ static gboolean do_shuffle (Obj * obj, Invoc * invoc)
 
 static gboolean do_song_filename (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    String filename = aud_playlist_entry_get_filename (CURRENT, pos);
+    String filename = CURRENT.entry_filename (pos);
     FINISH2 (song_filename, filename ? filename : "");
     return true;
 }
 
 static gboolean do_song_frames (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    Tuple tuple = aud_playlist_entry_get_tuple (CURRENT, pos);
+    Tuple tuple = CURRENT.entry_tuple (pos);
     FINISH2 (song_frames, aud::max (0, tuple.get_int (Tuple::Length)));
     return true;
 }
 
 static gboolean do_song_length (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    Tuple tuple = aud_playlist_entry_get_tuple (CURRENT, pos);
+    Tuple tuple = CURRENT.entry_tuple (pos);
     int length = aud::max (0, tuple.get_int (Tuple::Length));
     FINISH2 (song_length, length / 1000);
     return true;
@@ -586,7 +583,7 @@ static gboolean do_song_length (Obj * obj, Invoc * invoc, unsigned pos)
 
 static gboolean do_song_title (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    Tuple tuple = aud_playlist_entry_get_tuple (CURRENT, pos);
+    Tuple tuple = CURRENT.entry_tuple (pos);
     String title = tuple.get_str (Tuple::FormattedTitle);
     FINISH2 (song_title, title ? title : "");
     return true;
@@ -599,7 +596,7 @@ static gboolean do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const cha
     GVariant * var;
 
     if (field >= 0)
-        tuple = aud_playlist_entry_get_tuple (CURRENT, pos);
+        tuple = CURRENT.entry_tuple (pos);
 
     switch (tuple.get_value_type (field))
     {
@@ -664,28 +661,28 @@ static gboolean do_time (Obj * obj, Invoc * invoc)
 
 static gboolean do_toggle_auto_advance (Obj * obj, Invoc * invoc)
 {
-    aud_set_bool (nullptr, "no_playlist_advance", ! aud_get_bool (nullptr, "no_playlist_advance"));
+    aud_toggle_bool (nullptr, "no_playlist_advance");
     FINISH (toggle_auto_advance);
     return true;
 }
 
 static gboolean do_toggle_repeat (Obj * obj, Invoc * invoc)
 {
-    aud_set_bool (nullptr, "repeat", ! aud_get_bool (nullptr, "repeat"));
+    aud_toggle_bool (nullptr, "repeat");
     FINISH (toggle_repeat);
     return true;
 }
 
 static gboolean do_toggle_shuffle (Obj * obj, Invoc * invoc)
 {
-    aud_set_bool (nullptr, "shuffle", ! aud_get_bool (nullptr, "shuffle"));
+    aud_toggle_bool (nullptr, "shuffle");
     FINISH (toggle_shuffle);
     return true;
 }
 
 static gboolean do_toggle_stop_after (Obj * obj, Invoc * invoc)
 {
-    aud_set_bool (nullptr, "stop_after_current_song", ! aud_get_bool (nullptr, "stop_after_current_song"));
+    aud_toggle_bool (nullptr, "stop_after_current_song");
     FINISH (toggle_stop_after);
     return true;
 }
