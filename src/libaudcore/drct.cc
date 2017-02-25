@@ -21,6 +21,7 @@
 
 #include "hook.h"
 #include "i18n.h"
+#include "interface.h"
 #include "internal.h"
 #include "playlist-internal.h"
 #include "plugins-internal.h"
@@ -78,8 +79,23 @@ static PluginHandle * record_plugin;
 
 static bool record_plugin_watcher (PluginHandle *, void *)
 {
+    if (! aud_drct_get_record_enabled ())
+        aud_set_bool (nullptr, "record", false);
+
     hook_call ("enable record", nullptr);
     return true;
+}
+
+static void validate_record_setting (void *, void *)
+{
+    if (aud_get_bool (nullptr, "record") && ! aud_drct_get_record_enabled ())
+    {
+        /* User attempted to start recording without a recording plugin enabled.
+         * This is probably not the best response, but better than nothing. */
+        aud_set_bool (nullptr, "record", false);
+        aud_ui_show_error (_("Stream recording must be configured in Audio "
+         "Settings before it can be used."));
+    }
 }
 
 void record_init ()
@@ -90,10 +106,17 @@ void record_init ()
         record_plugin = plugin;
         aud_plugin_add_watch (plugin, record_plugin_watcher, nullptr);
     }
+
+    if (! aud_drct_get_record_enabled ())
+        aud_set_bool (nullptr, "record", false);
+
+    hook_associate ("set record", validate_record_setting, nullptr);
 }
 
 void record_cleanup ()
 {
+    hook_dissociate ("set record", validate_record_setting);
+
     if (record_plugin)
     {
         aud_plugin_remove_watch (record_plugin, record_plugin_watcher, nullptr);

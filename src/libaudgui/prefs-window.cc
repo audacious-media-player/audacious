@@ -737,7 +737,7 @@ static void record_update (void * = nullptr, void * = nullptr)
 
         gtk_widget_set_sensitive (record_checkbox, true);
         gtk_button_set_label ((GtkButton *) record_checkbox,
-         str_printf (_("Record audio stream using %s"), aud_plugin_get_name (p)));
+         str_printf (_("Enable audio stream recording with %s"), aud_plugin_get_name (p)));
         gtk_toggle_button_set_active ((GtkToggleButton *) record_checkbox, enabled);
         gtk_widget_set_sensitive (record_config_button, enabled && aud_plugin_has_configure (p));
         gtk_widget_set_sensitive (record_about_button, enabled && aud_plugin_has_about (p));

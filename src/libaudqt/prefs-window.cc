@@ -701,7 +701,7 @@ void PrefsWindow::record_update ()
     if (p)
     {
         bool enabled = aud_drct_get_record_enabled ();
-        auto text = str_printf (_("Record audio stream using %s"), aud_plugin_get_name (p));
+        auto text = str_printf (_("Enable audio stream recording with %s"), aud_plugin_get_name (p));
 
         record_checkbox->setEnabled (true);
         record_checkbox->setText ((const char *) text);

@@ -45,10 +45,6 @@ void audgui_show_unique_window (int id, GtkWidget * widget);
 bool audgui_reshow_unique_window (int id);
 void audgui_hide_unique_window (int id);
 
-/* confirm.c */
-void record_init ();
-void record_cleanup ();
-
 /* pixbufs.c */
 void audgui_pixbuf_uncache ();
 
