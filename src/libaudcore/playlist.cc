@@ -76,7 +76,7 @@ enum {
 } while (0)
 
 #define ENTER_GET_PLAYLIST(...) ENTER; \
-    PlaylistData * playlist = lookup_playlist (m_id); \
+    PlaylistData * playlist = m_id ? m_id->data : nullptr; \
     if (! playlist) \
         RETURN (__VA_ARGS__);
 
@@ -178,11 +178,6 @@ static void number_playlists (int at, int length)
 {
     for (int i = at; i < at + length; i ++)
         playlists[i]->id ()->index = i;
-}
-
-static PlaylistData * lookup_playlist (Playlist::ID * id)
-{
-    return id ? id->data : nullptr;
 }
 
 static void update (void *)
@@ -506,15 +501,17 @@ static void scan_restart ()
 }
 
 /* mutex may be unlocked during the call */
-static PlaylistEntry * get_entry (Playlist::ID * playlist_id, int entry_num,
+static PlaylistEntry * get_entry (Playlist::ID * id, int entry_num,
  bool need_decoder, bool need_tuple)
 {
     bool scan_started = false;
 
+    if (! id)
+        return nullptr;
+
     while (1)
     {
-        PlaylistData * playlist = lookup_playlist (playlist_id);
-        PlaylistEntry * entry = playlist ? playlist->lookup_entry (entry_num) : nullptr;
+        PlaylistEntry * entry = id->data ? id->data->lookup_entry (entry_num) : nullptr;
 
         // check whether entry was deleted; also blacklist stdin
         if (! entry || ! strncmp (entry->filename, "stdin://", 8))
@@ -531,7 +528,7 @@ static PlaylistEntry * get_entry (Playlist::ID * playlist_id, int entry_num,
             if (scan_started)
                 return entry;
 
-            scan_queue_entry (playlist, entry);
+            scan_queue_entry (id->data, entry);
         }
 
         // wait for scan to finish
