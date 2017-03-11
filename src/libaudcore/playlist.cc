@@ -109,7 +109,7 @@ struct Playlist::ID
     int stamp;            // integer stamp, determines filename
     PlaylistData * data;  // pointer to actual playlist data
 
-    static ID * create (int stamp, PlaylistData * data);
+    static PlaylistData * new_playlist (int stamp);
 };
 
 static SimpleHash<IntHashKey, Playlist::ID> id_table;
@@ -155,52 +155,22 @@ static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
 static void playlist_reformat_titles (void * = nullptr, void * = nullptr);
 static void playlist_trigger_scan (void * = nullptr, void * = nullptr);
 
-void PlaylistData::set_entry_tuple (PlaylistEntry * entry, Tuple && tuple)
+/* creates a new ID and playlist with the requested stamp (if not already in use) */
+PlaylistData * Playlist::ID::new_playlist (int stamp)
 {
-    total_length -= entry->length;
-    if (entry->selected)
-        selected_length -= entry->length;
+    Playlist::ID * id;
 
-    entry->set_tuple (std::move (tuple));
-
-    total_length += entry->length;
-    if (entry->selected)
-        selected_length += entry->length;
-}
-
-/* creates a new ID with the requested stamp (if not already in use) */
-Playlist::ID * Playlist::ID::create (int stamp, PlaylistData * data)
-{
     if (stamp >= 0 && ! id_table.lookup (stamp))
-        return id_table.add (stamp, {stamp, data});
+        id = id_table.add (stamp, {stamp, nullptr});
+    else
+    {
+        while (id_table.lookup (next_stamp))
+            next_stamp ++;
 
-    while (id_table.lookup (next_stamp))
-        next_stamp ++;
+        id = id_table.add (next_stamp, {next_stamp, nullptr});
+    }
 
-    return id_table.add (next_stamp, {next_stamp, data});
-}
-
-PlaylistData::PlaylistData (int stamp) :
-    id (Playlist::ID::create (stamp, this)),
-    number (-1),
-    modified (true),
-    scanning (false),
-    scan_ending (false),
-    title (_(default_title)),
-    position (nullptr),
-    focus (nullptr),
-    selected_count (0),
-    last_shuffle_num (0),
-    total_length (0),
-    selected_length (0),
-    next_update (),
-    last_update (),
-    resume_time (0) {}
-
-PlaylistData::~PlaylistData ()
-{
-    /* break weak pointer link */
-    id->data = nullptr;
+    return (id->data = new PlaylistData (id, _(default_title)));
 }
 
 static void number_playlists (int at, int length)
@@ -212,17 +182,6 @@ static void number_playlists (int at, int length)
 static PlaylistData * lookup_playlist (Playlist::ID * id)
 {
     return id ? id->data : nullptr;
-}
-
-void PlaylistData::number_entries (int at, int length)
-{
-    for (int i = at; i < at + length; i ++)
-        entries[i]->number = i;
-}
-
-PlaylistEntry * PlaylistData::lookup_entry (int i)
-{
-    return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
 }
 
 static void update (void *)
@@ -606,6 +565,12 @@ void pl_signal_entry_deleted (PlaylistEntry * entry)
     scan_cancel (entry);
 }
 
+void pl_signal_playlist_deleted (Playlist::ID * id)
+{
+    /* break weak pointer link */
+    id->data = nullptr;
+}
+
 void playlist_init ()
 {
     srand (time (nullptr));
@@ -704,7 +669,8 @@ static PlaylistData * insert_playlist_locked (int at, int stamp = -1)
     if (at < 0 || at > playlists.len ())
         at = playlists.len ();
 
-    auto playlist = new PlaylistData (stamp);
+    auto playlist = Playlist::ID::new_playlist (stamp);
+
     playlists.insert (at, 1);
     playlists[at].capture (playlist);
 
@@ -783,7 +749,7 @@ EXPORT void Playlist::remove_playlist () const
     playlists.remove (at, 1);
 
     if (! playlists.len ())
-        playlists.append (SmartNew<PlaylistData> (-1));
+        playlists.append (Playlist::ID::new_playlist (-1));
 
     number_playlists (at, playlists.len () - at);
 

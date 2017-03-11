@@ -51,7 +51,7 @@ private:
 
 struct PlaylistData
 {
-    PlaylistData (int id);
+    PlaylistData (Playlist::ID * id, const char * title);
     ~PlaylistData ();
 
     void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
@@ -78,5 +78,6 @@ struct PlaylistData
 
 /* callbacks or "signals" (in the QObject sense) */
 void pl_signal_entry_deleted (PlaylistEntry * entry);
+void pl_signal_playlist_deleted (Playlist::ID * id);
 
 #endif // PLAYLIST_DATA_H

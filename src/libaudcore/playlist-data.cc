@@ -85,3 +85,49 @@ PlaylistEntry::~PlaylistEntry ()
 {
     pl_signal_entry_deleted (this);
 }
+
+PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
+    id (id),
+    number (-1),
+    modified (true),
+    scanning (false),
+    scan_ending (false),
+    title (title),
+    position (nullptr),
+    focus (nullptr),
+    selected_count (0),
+    last_shuffle_num (0),
+    total_length (0),
+    selected_length (0),
+    next_update (),
+    last_update (),
+    resume_time (0) {}
+
+PlaylistData::~PlaylistData ()
+{
+    pl_signal_playlist_deleted (id);
+}
+
+void PlaylistData::set_entry_tuple (PlaylistEntry * entry, Tuple && tuple)
+{
+    total_length -= entry->length;
+    if (entry->selected)
+        selected_length -= entry->length;
+
+    entry->set_tuple (std::move (tuple));
+
+    total_length += entry->length;
+    if (entry->selected)
+        selected_length += entry->length;
+}
+
+void PlaylistData::number_entries (int at, int length)
+{
+    for (int i = at; i < at + length; i ++)
+        entries[i]->number = i;
+}
+
+PlaylistEntry * PlaylistData::lookup_entry (int i)
+{
+    return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
+}
