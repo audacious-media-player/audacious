@@ -87,8 +87,7 @@ PlaylistEntry::~PlaylistEntry ()
 }
 
 PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
-    id (id),
-    number (-1),
+    m_id (id),
     modified (true),
     scanning (false),
     scan_ending (false),
@@ -105,7 +104,7 @@ PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
 
 PlaylistData::~PlaylistData ()
 {
-    pl_signal_playlist_deleted (id);
+    pl_signal_playlist_deleted (m_id);
 }
 
 void PlaylistData::set_entry_tuple (PlaylistEntry * entry, Tuple && tuple)

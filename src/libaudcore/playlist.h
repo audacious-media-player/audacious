@@ -94,10 +94,10 @@ public:
     /* --- CONSTRUCTOR ETC. --- */
 
     /* Default constructor; indicates "no playlist" */
-    constexpr Playlist () : id (nullptr) {}
+    constexpr Playlist () : m_id (nullptr) {}
 
-    bool operator== (const Playlist & b) const { return id == b.id; }
-    bool operator!= (const Playlist & b) const { return id != b.id; }
+    bool operator== (const Playlist & b) const { return m_id == b.m_id; }
+    bool operator!= (const Playlist & b) const { return m_id != b.m_id; }
 
     /* The number of the playlist in display order, starting from 0.
      * Returns -1 if the playlist no longer exists. */
@@ -369,10 +369,10 @@ public:
     /* --- IMPLEMENTATION --- */
 
 private:
-    ID * id;
+    ID * m_id;
 
     explicit constexpr Playlist (ID * id) :
-        id (id) {}
+        m_id (id) {}
 
     friend class PlaylistEx;
 };

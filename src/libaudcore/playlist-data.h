@@ -51,7 +51,7 @@ private:
 
 struct PlaylistData
 {
-    PlaylistData (Playlist::ID * id, const char * title);
+    PlaylistData (Playlist::ID * m_id, const char * title);
     ~PlaylistData ();
 
     void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
@@ -61,8 +61,9 @@ struct PlaylistData
     void set_position (PlaylistEntry * entry, bool update_shuffle);
     PlaylistEntry * find_unselected_focus ();
 
-    Playlist::ID * id;
-    int number;
+    Playlist::ID * id () const { return m_id; }
+
+    Playlist::ID * m_id;
     bool modified, scanning, scan_ending;
     String filename, title;
     Index<SmartPtr<PlaylistEntry>> entries;
