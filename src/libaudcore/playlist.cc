@@ -108,8 +108,6 @@ struct Playlist::ID
 {
     int stamp;            // integer stamp, determines filename
     PlaylistData * data;  // pointer to actual playlist data
-
-    static PlaylistData * new_playlist (int stamp);
 };
 
 static SimpleHash<IntHashKey, Playlist::ID> id_table;
@@ -155,8 +153,8 @@ static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
 static void playlist_reformat_titles (void * = nullptr, void * = nullptr);
 static void playlist_trigger_scan (void * = nullptr, void * = nullptr);
 
-/* creates a new ID and playlist with the requested stamp (if not already in use) */
-PlaylistData * Playlist::ID::new_playlist (int stamp)
+/* creates a new playlist with the requested stamp (if not already in use) */
+static PlaylistData * create_playlist (int stamp)
 {
     Playlist::ID * id;
 
@@ -669,7 +667,7 @@ static PlaylistData * insert_playlist_locked (int at, int stamp = -1)
     if (at < 0 || at > playlists.len ())
         at = playlists.len ();
 
-    auto playlist = Playlist::ID::new_playlist (stamp);
+    auto playlist = create_playlist (stamp);
 
     playlists.insert (at, 1);
     playlists[at].capture (playlist);
@@ -749,7 +747,7 @@ EXPORT void Playlist::remove_playlist () const
     playlists.remove (at, 1);
 
     if (! playlists.len ())
-        playlists.append (Playlist::ID::new_playlist (-1));
+        playlists.append (create_playlist (-1));
 
     number_playlists (at, playlists.len () - at);
 
