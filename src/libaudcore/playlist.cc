@@ -18,7 +18,6 @@
  */
 
 #include "playlist-internal.h"
-#include "runtime.h"
 
 #include <assert.h>
 #include <pthread.h>
@@ -39,7 +38,9 @@
 #include "multihash.h"
 #include "objects.h"
 #include "parse.h"
+#include "playlist-data.h"
 #include "plugins.h"
+#include "runtime.h"
 #include "scanner.h"
 #include "tuple.h"
 #include "tuple-compiler.h"
@@ -83,51 +84,6 @@ enum {
     Entry * entry = playlist->lookup_entry (entry_num); \
     if (! entry) \
         RETURN (__VA_ARGS__);
-
-struct Entry
-{
-    Entry (PlaylistAddItem && item);
-    ~Entry ();
-
-    void format ();
-    void set_tuple (Tuple && new_tuple);
-
-    String filename;
-    PluginHandle * decoder;
-    Tuple tuple;
-    String error;
-    int number;
-    int length;
-    int shuffle_num;
-    bool selected, queued;
-};
-
-struct PlaylistData
-{
-    PlaylistData (int id);
-    ~PlaylistData ();
-
-    void set_entry_tuple (Entry * entry, Tuple && tuple);
-    void number_entries (int at, int length);
-    Entry * lookup_entry (int i);
-
-    void set_position (Entry * entry, bool update_shuffle);
-    int change_playback ();
-    Entry * find_unselected_focus ();
-
-    Playlist::ID * id;
-    int number;
-    bool modified, scanning, scan_ending;
-    String filename, title;
-    Index<SmartPtr<Entry>> entries;
-    Entry * position, * focus;
-    int selected_count;
-    int last_shuffle_num;
-    Index<Entry *> queued;
-    int64_t total_length, selected_length;
-    Playlist::Update next_update, last_update;
-    int resume_time;
-};
 
 static const char * const default_title = N_("New Playlist");
 static const char * const temp_title = N_("Now Playing");
