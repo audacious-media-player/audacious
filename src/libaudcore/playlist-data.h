@@ -22,6 +22,8 @@
 
 #include "playlist.h"
 
+class TupleCompiler;
+
 struct Entry
 {
     Entry (PlaylistAddItem && item);
@@ -29,6 +31,9 @@ struct Entry
 
     void format ();
     void set_tuple (Tuple && new_tuple);
+
+    static void update_formatting ();
+    static void cleanup ();
 
     String filename;
     PluginHandle * decoder;
@@ -38,6 +43,10 @@ struct Entry
     int length;
     int shuffle_num;
     bool selected, queued;
+
+private:
+    static TupleCompiler s_compiler;
+    static bool s_use_fallbacks;
 };
 
 struct PlaylistData
@@ -66,5 +75,8 @@ struct PlaylistData
     Playlist::Update next_update, last_update;
     int resume_time;
 };
+
+/* callbacks or "signals" (in the QObject sense) */
+void pl_signal_entry_deleted (Entry * entry);
 
 #endif // PLAYLIST_DATA_H

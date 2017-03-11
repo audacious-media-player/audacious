@@ -121,9 +121,6 @@ static PlaylistData * playing_data = nullptr;
 static int resume_playlist = -1;
 static bool resume_paused = false;
 
-static bool metadata_fallbacks = false;
-static TupleCompiler title_formatter;
-
 static QueuedFunc queued_update;
 static Playlist::UpdateLevel update_level;
 static bool update_delayed;
@@ -158,39 +155,6 @@ static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
 static void playlist_reformat_titles (void * = nullptr, void * = nullptr);
 static void playlist_trigger_scan (void * = nullptr, void * = nullptr);
 
-void Entry::format ()
-{
-    tuple.delete_fallbacks ();
-
-    if (metadata_fallbacks)
-        tuple.generate_fallbacks ();
-    else
-        tuple.generate_title ();
-
-    title_formatter.format (tuple);
-}
-
-void Entry::set_tuple (Tuple && new_tuple)
-{
-    /* Since 3.8, cuesheet entries are handled differently.  The entry filename
-     * points to the .cue file, and the path to the actual audio file is stored
-     * in the Tuple::AudioFile.  If Tuple::AudioFile is not set, then assume
-     * that the playlist was created by an older version of Audacious, and
-     * revert to the former behavior (don't refresh this entry). */
-    if (tuple.is_set (Tuple::StartTime) && ! tuple.is_set (Tuple::AudioFile))
-        return;
-
-    error = String ();
-
-    if (! new_tuple.valid ())
-        new_tuple.set_filename (filename);
-
-    length = aud::max (0, new_tuple.get_int (Tuple::Length));
-    tuple = std::move (new_tuple);
-
-    format ();
-}
-
 void PlaylistData::set_entry_tuple (Entry * entry, Tuple && tuple)
 {
     total_length -= entry->length;
@@ -202,23 +166,6 @@ void PlaylistData::set_entry_tuple (Entry * entry, Tuple && tuple)
     total_length += entry->length;
     if (entry->selected)
         selected_length += entry->length;
-}
-
-Entry::Entry (PlaylistAddItem && item) :
-    filename (item.filename),
-    decoder (item.decoder),
-    number (-1),
-    length (0),
-    shuffle_num (0),
-    selected (false),
-    queued (false)
-{
-    set_tuple (std::move (item.tuple));
-}
-
-Entry::~Entry ()
-{
-    scan_cancel (this);
 }
 
 /* creates a new ID with the requested stamp (if not already in use) */
@@ -654,6 +601,11 @@ static void stop_playback_locked ()
     playback_stop ();
 }
 
+void pl_signal_entry_deleted (Entry * entry)
+{
+    scan_cancel (entry);
+}
+
 void playlist_init ()
 {
     srand (time (nullptr));
@@ -714,7 +666,7 @@ void playlist_end ()
     playlists.clear ();
     id_table.clear ();
 
-    title_formatter.reset ();
+    Entry::cleanup ();
 
     LEAVE;
 }
@@ -1737,8 +1689,7 @@ static void playlist_reformat_titles (void *, void *)
 {
     ENTER;
 
-    metadata_fallbacks = aud_get_bool (nullptr, "metadata_fallbacks");
-    title_formatter.compile (aud_get_str (nullptr, "generic_title_format"));
+    Entry::update_formatting ();
 
     for (auto & playlist : playlists)
     {
