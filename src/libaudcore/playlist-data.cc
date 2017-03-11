@@ -131,3 +131,35 @@ PlaylistEntry * PlaylistData::lookup_entry (int i)
 {
     return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
 }
+
+void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)
+{
+    position = entry;
+    resume_time = 0;
+
+    /* move entry to top of shuffle list */
+    if (entry && update_shuffle)
+        entry->shuffle_num = ++ last_shuffle_num;
+}
+
+PlaylistEntry * PlaylistData::find_unselected_focus ()
+{
+    if (! focus || ! focus->selected)
+        return focus;
+
+    int n_entries = entries.len ();
+
+    for (int search = focus->number + 1; search < n_entries; search ++)
+    {
+        if (! entries[search]->selected)
+            return entries[search].get ();
+    }
+
+    for (int search = focus->number; search --;)
+    {
+        if (! entries[search]->selected)
+            return entries[search].get ();
+    }
+
+    return nullptr;
+}

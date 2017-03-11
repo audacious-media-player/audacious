@@ -59,7 +59,6 @@ struct PlaylistData
     PlaylistEntry * lookup_entry (int i);
 
     void set_position (PlaylistEntry * entry, bool update_shuffle);
-    int change_playback ();
     PlaylistEntry * find_unselected_focus ();
 
     Playlist::ID * id;

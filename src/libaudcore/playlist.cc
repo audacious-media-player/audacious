@@ -975,24 +975,14 @@ EXPORT Playlist Playlist::temporary_playlist ()
     RETURN (Playlist (id));
 }
 
-void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)
-{
-    position = entry;
-    resume_time = 0;
-
-    /* move entry to top of shuffle list */
-    if (entry && update_shuffle)
-        entry->shuffle_num = ++ last_shuffle_num;
-}
-
 // updates playback state (while locked) if playlist position was changed
-int PlaylistData::change_playback ()
+static int change_playback (PlaylistData * playlist)
 {
     int hooks = SetPosition;
 
-    if (this == playing_data)
+    if (playlist == playing_data)
     {
-        if (position)
+        if (playlist->position)
         {
             start_playback_locked (0, aud_drct_get_paused ());
             hooks |= PlaybackBegin;
@@ -1102,7 +1092,7 @@ EXPORT void Playlist::remove_entries (int at, int number) const
         if (aud_get_bool (nullptr, "advance_on_delete"))
             next_song_locked (playlist, aud_get_bool (nullptr, "repeat"), at);
 
-        playback_hooks = playlist->change_playback ();
+        playback_hooks = change_playback (playlist);
     }
 
     queue_update (Structure, playlist, at, 0, update_flags);
@@ -1151,7 +1141,7 @@ EXPORT void Playlist::set_position (int entry_num) const
     PlaylistEntry * entry = playlist->lookup_entry (entry_num);
     playlist->set_position (entry, true);
 
-    int hooks = playlist->change_playback ();
+    int hooks = change_playback (playlist);
 
     LEAVE;
 
@@ -1364,28 +1354,6 @@ EXPORT int Playlist::shift_entries (int entry_num, int distance) const
     RETURN (shift);
 }
 
-PlaylistEntry * PlaylistData::find_unselected_focus ()
-{
-    if (! focus || ! focus->selected)
-        return focus;
-
-    int n_entries = entries.len ();
-
-    for (int search = focus->number + 1; search < n_entries; search ++)
-    {
-        if (! entries[search]->selected)
-            return entries[search].get ();
-    }
-
-    for (int search = focus->number; search --;)
-    {
-        if (! entries[search]->selected)
-            return entries[search].get ();
-    }
-
-    return nullptr;
-}
-
 EXPORT void Playlist::remove_selected () const
 {
     ENTER_GET_PLAYLIST ();
@@ -1447,7 +1415,7 @@ EXPORT void Playlist::remove_selected () const
         if (aud_get_bool (nullptr, "advance_on_delete"))
             next_song_locked (playlist, aud_get_bool (nullptr, "repeat"), entries - after);
 
-        playback_hooks = playlist->change_playback ();
+        playback_hooks = change_playback (playlist);
     }
 
     queue_update (Structure, playlist, before, entries - after - before, update_flags);
@@ -1920,7 +1888,7 @@ bool PlaylistEx::prev_song () const
         playlist->set_position (playlist->entries[playlist->position->number - 1].get (), true);
     }
 
-    int hooks = playlist->change_playback ();
+    int hooks = change_playback (playlist);
 
     LEAVE;
 
@@ -2075,7 +2043,7 @@ bool PlaylistEx::next_song (bool repeat) const
     if (! next_song_locked (playlist, repeat, hint))
         RETURN (false);
 
-    int hooks = playlist->change_playback ();
+    int hooks = change_playback (playlist);
 
     LEAVE;
 
