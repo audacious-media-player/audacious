@@ -24,10 +24,10 @@
 
 class TupleCompiler;
 
-struct Entry
+struct PlaylistEntry
 {
-    Entry (PlaylistAddItem && item);
-    ~Entry ();
+    PlaylistEntry (PlaylistAddItem && item);
+    ~PlaylistEntry ();
 
     void format ();
     void set_tuple (Tuple && new_tuple);
@@ -54,29 +54,29 @@ struct PlaylistData
     PlaylistData (int id);
     ~PlaylistData ();
 
-    void set_entry_tuple (Entry * entry, Tuple && tuple);
+    void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
     void number_entries (int at, int length);
-    Entry * lookup_entry (int i);
+    PlaylistEntry * lookup_entry (int i);
 
-    void set_position (Entry * entry, bool update_shuffle);
+    void set_position (PlaylistEntry * entry, bool update_shuffle);
     int change_playback ();
-    Entry * find_unselected_focus ();
+    PlaylistEntry * find_unselected_focus ();
 
     Playlist::ID * id;
     int number;
     bool modified, scanning, scan_ending;
     String filename, title;
-    Index<SmartPtr<Entry>> entries;
-    Entry * position, * focus;
+    Index<SmartPtr<PlaylistEntry>> entries;
+    PlaylistEntry * position, * focus;
     int selected_count;
     int last_shuffle_num;
-    Index<Entry *> queued;
+    Index<PlaylistEntry *> queued;
     int64_t total_length, selected_length;
     Playlist::Update next_update, last_update;
     int resume_time;
 };
 
 /* callbacks or "signals" (in the QObject sense) */
-void pl_signal_entry_deleted (Entry * entry);
+void pl_signal_entry_deleted (PlaylistEntry * entry);
 
 #endif // PLAYLIST_DATA_H

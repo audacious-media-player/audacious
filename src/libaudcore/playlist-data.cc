@@ -22,21 +22,21 @@
 #include "runtime.h"
 #include "tuple-compiler.h"
 
-TupleCompiler Entry::s_compiler;
-bool Entry::s_use_fallbacks = false;
+TupleCompiler PlaylistEntry::s_compiler;
+bool PlaylistEntry::s_use_fallbacks = false;
 
-void Entry::update_formatting () // static
+void PlaylistEntry::update_formatting () // static
 {
     s_compiler.compile (aud_get_str (nullptr, "generic_title_format"));
     s_use_fallbacks = aud_get_bool (nullptr, "metadata_fallbacks");
 }
 
-void Entry::cleanup () // static
+void PlaylistEntry::cleanup () // static
 {
     s_compiler.reset ();
 }
 
-void Entry::format ()
+void PlaylistEntry::format ()
 {
     tuple.delete_fallbacks ();
 
@@ -48,7 +48,7 @@ void Entry::format ()
     s_compiler.format (tuple);
 }
 
-void Entry::set_tuple (Tuple && new_tuple)
+void PlaylistEntry::set_tuple (Tuple && new_tuple)
 {
     /* Since 3.8, cuesheet entries are handled differently.  The entry filename
      * points to the .cue file, and the path to the actual audio file is stored
@@ -69,7 +69,7 @@ void Entry::set_tuple (Tuple && new_tuple)
     format ();
 }
 
-Entry::Entry (PlaylistAddItem && item) :
+PlaylistEntry::PlaylistEntry (PlaylistAddItem && item) :
     filename (item.filename),
     decoder (item.decoder),
     number (-1),
@@ -81,7 +81,7 @@ Entry::Entry (PlaylistAddItem && item) :
     set_tuple (std::move (item.tuple));
 }
 
-Entry::~Entry ()
+PlaylistEntry::~PlaylistEntry ()
 {
     pl_signal_entry_deleted (this);
 }
