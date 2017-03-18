@@ -51,6 +51,12 @@ private:
 
 struct PlaylistData
 {
+    /* update flags */
+    enum {
+        QueueChanged  = (1 << 0),
+        DelayedUpdate = (1 << 1)
+    };
+
     PlaylistData (Playlist::ID * m_id, const char * title);
     ~PlaylistData ();
 
@@ -58,6 +64,7 @@ struct PlaylistData
     void number_entries (int at, int length);
     PlaylistEntry * lookup_entry (int i);
 
+    void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
     void set_position (PlaylistEntry * entry, bool update_shuffle);
     PlaylistEntry * find_unselected_focus ();
 
@@ -78,6 +85,7 @@ struct PlaylistData
 
 /* callbacks or "signals" (in the QObject sense) */
 void pl_signal_entry_deleted (PlaylistEntry * entry);
+void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, int flags);
 void pl_signal_playlist_deleted (Playlist::ID * id);
 
 #endif // PLAYLIST_DATA_H

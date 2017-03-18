@@ -131,6 +131,27 @@ PlaylistEntry * PlaylistData::lookup_entry (int i)
     return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
 }
 
+void PlaylistData::queue_update (Playlist::UpdateLevel level, int at, int count, int flags)
+{
+    if (next_update.level)
+    {
+        next_update.level = aud::max (next_update.level, level);
+        next_update.before = aud::min (next_update.before, at);
+        next_update.after = aud::min (next_update.after, entries.len () - at - count);
+    }
+    else
+    {
+        next_update.level = level;
+        next_update.before = at;
+        next_update.after = entries.len () - at - count;
+    }
+
+    if ((flags & QueueChanged))
+        next_update.queue_changed = true;
+
+    pl_signal_update_queued (m_id, level, flags);
+}
+
 void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)
 {
     position = entry;
