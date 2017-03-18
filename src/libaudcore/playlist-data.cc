@@ -130,6 +130,11 @@ PlaylistEntry * PlaylistData::lookup_entry (int i)
     return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
 }
 
+const PlaylistEntry * PlaylistData::lookup_entry (int i) const
+{
+    return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
+}
+
 void PlaylistData::queue_update (Playlist::UpdateLevel level, int at, int count, int flags)
 {
     if (m_next_update.level)
@@ -236,6 +241,215 @@ void PlaylistData::remove_entries (int at, int number, bool & position_changed)
 
     number_entries (at, n_entries - at - number);
     queue_update (Playlist::Structure, at, 0, update_flags);
+}
+
+bool PlaylistData::entry_selected (int entry_num) const
+{
+    auto entry = lookup_entry (entry_num);
+    return entry ? entry->selected : false;
+}
+
+int PlaylistData::n_selected (int at, int number) const
+{
+    int n_entries = entries.len ();
+
+    if (at < 0 || at > n_entries)
+        at = n_entries;
+    if (number < 0 || number > n_entries - at)
+        number = n_entries - at;
+
+    int n_selected = 0;
+
+    if (at == 0 && number == n_entries)
+        n_selected = selected_count;
+    else
+    {
+        for (int i = 0; i < number; i ++)
+        {
+            if (entries[at + i]->selected)
+                n_selected ++;
+        }
+    }
+
+    return n_selected;
+}
+
+void PlaylistData::select_entry (int entry_num, bool selected)
+{
+    auto entry = lookup_entry (entry_num);
+    if (! entry || entry->selected == selected)
+        return;
+
+    entry->selected = selected;
+
+    if (selected)
+    {
+        selected_count ++;
+        selected_length += entry->length;
+    }
+    else
+    {
+        selected_count --;
+        selected_length -= entry->length;
+    }
+
+    queue_update (Playlist::Selection, entry_num, 1);
+}
+
+void PlaylistData::select_all (bool selected)
+{
+    int n_entries = entries.len ();
+    int first = n_entries, last = 0;
+
+    for (auto & entry : entries)
+    {
+        if (entry->selected != selected)
+        {
+            entry->selected = selected;
+            first = aud::min (first, entry->number);
+            last = entry->number;
+        }
+    }
+
+    if (selected)
+    {
+        selected_count = n_entries;
+        selected_length = total_length;
+    }
+    else
+    {
+        selected_count = 0;
+        selected_length = 0;
+    }
+
+    if (first < n_entries)
+        queue_update (Playlist::Selection, first, last + 1 - first);
+}
+
+int PlaylistData::shift_entries (int entry_num, int distance)
+{
+    PlaylistEntry * entry = lookup_entry (entry_num);
+    if (! entry || ! entry->selected || ! distance)
+        return 0;
+
+    int n_entries = entries.len ();
+    int shift = 0, center, top, bottom;
+
+    if (distance < 0)
+    {
+        for (center = entry_num; center > 0 && shift > distance; )
+        {
+            if (! entries[-- center]->selected)
+                shift --;
+        }
+    }
+    else
+    {
+        for (center = entry_num + 1; center < n_entries && shift < distance; )
+        {
+            if (! entries[center ++]->selected)
+                shift ++;
+        }
+    }
+
+    top = bottom = center;
+
+    for (int i = 0; i < top; i ++)
+    {
+        if (entries[i]->selected)
+            top = i;
+    }
+
+    for (int i = n_entries; i > bottom; i --)
+    {
+        if (entries[i - 1]->selected)
+            bottom = i;
+    }
+
+    Index<SmartPtr<PlaylistEntry>> temp;
+
+    for (int i = top; i < center; i ++)
+    {
+        if (! entries[i]->selected)
+            temp.append (std::move (entries[i]));
+    }
+
+    for (int i = top; i < bottom; i ++)
+    {
+        if (entries[i] && entries[i]->selected)
+            temp.append (std::move (entries[i]));
+    }
+
+    for (int i = center; i < bottom; i ++)
+    {
+        if (entries[i] && ! entries[i]->selected)
+            temp.append (std::move (entries[i]));
+    }
+
+    entries.move_from (temp, 0, top, bottom - top, false, true);
+
+    number_entries (top, bottom - top);
+    queue_update (Playlist::Structure, top, bottom - top);
+
+    return shift;
+}
+
+void PlaylistData::remove_selected (bool & position_changed, int & next_song_hint)
+{
+    if (! selected_count)
+        return;
+
+    int n_entries = entries.len ();
+    int update_flags = 0;
+
+    if (position && position->selected)
+    {
+        set_position (nullptr, false);
+        position_changed = true;
+    }
+
+    focus = find_unselected_focus ();
+
+    int before = 0;  // number of entries before first selected
+    int after = 0;   // number of entries after last selected
+
+    while (before < n_entries && ! entries[before]->selected)
+        before ++;
+
+    int to = before;
+
+    for (int from = before; from < n_entries; from ++)
+    {
+        PlaylistEntry * entry = entries[from].get ();
+
+        if (entry->selected)
+        {
+            if (entry->queued)
+            {
+                queued.remove (queued.find (entry), 1);
+                update_flags |= PlaylistData::QueueChanged;
+            }
+
+            total_length -= entry->length;
+            after = 0;
+        }
+        else
+        {
+            entries[to ++] = std::move (entries[from]);
+            after ++;
+        }
+    }
+
+    n_entries = to;
+    entries.remove (n_entries, -1);
+
+    selected_count = 0;
+    selected_length = 0;
+
+    number_entries (before, n_entries - before);
+    queue_update (Playlist::Structure, before, n_entries - after - before, update_flags);
+
+    next_song_hint = n_entries - after;
 }
 
 void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)

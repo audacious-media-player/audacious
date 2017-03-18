@@ -69,7 +69,9 @@ struct PlaylistData
 
     void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
     void number_entries (int at, int length);
+
     PlaylistEntry * lookup_entry (int i);
+    const PlaylistEntry * lookup_entry (int i) const;
 
     void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
     void cancel_updates ();
@@ -77,6 +79,14 @@ struct PlaylistData
 
     void insert_items (int at, Index<PlaylistAddItem> && items);
     void remove_entries (int at, int number, bool & position_changed);
+
+    bool entry_selected (int entry_num) const;
+    int n_selected (int at, int number) const;
+
+    void select_entry (int entry_num, bool selected);
+    void select_all (bool selected);
+    int shift_entries (int entry_num, int distance);
+    void remove_selected (bool & position_changed, int & next_song_hint);
 
     void set_position (PlaylistEntry * entry, bool update_shuffle);
     PlaylistEntry * find_unselected_focus ();

@@ -1084,161 +1084,36 @@ EXPORT int Playlist::get_focus () const
 
 EXPORT void Playlist::select_entry (int entry_num, bool selected) const
 {
-    ENTER_GET_ENTRY ();
-
-    if (entry->selected == selected)
-        RETURN ();
-
-    entry->selected = selected;
-
-    if (selected)
-    {
-        playlist->selected_count ++;
-        playlist->selected_length += entry->length;
-    }
-    else
-    {
-        playlist->selected_count --;
-        playlist->selected_length -= entry->length;
-    }
-
-    playlist->queue_update (Selection, entry_num, 1);
+    ENTER_GET_PLAYLIST ();
+    playlist->select_entry (entry_num, selected);
     LEAVE;
 }
 
 EXPORT bool Playlist::entry_selected (int entry_num) const
 {
-    ENTER_GET_ENTRY (false);
-    bool selected = entry->selected;
+    ENTER_GET_PLAYLIST (false);
+    bool selected = playlist->entry_selected (entry_num);
     RETURN (selected);
 }
 
 EXPORT int Playlist::n_selected (int at, int number) const
 {
     ENTER_GET_PLAYLIST (0);
-
-    int entries = playlist->entries.len ();
-
-    if (at < 0 || at > entries)
-        at = entries;
-    if (number < 0 || number > entries - at)
-        number = entries - at;
-
-    int selected_count = 0;
-
-    if (at == 0 && number == entries)
-        selected_count = playlist->selected_count;
-    else
-    {
-        for (int i = 0; i < number; i ++)
-        {
-            if (playlist->entries[at + i]->selected)
-                selected_count ++;
-        }
-    }
-
-    RETURN (selected_count);
+    int n_selected = playlist->n_selected (at, number);
+    RETURN (n_selected);
 }
 
 EXPORT void Playlist::select_all (bool selected) const
 {
     ENTER_GET_PLAYLIST ();
-
-    int entries = playlist->entries.len ();
-    int first = entries, last = 0;
-
-    for (auto & entry : playlist->entries)
-    {
-        if ((selected && ! entry->selected) || (entry->selected && ! selected))
-        {
-            entry->selected = selected;
-            first = aud::min (first, entry->number);
-            last = entry->number;
-        }
-    }
-
-    if (selected)
-    {
-        playlist->selected_count = entries;
-        playlist->selected_length = playlist->total_length;
-    }
-    else
-    {
-        playlist->selected_count = 0;
-        playlist->selected_length = 0;
-    }
-
-    if (first < entries)
-        playlist->queue_update (Selection, first, last + 1 - first);
-
+    playlist->select_all (selected);
     LEAVE;
 }
 
 EXPORT int Playlist::shift_entries (int entry_num, int distance) const
 {
-    ENTER_GET_ENTRY (0);
-
-    if (! entry->selected || ! distance)
-        RETURN (0);
-
-    int entries = playlist->entries.len ();
-    int shift = 0, center, top, bottom;
-
-    if (distance < 0)
-    {
-        for (center = entry_num; center > 0 && shift > distance; )
-        {
-            if (! playlist->entries[-- center]->selected)
-                shift --;
-        }
-    }
-    else
-    {
-        for (center = entry_num + 1; center < entries && shift < distance; )
-        {
-            if (! playlist->entries[center ++]->selected)
-                shift ++;
-        }
-    }
-
-    top = bottom = center;
-
-    for (int i = 0; i < top; i ++)
-    {
-        if (playlist->entries[i]->selected)
-            top = i;
-    }
-
-    for (int i = entries; i > bottom; i --)
-    {
-        if (playlist->entries[i - 1]->selected)
-            bottom = i;
-    }
-
-    Index<SmartPtr<PlaylistEntry>> temp;
-
-    for (int i = top; i < center; i ++)
-    {
-        if (! playlist->entries[i]->selected)
-            temp.append (std::move (playlist->entries[i]));
-    }
-
-    for (int i = top; i < bottom; i ++)
-    {
-        if (playlist->entries[i] && playlist->entries[i]->selected)
-            temp.append (std::move (playlist->entries[i]));
-    }
-
-    for (int i = center; i < bottom; i ++)
-    {
-        if (playlist->entries[i] && ! playlist->entries[i]->selected)
-            temp.append (std::move (playlist->entries[i]));
-    }
-
-    playlist->entries.move_from (temp, 0, top, bottom - top, false, true);
-    playlist->number_entries (top, bottom - top);
-    playlist->queue_update (Structure, top, bottom - top);
-
+    ENTER_GET_PLAYLIST (0);
+    int shift = playlist->shift_entries (entry_num, distance);
     RETURN (shift);
 }
 
@@ -1246,67 +1121,20 @@ EXPORT void Playlist::remove_selected () const
 {
     ENTER_GET_PLAYLIST ();
 
-    if (! playlist->selected_count)
-        RETURN ();
-
-    int entries = playlist->entries.len ();
     bool position_changed = false;
-    int update_flags = 0, playback_hooks = 0;
+    int next_song_hint = 0;
+    int playback_hooks = 0;
 
-    if (playlist->position && playlist->position->selected)
-    {
-        playlist->set_position (nullptr, false);
-        position_changed = true;
-    }
-
-    playlist->focus = playlist->find_unselected_focus ();
-
-    int before = 0;  // number of entries before first selected
-    int after = 0;   // number of entries after last selected
-
-    while (before < entries && ! playlist->entries[before]->selected)
-        before ++;
-
-    int to = before;
-
-    for (int from = before; from < entries; from ++)
-    {
-        PlaylistEntry * entry = playlist->entries[from].get ();
-
-        if (entry->selected)
-        {
-            if (entry->queued)
-            {
-                playlist->queued.remove (playlist->queued.find (entry), 1);
-                update_flags |= PlaylistData::QueueChanged;
-            }
-
-            playlist->total_length -= entry->length;
-            after = 0;
-        }
-        else
-        {
-            playlist->entries[to ++] = std::move (playlist->entries[from]);
-            after ++;
-        }
-    }
-
-    entries = to;
-    playlist->entries.remove (entries, -1);
-    playlist->number_entries (before, entries - before);
-
-    playlist->selected_count = 0;
-    playlist->selected_length = 0;
+    playlist->remove_selected (position_changed, next_song_hint);
 
     if (position_changed)
     {
         if (aud_get_bool (nullptr, "advance_on_delete"))
-            next_song_locked (playlist, aud_get_bool (nullptr, "repeat"), entries - after);
+            next_song_locked (playlist, aud_get_bool (nullptr, "repeat"), next_song_hint);
 
         playback_hooks = change_playback (m_id);
     }
 
-    playlist->queue_update (Structure, before, entries - after - before, update_flags);
     LEAVE;
 
     call_playback_hooks (* this, playback_hooks);
