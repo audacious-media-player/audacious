@@ -1324,134 +1324,49 @@ EXPORT int64_t Playlist::selected_length_ms () const
 EXPORT int Playlist::n_queued () const
 {
     ENTER_GET_PLAYLIST (0);
-    int count = playlist->queued.len ();
+    int count = playlist->n_queued ();
     RETURN (count);
 }
 
 EXPORT void Playlist::queue_insert (int at, int entry_num) const
 {
-    ENTER_GET_ENTRY ();
-
-    if (entry->queued || at > playlist->queued.len ())
-        RETURN ();
-
-    if (at < 0)
-        playlist->queued.append (entry);
-    else
-    {
-        playlist->queued.insert (at, 1);
-        playlist->queued[at] = entry;
-    }
-
-    entry->queued = true;
-
-    playlist->queue_update (Selection, entry_num, 1, PlaylistData::QueueChanged);
+    ENTER_GET_PLAYLIST ();
+    playlist->queue_insert (at, entry_num);
     LEAVE;
 }
 
 EXPORT void Playlist::queue_insert_selected (int at) const
 {
     ENTER_GET_PLAYLIST ();
-
-    if (at > playlist->queued.len ())
-        RETURN ();
-
-    Index<PlaylistEntry *> add;
-    int first = playlist->entries.len ();
-    int last = 0;
-
-    for (auto & entry : playlist->entries)
-    {
-        if (! entry->selected || entry->queued)
-            continue;
-
-        add.append (entry.get ());
-        entry->queued = true;
-        first = aud::min (first, entry->number);
-        last = entry->number;
-    }
-
-    playlist->queued.move_from (add, 0, at, -1, true, true);
-
-    if (first < playlist->entries.len ())
-        playlist->queue_update (Selection, first, last + 1 - first, PlaylistData::QueueChanged);
-
+    playlist->queue_insert_selected (at);
     LEAVE;
 }
 
 EXPORT int Playlist::queue_get_entry (int at) const
 {
     ENTER_GET_PLAYLIST (-1);
-
-    int entry_num = -1;
-    if (at >= 0 && at < playlist->queued.len ())
-        entry_num = playlist->queued[at]->number;
-
+    int entry_num = playlist->queue_get_entry (at);
     RETURN (entry_num);
 }
 
 EXPORT int Playlist::queue_find_entry (int entry_num) const
 {
-    ENTER_GET_ENTRY (-1);
-    int pos = entry->queued ? playlist->queued.find (entry) : -1;
+    ENTER_GET_PLAYLIST (-1);
+    int pos = playlist->queue_find_entry (entry_num);
     RETURN (pos);
 }
 
 EXPORT void Playlist::queue_remove (int at, int number) const
 {
     ENTER_GET_PLAYLIST ();
-
-    int queue_len = playlist->queued.len ();
-
-    if (at < 0 || at > queue_len)
-        at = queue_len;
-    if (number < 0 || number > queue_len - at)
-        number = queue_len - at;
-
-    int entries = playlist->entries.len ();
-    int first = entries, last = 0;
-
-    for (int i = at; i < at + number; i ++)
-    {
-        PlaylistEntry * entry = playlist->queued[i];
-        entry->queued = false;
-        first = aud::min (first, entry->number);
-        last = entry->number;
-    }
-
-    playlist->queued.remove (at, number);
-
-    if (first < entries)
-        playlist->queue_update (Selection, first, last + 1 - first, PlaylistData::QueueChanged);
-
+    playlist->queue_remove (at, number);
     LEAVE;
 }
 
 EXPORT void Playlist::queue_remove_selected () const
 {
     ENTER_GET_PLAYLIST ();
-
-    int entries = playlist->entries.len ();
-    int first = entries, last = 0;
-
-    for (int i = 0; i < playlist->queued.len ();)
-    {
-        PlaylistEntry * entry = playlist->queued[i];
-
-        if (entry->selected)
-        {
-            playlist->queued.remove (i, 1);
-            entry->queued = false;
-            first = aud::min (first, entry->number);
-            last = entry->number;
-        }
-        else
-            i ++;
-    }
-
-    if (first < entries)
-        playlist->queue_update (Selection, first, last + 1 - first, PlaylistData::QueueChanged);
-
+    playlist->queue_remove_selected ();
     LEAVE;
 }
 

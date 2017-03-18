@@ -101,11 +101,20 @@ struct PlaylistData
     void reverse_selected ();
     void randomize_selected ();
 
+    int queue_get_entry (int at) const;
+    int queue_find_entry (int entry_num) const;
+
+    void queue_insert (int at, int entry_num);
+    void queue_insert_selected (int pos);
+    void queue_remove (int at, int number);
+    void queue_remove_selected ();
+
     void set_position (PlaylistEntry * entry, bool update_shuffle);
     PlaylistEntry * find_unselected_focus ();
 
     Playlist::ID * id () const { return m_id; }
     int n_entries () const { return entries.len (); }
+    int n_queued () const { return queued.len (); }
 
     const Playlist::Update & last_update () const { return m_last_update; }
     bool update_pending () const { return m_next_update.level != Playlist::NoUpdate; }
