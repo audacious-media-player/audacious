@@ -69,15 +69,27 @@ enum {
     return __VA_ARGS__; \
 } while (0)
 
-#define ENTER_GET_PLAYLIST(...) ENTER; \
+#define ENTER_GET_PLAYLIST(...) \
+    ENTER; \
     PlaylistData * playlist = m_id ? m_id->data : nullptr; \
     if (! playlist) \
-        RETURN (__VA_ARGS__);
+        RETURN (__VA_ARGS__)
 
-#define ENTER_GET_ENTRY(...) ENTER_GET_PLAYLIST (__VA_ARGS__); \
+#define ENTER_GET_ENTRY(...) \
+    ENTER_GET_PLAYLIST (__VA_ARGS__); \
     PlaylistEntry * entry = playlist->lookup_entry (entry_num); \
     if (! entry) \
-        RETURN (__VA_ARGS__);
+        RETURN (__VA_ARGS__)
+
+#define SIMPLE_WRAPPER(type, failcode, func, ...) \
+    ENTER_GET_PLAYLIST (failcode); \
+    type retval = playlist->func (__VA_ARGS__); \
+    RETURN (retval)
+
+#define SIMPLE_VOID_WRAPPER(func, ...) \
+    ENTER_GET_PLAYLIST (); \
+    playlist->func (__VA_ARGS__); \
+    LEAVE
 
 static const char * const default_title = N_("New Playlist");
 static const char * const temp_title = N_("Now Playing");
@@ -212,25 +224,11 @@ static void queue_global_update (Playlist::UpdateLevel level, int flags = 0)
     update_level = aud::max (update_level, level);
 }
 
-EXPORT bool Playlist::update_pending () const
-{
-    ENTER_GET_PLAYLIST (false);
-    bool pending = playlist->update_pending ();
-    RETURN (pending);
-}
-
 EXPORT bool Playlist::update_pending_any ()
 {
     ENTER;
     bool pending = (update_level != Playlist::NoUpdate);
     RETURN (pending);
-}
-
-EXPORT Playlist::Update Playlist::update_detail () const
-{
-    ENTER_GET_PLAYLIST (Update ());
-    Update update = playlist->last_update ();
-    RETURN (update);
 }
 
 EXPORT bool Playlist::scan_in_progress () const
@@ -595,6 +593,67 @@ void playlist_end ()
 
     LEAVE;
 }
+
+EXPORT int Playlist::n_entries () const
+    { SIMPLE_WRAPPER (int, 0, n_entries); }
+
+EXPORT int Playlist::get_position () const
+    { SIMPLE_WRAPPER (int, -1, position); }
+EXPORT int Playlist::get_focus () const
+    { SIMPLE_WRAPPER (int, -1, focus); }
+EXPORT void Playlist::set_focus (int entry_num) const
+    { SIMPLE_VOID_WRAPPER (set_focus, entry_num); }
+EXPORT bool Playlist::entry_selected (int entry_num) const
+    { SIMPLE_WRAPPER (bool, false, entry_selected, entry_num); }
+EXPORT void Playlist::select_entry (int entry_num, bool selected) const
+    { SIMPLE_VOID_WRAPPER (select_entry, entry_num, selected); }
+EXPORT int Playlist::n_selected (int at, int number) const
+    { SIMPLE_WRAPPER (int, 0, n_selected, at, number); }
+EXPORT void Playlist::select_all (bool selected) const
+    { SIMPLE_VOID_WRAPPER (select_all, selected); }
+EXPORT int Playlist::shift_entries (int entry_num, int distance) const
+    { SIMPLE_WRAPPER (int, 0, shift_entries, entry_num, distance); }
+
+EXPORT void Playlist::sort_by_filename (StringCompareFunc compare) const
+    { SIMPLE_VOID_WRAPPER (sort, {compare, nullptr}); }
+EXPORT void Playlist::sort_selected_by_filename (StringCompareFunc compare) const
+    { SIMPLE_VOID_WRAPPER (sort_selected, {compare, nullptr}); }
+EXPORT void Playlist::reverse_order () const
+    { SIMPLE_VOID_WRAPPER (reverse_order); }
+EXPORT void Playlist::reverse_selected () const
+    { SIMPLE_VOID_WRAPPER (reverse_selected); }
+EXPORT void Playlist::randomize_order () const
+    { SIMPLE_VOID_WRAPPER (randomize_order); }
+EXPORT void Playlist::randomize_selected () const
+    { SIMPLE_VOID_WRAPPER (randomize_selected); }
+
+EXPORT int64_t Playlist::total_length_ms () const
+    { SIMPLE_WRAPPER (int64_t, 0, total_length); }
+EXPORT int64_t Playlist::selected_length_ms () const
+    { SIMPLE_WRAPPER (int64_t, 0, selected_length); }
+
+EXPORT int Playlist::n_queued () const
+    { SIMPLE_WRAPPER (int, 0, n_queued); }
+EXPORT void Playlist::queue_insert (int at, int entry_num) const
+    { SIMPLE_VOID_WRAPPER (queue_insert, at, entry_num); }
+EXPORT void Playlist::queue_insert_selected (int at) const
+    { SIMPLE_VOID_WRAPPER (queue_insert_selected, at); }
+EXPORT int Playlist::queue_get_entry (int at) const
+    { SIMPLE_WRAPPER (int, -1, queue_get_entry, at); }
+EXPORT int Playlist::queue_find_entry (int entry_num) const
+    { SIMPLE_WRAPPER (int, -1, queue_find_entry, entry_num); }
+EXPORT void Playlist::queue_remove (int at, int number) const
+    { SIMPLE_VOID_WRAPPER (queue_remove, at, number); }
+EXPORT void Playlist::queue_remove_selected () const
+    { SIMPLE_VOID_WRAPPER (queue_remove_selected); }
+
+EXPORT bool Playlist::update_pending () const
+    { SIMPLE_WRAPPER (bool, false, update_pending); }
+EXPORT Playlist::Update Playlist::update_detail () const
+    { SIMPLE_WRAPPER (Update, Update (), last_update); }
+
+void PlaylistEx::insert_flat_items (int at, Index<PlaylistAddItem> && items) const
+    { SIMPLE_VOID_WRAPPER (insert_items, at, std::move (items)); }
 
 EXPORT int Playlist::index () const
 {
@@ -961,20 +1020,6 @@ static int change_playback (Playlist::ID * id)
     return hooks;
 }
 
-EXPORT int Playlist::n_entries () const
-{
-    ENTER_GET_PLAYLIST (0);
-    int count = playlist->n_entries ();
-    RETURN (count);
-}
-
-void PlaylistEx::insert_flat_items (int at, Index<PlaylistAddItem> && items) const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->insert_items (at, std::move (items));
-    LEAVE;
-}
-
 EXPORT void Playlist::remove_entries (int at, int number) const
 {
     ENTER_GET_PLAYLIST ();
@@ -985,12 +1030,7 @@ EXPORT void Playlist::remove_entries (int at, int number) const
     playlist->remove_entries (at, number, position_changed);
 
     if (position_changed)
-    {
-        if (aud_get_bool (nullptr, "advance_on_delete"))
-            playlist->next_song (aud_get_bool (nullptr, "repeat"), at);
-
         playback_hooks = change_playback (m_id);
-    }
 
     LEAVE;
 
@@ -1034,70 +1074,14 @@ EXPORT void Playlist::set_position (int entry_num) const
 {
     ENTER_GET_PLAYLIST ();
 
-    PlaylistEntry * entry = playlist->lookup_entry (entry_num);
+    auto entry = playlist->lookup_entry (entry_num);
     playlist->set_position (entry, true);
 
-    int hooks = change_playback (m_id);
+    int playback_hooks = change_playback (m_id);
 
     LEAVE;
 
-    call_playback_hooks (* this, hooks);
-}
-
-EXPORT int Playlist::get_position () const
-{
-    ENTER_GET_PLAYLIST (-1);
-    int position = playlist->position ();
-    RETURN (position);
-}
-
-EXPORT void Playlist::set_focus (int entry_num) const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->set_focus (entry_num);
-    LEAVE;
-}
-
-EXPORT int Playlist::get_focus () const
-{
-    ENTER_GET_PLAYLIST (-1);
-    int focus = playlist->focus ();
-    RETURN (focus);
-}
-
-EXPORT void Playlist::select_entry (int entry_num, bool selected) const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->select_entry (entry_num, selected);
-    LEAVE;
-}
-
-EXPORT bool Playlist::entry_selected (int entry_num) const
-{
-    ENTER_GET_PLAYLIST (false);
-    bool selected = playlist->entry_selected (entry_num);
-    RETURN (selected);
-}
-
-EXPORT int Playlist::n_selected (int at, int number) const
-{
-    ENTER_GET_PLAYLIST (0);
-    int n_selected = playlist->n_selected (at, number);
-    RETURN (n_selected);
-}
-
-EXPORT void Playlist::select_all (bool selected) const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->select_all (selected);
-    LEAVE;
-}
-
-EXPORT int Playlist::shift_entries (int entry_num, int distance) const
-{
-    ENTER_GET_PLAYLIST (0);
-    int shift = playlist->shift_entries (entry_num, distance);
-    RETURN (shift);
+    call_playback_hooks (* this, playback_hooks);
 }
 
 EXPORT void Playlist::remove_selected () const
@@ -1105,50 +1089,16 @@ EXPORT void Playlist::remove_selected () const
     ENTER_GET_PLAYLIST ();
 
     bool position_changed = false;
-    int next_song_hint = 0;
     int playback_hooks = 0;
 
-    playlist->remove_selected (position_changed, next_song_hint);
+    playlist->remove_selected (position_changed);
 
     if (position_changed)
-    {
-        if (aud_get_bool (nullptr, "advance_on_delete"))
-            playlist->next_song (aud_get_bool (nullptr, "repeat"), next_song_hint);
-
         playback_hooks = change_playback (m_id);
-    }
 
     LEAVE;
 
     call_playback_hooks (* this, playback_hooks);
-}
-
-EXPORT void Playlist::reverse_order () const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->reverse_order ();
-    LEAVE;
-}
-
-EXPORT void Playlist::reverse_selected () const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->reverse_selected ();
-    LEAVE;
-}
-
-EXPORT void Playlist::randomize_order () const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->randomize_order ();
-    LEAVE;
-}
-
-EXPORT void Playlist::randomize_selected () const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->randomize_selected ();
-    LEAVE;
 }
 
 static bool entries_are_scanned (PlaylistData * playlist, bool selected)
@@ -1169,13 +1119,6 @@ static bool entries_are_scanned (PlaylistData * playlist, bool selected)
     return true;
 }
 
-EXPORT void Playlist::sort_by_filename (StringCompareFunc compare) const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->sort ({compare, nullptr});
-    LEAVE;
-}
-
 EXPORT void Playlist::sort_by_tuple (TupleCompareFunc compare) const
 {
     ENTER_GET_PLAYLIST ();
@@ -1183,13 +1126,6 @@ EXPORT void Playlist::sort_by_tuple (TupleCompareFunc compare) const
     if (entries_are_scanned (playlist, false))
         playlist->sort ({nullptr, compare});
 
-    LEAVE;
-}
-
-EXPORT void Playlist::sort_selected_by_filename (StringCompareFunc compare) const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->sort_selected ({compare, nullptr});
     LEAVE;
 }
 
@@ -1287,69 +1223,6 @@ EXPORT void Playlist::rescan_file (const char * filename)
     if (restart)
         scan_restart ();
 
-    LEAVE;
-}
-
-EXPORT int64_t Playlist::total_length_ms () const
-{
-    ENTER_GET_PLAYLIST (0);
-    int64_t length = playlist->total_length ();
-    RETURN (length);
-}
-
-EXPORT int64_t Playlist::selected_length_ms () const
-{
-    ENTER_GET_PLAYLIST (0);
-    int64_t length = playlist->selected_length ();
-    RETURN (length);
-}
-
-EXPORT int Playlist::n_queued () const
-{
-    ENTER_GET_PLAYLIST (0);
-    int count = playlist->n_queued ();
-    RETURN (count);
-}
-
-EXPORT void Playlist::queue_insert (int at, int entry_num) const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->queue_insert (at, entry_num);
-    LEAVE;
-}
-
-EXPORT void Playlist::queue_insert_selected (int at) const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->queue_insert_selected (at);
-    LEAVE;
-}
-
-EXPORT int Playlist::queue_get_entry (int at) const
-{
-    ENTER_GET_PLAYLIST (-1);
-    int entry_num = playlist->queue_get_entry (at);
-    RETURN (entry_num);
-}
-
-EXPORT int Playlist::queue_find_entry (int entry_num) const
-{
-    ENTER_GET_PLAYLIST (-1);
-    int pos = playlist->queue_find_entry (entry_num);
-    RETURN (pos);
-}
-
-EXPORT void Playlist::queue_remove (int at, int number) const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->queue_remove (at, number);
-    LEAVE;
-}
-
-EXPORT void Playlist::queue_remove_selected () const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist->queue_remove_selected ();
     LEAVE;
 }
 

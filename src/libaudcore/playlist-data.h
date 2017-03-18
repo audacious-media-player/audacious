@@ -95,7 +95,7 @@ struct PlaylistData
     void select_entry (int entry_num, bool selected);
     void select_all (bool selected);
     int shift_entries (int entry_num, int distance);
-    void remove_selected (bool & position_changed, int & next_song_hint);
+    void remove_selected (bool & position_changed);
 
     void sort (const CompareData & data);
     void sort_selected (const CompareData & data);

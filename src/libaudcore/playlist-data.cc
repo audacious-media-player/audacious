@@ -243,6 +243,9 @@ void PlaylistData::remove_entries (int at, int number, bool & position_changed)
 
     number_entries (at, n_entries - at - number);
     queue_update (Playlist::Structure, at, 0, update_flags);
+
+    if (aud_get_bool (nullptr, "advance_on_delete"))
+        next_song (aud_get_bool (nullptr, "repeat"), at);
 }
 
 int PlaylistData::position () const
@@ -433,7 +436,7 @@ int PlaylistData::shift_entries (int entry_num, int distance)
     return shift;
 }
 
-void PlaylistData::remove_selected (bool & position_changed, int & next_song_hint)
+void PlaylistData::remove_selected (bool & position_changed)
 {
     if (! m_selected_count)
         return;
@@ -488,7 +491,8 @@ void PlaylistData::remove_selected (bool & position_changed, int & next_song_hin
     number_entries (before, n_entries - before);
     queue_update (Playlist::Structure, before, n_entries - after - before, update_flags);
 
-    next_song_hint = n_entries - after;
+    if (aud_get_bool (nullptr, "advance_on_delete"))
+        next_song (aud_get_bool (nullptr, "repeat"), n_entries - after);
 }
 
 static void sort_entries (Index<SmartPtr<PlaylistEntry>> & entries, const PlaylistData::CompareData & data)
