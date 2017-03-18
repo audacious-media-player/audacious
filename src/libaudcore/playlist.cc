@@ -77,7 +77,7 @@ enum {
 
 #define ENTER_GET_ENTRY(...) \
     ENTER_GET_PLAYLIST (__VA_ARGS__); \
-    PlaylistEntry * entry = playlist->lookup_entry (entry_num); \
+    PlaylistEntry * entry = playlist->entry_at (entry_num); \
     if (! entry) \
         RETURN (__VA_ARGS__)
 
@@ -445,7 +445,7 @@ static PlaylistEntry * get_entry (Playlist::ID * id, int entry_num,
         if (! id || ! id->data)
             return nullptr;
 
-        PlaylistEntry * entry = id->data->lookup_entry (entry_num);
+        PlaylistEntry * entry = id->data->entry_at (entry_num);
 
         // check whether entry was deleted; also blacklist stdin
         if (! entry || ! strncmp (entry->filename, "stdin://", 8))
@@ -479,7 +479,7 @@ static void start_playback_locked (int seek_time, bool pause)
     playback_play (seek_time, pause);
 
     auto playlist = playing_id->data;
-    auto entry = playlist->lookup_entry (playlist->position ());
+    auto entry = playlist->entry_at (playlist->position ());
 
     // playback always begins with a rescan of the current entry in order to
     // open the file, ensure a valid tuple, and read album art
@@ -512,7 +512,7 @@ void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, in
         int pos = playlist->position ();
         if (id == playing_id && pos >= 0)
         {
-            auto entry = playlist->lookup_entry (pos);
+            auto entry = playlist->entry_at (pos);
             playback_set_info (pos, entry->tuple.ref ());
         }
 
@@ -1067,7 +1067,7 @@ EXPORT void Playlist::set_position (int entry_num) const
 {
     ENTER_GET_PLAYLIST ();
 
-    auto entry = playlist->lookup_entry (entry_num);
+    auto entry = playlist->entry_at (entry_num);
     playlist->set_position (entry, true);
     int hooks = change_playback (m_id);
 
@@ -1247,7 +1247,7 @@ static PlaylistEntry * get_playback_entry (int serial)
         return nullptr;
 
     auto playlist = playing_id->data;
-    return playlist->lookup_entry (playlist->position ());
+    return playlist->entry_at (playlist->position ());
 }
 
 // called from playback thread

@@ -114,12 +114,12 @@ void PlaylistData::number_entries (int at, int length)
         entries[i]->number = i;
 }
 
-PlaylistEntry * PlaylistData::lookup_entry (int i)
+PlaylistEntry * PlaylistData::entry_at (int i)
 {
     return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
 }
 
-const PlaylistEntry * PlaylistData::lookup_entry (int i) const
+const PlaylistEntry * PlaylistData::entry_at (int i) const
 {
     return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
 }
@@ -260,7 +260,7 @@ int PlaylistData::focus () const
 
 bool PlaylistData::entry_selected (int entry_num) const
 {
-    auto entry = lookup_entry (entry_num);
+    auto entry = entry_at (entry_num);
     return entry ? entry->selected : false;
 }
 
@@ -291,7 +291,7 @@ int PlaylistData::n_selected (int at, int number) const
 
 void PlaylistData::set_focus (int entry_num)
 {
-    auto new_focus = lookup_entry (entry_num);
+    auto new_focus = entry_at (entry_num);
     if (new_focus == m_focus)
         return;
 
@@ -318,7 +318,7 @@ void PlaylistData::set_focus (int entry_num)
 
 void PlaylistData::select_entry (int entry_num, bool selected)
 {
-    auto entry = lookup_entry (entry_num);
+    auto entry = entry_at (entry_num);
     if (! entry || entry->selected == selected)
         return;
 
@@ -370,7 +370,7 @@ void PlaylistData::select_all (bool selected)
 
 int PlaylistData::shift_entries (int entry_num, int distance)
 {
-    PlaylistEntry * entry = lookup_entry (entry_num);
+    PlaylistEntry * entry = entry_at (entry_num);
     if (! entry || ! entry->selected || ! distance)
         return 0;
 
@@ -616,13 +616,13 @@ int PlaylistData::queue_get_entry (int at) const
 
 int PlaylistData::queue_find_entry (int entry_num) const
 {
-    auto entry = lookup_entry (entry_num);
+    auto entry = entry_at (entry_num);
     return entry->queued ? m_queued.find ((PlaylistEntry *) entry) : -1;
 }
 
 void PlaylistData::queue_insert (int at, int entry_num)
 {
-    auto entry = lookup_entry (entry_num);
+    auto entry = entry_at (entry_num);
     if (entry->queued)
         return;
 

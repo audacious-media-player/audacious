@@ -72,8 +72,8 @@ struct PlaylistData
     PlaylistData (Playlist::ID * m_id, const char * title);
     ~PlaylistData ();
 
-    PlaylistEntry * lookup_entry (int i);
-    const PlaylistEntry * lookup_entry (int i) const;
+    PlaylistEntry * entry_at (int i);
+    const PlaylistEntry * entry_at (int i) const;
 
     void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
 
