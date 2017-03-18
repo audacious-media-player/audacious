@@ -177,7 +177,7 @@ static void print_help ()
 {
     static const char pad[21] = "                    ";
 
-    fprintf (stderr, _("Usage: audacious [OPTION] ... [FILE] ...\n\n"));
+    fprintf (stderr, "%s", _("Usage: audacious [OPTION] ... [FILE] ...\n\n"));
     fprintf (stderr, "  -1, -2, -3, etc.          %s\n", _("Select instance to run/control"));
 
     for (auto & arg_info : arg_map)
