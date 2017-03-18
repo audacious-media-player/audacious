@@ -57,6 +57,13 @@ struct PlaylistData
         DelayedUpdate = (1 << 1)
     };
 
+    /* scan status */
+    enum ScanStatus {
+        NotScanning,
+        ScanActive,
+        ScanEnding
+    };
+
     PlaylistData (Playlist::ID * m_id, const char * title);
     ~PlaylistData ();
 
@@ -76,7 +83,8 @@ struct PlaylistData
     bool update_pending () const { return m_next_update.level != Playlist::NoUpdate; }
 
     Playlist::ID * m_id;
-    bool modified, scanning, scan_ending;
+    bool modified;
+    ScanStatus scan_status;
     String filename, title;
     Index<SmartPtr<PlaylistEntry>> entries;
     PlaylistEntry * position, * focus;

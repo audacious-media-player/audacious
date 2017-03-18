@@ -140,7 +140,6 @@ static List<ScanItem> scan_list;
 
 static void scan_finish (ScanRequest * request);
 static void scan_cancel (PlaylistEntry * entry);
-static void scan_queue_playlist (PlaylistData * playlist);
 static void scan_restart ();
 
 static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
@@ -239,7 +238,7 @@ EXPORT Playlist::Update Playlist::update_detail () const
 EXPORT bool Playlist::scan_in_progress () const
 {
     ENTER_GET_PLAYLIST (false);
-    bool scanning = playlist->scanning || playlist->scan_ending;
+    bool scanning = (playlist->scan_status != PlaylistData::NotScanning);
     RETURN (scanning);
 }
 
@@ -250,7 +249,7 @@ EXPORT bool Playlist::scan_in_progress_any ()
     bool scanning = false;
     for (auto & p : playlists)
     {
-        if (p->scanning || p->scan_ending)
+        if (p->scan_status != PlaylistData::NotScanning)
             scanning = true;
     }
 
@@ -305,10 +304,10 @@ static void scan_check_complete (PlaylistData * playlist)
     auto match = [playlist] (const ScanItem & item)
         { return item.playlist == playlist; };
 
-    if (! playlist->scan_ending || scan_list.find (match))
+    if (playlist->scan_status != PlaylistData::ScanEnding || scan_list.find (match))
         return;
 
-    playlist->scan_ending = false;
+    playlist->scan_status = PlaylistData::NotScanning;
 
     if (update_delayed)
     {
@@ -329,7 +328,7 @@ static bool scan_queue_next_entry ()
     {
         PlaylistData * playlist = playlists[scan_playlist].get ();
 
-        if (playlist->scanning)
+        if (playlist->scan_status == PlaylistData::ScanActive)
         {
             while (scan_row < playlist->entries.len ())
             {
@@ -345,8 +344,7 @@ static bool scan_queue_next_entry ()
                 }
             }
 
-            playlist->scanning = false;
-            playlist->scan_ending = true;
+            playlist->scan_status = PlaylistData::ScanEnding;
             scan_check_complete (playlist);
         }
 
@@ -392,7 +390,7 @@ static void scan_finish (ScanRequest * request)
 
     // only use delayed update if a scan is still in progress
     int update_flags = 0;
-    if (scan_enabled && (playlist->scanning || playlist->scan_ending))
+    if (scan_enabled && playlist->scan_status != PlaylistData::NotScanning)
         update_flags = PlaylistData::DelayedUpdate;
 
     if (! entry->decoder)
@@ -431,12 +429,6 @@ static void scan_cancel (PlaylistEntry * entry)
 
     scan_list.remove (item);
     delete (item);
-}
-
-static void scan_queue_playlist (PlaylistData * playlist)
-{
-    playlist->scanning = true;
-    playlist->scan_ending = false;
 }
 
 static void scan_restart ()
@@ -512,7 +504,7 @@ void pl_signal_entry_deleted (PlaylistEntry * entry)
 void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, int flags)
 {
     if (level == Playlist::Structure)
-        scan_queue_playlist (id->data);
+        id->data->scan_status = PlaylistData::ScanActive;
 
     if (level >= Playlist::Metadata)
     {
@@ -1614,7 +1606,7 @@ static void playlist_rescan_real (PlaylistData * playlist, bool selected)
     }
 
     playlist->queue_update (Playlist::Metadata, 0, playlist->entries.len ());
-    scan_queue_playlist (playlist);
+    playlist->scan_status = PlaylistData::ScanActive;
     scan_restart ();
 }
 
@@ -1654,7 +1646,7 @@ EXPORT void Playlist::rescan_file (const char * filename)
 
         if (queue)
         {
-            scan_queue_playlist (playlist.get ());
+            playlist->scan_status = PlaylistData::ScanActive;
             restart = true;
         }
     }

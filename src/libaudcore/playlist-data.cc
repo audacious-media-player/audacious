@@ -89,8 +89,7 @@ PlaylistEntry::~PlaylistEntry ()
 PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
     m_id (id),
     modified (true),
-    scanning (false),
-    scan_ending (false),
+    scan_status (NotScanning),
     title (title),
     position (nullptr),
     focus (nullptr),
