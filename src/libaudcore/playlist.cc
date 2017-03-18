@@ -257,37 +257,12 @@ EXPORT bool Playlist::scan_in_progress_any ()
     RETURN (scanning);
 }
 
-static ScanItem * scan_list_find_playlist (PlaylistData * playlist)
-{
-    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
-    {
-        if (item->playlist == playlist)
-            return item;
-    }
-
-    return nullptr;
-}
-
 static ScanItem * scan_list_find_entry (PlaylistEntry * entry)
 {
-    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
-    {
-        if (item->entry == entry)
-            return item;
-    }
+    auto match = [entry] (const ScanItem & item)
+        { return item.entry == entry; };
 
-    return nullptr;
-}
-
-static ScanItem * scan_list_find_request (ScanRequest * request)
-{
-    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
-    {
-        if (item->request == request)
-            return item;
-    }
-
-    return nullptr;
+    return scan_list.find (match);
 }
 
 static void scan_queue_entry (PlaylistData * playlist, PlaylistEntry * entry, bool for_playback = false)
@@ -311,22 +286,26 @@ static void scan_queue_entry (PlaylistData * playlist, PlaylistEntry * entry, bo
 
 static void scan_reset_playback ()
 {
-    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
-    {
-        if (item->for_playback)
-        {
-            item->for_playback = false;
+    auto match = [] (const ScanItem & item)
+        { return item.for_playback; };
 
-            /* if playback was canceled before the entry was scanned, requeue it */
-            if (! item->handled_by_playback)
-                scanner_request (item->request);
-        }
-    }
+    ScanItem * item = scan_list.find (match);
+    if (! item)
+        return;
+
+    item->for_playback = false;
+
+    /* if playback was canceled before the entry was scanned, requeue it */
+    if (! item->handled_by_playback)
+        scanner_request (item->request);
 }
 
 static void scan_check_complete (PlaylistData * playlist)
 {
-    if (! playlist->scan_ending || scan_list_find_playlist (playlist))
+    auto match = [playlist] (const ScanItem & item)
+        { return item.playlist == playlist; };
+
+    if (! playlist->scan_ending || scan_list.find (match))
         return;
 
     playlist->scan_ending = false;
@@ -399,7 +378,10 @@ static void scan_finish (ScanRequest * request)
 {
     ENTER;
 
-    ScanItem * item = scan_list_find_request (request);
+    auto match = [request] (const ScanItem & item)
+        { return item.request == request; };
+
+    ScanItem * item = scan_list.find (match);
     if (! item)
         RETURN ();
 
