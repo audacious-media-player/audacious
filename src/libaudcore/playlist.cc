@@ -945,7 +945,6 @@ EXPORT void Playlist::start_playback (bool paused) const
     ENTER_GET_PLAYLIST ();
     int hooks = set_playing_locked (m_id, paused);
     LEAVE;
-
     call_playback_hooks (* this, hooks);
 }
 
@@ -954,7 +953,6 @@ EXPORT void aud_drct_stop ()
     ENTER;
     int hooks = set_playing_locked (nullptr, false);
     LEAVE;
-
     call_playback_hooks (Playlist (), hooks);
 }
 
@@ -1025,16 +1023,11 @@ EXPORT void Playlist::remove_entries (int at, int number) const
     ENTER_GET_PLAYLIST ();
 
     bool position_changed = false;
-    int playback_hooks = 0;
-
     playlist->remove_entries (at, number, position_changed);
-
-    if (position_changed)
-        playback_hooks = change_playback (m_id);
+    int hooks = position_changed ? change_playback (m_id) : 0;
 
     LEAVE;
-
-    call_playback_hooks (* this, playback_hooks);
+    call_playback_hooks (* this, hooks);
 }
 
 EXPORT String Playlist::entry_filename (int entry_num) const
@@ -1076,12 +1069,10 @@ EXPORT void Playlist::set_position (int entry_num) const
 
     auto entry = playlist->lookup_entry (entry_num);
     playlist->set_position (entry, true);
-
-    int playback_hooks = change_playback (m_id);
+    int hooks = change_playback (m_id);
 
     LEAVE;
-
-    call_playback_hooks (* this, playback_hooks);
+    call_playback_hooks (* this, hooks);
 }
 
 EXPORT void Playlist::remove_selected () const
@@ -1089,16 +1080,11 @@ EXPORT void Playlist::remove_selected () const
     ENTER_GET_PLAYLIST ();
 
     bool position_changed = false;
-    int playback_hooks = 0;
-
     playlist->remove_selected (position_changed);
-
-    if (position_changed)
-        playback_hooks = change_playback (m_id);
+    int hooks = position_changed ? change_playback (m_id) : 0;
 
     LEAVE;
-
-    call_playback_hooks (* this, playback_hooks);
+    call_playback_hooks (* this, hooks);
 }
 
 static bool entries_are_scanned (PlaylistData * playlist, bool selected)
@@ -1236,7 +1222,6 @@ bool PlaylistEx::prev_song () const
     int hooks = change_playback (m_id);
 
     LEAVE;
-
     call_playback_hooks (* this, hooks);
     return true;
 }
@@ -1252,7 +1237,6 @@ bool PlaylistEx::next_song (bool repeat) const
     int hooks = change_playback (m_id);
 
     LEAVE;
-
     call_playback_hooks (* this, hooks);
     return true;
 }
