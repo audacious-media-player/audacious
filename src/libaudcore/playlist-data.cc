@@ -20,8 +20,10 @@
 #include "playlist-data.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "runtime.h"
+#include "scanner.h"
 #include "tuple-compiler.h"
 
 TupleCompiler PlaylistEntry::s_compiler;
@@ -890,6 +892,77 @@ bool PlaylistData::next_song (bool repeat, int hint)
 
     set_position (entries[hint].get (), true);
     return true;
+}
+
+int PlaylistData::next_unscanned_entry (int entry_num) const
+{
+    if (entry_num < 0)
+        return -1;
+
+    for (; entry_num < entries.len (); entry_num ++)
+    {
+        if (entries[entry_num]->tuple.state () == Tuple::Initial)
+            return entry_num;
+    }
+
+    return -1;
+}
+
+void PlaylistData::update_entry_from_scan (PlaylistEntry * entry, ScanRequest * request, int update_flags)
+{
+    if (! entry->decoder)
+        entry->decoder = request->decoder;
+
+    if (! entry->tuple.valid () && request->tuple.valid ())
+    {
+        set_entry_tuple (entry, std::move (request->tuple));
+        queue_update (Playlist::Metadata, entry->number, 1, update_flags);
+    }
+
+    if (! entry->decoder || ! entry->tuple.valid ())
+        entry->error = request->error;
+
+    if (entry->tuple.state () == Tuple::Initial)
+    {
+        entry->tuple.set_state (Tuple::Failed);
+        queue_update (Playlist::Metadata, entry->number, 1, update_flags);
+    }
+}
+
+void PlaylistData::reformat_titles ()
+{
+    for (auto & entry : entries)
+        entry->format ();
+
+    queue_update (Playlist::Metadata, 0, entries.len ());
+}
+
+void PlaylistData::reset_tuples (bool selected_only)
+{
+    for (auto & entry : entries)
+    {
+        if (! selected_only || entry->selected)
+            set_entry_tuple (entry.get (), Tuple ());
+    }
+
+    queue_update (Playlist::Metadata, 0, entries.len ());
+}
+
+bool PlaylistData::reset_tuple_of_file (const char * filename)
+{
+    bool found = false;
+
+    for (auto & entry : entries)
+    {
+        if (! strcmp (entry->filename, filename))
+        {
+            set_entry_tuple (entry.get (), Tuple ());
+            queue_update (Playlist::Metadata, entry->number, 1);
+            found = true;
+        }
+    }
+
+    return found;
 }
 
 PlaylistEntry * PlaylistData::find_unselected_focus ()

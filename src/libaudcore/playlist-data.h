@@ -23,6 +23,7 @@
 #include "playlist.h"
 
 class TupleCompiler;
+struct ScanRequest;
 
 struct PlaylistEntry
 {
@@ -117,6 +118,13 @@ struct PlaylistData
 
     bool prev_song ();
     bool next_song (bool repeat, int hint);
+
+    int next_unscanned_entry (int entry_num) const;
+    void update_entry_from_scan (PlaylistEntry * entry, ScanRequest * request, int update_flags);
+
+    void reformat_titles ();
+    void reset_tuples (bool selected_only);
+    bool reset_tuple_of_file (const char * filename);
 
 private:
     void number_entries (int at, int length);

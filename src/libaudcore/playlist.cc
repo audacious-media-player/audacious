@@ -326,18 +326,22 @@ static bool scan_queue_next_entry ()
 
         if (playlist->scan_status == PlaylistData::ScanActive)
         {
-            while (scan_row < playlist->entries.len ())
+            while (1)
             {
-                PlaylistEntry * entry = playlist->entries[scan_row ++].get ();
+                scan_row = playlist->next_unscanned_entry (scan_row);
+                if (scan_row < 0)
+                    break;
+
+                auto entry = playlist->entry_at (scan_row);
 
                 // blacklist stdin
-                if (entry->tuple.state () == Tuple::Initial &&
-                 ! scan_list_find_entry (entry) &&
-                 strncmp (entry->filename, "stdin://", 8))
+                if (! scan_list_find_entry (entry) && strncmp (entry->filename, "stdin://", 8))
                 {
                     scan_queue_entry (playlist, entry);
                     return true;
                 }
+
+                scan_row ++;
             }
 
             playlist->scan_status = PlaylistData::ScanEnding;
@@ -389,23 +393,7 @@ static void scan_finish (ScanRequest * request)
     if (scan_enabled && playlist->scan_status != PlaylistData::NotScanning)
         update_flags = PlaylistData::DelayedUpdate;
 
-    if (! entry->decoder)
-        entry->decoder = request->decoder;
-
-    if (! entry->tuple.valid () && request->tuple.valid ())
-    {
-        playlist->set_entry_tuple (entry, std::move (request->tuple));
-        playlist->queue_update (Playlist::Metadata, entry->number, 1, update_flags);
-    }
-
-    if (! entry->decoder || ! entry->tuple.valid ())
-        entry->error = request->error;
-
-    if (entry->tuple.state () == Tuple::Initial)
-    {
-        entry->tuple.set_state (Tuple::Failed);
-        playlist->queue_update (Playlist::Metadata, entry->number, 1, update_flags);
-    }
+    playlist->update_entry_from_scan (entry, request, update_flags);
 
     delete item;
 
@@ -616,8 +604,12 @@ EXPORT int Playlist::shift_entries (int entry_num, int distance) const
 
 EXPORT void Playlist::sort_by_filename (StringCompareFunc compare) const
     { SIMPLE_VOID_WRAPPER (sort, {compare, nullptr}); }
+EXPORT void Playlist::sort_by_tuple (TupleCompareFunc compare) const
+    { SIMPLE_VOID_WRAPPER (sort, {nullptr, compare}); }
 EXPORT void Playlist::sort_selected_by_filename (StringCompareFunc compare) const
     { SIMPLE_VOID_WRAPPER (sort_selected, {compare, nullptr}); }
+EXPORT void Playlist::sort_selected_by_tuple (TupleCompareFunc compare) const
+    { SIMPLE_VOID_WRAPPER (sort_selected, {nullptr, compare}); }
 EXPORT void Playlist::reverse_order () const
     { SIMPLE_VOID_WRAPPER (reverse_order); }
 EXPORT void Playlist::reverse_selected () const
@@ -706,7 +698,7 @@ static Playlist::ID * insert_playlist_locked (int at, int stamp = -1)
 
 static Playlist::ID * get_blank_locked ()
 {
-    if (! strcmp (active_id->data->title, _(default_title)) && ! active_id->data->entries.len ())
+    if (! strcmp (active_id->data->title, _(default_title)) && ! active_id->data->n_entries ())
         return active_id;
 
     return insert_playlist_locked (active_id->index + 1);
@@ -1087,44 +1079,6 @@ EXPORT void Playlist::remove_selected () const
     call_playback_hooks (* this, hooks);
 }
 
-static bool entries_are_scanned (PlaylistData * playlist, bool selected)
-{
-    for (auto & entry : playlist->entries)
-    {
-        if (selected && ! entry->selected)
-            continue;
-
-        if (entry->tuple.state () == Tuple::Initial)
-        {
-            aud_ui_show_error (_("The playlist cannot be sorted because "
-             "metadata scanning is still in progress (or has been disabled)."));
-            return false;
-        }
-    }
-
-    return true;
-}
-
-EXPORT void Playlist::sort_by_tuple (TupleCompareFunc compare) const
-{
-    ENTER_GET_PLAYLIST ();
-
-    if (entries_are_scanned (playlist, false))
-        playlist->sort ({nullptr, compare});
-
-    LEAVE;
-}
-
-EXPORT void Playlist::sort_selected_by_tuple (TupleCompareFunc compare) const
-{
-    ENTER_GET_PLAYLIST ();
-
-    if (entries_are_scanned (playlist, true))
-        playlist->sort_selected ({nullptr, compare});
-
-    LEAVE;
-}
-
 static void playlist_reformat_titles (void *, void *)
 {
     ENTER;
@@ -1132,12 +1086,7 @@ static void playlist_reformat_titles (void *, void *)
     PlaylistEntry::update_formatting ();
 
     for (auto & playlist : playlists)
-    {
-        for (auto & entry : playlist->entries)
-            entry->format ();
-
-        playlist->queue_update (Playlist::Metadata, 0, playlist->entries.len ());
-    }
+        playlist->reformat_titles ();
 
     LEAVE;
 }
@@ -1152,15 +1101,9 @@ static void playlist_trigger_scan (void *, void *)
     LEAVE;
 }
 
-static void playlist_rescan_real (PlaylistData * playlist, bool selected)
+static void playlist_rescan_real (PlaylistData * playlist, bool selected_only)
 {
-    for (auto & entry : playlist->entries)
-    {
-        if (! selected || entry->selected)
-            playlist->set_entry_tuple (entry.get (), Tuple ());
-    }
-
-    playlist->queue_update (Playlist::Metadata, 0, playlist->entries.len ());
+    playlist->reset_tuples (selected_only);
     playlist->scan_status = PlaylistData::ScanActive;
     scan_restart ();
 }
@@ -1187,19 +1130,7 @@ EXPORT void Playlist::rescan_file (const char * filename)
 
     for (auto & playlist : playlists)
     {
-        bool queue = false;
-
-        for (auto & entry : playlist->entries)
-        {
-            if (! strcmp (entry->filename, filename))
-            {
-                playlist->set_entry_tuple (entry.get (), Tuple ());
-                playlist->queue_update (Metadata, entry->number, 1);
-                queue = true;
-            }
-        }
-
-        if (queue)
+        if (playlist->reset_tuple_of_file (filename))
         {
             playlist->scan_status = PlaylistData::ScanActive;
             restart = true;
@@ -1369,7 +1300,6 @@ void playlist_load_state ()
            playlist_num >= 0 && playlist_num < playlists.len ())
     {
         PlaylistData * playlist = playlists[playlist_num].get ();
-        int entries = playlist->entries.len ();
 
         parser.next ();
 
@@ -1381,8 +1311,9 @@ void playlist_load_state ()
         if (parser.get_int ("position", position))
             parser.next ();
 
-        if (position >= 0 && position < entries)
-            playlist->set_position (playlist->entries [position].get (), true);
+        PlaylistEntry * entry;
+        if ((entry = playlist->entry_at (position)))
+            playlist->set_position (entry, true);
 
         /* resume state is stored per-playlist for historical reasons */
         int resume_state = ResumePlay;
@@ -1409,7 +1340,7 @@ void playlist_load_state ()
     for (auto & playlist : playlists)
     {
         int focus = playlist->position ();
-        if (focus < 0 && playlist->entries.len ())
+        if (focus < 0 && playlist->n_entries ())
             focus = 0;
 
         if (focus >= 0)
