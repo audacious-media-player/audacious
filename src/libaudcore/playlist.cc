@@ -45,11 +45,12 @@ enum {
     ResumePause
 };
 
-/* playback hooks */
+/* update hooks */
 enum {
-    SetPlaylist   = (1 << 0),
-    PlaybackBegin = (1 << 1),
-    PlaybackStop  = (1 << 2)
+    SetActive     = (1 << 0),
+    SetPlaying    = (1 << 1),
+    PlaybackBegin = (1 << 2),
+    PlaybackStop  = (1 << 3)
 };
 
 enum class UpdateState {
@@ -121,7 +122,7 @@ static bool resume_paused = false;
 
 static QueuedFunc queued_update;
 static Playlist::UpdateLevel update_level;
-static int update_playback_hooks;
+static int update_hooks;
 static UpdateState update_state;
 
 struct ScanItem : public ListNode
@@ -190,10 +191,10 @@ static void update (void *)
             position_change_list.append (p->id ());
     }
 
-    int hooks = update_playback_hooks;
+    int hooks = update_hooks;
     auto level = update_level;
 
-    update_playback_hooks = 0;
+    update_hooks = 0;
     update_level = Playlist::NoUpdate;
     update_state = UpdateState::None;
 
@@ -202,7 +203,9 @@ static void update (void *)
     for (PlaylistEx playlist : position_change_list)
         hook_call ("playlist position", aud::to_ptr (playlist));
 
-    if ((hooks & SetPlaylist))
+    if ((hooks & SetActive))
+        hook_call ("playlist activate", nullptr);
+    if ((hooks & SetPlaying))
         hook_call ("playlist set playing", nullptr);
     if ((hooks & PlaybackBegin))
         hook_call ("playback begin", nullptr);
@@ -213,14 +216,14 @@ static void update (void *)
         hook_call ("playlist update", aud::to_ptr (level));
 }
 
-static void queue_playback_hooks (int hooks)
+static void queue_update_hooks (int hooks)
 {
     if ((hooks & PlaybackBegin))
-        update_playback_hooks &= ~PlaybackStop;
+        update_hooks &= ~PlaybackStop;
     if ((hooks & PlaybackStop))
-        update_playback_hooks &= ~PlaybackBegin;
+        update_hooks &= ~PlaybackBegin;
 
-    update_playback_hooks |= hooks;
+    update_hooks |= hooks;
 
     if (update_state < UpdateState::Queued)
     {
@@ -514,13 +517,13 @@ void pl_signal_position_changed (Playlist::ID * id)
         if (id->data->position () >= 0)
         {
             start_playback_locked (0, aud_drct_get_paused ());
-            queue_playback_hooks (PlaybackBegin);
+            queue_update_hooks (PlaybackBegin);
         }
         else
         {
             playing_id = nullptr;
             stop_playback_locked ();
-            queue_playback_hooks (SetPlaylist | PlaybackStop);
+            queue_update_hooks (SetPlaying | PlaybackStop);
         }
     }
 }
@@ -586,7 +589,7 @@ void playlist_init ()
     PlaylistData::update_formatter ();
 
     update_level = Playlist::NoUpdate;
-    update_playback_hooks = 0;
+    update_hooks = 0;
     update_state = UpdateState::None;
     scan_enabled = scan_enabled_nominal = false;
     scan_playlist = scan_row = 0;
@@ -833,9 +836,6 @@ EXPORT void Playlist::remove_playlist () const
 {
     ENTER_GET_PLAYLIST ();
 
-    bool was_active = false;
-    bool was_playing = false;
-
     int at = m_id->index;
     playlists.remove (at, 1);
 
@@ -848,27 +848,18 @@ EXPORT void Playlist::remove_playlist () const
     {
         int active_num = aud::min (at, playlists.len () - 1);
         active_id = playlists[active_num]->id ();
-        was_active = true;
+        queue_update_hooks (SetActive);
     }
 
     if (m_id == playing_id)
     {
         playing_id = nullptr;
         stop_playback_locked ();
-        was_playing = true;
+        queue_update_hooks (SetPlaying | PlaybackStop);
     }
 
     queue_global_update (Structure);
     LEAVE;
-
-    if (was_active)
-        hook_call ("playlist activate", nullptr);
-
-    if (was_playing)
-    {
-        hook_call ("playlist set playing", nullptr);
-        hook_call ("playback stop", nullptr);
-    }
 }
 
 EXPORT void Playlist::set_filename (const char * filename) const
@@ -925,18 +916,13 @@ EXPORT void Playlist::activate () const
 {
     ENTER_GET_PLAYLIST ();
 
-    bool changed = false;
-
     if (m_id != active_id)
     {
         active_id = m_id;
-        changed = true;
+        queue_update_hooks (SetActive);
     }
 
     LEAVE;
-
-    if (changed)
-        hook_call ("playlist activate", nullptr);
 }
 
 EXPORT Playlist Playlist::active_playlist ()
@@ -949,13 +935,14 @@ EXPORT Playlist Playlist::active_playlist ()
 EXPORT Playlist Playlist::new_playlist ()
 {
     ENTER;
+
     int at = active_id->index + 1;
     auto id = insert_playlist_locked (at);
-    active_id = id;
-    LEAVE;
 
-    hook_call ("playlist activate", nullptr);
-    return Playlist (id);
+    active_id = id;
+    queue_update_hooks (SetActive);
+
+    RETURN (Playlist (id));
 }
 
 static void set_playing_locked (Playlist::ID * id, bool paused)
@@ -981,12 +968,12 @@ static void set_playing_locked (Playlist::ID * id, bool paused)
     if (id)
     {
         start_playback_locked (id->data->resume_time, paused);
-        queue_playback_hooks (SetPlaylist | PlaybackBegin);
+        queue_update_hooks (SetPlaying | PlaybackBegin);
     }
     else
     {
         stop_playback_locked ();
-        queue_playback_hooks (SetPlaylist | PlaybackStop);
+        queue_update_hooks (SetPlaying | PlaybackStop);
     }
 }
 
