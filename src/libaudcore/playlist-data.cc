@@ -111,6 +111,7 @@ void PlaylistData::delete_entry (PlaylistEntry * entry) // static
 
 PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
     modified (true),
+    position_changed (false),
     scan_status (NotScanning),
     title (title),
     resume_time (0),

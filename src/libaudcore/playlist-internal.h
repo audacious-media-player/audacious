@@ -37,7 +37,9 @@ struct DecodeInfo
 class PlaylistEx : public Playlist
 {
 public:
-    PlaylistEx (Playlist playlist = Playlist ()) :
+    PlaylistEx (Playlist::ID * id = nullptr) :
+        Playlist (id) {}
+    PlaylistEx (Playlist playlist) :
         Playlist (playlist) {}
 
     int stamp () const;

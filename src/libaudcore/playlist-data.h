@@ -141,6 +141,7 @@ private:
 
 public:
     bool modified;
+    bool position_changed;
     ScanStatus scan_status;
     String filename, title;
     int resume_time;
