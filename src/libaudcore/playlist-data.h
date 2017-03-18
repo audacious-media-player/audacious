@@ -64,6 +64,11 @@ struct PlaylistData
         ScanEnding
     };
 
+    struct CompareData {
+        Playlist::StringCompareFunc filename_compare;
+        Playlist::TupleCompareFunc tuple_compare;
+    };
+
     PlaylistData (Playlist::ID * m_id, const char * title);
     ~PlaylistData ();
 
@@ -87,6 +92,14 @@ struct PlaylistData
     void select_all (bool selected);
     int shift_entries (int entry_num, int distance);
     void remove_selected (bool & position_changed, int & next_song_hint);
+
+    void sort (const CompareData & data);
+    void sort_selected (const CompareData & data);
+
+    void reverse_order ();
+    void randomize_order ();
+    void reverse_selected ();
+    void randomize_selected ();
 
     void set_position (PlaylistEntry * entry, bool update_shuffle);
     PlaylistEntry * find_unselected_focus ();

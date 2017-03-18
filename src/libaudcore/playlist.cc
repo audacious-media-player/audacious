@@ -1143,133 +1143,29 @@ EXPORT void Playlist::remove_selected () const
 EXPORT void Playlist::reverse_order () const
 {
     ENTER_GET_PLAYLIST ();
-
-    int entries = playlist->entries.len ();
-
-    for (int i = 0; i < entries / 2; i ++)
-        std::swap (playlist->entries[i], playlist->entries[entries - 1 - i]);
-
-    playlist->number_entries (0, entries);
-    playlist->queue_update (Structure, 0, entries);
+    playlist->reverse_order ();
     LEAVE;
 }
 
 EXPORT void Playlist::reverse_selected () const
 {
     ENTER_GET_PLAYLIST ();
-
-    int entries = playlist->entries.len ();
-
-    int top = 0;
-    int bottom = entries - 1;
-
-    while (1)
-    {
-        while (top < bottom && ! playlist->entries[top]->selected)
-            top ++;
-        while (top < bottom && ! playlist->entries[bottom]->selected)
-            bottom --;
-
-        if (top >= bottom)
-            break;
-
-        std::swap (playlist->entries[top ++], playlist->entries[bottom --]);
-    }
-
-    playlist->number_entries (0, entries);
-    playlist->queue_update (Structure, 0, entries);
+    playlist->reverse_selected ();
     LEAVE;
 }
 
 EXPORT void Playlist::randomize_order () const
 {
     ENTER_GET_PLAYLIST ();
-
-    int entries = playlist->entries.len ();
-
-    for (int i = 0; i < entries; i ++)
-        std::swap (playlist->entries[i], playlist->entries[rand () % entries]);
-
-    playlist->number_entries (0, entries);
-    playlist->queue_update (Structure, 0, entries);
+    playlist->randomize_order ();
     LEAVE;
 }
 
 EXPORT void Playlist::randomize_selected () const
 {
     ENTER_GET_PLAYLIST ();
-
-    int entries = playlist->entries.len ();
-
-    Index<PlaylistEntry *> selected;
-
-    for (auto & entry : playlist->entries)
-    {
-        if (entry->selected)
-            selected.append (entry.get ());
-    }
-
-    int n_selected = selected.len ();
-
-    for (int i = 0; i < n_selected; i ++)
-    {
-        int a = selected[i]->number;
-        int b = selected[rand () % n_selected]->number;
-        std::swap (playlist->entries[a], playlist->entries[b]);
-    }
-
-    playlist->number_entries (0, entries);
-    playlist->queue_update (Structure, 0, entries);
+    playlist->randomize_selected ();
     LEAVE;
-}
-
-enum {COMPARE_TYPE_FILENAME, COMPARE_TYPE_TUPLE, COMPARE_TYPE_TITLE};
-
-struct CompareData {
-    Playlist::StringCompareFunc filename_compare;
-    Playlist::TupleCompareFunc tuple_compare;
-};
-
-static void sort_entries (Index<SmartPtr<PlaylistEntry>> & entries, CompareData * data)
-{
-    entries.sort ([data] (const SmartPtr<PlaylistEntry> & a, const SmartPtr<PlaylistEntry> & b) {
-        if (data->filename_compare)
-            return data->filename_compare (a->filename, b->filename);
-        else
-            return data->tuple_compare (a->tuple, b->tuple);
-    });
-}
-
-static void sort (PlaylistData * playlist, CompareData * data)
-{
-    sort_entries (playlist->entries, data);
-    playlist->number_entries (0, playlist->entries.len ());
-    playlist->queue_update (Playlist::Structure, 0, playlist->entries.len ());
-}
-
-static void sort_selected (PlaylistData * playlist, CompareData * data)
-{
-    int entries = playlist->entries.len ();
-
-    Index<SmartPtr<PlaylistEntry>> selected;
-
-    for (auto & entry : playlist->entries)
-    {
-        if (entry->selected)
-            selected.append (std::move (entry));
-    }
-
-    sort_entries (selected, data);
-
-    int i = 0;
-    for (auto & entry : playlist->entries)
-    {
-        if (! entry)
-            entry = std::move (selected[i ++]);
-    }
-
-    playlist->number_entries (0, entries);
-    playlist->queue_update (Playlist::Structure, 0, entries);
 }
 
 static bool entries_are_scanned (PlaylistData * playlist, bool selected)
@@ -1293,10 +1189,7 @@ static bool entries_are_scanned (PlaylistData * playlist, bool selected)
 EXPORT void Playlist::sort_by_filename (StringCompareFunc compare) const
 {
     ENTER_GET_PLAYLIST ();
-
-    CompareData data = {compare};
-    sort (playlist, & data);
-
+    playlist->sort ({compare, nullptr});
     LEAVE;
 }
 
@@ -1304,9 +1197,8 @@ EXPORT void Playlist::sort_by_tuple (TupleCompareFunc compare) const
 {
     ENTER_GET_PLAYLIST ();
 
-    CompareData data = {nullptr, compare};
     if (entries_are_scanned (playlist, false))
-        sort (playlist, & data);
+        playlist->sort ({nullptr, compare});
 
     LEAVE;
 }
@@ -1314,10 +1206,7 @@ EXPORT void Playlist::sort_by_tuple (TupleCompareFunc compare) const
 EXPORT void Playlist::sort_selected_by_filename (StringCompareFunc compare) const
 {
     ENTER_GET_PLAYLIST ();
-
-    CompareData data = {compare};
-    ::sort_selected (playlist, & data);
-
+    playlist->sort_selected ({compare, nullptr});
     LEAVE;
 }
 
@@ -1325,9 +1214,8 @@ EXPORT void Playlist::sort_selected_by_tuple (TupleCompareFunc compare) const
 {
     ENTER_GET_PLAYLIST ();
 
-    CompareData data = {nullptr, compare};
     if (entries_are_scanned (playlist, true))
-        ::sort_selected (playlist, & data);
+        playlist->sort_selected ({nullptr, compare});
 
     LEAVE;
 }

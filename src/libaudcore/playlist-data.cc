@@ -19,6 +19,8 @@
 
 #include "playlist-data.h"
 
+#include <stdlib.h>
+
 #include "runtime.h"
 #include "tuple-compiler.h"
 
@@ -450,6 +452,120 @@ void PlaylistData::remove_selected (bool & position_changed, int & next_song_hin
     queue_update (Playlist::Structure, before, n_entries - after - before, update_flags);
 
     next_song_hint = n_entries - after;
+}
+
+static void sort_entries (Index<SmartPtr<PlaylistEntry>> & entries, const PlaylistData::CompareData & data)
+{
+    entries.sort ([data] (const SmartPtr<PlaylistEntry> & a, const SmartPtr<PlaylistEntry> & b) {
+        if (data.filename_compare)
+            return data.filename_compare (a->filename, b->filename);
+        else
+            return data.tuple_compare (a->tuple, b->tuple);
+    });
+}
+
+void PlaylistData::sort (const CompareData & data)
+{
+    sort_entries (entries, data);
+
+    number_entries (0, entries.len ());
+    queue_update (Playlist::Structure, 0, entries.len ());
+}
+
+void PlaylistData::sort_selected (const CompareData & data)
+{
+    int n_entries = entries.len ();
+
+    Index<SmartPtr<PlaylistEntry>> selected;
+
+    for (auto & entry : entries)
+    {
+        if (entry->selected)
+            selected.append (std::move (entry));
+    }
+
+    sort_entries (selected, data);
+
+    int i = 0;
+    for (auto & entry : entries)
+    {
+        if (! entry)
+            entry = std::move (selected[i ++]);
+    }
+
+    number_entries (0, n_entries);
+    queue_update (Playlist::Structure, 0, n_entries);
+}
+
+void PlaylistData::reverse_order ()
+{
+    int n_entries = entries.len ();
+
+    for (int i = 0; i < n_entries / 2; i ++)
+        std::swap (entries[i], entries[n_entries - 1 - i]);
+
+    number_entries (0, n_entries);
+    queue_update (Playlist::Structure, 0, n_entries);
+}
+
+void PlaylistData::reverse_selected ()
+{
+    int n_entries = entries.len ();
+
+    int top = 0;
+    int bottom = n_entries - 1;
+
+    while (1)
+    {
+        while (top < bottom && ! entries[top]->selected)
+            top ++;
+        while (top < bottom && ! entries[bottom]->selected)
+            bottom --;
+
+        if (top >= bottom)
+            break;
+
+        std::swap (entries[top ++], entries[bottom --]);
+    }
+
+    number_entries (0, n_entries);
+    queue_update (Playlist::Structure, 0, n_entries);
+}
+
+void PlaylistData::randomize_order ()
+{
+    int n_entries = entries.len ();
+
+    for (int i = 0; i < n_entries; i ++)
+        std::swap (entries[i], entries[rand () % n_entries]);
+
+    number_entries (0, n_entries);
+    queue_update (Playlist::Structure, 0, n_entries);
+}
+
+void PlaylistData::randomize_selected ()
+{
+    int n_entries = entries.len ();
+
+    Index<PlaylistEntry *> selected;
+
+    for (auto & entry : entries)
+    {
+        if (entry->selected)
+            selected.append (entry.get ());
+    }
+
+    int n_selected = selected.len ();
+
+    for (int i = 0; i < n_selected; i ++)
+    {
+        int a = selected[i]->number;
+        int b = selected[rand () % n_selected]->number;
+        std::swap (entries[a], entries[b]);
+    }
+
+    number_entries (0, n_entries);
+    queue_update (Playlist::Structure, 0, n_entries);
 }
 
 void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)
