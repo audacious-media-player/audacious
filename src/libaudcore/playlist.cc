@@ -444,12 +444,12 @@ static PlaylistEntry * get_entry (Playlist::ID * id, int entry_num,
 {
     bool scan_started = false;
 
-    if (! id)
-        return nullptr;
-
     while (1)
     {
-        PlaylistEntry * entry = id->data ? id->data->lookup_entry (entry_num) : nullptr;
+        if (! id || ! id->data)
+            return nullptr;
+
+        PlaylistEntry * entry = id->data->lookup_entry (entry_num);
 
         // check whether entry was deleted; also blacklist stdin
         if (! entry || ! strncmp (entry->filename, "stdin://", 8))
