@@ -186,13 +186,11 @@ static void update (void *)
 
     for (auto & p : playlists)
     {
-        if (p->position_changed)
-        {
-            position_change_list.append (p->id ());
-            p->position_changed = false;
-        }
+        bool position_changed = false;
+        p->swap_updates (position_changed);
 
-        p->swap_updates ();
+        if (position_changed)
+            position_change_list.append (p->id ());
     }
 
     int hooks = update_playback_hooks;
@@ -216,17 +214,6 @@ static void update (void *)
 
     if (level != Playlist::NoUpdate)
         hook_call ("playlist update", aud::to_ptr (level));
-}
-
-static void queue_position_change (PlaylistData * playlist)
-{
-    playlist->position_changed = true;
-
-    if (update_state < UpdateState::Queued)
-    {
-        queued_update.queue (update, nullptr);
-        update_state = UpdateState::Queued;
-    }
 }
 
 static void queue_playback_hooks (int hooks)
@@ -517,6 +504,30 @@ void pl_signal_entry_deleted (PlaylistEntry * entry)
     scan_cancel (entry);
 }
 
+void pl_signal_position_changed (Playlist::ID * id)
+{
+    if (update_state < UpdateState::Queued)
+    {
+        queued_update.queue (update, nullptr);
+        update_state = UpdateState::Queued;
+    }
+
+    if (id == playing_id)
+    {
+        if (id->data->position () >= 0)
+        {
+            start_playback_locked (0, aud_drct_get_paused ());
+            queue_playback_hooks (PlaybackBegin);
+        }
+        else
+        {
+            playing_id = nullptr;
+            stop_playback_locked ();
+            queue_playback_hooks (SetPlaylist | PlaybackStop);
+        }
+    }
+}
+
 void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, int flags)
 {
     auto playlist = id->data;
@@ -610,11 +621,15 @@ void playlist_end ()
 
 EXPORT int Playlist::n_entries () const
     { SIMPLE_WRAPPER (int, 0, n_entries); }
+EXPORT void Playlist::remove_entries (int at, int number) const
+    { SIMPLE_VOID_WRAPPER (remove_entries, at, number); }
 EXPORT String Playlist::entry_filename (int entry_num) const
     { SIMPLE_WRAPPER (String, String (), entry_filename, entry_num); }
 
 EXPORT int Playlist::get_position () const
     { SIMPLE_WRAPPER (int, -1, position); }
+EXPORT void Playlist::set_position (int entry_num) const
+    { SIMPLE_VOID_WRAPPER (set_position, entry_num); }
 EXPORT int Playlist::get_focus () const
     { SIMPLE_WRAPPER (int, -1, focus); }
 EXPORT void Playlist::set_focus (int entry_num) const
@@ -629,6 +644,8 @@ EXPORT void Playlist::select_all (bool selected) const
     { SIMPLE_VOID_WRAPPER (select_all, selected); }
 EXPORT int Playlist::shift_entries (int entry_num, int distance) const
     { SIMPLE_WRAPPER (int, 0, shift_entries, entry_num, distance); }
+EXPORT void Playlist::remove_selected () const
+    { SIMPLE_VOID_WRAPPER (remove_selected); }
 
 EXPORT void Playlist::sort_by_filename (StringCompareFunc compare) const
     { SIMPLE_VOID_WRAPPER (sort, {compare, nullptr}); }
@@ -674,6 +691,11 @@ EXPORT Playlist::Update Playlist::update_detail () const
 
 void PlaylistEx::insert_flat_items (int at, Index<PlaylistAddItem> && items) const
     { SIMPLE_VOID_WRAPPER (insert_items, at, std::move (items)); }
+
+bool PlaylistEx::prev_song () const
+    { SIMPLE_WRAPPER (bool, false, prev_song); }
+bool PlaylistEx::next_song (bool repeat) const
+    { SIMPLE_WRAPPER (bool, false, next_song, repeat); }
 
 EXPORT int Playlist::index () const
 {
@@ -922,13 +944,8 @@ static void set_playing_locked (Playlist::ID * id, bool paused)
         playing_id->data->resume_time = aud_drct_get_time ();
 
     /* is there anything to play? */
-    if (id && id->data->position () < 0)
-    {
-        if (id->data->next_song (true, 0))
-            queue_position_change (id->data);
-        else
-            id = nullptr;
-    }
+    if (id && id->data->position () < 0 && ! id->data->next_song (true))
+        id = nullptr;
 
     playing_id = id;
 
@@ -997,40 +1014,6 @@ EXPORT Playlist Playlist::temporary_playlist ()
     RETURN (Playlist (id));
 }
 
-// updates playback state (while locked) if playlist position was changed
-static void change_playback (Playlist::ID * id)
-{
-    queue_position_change (id->data);
-
-    if (id == playing_id)
-    {
-        if (id->data->position () >= 0)
-        {
-            start_playback_locked (0, aud_drct_get_paused ());
-            queue_playback_hooks (PlaybackBegin);
-        }
-        else
-        {
-            playing_id = nullptr;
-            stop_playback_locked ();
-            queue_playback_hooks (SetPlaylist | PlaybackStop);
-        }
-    }
-}
-
-EXPORT void Playlist::remove_entries (int at, int number) const
-{
-    ENTER_GET_PLAYLIST ();
-
-    bool position_changed = false;
-    playlist->remove_entries (at, number, position_changed);
-
-    if (position_changed)
-        change_playback (m_id);
-
-    LEAVE;
-}
-
 EXPORT PluginHandle * Playlist::entry_decoder (int entry_num, GetMode mode, String * error) const
 {
     ENTER_GET_PLAYLIST (nullptr);
@@ -1045,30 +1028,6 @@ EXPORT Tuple Playlist::entry_tuple (int entry_num, GetMode mode, String * error)
     wait_for_entry (playlist, entry_num, false, (mode == Wait));
     Tuple tuple = playlist->entry_tuple (entry_num, error);
     RETURN (tuple);
-}
-
-EXPORT void Playlist::set_position (int entry_num) const
-{
-    ENTER_GET_PLAYLIST ();
-
-    auto entry = playlist->entry_at (entry_num);
-    playlist->set_position (entry, true);
-    change_playback (m_id);
-
-    LEAVE;
-}
-
-EXPORT void Playlist::remove_selected () const
-{
-    ENTER_GET_PLAYLIST ();
-
-    bool position_changed = false;
-    playlist->remove_selected (position_changed);
-
-    if (position_changed)
-        change_playback (m_id);
-
-    LEAVE;
 }
 
 static void playlist_reformat_titles (void *, void *)
@@ -1131,33 +1090,6 @@ EXPORT void Playlist::rescan_file (const char * filename)
         scan_restart ();
 
     LEAVE;
-}
-
-bool PlaylistEx::prev_song () const
-{
-    ENTER_GET_PLAYLIST (false);
-
-    if (! playlist->prev_song ())
-        RETURN (false);
-
-    change_playback (m_id);
-
-    LEAVE;
-    return true;
-}
-
-bool PlaylistEx::next_song (bool repeat) const
-{
-    ENTER_GET_PLAYLIST (false);
-
-    int hint = playlist->position () + 1; // 0 if -1
-    if (! playlist->next_song (repeat, hint))
-        RETURN (false);
-
-    change_playback (m_id);
-
-    LEAVE;
-    return true;
 }
 
 // called from playback thread
@@ -1289,11 +1221,10 @@ void playlist_load_state ()
 
         int position = -1;
         if (parser.get_int ("position", position))
+        {
+            playlist->set_position (position);
             parser.next ();
-
-        PlaylistEntry * entry;
-        if ((entry = playlist->entry_at (position)))
-            playlist->set_position (entry, true);
+        }
 
         /* resume state is stored per-playlist for historical reasons */
         int resume_state = ResumePlay;
@@ -1330,7 +1261,6 @@ void playlist_load_state ()
         }
 
         playlist->cancel_updates ();
-        playlist->position_changed = false;
     }
 
     queued_update.stop ();

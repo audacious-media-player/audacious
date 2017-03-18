@@ -58,10 +58,10 @@ public:
     Tuple entry_tuple (int i, String * error = nullptr) const;
 
     void cancel_updates ();
-    void swap_updates ();
+    void swap_updates (bool & position_changed);
 
     void insert_items (int at, Index<PlaylistAddItem> && items);
-    void remove_entries (int at, int number, bool & position_changed);
+    void remove_entries (int at, int number);
 
     int position () const;
     int focus () const;
@@ -74,7 +74,7 @@ public:
     void select_entry (int entry_num, bool selected);
     void select_all (bool selected);
     int shift_entries (int entry_num, int distance);
-    void remove_selected (bool & position_changed);
+    void remove_selected ();
 
     void sort (const CompareData & data);
     void sort_selected (const CompareData & data);
@@ -92,10 +92,10 @@ public:
     void queue_remove (int at, int number);
     void queue_remove_selected ();
 
-    void set_position (PlaylistEntry * entry, bool update_shuffle);
+    void set_position (int entry_num);
 
     bool prev_song ();
-    bool next_song (bool repeat, int hint);
+    bool next_song (bool repeat);
 
     int next_unscanned_entry (int entry_num) const;
     bool entry_needs_rescan (PlaylistEntry * entry, bool need_decoder, bool need_tuple);
@@ -129,19 +129,23 @@ private:
     void number_entries (int at, int length);
     void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
     void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
+    void queue_position_change ();
 
     static void sort_entries (Index<EntryPtr> & entries, const CompareData & data);
+
+    void set_position (PlaylistEntry * entry, bool update_shuffle);
 
     bool shuffle_prev ();
     bool shuffle_next ();
     void shuffle_reset ();
+
+    bool next_song_with_hint (bool repeat, int hint);
 
     PlaylistEntry * find_unselected_focus ();
     PlaylistEntry * queue_pop ();
 
 public:
     bool modified;
-    bool position_changed;
     ScanStatus scan_status;
     String filename, title;
     int resume_time;
@@ -155,10 +159,12 @@ private:
     Index<PlaylistEntry *> m_queued;
     int64_t m_total_length, m_selected_length;
     Playlist::Update m_last_update, m_next_update;
+    bool m_position_changed;
 };
 
 /* callbacks or "signals" (in the QObject sense) */
 void pl_signal_entry_deleted (PlaylistEntry * entry);
+void pl_signal_position_changed (Playlist::ID * id);
 void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, int flags);
 void pl_signal_playlist_deleted (Playlist::ID * id);
 

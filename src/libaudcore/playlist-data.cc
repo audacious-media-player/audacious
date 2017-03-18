@@ -111,7 +111,6 @@ void PlaylistData::delete_entry (PlaylistEntry * entry) // static
 
 PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
     modified (true),
-    position_changed (false),
     scan_status (NotScanning),
     title (title),
     resume_time (0),
@@ -123,7 +122,8 @@ PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
     m_total_length (0),
     m_selected_length (0),
     m_last_update (),
-    m_next_update () {}
+    m_next_update (),
+    m_position_changed (false) {}
 
 PlaylistData::~PlaylistData ()
 {
@@ -200,16 +200,25 @@ void PlaylistData::queue_update (Playlist::UpdateLevel level, int at, int count,
     pl_signal_update_queued (m_id, level, flags);
 }
 
+void PlaylistData::queue_position_change ()
+{
+    m_position_changed = true;
+    pl_signal_position_changed (m_id);
+}
+
 void PlaylistData::cancel_updates ()
 {
     m_last_update = Playlist::Update ();
     m_next_update = Playlist::Update ();
+    m_position_changed = false;
 }
 
-void PlaylistData::swap_updates ()
+void PlaylistData::swap_updates (bool & position_changed)
 {
     m_last_update = m_next_update;
     m_next_update = Playlist::Update ();
+    position_changed = m_position_changed;
+    m_position_changed = false;
 }
 
 void PlaylistData::insert_items (int at, Index<PlaylistAddItem> && items)
@@ -236,9 +245,10 @@ void PlaylistData::insert_items (int at, Index<PlaylistAddItem> && items)
     queue_update (Playlist::Structure, at, n_items);
 }
 
-void PlaylistData::remove_entries (int at, int number, bool & position_changed)
+void PlaylistData::remove_entries (int at, int number)
 {
     int n_entries = m_entries.len ();
+    bool position_changed = false;
     int update_flags = 0;
 
     if (at < 0 || at > n_entries)
@@ -286,8 +296,13 @@ void PlaylistData::remove_entries (int at, int number, bool & position_changed)
     number_entries (at, n_entries - at - number);
     queue_update (Playlist::Structure, at, 0, update_flags);
 
-    if (aud_get_bool (nullptr, "advance_on_delete"))
-        next_song (aud_get_bool (nullptr, "repeat"), at);
+    if (position_changed)
+    {
+        if (aud_get_bool (nullptr, "advance_on_delete"))
+            next_song_with_hint (aud_get_bool (nullptr, "repeat"), at);
+
+        queue_position_change ();
+    }
 }
 
 int PlaylistData::position () const
@@ -478,12 +493,13 @@ int PlaylistData::shift_entries (int entry_num, int distance)
     return shift;
 }
 
-void PlaylistData::remove_selected (bool & position_changed)
+void PlaylistData::remove_selected ()
 {
     if (! m_selected_count)
         return;
 
     int n_entries = m_entries.len ();
+    bool position_changed = false;
     int update_flags = 0;
 
     if (m_position && m_position->selected)
@@ -533,8 +549,13 @@ void PlaylistData::remove_selected (bool & position_changed)
     number_entries (before, n_entries - before);
     queue_update (Playlist::Structure, before, n_entries - after - before, update_flags);
 
-    if (aud_get_bool (nullptr, "advance_on_delete"))
-        next_song (aud_get_bool (nullptr, "repeat"), n_entries - after);
+    if (position_changed)
+    {
+        if (aud_get_bool (nullptr, "advance_on_delete"))
+            next_song_with_hint (aud_get_bool (nullptr, "repeat"), n_entries - after);
+
+        queue_position_change ();
+    }
 }
 
 void PlaylistData::sort_entries (Index<EntryPtr> & entries, const CompareData & data) // static
@@ -767,6 +788,12 @@ void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)
         entry->shuffle_num = ++ m_last_shuffle_num;
 }
 
+void PlaylistData::set_position (int entry_num)
+{
+    set_position (entry_at (entry_num), true);
+    queue_position_change ();
+}
+
 bool PlaylistData::shuffle_prev ()
 {
     PlaylistEntry * found = nullptr;
@@ -886,17 +913,24 @@ void PlaylistData::shuffle_reset ()
 bool PlaylistData::prev_song ()
 {
     if (aud_get_bool (nullptr, "shuffle"))
-        return shuffle_prev ();
+    {
+        if (! shuffle_prev ())
+            return false;
+    }
+    else
+    {
+        int pos = position ();
+        if (pos < 1)
+            return false;
 
-    int pos = position ();
-    if (pos < 1)
-        return false;
+        set_position (m_entries[pos - 1].get (), true);
+    }
 
-    set_position (m_entries[pos - 1].get (), true);
+    queue_position_change ();
     return true;
 }
 
-bool PlaylistData::next_song (bool repeat, int hint)
+bool PlaylistData::next_song_with_hint (bool repeat, int hint)
 {
     int n_entries = m_entries.len ();
     if (! n_entries)
@@ -931,6 +965,15 @@ bool PlaylistData::next_song (bool repeat, int hint)
     }
 
     set_position (m_entries[hint].get (), true);
+    return true;
+}
+
+bool PlaylistData::next_song (bool repeat)
+{
+    if (! next_song_with_hint (repeat, position () + 1)) // -1 becomes 0
+        return false;
+
+    queue_position_change ();
     return true;
 }
 
