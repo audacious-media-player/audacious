@@ -588,7 +588,7 @@ void playlist_init ()
     update_level = Playlist::NoUpdate;
     update_playback_hooks = 0;
     update_state = UpdateState::None;
-    scan_enabled = false;
+    scan_enabled = scan_enabled_nominal = false;
     scan_playlist = scan_row = 0;
 
     LEAVE;
@@ -627,6 +627,7 @@ void playlist_end ()
 
     /* playback should already be stopped */
     assert (! playing_id);
+    assert (! scan_list.head ());
 
     queued_update.stop ();
 
