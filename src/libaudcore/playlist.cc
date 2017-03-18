@@ -179,10 +179,7 @@ static void update (void *)
     ENTER;
 
     for (auto & p : playlists)
-    {
-        p->last_update = p->next_update;
-        p->next_update = Playlist::Update ();
-    }
+        p->swap_updates ();
 
     auto level = update_level;
     update_level = Playlist::NoUpdate;
@@ -221,21 +218,21 @@ static void queue_global_update (Playlist::UpdateLevel level, int flags = 0)
 EXPORT bool Playlist::update_pending () const
 {
     ENTER_GET_PLAYLIST (false);
-    bool pending = playlist->next_update.level ? true : false;
+    bool pending = playlist->update_pending ();
     RETURN (pending);
 }
 
 EXPORT bool Playlist::update_pending_any ()
 {
     ENTER;
-    bool pending = update_level ? true : false;
+    bool pending = (update_level != Playlist::NoUpdate);
     RETURN (pending);
 }
 
 EXPORT Playlist::Update Playlist::update_detail () const
 {
     ENTER_GET_PLAYLIST (Update ());
-    Update update = playlist->last_update;
+    Update update = playlist->last_update ();
     RETURN (update);
 }
 
@@ -2211,8 +2208,7 @@ void playlist_load_state ()
             playlist->selected_length = focus->length;
         }
 
-        playlist->next_update = Playlist::Update ();
-        playlist->last_update = Playlist::Update ();
+        playlist->cancel_updates ();
     }
 
     queued_update.stop ();

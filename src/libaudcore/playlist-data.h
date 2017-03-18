@@ -65,10 +65,15 @@ struct PlaylistData
     PlaylistEntry * lookup_entry (int i);
 
     void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
+    void cancel_updates ();
+    void swap_updates ();
+
     void set_position (PlaylistEntry * entry, bool update_shuffle);
     PlaylistEntry * find_unselected_focus ();
 
     Playlist::ID * id () const { return m_id; }
+    const Playlist::Update & last_update () const { return m_last_update; }
+    bool update_pending () const { return m_next_update.level != Playlist::NoUpdate; }
 
     Playlist::ID * m_id;
     bool modified, scanning, scan_ending;
@@ -79,7 +84,7 @@ struct PlaylistData
     int last_shuffle_num;
     Index<PlaylistEntry *> queued;
     int64_t total_length, selected_length;
-    Playlist::Update next_update, last_update;
+    Playlist::Update m_last_update, m_next_update;
     int resume_time;
 };
 

@@ -98,8 +98,8 @@ PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
     last_shuffle_num (0),
     total_length (0),
     selected_length (0),
-    next_update (),
-    last_update (),
+    m_last_update (),
+    m_next_update (),
     resume_time (0) {}
 
 PlaylistData::~PlaylistData ()
@@ -133,23 +133,35 @@ PlaylistEntry * PlaylistData::lookup_entry (int i)
 
 void PlaylistData::queue_update (Playlist::UpdateLevel level, int at, int count, int flags)
 {
-    if (next_update.level)
+    if (m_next_update.level)
     {
-        next_update.level = aud::max (next_update.level, level);
-        next_update.before = aud::min (next_update.before, at);
-        next_update.after = aud::min (next_update.after, entries.len () - at - count);
+        m_next_update.level = aud::max (m_next_update.level, level);
+        m_next_update.before = aud::min (m_next_update.before, at);
+        m_next_update.after = aud::min (m_next_update.after, entries.len () - at - count);
     }
     else
     {
-        next_update.level = level;
-        next_update.before = at;
-        next_update.after = entries.len () - at - count;
+        m_next_update.level = level;
+        m_next_update.before = at;
+        m_next_update.after = entries.len () - at - count;
     }
 
     if ((flags & QueueChanged))
-        next_update.queue_changed = true;
+        m_next_update.queue_changed = true;
 
     pl_signal_update_queued (m_id, level, flags);
+}
+
+void PlaylistData::cancel_updates ()
+{
+    m_last_update = Playlist::Update ();
+    m_next_update = Playlist::Update ();
+}
+
+void PlaylistData::swap_updates ()
+{
+    m_last_update = m_next_update;
+    m_next_update = Playlist::Update ();
 }
 
 void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)
