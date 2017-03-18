@@ -691,7 +691,7 @@ static Playlist::ID * insert_playlist_locked (int at, int stamp = -1)
     if (! active_id)
         active_id = id;
 
-    id->data->queue_update (Playlist::Structure, 0, 0);
+    queue_global_update (Playlist::Structure);
 
     return id;
 }
@@ -1172,24 +1172,17 @@ bool PlaylistEx::next_song (bool repeat) const
     return true;
 }
 
-static PlaylistEntry * get_playback_entry (int serial)
-{
-    if (! playback_check_serial (serial))
-        return nullptr;
-
-    auto playlist = playing_id->data;
-    return playlist->entry_at (playlist->position ());
-}
-
 // called from playback thread
 DecodeInfo playback_entry_read (int serial)
 {
     ENTER;
     DecodeInfo dec;
-    PlaylistEntry * entry;
 
-    if ((entry = get_playback_entry (serial)))
+    if (playback_check_serial (serial))
     {
+        auto playlist = playing_id->data;
+        auto entry = playlist->entry_at (playlist->position ());
+
         ScanItem * item = scan_list_find_entry (entry);
         assert (item && item->for_playback);
 
@@ -1200,8 +1193,11 @@ DecodeInfo playback_entry_read (int serial)
         request->run ();
         ENTER;
 
-        if ((entry = get_playback_entry (serial)))
+        if (playback_check_serial (serial))
         {
+            playlist = playing_id->data;
+            entry = playlist->entry_at (playlist->position ());
+
             playback_set_info (entry->number, entry->tuple.ref ());
             art_cache_current (entry->filename, std::move (request->image_data),
              std::move (request->image_file));
@@ -1222,14 +1218,9 @@ DecodeInfo playback_entry_read (int serial)
 void playback_entry_set_tuple (int serial, Tuple && tuple)
 {
     ENTER;
-    PlaylistEntry * entry = get_playback_entry (serial);
 
-    /* don't update cuesheet entries with stream metadata */
-    if (entry && ! entry->tuple.is_set (Tuple::StartTime))
-    {
-        playing_id->data->set_entry_tuple (entry, std::move (tuple));
-        playing_id->data->queue_update (Playlist::Metadata, entry->number, 1);
-    }
+    if (playback_check_serial (serial))
+        playing_id->data->update_playback_entry (std::move (tuple));
 
     LEAVE;
 }

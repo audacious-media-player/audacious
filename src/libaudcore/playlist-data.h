@@ -76,9 +76,6 @@ struct PlaylistData
     PlaylistEntry * entry_at (int i);
     const PlaylistEntry * entry_at (int i) const;
 
-    void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
-
-    void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
     void cancel_updates ();
     void swap_updates ();
 
@@ -121,6 +118,7 @@ struct PlaylistData
 
     int next_unscanned_entry (int entry_num) const;
     void update_entry_from_scan (PlaylistEntry * entry, ScanRequest * request, int update_flags);
+    void update_playback_entry (Tuple && tuple);
 
     void reformat_titles ();
     void reset_tuples (bool selected_only);
@@ -128,6 +126,8 @@ struct PlaylistData
 
 private:
     void number_entries (int at, int length);
+    void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
+    void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
 
     bool shuffle_prev ();
     bool shuffle_next ();
@@ -139,7 +139,7 @@ private:
 public:
     Playlist::ID * id () const { return m_id; }
 
-    int n_entries () const { return entries.len (); }
+    int n_entries () const { return m_entries.len (); }
     int n_queued () const { return m_queued.len (); }
 
     int64_t total_length () const { return m_total_length; }
@@ -148,18 +148,20 @@ public:
     const Playlist::Update & last_update () const { return m_last_update; }
     bool update_pending () const { return m_next_update.level != Playlist::NoUpdate; }
 
-    Playlist::ID * m_id;
     bool modified;
     ScanStatus scan_status;
     String filename, title;
-    Index<SmartPtr<PlaylistEntry>> entries;
+    int resume_time;
+
+private:
+    Playlist::ID * m_id;
+    Index<SmartPtr<PlaylistEntry>> m_entries;
     PlaylistEntry * m_position, * m_focus;
     int m_selected_count;
     int m_last_shuffle_num;
     Index<PlaylistEntry *> m_queued;
     int64_t m_total_length, m_selected_length;
     Playlist::Update m_last_update, m_next_update;
-    int resume_time;
 };
 
 /* callbacks or "signals" (in the QObject sense) */
