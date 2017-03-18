@@ -615,6 +615,22 @@ void playlist_enable_scan (bool enable)
     LEAVE;
 }
 
+void playlist_clear_updates ()
+{
+    ENTER;
+
+    /* clear updates queued during init sequence */
+    for (auto & playlist : playlists)
+        playlist->cancel_updates ();
+
+    queued_update.stop ();
+    update_level = Playlist::NoUpdate;
+    update_hooks = 0;
+    update_state = UpdateState::None;
+
+    LEAVE;
+}
+
 void playlist_end ()
 {
     hook_dissociate ("set generic_title_format", pl_hook_reformat_titles);
@@ -1210,8 +1226,6 @@ void playlist_load_state ()
     fclose (handle);
 
     /* set initial focus and selection */
-    /* clear updates queued during init sequence */
-
     for (auto & playlist : playlists)
     {
         int focus = playlist->position ();
@@ -1223,13 +1237,7 @@ void playlist_load_state ()
             playlist->set_focus (focus);
             playlist->select_entry (focus, true);
         }
-
-        playlist->cancel_updates ();
     }
-
-    queued_update.stop ();
-    update_level = Playlist::NoUpdate;
-    update_state = UpdateState::None;
 
     LEAVE;
 }
