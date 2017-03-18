@@ -142,8 +142,6 @@ static void scan_finish (ScanRequest * request);
 static void scan_cancel (PlaylistEntry * entry);
 static void scan_restart ();
 
-static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
-
 static void playlist_reformat_titles (void * = nullptr, void * = nullptr);
 static void playlist_trigger_scan (void * = nullptr, void * = nullptr);
 
@@ -849,7 +847,7 @@ static int set_playing_locked (Playlist::ID * id, bool paused)
     /* is there anything to play? */
     if (id && id->data->position () < 0)
     {
-        if (next_song_locked (id->data, true, 0))
+        if (id->data->next_song (true, 0))
             playback_hooks |= SetPosition;
         else
             id = nullptr;
@@ -989,7 +987,7 @@ EXPORT void Playlist::remove_entries (int at, int number) const
     if (position_changed)
     {
         if (aud_get_bool (nullptr, "advance_on_delete"))
-            next_song_locked (playlist, aud_get_bool (nullptr, "repeat"), at);
+            playlist->next_song (aud_get_bool (nullptr, "repeat"), at);
 
         playback_hooks = change_playback (m_id);
     }
@@ -1115,7 +1113,7 @@ EXPORT void Playlist::remove_selected () const
     if (position_changed)
     {
         if (aud_get_bool (nullptr, "advance_on_delete"))
-            next_song_locked (playlist, aud_get_bool (nullptr, "repeat"), next_song_hint);
+            playlist->next_song (aud_get_bool (nullptr, "repeat"), next_song_hint);
 
         playback_hooks = change_playback (m_id);
     }
@@ -1359,19 +1357,8 @@ bool PlaylistEx::prev_song () const
 {
     ENTER_GET_PLAYLIST (false);
 
-    if (aud_get_bool (nullptr, "shuffle"))
-    {
-        if (! playlist->shuffle_prev ())
-            RETURN (false);
-    }
-    else
-    {
-        int pos = playlist->position ();
-        if (pos < 1)
-            RETURN (false);
-
-        playlist->set_position (playlist->entries[pos - 1].get (), true);
-    }
+    if (! playlist->prev_song ())
+        RETURN (false);
 
     int hooks = change_playback (m_id);
 
@@ -1381,53 +1368,12 @@ bool PlaylistEx::prev_song () const
     return true;
 }
 
-static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint)
-{
-    int entries = playlist->entries.len ();
-    if (! entries)
-        return false;
-
-    PlaylistEntry * entry;
-    if ((entry = playlist->queue_pop ()))
-    {
-        playlist->set_position (entry, true);
-    }
-    else if (aud_get_bool (nullptr, "shuffle"))
-    {
-        if (! playlist->shuffle_next ())
-        {
-            if (! repeat)
-                return false;
-
-            playlist->shuffle_reset ();
-
-            if (! playlist->shuffle_next ())
-                return false;
-        }
-    }
-    else
-    {
-        if (hint >= entries)
-        {
-            if (! repeat)
-                return false;
-
-            hint = 0;
-        }
-
-        playlist->set_position (playlist->entries[hint].get (), true);
-    }
-
-    return true;
-}
-
 bool PlaylistEx::next_song (bool repeat) const
 {
     ENTER_GET_PLAYLIST (false);
 
     int hint = playlist->position () + 1; // 0 if -1
-
-    if (! next_song_locked (playlist, repeat, hint))
+    if (! playlist->next_song (repeat, hint))
         RETURN (false);
 
     int hooks = change_playback (m_id);

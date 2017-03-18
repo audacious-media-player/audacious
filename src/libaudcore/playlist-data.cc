@@ -108,19 +108,6 @@ PlaylistData::~PlaylistData ()
     pl_signal_playlist_deleted (m_id);
 }
 
-void PlaylistData::set_entry_tuple (PlaylistEntry * entry, Tuple && tuple)
-{
-    m_total_length -= entry->length;
-    if (entry->selected)
-        m_selected_length -= entry->length;
-
-    entry->set_tuple (std::move (tuple));
-
-    m_total_length += entry->length;
-    if (entry->selected)
-        m_selected_length += entry->length;
-}
-
 void PlaylistData::number_entries (int at, int length)
 {
     for (int i = at; i < at + length; i ++)
@@ -135,6 +122,19 @@ PlaylistEntry * PlaylistData::lookup_entry (int i)
 const PlaylistEntry * PlaylistData::lookup_entry (int i) const
 {
     return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
+}
+
+void PlaylistData::set_entry_tuple (PlaylistEntry * entry, Tuple && tuple)
+{
+    m_total_length -= entry->length;
+    if (entry->selected)
+        m_selected_length -= entry->length;
+
+    entry->set_tuple (std::move (tuple));
+
+    m_total_length += entry->length;
+    if (entry->selected)
+        m_selected_length += entry->length;
 }
 
 void PlaylistData::queue_update (Playlist::UpdateLevel level, int at, int count, int flags)
@@ -711,20 +711,6 @@ void PlaylistData::queue_remove_selected ()
         queue_update (Playlist::Selection, first, last + 1 - first, QueueChanged);
 }
 
-PlaylistEntry * PlaylistData::queue_pop ()
-{
-    if (! m_queued.len ())
-        return nullptr;
-
-    auto entry = m_queued[0];
-    m_queued.remove (0, 1);
-    entry->queued = false;
-
-    queue_update (Playlist::Selection, entry->number, 1, QueueChanged);
-
-    return entry;
-}
-
 void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)
 {
     m_position = entry;
@@ -851,6 +837,57 @@ void PlaylistData::shuffle_reset ()
         entry->shuffle_num = 0;
 }
 
+bool PlaylistData::prev_song ()
+{
+    if (aud_get_bool (nullptr, "shuffle"))
+        return shuffle_prev ();
+
+    int pos = position ();
+    if (pos < 1)
+        return false;
+
+    set_position (entries[pos - 1].get (), true);
+    return true;
+}
+
+bool PlaylistData::next_song (bool repeat, int hint)
+{
+    int n_entries = entries.len ();
+    if (! n_entries)
+        return false;
+
+    PlaylistEntry * entry;
+    if ((entry = queue_pop ()))
+    {
+        set_position (entry, true);
+        return true;
+    }
+
+    if (aud_get_bool (nullptr, "shuffle"))
+    {
+        if (shuffle_next ())
+            return true;
+
+        if (! repeat)
+            return false;
+
+        shuffle_reset ();
+
+        return shuffle_next ();
+    }
+
+    if (hint < 0 || hint >= n_entries)
+    {
+        if (! repeat)
+            return false;
+
+        hint = 0;
+    }
+
+    set_position (entries[hint].get (), true);
+    return true;
+}
+
 PlaylistEntry * PlaylistData::find_unselected_focus ()
 {
     if (! m_focus || ! m_focus->selected)
@@ -871,4 +908,18 @@ PlaylistEntry * PlaylistData::find_unselected_focus ()
     }
 
     return nullptr;
+}
+
+PlaylistEntry * PlaylistData::queue_pop ()
+{
+    if (! m_queued.len ())
+        return nullptr;
+
+    auto entry = m_queued[0];
+    m_queued.remove (0, 1);
+    entry->queued = false;
+
+    queue_update (Playlist::Selection, entry->number, 1, QueueChanged);
+
+    return entry;
 }

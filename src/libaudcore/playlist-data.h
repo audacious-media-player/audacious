@@ -72,11 +72,10 @@ struct PlaylistData
     PlaylistData (Playlist::ID * m_id, const char * title);
     ~PlaylistData ();
 
-    void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
-    void number_entries (int at, int length);
-
     PlaylistEntry * lookup_entry (int i);
     const PlaylistEntry * lookup_entry (int i) const;
+
+    void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
 
     void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
     void cancel_updates ();
@@ -114,15 +113,22 @@ struct PlaylistData
     void queue_remove (int at, int number);
     void queue_remove_selected ();
 
-    PlaylistEntry * queue_pop ();
     void set_position (PlaylistEntry * entry, bool update_shuffle);
+
+    bool prev_song ();
+    bool next_song (bool repeat, int hint);
+
+private:
+    void number_entries (int at, int length);
 
     bool shuffle_prev ();
     bool shuffle_next ();
     void shuffle_reset ();
 
     PlaylistEntry * find_unselected_focus ();
+    PlaylistEntry * queue_pop ();
 
+public:
     Playlist::ID * id () const { return m_id; }
 
     int n_entries () const { return entries.len (); }
