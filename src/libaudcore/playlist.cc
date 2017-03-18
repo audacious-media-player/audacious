@@ -482,10 +482,13 @@ static void start_playback_locked (int seek_time, bool pause)
 
     playback_play (seek_time, pause);
 
+    auto playlist = playing_id->data;
+    auto entry = playlist->lookup_entry (playlist->position ());
+
     // playback always begins with a rescan of the current entry in order to
     // open the file, ensure a valid tuple, and read album art
-    scan_cancel (playing_id->data->position);
-    scan_queue_entry (playing_id->data, playing_id->data->position, true);
+    scan_cancel (entry);
+    scan_queue_entry (playlist, entry, true);
 }
 
 static void stop_playback_locked ()
@@ -503,15 +506,21 @@ void pl_signal_entry_deleted (PlaylistEntry * entry)
 
 void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, int flags)
 {
+    auto playlist = id->data;
+
     if (level == Playlist::Structure)
-        id->data->scan_status = PlaylistData::ScanActive;
+        playlist->scan_status = PlaylistData::ScanActive;
 
     if (level >= Playlist::Metadata)
     {
-        if (id == playing_id && id->data->position)
-            playback_set_info (id->data->position->number, id->data->position->tuple.ref ());
+        int pos = playlist->position ();
+        if (id == playing_id && pos >= 0)
+        {
+            auto entry = playlist->lookup_entry (pos);
+            playback_set_info (pos, entry->tuple.ref ());
+        }
 
-        id->data->modified = true;
+        playlist->modified = true;
     }
 
     queue_global_update (level, flags);
@@ -838,7 +847,7 @@ static int set_playing_locked (Playlist::ID * id, bool paused)
         playing_id->data->resume_time = aud_drct_get_time ();
 
     /* is there anything to play? */
-    if (id && ! id->data->position)
+    if (id && id->data->position () < 0)
     {
         if (next_song_locked (id->data, true, 0))
             playback_hooks |= SetPosition;
@@ -938,7 +947,7 @@ static int change_playback (Playlist::ID * id)
 
     if (id == playing_id)
     {
-        if (id->data->position)
+        if (id->data->position () >= 0)
         {
             start_playback_locked (0, aud_drct_get_paused ());
             hooks |= PlaybackBegin;
@@ -1040,45 +1049,21 @@ EXPORT void Playlist::set_position (int entry_num) const
 EXPORT int Playlist::get_position () const
 {
     ENTER_GET_PLAYLIST (-1);
-    int position = playlist->position ? playlist->position->number : -1;
+    int position = playlist->position ();
     RETURN (position);
 }
 
 EXPORT void Playlist::set_focus (int entry_num) const
 {
     ENTER_GET_PLAYLIST ();
-
-    PlaylistEntry * new_focus = playlist->lookup_entry (entry_num);
-    if (new_focus == playlist->focus)
-        RETURN ();
-
-    int first = INT_MAX;
-    int last = -1;
-
-    if (playlist->focus)
-    {
-        first = aud::min (first, playlist->focus->number);
-        last = aud::max (last, playlist->focus->number);
-    }
-
-    playlist->focus = new_focus;
-
-    if (playlist->focus)
-    {
-        first = aud::min (first, playlist->focus->number);
-        last = aud::max (last, playlist->focus->number);
-    }
-
-    if (first <= last)
-        playlist->queue_update (Selection, first, last + 1 - first);
-
+    playlist->set_focus (entry_num);
     LEAVE;
 }
 
 EXPORT int Playlist::get_focus () const
 {
     ENTER_GET_PLAYLIST (-1);
-    int focus = playlist->focus ? playlist->focus->number : -1;
+    int focus = playlist->focus ();
     RETURN (focus);
 }
 
@@ -1370,40 +1355,22 @@ EXPORT void Playlist::queue_remove_selected () const
     LEAVE;
 }
 
-static bool shuffle_prev (PlaylistData * playlist)
-{
-    PlaylistEntry * found = nullptr;
-
-    for (auto & entry : playlist->entries)
-    {
-        if (entry->shuffle_num && (! playlist->position ||
-         entry->shuffle_num < playlist->position->shuffle_num) && (! found
-         || entry->shuffle_num > found->shuffle_num))
-            found = entry.get ();
-    }
-
-    if (! found)
-        return false;
-
-    playlist->set_position (found, false);
-    return true;
-}
-
 bool PlaylistEx::prev_song () const
 {
     ENTER_GET_PLAYLIST (false);
 
     if (aud_get_bool (nullptr, "shuffle"))
     {
-        if (! shuffle_prev (playlist))
+        if (! playlist->shuffle_prev ())
             RETURN (false);
     }
     else
     {
-        if (! playlist->position || playlist->position->number == 0)
+        int pos = playlist->position ();
+        if (pos < 1)
             RETURN (false);
 
-        playlist->set_position (playlist->entries[playlist->position->number - 1].get (), true);
+        playlist->set_position (playlist->entries[pos - 1].get (), true);
     }
 
     int hooks = change_playback (m_id);
@@ -1412,101 +1379,6 @@ bool PlaylistEx::prev_song () const
 
     call_playback_hooks (* this, hooks);
     return true;
-}
-
-static bool shuffle_next (PlaylistData * playlist)
-{
-    bool by_album = aud_get_bool (nullptr, "album_shuffle");
-
-    // helper #1: determine whether two entries are in the same album
-    auto same_album = [] (const Tuple & a, const Tuple & b)
-    {
-        String album = a.get_str (Tuple::Album);
-        return (album && album == b.get_str (Tuple::Album));
-    };
-
-    // helper #2: determine whether an entry is among the shuffle choices
-    auto is_choice = [&] (PlaylistEntry * prev, PlaylistEntry * entry)
-    {
-        return (! entry->shuffle_num) && (! by_album || ! prev ||
-         prev->shuffle_num || ! same_album (prev->tuple, entry->tuple));
-    };
-
-    if (playlist->position)
-    {
-        // step #1: check to see if the shuffle order is already established
-        PlaylistEntry * next = nullptr;
-
-        for (auto & entry : playlist->entries)
-        {
-            if (entry->shuffle_num > playlist->position->shuffle_num &&
-             (! next || entry->shuffle_num < next->shuffle_num))
-                next = entry.get ();
-        }
-
-        if (next)
-        {
-            playlist->set_position (next, false);
-            return true;
-        }
-
-        // step #2: check to see if we should advance to the next entry
-        if (by_album && playlist->position->number + 1 < playlist->entries.len ())
-        {
-            next = playlist->entries[playlist->position->number + 1].get ();
-
-            if (! next->shuffle_num && same_album (playlist->position->tuple, next->tuple))
-            {
-                playlist->set_position (next, true);
-                return true;
-            }
-        }
-    }
-
-    // step #3: count the number of possible shuffle choices
-    int choices = 0;
-    PlaylistEntry * prev = nullptr;
-
-    for (auto & entry : playlist->entries)
-    {
-        if (is_choice (prev, entry.get ()))
-            choices ++;
-
-        prev = entry.get ();
-    }
-
-    if (! choices)
-        return false;
-
-    // step #4: pick one of those choices by random and find it again
-    choices = rand () % choices;
-    prev = nullptr;
-
-    for (auto & entry : playlist->entries)
-    {
-        if (is_choice (prev, entry.get ()))
-        {
-            if (! choices)
-            {
-                playlist->set_position (entry.get (), true);
-                return true;
-            }
-
-            choices --;
-        }
-
-        prev = entry.get ();
-    }
-
-    return false;  // never reached
-}
-
-static void shuffle_reset (PlaylistData * playlist)
-{
-    playlist->last_shuffle_num = 0;
-
-    for (auto & entry : playlist->entries)
-        entry->shuffle_num = 0;
 }
 
 static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint)
@@ -1522,14 +1394,14 @@ static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint)
     }
     else if (aud_get_bool (nullptr, "shuffle"))
     {
-        if (! shuffle_next (playlist))
+        if (! playlist->shuffle_next ())
         {
             if (! repeat)
                 return false;
 
-            shuffle_reset (playlist);
+            playlist->shuffle_reset ();
 
-            if (! shuffle_next (playlist))
+            if (! playlist->shuffle_next ())
                 return false;
         }
     }
@@ -1553,7 +1425,7 @@ bool PlaylistEx::next_song (bool repeat) const
 {
     ENTER_GET_PLAYLIST (false);
 
-    int hint = playlist->position ? playlist->position->number + 1 : 0;
+    int hint = playlist->position () + 1; // 0 if -1
 
     if (! next_song_locked (playlist, repeat, hint))
         RETURN (false);
@@ -1571,7 +1443,8 @@ static PlaylistEntry * get_playback_entry (int serial)
     if (! playback_check_serial (serial))
         return nullptr;
 
-    return playing_id->data->position;
+    auto playlist = playing_id->data;
+    return playlist->lookup_entry (playlist->position ());
 }
 
 // called from playback thread
@@ -1652,7 +1525,7 @@ void playlist_save_state ()
         if (playlist->filename)
             fprintf (handle, "filename %s\n", (const char *) playlist->filename);
 
-        fprintf (handle, "position %d\n", playlist->position ? playlist->position->number : -1);
+        fprintf (handle, "position %d\n", playlist->position ());
 
         /* resume state is stored per-playlist for historical reasons */
         bool is_playing = (playlist->id () == playing_id);
@@ -1732,14 +1605,14 @@ void playlist_load_state ()
 
     for (auto & playlist : playlists)
     {
-        PlaylistEntry * focus = playlist->position;
-        if (! focus && playlist->entries.len ())
-            focus = playlist->entries[0].get ();
+        int focus = playlist->position ();
+        if (focus < 0 && playlist->entries.len ())
+            focus = 0;
 
-        if (focus)
+        if (focus >= 0)
         {
-            playlist->focus = focus;
-            playlist->select_entry (focus->number, true);
+            playlist->set_focus (focus);
+            playlist->select_entry (focus, true);
         }
 
         playlist->cancel_updates ();

@@ -93,10 +93,10 @@ PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
     modified (true),
     scan_status (NotScanning),
     title (title),
-    position (nullptr),
-    focus (nullptr),
+    m_position (nullptr),
+    m_focus (nullptr),
     m_selected_count (0),
-    last_shuffle_num (0),
+    m_last_shuffle_num (0),
     m_total_length (0),
     m_selected_length (0),
     m_last_update (),
@@ -204,20 +204,20 @@ void PlaylistData::remove_entries (int at, int number, bool & position_changed)
     if (number < 0 || number > n_entries - at)
         number = n_entries - at;
 
-    if (position && position->number >= at && position->number < at + number)
+    if (m_position && m_position->number >= at && m_position->number < at + number)
     {
         set_position (nullptr, false);
         position_changed = true;
     }
 
-    if (focus && focus->number >= at && focus->number < at + number)
+    if (m_focus && m_focus->number >= at && m_focus->number < at + number)
     {
         if (at + number < n_entries)
-            focus = entries[at + number].get ();
+            m_focus = entries[at + number].get ();
         else if (at > 0)
-            focus = entries[at - 1].get ();
+            m_focus = entries[at - 1].get ();
         else
-            focus = nullptr;
+            m_focus = nullptr;
     }
 
     for (int i = 0; i < number; i ++)
@@ -243,6 +243,16 @@ void PlaylistData::remove_entries (int at, int number, bool & position_changed)
 
     number_entries (at, n_entries - at - number);
     queue_update (Playlist::Structure, at, 0, update_flags);
+}
+
+int PlaylistData::position () const
+{
+    return m_position ? m_position->number : -1;
+}
+
+int PlaylistData::focus () const
+{
+    return m_focus ? m_focus->number : -1;
 }
 
 bool PlaylistData::entry_selected (int entry_num) const
@@ -274,6 +284,33 @@ int PlaylistData::n_selected (int at, int number) const
     }
 
     return n_selected;
+}
+
+void PlaylistData::set_focus (int entry_num)
+{
+    auto new_focus = lookup_entry (entry_num);
+    if (new_focus == m_focus)
+        return;
+
+    int first = entries.len ();
+    int last = -1;
+
+    if (m_focus)
+    {
+        first = aud::min (first, m_focus->number);
+        last = aud::max (last, m_focus->number);
+    }
+
+    m_focus = new_focus;
+
+    if (m_focus)
+    {
+        first = aud::min (first, m_focus->number);
+        last = aud::max (last, m_focus->number);
+    }
+
+    if (first <= last)
+        queue_update (Playlist::Selection, first, last + 1 - first);
 }
 
 void PlaylistData::select_entry (int entry_num, bool selected)
@@ -404,13 +441,13 @@ void PlaylistData::remove_selected (bool & position_changed, int & next_song_hin
     int n_entries = entries.len ();
     int update_flags = 0;
 
-    if (position && position->selected)
+    if (m_position && m_position->selected)
     {
         set_position (nullptr, false);
         position_changed = true;
     }
 
-    focus = find_unselected_focus ();
+    m_focus = find_unselected_focus ();
 
     int before = 0;  // number of entries before first selected
     int after = 0;   // number of entries after last selected
@@ -690,28 +727,144 @@ PlaylistEntry * PlaylistData::queue_pop ()
 
 void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)
 {
-    position = entry;
+    m_position = entry;
     resume_time = 0;
 
     /* move entry to top of shuffle list */
     if (entry && update_shuffle)
-        entry->shuffle_num = ++ last_shuffle_num;
+        entry->shuffle_num = ++ m_last_shuffle_num;
+}
+
+bool PlaylistData::shuffle_prev ()
+{
+    PlaylistEntry * found = nullptr;
+
+    for (auto & entry : entries)
+    {
+        if (entry->shuffle_num &&
+            (! m_position || entry->shuffle_num < m_position->shuffle_num) &&
+            (! found || entry->shuffle_num > found->shuffle_num))
+        {
+            found = entry.get ();
+        }
+    }
+
+    if (! found)
+        return false;
+
+    set_position (found, false);
+    return true;
+}
+
+bool PlaylistData::shuffle_next ()
+{
+    bool by_album = aud_get_bool (nullptr, "album_shuffle");
+
+    // helper #1: determine whether two entries are in the same album
+    auto same_album = [] (const Tuple & a, const Tuple & b)
+    {
+        String album = a.get_str (Tuple::Album);
+        return (album && album == b.get_str (Tuple::Album));
+    };
+
+    // helper #2: determine whether an entry is among the shuffle choices
+    auto is_choice = [&] (PlaylistEntry * prev, PlaylistEntry * entry)
+    {
+        return (! entry->shuffle_num) && (! by_album || ! prev ||
+         prev->shuffle_num || ! same_album (prev->tuple, entry->tuple));
+    };
+
+    if (m_position)
+    {
+        // step #1: check to see if the shuffle order is already established
+        PlaylistEntry * next = nullptr;
+
+        for (auto & entry : entries)
+        {
+            if (entry->shuffle_num > m_position->shuffle_num &&
+             (! next || entry->shuffle_num < next->shuffle_num))
+                next = entry.get ();
+        }
+
+        if (next)
+        {
+            set_position (next, false);
+            return true;
+        }
+
+        // step #2: check to see if we should advance to the next entry
+        if (by_album && m_position->number + 1 < entries.len ())
+        {
+            next = entries[m_position->number + 1].get ();
+
+            if (! next->shuffle_num && same_album (m_position->tuple, next->tuple))
+            {
+                set_position (next, true);
+                return true;
+            }
+        }
+    }
+
+    // step #3: count the number of possible shuffle choices
+    int choices = 0;
+    PlaylistEntry * prev = nullptr;
+
+    for (auto & entry : entries)
+    {
+        if (is_choice (prev, entry.get ()))
+            choices ++;
+
+        prev = entry.get ();
+    }
+
+    if (! choices)
+        return false;
+
+    // step #4: pick one of those choices by random and find it again
+    choices = rand () % choices;
+    prev = nullptr;
+
+    for (auto & entry : entries)
+    {
+        if (is_choice (prev, entry.get ()))
+        {
+            if (! choices)
+            {
+                set_position (entry.get (), true);
+                return true;
+            }
+
+            choices --;
+        }
+
+        prev = entry.get ();
+    }
+
+    return false;  // never reached
+}
+
+void PlaylistData::shuffle_reset ()
+{
+    m_last_shuffle_num = 0;
+
+    for (auto & entry : entries)
+        entry->shuffle_num = 0;
 }
 
 PlaylistEntry * PlaylistData::find_unselected_focus ()
 {
-    if (! focus || ! focus->selected)
-        return focus;
+    if (! m_focus || ! m_focus->selected)
+        return m_focus;
 
     int n_entries = entries.len ();
 
-    for (int search = focus->number + 1; search < n_entries; search ++)
+    for (int search = m_focus->number + 1; search < n_entries; search ++)
     {
         if (! entries[search]->selected)
             return entries[search].get ();
     }
 
-    for (int search = focus->number; search --;)
+    for (int search = m_focus->number; search --;)
     {
         if (! entries[search]->selected)
             return entries[search].get ();

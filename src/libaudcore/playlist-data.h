@@ -85,8 +85,13 @@ struct PlaylistData
     void insert_items (int at, Index<PlaylistAddItem> && items);
     void remove_entries (int at, int number, bool & position_changed);
 
+    int position () const;
+    int focus () const;
+
     bool entry_selected (int entry_num) const;
     int n_selected (int at, int number) const;
+
+    void set_focus (int entry_num);
 
     void select_entry (int entry_num, bool selected);
     void select_all (bool selected);
@@ -111,6 +116,11 @@ struct PlaylistData
 
     PlaylistEntry * queue_pop ();
     void set_position (PlaylistEntry * entry, bool update_shuffle);
+
+    bool shuffle_prev ();
+    bool shuffle_next ();
+    void shuffle_reset ();
+
     PlaylistEntry * find_unselected_focus ();
 
     Playlist::ID * id () const { return m_id; }
@@ -129,9 +139,9 @@ struct PlaylistData
     ScanStatus scan_status;
     String filename, title;
     Index<SmartPtr<PlaylistEntry>> entries;
-    PlaylistEntry * position, * focus;
+    PlaylistEntry * m_position, * m_focus;
     int m_selected_count;
-    int last_shuffle_num;
+    int m_last_shuffle_num;
     Index<PlaylistEntry *> m_queued;
     int64_t m_total_length, m_selected_length;
     Playlist::Update m_last_update, m_next_update;
