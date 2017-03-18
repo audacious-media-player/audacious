@@ -583,15 +583,15 @@ void playlist_init ()
 
     ENTER;
 
+    PlaylistData::update_formatter ();
+
     update_level = Playlist::NoUpdate;
+    update_playback_hooks = 0;
     update_state = UpdateState::None;
     scan_enabled = false;
     scan_playlist = scan_row = 0;
 
     LEAVE;
-
-    /* initialize title formatter */
-    pl_hook_reformat_titles (nullptr, nullptr);
 
     hook_associate ("set generic_title_format", pl_hook_reformat_titles, nullptr);
     hook_associate ("set leading_zero", pl_hook_reformat_titles, nullptr);
