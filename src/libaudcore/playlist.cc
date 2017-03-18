@@ -1310,14 +1310,14 @@ EXPORT void Playlist::rescan_file (const char * filename)
 EXPORT int64_t Playlist::total_length_ms () const
 {
     ENTER_GET_PLAYLIST (0);
-    int64_t length = playlist->total_length;
+    int64_t length = playlist->total_length ();
     RETURN (length);
 }
 
 EXPORT int64_t Playlist::selected_length_ms () const
 {
     ENTER_GET_PLAYLIST (0);
-    int64_t length = playlist->selected_length;
+    int64_t length = playlist->selected_length ();
     RETURN (length);
 }
 
@@ -1515,13 +1515,10 @@ static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint)
     if (! entries)
         return false;
 
-    if (playlist->queued.len ())
+    PlaylistEntry * entry;
+    if ((entry = playlist->queue_pop ()))
     {
-        playlist->set_position (playlist->queued[0], true);
-        playlist->queued.remove (0, 1);
-        playlist->position->queued = false;
-
-        playlist->queue_update (Playlist::Selection, playlist->position->number, 1, PlaylistData::QueueChanged);
+        playlist->set_position (entry, true);
     }
     else if (aud_get_bool (nullptr, "shuffle"))
     {
@@ -1741,10 +1738,8 @@ void playlist_load_state ()
 
         if (focus)
         {
-            focus->selected = true;
             playlist->focus = focus;
-            playlist->selected_count = 1;
-            playlist->selected_length = focus->length;
+            playlist->select_entry (focus->number, true);
         }
 
         playlist->cancel_updates ();

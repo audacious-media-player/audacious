@@ -109,12 +109,17 @@ struct PlaylistData
     void queue_remove (int at, int number);
     void queue_remove_selected ();
 
+    PlaylistEntry * queue_pop ();
     void set_position (PlaylistEntry * entry, bool update_shuffle);
     PlaylistEntry * find_unselected_focus ();
 
     Playlist::ID * id () const { return m_id; }
+
     int n_entries () const { return entries.len (); }
-    int n_queued () const { return queued.len (); }
+    int n_queued () const { return m_queued.len (); }
+
+    int64_t total_length () const { return m_total_length; }
+    int64_t selected_length () const { return m_selected_length; }
 
     const Playlist::Update & last_update () const { return m_last_update; }
     bool update_pending () const { return m_next_update.level != Playlist::NoUpdate; }
@@ -125,10 +130,10 @@ struct PlaylistData
     String filename, title;
     Index<SmartPtr<PlaylistEntry>> entries;
     PlaylistEntry * position, * focus;
-    int selected_count;
+    int m_selected_count;
     int last_shuffle_num;
-    Index<PlaylistEntry *> queued;
-    int64_t total_length, selected_length;
+    Index<PlaylistEntry *> m_queued;
+    int64_t m_total_length, m_selected_length;
     Playlist::Update m_last_update, m_next_update;
     int resume_time;
 };
