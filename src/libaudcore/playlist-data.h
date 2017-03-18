@@ -21,37 +21,14 @@
 #define PLAYLIST_DATA_H
 
 #include "playlist.h"
+#include "scanner.h"
 
 class TupleCompiler;
-struct ScanRequest;
+struct PlaylistEntry;
 
-struct PlaylistEntry
+class PlaylistData
 {
-    PlaylistEntry (PlaylistAddItem && item);
-    ~PlaylistEntry ();
-
-    void format ();
-    void set_tuple (Tuple && new_tuple);
-
-    static void update_formatting ();
-    static void cleanup ();
-
-    String filename;
-    PluginHandle * decoder;
-    Tuple tuple;
-    String error;
-    int number;
-    int length;
-    int shuffle_num;
-    bool selected, queued;
-
-private:
-    static TupleCompiler s_compiler;
-    static bool s_use_fallbacks;
-};
-
-struct PlaylistData
-{
+public:
     /* update flags */
     enum {
         QueueChanged  = (1 << 0),
@@ -75,6 +52,10 @@ struct PlaylistData
 
     PlaylistEntry * entry_at (int i);
     const PlaylistEntry * entry_at (int i) const;
+
+    String entry_filename (int i) const;
+    PluginHandle * entry_decoder (int i, String * error = nullptr) const;
+    Tuple entry_tuple (int i, String * error = nullptr) const;
 
     void cancel_updates ();
     void swap_updates ();
@@ -117,6 +98,9 @@ struct PlaylistData
     bool next_song (bool repeat, int hint);
 
     int next_unscanned_entry (int entry_num) const;
+    bool entry_needs_rescan (PlaylistEntry * entry, bool need_decoder, bool need_tuple);
+    ScanRequest * create_scan_request (PlaylistEntry * entry,
+     ScanRequest::Callback callback, bool for_playback);
     void update_entry_from_scan (PlaylistEntry * entry, ScanRequest * request, int update_flags);
     void update_playback_entry (Tuple && tuple);
 
@@ -124,19 +108,6 @@ struct PlaylistData
     void reset_tuples (bool selected_only);
     bool reset_tuple_of_file (const char * filename);
 
-private:
-    void number_entries (int at, int length);
-    void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
-    void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
-
-    bool shuffle_prev ();
-    bool shuffle_next ();
-    void shuffle_reset ();
-
-    PlaylistEntry * find_unselected_focus ();
-    PlaylistEntry * queue_pop ();
-
-public:
     Playlist::ID * id () const { return m_id; }
 
     int n_entries () const { return m_entries.len (); }
@@ -148,6 +119,27 @@ public:
     const Playlist::Update & last_update () const { return m_last_update; }
     bool update_pending () const { return m_next_update.level != Playlist::NoUpdate; }
 
+    static void update_formatter ();
+    static void cleanup_formatter ();
+
+private:
+    static void delete_entry (PlaylistEntry * entry);
+    typedef SmartPtr<PlaylistEntry, delete_entry> EntryPtr;
+
+    void number_entries (int at, int length);
+    void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
+    void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
+
+    static void sort_entries (Index<EntryPtr> & entries, const CompareData & data);
+
+    bool shuffle_prev ();
+    bool shuffle_next ();
+    void shuffle_reset ();
+
+    PlaylistEntry * find_unselected_focus ();
+    PlaylistEntry * queue_pop ();
+
+public:
     bool modified;
     ScanStatus scan_status;
     String filename, title;
@@ -155,7 +147,7 @@ public:
 
 private:
     Playlist::ID * m_id;
-    Index<SmartPtr<PlaylistEntry>> m_entries;
+    Index<EntryPtr> m_entries;
     PlaylistEntry * m_position, * m_focus;
     int m_selected_count;
     int m_last_shuffle_num;

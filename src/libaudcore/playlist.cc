@@ -132,7 +132,8 @@ static bool update_delayed;
 
 struct ScanItem : public ListNode
 {
-    ScanItem (PlaylistData * playlist, PlaylistEntry * entry, ScanRequest * request, bool for_playback) :
+    ScanItem (PlaylistData * playlist, PlaylistEntry * entry,
+     ScanRequest * request, bool for_playback) :
         playlist (playlist),
         entry (entry),
         request (request),
@@ -262,16 +263,7 @@ static ScanItem * scan_list_find_entry (PlaylistEntry * entry)
 
 static void scan_queue_entry (PlaylistData * playlist, PlaylistEntry * entry, bool for_playback = false)
 {
-    int flags = 0;
-    if (! entry->tuple.valid ())
-        flags |= SCAN_TUPLE;
-    if (for_playback)
-        flags |= (SCAN_IMAGE | SCAN_FILE);
-
-    /* scanner uses Tuple::AudioFile from existing tuple, if valid */
-    auto request = new ScanRequest (entry->filename, flags, scan_finish,
-     entry->decoder, (flags & SCAN_TUPLE) ? Tuple () : entry->tuple.ref ());
-
+    auto request = playlist->create_scan_request (entry, scan_finish, for_playback);
     scan_list.append (new ScanItem (playlist, entry, request, for_playback));
 
     /* playback entry will be scanned by the playback thread */
@@ -333,9 +325,7 @@ static bool scan_queue_next_entry ()
                     break;
 
                 auto entry = playlist->entry_at (scan_row);
-
-                // blacklist stdin
-                if (! scan_list_find_entry (entry) && strncmp (entry->filename, "stdin://", 8))
+                if (! scan_list_find_entry (entry))
                 {
                     scan_queue_entry (playlist, entry);
                     return true;
@@ -423,34 +413,26 @@ static void scan_restart ()
 }
 
 /* mutex may be unlocked during the call */
-static PlaylistEntry * get_entry (Playlist::ID * id, int entry_num,
- bool need_decoder, bool need_tuple)
+static void wait_for_entry (PlaylistData * playlist, int entry_num, bool need_decoder, bool need_tuple)
 {
     bool scan_started = false;
 
     while (1)
     {
-        if (! id || ! id->data)
-            return nullptr;
+        PlaylistEntry * entry = playlist->entry_at (entry_num);
 
-        PlaylistEntry * entry = id->data->entry_at (entry_num);
-
-        // check whether entry was deleted; also blacklist stdin
-        if (! entry || ! strncmp (entry->filename, "stdin://", 8))
-            return entry;
-
-        // check whether requested data (decoder and/or tuple) has been read
-        if ((! need_decoder || entry->decoder) && (! need_tuple || entry->tuple.valid ()))
-            return entry;
+        // check whether entry is deleted or has already been scanned
+        if (! entry || ! playlist->entry_needs_rescan (entry, need_decoder, need_tuple))
+            return;
 
         // start scan if not already running ...
         if (! scan_list_find_entry (entry))
         {
             // ... but only once
             if (scan_started)
-                return entry;
+                return;
 
-            scan_queue_entry (id->data, entry);
+            scan_queue_entry (playlist, entry);
         }
 
         // wait for scan to finish
@@ -499,10 +481,7 @@ void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, in
     {
         int pos = playlist->position ();
         if (id == playing_id && pos >= 0)
-        {
-            auto entry = playlist->entry_at (pos);
-            playback_set_info (pos, entry->tuple.ref ());
-        }
+            playback_set_info (pos, playlist->entry_tuple (pos));
 
         playlist->modified = true;
     }
@@ -577,13 +556,15 @@ void playlist_end ()
     playlists.clear ();
     id_table.clear ();
 
-    PlaylistEntry::cleanup ();
+    PlaylistData::cleanup_formatter ();
 
     LEAVE;
 }
 
 EXPORT int Playlist::n_entries () const
     { SIMPLE_WRAPPER (int, 0, n_entries); }
+EXPORT String Playlist::entry_filename (int entry_num) const
+    { SIMPLE_WRAPPER (String, String (), entry_filename, entry_num); }
 
 EXPORT int Playlist::get_position () const
     { SIMPLE_WRAPPER (int, -1, position); }
@@ -1022,36 +1003,19 @@ EXPORT void Playlist::remove_entries (int at, int number) const
     call_playback_hooks (* this, hooks);
 }
 
-EXPORT String Playlist::entry_filename (int entry_num) const
-{
-    ENTER_GET_ENTRY (String ());
-    String filename = entry->filename;
-    RETURN (filename);
-}
-
 EXPORT PluginHandle * Playlist::entry_decoder (int entry_num, GetMode mode, String * error) const
 {
-    ENTER;
-
-    PlaylistEntry * entry = get_entry (m_id, entry_num, (mode == Wait), false);
-    PluginHandle * decoder = entry ? entry->decoder : nullptr;
-
-    if (error)
-        * error = entry ? entry->error : String ();
-
+    ENTER_GET_PLAYLIST (nullptr);
+    wait_for_entry (playlist, entry_num, (mode == Wait), false);
+    PluginHandle * decoder = playlist->entry_decoder (entry_num, error);
     RETURN (decoder);
 }
 
 EXPORT Tuple Playlist::entry_tuple (int entry_num, GetMode mode, String * error) const
 {
-    ENTER;
-
-    PlaylistEntry * entry = get_entry (m_id, entry_num, false, (mode == Wait));
-    Tuple tuple = entry ? entry->tuple.ref () : Tuple ();
-
-    if (error)
-        * error = entry ? entry->error : String ();
-
+    ENTER_GET_PLAYLIST (Tuple ());
+    wait_for_entry (playlist, entry_num, false, (mode == Wait));
+    Tuple tuple = playlist->entry_tuple (entry_num, error);
     RETURN (tuple);
 }
 
@@ -1083,7 +1047,7 @@ static void playlist_reformat_titles (void *, void *)
 {
     ENTER;
 
-    PlaylistEntry::update_formatting ();
+    PlaylistData::update_formatter ();
 
     for (auto & playlist : playlists)
         playlist->reformat_titles ();
@@ -1195,14 +1159,15 @@ DecodeInfo playback_entry_read (int serial)
 
         if (playback_check_serial (serial))
         {
-            playlist = playing_id->data;
-            entry = playlist->entry_at (playlist->position ());
+            int pos = playlist->position ();
+            String filename = playlist->entry_filename (pos);
+            Tuple tuple = playlist->entry_tuple (pos);
 
-            playback_set_info (entry->number, entry->tuple.ref ());
-            art_cache_current (entry->filename, std::move (request->image_data),
+            playback_set_info (pos, std::move (tuple));
+            art_cache_current (filename, std::move (request->image_data),
              std::move (request->image_file));
 
-            dec.filename = entry->filename;
+            dec.filename = filename;
             dec.ip = request->ip;
             dec.file = std::move (request->file);
             dec.error = std::move (request->error);

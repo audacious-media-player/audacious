@@ -26,30 +26,37 @@
 #include "scanner.h"
 #include "tuple-compiler.h"
 
-TupleCompiler PlaylistEntry::s_compiler;
-bool PlaylistEntry::s_use_fallbacks = false;
+static TupleCompiler s_tuple_formatter;
+static bool s_use_tuple_fallbacks = false;
 
-void PlaylistEntry::update_formatting () // static
+struct PlaylistEntry
 {
-    s_compiler.compile (aud_get_str (nullptr, "generic_title_format"));
-    s_use_fallbacks = aud_get_bool (nullptr, "metadata_fallbacks");
-}
+    PlaylistEntry (PlaylistAddItem && item);
+    ~PlaylistEntry ();
 
-void PlaylistEntry::cleanup () // static
-{
-    s_compiler.reset ();
-}
+    void format ();
+    void set_tuple (Tuple && new_tuple);
+
+    String filename;
+    PluginHandle * decoder;
+    Tuple tuple;
+    String error;
+    int number;
+    int length;
+    int shuffle_num;
+    bool selected, queued;
+};
 
 void PlaylistEntry::format ()
 {
     tuple.delete_fallbacks ();
 
-    if (s_use_fallbacks)
+    if (s_use_tuple_fallbacks)
         tuple.generate_fallbacks ();
     else
         tuple.generate_title ();
 
-    s_compiler.format (tuple);
+    s_tuple_formatter.format (tuple);
 }
 
 void PlaylistEntry::set_tuple (Tuple && new_tuple)
@@ -90,6 +97,18 @@ PlaylistEntry::~PlaylistEntry ()
     pl_signal_entry_deleted (this);
 }
 
+void PlaylistData::update_formatter () // static
+{
+    s_tuple_formatter.compile (aud_get_str (nullptr, "generic_title_format"));
+    s_use_tuple_fallbacks = aud_get_bool (nullptr, "metadata_fallbacks");
+}
+
+void PlaylistData::cleanup_formatter () // static
+    { s_tuple_formatter.reset (); }
+
+void PlaylistData::delete_entry (PlaylistEntry * entry) // static
+    { delete entry; }
+
 PlaylistData::PlaylistData (Playlist::ID * id, const char * title) :
     modified (true),
     scan_status (NotScanning),
@@ -124,6 +143,26 @@ PlaylistEntry * PlaylistData::entry_at (int i)
 const PlaylistEntry * PlaylistData::entry_at (int i) const
 {
     return (i >= 0 && i < m_entries.len ()) ? m_entries[i].get () : nullptr;
+}
+
+String PlaylistData::entry_filename (int i) const
+{
+    auto entry = entry_at (i);
+    return entry ? entry->filename : String ();
+}
+
+PluginHandle * PlaylistData::entry_decoder (int i, String * error) const
+{
+    auto entry = entry_at (i);
+    if (error) * error = entry ? entry->error : String ();
+    return entry ? entry->decoder : nullptr;
+}
+
+Tuple PlaylistData::entry_tuple (int i, String * error) const
+{
+    auto entry = entry_at (i);
+    if (error) * error = entry ? entry->error : String ();
+    return entry ? entry->tuple.ref () : Tuple ();
 }
 
 void PlaylistData::set_entry_tuple (PlaylistEntry * entry, Tuple && tuple)
@@ -410,7 +449,7 @@ int PlaylistData::shift_entries (int entry_num, int distance)
             bottom = i;
     }
 
-    Index<SmartPtr<PlaylistEntry>> temp;
+    Index<EntryPtr> temp;
 
     for (int i = top; i < center; i ++)
     {
@@ -497,9 +536,9 @@ void PlaylistData::remove_selected (bool & position_changed)
         next_song (aud_get_bool (nullptr, "repeat"), n_entries - after);
 }
 
-static void sort_entries (Index<SmartPtr<PlaylistEntry>> & entries, const PlaylistData::CompareData & data)
+void PlaylistData::sort_entries (Index<EntryPtr> & entries, const CompareData & data) // static
 {
-    entries.sort ([data] (const SmartPtr<PlaylistEntry> & a, const SmartPtr<PlaylistEntry> & b) {
+    entries.sort ([data] (const EntryPtr & a, const EntryPtr & b) {
         if (data.filename_compare)
             return data.filename_compare (a->filename, b->filename);
         else
@@ -519,7 +558,7 @@ void PlaylistData::sort_selected (const CompareData & data)
 {
     int n_entries = m_entries.len ();
 
-    Index<SmartPtr<PlaylistEntry>> selected;
+    Index<EntryPtr> selected;
 
     for (auto & entry : m_entries)
     {
@@ -901,11 +940,30 @@ int PlaylistData::next_unscanned_entry (int entry_num) const
 
     for (; entry_num < m_entries.len (); entry_num ++)
     {
-        if (m_entries[entry_num]->tuple.state () == Tuple::Initial)
+        auto & entry = *m_entries[entry_num];
+
+        if (entry.tuple.state () == Tuple::Initial &&
+            strncmp (entry.filename, "stdin://", 8)) // blacklist stdin
+        {
             return entry_num;
+        }
     }
 
     return -1;
+}
+
+ScanRequest * PlaylistData::create_scan_request (PlaylistEntry * entry,
+ ScanRequest::Callback callback, bool for_playback)
+{
+    int flags = 0;
+    if (! entry->tuple.valid ())
+        flags |= SCAN_TUPLE;
+    if (for_playback)
+        flags |= (SCAN_IMAGE | SCAN_FILE);
+
+    /* scanner uses Tuple::AudioFile from existing tuple, if valid */
+    return new ScanRequest (entry->filename, flags, callback, entry->decoder,
+     (flags & SCAN_TUPLE) ? Tuple () : entry->tuple.ref ());
 }
 
 void PlaylistData::update_entry_from_scan (PlaylistEntry * entry, ScanRequest * request, int update_flags)
@@ -937,6 +995,15 @@ void PlaylistData::update_playback_entry (Tuple && tuple)
         set_entry_tuple (m_position, std::move (tuple));
         queue_update (Playlist::Metadata, m_position->number, 1);
     }
+}
+
+bool PlaylistData::entry_needs_rescan (PlaylistEntry * entry, bool need_decoder, bool need_tuple)
+{
+    if (! strncmp (entry->filename, "stdin://", 8)) // blacklist stdin
+        return false;
+
+    // check whether requested data (decoder and/or tuple) has been read
+    return (need_decoder && ! entry->decoder) || (need_tuple && ! entry->tuple.valid ());
 }
 
 void PlaylistData::reformat_titles ()
