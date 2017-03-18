@@ -547,6 +547,12 @@ void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, in
     queue_global_update (level, flags);
 }
 
+void pl_signal_rescan_needed (Playlist::ID * id)
+{
+    id->data->scan_status = PlaylistData::ScanActive;
+    scan_restart ();
+}
+
 void pl_signal_playlist_deleted (Playlist::ID * id)
 {
     /* break weak pointer link */
@@ -663,6 +669,11 @@ EXPORT void Playlist::randomize_order () const
     { SIMPLE_VOID_WRAPPER (randomize_order); }
 EXPORT void Playlist::randomize_selected () const
     { SIMPLE_VOID_WRAPPER (randomize_selected); }
+
+EXPORT void Playlist::rescan_all () const
+    { SIMPLE_VOID_WRAPPER (reset_tuples, false); }
+EXPORT void Playlist::rescan_selected () const
+    { SIMPLE_VOID_WRAPPER (reset_tuples, true); }
 
 EXPORT int64_t Playlist::total_length_ms () const
     { SIMPLE_WRAPPER (int64_t, 0, total_length); }
@@ -1050,44 +1061,12 @@ static void playlist_trigger_scan (void *, void *)
     LEAVE;
 }
 
-static void playlist_rescan_real (PlaylistData * playlist, bool selected_only)
-{
-    playlist->reset_tuples (selected_only);
-    playlist->scan_status = PlaylistData::ScanActive;
-    scan_restart ();
-}
-
-EXPORT void Playlist::rescan_all () const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist_rescan_real (playlist, false);
-    LEAVE;
-}
-
-EXPORT void Playlist::rescan_selected () const
-{
-    ENTER_GET_PLAYLIST ();
-    playlist_rescan_real (playlist, true);
-    LEAVE;
-}
-
 EXPORT void Playlist::rescan_file (const char * filename)
 {
     ENTER;
 
-    bool restart = false;
-
     for (auto & playlist : playlists)
-    {
-        if (playlist->reset_tuple_of_file (filename))
-        {
-            playlist->scan_status = PlaylistData::ScanActive;
-            restart = true;
-        }
-    }
-
-    if (restart)
-        scan_restart ();
+        playlist->reset_tuple_of_file (filename);
 
     LEAVE;
 }

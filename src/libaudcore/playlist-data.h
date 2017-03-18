@@ -106,7 +106,7 @@ public:
 
     void reformat_titles ();
     void reset_tuples (bool selected_only);
-    bool reset_tuple_of_file (const char * filename);
+    void reset_tuple_of_file (const char * filename);
 
     Playlist::ID * id () const { return m_id; }
 
@@ -166,6 +166,7 @@ private:
 void pl_signal_entry_deleted (PlaylistEntry * entry);
 void pl_signal_position_changed (Playlist::ID * id);
 void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, int flags);
+void pl_signal_rescan_needed (Playlist::ID * id);
 void pl_signal_playlist_deleted (Playlist::ID * id);
 
 #endif // PLAYLIST_DATA_H

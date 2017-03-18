@@ -1065,9 +1065,10 @@ void PlaylistData::reset_tuples (bool selected_only)
     }
 
     queue_update (Playlist::Metadata, 0, m_entries.len ());
+    pl_signal_rescan_needed (m_id);
 }
 
-bool PlaylistData::reset_tuple_of_file (const char * filename)
+void PlaylistData::reset_tuple_of_file (const char * filename)
 {
     bool found = false;
 
@@ -1081,7 +1082,8 @@ bool PlaylistData::reset_tuple_of_file (const char * filename)
         }
     }
 
-    return found;
+    if (found)
+        pl_signal_rescan_needed (m_id);
 }
 
 PlaylistEntry * PlaylistData::find_unselected_focus ()
