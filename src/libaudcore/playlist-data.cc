@@ -953,13 +953,11 @@ int PlaylistData::next_unscanned_entry (int entry_num) const
 }
 
 ScanRequest * PlaylistData::create_scan_request (PlaylistEntry * entry,
- ScanRequest::Callback callback, bool for_playback)
+ ScanRequest::Callback callback, int extra_flags)
 {
-    int flags = 0;
+    int flags = extra_flags;
     if (! entry->tuple.valid ())
         flags |= SCAN_TUPLE;
-    if (for_playback)
-        flags |= (SCAN_IMAGE | SCAN_FILE);
 
     /* scanner uses Tuple::AudioFile from existing tuple, if valid */
     return new ScanRequest (entry->filename, flags, callback, entry->decoder,

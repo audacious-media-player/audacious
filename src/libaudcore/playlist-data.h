@@ -100,7 +100,7 @@ public:
     int next_unscanned_entry (int entry_num) const;
     bool entry_needs_rescan (PlaylistEntry * entry, bool need_decoder, bool need_tuple);
     ScanRequest * create_scan_request (PlaylistEntry * entry,
-     ScanRequest::Callback callback, bool for_playback);
+     ScanRequest::Callback callback, int extra_flags);
     void update_entry_from_scan (PlaylistEntry * entry, ScanRequest * request, int update_flags);
     void update_playback_entry (Tuple && tuple);
 

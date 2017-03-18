@@ -31,19 +31,13 @@
 #include "drct.h"
 #include "hook.h"
 #include "i18n.h"
-#include "interface.h"
 #include "internal.h"
 #include "list.h"
 #include "mainloop.h"
 #include "multihash.h"
-#include "objects.h"
 #include "parse.h"
 #include "playlist-data.h"
-#include "plugins.h"
 #include "runtime.h"
-#include "scanner.h"
-#include "tuple.h"
-#include "tuple-compiler.h"
 
 enum {
     ResumeStop,
@@ -73,12 +67,6 @@ enum {
     ENTER; \
     PlaylistData * playlist = m_id ? m_id->data : nullptr; \
     if (! playlist) \
-        RETURN (__VA_ARGS__)
-
-#define ENTER_GET_ENTRY(...) \
-    ENTER_GET_PLAYLIST (__VA_ARGS__); \
-    PlaylistEntry * entry = playlist->entry_at (entry_num); \
-    if (! entry) \
         RETURN (__VA_ARGS__)
 
 #define SIMPLE_WRAPPER(type, failcode, func, ...) \
@@ -263,7 +251,9 @@ static ScanItem * scan_list_find_entry (PlaylistEntry * entry)
 
 static void scan_queue_entry (PlaylistData * playlist, PlaylistEntry * entry, bool for_playback = false)
 {
-    auto request = playlist->create_scan_request (entry, scan_finish, for_playback);
+    int extra_flags = for_playback ? (SCAN_IMAGE | SCAN_FILE) : 0;
+    auto request = playlist->create_scan_request (entry, scan_finish, extra_flags);
+
     scan_list.append (new ScanItem (playlist, entry, request, for_playback));
 
     /* playback entry will be scanned by the playback thread */
@@ -1058,10 +1048,8 @@ static void playlist_reformat_titles (void *, void *)
 static void playlist_trigger_scan (void *, void *)
 {
     ENTER;
-
     scan_enabled = scan_enabled_nominal && ! aud_get_bool (nullptr, "metadata_on_play");
     scan_restart ();
-
     LEAVE;
 }
 
@@ -1159,15 +1147,15 @@ DecodeInfo playback_entry_read (int serial)
 
         if (playback_check_serial (serial))
         {
+            assert (playlist == playing_id->data);
+
             int pos = playlist->position ();
-            String filename = playlist->entry_filename (pos);
-            Tuple tuple = playlist->entry_tuple (pos);
+            playback_set_info (pos, playlist->entry_tuple (pos));
 
-            playback_set_info (pos, std::move (tuple));
-            art_cache_current (filename, std::move (request->image_data),
-             std::move (request->image_file));
+            art_cache_current (request->filename,
+             std::move (request->image_data), std::move (request->image_file));
 
-            dec.filename = filename;
+            dec.filename = request->filename;
             dec.ip = request->ip;
             dec.file = std::move (request->file);
             dec.error = std::move (request->error);
