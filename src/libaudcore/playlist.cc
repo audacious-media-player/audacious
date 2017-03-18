@@ -178,9 +178,12 @@ static void number_playlists (int at, int length)
 
 static void update (void *)
 {
-    Index<PlaylistEx> position_change_list;
-
     ENTER;
+
+    int hooks = update_hooks;
+    auto level = update_level;
+
+    Index<PlaylistEx> position_change_list;
 
     for (auto & p : playlists)
     {
@@ -191,14 +194,14 @@ static void update (void *)
             position_change_list.append (p->id ());
     }
 
-    int hooks = update_hooks;
-    auto level = update_level;
-
     update_hooks = 0;
     update_level = Playlist::NoUpdate;
     update_state = UpdateState::None;
 
     LEAVE;
+
+    if (level != Playlist::NoUpdate)
+        hook_call ("playlist update", aud::to_ptr (level));
 
     for (PlaylistEx playlist : position_change_list)
         hook_call ("playlist position", aud::to_ptr (playlist));
@@ -211,9 +214,6 @@ static void update (void *)
         hook_call ("playback begin", nullptr);
     if ((hooks & PlaybackStop))
         hook_call ("playback stop", nullptr);
-
-    if (level != Playlist::NoUpdate)
-        hook_call ("playlist update", aud::to_ptr (level));
 }
 
 static void queue_update_hooks (int hooks)
