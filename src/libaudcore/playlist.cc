@@ -957,35 +957,14 @@ static int change_playback (Playlist::ID * id)
 EXPORT int Playlist::n_entries () const
 {
     ENTER_GET_PLAYLIST (0);
-    int count = playlist->entries.len ();
+    int count = playlist->n_entries ();
     RETURN (count);
 }
 
 void PlaylistEx::insert_flat_items (int at, Index<PlaylistAddItem> && items) const
 {
     ENTER_GET_PLAYLIST ();
-
-    int entries = playlist->entries.len ();
-
-    if (at < 0 || at > entries)
-        at = entries;
-
-    int number = items.len ();
-
-    playlist->entries.insert (at, number);
-
-    int i = at;
-    for (auto & item : items)
-    {
-        PlaylistEntry * entry = new PlaylistEntry (std::move (item));
-        playlist->entries[i ++].capture (entry);
-        playlist->total_length += entry->length;
-    }
-
-    items.clear ();
-
-    playlist->number_entries (at, entries + number - at);
-    playlist->queue_update (Structure, at, number);
+    playlist->insert_items (at, std::move (items));
     LEAVE;
 }
 
@@ -993,54 +972,10 @@ EXPORT void Playlist::remove_entries (int at, int number) const
 {
     ENTER_GET_PLAYLIST ();
 
-    int entries = playlist->entries.len ();
     bool position_changed = false;
-    int update_flags = 0, playback_hooks = 0;
+    int playback_hooks = 0;
 
-    if (at < 0 || at > entries)
-        at = entries;
-    if (number < 0 || number > entries - at)
-        number = entries - at;
-
-    if (playlist->position && playlist->position->number >= at &&
-     playlist->position->number < at + number)
-    {
-        playlist->set_position (nullptr, false);
-        position_changed = true;
-    }
-
-    if (playlist->focus && playlist->focus->number >= at &&
-     playlist->focus->number < at + number)
-    {
-        if (at + number < entries)
-            playlist->focus = playlist->entries[at + number].get ();
-        else if (at > 0)
-            playlist->focus = playlist->entries[at - 1].get ();
-        else
-            playlist->focus = nullptr;
-    }
-
-    for (int count = 0; count < number; count ++)
-    {
-        PlaylistEntry * entry = playlist->entries [at + count].get ();
-
-        if (entry->queued)
-        {
-            playlist->queued.remove (playlist->queued.find (entry), 1);
-            update_flags |= PlaylistData::QueueChanged;
-        }
-
-        if (entry->selected)
-        {
-            playlist->selected_count --;
-            playlist->selected_length -= entry->length;
-        }
-
-        playlist->total_length -= entry->length;
-    }
-
-    playlist->entries.remove (at, number);
-    playlist->number_entries (at, entries - at - number);
+    playlist->remove_entries (at, number, position_changed);
 
     if (position_changed)
     {
@@ -1050,7 +985,6 @@ EXPORT void Playlist::remove_entries (int at, int number) const
         playback_hooks = change_playback (m_id);
     }
 
-    playlist->queue_update (Structure, at, 0, update_flags);
     LEAVE;
 
     call_playback_hooks (* this, playback_hooks);

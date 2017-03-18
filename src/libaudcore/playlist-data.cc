@@ -163,6 +163,81 @@ void PlaylistData::swap_updates ()
     m_next_update = Playlist::Update ();
 }
 
+void PlaylistData::insert_items (int at, Index<PlaylistAddItem> && items)
+{
+    int n_entries = entries.len ();
+    int n_items = items.len ();
+
+    if (at < 0 || at > n_entries)
+        at = n_entries;
+
+    entries.insert (at, n_items);
+
+    int i = at;
+    for (auto & item : items)
+    {
+        auto entry = new PlaylistEntry (std::move (item));
+        entries[i ++].capture (entry);
+        total_length += entry->length;
+    }
+
+    items.clear ();
+
+    number_entries (at, n_entries + n_items - at);
+    queue_update (Playlist::Structure, at, n_items);
+}
+
+void PlaylistData::remove_entries (int at, int number, bool & position_changed)
+{
+    int n_entries = entries.len ();
+    int update_flags = 0;
+
+    if (at < 0 || at > n_entries)
+        at = n_entries;
+    if (number < 0 || number > n_entries - at)
+        number = n_entries - at;
+
+    if (position && position->number >= at && position->number < at + number)
+    {
+        set_position (nullptr, false);
+        position_changed = true;
+    }
+
+    if (focus && focus->number >= at && focus->number < at + number)
+    {
+        if (at + number < n_entries)
+            focus = entries[at + number].get ();
+        else if (at > 0)
+            focus = entries[at - 1].get ();
+        else
+            focus = nullptr;
+    }
+
+    for (int i = 0; i < number; i ++)
+    {
+        PlaylistEntry * entry = entries [at + i].get ();
+
+        if (entry->queued)
+        {
+            queued.remove (queued.find (entry), 1);
+            update_flags |= PlaylistData::QueueChanged;
+        }
+
+        if (entry->selected)
+        {
+            selected_count --;
+            selected_length -= entry->length;
+        }
+
+        total_length -= entry->length;
+    }
+
+    entries.remove (at, number);
+
+    number_entries (at, n_entries - at - number);
+    queue_update (Playlist::Structure, at, 0, update_flags);
+}
+
 void PlaylistData::set_position (PlaylistEntry * entry, bool update_shuffle)
 {
     position = entry;

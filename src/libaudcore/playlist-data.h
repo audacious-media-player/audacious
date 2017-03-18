@@ -75,10 +75,15 @@ struct PlaylistData
     void cancel_updates ();
     void swap_updates ();
 
+    void insert_items (int at, Index<PlaylistAddItem> && items);
+    void remove_entries (int at, int number, bool & position_changed);
+
     void set_position (PlaylistEntry * entry, bool update_shuffle);
     PlaylistEntry * find_unselected_focus ();
 
     Playlist::ID * id () const { return m_id; }
+    int n_entries () const { return entries.len (); }
+
     const Playlist::Update & last_update () const { return m_last_update; }
     bool update_pending () const { return m_next_update.level != Playlist::NoUpdate; }
 
