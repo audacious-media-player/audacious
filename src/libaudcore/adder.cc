@@ -77,8 +77,10 @@ static bool add_thread_exited = false;
 static pthread_t add_thread;
 static QueuedFunc queued_add;
 static QueuedFunc status_timer;
+
 static char status_path[512];
 static int status_count;
+static bool status_shown = false;
 
 static void status_cb (void * unused)
 {
@@ -98,6 +100,8 @@ static void status_cb (void * unused)
         hook_call ("ui show progress", status_path);
         hook_call ("ui show progress 2", scratch);
     }
+
+    status_shown = true;
 
     pthread_mutex_unlock (& mutex);
 }
@@ -119,10 +123,15 @@ static void status_done_locked ()
 {
     status_timer.stop ();
 
-    if (aud_get_headless_mode ())
-        printf ("\n");
-    else
-        hook_call ("ui hide progress", nullptr);
+    if (status_shown)
+    {
+        if (aud_get_headless_mode ())
+            printf ("\n");
+        else
+            hook_call ("ui hide progress", nullptr);
+
+        status_shown = false;
+    }
 }
 
 static void add_file (PlaylistAddItem && item, Playlist::FilterFunc filter,
