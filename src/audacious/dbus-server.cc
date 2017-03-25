@@ -399,14 +399,20 @@ static gboolean do_quit (Obj * obj, Invoc * invoc)
 
 static gboolean do_record (Obj * obj, Invoc * invoc)
 {
-    aud_drct_enable_record (! aud_drct_get_record_enabled ());
+    if (aud_drct_get_record_enabled ())
+        aud_set_bool (nullptr, "record", ! aud_get_bool (nullptr, "record"));
+
     FINISH (record);
     return true;
 }
 
 static gboolean do_recording (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (recording, aud_drct_get_record_enabled ());
+    bool recording = false;
+    if (aud_drct_get_record_enabled ())
+        recording = aud_get_bool (nullptr, "record");
+
+    FINISH2 (recording, recording);
     return true;
 }
 
