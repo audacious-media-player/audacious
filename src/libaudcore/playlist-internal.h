@@ -51,9 +51,6 @@ public:
 
     bool insert_flat_playlist (const char * filename) const;
     void insert_flat_items (int at, Index<PlaylistAddItem> && items) const;
-
-    bool prev_song () const;
-    bool next_song (bool repeat) const;
 };
 
 /* playlist.cc */

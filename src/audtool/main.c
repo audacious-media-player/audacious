@@ -59,6 +59,8 @@ const struct commandhandler handlers[] =
     {"playback-recording", playback_recording, "exit code = 0 if recording", 0},
 
     {"<sep>", NULL, "Playlist commands", 0},
+    {"select-displayed", select_displayed, "apply commands to displayed playlist", 0},
+    {"select-playing", select_playing, "apply commands to playing playlist", 0},
     {"playlist-advance", playlist_advance, "skip to next song", 0},
     {"playlist-reverse", playlist_reverse, "skip to previous song", 0},
     {"playlist-addurl", playlist_add_url_string, "add URI at end of playlist", 1},

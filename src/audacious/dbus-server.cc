@@ -38,10 +38,18 @@ typedef GDBusMethodInvocation Invoc;
 #define FINISH2(name, ...) \
  obj_audacious_complete_##name (obj, invoc, __VA_ARGS__)
 
+static bool prefer_playing = true;
+
 static Playlist current_playlist ()
 {
-    auto list = Playlist::playing_playlist ();
-    return (list != Playlist ()) ? list : Playlist::active_playlist ();
+    Playlist list;
+
+    if (prefer_playing)
+        list = Playlist::playing_playlist ();
+    if (list == Playlist ())
+        list = Playlist::active_playlist ();
+
+    return list;
 }
 
 #define CURRENT current_playlist ()
@@ -78,7 +86,7 @@ static gboolean do_add_url (Obj * obj, Invoc * invoc, const char * url)
 
 static gboolean do_advance (Obj * obj, Invoc * invoc)
 {
-    aud_drct_pl_next ();
+    CURRENT.next_song (aud_get_bool (nullptr, "repeat"));
     FINISH (advance);
     return true;
 }
@@ -424,7 +432,7 @@ static gboolean do_repeat (Obj * obj, Invoc * invoc)
 
 static gboolean do_reverse (Obj * obj, Invoc * invoc)
 {
-    aud_drct_pl_prev ();
+    CURRENT.prev_song ();
     FINISH (reverse);
     return true;
 }
@@ -436,13 +444,27 @@ static gboolean do_seek (Obj * obj, Invoc * invoc, unsigned pos)
     return true;
 }
 
+static gboolean do_select_displayed_playlist (Obj * obj, Invoc * invoc)
+{
+    prefer_playing = false;
+    FINISH (select_displayed_playlist);
+    return true;
+}
+
+static gboolean do_select_playing_playlist (Obj * obj, Invoc * invoc)
+{
+    prefer_playing = true;
+    FINISH (select_playing_playlist);
+    return true;
+}
+
 static gboolean do_set_active_playlist (Obj * obj, Invoc * invoc, int index)
 {
     auto playlist = Playlist::by_index (index);
 
     playlist.activate ();
 
-    if (aud_drct_get_playing ())
+    if (prefer_playing && aud_drct_get_playing ())
         playlist.start_playback (aud_drct_get_paused ());
 
     FINISH (set_active_playlist);
@@ -764,6 +786,8 @@ handlers[] =
     {"handle-repeat", (GCallback) do_repeat},
     {"handle-reverse", (GCallback) do_reverse},
     {"handle-seek", (GCallback) do_seek},
+    {"handle-select-displayed-playlist", (GCallback) do_select_displayed_playlist},
+    {"handle-select-playing-playlist", (GCallback) do_select_playing_playlist},
     {"handle-set-active-playlist", (GCallback) do_set_active_playlist},
     {"handle-set-active-playlist-name", (GCallback) do_set_active_playlist_name},
     {"handle-set-eq", (GCallback) do_set_eq},

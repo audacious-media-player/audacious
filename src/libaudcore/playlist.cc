@@ -673,6 +673,10 @@ EXPORT int Playlist::get_position () const
     { SIMPLE_WRAPPER (int, -1, position); }
 EXPORT void Playlist::set_position (int entry_num) const
     { SIMPLE_VOID_WRAPPER (set_position, entry_num); }
+EXPORT bool Playlist::prev_song () const
+    { SIMPLE_WRAPPER (bool, false, prev_song); }
+EXPORT bool Playlist::next_song (bool repeat) const
+    { SIMPLE_WRAPPER (bool, false, next_song, repeat); }
 EXPORT int Playlist::get_focus () const
     { SIMPLE_WRAPPER (int, -1, focus); }
 EXPORT void Playlist::set_focus (int entry_num) const
@@ -739,11 +743,6 @@ EXPORT Playlist::Update Playlist::update_detail () const
 
 void PlaylistEx::insert_flat_items (int at, Index<PlaylistAddItem> && items) const
     { SIMPLE_VOID_WRAPPER (insert_items, at, std::move (items)); }
-
-bool PlaylistEx::prev_song () const
-    { SIMPLE_WRAPPER (bool, false, prev_song); }
-bool PlaylistEx::next_song (bool repeat) const
-    { SIMPLE_WRAPPER (bool, false, next_song, repeat); }
 
 EXPORT int Playlist::index () const
 {

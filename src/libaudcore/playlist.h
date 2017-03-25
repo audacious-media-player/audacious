@@ -221,6 +221,17 @@ public:
     int get_position () const;
     void set_position (int position) const;
 
+    /* Advances the playlist position to the next entry in playback order,
+     * taking current shuffle settings into account.  At the end of the
+     * playlist, wraps around to the beginning if <repeat> is true.  Returns
+     * true on success, false if playlist position was not changed. */
+    bool next_song (bool repeat) const;
+
+    /* Returns the playlist position to the previous entry in playback order.
+     * Does not support wrapping past the beginning of the playlist.  Returns
+     * true on success, false if playlist position was not changed. */
+    bool prev_song () const;
+
     /* Gets/sets the entry which has keyboard focus (-1 = no entry). */
     int get_focus () const;
     void set_focus (int entry) const;
