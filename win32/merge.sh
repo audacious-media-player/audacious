@@ -2,6 +2,8 @@
 
 # Quick-and-dirty script for updating a Windows release folder
 
+rm -rf /C/aud-win32/share/locale
+
 cd /C/aud-win32
 for i in `find -type f` ; do
     if test -f /C/audacious/win32/override/$i ; then
@@ -21,8 +23,6 @@ done
 
 for i in `find -name *.dll` ; do strip -s $i ; done
 for i in `find -name *.exe` ; do strip -s $i ; done
-
-rm -rf /C/aud-win32/share/locale
 
 cd /C/GTK
 for i in `find ./share/locale -name gtk20.mo` ; do
