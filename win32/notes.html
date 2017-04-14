@@ -10,69 +10,35 @@
 <h2>Notes for Building Audacious on Windows</h2>
 
 <p><em>John Lindgren<br>
-May 16, 2015</em></p>
+April 13, 2017</em></p>
 
 <p>Several patch files should accompany this document.</p>
 
-<h3>Set up system paths</h3>
-
-<p>Under <em>My Computer -> Properties -> Advanced -> Environment Variables</em>, set:</p>
-<blockquote><p><tt>PATH=C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Python27;C:\CMake\bin;C:\GTK\bin;C:\libs\bin;C:\aud\bin<br>
-PKG_CONFIG_PATH=/C/GTK/lib/pkgconfig:/C/libs/lib/pkgconfig:/C/aud/lib/pkgconfig<br>
-C_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
-CPLUS_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
-LIBRARY_PATH=/C/GTK/lib:/C/libs/lib</tt></p></blockquote>
-
-<h3>Install MinGW</h3>
+<h3>Set up MSYS2 environment</h3>
 
 <p>Download and run:<br>
-<a href="http://sourceforge.net/projects/mingw/files/Installer/mingw-get-setup.exe/download">
-<tt>http://sourceforge.net/projects/mingw/files/Installer/mingw-get-setup.exe/download</tt></a></p>
+<a href="http://repo.msys2.org/distrib/i686/msys2-i686-20161025.exe">
+<tt>http://repo.msys2.org/distrib/i686/msys2-i686-20161025.exe</tt></a></p>
 
-<p>In the MinGW Installation Manager window, install the following packages:</p>
-<ul><li>mingw32-base (bin)</li>
-<li>mingw32-gcc-g++ (bin)</li>
-<li>mingw-developer-toolkit (bin)</li>
-<li>mingw32-pthreads-w32 (dev)</li>
-<li>mingw32-libz (dev)</li></ul>
+<p>Accept the default options to install to <tt>C:\msys32</tt>.</p>
 
-<p>Edit the file <tt>C:\MinGW\msys\1.0\etc\fstab</tt> to contain only the
-following line, in lowercase:</p>
-<blockquote><p><tt>c:/mingw /mingw</tt></p></blockquote>
+<p>Edit <tt>C:\msys32\home\&lt;user&gt;\.bashrc</tt> and add the following lines:</p>
+<blockquote><p><tt>export PATH="$PATH:/C/GTK/bin:/C/libs/bin:/C/aud/bin"<br>
+export PKG_CONFIG_PATH=/C/GTK/lib/pkgconfig:/C/libs/lib/pkgconfig:/C/aud/lib/pkgconfig<br>
+export C_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
+export CPLUS_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
+export LIBRARY_PATH=/C/GTK/lib:/C/libs/lib</tt></p></blockquote>
 
-<p>As of version 4.0.3-1, the MinGW runtime library is missing some mathematical
-functions that are necessary to build Audacious.  Downgrade the library by
-running the following in a command prompt window:</p>
-<blockquote><p><tt>mingw-get upgrade mingw32-mingwrt-dev=3.20-2<br>
-mingw-get upgrade mingw32-w32api=3.17-2</tt></p></blockquote>
+<p>In the MinGW shell (MSYS2 MinGW 32-bit, <b>not</b> MSYS2 MSYS):</p>
 
-<p>Open the file <tt>C:\MinGW\lib\gcc\mingw32\4.8.1\include\c++\mingw32\bits\c++config.h</tt>
-and locate the following line:</p>
-<blockquote><p><tt>/* #undef _GLIBCXX_HAVE_FENV_H */</tt></p></blockquote>
-<p>Change it to read:</p>
-<blockquote><p><tt>#define _GLIBCXX_HAVE_FENV_H 1</tt></p></blockquote>
-
-<h3>Install Python</h3>
-
-<p>Download and run:<br>
-<a href="http://python.org/ftp/python/2.7.6/python-2.7.6.msi">
-<tt>http://python.org/ftp/python/2.7.6/python-2.7.6.msi</tt></a></p>
-
-<p>Follow the prompts to install with default options to <tt>C:\Python27</tt>.</p>
-
-<h3>Install CMake</h3>
-
-<p>Download and run:<br>
-<a href="https://cmake.org/files/v3.6/cmake-3.6.1-win32-x86.msi">
-<tt>https://cmake.org/files/v3.6/cmake-3.6.1-win32-x86.msi</tt></a></p>
-
-<p>Follow the prompts to install, changing the installation path to <tt>C:\CMake</tt>.</p>
+<blockquote><p><tt>pacman -Syu<br>
+pacman -S autoconf automake mingw-w64-i686-gcc mingw-w64-i686-gettext make perl-XML-Parser pkg-config python2</tt></p></blockquote>
 
 <h3>Install libpng</h3>
 
 <p>Download and unzip to <tt>C:\libpng</tt>:<br>
-<a href="https://sourceforge.net/projects/libpng/files/libpng16/1.6.23/libpng-1.6.23.tar.xz/download">
-<tt>https://sourceforge.net/projects/libpng/files/libpng16/1.6.23/libpng-1.6.23.tar.xz/download</tt></a></p>
+<a href="https://sourceforge.net/projects/libpng/files/libpng16/1.6.29/libpng-1.6.29.tar.xz/download">
+<tt>https://sourceforge.net/projects/libpng/files/libpng16/1.6.29/libpng-1.6.29.tar.xz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libpng<br>
@@ -83,8 +49,8 @@ make install</tt></p></blockquote>
 <h3>Install libjpeg-turbo</h3>
 
 <p>Download and unzip to <tt>C:\libjpeg</tt>:<br>
-<a href="https://sourceforge.net/projects/libjpeg-turbo/files/1.5.0/libjpeg-turbo-1.5.0.tar.gz/download">
-<tt>https://sourceforge.net/projects/libjpeg-turbo/files/1.5.0/libjpeg-turbo-1.5.0.tar.gz/download</tt></a></p>
+<a href="https://sourceforge.net/projects/libjpeg-turbo/files/1.5.1/libjpeg-turbo-1.5.1.tar.gz/download">
+<tt>https://sourceforge.net/projects/libjpeg-turbo/files/1.5.1/libjpeg-turbo-1.5.1.tar.gz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libjpeg<br>
@@ -107,33 +73,17 @@ make install</tt></p></blockquote>
 <h3>Install GLib</h3>
 
 <p>Download and unzip to <tt>C:\glib</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.44/glib-2.44.1.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.44/glib-2.44.1.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.52/glib-2.52.1.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.52/glib-2.52.1.tar.xz</tt></a></p>
 
 <p>Apply the patch <tt>ggettext.c.diff</tt> to <tt>C:\glib\glib\ggettext.c</tt>.<br>
-Apply the patch <tt>gcontenttype-win32.c.diff</tt> to <tt>C:\glib\gio\gcontenttype-win32.c.diff</tt>.<br>
-Apply the patch <tt>gwin32appinfo.c.diff</tt> to <tt>C:\glib\gio\gwin32appinfo.c.diff</tt>.<br>
-Apply the patch <tt>gwin32networking.h.diff</tt> to <tt>C:\glib\gio\gwin32networking.h</tt>.</p>
+Apply the patch <tt>glib-2-52.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/glib<br>
-CFLAGS="-O2 -march=i686" LIBFFI_CFLAGS="-I/C/GTK/lib/libffi-3.2.1/include" LIBFFI_LIBS="-lffi" ZLIB_CFLAGS="" ZLIB_LIBS="-lz" ./configure --prefix=/C/GTK<br>
+CFLAGS="-O2 -march=i686" ./configure --prefix=/C/GTK --with-pcre=internal<br>
 make<br>
 make install</tt></p></blockquote>
-
-<h3>Install pkg-config</h3>
-
-<p>Download and unzip to <tt>C:\pkgconfig</tt>:<br>
-<a href="https://pkg-config.freedesktop.org/releases/pkg-config-0.29.1.tar.gz">
-<tt>https://pkg-config.freedesktop.org/releases/pkg-config-0.29.1.tar.gz</tt></a></p>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/pkgconfig<br>
-GLIB_CFLAGS="-I/C/GTK/include/glib-2.0 -I/C/GTK/lib/glib-2.0/include" GLIB_LIBS="-lglib-2.0" ./configure --prefix=/C/GTK<br>
-make<br>
-make install</tt></p></blockquote>
-
-<p>Copy <tt>C:\GTK\share\aclocal\pkg.m4</tt> to <tt>C:\MinGW\share\aclocal</tt>.</p>
 
 <h3>Install pixman</h3>
 
@@ -150,8 +100,8 @@ make install</tt></p></blockquote>
 <h3>Install Cairo</h3>
 
 <p>Download and unzip to <tt>C:\cairo</tt>:<br>
-<a href="https://www.cairographics.org/releases/cairo-1.14.6.tar.xz">
-<tt>https://www.cairographics.org/releases/cairo-1.14.6.tar.xz</tt></a></p>
+<a href="https://www.cairographics.org/releases/cairo-1.14.8.tar.xz">
+<tt>https://www.cairographics.org/releases/cairo-1.14.8.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/cairo<br>
@@ -162,8 +112,8 @@ make install</tt></p></blockquote>
 <h3>Install Pango</h3>
 
 <p>Download and unzip to <tt>C:\pango</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.1.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.1.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.5.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.5.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/pango<br>
@@ -174,8 +124,8 @@ make install</tt></p></blockquote>
 <h3>Install gdk-pixbuf</h3>
 
 <p>Download and unzip to <tt>C:\gdk-pixbuf</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.34/gdk-pixbuf-2.34.0.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.34/gdk-pixbuf-2.34.0.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gdk-pixbuf<br>
@@ -186,8 +136,8 @@ make install</tt></p></blockquote>
 <h3>Install ATK</h3>
 
 <p>Download and unzip to <tt>C:\atk</tt>:<br>
-<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.20/atk-2.20.0.tar.xz">
-<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.20/atk-2.20.0.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.24/atk-2.24.0.tar.xz">
+<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.24/atk-2.24.0.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/atk<br>
@@ -198,14 +148,14 @@ make install</tt></p></blockquote>
 <h3>Install GTK+</h3>
 
 <p>Download and unzip to <tt>C:\gtksrc</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.30.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.30.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.31.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.31.tar.xz</tt></a></p>
 
 <p>Apply the patch <tt>gdkwindow-win32.c.diff</tt> to <tt>C:\gtksrc\gdk\win32\gdkwindow-win32.c</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gtksrc<br>
-CFLAGS="-O2 -D_WIN32_WINNT=0x0501" ./configure --prefix=/C/GTK<br>
+./configure --prefix=/C/GTK<br>
 make<br>
 make install</tt></p></blockquote>
 
