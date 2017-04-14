@@ -74,8 +74,13 @@ namespace audlog
     void subscribe (Handler handler, Level level);
     void unsubscribe (Handler handler);
 
+#ifdef _WIN32
+    void log (Level level, const char * file, int line, const char * func,
+     const char * format, ...) __attribute__ ((__format__ (gnu_printf, 5, 6)));
+#else
     void log (Level level, const char * file, int line, const char * func,
      const char * format, ...) __attribute__ ((__format__ (__printf__, 5, 6)));
+#endif
 
     const char * get_level_name (Level level);
 }
