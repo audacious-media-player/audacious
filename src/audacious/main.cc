@@ -21,6 +21,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #define AUD_GLIB_INTEGRATION
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
@@ -337,6 +341,9 @@ int main (int argc, char * * argv)
 {
     atexit (main_cleanup);
 
+#ifdef _WIN32
+    SetErrorMode (SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
+#endif
 #ifdef HAVE_SIGWAIT
     signals_init_one ();
 #endif
