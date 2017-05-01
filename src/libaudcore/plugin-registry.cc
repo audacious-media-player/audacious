@@ -118,6 +118,7 @@ static constexpr aud::array<InputKey, const char *> input_key_names = {
 static aud::array<PluginType, Index<PluginHandle *>> plugins;
 static aud::array<PluginType, Index<PluginHandle *>> compatible;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static bool modified = false;
 
 static StringBuf get_basename (const char * path)
 {
@@ -190,6 +191,9 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
 
 void plugin_registry_save ()
 {
+    if (! modified)
+        return;
+
     FILE * handle = open_registry_file ("w");
     if (! handle)
         return;
@@ -199,18 +203,25 @@ void plugin_registry_save ()
     for (auto & list : plugins)
     {
         for (PluginHandle * plugin : list)
-        {
             plugin_save (plugin, handle);
+    }
+
+    fclose (handle);
+    modified = false;
+}
+
+void plugin_registry_cleanup ()
+{
+    for (auto & list : plugins)
+    {
+        for (PluginHandle * plugin : list)
             delete plugin;
-        }
 
         list.clear ();
     }
 
     for (auto & list : compatible)
         list.clear ();
-
-    fclose (handle);
 }
 
 static void transport_plugin_parse (PluginHandle * plugin, TextParser & parser)
@@ -556,6 +567,7 @@ void plugin_register (const char * path, int timestamp)
             plugin->timestamp = timestamp;
 
             plugin_get_info (plugin, false);
+            modified = true;
         }
     }
     else
@@ -570,6 +582,7 @@ void plugin_register (const char * path, int timestamp)
         plugins[plugin->type].append (plugin);
 
         plugin_get_info (plugin, true);
+        modified = true;
     }
 }
 
@@ -656,6 +669,7 @@ void plugin_set_enabled (PluginHandle * plugin, PluginEnabled enabled)
 {
     plugin->enabled = enabled;
     plugin_call_watches (plugin);
+    modified = true;
 }
 
 void plugin_set_failed (PluginHandle * plugin)

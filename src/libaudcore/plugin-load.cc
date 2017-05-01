@@ -168,6 +168,7 @@ void plugin_system_init ()
 void plugin_system_cleanup ()
 {
     plugin_registry_save ();
+    plugin_registry_cleanup ();
 
     for (LoadedModule & loaded : loaded_modules)
         plugin_unload (loaded);

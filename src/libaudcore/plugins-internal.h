@@ -50,6 +50,7 @@ Plugin * plugin_load (const char * path);
 void plugin_registry_load ();
 void plugin_registry_prune ();
 void plugin_registry_save ();
+void plugin_registry_cleanup ();
 
 void plugin_register (const char * path, int timestamp);
 PluginEnabled plugin_get_enabled (PluginHandle * plugin);
