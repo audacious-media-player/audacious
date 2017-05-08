@@ -143,6 +143,7 @@ static const Category categories[] = {
 static const TitleFieldTag title_field_tags[] = {
     { N_("Artist")      , "${artist}" },
     { N_("Album")       , "${album}" },
+    { N_("Album Artist"), "${album-artist}" },
     { N_("Title")       , "${title}" },
     { N_("Track number"), "${track-number}" },
     { N_("Genre")       , "${genre}" },
