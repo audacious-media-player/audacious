@@ -23,7 +23,7 @@ April 13, 2017</em></p>
 <p>Accept the default options to install to <tt>C:\msys32</tt>.</p>
 
 <p>Edit <tt>C:\msys32\home\&lt;user&gt;\.bashrc</tt> and add the following lines:</p>
-<blockquote><p><tt>export PATH="$PATH:/C/GTK/bin:/C/libs/bin:/C/aud/bin"<br>
+<blockquote><p><tt>export PATH="$PATH:/C/cmake/bin:/C/GTK/bin:/C/libs/bin:/C/aud/bin"<br>
 export PKG_CONFIG_PATH=/C/GTK/lib/pkgconfig:/C/libs/lib/pkgconfig:/C/aud/lib/pkgconfig<br>
 export C_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
 export CPLUS_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
@@ -32,7 +32,15 @@ export LIBRARY_PATH=/C/GTK/lib:/C/libs/lib</tt></p></blockquote>
 <p>In the MinGW shell (MSYS2 MinGW 32-bit, <b>not</b> MSYS2 MSYS):</p>
 
 <blockquote><p><tt>pacman -Syu<br>
-pacman -S autoconf automake mingw-w64-i686-gcc mingw-w64-i686-gettext make perl-XML-Parser pkg-config python2</tt></p></blockquote>
+pacman -S autoconf automake bison libtool mingw-w64-i686-gcc mingw-w64-i686-gettext make perl-XML-Parser pkg-config python2</tt></p></blockquote>
+
+<h3>Install CMake</h3>
+
+<p>Download and run:<br>
+<a href="https://cmake.org/files/v3.8/cmake-3.8.2-win32-x86.msi">
+<tt>https://cmake.org/files/v3.8/cmake-3.8.2-win32-x86.msi</tt></a></p>
+
+<p>Install to <tt>C:\cmake</tt>.</p>
 
 <h3>Install libpng</h3>
 
@@ -77,7 +85,7 @@ make install</tt></p></blockquote>
 <tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.52/glib-2.52.1.tar.xz</tt></a></p>
 
 <p>Apply the patch <tt>ggettext.c.diff</tt> to <tt>C:\glib\glib\ggettext.c</tt>.<br>
-Apply the patch <tt>glib-2-52.diff</tt>.</p>
+Apply the recursive patch <tt>glib-2-52.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/glib<br>
@@ -212,8 +220,8 @@ make install</tt></p></blockquote>
 <h3>Install mpg123</h3>
 
 <p>Download and unzip to <tt>C:\mpg123</tt>:<br>
-<a href="http://mpg123.de/download/mpg123-1.23.6.tar.bz2">
-<tt>http://mpg123.de/download/mpg123-1.23.6.tar.bz2</tt></a></p>
+<a href="http://mpg123.de/download/mpg123-1.25.0.tar.bz2">
+<tt>http://mpg123.de/download/mpg123-1.25.0.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/mpg123<br>
@@ -232,7 +240,7 @@ Apply the patch <tt>libfaad-main.c.diff</tt> to <tt>C:\libfaad\frontend\main.c</
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libfaad<br>
-cp /C/MinGW/share/libtool/config/ltmain.sh .<br>
+cp /C/msys32/usr/share/libtool/build-aux/ltmain.sh .<br>
 autoreconf<br>
 ./configure --prefix=/C/libs<br>
 make<br>
@@ -241,8 +249,8 @@ make install</tt></p></blockquote>
 <h3>Install libsndfile</h3>
 
 <p>Download and unzip to <tt>C:\libsndfile</tt>:<br>
-<a href="http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.27.tar.gz">
-<tt>http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.27.tar.gz</tt></a></p>
+<a href="http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz">
+<tt>http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libsndfile<br>
@@ -260,7 +268,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libbs2b<br>
-cp /C/MinGW/share/libtool/config/ltmain.sh build-aux<br>
+cp /C/msys32/usr/share/libtool/build-aux/ltmain.sh build-aux<br>
 autoreconf<br>
 ./configure --prefix=/C/libs<br>
 make<br>
@@ -272,7 +280,7 @@ make install</tt></p></blockquote>
 <a href="http://ftp.gnu.org/gnu/libcdio/libcdio-0.83.tar.gz">
 <tt>http://ftp.gnu.org/gnu/libcdio/libcdio-0.83.tar.gz</tt></a></p>
 
-<p>Apply the patch <tt>libcdio-util.c.diff</tt> to <tt>C:\libcdio\src\util.c</tt>.</p>
+<p>Apply the recursive patch <tt>libcdio-0.83.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libcdio<br>
@@ -285,6 +293,8 @@ make install</tt></p></blockquote>
 <p>Download and unzip to <tt>C:\libcddb</tt>:<br>
 <a href="http://sourceforge.net/projects/libcddb/files/libcddb/1.3.2/libcddb-1.3.2.tar.bz2/download">
 <tt>http://sourceforge.net/projects/libcddb/files/libcddb/1.3.2/libcddb-1.3.2.tar.bz2/download</tt></a></p>
+
+<p>Apply the recursive patch <tt>libcddb-1.3.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libcddb<br>
@@ -312,8 +322,12 @@ make install</tt></p></blockquote>
 <a href="http://sourceforge.net/projects/lame/files/lame/3.99/lame-3.99.5.tar.gz/download">
 <tt>http://sourceforge.net/projects/lame/files/lame/3.99/lame-3.99.5.tar.gz/download</tt></a></p>
 
+<p>Apply the recursive patch <tt>lame-3.99.diff</tt>.</p>
+
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/lame<br>
+cp /C/msys32/usr/share/libtool/build-aux/ltmain.sh .<br>
+autoreconf<br>
 ./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
@@ -321,8 +335,8 @@ make install</tt></p></blockquote>
 <h3>Install libflac</h3>
 
 <p>Download and unzip to <tt>C:\libflac</tt>:<br>
-<a href="http://downloads.xiph.org/releases/flac/flac-1.3.1.tar.xz">
-<tt>http://downloads.xiph.org/releases/flac/flac-1.3.1.tar.xz</tt></a></p>
+<a href="http://downloads.xiph.org/releases/flac/flac-1.3.2.tar.xz">
+<tt>http://downloads.xiph.org/releases/flac/flac-1.3.2.tar.xzz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libflac<br>
@@ -357,11 +371,14 @@ make install</tt></p></blockquote>
 <h3>Install libneon</h3>
 
 <p>Download and unzip to <tt>C:\libneon</tt>:<br>
-<a href="http://www.webdav.org/neon/neon-0.30.1.tar.gz">
-<tt>http://www.webdav.org/neon/neon-0.30.1.tar.gz</tt></a></p>
+<a href="http://www.webdav.org/neon/neon-0.30.2.tar.gz">
+<tt>http://www.webdav.org/neon/neon-0.30.2.tar.gz</tt></a></p>
+
+<p>Apply the recursive patch <tt>neon-0.30.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libneon<br>
+./autogen.sh
 ./configure --prefix=/C/libs --enable-shared<br>
 make<br>
 make install</tt></p></blockquote>
@@ -369,8 +386,10 @@ make install</tt></p></blockquote>
 <h3>Install libsamplerate</h3>
 
 <p>Download and unzip to <tt>C:\libsamplerate</tt>:<br>
-<a href="http://www.mega-nerd.com/SRC/libsamplerate-0.1.8.tar.gz">
-<tt>http://www.mega-nerd.com/SRC/libsamplerate-0.1.8.tar.gz</tt></a></p>
+<a href="http://www.mega-nerd.com/SRC/libsamplerate-0.1.9.tar.gz">
+<tt>http://www.mega-nerd.com/SRC/libsamplerate-0.1.9.tar.gz</tt></a></p>
+
+<p>Apply the recursive patch <tt>libsamplerate-0.1.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libsamplerate<br>
@@ -381,8 +400,8 @@ make install</tt></p></blockquote>
 <h3>Install libwavpack</h3>
 
 <p>Download and unzip to <tt>C:\libwavpack</tt>:<br>
-<a href="http://www.wavpack.com/wavpack-4.80.0.tar.bz2">
-<tt>http://www.wavpack.com/wavpack-4.80.0.tar.bz2</tt></a></p>
+<a href="http://www.wavpack.com/wavpack-5.1.0.tar.bz2">
+<tt>http://www.wavpack.com/wavpack-5.1.0.tar.bz2</tt></a></p>
 
 <p>Apply the recursive patch <tt>wavpack-4.80.diff</tt>.</p>
 
@@ -395,8 +414,8 @@ make install</tt></p></blockquote>
 <h3>Install FFmpeg</h3>
 
 <p>Download and unzip to <tt>C:\ffmpeg</tt>:<br>
-<a href="http://ffmpeg.org/releases/ffmpeg-3.1.1.tar.xz">
-<tt>http://ffmpeg.org/releases/ffmpeg-3.1.1.tar.xz</tt></a></p>
+<a href="http://ffmpeg.org/releases/ffmpeg-3.3.tar.xz">
+<tt>http://ffmpeg.org/releases/ffmpeg-3.3.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/ffmpeg<br>
@@ -414,7 +433,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libmms<br>
-cp /C/MinGW/share/libtool/config/ltmain.sh .<br>
+cp /C/msys32/usr/share/libtool/build-aux/ltmain.sh .<br>
 autoreconf<br>
 ./configure --prefix=/C/libs<br>
 make<br>
@@ -423,8 +442,8 @@ make install</tt></p></blockquote>
 <h3>Install libmodplug</h3>
 
 <p>Download and unzip to <tt>C:\libmodplug</tt>:<br>
-<a href="http://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.8.5/libmodplug-0.8.8.5.tar.gz/download">
-<tt>http://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.8.5/libmodplug-0.8.8.5.tar.gz/download</tt></a></p>
+<a href="https://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.9.0/libmodplug-0.8.9.0.tar.gz/download">
+<tt>https://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.9.0/libmodplug-0.8.9.0.tar.gz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libmodplug<br>
@@ -435,8 +454,8 @@ make install</tt></p></blockquote>
 <h3>Install libsidplayfp</h3>
 
 <p>Download and unzip to <tt>C:\libsidplayfp</tt>:<br>
-<a href="https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.8/libsidplayfp-1.8.6.tar.gz/download">
-<tt>https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.8/libsidplayfp-1.8.6.tar.gz/download</tt></a></p>
+<a href="https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.8/libsidplayfp-1.8.7.tar.gz/download">
+<tt>https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.8/libsidplayfp-1.8.7.tar.gz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libsidplayfp<br>

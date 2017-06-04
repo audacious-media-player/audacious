@@ -1,0 +1,15 @@
+diff --git a/macros/neon.m4 b/macros/neon.m4
+index e051e94..2aa1605 100644
+--- a/macros/neon.m4
++++ b/macros/neon.m4
+@@ -543,8 +543,8 @@ if test $ne_fmt_trycompile = yes; then
+   oflags="$CPPFLAGS"
+   # Consider format string mismatches as errors
+   CPPFLAGS="$CPPFLAGS -Wformat -Werror"
+-  dnl obscured for m4 quoting: "for str in d ld lld; do"
+-  for str in ne_spec l]ne_spec[ ll]ne_spec[; do
++  dnl obscured for m4 quoting: "for str in d ld lld I64d; do"
++  for str in ne_spec l]ne_spec[ ll]ne_spec[ I64]ne_spec[; do
+     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/types.h>
+ $2
+ #include <stdio.h>]], [[$1 i = 1; printf("%$str", i);]])],

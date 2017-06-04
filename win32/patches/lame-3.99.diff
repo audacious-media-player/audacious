@@ -1,0 +1,61 @@
+diff --git a/configure.in b/configure.in
+index 2f8fa66..813d33d 100644
+--- a/configure.in
++++ b/configure.in
+@@ -96,7 +96,6 @@ AC_CHECK_HEADERS( \
+ 		 sys/soundcard.h \
+ 		 sys/time.h \
+ 		 unistd.h \
+-		 xmmintrin.h \
+ 		 linux/soundcard.h)
+ 
+ dnl Checks for typedefs, structures, and compiler characteristics.
+@@ -393,8 +392,6 @@ CONFIG_MATH_LIB="${USE_LIBM}"
+ 
+ dnl configure use of features
+ 
+-AM_PATH_GTK(1.2.0, HAVE_GTK="yes", HAVE_GTK="no")
+-
+ dnl ElectricFence malloc debugging
+ AC_MSG_CHECKING(use of ElectricFence malloc debugging)
+ AC_ARG_ENABLE(efence,
+@@ -527,7 +524,7 @@ else
+ 	AC_MSG_RESULT(no)
+ fi
+ 
+-if test "${HAVE_GTK}" = "no"; then
++if false ; then
+ 	if test "x${WITH_MP3X}" = "xmp3x"; then
+ 		AC_MSG_WARN(can't build mp3x, no GTK installed)
+ 		WITH_MP3X=
+@@ -635,7 +632,7 @@ WITH_VECTOR=no
+ case $host_cpu in
+ x86_64|amd64)
+ 	CPUTYPE="no"
+-	if test $ac_cv_header_xmmintrin_h = yes ; then
++	if false ; then
+ 		WITH_XMM=yes
+ 		WITH_VECTOR=yes
+ 	fi
+@@ -646,7 +643,7 @@ h precission)
+ 	;;
+ *86)
+ 	CPUTYPE="i386"
+-	if test $ac_cv_header_xmmintrin_h = yes ; then
++	if false ; then
+ 		WITH_XMM=yes
+ 		WITH_VECTOR=yes
+ 	fi
+diff --git a/frontend/Makefile.am b/frontend/Makefile.am
+index a35cb17..3cf2d8f 100644
+--- a/frontend/Makefile.am
++++ b/frontend/Makefile.am
+@@ -35,7 +35,7 @@ lame_SOURCES = lame_main.c $(common_sources)
+ mp3rtp_SOURCES = mp3rtp.c rtp.c $(common_sources)
+ mp3x_SOURCES = mp3x.c gtkanal.c gpkplotting.c $(common_sources)
+ 
+-CFLAGS = @CFLAGS@ @GTK_CFLAGS@ @FRONTEND_CFLAGS@ @SNDFILE_CFLAGS@
++CFLAGS = @CFLAGS@ @FRONTEND_CFLAGS@ @SNDFILE_CFLAGS@
+ LDFLAGS = @LDFLAGS@ @FRONTEND_LDFLAGS@ @SNDFILE_LIBS@
+ 
+ INCLUDES = -I$(top_srcdir)/libmp3lame -I$(top_srcdir)/include -I$(top_builddir)
