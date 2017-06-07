@@ -36,13 +36,14 @@
 #include "interface.h"
 #include "vfs.h"
 
-#ifdef _WIN32
 // regrettably, strcmp_nocase can't be used directly as a
-// callback for Index::sort due to taking a third argument
+// callback for Index::sort due to taking a third argument;
+// strcmp also triggers -Wnoexcept-type with GCC 7
 static int filename_compare (const char * a, const char * b)
-	{ return strcmp_nocase (a, b); }
+#ifdef _WIN32
+    { return strcmp_nocase (a, b); }
 #else
-#define filename_compare strcmp
+    { return strcmp (a, b); }
 #endif
 
 struct AddTask : public ListNode
