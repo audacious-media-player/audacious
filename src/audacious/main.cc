@@ -21,6 +21,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #define AUD_GLIB_INTEGRATION
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
@@ -177,7 +181,7 @@ static void print_help ()
 {
     static const char pad[21] = "                    ";
 
-    fprintf (stderr, _("Usage: audacious [OPTION] ... [FILE] ...\n\n"));
+    fprintf (stderr, "%s", _("Usage: audacious [OPTION] ... [FILE] ...\n\n"));
     fprintf (stderr, "  -1, -2, -3, etc.          %s\n", _("Select instance to run/control"));
 
     for (auto & arg_info : arg_map)
@@ -337,6 +341,9 @@ int main (int argc, char * * argv)
 {
     atexit (main_cleanup);
 
+#ifdef _WIN32
+    SetErrorMode (SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
+#endif
 #ifdef HAVE_SIGWAIT
     signals_init_one ();
 #endif

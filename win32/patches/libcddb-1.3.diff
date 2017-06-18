@@ -1,0 +1,35 @@
+diff --git a/include/cddb/cddb_conn.h b/include/cddb/cddb_conn.h
+index ada3cdd..dfff5bb 100644
+--- a/include/cddb/cddb_conn.h
++++ b/include/cddb/cddb_conn.h
+@@ -55,6 +55,8 @@ typedef struct cddb_iconv_s *cddb_iconv_t;
+  */
+ typedef struct cddb_conn_s cddb_conn_t;
+ 
++#undef SEARCH_ALL /* namespace conflict with ntddchgr.h */
++
+ /**
+  * Which fields to use for the full text search is defined by one or
+  * more of the constants below.
+diff --git a/lib/cddb_net.c b/lib/cddb_net.c
+index 7adf37b..6e335b5 100644
+--- a/lib/cddb_net.c
++++ b/lib/cddb_net.c
+@@ -228,7 +228,7 @@ int sock_vfprintf(cddb_conn_t *c, const char *format, va_list ap)
+ 
+ /* Time-out enabled work-alikes */
+ 
+-#ifdef HAVE_ALARM
++#if 0
+ /* time-out jump buffer */
+ static jmp_buf timeout_expired;
+ 
+@@ -241,7 +241,7 @@ static void alarm_handler(int signum)
+ 
+ struct hostent *timeout_gethostbyname(const char *hostname, int timeout)
+ {
+-#ifdef HAVE_ALARM
++#if 0
+     struct hostent *he = NULL;
+     struct sigaction action;
+     struct sigaction old;

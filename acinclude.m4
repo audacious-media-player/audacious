@@ -110,9 +110,10 @@ if test $HAVE_LINUX = yes ; then
     LDFLAGS="$LDFLAGS -Wl,-z,defs"
 fi
 
-dnl MinGW needs -march=i686 for atomics
-dnl ===================================
+dnl MinGW-specific flags
+dnl ====================
 if test $HAVE_MSWINDOWS = yes ; then
+    AC_DEFINE([__USE_MINGW_ANSI_STDIO], [1], "Use GNU-style printf")
     CFLAGS="$CFLAGS -march=i686"
 fi
 

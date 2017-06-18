@@ -303,6 +303,7 @@ static void do_autosave (void *)
 {
     hook_call ("config save", nullptr);
     save_playlists (false);
+    plugin_registry_save ();
     config_save ();
 }
 
@@ -312,6 +313,7 @@ EXPORT void aud_run ()
      * avoid scanning until the currently playing entry is known, at which time
      * it can be scanned more efficiently (album art read in the same pass). */
     playlist_enable_scan (true);
+    playlist_clear_updates ();
     start_plugins_two ();
 
     static QueuedFunc autosave;

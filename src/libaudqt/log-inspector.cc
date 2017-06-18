@@ -33,10 +33,10 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
-#include <libaudcore/index.h>
+#include <libaudcore/ringbuf.h>
 #include <libaudcore/runtime.h>
 
-#define LOGENTRY_MAX 1000
+#define LOGENTRY_MAX 1024
 
 namespace audqt {
 
@@ -70,7 +70,7 @@ protected:
     QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
 private:
-    Index<LogEntry> m_entries;
+    RingBuf<LogEntry> m_entries;
 
     void addEntry (const LogEntry * entry);
     HookReceiver<LogEntryModel, const LogEntry *>
@@ -82,7 +82,7 @@ void LogEntryModel::cleanup ()
     if (m_entries.len () > 0)
     {
         beginRemoveRows (QModelIndex (), 0, m_entries.len () - 1);
-        m_entries.remove (0, m_entries.len ());
+        m_entries.destroy ();
         endRemoveRows ();
     }
 }
@@ -90,15 +90,20 @@ void LogEntryModel::cleanup ()
 /* log entry model */
 void LogEntryModel::addEntry (const LogEntry * entry)
 {
-    if (m_entries.len () >= LOGENTRY_MAX)
+    if (! m_entries.space ())
     {
-        beginRemoveRows (QModelIndex (), 0, 0);
-        m_entries.remove (0, 1);
-        endRemoveRows ();
+        if (m_entries.len () < LOGENTRY_MAX)
+            m_entries.alloc (aud::max (16, 2 * m_entries.len ()));
+        else
+        {
+            beginRemoveRows (QModelIndex (), 0, 0);
+            m_entries.pop ();
+            endRemoveRows ();
+        }
     }
 
     beginInsertRows (QModelIndex (), m_entries.len (), m_entries.len ());
-    m_entries.append (* entry);
+    m_entries.push (* entry);
     endInsertRows ();
 }
 

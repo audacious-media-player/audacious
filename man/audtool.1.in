@@ -114,6 +114,33 @@ Toggle recording of the output stream (using FileWriter).
 .B --playback-recording
 Return an exit code of 0 (true) if stream recording is enabled.
 
+.SS Playlist selection:
+
+.TP
+.B --select-displayed
+Specifies that any subsequent playlist commands should apply to the playlist
+currently displayed by Audacious, regardless of which playlist is playing.  This
+setting takes effect until it is overridden by \fB--select-playing\fR or
+Audacious is restarted.
+
+The following commands are also affected:
+.RS
+.RS
+--current-song
+.br
+--current-song-filename
+.br
+--current-song-length[-seconds,-frames]
+.br
+--current-song-tuple-data
+.RE
+.RE
+.TP
+.B --select-playing
+Specifies that when playback is active, any subsequent playlist commands should
+apply to the playlist currently playing.  When playback is stopped, the behavior
+is the same as \fB--select-displayed\fR.  This setting is the default.
+
 .SS Playlist commands:
 
 .TP
@@ -202,19 +229,18 @@ Toggle the ``stop after current song'' option.
 Print the number of open playlists.
 .TP
 .B --current-playlist
-Print the number of the current playlist.  When a song is playing, the current
-playlist is defined as the playlist containing that song.  Otherwise, it is the
-playlist currently displayed in Audacious.
+Print the number of the current playlist, where "current" is interpreted
+according to \fB--select-displayed\fR or fB--select-playing\fR.
 .TP
 .B --play-current-playlist
-Start playback.  If paused or previously stopped in the middle of a song,
-playback will resume from the last point played.  There is no effect if playback
-is already active and not paused.
+Start playback in the current playlist, resuming from the last point played if
+possible.  When \fB--select-displayed\fR is in effect, this command can be used
+to switch playback to the displayed playlist.
 .TP
 .B --set-current-playlist \fIplaylist\fR
-Switch to the given playlist.  If another playlist is playing, playback will
-switch to this one, resuming from the last point played.  If playback is
-currently paused, it will remain so after the switch.
+Display the given playlist.  When \fB--select-playing\fR is in effect and a
+different playlist is playing, this command will also switch playback to the
+given playlist.  The \fB--select-displayed\fR option disables this behavior.
 .TP
 .B --current-playlist-name
 Print the title of the current playlist.
@@ -227,7 +253,7 @@ Insert a new playlist after the current one and switch to it as if
 \fB--set-current-playlist\fR were used.
 .TP
 .B --delete-current-playlist
-Remove the current playlist.  Playback, if active, will be stopped.
+Remove the current playlist.
 
 .SS Playlist queue commands:
 

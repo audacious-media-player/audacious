@@ -1,0 +1,229 @@
+diff --git a/gio/gwin32appinfo.c b/gio/gwin32appinfo.c
+index b547012b6..4eb7d96c1 100644
+--- a/gio/gwin32appinfo.c
++++ b/gio/gwin32appinfo.c
+@@ -2777,7 +2777,7 @@ read_classes (GWin32RegistryKey *classes_root)
+           (class_name_len <= 1))
+         continue;
+ 
+-      if (class_name[0] == L'.')
++      if (class_name[0] == L'.' || wcscmp(class_name, L"Folder") == 0)
+         read_class_extension (classes_root, class_name, class_name_len);
+       else
+         {
+@@ -3953,6 +3953,79 @@ Legend: (from http://msdn.microsoft.com/en-us/library/windows/desktop/cc144101%2
+   return result;
+ }
+ 
++/* This is somewhat similar to g_shell_parse_argv, but handles only unquoting.
++ * Escape sequences are not supported since '\' is a path delimiter on Windows. */
++static void
++split_command_line (const gchar   *command_line,
++                    gint          *argcp,
++                    gchar       ***argvp)
++{
++  GSList *args = NULL;
++  gchar current_quote = '\0';
++  const gchar *current_token = NULL;
++  const gchar *next = command_line;
++  GSList *arg_iter;
++  gchar **argv_iter;
++
++  for (next = command_line;; next++)
++  {
++    if (current_token == NULL)
++    {
++      /* a token begins with:
++       *   a quote
++       *   a non-whitespace character
++       */
++      if (*next != '\0' && !g_ascii_isspace(*next))
++      {
++        if (*next == '\'' || *next == '"')
++        {
++          current_quote = *next;
++          current_token = next + 1;
++        }
++        else
++        {
++          current_token = next;
++        }
++      }
++    }
++    else /* current_token != NULL */
++    {
++      /* a token ends with:
++       *   a NUL
++       *   a matching end quote
++       *   an unquoted whitespace character
++       */
++      if (*next == '\0' ||
++        *next == current_quote ||
++        (current_quote == '\0' && g_ascii_isspace (*next)))
++      {
++        args = g_slist_prepend (args, g_strndup (current_token, next - current_token));
++
++        current_quote = '\0';
++        current_token = NULL;
++      }
++    }
++
++    if (*next == '\0')
++      break;
++  }
++
++  args = g_slist_reverse (args);
++
++  /* build NULL-terminated argv array */
++  *argcp = g_slist_length (args);
++  *argvp = g_new (gchar*, *argcp + 1);
++
++  argv_iter = *argvp;
++
++  for (arg_iter = args; arg_iter != NULL; arg_iter = arg_iter->next)
++    *argv_iter++ = arg_iter->data;
++
++  *argv_iter = NULL;
++
++  g_slist_free (args);
++}
++
+ static gboolean
+ expand_application_parameters (GWin32AppInfo   *info,
+                                const gchar     *exec_line,
+@@ -3966,7 +4039,6 @@ expand_application_parameters (GWin32AppInfo   *info,
+   const char *p = exec_line;
+   GString *expanded_exec;
+   gboolean res;
+-  gchar *a_char;
+ 
+   if (exec_line == NULL)
+     {
+@@ -4005,20 +4077,9 @@ expand_application_parameters (GWin32AppInfo   *info,
+       expand_macro ('f', expanded_exec, info, stat_obj_list, objs);
+     }
+ 
+-  /* Replace '\\' with '/', because g_shell_parse_argv considers them
+-   * to be escape sequences.
+-   */
+-  for (a_char = expanded_exec->str;
+-       a_char <= &expanded_exec->str[expanded_exec->len];
+-       a_char++)
+-    {
+-      if (*a_char == '\\')
+-        *a_char = '/';
+-    }
+-
+-  res = g_shell_parse_argv (expanded_exec->str, argc, argv, error);
++  split_command_line (expanded_exec->str, argc, argv);
+   g_string_free (expanded_exec, TRUE);
+-  return res;
++  return TRUE;
+ }
+ 
+ 
+@@ -4286,7 +4347,7 @@ g_win32_app_info_launch_uris (GAppInfo           *appinfo,
+   gboolean do_files;
+   GList *objs;
+ 
+-  do_files = g_win32_app_info_supports_files (appinfo);
++  do_files = ! g_win32_app_info_supports_uris (appinfo);
+ 
+   objs = NULL;
+   while (uris)
+@@ -4305,7 +4366,8 @@ g_win32_app_info_launch_uris (GAppInfo           *appinfo,
+           g_object_unref (file);
+         }
+ 
+-      obj->uri = g_strdup (uris->data);
++      if (obj->file == NULL)
++        obj->uri = g_strdup (uris->data);
+ 
+       objs = g_list_prepend (objs, obj);
+       uris = uris->next;
+@@ -4341,11 +4403,13 @@ g_win32_app_info_launch (GAppInfo           *appinfo,
+     {
+       file_or_uri *obj;
+       obj = g_new0 (file_or_uri, 1);
+-      obj->file = g_file_get_path (G_FILE (files->data));
+ 
+       if (do_uris)
+         obj->uri = g_file_get_uri (G_FILE (files->data));
+ 
++      if (obj->uri == NULL)
++        obj->file = g_file_get_path (G_FILE (files->data));
++
+       objs = g_list_prepend (objs, obj);
+       files = files->next;
+     }
+@@ -4500,6 +4564,9 @@ g_app_info_get_default_for_type (const char *content_type,
+   GWin32AppInfoApplication *app;
+   GHashTableIter iter;
+ 
++  if (g_strcmp0 (content_type, "inode/directory") == 0)
++    content_type = "Folder";
++
+   ext_down = g_utf8_casefold (content_type, -1);
+ 
+   if (!ext_down)
+diff --git a/gio/gwin32registrykey.c b/gio/gwin32registrykey.c
+index 313980bc0..ab03a469f 100644
+--- a/gio/gwin32registrykey.c
++++ b/gio/gwin32registrykey.c
+@@ -89,18 +89,18 @@ typedef NTSTATUS
+                          PULONG                result_size);
+ 
+ typedef NTSTATUS
+-(* NtNotifyChangeMultipleKeysFunc)(HANDLE             key_handle,
+-                                   ULONG              subkey_count,
+-                                   POBJECT_ATTRIBUTES subkeys,
+-                                   HANDLE             event,
+-                                   PIO_APC_ROUTINE    apc_routine,
+-                                   PVOID              apc_closure,
+-                                   PIO_STATUS_BLOCK   status_block,
+-                                   ULONG              filter,
+-                                   BOOLEAN            watch_tree,
+-                                   PVOID              buffer,
+-                                   ULONG              buffer_size,
+-                                   BOOLEAN            async);
++(NTAPI * NtNotifyChangeMultipleKeysFunc)(HANDLE             key_handle,
++                                         ULONG              subkey_count,
++                                         POBJECT_ATTRIBUTES subkeys,
++                                         HANDLE             event,
++                                         PIO_APC_ROUTINE    apc_routine,
++                                         PVOID              apc_closure,
++                                         PIO_STATUS_BLOCK   status_block,
++                                         ULONG              filter,
++                                         BOOLEAN            watch_tree,
++                                         PVOID              buffer,
++                                         ULONG              buffer_size,
++                                         BOOLEAN            async);
+ 
+ static NtQueryKeyFunc nt_query_key = NULL;
+ static NtNotifyChangeMultipleKeysFunc nt_notify_change_multiple_keys = NULL;
+diff --git a/glib/gfileutils.c b/glib/gfileutils.c
+index 6789c537f..ea3806eeb 100644
+--- a/glib/gfileutils.c
++++ b/glib/gfileutils.c
+@@ -317,6 +317,11 @@ gboolean
+ g_file_test (const gchar *filename,
+              GFileTest    test)
+ {
++#ifdef G_OS_WIN32
++  int attributes;
++  wchar_t *wfilename;
++#endif
++
+   g_return_val_if_fail (filename != NULL, FALSE);
+ 
+ #ifdef G_OS_WIN32
+@@ -327,8 +332,7 @@ g_file_test (const gchar *filename,
+ #  ifndef FILE_ATTRIBUTE_DEVICE
+ #    define FILE_ATTRIBUTE_DEVICE 64
+ #  endif
+-  int attributes;
+-  wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
++  wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
+ 
+   if (wfilename == NULL)
+     return FALSE;

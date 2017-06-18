@@ -37,7 +37,9 @@ struct DecodeInfo
 class PlaylistEx : public Playlist
 {
 public:
-    PlaylistEx (Playlist playlist = Playlist ()) :
+    PlaylistEx (Playlist::ID * id = nullptr) :
+        Playlist (id) {}
+    PlaylistEx (Playlist playlist) :
         Playlist (playlist) {}
 
     int stamp () const;
@@ -49,14 +51,12 @@ public:
 
     bool insert_flat_playlist (const char * filename) const;
     void insert_flat_items (int at, Index<PlaylistAddItem> && items) const;
-
-    bool prev_song () const;
-    bool next_song (bool repeat) const;
 };
 
 /* playlist.cc */
 void playlist_init ();
 void playlist_enable_scan (bool enable);
+void playlist_clear_updates ();
 void playlist_end ();
 
 void playlist_load_state ();

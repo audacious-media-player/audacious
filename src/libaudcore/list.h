@@ -74,6 +74,18 @@ public:
     void clear ()
         { ListBase::clear (destroy); }
 
+    template<class MatchFunc>
+    C * find (MatchFunc match)
+    {
+        for (C * node = head (); node; node = next (node))
+        {
+            if (match (* node))
+                return node;
+        }
+
+        return nullptr;
+    }
+
 private:
     static void destroy (ListNode * node)
         { delete (C *) node; }

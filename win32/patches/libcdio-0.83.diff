@@ -1,0 +1,40 @@
+diff --git a/lib/driver/MSWindows/win32_ioctl.c b/lib/driver/MSWindows/win32_ioctl.c
+index 02d1576..ca62915 100644
+--- a/lib/driver/MSWindows/win32_ioctl.c
++++ b/lib/driver/MSWindows/win32_ioctl.c
+@@ -30,9 +30,9 @@
+ # include "NtScsi.h"
+ # include "undocumented.h"
+ #else
+-# include <ddk/ntddcdrm.h>
+-# include <ddk/ntddscsi.h>
+-# include <ddk/scsi.h>
++# include <windows.h>
++# include <ntddcdrm.h>
++# include <ntddscsi.h>
+ #endif
+ 
+ #ifdef WIN32
+diff --git a/src/util.c b/src/util.c
+index 21c83cc..efe9cdb 100644
+--- a/src/util.c
++++ b/src/util.c
+@@ -510,6 +510,7 @@ print_fs_attrs(iso9660_stat_t *p_statbuf, bool b_rock, bool b_xa,
+ 	     (unsigned int) p_statbuf->size );
+   }
+ 
++#ifdef HAVE_ROCK
+   if (yep == p_statbuf->rr.b3_rock && b_rock) {
+     struct tm tm;
+ 
+@@ -531,7 +532,9 @@ print_fs_attrs(iso9660_stat_t *p_statbuf, bool b_rock, bool b_xa,
+       report(stdout, " -> %s", p_statbuf->rr.psz_symlink);
+     }
+ 
+-  } else {
++  } else
++#endif
++  {
+     strftime(date_str, sizeof(date_str), "%b %d %Y %H:%M:%S ", &p_statbuf->tm);
+     report (stdout," %s %s", date_str, psz_name_translated);
+   }

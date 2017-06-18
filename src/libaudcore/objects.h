@@ -132,7 +132,8 @@ SmartPtr<T> SmartNew (Args && ... args)
 class CharPtr : public SmartPtr<char, aud::typed_func<char, g_free>>
 {
 public:
-    using SmartPtr::SmartPtr;
+    CharPtr () : SmartPtr () {}
+    explicit CharPtr (char * ptr) : SmartPtr (ptr) {}
 
     // non-const operator omitted to prevent "CharPtr s; g_free(s);"
     operator const char * () const

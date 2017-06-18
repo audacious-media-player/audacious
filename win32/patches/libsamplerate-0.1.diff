@@ -1,0 +1,13 @@
+diff --git a/examples/audio_out.c b/examples/audio_out.c
+index 4ba8fb4..32548c8 100644
+--- a/examples/audio_out.c
++++ b/examples/audio_out.c
+@@ -801,7 +801,7 @@ win32_close (AUDIO_OUT *audio_out)
+ static DWORD CALLBACK
+ win32_audio_out_callback (HWAVEOUT hwave, UINT msg, DWORD data, DWORD param1, DWORD param2)
+ {	WIN32_AUDIO_OUT	*win32_out ;
+-	int		read_count, frame_count, k ;
++	int		read_count, sample_count, frame_count, k ;
+ 	short	*sptr ;
+ 
+ 	/*

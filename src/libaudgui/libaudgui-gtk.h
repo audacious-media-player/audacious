@@ -35,7 +35,8 @@ typedef void (* AudguiCallback) (void * data);
 class AudguiPixbuf : public SmartPtr<GdkPixbuf, aud::typed_func<GdkPixbuf, g_object_unref>>
 {
 public:
-    using SmartPtr::SmartPtr;
+    AudguiPixbuf () : SmartPtr () {}
+    explicit AudguiPixbuf (GdkPixbuf * ptr) : SmartPtr (ptr) {}
 
     int width ()
         { return gdk_pixbuf_get_width (get ()); }

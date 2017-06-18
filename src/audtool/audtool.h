@@ -59,6 +59,8 @@ void get_current_song_info (int argc, char * * argv);
 void get_volume (int, char * *);
 void set_volume (int, char * *);
 
+void select_displayed (int, char * *);
+void select_playing (int, char * *);
 void playlist_position (int, char * *);
 void playlist_advance (int, char * *);
 void playlist_auto_advance_status (int, char * *);

@@ -94,10 +94,10 @@ public:
     /* --- CONSTRUCTOR ETC. --- */
 
     /* Default constructor; indicates "no playlist" */
-    constexpr Playlist () : id (nullptr) {}
+    constexpr Playlist () : m_id (nullptr) {}
 
-    bool operator== (const Playlist & b) const { return id == b.id; }
-    bool operator!= (const Playlist & b) const { return id != b.id; }
+    bool operator== (const Playlist & b) const { return m_id == b.m_id; }
+    bool operator!= (const Playlist & b) const { return m_id != b.m_id; }
 
     /* The number of the playlist in display order, starting from 0.
      * Returns -1 if the playlist no longer exists. */
@@ -220,6 +220,17 @@ public:
      * set_position(-1) stops playback. */
     int get_position () const;
     void set_position (int position) const;
+
+    /* Advances the playlist position to the next entry in playback order,
+     * taking current shuffle settings into account.  At the end of the
+     * playlist, wraps around to the beginning if <repeat> is true.  Returns
+     * true on success, false if playlist position was not changed. */
+    bool next_song (bool repeat) const;
+
+    /* Returns the playlist position to the previous entry in playback order.
+     * Does not support wrapping past the beginning of the playlist.  Returns
+     * true on success, false if playlist position was not changed. */
+    bool prev_song () const;
 
     /* Gets/sets the entry which has keyboard focus (-1 = no entry). */
     int get_focus () const;
@@ -369,10 +380,10 @@ public:
     /* --- IMPLEMENTATION --- */
 
 private:
-    ID * id;
+    ID * m_id;
 
     explicit constexpr Playlist (ID * id) :
-        id (id) {}
+        m_id (id) {}
 
     friend class PlaylistEx;
 };
