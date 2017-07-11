@@ -4,17 +4,17 @@
 #
 # Translators:
 # Ivar Smolin <okul at linux ee>, 2007
-# Ivar Smolin <okul@linux.ee>, 2012-2013
-# John Lindgren <john.lindgren@aol.com>, 2012
-# John Lindgren <john.lindgren@aol.com>, 2012
+# Ivar Smolin <okul@linux.ee>, 2012-2013,2017
+# John Lindgren <john@jlindgren.net>, 2012
+# John Lindgren <john@jlindgren.net>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2016-09-18 19:46+0200\n"
-"PO-Revision-Date: 2016-08-22 12:05+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
-"Language-Team: Estonian (http://www.transifex.com/jlindgren/audacious/"
+"POT-Creation-Date: 2017-07-09 23:37+0200\n"
+"PO-Revision-Date: 2017-06-07 18:51+0000\n"
+"Last-Translator: Thomas Lange\n"
+"Language-Team: Estonian (http://www.transifex.com/audacious/audacious/"
 "language/et/)\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
@@ -22,189 +22,186 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/audacious/main.cc:62
+#: src/audacious/main.cc:65
 msgid "Show command-line help"
-msgstr ""
+msgstr "Käsurea abiteabe näitamine"
 
-#: src/audacious/main.cc:63
+#: src/audacious/main.cc:66
 msgid "Show version"
 msgstr "Versiooni näitamine"
 
-#: src/audacious/main.cc:64
+#: src/audacious/main.cc:67
 msgid "Start playback"
-msgstr ""
+msgstr "Esituse kävitamine"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:68
 msgid "Pause playback"
-msgstr ""
+msgstr "Esituse pausimine"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:69
 msgid "Pause if playing, play otherwise"
 msgstr "Esitamise korral pausimine, pausi korral esitamine"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:70
 msgid "Stop playback"
-msgstr ""
+msgstr "Esituse seiskamine"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:71
 msgid "Skip to previous song"
 msgstr ""
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:72
 msgid "Skip to next song"
 msgstr ""
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:73
 msgid "Add files to the playlist"
 msgstr "Failide lisamine esitusnimekirja"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:74
 msgid "Add files to a temporary playlist"
 msgstr ""
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:75
 msgid "Display the main window"
 msgstr "Peaakna kuvamine"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:76
 msgid "Display the jump-to-song window"
 msgstr ""
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:77
 msgid "Start without a graphical interface"
-msgstr ""
+msgstr "Käivitamine ilma graafilise liideseta"
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:78
 msgid "Quit on playback stop"
 msgstr "Programmi sulgemine esituse lõppedes"
 
-#: src/audacious/main.cc:76
+#: src/audacious/main.cc:79
 msgid "Print debugging messages (may be used twice)"
 msgstr ""
 
-#: src/audacious/main.cc:78
+#: src/audacious/main.cc:81
 msgid "Run in Qt mode"
-msgstr ""
+msgstr "Käivitamine Qt režiimis"
 
-#: src/audacious/main.cc:136
+#: src/audacious/main.cc:138
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr ""
+msgstr "Tundmatu võti: %s\n"
 
-#: src/audacious/main.cc:159
+#: src/audacious/main.cc:160
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr ""
+msgstr "Tundmatu võti: -%c\n"
 
-#: src/audacious/main.cc:186
-#, c-format
+#: src/audacious/main.cc:184
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
+"Kasutamine: audacious [VÕTI] ... [FAIL] ...\n"
+"\n"
 
-#: src/audacious/main.cc:187
+#: src/audacious/main.cc:185
 msgid "Select instance to run/control"
 msgstr ""
 
-#: src/audacious/main.cc:366 src/libaudqt/util.cc:54
+#: src/audacious/main.cc:367 src/libaudqt/util.cc:62
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/libaudcore/adder.cc:86
+#: src/libaudcore/adder.cc:91
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "leiti %d fail"
 msgstr[1] "leiti %d faili"
 
-#: src/libaudcore/adder.cc:263 src/libaudcore/adder.cc:325
+#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
 #, c-format
 msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
+"Viga %s lugemisel:\n"
+"%s"
 
-#: src/libaudcore/adder.cc:382
-#, fuzzy
+#: src/libaudcore/adder.cc:395
 msgid "No files found."
-msgstr "leiti %d fail"
+msgstr "Faile ei leitud."
 
-#: src/libaudcore/adder.cc:406 src/libaudcore/playlist.cc:147
+#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "Uus esitusnimekiri"
 
-#: src/libaudcore/audstrings.cc:603 src/libaudcore/tuple.cc:520
+#: src/libaudcore/audstrings.cc:640 src/libaudcore/tuple.cc:520
 msgid "Standard input"
-msgstr ""
+msgstr "Standardsisend"
 
-#: src/libaudcore/audstrings.cc:605
+#: src/libaudcore/audstrings.cc:642
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Audio-CD, lugu %s"
 
-#: src/libaudcore/audstrings.cc:609 src/libaudcore/tuple.cc:496
+#: src/libaudcore/audstrings.cc:646 src/libaudcore/tuple.cc:496
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(märgikodeeringu viga)"
 
-#: src/libaudcore/output.cc:197 src/libaudcore/output.cc:250
+#: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
+msgstr "Viga väljundvoo avamisel"
+
+#: src/libaudcore/output.cc:248
+msgid "Error recording output stream"
 msgstr ""
 
-#: src/libaudcore/playback.cc:367
+#: src/libaudcore/playback.cc:369
 #, c-format
 msgid ""
 "Error playing %s:\n"
 "%s"
 msgstr ""
+"Viga %s esitamisel:\n"
+"%s"
 
-#: src/libaudcore/playback.cc:369
-msgid ""
-"Unknown playback error (check the console for detailed error information)"
-msgstr ""
-
-#: src/libaudcore/playback.cc:499
+#: src/libaudcore/playback.cc:501
 msgid "Invalid audio format"
-msgstr ""
+msgstr "Vigane audiovorming"
 
-#: src/libaudcore/playlist.cc:148
+#: src/libaudcore/playlist.cc:89
 msgid "Now Playing"
 msgstr "Praegu esitamisel"
 
-#: src/libaudcore/playlist.cc:1705
-msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Esitusnimekirja sortimine pole võimalik, kuna metaandmete laadimine on "
-"pooleli (või keelatud)."
-
-#: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:488
-#: src/libaudqt/infowin.cc:144
+#: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:489
+#: src/libaudqt/infowin.cc:143
 #, c-format
 msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
+"Viga %s avamisel:\n"
+"%s"
 
 #: src/libaudcore/playlist-files.cc:83
 #, c-format
 msgid "Error loading %s."
-msgstr ""
+msgstr "Viga %s laadimisel."
 
 #: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr ""
+msgstr "Faili %s laadimine pole võimalik: failinime laiend pole toetatud."
 
 #: src/libaudcore/playlist-files.cc:151
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "Faili %s salvestamine pole võimalik: failinime laiend pole toetatud."
 
 #: src/libaudcore/probe.cc:54
 msgid "Error loading plugin"
-msgstr ""
+msgstr "Viga plugina laadimisel"
 
 #: src/libaudcore/probe.cc:145
 msgid "Seek error"
@@ -212,11 +209,11 @@ msgstr ""
 
 #: src/libaudcore/probe.cc:153
 msgid "File format not recognized"
-msgstr ""
+msgstr "Tuvastamatu failivorming"
 
 #: src/libaudcore/probe.cc:181
 msgid "Error reading metadata"
-msgstr ""
+msgstr "Viga metaandmete lugemisel"
 
 #: src/libaudcore/tuple.cc:550
 msgid "Mono"
@@ -235,29 +232,29 @@ msgstr[1] "%d kanalit"
 
 #: src/libaudcore/tuple.cc:742
 msgid "Audio CD"
-msgstr ""
+msgstr "Audio CD"
 
 #: src/libaudcore/tuple.cc:824
 #, c-format
 msgid "Track %d"
-msgstr ""
+msgstr "Rada %d"
 
 #: src/libaudcore/tuple.cc:829
 msgid "(unknown title)"
-msgstr ""
+msgstr "(tundmatu pealkiri)"
 
 #: src/libaudcore/vfs.cc:47
 msgid "Invalid URI"
-msgstr ""
+msgstr "Vigane URI"
 
 #: src/libaudcore/vfs.cc:85
 msgid "Unknown URI scheme"
-msgstr ""
+msgstr "Vigane URI skeem"
 
 #: src/libaudcore/vfs_local.cc:85 src/libaudcore/vfs_local.cc:330
 #: src/libaudcore/vfs_local.cc:385
 msgid "Invalid file name"
-msgstr ""
+msgstr "Vigane failinimi"
 
 #: src/libaudcore/vfs_local.cc:132
 msgid "Invalid access mode"
@@ -271,59 +268,59 @@ msgstr "Autorid"
 msgid "License"
 msgstr "Litsents"
 
-#: src/libaudgui/about.cc:71 src/libaudqt/about.cc:88
+#: src/libaudgui/about.cc:71 src/libaudqt/about.cc:71
 msgid "About Audacious"
 msgstr "Audacious'est lähemalt"
 
-#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:79
+#: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
+#: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
+#: src/libaudgui/plugin-prefs.cc:160 src/libaudgui/url-opener.cc:76
+#: src/libaudqt/playlist-management.cc:43
+#: src/libaudqt/playlist-management.cc:75 src/libaudqt/prefs-plugin.cc:131
+#: src/libaudqt/url-opener.cc:65
+msgid "_Cancel"
+msgstr "Tü_hista"
+
+#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:73
+msgid "_Don’t ask again"
+msgstr "Tulevikus rohkem ei _küsita"
+
+#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:79
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr ""
+msgstr "Kas eemaldada \"%s\" jäädavalt?"
 
-#: src/libaudgui/confirm.cc:55 src/libaudqt/playlist-management.cc:74
+#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:74
 msgid "_Remove"
-msgstr ""
+msgstr "_Eemalda"
 
-#: src/libaudgui/confirm.cc:57 src/libaudgui/confirm.cc:88
-#: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:95
-#: src/libaudgui/playlists.cc:195 src/libaudgui/plugin-prefs.cc:160
-#: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:43
-#: src/libaudqt/playlist-management.cc:75 src/libaudqt/prefs-plugin.cc:133
-#: src/libaudqt/url-opener.cc:64
-msgid "_Cancel"
-msgstr ""
-
-#: src/libaudgui/confirm.cc:60 src/libaudqt/playlist-management.cc:78
+#: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:78
 msgid "Remove Playlist"
-msgstr ""
+msgstr "Esitusnimekirja eemaldamine"
 
-#: src/libaudgui/confirm.cc:62 src/libaudqt/playlist-management.cc:73
-msgid "_Don’t ask again"
-msgstr ""
+#: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:40
+msgid "What would you like to call this playlist?"
+msgstr "Mis nime sa soovid sellele esitusnimekirjale anda?"
 
-#: src/libaudgui/confirm.cc:87 src/libaudqt/playlist-management.cc:42
+#: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:42
 msgid "_Rename"
-msgstr ""
+msgstr "_Muuda nime"
 
-#: src/libaudgui/confirm.cc:91 src/libaudqt/playlist-management.cc:64
+#: src/libaudgui/confirm.cc:97 src/libaudqt/playlist-management.cc:62
 msgid "Rename Playlist"
 msgstr "Esitusnimekirja nime muutmine"
 
-#: src/libaudgui/confirm.cc:91 src/libaudqt/playlist-management.cc:40
-msgid "What would you like to call this playlist?"
-msgstr ""
-
 #: src/libaudgui/eq-preset.cc:208 src/libaudgui/eq-preset.cc:215
 msgid "Preset File ..."
-msgstr ""
+msgstr "Eelsätete fail..."
 
 #: src/libaudgui/eq-preset.cc:209 src/libaudgui/eq-preset.cc:216
 msgid "EQF File ..."
-msgstr ""
+msgstr "EQF-fail .."
 
 #: src/libaudgui/eq-preset.cc:211
 msgid "Winamp Presets ..."
-msgstr ""
+msgstr "Winampi eelsätted..."
 
 #: src/libaudgui/eq-preset.cc:220
 msgid "Import"
@@ -335,15 +332,15 @@ msgstr ""
 
 #: src/libaudgui/eq-preset.cc:236
 msgid "Equalizer Presets"
-msgstr ""
+msgstr "Ekvalaiseri eelsätted"
 
 #: src/libaudgui/eq-preset.cc:258
 msgid "Save Preset"
-msgstr ""
+msgstr "Salvesta eelsätted"
 
 #: src/libaudgui/eq-preset.cc:280
 msgid "Delete Selected"
-msgstr ""
+msgstr "Kustuta valik"
 
 #: src/libaudgui/eq-preset.cc:284
 msgid "Revert Changes"
@@ -393,306 +390,310 @@ msgstr "8 kHz"
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer.cc:141
+#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer.cc:142
 msgid "Equalizer"
 msgstr "Ekvalaiser"
 
 #: src/libaudgui/equalizer.cc:143
 msgid "Presets ..."
-msgstr ""
+msgstr "Eelsätted..."
 
 #: src/libaudgui/equalizer.cc:147
 msgid "Reset to Zero"
-msgstr ""
+msgstr "Nulli"
 
 #: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer.cc:123
 msgid "Preamp"
 msgstr "Eelmoonutus"
 
-#: src/libaudgui/file-opener.cc:80 src/libaudqt/fileopener.cc:39
+#: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:39
 msgid "Open Files"
 msgstr "Failide avamine"
 
-#: src/libaudgui/file-opener.cc:81 src/libaudgui/url-opener.cc:50
+#: src/libaudgui/file-opener.cc:79 src/libaudgui/url-opener.cc:50
 #: src/libaudqt/url-opener.cc:42
 msgid "_Open"
-msgstr ""
+msgstr "_Ava"
 
-#: src/libaudgui/file-opener.cc:83
+#: src/libaudgui/file-opener.cc:81
 msgid "Close _dialog on open"
-msgstr ""
+msgstr "Avamise järel _dialoog suletakse"
 
-#: src/libaudgui/file-opener.cc:88 src/libaudqt/fileopener.cc:41
+#: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:41
 msgid "Add Files"
 msgstr "Failide lisamine"
 
-#: src/libaudgui/file-opener.cc:89 src/libaudgui/url-opener.cc:56
+#: src/libaudgui/file-opener.cc:87 src/libaudgui/url-opener.cc:56
 #: src/libaudqt/url-opener.cc:48
 msgid "_Add"
-msgstr ""
+msgstr "_Lisa"
 
-#: src/libaudgui/file-opener.cc:91
+#: src/libaudgui/file-opener.cc:89
 msgid "Close _dialog on add"
-msgstr ""
+msgstr "Lisamise järel _dialoog suletakse"
 
-#: src/libaudgui/file-opener.cc:130 src/libaudgui/infowin.cc:394
+#: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:397
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:850 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:324 src/libaudqt/infowin.cc:74
-#: src/libaudqt/prefs-plugin.cc:143 src/libaudqt/prefs-window.cc:635
-#: src/libaudqt/queue-manager.cc:161 src/libaudqt/util.cc:130
+#: src/libaudgui/prefs-window.cc:853 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:297 src/libaudqt/infowin.cc:75
+#: src/libaudqt/log-inspector.cc:227 src/libaudqt/prefs-plugin.cc:141
+#: src/libaudqt/prefs-window.cc:619 src/libaudqt/queue-manager.cc:161
+#: src/libaudqt/util.cc:168
 msgid "_Close"
-msgstr ""
+msgstr "Sul_ge"
 
-#: src/libaudgui/infopopup.cc:193 src/libaudgui/infowin.cc:348
-#: src/libaudgui/prefs-window.cc:100 src/libaudqt/info-widget.cc:42
-#: src/libaudqt/prefs-window.cc:104
+#: src/libaudgui/infopopup.cc:192 src/libaudgui/infowin.cc:351
+#: src/libaudgui/prefs-window.cc:101 src/libaudqt/info-widget.cc:42
+#: src/libaudqt/prefs-window.cc:147
 msgid "Title"
 msgstr "Pealkiri"
 
-#: src/libaudgui/infopopup.cc:194 src/libaudgui/infowin.cc:351
+#: src/libaudgui/infopopup.cc:193 src/libaudgui/infowin.cc:354
 #: src/libaudgui/prefs-window.cc:98 src/libaudqt/info-widget.cc:40
-#: src/libaudqt/prefs-window.cc:102
+#: src/libaudqt/prefs-window.cc:144
 msgid "Artist"
 msgstr "Esitaja"
 
-#: src/libaudgui/infopopup.cc:195 src/libaudgui/infowin.cc:354
-#: src/libaudgui/prefs-window.cc:99 src/libaudqt/info-widget.cc:41
-#: src/libaudqt/prefs-window.cc:103
+#: src/libaudgui/infopopup.cc:194 src/libaudgui/infowin.cc:357
+#: src/libaudgui/prefs-window.cc:99 src/libaudgui/prefs-window.cc:145
+#: src/libaudqt/info-widget.cc:41 src/libaudqt/prefs-window.cc:145
+#: src/libaudqt/prefs-window.cc:191
 msgid "Album"
 msgstr "Album"
 
-#: src/libaudgui/infopopup.cc:196 src/libaudgui/infowin.cc:364
-#: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:44
-#: src/libaudqt/prefs-window.cc:106
+#: src/libaudgui/infopopup.cc:195 src/libaudgui/infowin.cc:367
+#: src/libaudgui/prefs-window.cc:103 src/libaudqt/info-widget.cc:44
+#: src/libaudqt/prefs-window.cc:149
 msgid "Genre"
 msgstr "Žanr"
 
-#: src/libaudgui/infopopup.cc:197 src/libaudgui/infowin.cc:367
-#: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:110
+#: src/libaudgui/infopopup.cc:196 src/libaudgui/infowin.cc:370
+#: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:153
 msgid "Year"
 msgstr "Aasta"
 
-#: src/libaudgui/infopopup.cc:198
+#: src/libaudgui/infopopup.cc:197 src/libaudgui/prefs-window.cc:144
+#: src/libaudqt/prefs-window.cc:190
 msgid "Track"
 msgstr "Rada"
 
-#: src/libaudgui/infopopup.cc:199 src/libaudqt/info-widget.cc:54
+#: src/libaudgui/infopopup.cc:198 src/libaudqt/info-widget.cc:54
 msgid "Length"
 msgstr "Pikkus"
 
 #: src/libaudgui/infowin.cc:50
 msgid "Format:"
-msgstr ""
+msgstr "Vorming:"
 
 #: src/libaudgui/infowin.cc:51
 msgid "Quality:"
-msgstr ""
+msgstr "Kvaliteet:"
 
 #: src/libaudgui/infowin.cc:52
 msgid "Bitrate:"
-msgstr ""
+msgstr "Bitikiirus:"
 
-#: src/libaudgui/infowin.cc:85
+#: src/libaudgui/infowin.cc:86
 msgid "Acid Jazz"
 msgstr "Acid Jazz"
 
-#: src/libaudgui/infowin.cc:86
+#: src/libaudgui/infowin.cc:87
 msgid "Acid Rock"
 msgstr "Acid Rock"
 
-#: src/libaudgui/infowin.cc:87
+#: src/libaudgui/infowin.cc:88
 msgid "Ambient"
 msgstr "Ambient"
 
-#: src/libaudgui/infowin.cc:88
+#: src/libaudgui/infowin.cc:89
 msgid "Bebop"
 msgstr "Bebop"
 
-#: src/libaudgui/infowin.cc:89
+#: src/libaudgui/infowin.cc:90
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.cc:90
+#: src/libaudgui/infowin.cc:91
 msgid "Blues"
 msgstr "Bluus"
 
-#: src/libaudgui/infowin.cc:91
+#: src/libaudgui/infowin.cc:92
 msgid "Chamber Music"
 msgstr "Kammermuusika"
 
-#: src/libaudgui/infowin.cc:92
+#: src/libaudgui/infowin.cc:93
 msgid "Classical"
 msgstr "Klassikaline"
 
-#: src/libaudgui/infowin.cc:93
+#: src/libaudgui/infowin.cc:94
 msgid "Country"
 msgstr "Kantri"
 
-#: src/libaudgui/infowin.cc:94
+#: src/libaudgui/infowin.cc:95
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: src/libaudgui/infowin.cc:95
+#: src/libaudgui/infowin.cc:96
 msgid "Disco"
 msgstr "Disko"
 
-#: src/libaudgui/infowin.cc:96
+#: src/libaudgui/infowin.cc:97
 msgid "Easy Listening"
 msgstr "Ajaviitemuusika"
 
-#: src/libaudgui/infowin.cc:97
+#: src/libaudgui/infowin.cc:98
 msgid "Folk"
 msgstr "Folk"
 
-#: src/libaudgui/infowin.cc:98
+#: src/libaudgui/infowin.cc:99
 msgid "Funk"
 msgstr "Funk"
 
-#: src/libaudgui/infowin.cc:99
+#: src/libaudgui/infowin.cc:100
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.cc:100
+#: src/libaudgui/infowin.cc:101
 msgid "Gospel"
 msgstr "Gospel"
 
-#: src/libaudgui/infowin.cc:101
+#: src/libaudgui/infowin.cc:102
 msgid "Grunge"
 msgstr "Grunge"
 
-#: src/libaudgui/infowin.cc:102
+#: src/libaudgui/infowin.cc:103
 msgid "Hard Rock"
 msgstr "Raske rokk"
 
-#: src/libaudgui/infowin.cc:103
+#: src/libaudgui/infowin.cc:104
 msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
-#: src/libaudgui/infowin.cc:104
+#: src/libaudgui/infowin.cc:105
 msgid "Hip-hop"
 msgstr "Hip-hop"
 
-#: src/libaudgui/infowin.cc:105
+#: src/libaudgui/infowin.cc:106
 msgid "House"
 msgstr "House"
 
-#: src/libaudgui/infowin.cc:106
+#: src/libaudgui/infowin.cc:107
 msgid "Jazz"
 msgstr "Džäss"
 
-#: src/libaudgui/infowin.cc:107
+#: src/libaudgui/infowin.cc:108
 msgid "Jungle"
 msgstr "Jungle"
 
-#: src/libaudgui/infowin.cc:108
+#: src/libaudgui/infowin.cc:109
 msgid "Metal"
 msgstr "Metal"
 
-#: src/libaudgui/infowin.cc:109
+#: src/libaudgui/infowin.cc:110
 msgid "New Age"
 msgstr "New Age"
 
-#: src/libaudgui/infowin.cc:110
+#: src/libaudgui/infowin.cc:111
 msgid "New Wave"
 msgstr "New Wave"
 
-#: src/libaudgui/infowin.cc:111
+#: src/libaudgui/infowin.cc:112
 msgid "Noise"
 msgstr "Müra"
 
-#: src/libaudgui/infowin.cc:112
+#: src/libaudgui/infowin.cc:113
 msgid "Pop"
 msgstr "Pop"
 
-#: src/libaudgui/infowin.cc:113
+#: src/libaudgui/infowin.cc:114
 msgid "Punk Rock"
 msgstr "Punkrokk"
 
-#: src/libaudgui/infowin.cc:114
+#: src/libaudgui/infowin.cc:115
 msgid "Rap"
 msgstr "Räpp"
 
-#: src/libaudgui/infowin.cc:115
+#: src/libaudgui/infowin.cc:116
 msgid "Reggae"
 msgstr "Rege"
 
-#: src/libaudgui/infowin.cc:116
+#: src/libaudgui/infowin.cc:117
 msgid "Rock"
 msgstr "Rokk"
 
-#: src/libaudgui/infowin.cc:117
+#: src/libaudgui/infowin.cc:118
 msgid "Rock and Roll"
 msgstr "Rock & Roll"
 
-#: src/libaudgui/infowin.cc:118
+#: src/libaudgui/infowin.cc:119
 msgid "Rhythm and Blues"
 msgstr "Rütmibluus"
 
-#: src/libaudgui/infowin.cc:119
+#: src/libaudgui/infowin.cc:120
 msgid "Ska"
 msgstr "Ska"
 
-#: src/libaudgui/infowin.cc:120
+#: src/libaudgui/infowin.cc:121
 msgid "Soul"
 msgstr "Soul"
 
-#: src/libaudgui/infowin.cc:121
+#: src/libaudgui/infowin.cc:122
 msgid "Swing"
 msgstr "Sving"
 
-#: src/libaudgui/infowin.cc:122
+#: src/libaudgui/infowin.cc:123
 msgid "Techno"
 msgstr "Tehno"
 
-#: src/libaudgui/infowin.cc:123
+#: src/libaudgui/infowin.cc:124
 msgid "Trip-hop"
 msgstr "Trip-hop"
 
-#: src/libaudgui/infowin.cc:216
+#: src/libaudgui/infowin.cc:217
 msgid "Save successful"
 msgstr ""
 
-#: src/libaudgui/infowin.cc:220
+#: src/libaudgui/infowin.cc:221
 msgid "Save error"
 msgstr ""
 
-#: src/libaudgui/infowin.cc:303 src/libaudgui/prefs-window.cc:84
-#: src/libaudqt/infowin.cc:63 src/libaudqt/prefs-window.cc:88
+#: src/libaudgui/infowin.cc:306 src/libaudgui/prefs-window.cc:84
+#: src/libaudqt/infowin.cc:63 src/libaudqt/prefs-window.cc:139
 msgid "Song Info"
 msgstr "Loo andmed"
 
-#: src/libaudgui/infowin.cc:357 src/libaudqt/info-widget.cc:46
+#: src/libaudgui/infowin.cc:360 src/libaudqt/info-widget.cc:46
+#: src/libaudqt/prefs-window.cc:146
 msgid "Album Artist"
-msgstr ""
+msgstr "Albumi esitaja"
 
-#: src/libaudgui/infowin.cc:360 src/libaudgui/prefs-window.cc:107
-#: src/libaudqt/info-widget.cc:45 src/libaudqt/prefs-window.cc:111
+#: src/libaudgui/infowin.cc:363 src/libaudgui/prefs-window.cc:108
+#: src/libaudqt/info-widget.cc:45 src/libaudqt/prefs-window.cc:154
 msgid "Comment"
 msgstr "Kommentaar"
 
-#: src/libaudgui/infowin.cc:370 src/libaudqt/info-widget.cc:43
+#: src/libaudgui/infowin.cc:373 src/libaudqt/info-widget.cc:43
 msgid "Track Number"
-msgstr ""
+msgstr "Raja number"
 
-#: src/libaudgui/infowin.cc:377
+#: src/libaudgui/infowin.cc:380
 msgid "Clea_r fields when moving to next song"
-msgstr ""
+msgstr "Väljade _puhastamine järgmisele loole liikumisel"
 
-#: src/libaudgui/infowin.cc:391 src/libaudqt/infowin.cc:73
+#: src/libaudgui/infowin.cc:394 src/libaudqt/infowin.cc:74
 msgid "_Save"
-msgstr ""
+msgstr "_Salvesta"
 
-#: src/libaudgui/infowin.cc:397
+#: src/libaudgui/infowin.cc:400
 msgid "_Next"
-msgstr ""
+msgstr "_Järgmine"
 
-#: src/libaudgui/infowin.cc:444
+#: src/libaudgui/infowin.cc:447
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.cc:449
+#: src/libaudgui/infowin.cc:452
 msgid "N/A"
 msgstr ""
 
@@ -733,69 +734,71 @@ msgstr "_Filter:"
 msgid "C_lose on jump"
 msgstr ""
 
-#: src/libaudgui/playlists.cc:94
+#: src/libaudgui/playlists.cc:91
 msgid "_Overwrite"
-msgstr ""
+msgstr "_Kirjuta üle"
 
-#: src/libaudgui/playlists.cc:98
+#: src/libaudgui/playlists.cc:95
 msgid "Confirm Overwrite"
-msgstr ""
+msgstr "Ülekirjutamise kinnitus"
 
-#: src/libaudgui/playlists.cc:98
+#: src/libaudgui/playlists.cc:95
 #, c-format
 msgid "Overwrite %s?"
 msgstr "Kas kirjutada fail %s üle?"
 
-#: src/libaudgui/playlists.cc:127
+#: src/libaudgui/playlists.cc:121
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
-msgstr ""
+msgstr "Palun sisesta failinime laiend või vali vorming valikunimekirjast."
 
-#: src/libaudgui/playlists.cc:146
+#: src/libaudgui/playlists.cc:140
 msgid "Select Format by Extension"
-msgstr ""
+msgstr "Vorming valitakse laiendi järgi"
 
-#: src/libaudgui/playlists.cc:173
+#: src/libaudgui/playlists.cc:167
 msgid "Export Playlist"
 msgstr "Esitusnimekirja eksportimine"
 
-#: src/libaudgui/playlists.cc:174
+#: src/libaudgui/playlists.cc:168
 msgid "_Export"
 msgstr ""
 
-#: src/libaudgui/playlists.cc:180
+#: src/libaudgui/playlists.cc:174
 msgid "Import Playlist"
 msgstr "Esitusnimekirja importimine"
 
-#: src/libaudgui/playlists.cc:181
+#: src/libaudgui/playlists.cc:175
 msgid "_Import"
 msgstr ""
 
 #: src/libaudgui/plugin-menu.cc:40
 msgid "_Plugins ..."
-msgstr ""
+msgstr "_Pluginad ..."
 
 #: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "%s ‒ plugina andmed"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:118
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:119
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s - sätted"
 
-#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:132
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:130
 msgid "_Set"
 msgstr ""
 
-#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:672
-#: src/libaudgui/prefs-window.cc:712 src/libaudqt/prefs-window.cc:495
+#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:675
+#: src/libaudgui/prefs-window.cc:715 src/libaudqt/prefs-window.cc:581
+#: src/libaudqt/prefs-window.cc:584
 msgid "_Settings"
-msgstr ""
+msgstr "_Sätted"
 
-#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:686
-#: src/libaudgui/prefs-window.cc:724 src/libaudqt/prefs-window.cc:509
+#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:689
+#: src/libaudgui/prefs-window.cc:727 src/libaudqt/prefs-window.cc:582
+#: src/libaudqt/prefs-window.cc:585
 msgid "_About"
 msgstr ""
 
@@ -805,474 +808,477 @@ msgstr ""
 
 #: src/libaudgui/prefs-widget.cc:281
 msgid "Choose Folder"
-msgstr ""
+msgstr "Kataloogi valimine"
 
-#: src/libaudgui/prefs-window.cc:80 src/libaudqt/prefs-window.cc:84
+#: src/libaudgui/prefs-window.cc:80 src/libaudqt/prefs-window.cc:135
 msgid "Appearance"
-msgstr ""
+msgstr "Välimus"
 
-#: src/libaudgui/prefs-window.cc:81 src/libaudqt/prefs-window.cc:85
+#: src/libaudgui/prefs-window.cc:81 src/libaudqt/prefs-window.cc:136
 msgid "Audio"
 msgstr "Audio"
 
-#: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:86
+#: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:137
 msgid "Network"
 msgstr "Võrk"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:87 src/libaudqt/prefs-window.cc:97
+#: src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "Esitusnimekiri"
 
-#: src/libaudgui/prefs-window.cc:85 src/libaudqt/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:85 src/libaudqt/prefs-window.cc:140
 msgid "Plugins"
 msgstr "Pluginad"
 
-#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-window.cc:93
+#: src/libaudgui/prefs-window.cc:89
 msgid "General"
 msgstr "Üldine"
 
-#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:90
 msgid "Effect"
 msgstr "Efekt"
 
-#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-window.cc:95
+#: src/libaudgui/prefs-window.cc:91
 msgid "Visualization"
 msgstr "Visualiseerimine"
 
-#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-window.cc:96
+#: src/libaudgui/prefs-window.cc:92
 msgid "Input"
 msgstr "Sisend"
 
-#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-window.cc:98
+#: src/libaudgui/prefs-window.cc:94
 msgid "Transport"
 msgstr "Transport"
 
-#: src/libaudgui/prefs-window.cc:101 src/libaudqt/prefs-window.cc:105
+#: src/libaudgui/prefs-window.cc:100
+msgid "Album artist"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:102 src/libaudqt/prefs-window.cc:148
 msgid "Track number"
-msgstr ""
+msgstr "Raja number"
 
-#: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:107
+#: src/libaudgui/prefs-window.cc:104 src/libaudqt/prefs-window.cc:150
 msgid "File name"
-msgstr ""
+msgstr "Fail nimi"
 
-#: src/libaudgui/prefs-window.cc:104 src/libaudqt/prefs-window.cc:108
+#: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:151
 msgid "File path"
-msgstr ""
+msgstr "Faili rada"
 
-#: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:109
+#: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:152
 msgid "Date"
 msgstr "Kuupäev"
 
-#: src/libaudgui/prefs-window.cc:108 src/libaudqt/info-widget.cc:55
-#: src/libaudqt/prefs-window.cc:112
+#: src/libaudgui/prefs-window.cc:109 src/libaudqt/info-widget.cc:55
+#: src/libaudqt/prefs-window.cc:155
 msgid "Codec"
 msgstr "Koodek"
 
-#: src/libaudgui/prefs-window.cc:109 src/libaudqt/info-widget.cc:56
-#: src/libaudqt/prefs-window.cc:113
+#: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:56
+#: src/libaudqt/prefs-window.cc:156
 msgid "Quality"
 msgstr "Kvaliteet"
 
-#: src/libaudgui/prefs-window.cc:113 src/libaudqt/prefs-window.cc:117
+#: src/libaudgui/prefs-window.cc:114 src/libaudqt/prefs-window.cc:160
 msgid "None"
 msgstr "Puudub"
 
-#: src/libaudgui/prefs-window.cc:114 src/libaudqt/prefs-window.cc:118
+#: src/libaudgui/prefs-window.cc:115 src/libaudqt/prefs-window.cc:161
 msgid "Arabic"
 msgstr "Araabia"
 
-#: src/libaudgui/prefs-window.cc:115 src/libaudqt/prefs-window.cc:119
+#: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window.cc:162
 msgid "Baltic"
 msgstr "Balti"
 
-#: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window.cc:120
+#: src/libaudgui/prefs-window.cc:117 src/libaudqt/prefs-window.cc:163
 msgid "Chinese"
 msgstr "Hiina"
 
-#: src/libaudgui/prefs-window.cc:117 src/libaudqt/prefs-window.cc:121
+#: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window.cc:164
 msgid "Greek"
 msgstr "Kreeka"
 
-#: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window.cc:122
+#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window.cc:165
 msgid "Hebrew"
 msgstr "Heebrea"
 
-#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window.cc:123
+#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window.cc:166
 msgid "Japanese"
 msgstr "Jaapani"
 
-#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window.cc:124
+#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window.cc:167
 msgid "Korean"
 msgstr "Korea"
 
-#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window.cc:125
+#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window.cc:168
 msgid "Polish"
 msgstr "Poola"
 
-#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window.cc:126
+#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window.cc:169
 msgid "Russian"
 msgstr "Vene"
 
-#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window.cc:127
+#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window.cc:170
 msgid "Taiwanese"
 msgstr "Taivani"
 
-#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window.cc:128
+#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window.cc:171
 msgid "Turkish"
 msgstr "Türgi"
 
-#: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window.cc:132
+#: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window.cc:175
 msgid "Automatic"
-msgstr ""
+msgstr "Automaatne"
 
-#: src/libaudgui/prefs-window.cc:132 src/libaudqt/prefs-window.cc:136
+#: src/libaudgui/prefs-window.cc:133 src/libaudqt/prefs-window.cc:179
 msgid "Floating point"
-msgstr ""
+msgstr "Ujukoma"
 
-#: src/libaudgui/prefs-window.cc:136
+#: src/libaudgui/prefs-window.cc:137 src/libaudqt/prefs-window.cc:183
 msgid "As decoded"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:137
+#: src/libaudgui/prefs-window.cc:138 src/libaudqt/prefs-window.cc:184
 msgid "After applying ReplayGain"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:138
+#: src/libaudgui/prefs-window.cc:139 src/libaudqt/prefs-window.cc:185
 msgid "After applying effects"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:139
+#: src/libaudgui/prefs-window.cc:140 src/libaudqt/prefs-window.cc:186
 msgid "After applying equalization"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:151 src/libaudqt/prefs-window.cc:148
-msgid "<b>Interface Settings</b>"
+#: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window.cc:192
+msgid "Based on shuffle"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:152 src/libaudqt/prefs-window.cc:149
-msgid "Interface plugin:"
+#: src/libaudgui/prefs-window.cc:158 src/libaudqt/prefs-window.cc:204
+msgid "Interface:"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:170 src/libaudqt/prefs-window.cc:167
+#: src/libaudgui/prefs-window.cc:177 src/libaudqt/prefs-window.cc:214
 msgid "Output plugin:"
 msgstr "Väljundplugin:"
 
-#: src/libaudgui/prefs-window.cc:191 src/libaudqt/prefs-window.cc:175
+#: src/libaudgui/prefs-window.cc:198 src/libaudqt/prefs-window.cc:229
 msgid "Amplify all files:"
 msgstr "Kõikide failide võimendamine:"
 
-#: src/libaudgui/prefs-window.cc:193 src/libaudgui/prefs-window.cc:197
-#: src/libaudqt/prefs-window.cc:177 src/libaudqt/prefs-window.cc:181
+#: src/libaudgui/prefs-window.cc:200 src/libaudgui/prefs-window.cc:203
+#: src/libaudqt/prefs-window.cc:231 src/libaudqt/prefs-window.cc:234
 msgid "dB"
 msgstr "dB"
 
-#: src/libaudgui/prefs-window.cc:195 src/libaudqt/prefs-window.cc:179
+#: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window.cc:232
 msgid "Amplify untagged files:"
 msgstr "Sildistamata failide võimendamine:"
 
-#: src/libaudgui/prefs-window.cc:202 src/libaudqt/prefs-window.cc:186
+#: src/libaudgui/prefs-window.cc:207 src/libaudqt/prefs-window.cc:238
 msgid "<b>Output Settings</b>"
 msgstr "<b>Väljundi sätted</b>"
 
-#: src/libaudgui/prefs-window.cc:204 src/libaudqt/prefs-window.cc:188
+#: src/libaudgui/prefs-window.cc:209 src/libaudqt/prefs-window.cc:240
 msgid "Bit depth:"
 msgstr "Bitisügavus:"
 
-#: src/libaudgui/prefs-window.cc:207 src/libaudgui/prefs-window.cc:251
-#: src/libaudqt/prefs-window.cc:191 src/libaudqt/prefs-window.cc:230
+#: src/libaudgui/prefs-window.cc:212 src/libaudgui/prefs-window.cc:257
+#: src/libaudqt/prefs-window.cc:243 src/libaudqt/prefs-window.cc:288
 msgid "Buffer size:"
 msgstr "Puhvri suurus:"
 
-#: src/libaudgui/prefs-window.cc:209 src/libaudqt/prefs-window.cc:193
+#: src/libaudgui/prefs-window.cc:214 src/libaudqt/prefs-window.cc:245
 msgid "ms"
 msgstr "ms"
 
-#: src/libaudgui/prefs-window.cc:210 src/libaudqt/prefs-window.cc:194
+#: src/libaudgui/prefs-window.cc:215 src/libaudqt/prefs-window.cc:246
 msgid "Soft clipping"
 msgstr "Pehme kärpimine"
 
-#: src/libaudgui/prefs-window.cc:212 src/libaudqt/prefs-window.cc:196
+#: src/libaudgui/prefs-window.cc:217 src/libaudqt/prefs-window.cc:248
 msgid "Use software volume control (not recommended)"
 msgstr "Tarkvaraline valjuse juhtimine (pole soovitatav)"
 
-#: src/libaudgui/prefs-window.cc:214
+#: src/libaudgui/prefs-window.cc:219 src/libaudqt/prefs-window.cc:250
 msgid "<b>Recording Settings</b>"
-msgstr ""
+msgstr "<b>Salvestamise sätted</b>"
 
-#: src/libaudgui/prefs-window.cc:218
+#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:254
 msgid "Record stream:"
-msgstr ""
+msgstr "Voo salvestamine:"
 
-#: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window.cc:198
+#: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:257
 msgid "<b>ReplayGain</b>"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window.cc:199
+#: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:258
 msgid "Enable ReplayGain"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:224 src/libaudqt/prefs-window.cc:201
-msgid "Album mode"
-msgstr "Albumi kaupa"
+#: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window.cc:260
+msgid "Mode:"
+msgstr ""
 
-#: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:204
+#: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window.cc:264
 msgid "Prevent clipping (recommended)"
 msgstr "Hoidutakse kärpimisest (soovitatav)"
 
-#: src/libaudgui/prefs-window.cc:235 src/libaudqt/prefs-window.cc:214
+#: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window.cc:272
 msgid "Proxy hostname:"
 msgstr "Proksi hostinimi:"
 
-#: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window.cc:216
+#: src/libaudgui/prefs-window.cc:243 src/libaudqt/prefs-window.cc:274
 msgid "Proxy port:"
 msgstr "Proksi port:"
 
-#: src/libaudgui/prefs-window.cc:242 src/libaudqt/prefs-window.cc:221
+#: src/libaudgui/prefs-window.cc:248 src/libaudqt/prefs-window.cc:279
 msgid "Proxy username:"
 msgstr "Proksi kasutajanimi:"
 
-#: src/libaudgui/prefs-window.cc:244 src/libaudqt/prefs-window.cc:223
+#: src/libaudgui/prefs-window.cc:250 src/libaudqt/prefs-window.cc:281
 msgid "Proxy password:"
 msgstr "Proksi parool:"
 
-#: src/libaudgui/prefs-window.cc:250 src/libaudqt/prefs-window.cc:229
+#: src/libaudgui/prefs-window.cc:256 src/libaudqt/prefs-window.cc:287
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Võrgusätted</b>"
 
-#: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:232
+#: src/libaudgui/prefs-window.cc:259 src/libaudqt/prefs-window.cc:290
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
-#: src/libaudgui/prefs-window.cc:254 src/libaudqt/prefs-window.cc:233
+#: src/libaudgui/prefs-window.cc:260 src/libaudqt/prefs-window.cc:291
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Proksi sätted</b>"
 
-#: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:234
+#: src/libaudgui/prefs-window.cc:261 src/libaudqt/prefs-window.cc:292
 msgid "Enable proxy usage"
 msgstr "Proksi kasutamine on lubatud"
 
-#: src/libaudgui/prefs-window.cc:259 src/libaudqt/prefs-window.cc:238
+#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window.cc:296
 msgid "Use authentication with proxy"
 msgstr "Proksi kasutatab autentimist"
 
-#: src/libaudgui/prefs-window.cc:266 src/libaudqt/prefs-window.cc:245
+#: src/libaudgui/prefs-window.cc:272 src/libaudqt/prefs-window.cc:303
 msgid "Auto character encoding detector for:"
 msgstr "Automaatne kooditabeli tuvastaja:"
 
-#: src/libaudgui/prefs-window.cc:269 src/libaudqt/prefs-window.cc:248
+#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:306
 msgid "Fallback character encodings:"
 msgstr "Kooditabelite tagavara:"
 
-#: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:257
+#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window.cc:314
 msgid "<b>Behavior</b>"
 msgstr "<b>Käitumine</b>"
 
-#: src/libaudgui/prefs-window.cc:278 src/libaudqt/prefs-window.cc:258
+#: src/libaudgui/prefs-window.cc:284 src/libaudqt/prefs-window.cc:315
 msgid "Resume playback on startup"
-msgstr ""
+msgstr "Käivitamisel jätkatakse esitamist"
 
-#: src/libaudgui/prefs-window.cc:280 src/libaudqt/prefs-window.cc:260
+#: src/libaudgui/prefs-window.cc:286 src/libaudqt/prefs-window.cc:317
 msgid "Pause instead of resuming immediately"
-msgstr ""
+msgstr "Kohese esitamise asemel määratakse paus"
 
-#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window.cc:263
+#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window.cc:320
 msgid "Advance when the current song is deleted"
 msgstr "Esitatava loo kustutamisel hakatakse järgmist lugu esitama"
 
-#: src/libaudgui/prefs-window.cc:285 src/libaudqt/prefs-window.cc:265
+#: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window.cc:322
 msgid "Clear the playlist when opening files"
 msgstr "Failide avamisel tühjendatakse esitusnimekiri"
 
-#: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window.cc:267
+#: src/libaudgui/prefs-window.cc:293 src/libaudqt/prefs-window.cc:324
 msgid "Open files in a temporary playlist"
 msgstr "Failid avatakse ajutises esitusnimekirjas"
 
-#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window.cc:271
+#: src/libaudgui/prefs-window.cc:295 src/libaudqt/prefs-window.cc:326
 msgid "<b>Song Display</b>"
 msgstr "<b>Loo kuvamine</b>"
 
-#: src/libaudgui/prefs-window.cc:290 src/libaudqt/prefs-window.cc:272
+#: src/libaudgui/prefs-window.cc:296 src/libaudqt/prefs-window.cc:327
 msgid "Show song numbers"
 msgstr "Näidatakse lugude numbreid"
 
-#: src/libaudgui/prefs-window.cc:292 src/libaudqt/prefs-window.cc:274
+#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window.cc:329
 msgid "Show leading zeroes (02:00 vs. 2:00)"
-msgstr ""
+msgstr "Näidatakse algusnulle (02:00 vs. 2:00)"
 
-#: src/libaudgui/prefs-window.cc:294 src/libaudqt/prefs-window.cc:276
+#: src/libaudgui/prefs-window.cc:300 src/libaudqt/prefs-window.cc:331
 msgid "Show hours separately (1:30:00 vs. 90:00)"
-msgstr ""
+msgstr "Tunde näidatakse eraldi (1:30:00 vs. 90:00)"
 
-#: src/libaudgui/prefs-window.cc:297 src/libaudqt/prefs-window.cc:279
+#: src/libaudgui/prefs-window.cc:303 src/libaudqt/prefs-window.cc:334
 msgid "<b>Compatibility</b>"
 msgstr "<b>Ühilduvus</b>"
 
-#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window.cc:280
+#: src/libaudgui/prefs-window.cc:304 src/libaudqt/prefs-window.cc:335
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr "Märki \\ (kurakaldkriips) käsitletakse kataloogide eraldajana"
 
-#: src/libaudgui/prefs-window.cc:304 src/libaudqt/prefs-window.cc:286
+#: src/libaudgui/prefs-window.cc:310 src/libaudqt/prefs-window.cc:341
 msgid "<b>Album Art</b>"
 msgstr "<b>Albumite kujundused</b>"
 
-#: src/libaudgui/prefs-window.cc:305 src/libaudqt/prefs-window.cc:287
+#: src/libaudgui/prefs-window.cc:311 src/libaudqt/prefs-window.cc:342
 msgid "Search for images matching these words (comma-separated):"
 msgstr "Otsitakse nende sõnadega kattuvaid pilte (komaga eraldatud nimekiri):"
 
-#: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window.cc:289
+#: src/libaudgui/prefs-window.cc:313 src/libaudqt/prefs-window.cc:344
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
 "Nende nende sõnadega kattuvad pildid välistatakse (komaga eraldatud "
 "nimekiri):"
 
-#: src/libaudgui/prefs-window.cc:309 src/libaudqt/prefs-window.cc:291
+#: src/libaudgui/prefs-window.cc:315 src/libaudqt/prefs-window.cc:346
 msgid "Search for images matching song file name"
 msgstr "Otsitakse loo failinimega kattuvaid pilte"
 
-#: src/libaudgui/prefs-window.cc:311 src/libaudqt/prefs-window.cc:293
+#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window.cc:348
 msgid "Search recursively"
 msgstr "Otsing toimub sügavuti"
 
-#: src/libaudgui/prefs-window.cc:313 src/libaudqt/prefs-window.cc:295
+#: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window.cc:350
 msgid "Search depth:"
 msgstr "Otsingu sügavus:"
 
-#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window.cc:299
+#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window.cc:354
 msgid "<b>Popup Information</b>"
 msgstr "<b>Loo andmete hüpikaken</b>"
 
-#: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window.cc:300
+#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window.cc:355
 msgid "Show popup information"
 msgstr "Loo andmeid näidatakse hüpikaknas"
 
-#: src/libaudgui/prefs-window.cc:320 src/libaudqt/prefs-window.cc:302
+#: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window.cc:357
 msgid "Popup delay (tenths of a second):"
 msgstr "Lahtihüppamise viivitus (sekundikümnendikes):"
 
-#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window.cc:306
+#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window.cc:361
 msgid "Show time scale for current song"
 msgstr "Esitamisel oleva loo kohta näidatakse ajaskaalat"
 
-#: src/libaudgui/prefs-window.cc:327 src/libaudqt/prefs-window.cc:309
+#: src/libaudgui/prefs-window.cc:333 src/libaudqt/prefs-window.cc:364
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>Laiendatud</b>"
 
-#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window.cc:310
+#: src/libaudgui/prefs-window.cc:334 src/libaudqt/prefs-window.cc:365
 msgid "Guess missing metadata from file path"
-msgstr ""
+msgstr "Puuduvad metaandmed tuletatakse faili rajast"
 
-#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window.cc:269
-#: src/libaudqt/prefs-window.cc:312
+#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window.cc:367
 msgid "Do not load metadata for songs until played"
 msgstr "Loo metaandmeid enne esitamist ei laadita"
 
-#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window.cc:314
+#: src/libaudgui/prefs-window.cc:338 src/libaudqt/prefs-window.cc:369
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "Tuvastamatu laiendiga failide puhul uuritakse faili sisu"
 
-#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window.cc:332
+#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window.cc:387
 msgid "TITLE"
 msgstr "PEALKIRI"
 
-#: src/libaudgui/prefs-window.cc:351 src/libaudqt/prefs-window.cc:333
+#: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window.cc:388
 msgid "TITLE - ARTIST"
-msgstr ""
+msgstr "PEALKIRI - ESITAJA"
 
-#: src/libaudgui/prefs-window.cc:352 src/libaudqt/prefs-window.cc:334
+#: src/libaudgui/prefs-window.cc:358 src/libaudqt/prefs-window.cc:389
 msgid "TITLE - ARTIST - ALBUM"
-msgstr ""
+msgstr "PEALKIRI - ESITAJA - ALBUM"
 
-#: src/libaudgui/prefs-window.cc:353 src/libaudqt/prefs-window.cc:335
+#: src/libaudgui/prefs-window.cc:359 src/libaudqt/prefs-window.cc:390
 msgid "ARTIST - TITLE"
 msgstr "ESITAJA - PEALKIRI"
 
-#: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window.cc:336
+#: src/libaudgui/prefs-window.cc:360 src/libaudqt/prefs-window.cc:391
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ESITAJA - ALBUM - PEALKIRI"
 
-#: src/libaudgui/prefs-window.cc:355 src/libaudqt/prefs-window.cc:337
+#: src/libaudgui/prefs-window.cc:361 src/libaudqt/prefs-window.cc:392
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ESITAJA - ALBUM - RADA. PEALKIRI"
 
-#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window.cc:338
+#: src/libaudgui/prefs-window.cc:362 src/libaudqt/prefs-window.cc:393
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ESITAJA [ALBUM] - RADA. PEALKIRI"
 
-#: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window.cc:339
+#: src/libaudgui/prefs-window.cc:363 src/libaudqt/prefs-window.cc:394
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - PEALKIRI"
 
-#: src/libaudgui/prefs-window.cc:451
+#: src/libaudgui/prefs-window.cc:457
 msgid "Category"
 msgstr "Kategooria"
 
-#: src/libaudgui/prefs-window.cc:517 src/libaudqt/prefs-window.cc:355
+#: src/libaudgui/prefs-window.cc:520 src/libaudqt/prefs-window.cc:412
 msgid "Custom"
 msgstr "Kohandatud"
 
-#: src/libaudgui/prefs-window.cc:535 src/libaudqt/prefs-window.cc:347
+#: src/libaudgui/prefs-window.cc:538 src/libaudqt/prefs-window.cc:404
 msgid "Title format:"
 msgstr "Pealkirja vorming:"
 
-#: src/libaudgui/prefs-window.cc:539 src/libaudqt/prefs-window.cc:358
+#: src/libaudgui/prefs-window.cc:542 src/libaudqt/prefs-window.cc:415
 msgid "Custom string:"
 msgstr "Kohandatud string:"
 
-#: src/libaudgui/prefs-window.cc:738
+#: src/libaudgui/prefs-window.cc:741 src/libaudqt/prefs-window.cc:705
 #, c-format
-msgid "Record audio stream using %s"
+msgid "Enable audio stream recording with %s"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:747
+#: src/libaudgui/prefs-window.cc:750 src/libaudqt/prefs-window.cc:716
 msgid "No audio recording plugin available"
-msgstr ""
+msgstr "Audiosalvestamise pluginat pole saadaval"
 
-#: src/libaudgui/prefs-window.cc:800 src/libaudqt/prefs-window.cc:605
+#: src/libaudgui/prefs-window.cc:803 src/libaudqt/prefs-window.cc:593
 msgid "Audacious Settings"
-msgstr ""
+msgstr "Audaciouse sätted"
 
-#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:174
+#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:172
 msgid "Cancel"
-msgstr ""
+msgstr "Tühista"
 
 #: src/libaudgui/preset-browser.cc:51
 msgid "Save"
-msgstr ""
+msgstr "Salvesta"
 
 #: src/libaudgui/preset-browser.cc:51
 msgid "Load"
-msgstr ""
+msgstr "Laadi"
 
 #: src/libaudgui/preset-browser.cc:77
 msgid "Load Preset File"
-msgstr ""
+msgstr "Eelsätete faili laadimine"
 
 #: src/libaudgui/preset-browser.cc:94
 msgid "Load EQF File"
-msgstr ""
+msgstr "EQF-faili laadimine"
 
 #: src/libaudgui/preset-browser.cc:109
 msgid "Save Preset File"
-msgstr ""
+msgstr "Eelsätete faili salvestamine"
 
 #: src/libaudgui/preset-browser.cc:109
 msgid "<name>.preset"
-msgstr ""
+msgstr "<nimi>.preset"
 
 #: src/libaudgui/preset-browser.cc:127
 msgid "Save EQF File"
-msgstr ""
+msgstr "EQF-faili salvestamine"
 
 #: src/libaudgui/preset-browser.cc:127
 msgid "<name>.eqf"
-msgstr ""
+msgstr "<nimi>.eqf"
 
 #: src/libaudgui/preset-browser.cc:141
 msgid "Import Winamp Presets"
-msgstr ""
+msgstr "Winampi eelsätete import"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager.cc:178
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager.cc:157
 msgid "Queue Manager"
 msgstr "Esitusjärjekorra haldamine"
 
@@ -1282,15 +1288,15 @@ msgstr ""
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr ""
+msgstr "Töötamine ..."
 
-#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:191
+#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:209
 msgid "Error"
-msgstr ""
+msgstr "Viga"
 
 #: src/libaudgui/status.cc:90
 msgid "Information"
-msgstr ""
+msgstr "Teave"
 
 #: src/libaudgui/url-opener.cc:49 src/libaudqt/url-opener.cc:41
 msgid "Open URL"
@@ -1304,12 +1310,12 @@ msgstr "URL-i lisamine"
 msgid "Enter URL:"
 msgstr "Sisesta URL:"
 
-#: src/libaudgui/util.cc:174 src/libaudqt/fileopener.cc:46
+#: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:46
 #: src/libaudqt/fileopener.cc:47
 msgid "Open"
 msgstr ""
 
-#: src/libaudgui/util.cc:309
+#: src/libaudgui/util.cc:283
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1331,23 +1337,23 @@ msgstr ""
 
 #: src/libaudqt/info-widget.cc:39
 msgid "Metadata"
-msgstr ""
+msgstr "Metaandmed"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Composer"
-msgstr ""
+msgstr "Helilooja"
 
 #: src/libaudqt/info-widget.cc:48
 msgid "Performer"
-msgstr ""
+msgstr "Esitaja"
 
 #: src/libaudqt/info-widget.cc:49
 msgid "Recording Year"
-msgstr ""
+msgstr "Salvestamise aasta"
 
 #: src/libaudqt/info-widget.cc:50
 msgid "Recording Date"
-msgstr ""
+msgstr "Salvestamise kuupäev"
 
 #: src/libaudqt/info-widget.cc:53
 msgid "Technical"
@@ -1355,56 +1361,48 @@ msgstr ""
 
 #: src/libaudqt/info-widget.cc:57
 msgid "Bitrate"
-msgstr ""
+msgstr "Bitikiirus"
 
-#: src/libaudqt/log-inspector.cc:105
+#: src/libaudqt/log-inspector.cc:137
 msgid "Level"
-msgstr ""
+msgstr "Tase"
 
-#: src/libaudqt/log-inspector.cc:106
-msgid "Filename"
-msgstr "Failinimi"
-
-#: src/libaudqt/log-inspector.cc:107
-msgid "Line"
-msgstr ""
-
-#: src/libaudqt/log-inspector.cc:108
+#: src/libaudqt/log-inspector.cc:138
 msgid "Function"
-msgstr ""
+msgstr "Funktsioon"
 
-#: src/libaudqt/log-inspector.cc:109
+#: src/libaudqt/log-inspector.cc:139
 msgid "Message"
-msgstr ""
+msgstr "Sõnum"
 
-#: src/libaudqt/log-inspector.cc:174
+#: src/libaudqt/log-inspector.cc:195
 msgid "Log Inspector"
-msgstr ""
+msgstr "Logiinspektor"
 
-#: src/libaudqt/log-inspector.cc:185
-msgid "Log Level:"
-msgstr ""
-
-#: src/libaudqt/log-inspector.cc:188
+#: src/libaudqt/log-inspector.cc:206
 msgid "Debug"
-msgstr ""
+msgstr "Silumine"
 
-#: src/libaudqt/log-inspector.cc:189
+#: src/libaudqt/log-inspector.cc:207
 msgid "Info"
+msgstr "Info"
+
+#: src/libaudqt/log-inspector.cc:208
+msgid "Warning"
+msgstr "Hoiatus"
+
+#: src/libaudqt/log-inspector.cc:219
+msgid "Cl_ear"
 msgstr ""
 
-#: src/libaudqt/log-inspector.cc:190
-msgid "Warning"
-msgstr ""
+#: src/libaudqt/log-inspector.cc:232
+msgid "Log Level:"
+msgstr "Logimise tase:"
 
 #: src/libaudqt/plugin-menu.cc:45
 msgid "Plugins ..."
-msgstr ""
+msgstr "Pluginad ..."
 
-#: src/libaudqt/plugin-menu.cc:54
+#: src/libaudqt/plugin-menu.cc:53
 msgid "Services"
-msgstr ""
-
-#: src/libaudqt/prefs-window.cc:207
-msgid "<b>Adjust Levels</b>"
-msgstr "<b>Valjuse kohendamine</b>"
+msgstr "Teenused"

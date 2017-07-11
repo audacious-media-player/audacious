@@ -1,6 +1,9 @@
 #!/bin/sh
 
 case "$1" in
+ar.po)
+    LANGUAGE="Arabic"
+    ;;
 ast.po)
     LANGUAGE="Asturian"
     ;;
