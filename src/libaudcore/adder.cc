@@ -181,9 +181,9 @@ static void add_file (PlaylistAddItem && item, Playlist::FilterFunc filter,
 }
 
 /* To prevent infinite recursion, we currently allow adding a folder from within
- * a playlist but not a playlist from within a folder, nor a second playlist
- * from within a playlist (this latter rule is enforced by setting
- * <allow_playlist> to false from within add_playlist(). */
+ * a playlist, but not a playlist from within a folder, nor a second playlist
+ * from within a playlist (this last rule is enforced by setting
+ * <allow_playlist> to false from within add_playlist()). */
 static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,
  void * user, AddResult * result, bool save_title, bool allow_playlist);
 
