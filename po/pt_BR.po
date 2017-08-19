@@ -12,6 +12,7 @@
 # F Marcelo O Amarante <marcelo.amarante@hotmail.com>, 2015
 # Habner Costa <habnertc@msn.com>, 2013
 # Habner Costa <habnertc@msn.com>, 2013
+# Iuri Suzano <isuzano@netkings.cc>, 2017
 # jimmiemacedo <jimmie.macedo@gmail.com>, 2012
 # jimmiemacedo <jimmie.macedo@gmail.com>, 2012
 # Jorgebadad <jorgebadad@gmail.com>, 2016
@@ -28,9 +29,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-06-07 18:51+0000\n"
-"Last-Translator: Thomas Lange\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-03 11:13+0000\n"
+"Last-Translator: Iuri Suzano <isuzano@netkings.cc>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/audacious/"
 "audacious/language/pt_BR/)\n"
 "Language: pt_BR\n"
@@ -136,7 +137,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d arquivo encontrado"
 msgstr[1] "%d arquivos encontrados"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -145,11 +146,11 @@ msgstr ""
 "Erro de leitura %s:\n"
 "%s"
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
 msgstr "Nenum arquivo encontrado."
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "Nova Lista de Reprodução"
 
@@ -166,13 +167,18 @@ msgstr "CD de Áudio, faixa %s"
 msgid "(character encoding error)"
 msgstr "(erro de codificação de caracteres)"
 
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
+msgstr ""
+
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
 msgstr "Erro ao abrir o fluxo de saída"
 
 #: src/libaudcore/output.cc:248
 msgid "Error recording output stream"
-msgstr ""
+msgstr "Erro ao gravar fluxo de saída"
 
 #: src/libaudcore/playback.cc:369
 #, c-format
@@ -843,7 +849,7 @@ msgid "Network"
 msgstr "Rede"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "Lista de Reprodução"
 
@@ -851,23 +857,23 @@ msgstr "Lista de Reprodução"
 msgid "Plugins"
 msgstr "Plugins"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "Geral"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "Efeito"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "Visualização"
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "Entrada"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "Transportar"
 
@@ -963,7 +969,7 @@ msgstr "Como decodificado"
 
 #: src/libaudgui/prefs-window.cc:138 src/libaudqt/prefs-window.cc:184
 msgid "After applying ReplayGain"
-msgstr ""
+msgstr "Após a aplicação de Ganho de Repetição"
 
 #: src/libaudgui/prefs-window.cc:139 src/libaudqt/prefs-window.cc:185
 msgid "After applying effects"
@@ -979,7 +985,7 @@ msgstr ""
 
 #: src/libaudgui/prefs-window.cc:158 src/libaudqt/prefs-window.cc:204
 msgid "Interface:"
-msgstr ""
+msgstr "Interface:"
 
 #: src/libaudgui/prefs-window.cc:177 src/libaudqt/prefs-window.cc:214
 msgid "Output plugin:"
@@ -1033,15 +1039,15 @@ msgstr "Fluxo de Registro"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:257
 msgid "<b>ReplayGain</b>"
-msgstr ""
+msgstr "<b>Ganho de Repetição</b>"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:258
 msgid "Enable ReplayGain"
-msgstr ""
+msgstr "Habilitar Ganho de Repetição"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window.cc:260
 msgid "Mode:"
-msgstr ""
+msgstr "Modo:"
 
 #: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window.cc:264
 msgid "Prevent clipping (recommended)"

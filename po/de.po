@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-07-09 23:38+0200\n"
-"Last-Translator: Thomas <thomas@Arch>\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-03 11:13+0000\n"
+"Last-Translator: Thomas Lange\n"
 "Language-Team: German (http://www.transifex.com/audacious/audacious/language/"
 "de/)\n"
 "Language: de\n"
@@ -124,7 +124,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d Datei gefunden"
 msgstr[1] "%d Dateien gefunden"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -133,11 +133,11 @@ msgstr ""
 "Fehler beim Lesen von %s:\n"
 "%s"
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
 msgstr "Keine Dateien gefunden."
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "Neue Wiedergabeliste"
 
@@ -153,6 +153,13 @@ msgstr "Audio-CD, Titel »%s«"
 #: src/libaudcore/audstrings.cc:646 src/libaudcore/tuple.cc:496
 msgid "(character encoding error)"
 msgstr "(Fehler bei Zeichencodierung)"
+
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
+msgstr ""
+"Die Aufnahme von Streams muss zuerst in den Audioeinstellungen konfiguriert "
+"werden."
 
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
@@ -830,7 +837,7 @@ msgid "Network"
 msgstr "Netzwerk"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "Wiedergabeliste"
 
@@ -838,23 +845,23 @@ msgstr "Wiedergabeliste"
 msgid "Plugins"
 msgstr "Plugins"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "Allgemein"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "Effekte"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "Visualisierung"
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "Eingabe"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "Transport"
 

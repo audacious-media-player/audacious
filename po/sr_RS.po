@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-06-07 18:51+0000\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-03 11:13+0000\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: Serbian (Serbia) (http://www.transifex.com/audacious/"
 "audacious/language/sr_RS/)\n"
@@ -118,18 +118,18 @@ msgstr[0] "Пронашао сам %d датотеку"
 msgstr[1] "Пронашао сам %d датотеке"
 msgstr[2] "Пронашао сам %d датотека"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
 msgstr ""
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "Нови списак нумера"
 
@@ -144,6 +144,11 @@ msgstr "Звучни ЦД, нумера %s"
 
 #: src/libaudcore/audstrings.cc:646 src/libaudcore/tuple.cc:496
 msgid "(character encoding error)"
+msgstr ""
+
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
 msgstr ""
 
 #: src/libaudcore/output.cc:195
@@ -817,7 +822,7 @@ msgid "Network"
 msgstr "Мрежа"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "Списак нумера"
 
@@ -825,23 +830,23 @@ msgstr "Списак нумера"
 msgid "Plugins"
 msgstr "Прикључци"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "Опште"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "Дејство"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "Приказивање"
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "Унос"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "Пренос"
 

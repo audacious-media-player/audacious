@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-06-08 07:02+0000\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-03 11:12+0000\n"
 "Last-Translator: Petr Šimáček <petr.simacek@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/audacious/audacious/language/"
 "cs/)\n"
@@ -130,7 +130,7 @@ msgstr[0] "Nalezen %d soubor"
 msgstr[1] "Nalezeny %d soubory"
 msgstr[2] "Nalezeno %d souborů"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -139,11 +139,11 @@ msgstr ""
 "Chyba při čtení %s:\n"
 "%s"
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
 msgstr "Nenalazeny žádné soubory."
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "Nový seznam skladeb"
 
@@ -159,6 +159,12 @@ msgstr "Zvukové CD, stopa %s"
 #: src/libaudcore/audstrings.cc:646 src/libaudcore/tuple.cc:496
 msgid "(character encoding error)"
 msgstr "(chyba kódování znaků)"
+
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
+msgstr ""
+"Nahrávání streamu musí být před použitím nakonfigurováno v nastavení zvuku."
 
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
@@ -835,7 +841,7 @@ msgid "Network"
 msgstr "Síť"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "Seznam skladeb"
 
@@ -843,23 +849,23 @@ msgstr "Seznam skladeb"
 msgid "Plugins"
 msgstr "Moduly"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "Obecné"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "Efekt"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "Znázornění"
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "Vstup"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "Přenos"
 
@@ -1416,10 +1422,3 @@ msgstr "Přídavné moduly..."
 #: src/libaudqt/plugin-menu.cc:53
 msgid "Services"
 msgstr "Služby"
-
-#~ msgid ""
-#~ "Stream recording must be configured in Audio Settings before it can be "
-#~ "used."
-#~ msgstr ""
-#~ "Nahrávání streamu musí být před použitím nakonfigurováno v nastavení "
-#~ "zvuku."

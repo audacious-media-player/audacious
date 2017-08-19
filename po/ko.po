@@ -14,14 +14,14 @@
 # natird zoto <dritan86@gmail.com>, 2012
 #       Sang-Jin Hwang <accel@accellinux.org>, 1999
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2012
-# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012-2015
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-06-07 18:51+0000\n"
-"Last-Translator: Thomas Lange\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-06 14:45+0000\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/audacious/audacious/language/"
 "ko/)\n"
 "Language: ko\n"
@@ -114,7 +114,7 @@ msgstr ""
 
 #: src/audacious/main.cc:185
 msgid "Select instance to run/control"
-msgstr ""
+msgstr "실행/제어할 인스턴스 선택"
 
 #: src/audacious/main.cc:367 src/libaudqt/util.cc:62
 msgid "Audacious"
@@ -126,18 +126,20 @@ msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "파일 %d개를 찾았습니다"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
+"%s 읽기 오류:\n"
+"%s"
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
-msgstr ""
+msgstr "파일이 없습니다."
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "새 재생 목록"
 
@@ -154,13 +156,18 @@ msgstr "음악 CD, %s 트랙"
 msgid "(character encoding error)"
 msgstr "(문자 인코딩 오류)"
 
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
+msgstr "스트림 녹음을 사용하려면 오디오 설정에서 설정해야합니다."
+
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
-msgstr ""
+msgstr "출력 스트림 열기 오류"
 
 #: src/libaudcore/output.cc:248
 msgid "Error recording output stream"
-msgstr ""
+msgstr "출력 스트림 녹음 오류"
 
 #: src/libaudcore/playback.cc:369
 #, c-format
@@ -168,6 +175,8 @@ msgid ""
 "Error playing %s:\n"
 "%s"
 msgstr ""
+"%s 재생 오류:\n"
+"%s"
 
 #: src/libaudcore/playback.cc:501
 msgid "Invalid audio format"
@@ -806,7 +815,7 @@ msgstr "정보(_A)"
 
 #: src/libaudgui/prefs-widget.cc:277
 msgid "Choose File"
-msgstr ""
+msgstr "파일 선택"
 
 #: src/libaudgui/prefs-widget.cc:281
 msgid "Choose Folder"
@@ -825,7 +834,7 @@ msgid "Network"
 msgstr "네트워크"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "재생 목록"
 
@@ -833,23 +842,23 @@ msgstr "재생 목록"
 msgid "Plugins"
 msgstr "플러그인"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "일반"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "효과"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "시각 효과"
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "입력"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "전송"
 
@@ -933,7 +942,7 @@ msgstr "터키어"
 
 #: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window.cc:175
 msgid "Automatic"
-msgstr ""
+msgstr "자동"
 
 #: src/libaudgui/prefs-window.cc:133 src/libaudqt/prefs-window.cc:179
 msgid "Floating point"
@@ -941,27 +950,27 @@ msgstr "부동 소숫점"
 
 #: src/libaudgui/prefs-window.cc:137 src/libaudqt/prefs-window.cc:183
 msgid "As decoded"
-msgstr ""
+msgstr "디코딩 상태"
 
 #: src/libaudgui/prefs-window.cc:138 src/libaudqt/prefs-window.cc:184
 msgid "After applying ReplayGain"
-msgstr ""
+msgstr "리플레이게인 적용"
 
 #: src/libaudgui/prefs-window.cc:139 src/libaudqt/prefs-window.cc:185
 msgid "After applying effects"
-msgstr ""
+msgstr "효과 적용"
 
 #: src/libaudgui/prefs-window.cc:140 src/libaudqt/prefs-window.cc:186
 msgid "After applying equalization"
-msgstr ""
+msgstr "이퀄라이제이션 적용"
 
 #: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window.cc:192
 msgid "Based on shuffle"
-msgstr ""
+msgstr "임의 재생 기반"
 
 #: src/libaudgui/prefs-window.cc:158 src/libaudqt/prefs-window.cc:204
 msgid "Interface:"
-msgstr ""
+msgstr "인터페이스"
 
 #: src/libaudgui/prefs-window.cc:177 src/libaudqt/prefs-window.cc:214
 msgid "Output plugin:"
@@ -1007,23 +1016,23 @@ msgstr "프로그램 음량 조절기 사용(추천하지 않음)"
 
 #: src/libaudgui/prefs-window.cc:219 src/libaudqt/prefs-window.cc:250
 msgid "<b>Recording Settings</b>"
-msgstr ""
+msgstr "<b>녹음 설정</b>"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:254
 msgid "Record stream:"
-msgstr ""
+msgstr "녹음 스트림:"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:257
 msgid "<b>ReplayGain</b>"
-msgstr ""
+msgstr "<b>리플레이게인</b>"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:258
 msgid "Enable ReplayGain"
-msgstr ""
+msgstr "리플레이게인 활성화"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window.cc:260
 msgid "Mode:"
-msgstr ""
+msgstr "모드:"
 
 #: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window.cc:264
 msgid "Prevent clipping (recommended)"
@@ -1107,11 +1116,11 @@ msgstr "곡 번호 표시"
 
 #: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window.cc:329
 msgid "Show leading zeroes (02:00 vs. 2:00)"
-msgstr ""
+msgstr "자리수 맞추기 영(0) 표시(02:00 / 2:00)"
 
 #: src/libaudgui/prefs-window.cc:300 src/libaudqt/prefs-window.cc:331
 msgid "Show hours separately (1:30:00 vs. 90:00)"
-msgstr ""
+msgstr "시간 단위 개별 표시(1:30:00 / 90:00)"
 
 #: src/libaudgui/prefs-window.cc:303 src/libaudqt/prefs-window.cc:334
 msgid "<b>Compatibility</b>"
@@ -1228,11 +1237,11 @@ msgstr "사용자 정의:"
 #: src/libaudgui/prefs-window.cc:741 src/libaudqt/prefs-window.cc:705
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr ""
+msgstr "%s 오디오 스트림 녹음 활성화"
 
 #: src/libaudgui/prefs-window.cc:750 src/libaudqt/prefs-window.cc:716
 msgid "No audio recording plugin available"
-msgstr ""
+msgstr "사용할 수 있는 오디오 녹음 플러그인이 없습니다"
 
 #: src/libaudgui/prefs-window.cc:803 src/libaudqt/prefs-window.cc:593
 msgid "Audacious Settings"
@@ -1296,7 +1305,7 @@ msgstr "오류"
 
 #: src/libaudgui/status.cc:90
 msgid "Information"
-msgstr ""
+msgstr "정보"
 
 #: src/libaudgui/url-opener.cc:49 src/libaudqt/url-opener.cc:41
 msgid "Open URL"
@@ -1393,7 +1402,7 @@ msgstr "경고"
 
 #: src/libaudqt/log-inspector.cc:219
 msgid "Cl_ear"
-msgstr ""
+msgstr "지우기(_E)"
 
 #: src/libaudqt/log-inspector.cc:232
 msgid "Log Level:"

@@ -13,14 +13,14 @@
 # Jordi Amenós <>, 2011
 # Juanma Hernández <juanmah@gmail.com>, 2012
 # Juanma Hernández <juanmah@gmail.com>, 2012
-# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016
+# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-06-07 18:51+0000\n"
-"Last-Translator: Thomas Lange\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-05 19:18+0000\n"
+"Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/audacious/audacious/"
 "language/ca/)\n"
 "Language: ca\n"
@@ -43,7 +43,7 @@ msgstr "Inicia la reproducció"
 
 #: src/audacious/main.cc:68
 msgid "Pause playback"
-msgstr "Pausa reproducció"
+msgstr "Fa una pausa a la reproducció"
 
 #: src/audacious/main.cc:69
 msgid "Pause if playing, play otherwise"
@@ -87,7 +87,7 @@ msgstr "Surt amb l'aturada de la reproducció"
 
 #: src/audacious/main.cc:79
 msgid "Print debugging messages (may be used twice)"
-msgstr "Imprimir missatges de depuració (pot ser utilitzat dues vegades)"
+msgstr "Imprimeix els missatges de depuració (pot utilitza-se dues vegades)"
 
 #: src/audacious/main.cc:81
 msgid "Run in Qt mode"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: src/audacious/main.cc:185
 msgid "Select instance to run/control"
-msgstr "Seleccioneu la instància a executar/controlar"
+msgstr "Selecciona la instància a executar o controlar"
 
 #: src/audacious/main.cc:367 src/libaudqt/util.cc:62
 msgid "Audacious"
@@ -126,7 +126,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d fitxer trobat"
 msgstr[1] "%d fitxers trobats"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -135,11 +135,11 @@ msgstr ""
 "Error de lectura %s:\n"
 "%s"
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
 msgstr "No s'ha trobat cap fiter."
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "Nova llista de reproducció"
 
@@ -156,13 +156,20 @@ msgstr "CD d'àudio, pista %s"
 msgid "(character encoding error)"
 msgstr "(error de codificació de caràcters)"
 
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
+msgstr ""
+"Abans que es pugui utilitzar l'enregistrament del flux, aquest s'ha de "
+"configurar als ajusts de l'àudio."
+
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
 msgstr "Error en obrir el flux de sortida"
 
 #: src/libaudcore/output.cc:248
 msgid "Error recording output stream"
-msgstr ""
+msgstr "Error en l'enregistrament del flux de sortida"
 
 #: src/libaudcore/playback.cc:369
 #, c-format
@@ -199,14 +206,12 @@ msgstr "Error en carregar %s."
 #: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr "No es pot carregar %s: l'extensió del nom del fitxer no és compatible."
+msgstr "No es pot carregar %s: extensió no admesa de nom de fitxer."
 
 #: src/libaudcore/playlist-files.cc:151
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
-" match\n"
-"No es pot desar %s: nom d'extensió d'arxiu no suportat."
+msgstr "No es pot desar %s: extensió no admesa de nom de fitxer."
 
 #: src/libaudcore/probe.cc:54
 msgid "Error loading plugin"
@@ -704,7 +709,7 @@ msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.cc:452
 msgid "N/A"
-msgstr "N/A"
+msgstr "N/D"
 
 #: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:314
 msgid "_Jump"
@@ -834,7 +839,7 @@ msgid "Network"
 msgstr "Xarxa"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "Llista de reproducció"
 
@@ -842,29 +847,29 @@ msgstr "Llista de reproducció"
 msgid "Plugins"
 msgstr "Connectors"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "General"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "Efectes"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "Visualització"
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "Entrada"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "Transport"
 
 #: src/libaudgui/prefs-window.cc:100
 msgid "Album artist"
-msgstr "Arista de l'àlbum"
+msgstr "Artista de l'àlbum"
 
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/prefs-window.cc:148
 msgid "Track number"
@@ -946,15 +951,15 @@ msgstr "Automàtic"
 
 #: src/libaudgui/prefs-window.cc:133 src/libaudqt/prefs-window.cc:179
 msgid "Floating point"
-msgstr "Coma flotant"
+msgstr "Punt flotant"
 
 #: src/libaudgui/prefs-window.cc:137 src/libaudqt/prefs-window.cc:183
 msgid "As decoded"
-msgstr "Com es descodifica"
+msgstr "Com a descodificat"
 
 #: src/libaudgui/prefs-window.cc:138 src/libaudqt/prefs-window.cc:184
 msgid "After applying ReplayGain"
-msgstr "Després de l'aplicació de ReplayGain"
+msgstr "Després d'aplicar ReplayGain"
 
 #: src/libaudgui/prefs-window.cc:139 src/libaudqt/prefs-window.cc:185
 msgid "After applying effects"
@@ -962,15 +967,15 @@ msgstr "Després d'aplicar els efectes"
 
 #: src/libaudgui/prefs-window.cc:140 src/libaudqt/prefs-window.cc:186
 msgid "After applying equalization"
-msgstr "Després d'aplicar equalització"
+msgstr "Després d'aplicar l'equalització"
 
 #: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window.cc:192
 msgid "Based on shuffle"
-msgstr ""
+msgstr "Basat en la mescla"
 
 #: src/libaudgui/prefs-window.cc:158 src/libaudqt/prefs-window.cc:204
 msgid "Interface:"
-msgstr ""
+msgstr "Interfície:"
 
 #: src/libaudgui/prefs-window.cc:177 src/libaudqt/prefs-window.cc:214
 msgid "Output plugin:"
@@ -995,7 +1000,7 @@ msgstr "<b>Ajusts de la sortida</b>"
 
 #: src/libaudgui/prefs-window.cc:209 src/libaudqt/prefs-window.cc:240
 msgid "Bit depth:"
-msgstr "Profunditat de bits:"
+msgstr "Profunditat de mostreig:"
 
 #: src/libaudgui/prefs-window.cc:212 src/libaudgui/prefs-window.cc:257
 #: src/libaudqt/prefs-window.cc:243 src/libaudqt/prefs-window.cc:288
@@ -1032,7 +1037,7 @@ msgstr "Habilita ReplayGain"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window.cc:260
 msgid "Mode:"
-msgstr ""
+msgstr "Mode:"
 
 #: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window.cc:264
 msgid "Prevent clipping (recommended)"
@@ -1243,7 +1248,7 @@ msgstr "Cadena personalitzada:"
 #: src/libaudgui/prefs-window.cc:741 src/libaudqt/prefs-window.cc:705
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr ""
+msgstr "Habilita l'enregistrament del flux d'àudio amb %s"
 
 #: src/libaudgui/prefs-window.cc:750 src/libaudqt/prefs-window.cc:716
 msgid "No audio recording plugin available"
@@ -1408,7 +1413,7 @@ msgstr "Advertència"
 
 #: src/libaudqt/log-inspector.cc:219
 msgid "Cl_ear"
-msgstr ""
+msgstr "N_eteja"
 
 #: src/libaudqt/log-inspector.cc:232
 msgid "Log Level:"

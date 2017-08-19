@@ -4,7 +4,7 @@
 #
 # Translators:
 # ABE Tsunehiko, 2013
-# ABE Tsunehiko, 2015-2016
+# ABE Tsunehiko, 2015-2017
 # natird zoto <dritan86@gmail.com>, 2012
 # ABE Tsunehiko, 2013
 # Nastuko Toda <m2330880989@shibuya-center.com>, 2012
@@ -20,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-06-07 18:51+0000\n"
-"Last-Translator: Thomas Lange\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-03 11:13+0000\n"
+"Last-Translator: ABE Tsunehiko\n"
 "Language-Team: Japanese (http://www.transifex.com/audacious/audacious/"
 "language/ja/)\n"
 "Language: ja\n"
@@ -127,7 +127,7 @@ msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d 個のファイルが見つかりました"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -136,11 +136,11 @@ msgstr ""
 "読み込みエラー %s\n"
 "%s"
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
 msgstr "ファイルが見つかりません。"
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "新規プレイリスト"
 
@@ -157,13 +157,18 @@ msgstr "オーディオ CD、トラック %s"
 msgid "(character encoding error)"
 msgstr "(文字のエンコーディングエラー)"
 
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
+msgstr "録音を始める前にあらかじめオーディオの設定を行う必要があります。"
+
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
 msgstr "出力ストリームを開けません"
 
 #: src/libaudcore/output.cc:248
 msgid "Error recording output stream"
-msgstr ""
+msgstr "出力ストリームを録音できませんｑ"
 
 #: src/libaudcore/playback.cc:369
 #, c-format
@@ -832,7 +837,7 @@ msgid "Network"
 msgstr "ネットワーク"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "プレイリスト"
 
@@ -840,23 +845,23 @@ msgstr "プレイリスト"
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "一般"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "エフェクト"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "視覚化"
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "インプット"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "トランスポート"
 
@@ -964,11 +969,11 @@ msgstr "イコライザーの適用後"
 
 #: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window.cc:192
 msgid "Based on shuffle"
-msgstr ""
+msgstr "シャッフルの設定に合わせる"
 
 #: src/libaudgui/prefs-window.cc:158 src/libaudqt/prefs-window.cc:204
 msgid "Interface:"
-msgstr ""
+msgstr "インターフェイス:"
 
 #: src/libaudgui/prefs-window.cc:177 src/libaudqt/prefs-window.cc:214
 msgid "Output plugin:"
@@ -1030,7 +1035,7 @@ msgstr "リプレイゲインを有効にする"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window.cc:260
 msgid "Mode:"
-msgstr ""
+msgstr "モード:"
 
 #: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window.cc:264
 msgid "Prevent clipping (recommended)"
@@ -1235,7 +1240,7 @@ msgstr "カスタム文字列:"
 #: src/libaudgui/prefs-window.cc:741 src/libaudqt/prefs-window.cc:705
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr ""
+msgstr "%sを使ってオーディオストリームを録音する"
 
 #: src/libaudgui/prefs-window.cc:750 src/libaudqt/prefs-window.cc:716
 msgid "No audio recording plugin available"
@@ -1400,7 +1405,7 @@ msgstr "警告"
 
 #: src/libaudqt/log-inspector.cc:219
 msgid "Cl_ear"
-msgstr ""
+msgstr "クリアー(_E)"
 
 #: src/libaudqt/log-inspector.cc:232
 msgid "Log Level:"

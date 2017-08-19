@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-06-07 18:51+0000\n"
-"Last-Translator: Thomas Lange\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-04 19:13+0000\n"
+"Last-Translator: dragnadh <dragnadh@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/audacious/audacious/language/"
 "nl/)\n"
 "Language: nl\n"
@@ -122,7 +122,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d bestanden gevonden"
 msgstr[1] "%d bestanden gevonden"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -131,11 +131,11 @@ msgstr ""
 "Fout tijdens het lezen van %s:\n"
 "%s"
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
 msgstr "Geen bestanden gevonden."
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "Nieuwe afspeellijst"
 
@@ -152,13 +152,20 @@ msgstr "Audio CD, nummer %s"
 msgid "(character encoding error)"
 msgstr "(tekencodering fout)"
 
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
+msgstr ""
+"Stream opname moet geconfigureerd worden in de Audio instellingen voordat "
+"het kan worden gebruikt."
+
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
 msgstr "Fout tijdens het openen van uitvoer stream"
 
 #: src/libaudcore/output.cc:248
 msgid "Error recording output stream"
-msgstr ""
+msgstr "Fout tijdens het opnemen van uitvoer stream"
 
 #: src/libaudcore/playback.cc:369
 #, c-format
@@ -827,7 +834,7 @@ msgid "Network"
 msgstr "Netwerk"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "Speellijst"
 
@@ -835,23 +842,23 @@ msgstr "Speellijst"
 msgid "Plugins"
 msgstr "Plugins"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "Algemeen"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "Effect"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "Visualisatie "
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "Invoer"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "Transport"
 
@@ -959,11 +966,11 @@ msgstr "Na het toepassen van equalization"
 
 #: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window.cc:192
 msgid "Based on shuffle"
-msgstr ""
+msgstr "Op basis van shuffle"
 
 #: src/libaudgui/prefs-window.cc:158 src/libaudqt/prefs-window.cc:204
 msgid "Interface:"
-msgstr ""
+msgstr "Interface:"
 
 #: src/libaudgui/prefs-window.cc:177 src/libaudqt/prefs-window.cc:214
 msgid "Output plugin:"
@@ -1025,7 +1032,7 @@ msgstr "Normaliseren inschakelen"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window.cc:260
 msgid "Mode:"
-msgstr ""
+msgstr "Modus:"
 
 #: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window.cc:264
 msgid "Prevent clipping (recommended)"
@@ -1235,7 +1242,7 @@ msgstr "Handmatige instelling:"
 #: src/libaudgui/prefs-window.cc:741 src/libaudqt/prefs-window.cc:705
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr ""
+msgstr "Audio stream inschakelen met behulp van %s"
 
 #: src/libaudgui/prefs-window.cc:750 src/libaudqt/prefs-window.cc:716
 msgid "No audio recording plugin available"
@@ -1400,7 +1407,7 @@ msgstr "Waarschuwing"
 
 #: src/libaudqt/log-inspector.cc:219
 msgid "Cl_ear"
-msgstr ""
+msgstr "Wi_ssen"
 
 #: src/libaudqt/log-inspector.cc:232
 msgid "Log Level:"
