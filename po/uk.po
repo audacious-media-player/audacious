@@ -16,14 +16,15 @@
 # Rustam Tsurik <rustam.tsurik@gmail.com>, 2013
 # Rustam Tsurik <rustam.tsurik@gmail.com>, 2013
 # Oleg <kvantarium@gmail.com>, 2012
+# Taras Shevchenko, 2017
 # Yaroslav Yenkala <hyper-news@yandex.ru>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-06-07 18:51+0000\n"
-"Last-Translator: Thomas Lange\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-06 05:54+0000\n"
+"Last-Translator: Taras Shevchenko\n"
 "Language-Team: Ukrainian (http://www.transifex.com/audacious/audacious/"
 "language/uk/)\n"
 "Language: uk\n"
@@ -131,7 +132,7 @@ msgstr[0] "Знайдено %d файл"
 msgstr[1] "Знайдено %d файли"
 msgstr[2] "Знайдено %d файлів"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -140,11 +141,11 @@ msgstr ""
 "Помилка читання %s:\n"
 "%s"
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
 msgstr "Файлів не знайдено."
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "Новий список відтворення"
 
@@ -161,13 +162,18 @@ msgstr "Аудіодиск, доріжка %s"
 msgid "(character encoding error)"
 msgstr "(помилка кодування)"
 
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
+msgstr "Записування потоку має бути налаштоване перед використанням."
+
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
 msgstr "Помилка відкриття потоку виводу"
 
 #: src/libaudcore/output.cc:248
 msgid "Error recording output stream"
-msgstr ""
+msgstr "Хиба запису потоку"
 
 #: src/libaudcore/playback.cc:369
 #, c-format
@@ -838,7 +844,7 @@ msgid "Network"
 msgstr "Мережа"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "Списки відтворення"
 
@@ -846,23 +852,23 @@ msgstr "Списки відтворення"
 msgid "Plugins"
 msgstr "Модулі"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "Загальні"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "Ефекти"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "Візуалізація"
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "Вхід"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "Транспорт"
 
@@ -970,11 +976,11 @@ msgstr "Після застосування еквалайзера"
 
 #: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window.cc:192
 msgid "Based on shuffle"
-msgstr ""
+msgstr "Побудовано на мішаному режимі"
 
 #: src/libaudgui/prefs-window.cc:158 src/libaudqt/prefs-window.cc:204
 msgid "Interface:"
-msgstr ""
+msgstr "Вигляд:"
 
 #: src/libaudgui/prefs-window.cc:177 src/libaudqt/prefs-window.cc:214
 msgid "Output plugin:"
@@ -1036,7 +1042,7 @@ msgstr "Увімкнути вирівнювання гучності"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window.cc:260
 msgid "Mode:"
-msgstr ""
+msgstr "Режим:"
 
 #: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window.cc:264
 msgid "Prevent clipping (recommended)"
@@ -1241,7 +1247,7 @@ msgstr "Власний формат:"
 #: src/libaudgui/prefs-window.cc:741 src/libaudqt/prefs-window.cc:705
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr ""
+msgstr "Увімкнено записування потоку з %s"
 
 #: src/libaudgui/prefs-window.cc:750 src/libaudqt/prefs-window.cc:716
 msgid "No audio recording plugin available"
@@ -1406,7 +1412,7 @@ msgstr "Попереждення"
 
 #: src/libaudqt/log-inspector.cc:219
 msgid "Cl_ear"
-msgstr ""
+msgstr "Чис_то"
 
 #: src/libaudqt/log-inspector.cc:232
 msgid "Log Level:"

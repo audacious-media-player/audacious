@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-07-09 23:37+0200\n"
-"PO-Revision-Date: 2017-06-08 19:47+0000\n"
+"POT-Creation-Date: 2017-08-19 19:12+0200\n"
+"PO-Revision-Date: 2017-08-03 11:12+0000\n"
 "Last-Translator: antiparvos <marcoslansgarza@gmail.com>\n"
 "Language-Team: Galician (http://www.transifex.com/audacious/audacious/"
 "language/gl/)\n"
@@ -120,7 +120,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d ficheiro atopado"
 msgstr[1] "%d ficheiros atopados"
 
-#: src/libaudcore/adder.cc:275 src/libaudcore/adder.cc:337
+#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -129,11 +129,11 @@ msgstr ""
 "Produciuse un erro lendo %s:\n"
 "%s"
 
-#: src/libaudcore/adder.cc:395
+#: src/libaudcore/adder.cc:397
 msgid "No files found."
 msgstr "Non se atoparon ficheiros."
 
-#: src/libaudcore/adder.cc:417 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "Nova lista de reprodución"
 
@@ -149,6 +149,13 @@ msgstr "CD de son. pista %s"
 #: src/libaudcore/audstrings.cc:646 src/libaudcore/tuple.cc:496
 msgid "(character encoding error)"
 msgstr "(erro na codificación de caracteres)"
+
+#: src/libaudcore/drct.cc:96
+msgid ""
+"Stream recording must be configured in Audio Settings before it can be used."
+msgstr ""
+"A gravación do fluxo debe estar configurada nos Axustes do son antes de "
+"usala."
 
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
@@ -826,7 +833,7 @@ msgid "Network"
 msgstr "Rede"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-window.cc:138
+#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
 msgid "Playlist"
 msgstr "Lista de reprodución"
 
@@ -834,23 +841,23 @@ msgstr "Lista de reprodución"
 msgid "Plugins"
 msgstr "Engadidos"
 
-#: src/libaudgui/prefs-window.cc:89
+#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
 msgid "General"
 msgstr "Xeral"
 
-#: src/libaudgui/prefs-window.cc:90
+#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "Effect"
 msgstr "Efecto"
 
-#: src/libaudgui/prefs-window.cc:91
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Visualization"
 msgstr "Visualización"
 
-#: src/libaudgui/prefs-window.cc:92
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Input"
 msgstr "Entrada"
 
-#: src/libaudgui/prefs-window.cc:94
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Transport"
 msgstr "Transporte"
 
@@ -1413,10 +1420,3 @@ msgstr "Engadidos ..."
 #: src/libaudqt/plugin-menu.cc:53
 msgid "Services"
 msgstr "Servizos"
-
-#~ msgid ""
-#~ "Stream recording must be configured in Audio Settings before it can be "
-#~ "used."
-#~ msgstr ""
-#~ "A gravación do fluxo debe estar configurada nos Axustes do son antes de "
-#~ "usala."

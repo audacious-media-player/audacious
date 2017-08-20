@@ -2,6 +2,7 @@
 src/audacious/main.cc
 src/libaudcore/adder.cc
 src/libaudcore/audstrings.cc
+src/libaudcore/drct.cc
 src/libaudcore/output.cc
 src/libaudcore/playback.cc
 src/libaudcore/playlist.cc
@@ -39,6 +40,7 @@ src/libaudqt/log-inspector.cc
 src/libaudqt/playlist-management.cc
 src/libaudqt/plugin-menu.cc
 src/libaudqt/prefs-plugin.cc
+src/libaudqt/prefs-pluginlist-model.cc
 src/libaudqt/prefs-window.cc
 src/libaudqt/queue-manager.cc
 src/libaudqt/url-opener.cc
