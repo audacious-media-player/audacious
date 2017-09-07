@@ -922,7 +922,7 @@ Index<int> PlaylistData::shuffle_history () const
     }
 
     // sort by shuffle order
-    history.sort ([this] (const int & entry_a, const int & entry_b) {
+    history.sort ([this] (int entry_a, int entry_b) {
         return m_entries[entry_a]->shuffle_num - m_entries[entry_b]->shuffle_num;
     });
 
