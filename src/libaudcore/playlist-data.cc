@@ -910,6 +910,38 @@ void PlaylistData::shuffle_reset ()
         entry->shuffle_num = 0;
 }
 
+Index<int> PlaylistData::shuffle_history () const
+{
+    Index<int> history;
+
+    // create a list of all entries in the shuffle list
+    for (auto & entry : m_entries)
+    {
+        if (entry->shuffle_num)
+            history.append (entry->number);
+    }
+
+    // sort by shuffle order
+    history.sort ([this] (const int & entry_a, const int & entry_b) {
+        return m_entries[entry_a]->shuffle_num - m_entries[entry_b]->shuffle_num;
+    });
+
+    return history;
+}
+
+void PlaylistData::shuffle_replay (const Index<int> & history)
+{
+    shuffle_reset ();
+
+    // replay the given history, entry by entry
+    for (int entry_num : history)
+    {
+        auto entry = entry_at (entry_num);
+        if (entry)
+            entry->shuffle_num = ++ m_last_shuffle_num;
+    }
+}
+
 bool PlaylistData::prev_song ()
 {
     if (aud_get_bool (nullptr, "shuffle"))

@@ -1152,6 +1152,16 @@ void playlist_save_state ()
 
         fprintf (handle, "position %d\n", playlist->position ());
 
+        /* save shuffle history */
+        auto history = playlist->shuffle_history ();
+
+        for (int i = 0; i < history.len (); i += 16)
+        {
+            int count = aud::min (16, history.len () - i);
+            auto list = int_array_to_str (& history[i], count);
+            fprintf (handle, "shuffle %s\n", (const char *) list);
+        }
+
         /* resume state is stored per-playlist for historical reasons */
         bool is_playing = (playlist->id () == playing_id);
         fprintf (handle, "resume-state %d\n", (is_playing && paused) ? ResumePause : ResumePlay);
@@ -1204,6 +1214,19 @@ void playlist_load_state ()
             playlist->set_position (position);
             parser.next ();
         }
+
+        /* restore shuffle history */
+        Index<int> history;
+
+        for (String list; (list = parser.get_str ("shuffle")); parser.next ())
+        {
+            auto split = str_list_to_index (list, ", ");
+            for (auto & str : split)
+                history.append (str_to_int (str));
+        }
+
+        if (history.len ())
+            playlist->shuffle_replay (history);
 
         /* resume state is stored per-playlist for historical reasons */
         int resume_state = ResumePlay;
