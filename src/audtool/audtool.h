@@ -25,9 +25,9 @@
 
 struct commandhandler
 {
-    char * name;
+    const char * name;
     void (* handler) (int argc, char * * argv);
-    char * desc;
+    const char * desc;
     int args;
 };
 
@@ -129,6 +129,8 @@ void show_about_window (int, char * *);
 void get_version (int argc, char * * argv);
 void plugin_is_enabled (int argc, char * * argv);
 void plugin_enable (int argc, char * * argv);
+void config_get (int argc, char * * argv);
+void config_set (int argc, char * * argv);
 
 void equalizer_get_eq (int argc, char * * argv);
 void equalizer_get_eq_preamp (int argc, char * * argv);

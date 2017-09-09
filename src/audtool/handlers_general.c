@@ -19,6 +19,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "audtool.h"
 #include "wrappers.h"
@@ -149,4 +150,51 @@ void plugin_enable (int argc, char * * argv)
     }
 
     obj_audacious_call_plugin_enable_sync (dbus_proxy, argv[1], enable, NULL, NULL);
+}
+
+void config_get (int argc, char * * argv)
+{
+    if (argc != 2)
+    {
+        audtool_whine_args (argv[0], "[<section>]:<name>");
+        exit (1);
+    }
+
+    const char * section = "";
+    const char * name = argv[1];
+    char * colon = strchr (argv[1], ':');
+
+    if (colon)
+    {
+        * colon = 0;
+        section = argv[1];
+        name = colon + 1;
+    }
+
+    char * value = NULL;
+    obj_audacious_call_config_get_sync (dbus_proxy, section, name, & value, NULL, NULL);
+    audtool_report (value);
+    g_free (value);
+}
+
+void config_set (int argc, char * * argv)
+{
+    if (argc != 3)
+    {
+        audtool_whine_args (argv[0], "[<section>]:<name> <value>");
+        exit (1);
+    }
+
+    const char * section = "";
+    const char * name = argv[1];
+    char * colon = strchr (argv[1], ':');
+
+    if (colon)
+    {
+        * colon = 0;
+        section = argv[1];
+        name = colon + 1;
+    }
+
+    obj_audacious_call_config_set_sync (dbus_proxy, section, name, argv[2], NULL, NULL);
 }

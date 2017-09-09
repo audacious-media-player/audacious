@@ -41,6 +41,18 @@
             <arg type="b" direction="in" name="enable" />
         </method>
 
+        <method name="ConfigGet">
+            <arg type="s" direction="in" name="section" />
+            <arg type="s" direction="in" name="name" />
+            <arg type="s" direction="out" name="value" />
+        </method>
+
+        <method name="ConfigSet">
+            <arg type="s" direction="in" name="section" />
+            <arg type="s" direction="in" name="name" />
+            <arg type="s" direction="in" name="value" />
+        </method>
+
         <!-- Quit Audacious -->
         <method name="Quit" />
 

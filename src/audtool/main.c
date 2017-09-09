@@ -128,6 +128,8 @@ const struct commandhandler handlers[] =
     {"version", get_version, "print Audacious version", 0},
     {"plugin-is-enabled", plugin_is_enabled, "exit code = 0 if plugin is enabled", 1},
     {"plugin-enable", plugin_enable, "enable/disable plugin", 2},
+    {"config-get", config_get, "DO NOT USE", 1},
+    {"config-set", config_set, "DO NOT USE", 2},
     {"shutdown", shutdown_audacious_server, "shut down Audacious", 0},
 
     {"help", get_handlers_list, "print this help", 0},

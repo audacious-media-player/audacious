@@ -110,6 +110,21 @@ static gboolean do_clear (Obj * obj, Invoc * invoc)
     return true;
 }
 
+static gboolean do_config_get (Obj * obj, Invoc * invoc, const char * section, const char * name)
+{
+    String value = aud_get_str (section[0] ? section : nullptr, name);
+    FINISH2 (config_get, value);
+    return true;
+}
+
+static gboolean do_config_set (Obj * obj, Invoc * invoc, const char * section,
+ const char * name, const char * value)
+{
+    aud_set_str (section[0] ? section : nullptr, name, value);
+    FINISH (config_set);
+    return true;
+}
+
 static gboolean do_delete (Obj * obj, Invoc * invoc, unsigned pos)
 {
     CURRENT.remove_entry (pos);
@@ -742,6 +757,8 @@ handlers[] =
     {"handle-auto-advance", (GCallback) do_auto_advance},
     {"handle-balance", (GCallback) do_balance},
     {"handle-clear", (GCallback) do_clear},
+    {"handle-config-get", (GCallback) do_config_get},
+    {"handle-config-set", (GCallback) do_config_set},
     {"handle-delete", (GCallback) do_delete},
     {"handle-delete-active-playlist", (GCallback) do_delete_active_playlist},
     {"handle-eject", (GCallback) do_eject},
