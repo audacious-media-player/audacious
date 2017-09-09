@@ -156,7 +156,7 @@ void config_get (int argc, char * * argv)
 {
     if (argc != 2)
     {
-        audtool_whine_args (argv[0], "[<section>]:<name>");
+        audtool_whine_args (argv[0], "[<section>:]<name>");
         exit (1);
     }
 
@@ -181,7 +181,7 @@ void config_set (int argc, char * * argv)
 {
     if (argc != 3)
     {
-        audtool_whine_args (argv[0], "[<section>]:<name> <value>");
+        audtool_whine_args (argv[0], "[<section>:]<name> <value>");
         exit (1);
     }
 
