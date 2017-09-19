@@ -311,7 +311,7 @@ static void add_folder (const char * filename, Playlist::FilterFunc filter,
 
         if (mode & VFS_IS_REGULAR)
             add_file ({String (file)}, filter, user, result, true);
-        else if (mode & VFS_IS_DIR)
+        else if ((mode & VFS_IS_DIR) && aud_get_bool (nullptr, "recurse_folders"))
             add_folder (file, filter, user, result, false);
     }
 }

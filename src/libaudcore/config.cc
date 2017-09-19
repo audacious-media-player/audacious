@@ -39,6 +39,7 @@ static const char * const core_defaults[] = {
  "always_resume_paused", "TRUE",
  "clear_playlist", "TRUE",
  "open_to_temporary", "TRUE",
+ "recurse_folders", "TRUE",
  "resume_playback_on_startup", "TRUE",
  "show_interface", "TRUE",
 
