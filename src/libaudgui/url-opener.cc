@@ -21,6 +21,7 @@
 
 #include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
 
 #include "internal.h"
@@ -37,11 +38,24 @@ static void open_cb (void * entry)
     else
         aud_drct_pl_add (text, -1);
 
-    aud_history_add (text);
+    if (aud_get_bool (nullptr, "save_url_history"))
+        aud_history_add (text);
+}
+
+static void clear_cb (void * combo)
+{
+    /* no gtk_combo_box_text_clear()? */
+    gtk_list_store_clear ((GtkListStore *) gtk_combo_box_get_model ((GtkComboBox *) combo));
+    aud_history_clear ();
 }
 
 static GtkWidget * create_url_opener (bool open)
 {
+    static const PreferencesWidget widgets[] = {
+        WidgetCheck (N_("_Save to history"),
+            WidgetBool (0, "save_url_history"))
+    };
+
     const char * title, * verb, * icon;
 
     if (open)
@@ -72,13 +86,24 @@ static GtkWidget * create_url_opener (bool open)
 
     g_object_set_data ((GObject *) entry, "open", GINT_TO_POINTER (open));
 
+    GtkWidget * hbox = gtk_hbox_new (false, 6);
+    audgui_create_widgets (hbox, widgets);
+
+    GtkWidget * clear_button = audgui_button_new (_("C_lear history"),
+     "edit-clear", clear_cb, combo);
+    gtk_box_pack_end ((GtkBox *) hbox, clear_button, false, false, 0);
+
+    GtkWidget * vbox = gtk_vbox_new (false, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, combo, false, false, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);
+
     GtkWidget * button1 = audgui_button_new (verb, icon, open_cb, entry);
     GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", nullptr, nullptr);
 
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_OTHER, title,
      _("Enter URL:"), button1, button2);
     gtk_widget_set_size_request (dialog, 4 * audgui_get_dpi (), -1);
-    audgui_dialog_add_widget (dialog, combo);
+    audgui_dialog_add_widget (dialog, vbox);
 
     return dialog;
 }
