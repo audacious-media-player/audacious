@@ -6,6 +6,7 @@ DATA = AUTHORS \
        COPYING \
        images/about-logo.png \
        images/about-logo.svg \
+       images/advanced.png \
        images/album.png \
        images/appearance.png \
        images/audio.png \

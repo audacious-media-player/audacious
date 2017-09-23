@@ -73,7 +73,8 @@ enum {
     CATEGORY_NETWORK,
     CATEGORY_PLAYLIST,
     CATEGORY_SONG_INFO,
-    CATEGORY_PLUGINS
+    CATEGORY_PLUGINS,
+    CATEGORY_ADVANCED
 };
 
 static const Category categories[] = {
@@ -82,7 +83,8 @@ static const Category categories[] = {
     { "connectivity.png", N_("Network") },
     { "playlist.png", N_("Playlist")} ,
     { "info.png", N_("Song Info") },
-    { "plugins.png", N_("Plugins") }
+    { "plugins.png", N_("Plugins") },
+    { "advanced.png", N_("Advanced") }
 };
 
 static const PluginCategory plugin_categories[] = {
@@ -301,11 +303,7 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "leading_zero", send_title_change)),
     WidgetCheck (N_("Show hours separately (1:30:00 vs. 90:00)"),
         WidgetBool (0, "show_hours", send_title_change)),
-    WidgetCustomGTK (create_titlestring_table),
-    WidgetLabel (N_("<b>Compatibility</b>")),
-    WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
-        WidgetBool (0, "convert_backslash")),
-    WidgetTable ({{chardet_elements}})
+    WidgetCustomGTK (create_titlestring_table)
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
@@ -331,8 +329,15 @@ static const PreferencesWidget song_info_page_widgets[] = {
         WIDGET_CHILD),
     WidgetCheck (N_("Show time scale for current song"),
         WidgetBool (0, "filepopup_showprogressbar"),
-        WIDGET_CHILD),
-    WidgetLabel (N_("<b>Advanced</b>")),
+        WIDGET_CHILD)
+};
+
+static const PreferencesWidget advanced_page_widgets[] = {
+    WidgetLabel (N_("<b>Compatibility</b>")),
+    WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
+        WidgetBool (0, "convert_backslash")),
+    WidgetTable ({{chardet_elements}}),
+    WidgetLabel (N_("<b>Metadata</b>")),
     WidgetCheck (N_("Guess missing metadata from file path"),
         WidgetBool (0, "metadata_fallbacks")),
     WidgetCheck (N_("Do not load metadata for songs until played"),
@@ -784,6 +789,13 @@ static void create_plugin_category ()
          plugin_view_new (category.type), gtk_label_new (_(category.name)));
 }
 
+static void create_advanced_category ()
+{
+    GtkWidget * advanced_page_vbox = gtk_vbox_new (false, 0);
+    audgui_create_widgets (advanced_page_vbox, advanced_page_widgets);
+    gtk_container_add ((GtkContainer *) category_notebook, advanced_page_vbox);
+}
+
 static void destroy_cb ()
 {
     hook_dissociate ("enable record", record_update);
@@ -836,6 +848,7 @@ static void create_prefs_window ()
     create_playlist_category ();
     create_song_info_category ();
     create_plugin_category ();
+    create_advanced_category ();
 
     GtkWidget * hseparator = gtk_hseparator_new ();
     gtk_box_pack_start ((GtkBox *) vbox, hseparator, false, false, 6);
