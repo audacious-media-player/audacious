@@ -749,6 +749,37 @@ EXPORT StringBuf uri_construct (const char * path, const char * reference)
     return buf;
 }
 
+/* Basically the reverse of uri_construct().
+ * First try to split off a relative path (if so configured).
+ * Failing that, try to convert to a local filename.
+ * Failing that, return the URI as-is.
+ *
+ * All output is UTF-8 for portability.
+ *
+ * Parameters:
+ *   1. uri: the full URI of a song file
+ *   2. reference: the full URI of the playlist being written */
+
+EXPORT StringBuf uri_deconstruct (const char * uri, const char * reference)
+{
+    if (aud_get_bool (nullptr, "export_relative_paths"))
+    {
+        const char * slash = strrchr (reference, '/');
+        if (slash && ! strncmp (uri, reference, slash + 1 - reference))
+        {
+            StringBuf path = str_to_utf8 (str_decode_percent (uri + (slash + 1 - reference)));
+            if (path)
+                return path;
+        }
+    }
+
+    StringBuf filename = uri_to_filename (uri, false);
+    if (filename)
+        return filename;
+
+    return str_copy (uri);
+}
+
 /* Like strcasecmp, but orders numbers correctly (2 before 10). */
 /* Non-ASCII characters are treated exactly as is. */
 /* Handles nullptr gracefully. */

@@ -334,7 +334,10 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "leading_zero", send_title_change)),
     WidgetCheck (N_("Show hours separately (1:30:00 vs. 90:00)"),
         WidgetBool (0, "show_hours", send_title_change)),
-    WidgetCustomGTK (create_titlestring_table)
+    WidgetCustomQt (create_titlestring_table),
+    WidgetLabel (N_("<b>Export</b>")),
+    WidgetCheck (N_("Use relative paths when possible"),
+        WidgetBool (0, "export_relative_paths"))
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {

@@ -90,6 +90,7 @@ StringBuf uri_get_extension (const char * uri);
 
 /* Requires: aud_init() */
 StringBuf uri_construct (const char * path, const char * reference);
+StringBuf uri_deconstruct (const char * uri, const char * reference);
 
 int str_compare (const char * a, const char * b);
 int str_compare_encoded (const char * a, const char * b);

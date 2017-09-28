@@ -95,6 +95,7 @@ static const char * const core_defaults[] = {
 #else
  "convert_backslash", "FALSE",
 #endif
+ "export_relative_paths", "TRUE",
  "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
  "leading_zero", "FALSE",
  "show_hours", "TRUE",
