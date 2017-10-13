@@ -192,7 +192,7 @@ EXPORT void StringBuf::resize (int len)
         m_data[m_len] = 0;
 }
 
-EXPORT StringBuf::~StringBuf () noexcept (false)
+EXPORT StringBuf::~StringBuf ()
 {
     if (m_data)
     {
@@ -210,9 +210,11 @@ EXPORT StringBuf::~StringBuf () noexcept (false)
 
 EXPORT void StringBuf::steal (StringBuf && other)
 {
-    this->~StringBuf ();
-    new (this) StringBuf (std::move (other));
+    (* this = std::move (other)).settle ();
+}
 
+EXPORT StringBuf && StringBuf::settle ()
+{
     if (m_data)
     {
         /* collapse any space preceding this string */
@@ -233,6 +235,8 @@ EXPORT void StringBuf::steal (StringBuf && other)
             m_data = (char *) new_header + sizeof (StringHeader);
         }
     }
+
+    return std::move (* this);
 }
 
 EXPORT void StringBuf::combine (StringBuf && other)
@@ -247,12 +251,12 @@ EXPORT void StringBuf::combine (StringBuf && other)
         memcpy (temp.m_data, m_data, m_len);
         memcpy (temp.m_data + m_len, other.m_data, other.m_len);
 
-        other.steal (StringBuf ());
+        other = StringBuf ();
         steal (std::move (temp));
     }
     else
     {
-        steal (std::move (other));
+        * this = std::move (other);
     }
 }
 

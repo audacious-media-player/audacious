@@ -208,21 +208,21 @@ private:
 
 struct StringStack;
 
-// Mutable string buffer, allocated on a stack to allow fast allocation.  The
-// price for this speed is that only the top string in the stack (i.e. the one
-// most recently allocated) can be resized or deleted.  The string is always
-// null-terminated (i.e. str[str.len ()] == 0).  Rules for the correct use of
-// StringBuf can be summarized as follows:
+// Mutable string buffer, allocated on a stack-like structure.  The intent is
+// to provide fast allocation/deallocation for strings with a short lifespan.
+// Note that some usage patterns (for example, repeatedly appending to multiple
+// strings) can rapidly cause memory fragmentation and eventually lead to an
+// out-of-memory exception.
+//
+// Some usage guidelines:
 //
 //   1. Always declare StringBufs within function or block scope, never at file
 //      or class scope.  Do not attempt to create a StringBuf with new or
 //      malloc().
-//   2. Only the first StringBuf declared in a function can be used as the
-//      return value.  It is possible to create a second StringBuf and then
-//      transfer its contents to the first with steal(), but doing so carries
-//      a performance penalty.
-//   3. Do not truncate the StringBuf by inserting null characters manually;
-//      instead, use resize().
+//   2. If you need to return a StringBuf from a function that uses several
+//      different strings internally, make sure all the other strings go out of
+//      scope first and then call settle() on the string to be returned.
+//   3. Never transfer StringBuf objects across thread boundaries.
 
 class StringBuf
 {
@@ -254,23 +254,37 @@ public:
         other.m_len = 0;
     }
 
-    // only allowed for top (or null) string
-    ~StringBuf () noexcept (false);
+    StringBuf & operator= (StringBuf && other)
+    {
+        if (this != & other)
+        {
+            this->~StringBuf ();
+            new (this) StringBuf (std::move (other));
+        }
+        return * this;
+    }
 
-    // only allowed for top (or null) string
+    ~StringBuf ();
+
     void resize (int size);
     void insert (int pos, const char * s, int len = -1);
     void remove (int pos, int len);
 
-    // only allowed for top two strings (or when one string is null)
-    void steal (StringBuf && other);
-    void combine (StringBuf && other);
+    // Collapses any unused space preceding this string.
+    // Judicious use can combat memory fragmentation.
+    // Returns a move reference to allow e.g. "return str.settle();"
+    StringBuf && settle ();
 
     int len () const
         { return m_len; }
 
     operator char * ()
         { return m_data; }
+
+    // deprecated, use move semantics and/or settle()
+    void steal (StringBuf && other);
+    // deprecated, use str_concat()
+    void combine (StringBuf && other);
 
 private:
     StringStack * stack;

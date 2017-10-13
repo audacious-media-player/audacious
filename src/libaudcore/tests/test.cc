@@ -462,10 +462,8 @@ static StringBuf str_recursive_insert (const char * str, int level)
     if (level == 1)
         return buf;
 
-    // don't do this yet, it leaves the stack fragmented
-    // return str_recursive_insert (buf, level - 1);
-    buf.steal (str_recursive_insert (buf, level - 1));
-    return buf;
+    // intentionally causing fragmentation here
+    return str_recursive_insert (buf, level - 1);
 }
 
 static StringBuf str_repeated_nest (const char * str, int level)
@@ -479,7 +477,7 @@ static StringBuf str_repeated_nest (const char * str, int level)
         buf2.insert (buf2.len () / 2, buf1);
     }
 
-    // this leaves lots of fragmentation
+    // intentionally causing fragmentation here
     return buf2;
 }
 
@@ -487,7 +485,7 @@ static void test_stringbuf ()
 {
     char expect[262145];
 
-    StringBuf str1 = str_recursive_insert ("ab", 17);
+    StringBuf str1 = str_recursive_insert ("ab", 17).settle ();
 
     memset (expect, 'a', 121393);
     memset (expect + 121393, 'b', 121393);
