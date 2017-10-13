@@ -185,8 +185,11 @@ EXPORT void StringBuf::resize (int len)
         m_len = new_len;
     }
 
-    /* always null-terminate the string */
-    m_data[m_len] = 0;
+    /* Null-terminate the string except when the maximum length was requested
+     * (to avoid paging in the entire 1 MB stack prematurely).  The caller is
+     * expected to follow up with a more realistic resize() in this case. */
+    if (len >= 0)
+        m_data[m_len] = 0;
 }
 
 EXPORT StringBuf::~StringBuf () noexcept (false)
