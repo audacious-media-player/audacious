@@ -1019,24 +1019,22 @@ EXPORT double str_to_double (const char * string)
     return neg ? -val : val;
 }
 
-EXPORT StringBuf int_to_str (int val)
+EXPORT void str_insert_int (StringBuf & string, int pos, int val)
 {
     bool neg = (val < 0);
     unsigned absval = neg ? -val : val;
 
     int digits = digits_for (absval);
-    StringBuf buf ((neg ? 1 : 0) + digits);
+    int len = (neg ? 1 : 0) + digits;
+    char * set = string.insert (pos, nullptr, len);
 
-    char * set = buf;
     if (neg)
         * (set ++) = '-';
 
     uint_to_str (absval, set, digits);
-
-    return buf;
 }
 
-EXPORT StringBuf double_to_str (double val)
+EXPORT void str_insert_double (StringBuf & string, int pos, double val)
 {
     bool neg = (val < 0);
     if (neg)
@@ -1056,9 +1054,9 @@ EXPORT StringBuf double_to_str (double val)
         decimals --;
 
     int digits = digits_for (i);
-    StringBuf buf ((neg ? 1 : 0) + digits + (decimals ? 1 : 0) + decimals);
+    int len = (neg ? 1 : 0) + digits + (decimals ? 1 : 0) + decimals;
+    char * set = string.insert (pos, nullptr, len);
 
-    char * set = buf;
     if (neg)
         * (set ++) = '-';
 
@@ -1070,7 +1068,19 @@ EXPORT StringBuf double_to_str (double val)
         * (set ++) = '.';
         uint_to_str (f, set, decimals);
     }
+}
 
+EXPORT StringBuf int_to_str (int val)
+{
+    StringBuf buf;
+    str_insert_int (buf, 0, val);
+    return buf;
+}
+
+EXPORT StringBuf double_to_str (double val)
+{
+    StringBuf buf;
+    str_insert_double (buf, 0, val);
     return buf;
 }
 

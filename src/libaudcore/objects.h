@@ -232,10 +232,6 @@ public:
         m_data (nullptr),
         m_len (0) {}
 
-    // A length of -1 means to use all available space.  This can be useful when
-    // the final length of the string is not known in advance, but keep in mind
-    // that you will not be able to create any further StringBufs until you call
-    // resize().  Also, the string will not be null-terminated in this case.
     explicit StringBuf (int len) :
         stack (nullptr),
         m_data (nullptr),
@@ -266,8 +262,22 @@ public:
 
     ~StringBuf ();
 
-    void resize (int size);
-    void insert (int pos, const char * s, int len = -1);
+    // Resizes to <len> bytes (not counting the terminating null byte) by
+    // appended uninitialized bytes or truncating.  The resized string will be
+    // null-terminated unless <len> is -1.  A length of -1 means to make the
+    // string as large as possible.  This can be useful when the required length
+    // is not known in advance.  However, it will be impossible to create any
+    // further StringBufs until resize() is called again.
+    void resize (int len);
+
+    // Inserts the substring <s> at the given position, or appends it if <pos>
+    // is -1.  If <len> is -1, <s> is assumed to be null-terminated; otherwise,
+    // <len> indicates the number of bytes to insert.  If <s> is a null pointer,
+    // uninitialized bytes are inserted and <len> must not be -1.  A pointer to
+    // the inserted substring is returned for convenience.
+    char * insert (int pos, const char * s, int len = -1);
+
+    // Removes <len> bytes at the given position.
     void remove (int pos, int len);
 
     // Collapses any unused space preceding this string.

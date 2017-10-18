@@ -189,7 +189,7 @@ EXPORT void StringBuf::resize (int len)
      * (to avoid paging in the entire 1 MB stack prematurely).  The caller is
      * expected to follow up with a more realistic resize() in this case. */
     if (len >= 0)
-        m_data[m_len] = 0;
+        m_data[len] = 0;
 }
 
 EXPORT StringBuf::~StringBuf ()
@@ -249,7 +249,7 @@ EXPORT void StringBuf::combine (StringBuf && other)
     settle ();
 }
 
-EXPORT void StringBuf::insert (int pos, const char * s, int len)
+EXPORT char * StringBuf::insert (int pos, const char * s, int len)
 {
     int len0 = m_len;
 
@@ -260,7 +260,11 @@ EXPORT void StringBuf::insert (int pos, const char * s, int len)
 
     resize (len0 + len);
     memmove (m_data + pos + len, m_data + pos, len0 - pos);
-    memcpy (m_data + pos, s, len);
+
+    if (s)
+        memcpy (m_data + pos, s, len);
+
+    return m_data + pos;
 }
 
 EXPORT void StringBuf::remove (int pos, int len)

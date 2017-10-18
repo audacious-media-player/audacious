@@ -100,6 +100,8 @@ StringBuf index_to_str_list (const Index<String> & index, const char * sep);
 
 int str_to_int (const char * string);
 double str_to_double (const char * string);
+void str_insert_int (StringBuf & string, int pos, int val);
+void str_insert_double (StringBuf & string, int pos, double val);
 StringBuf int_to_str (int val);
 StringBuf double_to_str (double val);
 

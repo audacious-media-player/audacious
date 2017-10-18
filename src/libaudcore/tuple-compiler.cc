@@ -428,8 +428,7 @@ static void eval_expression (const Index<Node> & nodes, const Tuple & tuple, Str
                 break;
 
             case Tuple::Int:
-                out.insert (-1, int_to_str (tmpi));
-                out.settle ();
+                str_insert_int (out, -1, tmpi);
                 break;
 
             default:
