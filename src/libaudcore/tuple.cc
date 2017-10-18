@@ -547,18 +547,18 @@ EXPORT void Tuple::set_format (const char * format, int chans, int rate, int bra
     if (chans > 0)
     {
         if (chans == 1)
-            buf.insert (-1, _("Mono"));
+            buf = str_copy (_("Mono"));
         else if (chans == 2)
-            buf.insert (-1, _("Stereo"));
+            buf = str_copy (_("Stereo"));
         else
-            buf.combine (str_printf (dngettext (PACKAGE, "%d channel", "%d channels", chans), chans));
+            buf = str_printf (dngettext (PACKAGE, "%d channel", "%d channels", chans), chans);
 
         if (rate > 0)
             buf.insert (-1, ", ");
     }
 
     if (rate > 0)
-        buf.combine (str_printf ("%d kHz", rate / 1000));
+        buf.insert (-1, str_printf ("%d kHz", rate / 1000));
 
     if (buf[0])
         set_str (Quality, buf);

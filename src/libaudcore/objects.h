@@ -281,9 +281,9 @@ public:
     operator char * ()
         { return m_data; }
 
-    // deprecated, use move semantics and/or settle()
+    // deprecated, use assignment
     void steal (StringBuf && other);
-    // deprecated, use str_concat()
+    // deprecated, use insert()
     void combine (StringBuf && other);
 
 private:

@@ -239,9 +239,8 @@ static StringBuf make_playlist_path (int playlist)
     if (! playlist)
         return filename_build ({aud_get_path (AudPath::UserDir), "playlist.xspf"});
 
-    StringBuf name = str_printf ("playlist_%02d.xspf", 1 + playlist);
-    name.steal (filename_build ({aud_get_path (AudPath::UserDir), name}));
-    return name;
+    return filename_build ({aud_get_path (AudPath::UserDir),
+                            str_printf ("playlist_%02d.xspf", 1 + playlist)});
 }
 
 static void load_playlists_real ()
@@ -279,12 +278,9 @@ static void load_playlists_real ()
     {
         const String & number = order[i];
 
-        StringBuf name1 = str_concat ({number, ".audpl"});
-        StringBuf name2 = str_concat ({number, ".xspf"});
-
-        StringBuf path = filename_build ({folder, name1});
+        StringBuf path = filename_build ({folder, str_concat ({number, ".audpl"})});
         if (! g_file_test (path, G_FILE_TEST_EXISTS))
-            path.steal (filename_build ({folder, name2}));
+            path = filename_build ({folder, str_concat ({number, ".xspf"})});
 
         PlaylistEx playlist = PlaylistEx::insert_with_stamp (count + i, atoi (number));
         playlist.insert_flat_playlist (filename_to_uri (path));

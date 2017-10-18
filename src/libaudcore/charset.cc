@@ -185,9 +185,9 @@ EXPORT StringBuf str_to_utf8 (StringBuf && str)
         return std::move (str);
 
     tiny_lock_read (& settings_lock);
-    str.steal (convert_to_utf8_locked (str, str.len ()));
+    str = convert_to_utf8_locked (str, str.len ());
     tiny_unlock_read (& settings_lock);
-    return std::move (str);
+    return str.settle ();
 }
 
 static void chardet_update (void * = nullptr, void * = nullptr)

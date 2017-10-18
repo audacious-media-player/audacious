@@ -585,15 +585,12 @@ EXPORT StringBuf filename_to_uri (const char * name)
      * 1) system locale is not UTF-8, and
      * 2) filename is not already valid UTF-8 */
     if (! g_get_charset (nullptr) && ! g_utf8_validate (name, -1, nullptr))
-        buf.steal (str_from_locale (name));
-
-    if (! buf)
-        buf.steal (str_copy (name));
+        buf = str_from_locale (name);
 #endif
 
-    buf.steal (str_encode_percent (buf));
+    buf = str_encode_percent (buf ? buf : name);
     buf.insert (0, URI_PREFIX);
-    return buf;
+    return buf.settle ();
 }
 
 /* Like g_filename_from_uri, but converts the filename from UTF-8 to the system
@@ -616,19 +613,19 @@ EXPORT StringBuf uri_to_filename (const char * uri, bool use_locale)
     {
         StringBuf locale = str_to_locale (buf);
         if (locale)
-            buf.steal (std::move (locale));
+            buf = std::move (locale);
     }
 #endif
 
     /* if UTF-8 was requested, make sure the result is valid */
     if (! use_locale)
     {
-        buf.steal (str_to_utf8 (std::move (buf)));
+        buf = str_to_utf8 (std::move (buf));
         if (! buf)
             return StringBuf ();
     }
 
-    return filename_normalize (std::move (buf));
+    return filename_normalize (buf.settle ());
 }
 
 /* Formats a URI for human-readable display.  Percent-decodes and, for file://
@@ -739,14 +736,14 @@ EXPORT StringBuf uri_construct (const char * path, const char * reference)
 
     StringBuf buf = str_to_utf8 (path, -1);
     if (! buf)
-        return buf;
+        return StringBuf ();
 
     if (aud_get_bool (nullptr, "convert_backslash"))
         str_replace_char (buf, '\\', '/');
 
-    buf.steal (str_encode_percent (buf));
+    buf = str_encode_percent (buf);
     buf.insert (0, reference, slash + 1 - reference);
-    return buf;
+    return buf.settle ();
 }
 
 /* Basically the reverse of uri_construct().

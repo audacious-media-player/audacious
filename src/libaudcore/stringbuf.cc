@@ -244,20 +244,9 @@ EXPORT void StringBuf::combine (StringBuf && other)
     if (! other.m_data)
         return;
 
-    if (m_data)
-    {
-        StringBuf temp (m_len + other.m_len);
-
-        memcpy (temp.m_data, m_data, m_len);
-        memcpy (temp.m_data + m_len, other.m_data, other.m_len);
-
-        other = StringBuf ();
-        steal (std::move (temp));
-    }
-    else
-    {
-        * this = std::move (other);
-    }
+    insert (m_len, other.m_data, other.m_len);
+    other = StringBuf ();
+    settle ();
 }
 
 EXPORT void StringBuf::insert (int pos, const char * s, int len)
