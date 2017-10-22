@@ -36,10 +36,13 @@ StringBuf str_copy (const char * s, int len = -1);
 StringBuf str_concat (const std::initializer_list<const char *> & strings);
 #ifdef _WIN32
 StringBuf str_printf (const char * format, ...) __attribute__ ((__format__ (gnu_printf, 1, 2)));
+void str_append_printf (StringBuf & str, const char * format, ...) __attribute__ ((__format__ (gnu_printf, 2, 3)));
 #else
 StringBuf str_printf (const char * format, ...) __attribute__ ((__format__ (__printf__, 1, 2)));
+void str_append_printf (StringBuf & str, const char * format, ...) __attribute__ ((__format__ (__printf__, 2, 3)));
 #endif
 StringBuf str_vprintf (const char * format, va_list args);
+void str_append_vprintf (StringBuf & str, const char * format, va_list args);
 
 bool str_has_prefix_nocase (const char * str, const char * prefix);
 bool str_has_suffix_nocase (const char * str, const char * suffix);

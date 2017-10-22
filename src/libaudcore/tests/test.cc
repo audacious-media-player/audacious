@@ -500,6 +500,22 @@ static void test_stringbuf ()
     assert (! strcmp (str1, expect));
 }
 
+static void test_str_printf ()
+{
+    StringBuf problem = str_printf ("%d", 6);
+    const char * loc1 = problem;
+    str_append_printf (problem, " * %d", 7);
+    const char * loc2 = problem;
+
+    assert (loc1 == loc2);
+    assert (! strcmp (problem, "6 * 7"));
+
+    StringBuf answer = str_printf ("%d", 6 * 7);
+    str_append_printf (problem, " = %s", (const char *) answer);
+
+    assert (! strcmp (problem, "6 * 7 = 42"));
+}
+
 int main ()
 {
     test_audio_conversion ();
@@ -509,6 +525,7 @@ int main ()
     test_tuple_formats ();
     test_ringbuf ();
     test_stringbuf ();
+    test_str_printf ();
 
     return 0;
 }

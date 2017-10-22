@@ -757,7 +757,7 @@ static void record_update (void * = nullptr, void * = nullptr)
     {
         gtk_widget_set_sensitive (record_checkbox, false);
         gtk_button_set_label ((GtkButton *) record_checkbox,
-         str_printf (_("No audio recording plugin available")));
+         _("No audio recording plugin available"));
         gtk_toggle_button_set_active ((GtkToggleButton *) record_checkbox, false);
         gtk_widget_set_sensitive (record_config_button, false);
         gtk_widget_set_sensitive (record_about_button, false);

@@ -160,12 +160,28 @@ EXPORT StringBuf str_printf (const char * format, ...)
     return str;
 }
 
+EXPORT void str_append_printf (StringBuf & str, const char * format, ...)
+{
+    va_list args;
+    va_start (args, format);
+    str_append_vprintf (str, format, args);
+    va_end (args);
+}
+
 EXPORT StringBuf str_vprintf (const char * format, va_list args)
 {
     StringBuf str (-1);
     int len = vsnprintf (str, str.len (), format, args);
     str.resize (len);
     return str;
+}
+
+EXPORT void str_append_vprintf (StringBuf & str, const char * format, va_list args)
+{
+    int len0 = str.len ();
+    str.resize (-1);
+    int len1 = vsnprintf (str + len0, str.len () - len0, format, args);
+    str.resize (len0 + len1);
 }
 
 EXPORT bool str_has_prefix_nocase (const char * str, const char * prefix)

@@ -558,7 +558,7 @@ EXPORT void Tuple::set_format (const char * format, int chans, int rate, int bra
     }
 
     if (rate > 0)
-        buf.insert (-1, str_printf ("%d kHz", rate / 1000));
+        str_append_printf (buf, "%d kHz", rate / 1000);
 
     if (buf[0])
         set_str (Quality, buf);

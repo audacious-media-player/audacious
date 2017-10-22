@@ -139,7 +139,7 @@ EXPORT void StringBuf::resize (int len)
         char * limit = header->next ? (char *) header->next : (char *) stack + sizeof (StringStack);
         int max_len = limit - 1 - m_data;
 
-        if (max_len >= aud::max (len, 0))
+        if ((len < 0 && ! header->next) || (len >= 0 && len < max_len))
         {
             m_len = header->len = (len < 0) ? max_len : len;
             need_alloc = false;
