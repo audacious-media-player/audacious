@@ -98,6 +98,20 @@ inline T from_ptr (void * v)
     return u.t;
 }
 
+// Move-assignment implemented via move-constructor
+// ================================================
+
+template<class T>
+T & move_assign (T & a, T && b)
+{
+    if (& a != & b)
+    {
+        a.~T ();
+        new (& a) T (std::move (b));
+    }
+    return a;
+}
+
 // Function wrappers (or "casts") for interaction with C-style APIs
 // ================================================================
 

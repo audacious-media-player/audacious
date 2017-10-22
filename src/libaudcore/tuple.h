@@ -125,15 +125,7 @@ public:
     }
 
     Tuple & operator= (Tuple && b)
-    {
-        if (this != & b)
-        {
-            this->~Tuple ();
-            data = b.data;
-            b.data = nullptr;
-        }
-        return * this;
-    }
+        { return aud::move_assign (* this, std::move (b)); }
 
     bool operator== (const Tuple & b) const;
     bool operator!= (const Tuple & b) const

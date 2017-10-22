@@ -53,15 +53,6 @@ public:
         b.m_size = 0;
     }
 
-    void steal (IndexBase && b, aud::EraseFunc erase_func)
-    {
-        if (this != & b)
-        {
-            clear (erase_func);
-            new (this) IndexBase (std::move (b));
-        }
-    }
-
     void * begin ()
         { return m_data; }
     const void * begin () const
@@ -118,8 +109,8 @@ public:
 
     Index (Index && b) :
         IndexBase (std::move (b)) {}
-    void operator= (Index && b)
-        { steal (std::move (b), aud::erase_func<T> ()); }
+    Index & operator= (Index && b)
+        { return aud::move_assign (* this, std::move (b)); }
 
     T * begin ()
         { return (T *) IndexBase::begin (); }

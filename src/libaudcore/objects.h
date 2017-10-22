@@ -90,14 +90,7 @@ public:
     }
 
     SmartPtr & operator= (SmartPtr && b)
-    {
-        if (this != & b)
-        {
-            capture (b.ptr);
-            b.ptr = nullptr;
-        }
-        return * this;
-    }
+        { return aud::move_assign (* this, std::move (b)); }
 
     explicit operator bool () const
         { return (bool) ptr; }
@@ -172,15 +165,7 @@ public:
     }
 
     String & operator= (String && b)
-    {
-        if (this != & b)
-        {
-            raw_unref (raw);
-            raw = b.raw;
-            b.raw = nullptr;
-        }
-        return * this;
-    }
+        { return aud::move_assign (* this, std::move (b)); }
 
     bool operator== (const String & b) const
         { return raw_equal (raw, b.raw); }
@@ -251,14 +236,7 @@ public:
     }
 
     StringBuf & operator= (StringBuf && other)
-    {
-        if (this != & other)
-        {
-            this->~StringBuf ();
-            new (this) StringBuf (std::move (other));
-        }
-        return * this;
-    }
+        { return aud::move_assign (* this, std::move (other)); }
 
     ~StringBuf ();
 
