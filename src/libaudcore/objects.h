@@ -292,9 +292,9 @@ public:
         { return m_data; }
 
     // deprecated, use assignment
-    void steal (StringBuf && other);
+    void steal (StringBuf && other) __attribute__((deprecated));
     // deprecated, use insert()
-    void combine (StringBuf && other);
+    void combine (StringBuf && other) __attribute__((deprecated));
 
 private:
     StringStack * stack;
