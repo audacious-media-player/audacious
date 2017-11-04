@@ -609,16 +609,22 @@ EXPORT StringBuf filename_to_uri (const char * name)
     return buf.settle ();
 }
 
-/* Like g_filename_from_uri, but converts the filename from UTF-8 to the system
- * locale after percent-decoding (except on Windows, where filenames are assumed
- * to be UTF-8).  On Windows, strips the leading '/' and replaces '/' with '\'. */
+/* Like g_filename_from_uri, but optionally converts the filename from UTF-8 to
+ * the system locale after percent-decoding (except on Windows, where filenames
+ * are assumed to be UTF-8).  On Windows, strips the leading '/' and replaces
+ * '/' with '\'.  If the input is not a valid URI, it is assumed to be a local
+ * filename already and is not percent-decoded. */
 
 EXPORT StringBuf uri_to_filename (const char * uri, bool use_locale)
 {
-    if (strncmp (uri, URI_PREFIX, URI_PREFIX_LEN))
-        return StringBuf ();
+    StringBuf buf;
 
-    StringBuf buf = str_decode_percent (uri + URI_PREFIX_LEN);
+    if (! strncmp (uri, URI_PREFIX, URI_PREFIX_LEN))
+        buf = str_decode_percent (uri + URI_PREFIX_LEN);
+    else if (! strstr (uri, "://"))  /* already a local filename? */
+        buf = str_copy (uri);
+    else
+        return StringBuf ();
 
 #ifndef _WIN32
     /* convert to locale if:

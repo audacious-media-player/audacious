@@ -41,14 +41,8 @@ static TransportPlugin * lookup_transport (const char * filename,
  String & error, bool * custom_input = nullptr)
 {
     StringBuf scheme = uri_get_scheme (filename);
-    if (! scheme)
-    {
-        AUDERR ("Invalid URI: %s\n", filename);
-        error = String (_("Invalid URI"));
-        return nullptr;
-    }
 
-    if (! strcmp (scheme, "file"))
+    if (! scheme || ! strcmp (scheme, "file"))
         return & local_transport;
     if (! strcmp (scheme, "stdin"))
         return & stdin_transport;

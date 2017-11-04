@@ -241,9 +241,7 @@ private:
 
 void config_load ()
 {
-    StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
-    path.insert (-1, "/config");
-
+    StringBuf path = filename_build ({aud_get_path (AudPath::UserDir), "config"});
     if (VFSFile::test_file (path, VFS_EXISTS))
     {
         VFSFile file (path, "r");
@@ -282,12 +280,9 @@ void config_save ()
             return strcmp (a.section, b.section);
     });
 
-    StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
-    path.insert (-1, "/config");
-
     String current_heading;
 
-    VFSFile file (path, "w");
+    VFSFile file (filename_build ({aud_get_path (AudPath::UserDir), "config"}), "w");
     if (! file)
         goto FAILED;
 
