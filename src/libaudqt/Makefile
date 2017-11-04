@@ -2,24 +2,24 @@ SHARED_LIB = ${LIB_PREFIX}audqt${LIB_SUFFIX}
 LIB_MAJOR = 2
 LIB_MINOR = 0
 
-SRCS = about.cc			\
-       art.cc                   \
-       equalizer.cc		\
-       fileopener.cc		\
-       infowin.cc		\
-       info-widget.cc		\
-       log-inspector.cc         \
-       menu.cc			\
-       playlist-management.cc	\
-       plugin-menu.cc		\
-       prefs-builder.cc		\
-       prefs-plugin.cc          \
-       prefs-widget.cc		\
-       prefs-window.cc		\
-       prefs-pluginlist-model.cc  \
-       queue-manager.cc		\
-       url-opener.cc		\
-       util.cc			\
+SRCS = about-qt.cc \
+       art-qt.cc \
+       audqt.cc \
+       equalizer-qt.cc \
+       fileopener.cc \
+       infowin-qt.cc \
+       info-widget.cc \
+       log-inspector.cc \
+       menu-qt.cc \
+       playlist-management.cc \
+       plugin-menu-qt.cc \
+       prefs-builder.cc \
+       prefs-plugin.cc \
+       prefs-widget-qt.cc \
+       prefs-window-qt.cc \
+       prefs-pluginlist-model.cc \
+       queue-manager-qt.cc \
+       url-opener-qt.cc \
        volumebutton.cc
 
 INCLUDES = export.h \
