@@ -18,16 +18,15 @@
  */
 
 #include <QDialog>
-#include <QFile>
 #include <QLabel>
 #include <QPlainTextEdit>
 #include <QTabWidget>
-#include <QTextStream>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/vfs.h>
 
 #include "libaudqt.h"
 
@@ -43,18 +42,11 @@ static QTabWidget * buildCreditsNotebook (QWidget * parent)
 
     for (int i = 0; i < 2; i ++)
     {
-        QFile f (QString (filename_build ({data_dir, filenames[i]})));
-        if (! f.open (QIODevice::ReadOnly))
-            continue;
-
-        QTextStream in (& f);
-
-        auto edit = new QPlainTextEdit (in.readAll ().trimmed (), parent);
+        auto text = VFSFile::read_file (filename_build ({data_dir, filenames[i]}), VFS_APPEND_NULL);
+        auto edit = new QPlainTextEdit (text.begin (), parent);
         edit->setReadOnly (true);
         edit->setFrameStyle (QFrame::NoFrame);
         tabs->addTab (edit, _(titles[i]));
-
-        f.close ();
     }
 
     return tabs;

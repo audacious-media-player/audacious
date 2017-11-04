@@ -22,6 +22,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/vfs.h>
 
 #include "internal.h"
 #include "libaudgui.h"
@@ -92,25 +93,12 @@ static GtkWidget * create_about_window ()
     GtkWidget * button = gtk_link_button_new (website);
     gtk_container_add ((GtkContainer *) align, button);
 
-    char * credits, * license;
+    auto credits = VFSFile::read_file (filename_build ({data_dir, "AUTHORS"}), VFS_APPEND_NULL);
+    auto license = VFSFile::read_file (filename_build ({data_dir, "COPYING"}), VFS_APPEND_NULL);
 
-    StringBuf credits_path = filename_build ({data_dir, "AUTHORS"});
-    if (! g_file_get_contents (credits_path, & credits, nullptr, nullptr))
-        credits = g_strdup_printf ("Unable to load %s; check your installation.", (const char *) credits_path);
-
-    StringBuf license_path = filename_build ({data_dir, "COPYING"});
-    if (! g_file_get_contents (license_path, & license, nullptr, nullptr))
-        license = g_strdup_printf ("Unable to load %s; check your installation.", (const char *) license_path);
-
-    g_strchomp (credits);
-    g_strchomp (license);
-
-    GtkWidget * notebook = create_credits_notebook (credits, license);
+    GtkWidget * notebook = create_credits_notebook (credits.begin (), license.begin ());
     gtk_widget_set_size_request (notebook, 6 * dpi, 2 * dpi);
     gtk_box_pack_start ((GtkBox *) vbox, notebook, true, true, 0);
-
-    g_free (credits);
-    g_free (license);
 
     return about_window;
 }

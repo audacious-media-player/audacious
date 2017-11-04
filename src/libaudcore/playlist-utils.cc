@@ -264,19 +264,13 @@ static void load_playlists_real ()
     /* unique ID-based naming scheme */
 
     StringBuf order_path = filename_build ({folder, "order"});
-    char * order_string;
-    Index<String> order;
-
-    g_file_get_contents (order_path, & order_string, nullptr, nullptr);
-    if (! order_string)
-        goto DONE;
-
-    order = str_list_to_index (order_string, " ");
-    g_free (order_string);
+    auto order_string = VFSFile::read_file (order_path,
+        VFSReadOptions (VFS_APPEND_NULL | VFS_IGNORE_MISSING));
+    auto order = str_list_to_index (order_string.begin (), " ");
 
     for (int i = 0; i < order.len (); i ++)
     {
-        const String & number = order[i];
+        const char * number = order[i];
 
         StringBuf path = filename_build ({folder, str_concat ({number, ".audpl"})});
         if (! g_file_test (path, G_FILE_TEST_EXISTS))
@@ -287,7 +281,6 @@ static void load_playlists_real ()
         playlist.set_modified (g_str_has_suffix (path, ".xspf"));
     }
 
-DONE:
     if (! Playlist::n_playlists ())
         Playlist::insert_playlist (0);
 }
@@ -321,21 +314,11 @@ static void save_playlists_real ()
 
     StringBuf order_string = index_to_str_list (order, " ");
     StringBuf order_path = filename_build ({folder, "order"});
+    auto old_order_string = VFSFile::read_file (order_path,
+        VFSReadOptions (VFS_APPEND_NULL | VFS_IGNORE_MISSING));
 
-    char * old_order_string;
-    g_file_get_contents (order_path, & old_order_string, nullptr, nullptr);
-
-    if (! old_order_string || strcmp (old_order_string, order_string))
-    {
-        GError * error = nullptr;
-        if (! g_file_set_contents (order_path, order_string, -1, & error))
-        {
-            AUDERR ("Cannot write to %s: %s\n", (const char *) order_path, error->message);
-            g_error_free (error);
-        }
-    }
-
-    g_free (old_order_string);
+    if (strcmp (old_order_string.begin (), order_string))
+        VFSFile::write_file (order_path, (const char *) order_string, order_string.len ());
 
     /* clean up deleted playlists and files from old naming scheme */
 

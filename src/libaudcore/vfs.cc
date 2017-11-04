@@ -171,7 +171,7 @@ EXPORT int VFSFile::fseek (int64_t offset, VFSSeekType whence)
      whence == VFS_SEEK_CUR ? "current" : whence == VFS_SEEK_SET ? "beginning" :
      whence == VFS_SEEK_END ? "end" : "invalid");
 
-    if (! m_impl->fseek (offset, whence))
+    if (m_impl->fseek (offset, whence) == 0)
         return 0;
 
     AUDDBG ("<%p> seek failed!\n", m_impl.get ());
@@ -220,7 +220,7 @@ EXPORT int VFSFile::ftruncate (int64_t length)
 {
     AUDDBG ("<%p> truncate to %" PRId64 "\n", m_impl.get (), length);
 
-    if (! m_impl->ftruncate (length))
+    if (m_impl->ftruncate (length) == 0)
         return 0;
 
     AUDDBG ("<%p> truncate failed!\n", m_impl.get ());
@@ -232,7 +232,7 @@ EXPORT int VFSFile::fflush ()
 {
     AUDDBG ("<%p> flush\n", m_impl.get ());
 
-    if (! m_impl->fflush ())
+    if (m_impl->fflush () == 0)
         return 0;
 
     AUDDBG ("<%p> flush failed!\n", m_impl.get ());
@@ -384,4 +384,36 @@ EXPORT Index<String> VFSFile::read_folder (const char * filename, String & error
 {
     auto tp = lookup_transport (filename, error);
     return tp ? tp->read_folder (filename, error) : Index<String> ();
+}
+
+EXPORT Index<char> VFSFile::read_file (const char * filename, VFSReadOptions options)
+{
+    Index<char> text;
+
+    if (! (options & VFS_IGNORE_MISSING) || test_file (filename, VFS_EXISTS))
+    {
+        VFSFile file (filename, "r");
+        if (file)
+            text = file.read_all ();
+        else
+            AUDERR ("Cannot open %s for reading: %s\n", filename, file.error ());
+    }
+
+    if ((options & VFS_APPEND_NULL))
+        text.append (0);
+
+    return text;
+}
+
+EXPORT bool VFSFile::write_file (const char * filename, const void * data, int64_t len)
+{
+    bool written = false;
+
+    VFSFile file (filename, "w");
+    if (file)
+        written = (file.fwrite (data, 1, len) == len && file.fflush () == 0);
+    else
+        AUDERR ("Cannot open %s for writing: %s\n", filename, file.error ());
+
+    return written;
 }
