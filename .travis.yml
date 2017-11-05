@@ -1,15 +1,22 @@
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "aUdEyAXi+j2lG2WL42e80nNHdzbcJgbiQ1xiXgDNUEVcmltsGCEGc/5xDdZk9SIEd5jAqt54DNfZHtT4lR8cOUsqTAfgNNq8ALxEpVu0Fgp3cDGDK2gkAq5wTHu1LI996c/P+82Atnm11DI7Ayx917PvSjVMq6LvfQhPgXnhdt4="
 language:
   - cpp
 compiler:
   - gcc
-  - clang
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install libgtk2.0-dev qtbase5-dev
-script:
-  - ./autogen.sh
-  - ./configure --prefix=/opt/aud --enable-qt
-  - make
-  - cd src/libaudcore/tests
-  - make test
-  - ./test
+  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+addons:
+  coverity_scan:
+    project:
+      name: "audacious-media-player/audacious"
+      description: "Build submitted via Travis CI"
+    notification_email: john@jlindgren.net
+    build_command_prepend: "./autogen.sh ; ./configure --prefix=/opt/aud --enable-qt"
+    build_command: "make"
+    branch_pattern: coverity_scan
