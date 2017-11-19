@@ -84,6 +84,8 @@ void playlist_shuffle_status (int, char * *);
 void playlist_shuffle_toggle (int, char * *);
 void playlist_stop_after_status (int argc, char * * argv);
 void playlist_stop_after_toggle (int argc, char * * argv);
+void playlist_stop_after_each_status (int argc, char * * argv);
+void playlist_stop_after_each_toggle (int argc, char * * argv);
 void playlist_tuple_field_data (int, char * * argv);
 void playlist_enqueue_to_temp (int argc, char * * argv);
 void playlist_ins_url_string (int argc, char * * argv);

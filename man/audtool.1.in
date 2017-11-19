@@ -221,6 +221,12 @@ Print the ``stop after current song'' option (``on'' or ``off'').
 .TP
 .B --playlist-stop-after-toggle
 Toggle the ``stop after current song'' option.
+.TP
+.B --playlist-stop-after-each-status
+Print the ``stop after each song'' option (``on'' or ``off'').
+.TP
+.B --playlist-stop-after-each-toggle
+Toggle the ``stop after each song'' option.
 
 .SS More playlist commands:
 
