@@ -68,6 +68,18 @@ void playlist_stop_after_toggle (int argc, char * * argv)
     obj_audacious_call_toggle_stop_after_sync (dbus_proxy, NULL, NULL);
 }
 
+void playlist_stop_after_each_status (int argc, char * * argv)
+{
+    gboolean stop_after_each = FALSE;
+    obj_audacious_call_stop_after_each_sync (dbus_proxy, & stop_after_each, NULL, NULL);
+    audtool_report (stop_after_each ? "on" : "off");
+}
+
+void playlist_stop_after_each_toggle (int argc, char * * argv)
+{
+    obj_audacious_call_toggle_stop_after_each_sync (dbus_proxy, NULL, NULL);
+}
+
 int check_args_playlist_pos (int argc, char * * argv)
 {
     int pos;

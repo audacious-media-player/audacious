@@ -112,6 +112,8 @@ Control + n			Toggle advancing in playlist
 .br
 Control + m			Toggle stopping after current song
 .br
+Control + b			Toggle stopping after each song
+.br
 Control + e			Display Equalizer
 .br
 Control + y			Display Search Tool

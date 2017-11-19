@@ -395,6 +395,14 @@
         <!-- Toggle stop-after-song -->
         <method name="ToggleStopAfter" />
 
+        <!-- Query stop-after-each-song status -->
+        <method name="StopAfterEach">
+            <arg type="b" direction="out" name="is_stopping_each"/>
+        </method>
+
+        <!-- Toggle stop-after-each-song -->
+        <method name="ToggleStopAfterEach" />
+
         <!-- Playlist Queue -->
         <!-- ++++++++++++++ -->
 

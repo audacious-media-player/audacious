@@ -86,6 +86,8 @@ const struct commandhandler handlers[] =
     {"playlist-shuffle-toggle", playlist_shuffle_toggle, "toggle playlist shuffle", 0},
     {"playlist-stop-after-status", playlist_stop_after_status, "query if stopping after current song", 0},
     {"playlist-stop-after-toggle", playlist_stop_after_toggle, "toggle if stopping after current song", 0},
+    {"playlist-stop-after-each-status", playlist_stop_after_each_status, "query if stopping after each song", 0},
+    {"playlist-stop-after-each-toggle", playlist_stop_after_each_toggle, "toggle if stopping after each song", 0},
 
     {"<sep>", NULL, "More playlist commands", 0},
     {"number-of-playlists", number_of_playlists, "print number of playlists", 0},
