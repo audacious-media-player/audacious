@@ -22,6 +22,7 @@
 
 #include <assert.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "audstrings.h"
 #include "hook.h"
@@ -255,6 +256,7 @@ void config_load ()
     if (aud_get_bool (0, "replay_gain_album"))
     {
         aud_set_str (0, "replay_gain_album", "");
+	printf("config.cc 1\n");
         aud_set_int (0, "replay_gain_mode", (int) ReplayGainMode::Album);
     }
 }
@@ -376,6 +378,7 @@ EXPORT void aud_toggle_bool (const char * section, const char * name)
 
 EXPORT void aud_set_int (const char * section, const char * name, int value)
 {
+    printf("config.cc 1\n");
     aud_set_str (section, name, int_to_str (value));
 }
 

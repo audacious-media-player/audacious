@@ -42,6 +42,7 @@ static void get_value (void * user, int row, int column, GValue * value)
     switch (column)
     {
     case COLUMN_ENTRY:
+	printf("queue-manager.cc 1\n");
         g_value_set_int (value, 1 + entry);
         break;
     case COLUMN_TITLE:

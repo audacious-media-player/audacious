@@ -24,6 +24,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <stdio.h>
+
 #include <glib.h>  /* for g_utf8_validate */
 
 #include "audio.h"
@@ -111,6 +113,7 @@ static const struct {
     {"album-artist", Tuple::String, -1},
     {"comment", Tuple::String, -1},
     {"genre", Tuple::String, -1},
+    {"description", Tuple::String, -1},
     {"year", Tuple::Int, -1},
 
     {"composer", Tuple::String, -1},
@@ -171,6 +174,7 @@ static const FieldDictEntry field_dict[] = {
     {"composer", Tuple::Composer},
     {"copyright", Tuple::Copyright},
     {"date", Tuple::Date},
+    {"description", Tuple::Description},
     {"file-ext", Tuple::Suffix},
     {"file-name", Tuple::Basename},
     {"file-path", Tuple::Path},
@@ -470,9 +474,16 @@ EXPORT String Tuple::get_str (Field field) const
 
 EXPORT void Tuple::set_int (Field field, int x)
 {
+	int bloop;
+
+    bloop = (is_valid_field (field) && field_info[field].type == Int);
+    printf("bloop == %d ", bloop);
+    printf("field_info[field] == %s\n", field_info[field]);
+
     assert (is_valid_field (field) && field_info[field].type == Int);
 
     data = TupleData::copy_on_write (data);
+    printf("tuple.cc 0");
     data->set_int (field, x);
 }
 
@@ -533,8 +544,10 @@ EXPORT void Tuple::set_filename (const char * filename)
     if (sub > ext + 1)
         data->set_str (Suffix, str_to_utf8 (str_decode_percent (ext + 1, sub - ext - 1)));
 
-    if (sub[0])
+    if (sub[0]) {
+	printf("tuple.cc 1\n");
         data->set_int (Subtune, isub);
+    }
 }
 
 EXPORT void Tuple::set_format (const char * format, int chans, int rate, int brate)
@@ -563,8 +576,10 @@ EXPORT void Tuple::set_format (const char * format, int chans, int rate, int bra
     if (buf[0])
         set_str (Quality, buf);
 
-    if (brate > 0)
+    if (brate > 0) {
+        printf("tuple.cc 2\n");
         set_int (Bitrate, brate);
+    }
 }
 
 EXPORT void Tuple::set_subtunes (short n_subtunes, const short * subtunes)
@@ -588,7 +603,9 @@ EXPORT short Tuple::get_nth_subtune (short n) const
 
 EXPORT void Tuple::set_gain (Field field, Field unit_field, const char * str)
 {
+    printf("tuple.cc 3\n");
     set_int (field, lround (str_to_double (str) * 1000000));
+    printf("tuple.cc 4\n");
     set_int (unit_field, 1000000);
 }
 
@@ -673,6 +690,7 @@ EXPORT bool Tuple::fetch_stream_info (VFSFile & stream)
 
     if (value && value != get_int (Bitrate))
     {
+	printf("tuple.cc 5\n");
         set_int (Bitrate, value);
         updated = true;
     }

@@ -54,6 +54,7 @@ public:
         AlbumArtist,  /* Artist for entire album, if different than song artist */
         Comment,      /* Freeform comment */
         Genre,        /* Song's genre */
+        Description,  /* Description of song */
         Year,         /* Year of production, performance, etc. */
 
         Composer,     /* Composer, if different than artist */

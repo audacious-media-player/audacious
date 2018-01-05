@@ -23,6 +23,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "equalizer.h"
 #include "hook.h"
@@ -716,7 +717,9 @@ EXPORT void aud_drct_set_volume (StereoVolume volume)
 
     if (aud_get_bool (0, "software_volume_control"))
     {
+	printf("output.cc 1\n");
         aud_set_int (0, "sw_volume_left", volume.left);
+	printf("output.cc 2\n");
         aud_set_int (0, "sw_volume_right", volume.right);
     }
     else if (cop)

@@ -68,6 +68,7 @@ public:
         AlbumArtist,
         Date,            // release date (not modification time)
         Genre,
+        Description,
         Track,
         FormattedTitle,
         Length,

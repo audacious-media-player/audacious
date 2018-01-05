@@ -21,6 +21,7 @@
 #include "runtime.h"
 
 #include <assert.h>
+#include <stdio.h>
 
 EXPORT bool WidgetConfig::get_bool () const
 {
@@ -65,8 +66,10 @@ EXPORT void WidgetConfig::set_int (int val) const
 
     if (value)
         * (int *) value = val;
-    else if (name)
+    else if (name) {
+	printf("preferences.cc 1\n");
         aud_set_int (section, name, val);
+    }
 
     if (callback)
         callback ();

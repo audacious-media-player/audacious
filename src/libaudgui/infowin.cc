@@ -176,8 +176,10 @@ static void set_field_int_from_entry (Tuple & tuple, Tuple::Field field, GtkWidg
 {
     const char * text = gtk_entry_get_text ((GtkEntry *) widget);
 
-    if (text[0])
+    if (text[0]) {
+	printf("infowin.cc\n");
         tuple.set_int (field, atoi (text));
+    }
     else
         tuple.unset (field);
 }
