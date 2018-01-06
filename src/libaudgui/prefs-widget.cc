@@ -19,7 +19,6 @@
 
 #include <string.h>
 #include <gtk/gtk.h>
-#include <stdio.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -48,11 +47,9 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
     case PreferencesWidget::RadioButton:
     {
         bool set = gtk_toggle_button_get_active ((GtkToggleButton *) widget);
-
-        if (set) {
-printf("prefs-widget.cc 1\n");
+        if (set)
             w->cfg.set_int (w->data.radio_btn.value);
-}
+
         auto child = (GtkWidget *) g_object_get_data ((GObject *) widget, "child");
         if (child)
             gtk_widget_set_sensitive (child, set);
@@ -61,10 +58,8 @@ printf("prefs-widget.cc 1\n");
     }
 
     case PreferencesWidget::SpinButton:
-        if (w->cfg.type == WidgetConfig::Int) {
-printf("prefs-widget.cc 2");
+        if (w->cfg.type == WidgetConfig::Int)
             w->cfg.set_int (gtk_spin_button_get_value_as_int ((GtkSpinButton *) widget));
-}
         else if (w->cfg.type == WidgetConfig::Float)
             w->cfg.set_float (gtk_spin_button_get_value ((GtkSpinButton *) widget));
 
@@ -90,10 +85,8 @@ printf("prefs-widget.cc 2");
         auto items = (const ComboItem *) g_object_get_data ((GObject *) widget, "comboitems");
         int idx = gtk_combo_box_get_active ((GtkComboBox *) widget);
 
-        if (w->cfg.type == WidgetConfig::Int) {
-            printf("prefs-widget.cc 3\n");
+        if (w->cfg.type == WidgetConfig::Int)
             w->cfg.set_int (items[idx].num);
-	}
         else if (w->cfg.type == WidgetConfig::String)
             w->cfg.set_string (items[idx].str);
 

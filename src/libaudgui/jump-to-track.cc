@@ -217,7 +217,6 @@ static void list_get_value (void * user, int row, int column, GValue * value)
     switch (column)
     {
     case 0:
-        printf("jump-to-track.cc\n");
         g_value_set_int (value, 1 + entry);
         break;
     case 1:

@@ -23,7 +23,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 #define WANT_AUD_BSWAP
 #include <libaudcore/audio.h>
@@ -257,14 +256,10 @@ bool APETagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * imag
             tuple.set_str (Tuple::Comment, pair.value);
         else if (! strcmp (pair.key, "Genre"))
             tuple.set_str (Tuple::Genre, pair.value);
-        else if (! strcmp (pair.key, "Track")) {
-	    printf("ape.cc 1\n");
+        else if (! strcmp (pair.key, "Track"))
             tuple.set_int (Tuple::Track, atoi (pair.value));
-	}
-        else if (! strcmp (pair.key, "Year")) {
-	    printf("ape.cc 2\n");
+        else if (! strcmp (pair.key, "Year"))
             tuple.set_int (Tuple::Year, atoi (pair.value));
-}
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_TRACK_GAIN"))
             tuple.set_gain (Tuple::TrackGain, Tuple::GainDivisor, pair.value);
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_TRACK_PEAK"))
