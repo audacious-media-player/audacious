@@ -592,6 +592,14 @@ EXPORT void Tuple::set_gain (Field field, Field unit_field, const char * str)
     set_int (unit_field, 1000000);
 }
 
+/* combining this with get_replay_gain() would be cleaner but would
+ * require adding a validity flag to ReplayGainInfo, breaking ABI */
+EXPORT bool Tuple::has_replay_gain () const
+{
+    return get_int (GainDivisor) > 0 &&
+           (data->is_set (AlbumGain) || data->is_set (TrackGain));
+}
+
 EXPORT ReplayGainInfo Tuple::get_replay_gain () const
 {
     ReplayGainInfo gain {};
@@ -604,18 +612,36 @@ EXPORT ReplayGainInfo Tuple::get_replay_gain () const
 
     if (gain_unit > 0)
     {
-        if (data->is_set (AlbumGain))
+        bool have_album = data->is_set (AlbumGain);
+        bool have_track = data->is_set (TrackGain);
+
+        if (have_album)
             gain.album_gain = get_int (AlbumGain) / (float) gain_unit;
-        if (data->is_set (TrackGain))
+        if (have_track)
             gain.track_gain = get_int (TrackGain) / (float) gain_unit;
+
+        /* fill in missing information if we can */
+        if (! have_album && have_track)
+            gain.album_gain = gain.track_gain;
+        if (have_album && ! have_track)
+            gain.track_gain = gain.album_gain;
     }
 
     if (peak_unit > 0)
     {
-        if (data->is_set (AlbumPeak))
+        bool have_album = data->is_set (AlbumPeak);
+        bool have_track = data->is_set (TrackPeak);
+
+        if (have_album)
             gain.album_peak = get_int (AlbumPeak) / (float) peak_unit;
-        if (data->is_set (TrackPeak))
+        if (have_track)
             gain.track_peak = get_int (TrackPeak) / (float) peak_unit;
+
+        /* fill in missing information if we can */
+        if (! have_album && have_track)
+            gain.album_peak = gain.track_peak;
+        if (have_album && ! have_track)
+            gain.track_peak = gain.album_peak;
     }
 
     return gain;
