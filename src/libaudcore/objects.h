@@ -90,14 +90,7 @@ public:
     }
 
     SmartPtr & operator= (SmartPtr && b)
-    {
-        if (this != & b)
-        {
-            capture (b.ptr);
-            b.ptr = nullptr;
-        }
-        return * this;
-    }
+        { return aud::move_assign (* this, std::move (b)); }
 
     explicit operator bool () const
         { return (bool) ptr; }
@@ -172,15 +165,7 @@ public:
     }
 
     String & operator= (String && b)
-    {
-        if (this != & b)
-        {
-            raw_unref (raw);
-            raw = b.raw;
-            b.raw = nullptr;
-        }
-        return * this;
-    }
+        { return aud::move_assign (* this, std::move (b)); }
 
     bool operator== (const String & b) const
         { return raw_equal (raw, b.raw); }
@@ -208,21 +193,21 @@ private:
 
 struct StringStack;
 
-// Mutable string buffer, allocated on a stack to allow fast allocation.  The
-// price for this speed is that only the top string in the stack (i.e. the one
-// most recently allocated) can be resized or deleted.  The string is always
-// null-terminated (i.e. str[str.len ()] == 0).  Rules for the correct use of
-// StringBuf can be summarized as follows:
+// Mutable string buffer, allocated on a stack-like structure.  The intent is
+// to provide fast allocation/deallocation for strings with a short lifespan.
+// Note that some usage patterns (for example, repeatedly appending to multiple
+// strings) can rapidly cause memory fragmentation and eventually lead to an
+// out-of-memory exception.
+//
+// Some usage guidelines:
 //
 //   1. Always declare StringBufs within function or block scope, never at file
 //      or class scope.  Do not attempt to create a StringBuf with new or
 //      malloc().
-//   2. Only the first StringBuf declared in a function can be used as the
-//      return value.  It is possible to create a second StringBuf and then
-//      transfer its contents to the first with steal(), but doing so carries
-//      a performance penalty.
-//   3. Do not truncate the StringBuf by inserting null characters manually;
-//      instead, use resize().
+//   2. If you need to return a StringBuf from a function that uses several
+//      different strings internally, make sure all the other strings go out of
+//      scope first and then call settle() on the string to be returned.
+//   3. Never transfer StringBuf objects across thread boundaries.
 
 class StringBuf
 {
@@ -232,10 +217,6 @@ public:
         m_data (nullptr),
         m_len (0) {}
 
-    // A length of -1 means to use all available space.  This can be useful when
-    // the final length of the string is not known in advance, but keep in mind
-    // that you will not be able to create any further StringBufs until you call
-    // resize().  Also, the string will not be null-terminated in this case.
     explicit StringBuf (int len) :
         stack (nullptr),
         m_data (nullptr),
@@ -254,23 +235,44 @@ public:
         other.m_len = 0;
     }
 
-    // only allowed for top (or null) string
-    ~StringBuf () noexcept (false);
+    StringBuf & operator= (StringBuf && other)
+        { return aud::move_assign (* this, std::move (other)); }
 
-    // only allowed for top (or null) string
-    void resize (int size);
-    void insert (int pos, const char * s, int len = -1);
+    ~StringBuf ();
+
+    // Resizes to <len> bytes (not counting the terminating null byte) by
+    // appended uninitialized bytes or truncating.  The resized string will be
+    // null-terminated unless <len> is -1.  A length of -1 means to make the
+    // string as large as possible.  This can be useful when the required length
+    // is not known in advance.  However, it will be impossible to create any
+    // further StringBufs until resize() is called again.
+    void resize (int len);
+
+    // Inserts the substring <s> at the given position, or appends it if <pos>
+    // is -1.  If <len> is -1, <s> is assumed to be null-terminated; otherwise,
+    // <len> indicates the number of bytes to insert.  If <s> is a null pointer,
+    // uninitialized bytes are inserted and <len> must not be -1.  A pointer to
+    // the inserted substring is returned for convenience.
+    char * insert (int pos, const char * s, int len = -1);
+
+    // Removes <len> bytes at the given position.
     void remove (int pos, int len);
 
-    // only allowed for top two strings (or when one string is null)
-    void steal (StringBuf && other);
-    void combine (StringBuf && other);
+    // Collapses any unused space preceding this string.
+    // Judicious use can combat memory fragmentation.
+    // Returns a move reference to allow e.g. "return str.settle();"
+    StringBuf && settle ();
 
     int len () const
         { return m_len; }
 
     operator char * ()
         { return m_data; }
+
+    // deprecated, use assignment
+    void steal (StringBuf && other) __attribute__((deprecated));
+    // deprecated, use insert()
+    void combine (StringBuf && other) __attribute__((deprecated));
 
 private:
     StringStack * stack;

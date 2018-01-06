@@ -56,15 +56,6 @@ public:
         b.m_len = 0;
     }
 
-    void steal (RingBufBase && b, aud::EraseFunc erase_func)
-    {
-        if (this != & b)
-        {
-            destroy (erase_func);
-            new (this) RingBufBase (std::move (b));
-        }
-    }
-
     // allocated size of the buffer
     int size () const
         { return m_size; }
@@ -119,8 +110,8 @@ public:
 
     RingBuf (RingBuf && b) :
         RingBufBase (std::move (b)) {}
-    void operator= (RingBuf && b)
-        { steal (std::move (b), aud::erase_func<T> ()); }
+    RingBuf & operator= (RingBuf && b)
+        { return aud::move_assign (* this, std::move (b)); }
 
     int size () const
         { return cooked (RingBufBase::size ()); }

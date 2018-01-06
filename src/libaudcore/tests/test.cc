@@ -454,6 +454,68 @@ static void test_ringbuf ()
     string_leak_check ();
 }
 
+static StringBuf str_recursive_insert (const char * str, int level)
+{
+    StringBuf buf = str_copy (str);
+    buf.insert (buf.len () / 2, str);
+
+    if (level == 1)
+        return buf;
+
+    // intentionally causing fragmentation here
+    return str_recursive_insert (buf, level - 1);
+}
+
+static StringBuf str_repeated_nest (const char * str, int level)
+{
+    StringBuf buf1 = str_copy (str);
+    StringBuf buf2 = str_copy (str);
+
+    while (level -- > 0)
+    {
+        buf1.insert (buf1.len () / 2, buf2);
+        buf2.insert (buf2.len () / 2, buf1);
+    }
+
+    // intentionally causing fragmentation here
+    return buf2;
+}
+
+static void test_stringbuf ()
+{
+    char expect[262145];
+
+    StringBuf str1 = str_recursive_insert ("ab", 17).settle ();
+
+    memset (expect, 'a', 121393);
+    memset (expect + 121393, 'b', 121393);
+    expect[242786] = 0;
+
+    assert (! strcmp (str_repeated_nest ("ab", 12), expect));
+
+    memset (expect, 'a', 131072);
+    memset (expect + 131072, 'b', 131072);
+    expect[262144] = 0;
+
+    assert (! strcmp (str1, expect));
+}
+
+static void test_str_printf ()
+{
+    StringBuf problem = str_printf ("%d", 6);
+    const char * loc1 = problem;
+    str_append_printf (problem, " * %d", 7);
+    const char * loc2 = problem;
+
+    assert (loc1 == loc2);
+    assert (! strcmp (problem, "6 * 7"));
+
+    StringBuf answer = str_printf ("%d", 6 * 7);
+    str_append_printf (problem, " = %s", (const char *) answer);
+
+    assert (! strcmp (problem, "6 * 7 = 42"));
+}
+
 int main ()
 {
     test_audio_conversion ();
@@ -462,6 +524,8 @@ int main ()
     test_filename_split ();
     test_tuple_formats ();
     test_ringbuf ();
+    test_stringbuf ();
+    test_str_printf ();
 
     return 0;
 }

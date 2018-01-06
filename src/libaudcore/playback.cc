@@ -79,6 +79,7 @@ struct PlaybackInfo {
     int stop_time = -1;
 
     ReplayGainInfo gain {};
+    bool gain_valid = false;
 
     int bitrate = 0;
     int samplerate = 0;
@@ -314,6 +315,7 @@ static void run_playback ()
     pb_info.time_offset = aud::max (0, pb_info.tuple.get_int (Tuple::StartTime));
     pb_info.stop_time = aud::max (-1, pb_info.tuple.get_int (Tuple::EndTime) - pb_info.time_offset);
     pb_info.gain = pb_info.tuple.get_replay_gain ();
+    pb_info.gain_valid = pb_info.tuple.has_replay_gain ();
 
     // force initial seek if we are playing a segmented track
     if (pb_info.time_offset > 0 && pb_control.seek < 0)
@@ -503,7 +505,8 @@ EXPORT void InputPlugin::open_audio (int format, int rate, int channels)
         return;
     }
 
-    output_set_replay_gain (pb_info.gain);
+    if (pb_info.gain_valid)
+        output_set_replay_gain (pb_info.gain);
     if (pb_control.paused)
         output_pause (true);
 
@@ -524,6 +527,7 @@ EXPORT void InputPlugin::set_replay_gain (const ReplayGainInfo & gain)
 {
     lock ();
     pb_info.gain = gain;
+    pb_info.gain_valid = true;
 
     if (is_ready ())
         output_set_replay_gain (gain);

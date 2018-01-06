@@ -125,15 +125,7 @@ public:
     }
 
     Tuple & operator= (Tuple && b)
-    {
-        if (this != & b)
-        {
-            this->~Tuple ();
-            data = b.data;
-            b.data = nullptr;
-        }
-        return * this;
-    }
+        { return aud::move_assign (* this, std::move (b)); }
 
     bool operator== (const Tuple & b) const;
     bool operator!= (const Tuple & b) const
@@ -202,6 +194,8 @@ public:
     /* Sets a Replay Gain field pair from a decimal string. */
     void set_gain (Field field, Field unit_field, const char * str);
 
+    /* Returns true if minimal ReplayGainInfo is present. */
+    bool has_replay_gain () const;
     /* Fills ReplayGainInfo struct from various fields. */
     ReplayGainInfo get_replay_gain () const;
 

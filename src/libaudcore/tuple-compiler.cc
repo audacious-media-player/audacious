@@ -147,7 +147,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal)
     {
         if (! literal)
         {
-            buf.steal (StringBuf ());
+            buf = StringBuf (); // release space before AUDWARN
             AUDWARN ("Unexpected string literal at '%s'.\n", s);
             return StringBuf ();
         }
@@ -166,7 +166,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal)
 
             if (! * s)
             {
-                buf.steal (StringBuf ());
+                buf = StringBuf (); // release space before AUDWARN
                 AUDWARN ("Unterminated string literal.\n");
                 return StringBuf ();
             }
@@ -192,7 +192,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal)
 
     if (* s != endch)
     {
-        buf.steal (StringBuf ());
+        buf = StringBuf (); // release space before AUDWARN
         AUDWARN ("Expected '%c' at '%s'.\n", endch, s);
         return StringBuf ();
     }
@@ -361,7 +361,7 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
 
                     if (! * c)
                     {
-                        buf.steal (StringBuf ());
+                        buf = StringBuf (); // release space before AUDWARN
                         AUDWARN ("Incomplete escaped character.\n");
                         return false;
                     }
@@ -428,7 +428,7 @@ static void eval_expression (const Index<Node> & nodes, const Tuple & tuple, Str
                 break;
 
             case Tuple::Int:
-                out.combine (int_to_str (tmpi));
+                str_insert_int (out, -1, tmpi);
                 break;
 
             default:

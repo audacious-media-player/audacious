@@ -94,6 +94,9 @@ public:
 
     void set_position (int entry_num);
 
+    Index<int> shuffle_history () const;
+    void shuffle_replay (const Index<int> & history);
+
     bool prev_song ();
     bool next_song (bool repeat);
 

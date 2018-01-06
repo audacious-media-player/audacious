@@ -47,3 +47,12 @@ EXPORT void aud_history_add (const char * path)
         add = old;
     }
 }
+
+EXPORT void aud_history_clear ()
+{
+    for (int i = 0; i < MAX_ENTRIES; i ++)
+    {
+        StringBuf name = str_printf ("entry%d", i);
+        aud_set_str ("history", name, "");
+    }
+}

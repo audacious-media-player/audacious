@@ -73,7 +73,8 @@ enum {
     CATEGORY_NETWORK,
     CATEGORY_PLAYLIST,
     CATEGORY_SONG_INFO,
-    CATEGORY_PLUGINS
+    CATEGORY_PLUGINS,
+    CATEGORY_ADVANCED
 };
 
 static const Category categories[] = {
@@ -82,7 +83,8 @@ static const Category categories[] = {
     { "connectivity.png", N_("Network") },
     { "playlist.png", N_("Playlist")} ,
     { "info.png", N_("Song Info") },
-    { "plugins.png", N_("Plugins") }
+    { "plugins.png", N_("Plugins") },
+    { "advanced.png", N_("Advanced") }
 };
 
 static const PluginCategory plugin_categories[] = {
@@ -292,6 +294,8 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "clear_playlist")),
     WidgetCheck (N_("Open files in a temporary playlist"),
         WidgetBool (0, "open_to_temporary")),
+    WidgetCheck (N_("Add folders recursively"),
+        WidgetBool (0, "recurse_folders")),
     WidgetLabel (N_("<b>Song Display</b>")),
     WidgetCheck (N_("Show song numbers"),
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
@@ -300,10 +304,9 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetCheck (N_("Show hours separately (1:30:00 vs. 90:00)"),
         WidgetBool (0, "show_hours", send_title_change)),
     WidgetCustomGTK (create_titlestring_table),
-    WidgetLabel (N_("<b>Compatibility</b>")),
-    WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
-        WidgetBool (0, "convert_backslash")),
-    WidgetTable ({{chardet_elements}})
+    WidgetLabel (N_("<b>Export</b>")),
+    WidgetCheck (N_("Use relative paths when possible"),
+        WidgetBool (0, "export_relative_paths"))
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
@@ -329,8 +332,15 @@ static const PreferencesWidget song_info_page_widgets[] = {
         WIDGET_CHILD),
     WidgetCheck (N_("Show time scale for current song"),
         WidgetBool (0, "filepopup_showprogressbar"),
-        WIDGET_CHILD),
-    WidgetLabel (N_("<b>Advanced</b>")),
+        WIDGET_CHILD)
+};
+
+static const PreferencesWidget advanced_page_widgets[] = {
+    WidgetLabel (N_("<b>Compatibility</b>")),
+    WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
+        WidgetBool (0, "convert_backslash")),
+    WidgetTable ({{chardet_elements}}),
+    WidgetLabel (N_("<b>Metadata</b>")),
     WidgetCheck (N_("Guess missing metadata from file path"),
         WidgetBool (0, "metadata_fallbacks")),
     WidgetCheck (N_("Do not load metadata for songs until played"),
@@ -749,7 +759,7 @@ static void record_update (void * = nullptr, void * = nullptr)
     {
         gtk_widget_set_sensitive (record_checkbox, false);
         gtk_button_set_label ((GtkButton *) record_checkbox,
-         str_printf (_("No audio recording plugin available")));
+         _("No audio recording plugin available"));
         gtk_toggle_button_set_active ((GtkToggleButton *) record_checkbox, false);
         gtk_widget_set_sensitive (record_config_button, false);
         gtk_widget_set_sensitive (record_about_button, false);
@@ -783,6 +793,13 @@ static void create_plugin_category ()
     for (const PluginCategory & category : plugin_categories)
         gtk_notebook_append_page ((GtkNotebook *) plugin_notebook,
          plugin_view_new (category.type), gtk_label_new (_(category.name)));
+}
+
+static void create_advanced_category ()
+{
+    GtkWidget * advanced_page_vbox = gtk_vbox_new (false, 0);
+    audgui_create_widgets (advanced_page_vbox, advanced_page_widgets);
+    gtk_container_add ((GtkContainer *) category_notebook, advanced_page_vbox);
 }
 
 static void destroy_cb ()
@@ -837,6 +854,7 @@ static void create_prefs_window ()
     create_playlist_category ();
     create_song_info_category ();
     create_plugin_category ();
+    create_advanced_category ();
 
     GtkWidget * hseparator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start ((GtkBox *) vbox, hseparator, false, false, 6);

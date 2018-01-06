@@ -39,6 +39,7 @@ static const char * const core_defaults[] = {
  "always_resume_paused", "TRUE",
  "clear_playlist", "TRUE",
  "open_to_temporary", "TRUE",
+ "recurse_folders", "TRUE",
  "resume_playback_on_startup", "TRUE",
  "show_interface", "TRUE",
 
@@ -62,6 +63,7 @@ static const char * const core_defaults[] = {
 
  /* network */
  "net_buffer_kb", "128",
+ "save_url_history", "TRUE",
  "use_proxy", "FALSE",
  "use_proxy_auth", "FALSE",
 
@@ -93,6 +95,7 @@ static const char * const core_defaults[] = {
 #else
  "convert_backslash", "FALSE",
 #endif
+ "export_relative_paths", "TRUE",
  "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
  "leading_zero", "FALSE",
  "show_hours", "TRUE",
@@ -238,9 +241,7 @@ private:
 
 void config_load ()
 {
-    StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
-    path.insert (-1, "/config");
-
+    StringBuf path = filename_build ({aud_get_path (AudPath::UserDir), "config"});
     if (VFSFile::test_file (path, VFS_EXISTS))
     {
         VFSFile file (path, "r");
@@ -279,12 +280,9 @@ void config_save ()
             return strcmp (a.section, b.section);
     });
 
-    StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
-    path.insert (-1, "/config");
-
     String current_heading;
 
-    VFSFile file (path, "w");
+    VFSFile file (filename_build ({aud_get_path (AudPath::UserDir), "config"}), "w");
     if (! file)
         goto FAILED;
 

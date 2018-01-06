@@ -1,4 +1,4 @@
-.TH AUDTOOL "1" "May 2016" "Version @PACKAGE_VERSION@"
+.TH AUDTOOL "1" "September 2017" "Version @PACKAGE_VERSION@"
 
 .SH NAME
 .B audtool
@@ -344,6 +344,16 @@ Enable or disable the given plugin.  Note that interface and output plugins
 cannot be disabled directly since one of each must always be active.  Enabling
 an interface or output plugin will automatically disable the previous plugin.
 .TP
+.B --config-get [\fIsection\fR:]\fIname\fR
+Print the value of a configuration setting.  Any use of this command is
+entirely unsupported.  How to find the \fIsection\fR and \fIname\fR of a given
+setting is left as an exercise for the reader.
+.TP
+.B --config-set [\fIsection\fR:]\fIname\fR \fIvalue\fR
+Change the value of a configuration setting.  This command is unsupported and
+dangerous.  It might have unexpected side effects (such as crashing Audacious),
+or it might have no effect at all.  Use it at your own risk!
+.TP
 .B --shutdown
 Shut down Audacious.
 .TP
@@ -366,7 +376,7 @@ Pitcock <nenolod@atheme.org>.
 This manual page was written by Adam Cecile <gandalf@le-vert.net> and Kiyoshi
 Aman <kiyoshi@atheme.org>.  Some additional tweaks were done by William Pitcock
 <nenolod@atheme.org> and Tony Vroon <chainsaw@gentoo.org>.  The manual page was
-updated for Audacious 3.7 by John Lindgren <john.lindgren@aol.com>.
+updated for Audacious 3.7 and later by John Lindgren <john@jlindgren.net>.
 .PP
 This work is licensed under a Creative Commons Attribution 3.0 Unported License
 <http://creativecommons.org/licenses/by/3.0/>.

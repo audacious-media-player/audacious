@@ -183,9 +183,9 @@ static void add_file (PlaylistAddItem && item, Playlist::FilterFunc filter,
 /* To prevent infinite recursion, we currently allow adding a folder from within
  * a playlist, but not a playlist from within a folder, nor a second playlist
  * from within a playlist (this last rule is enforced by setting
- * <allow_playlist> to false from within add_playlist()). */
+ * <from_playlist> to true from within add_playlist()). */
 static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,
- void * user, AddResult * result, bool save_title, bool allow_playlist);
+ void * user, AddResult * result, bool save_title, bool from_playlist);
 
 static void add_playlist (const char * filename, Playlist::FilterFunc filter,
  void * user, AddResult * result, bool save_title)
@@ -203,7 +203,7 @@ static void add_playlist (const char * filename, Playlist::FilterFunc filter,
         result->title = title;
 
     for (auto & item : items)
-        add_generic (std::move (item), filter, user, result, false, false);
+        add_generic (std::move (item), filter, user, result, false, true);
 }
 
 static void add_cuesheets (Index<String> & files, Playlist::FilterFunc filter,
@@ -311,14 +311,21 @@ static void add_folder (const char * filename, Playlist::FilterFunc filter,
 
         if (mode & VFS_IS_REGULAR)
             add_file ({String (file)}, filter, user, result, true);
-        else if (mode & VFS_IS_DIR)
+        else if ((mode & VFS_IS_DIR) && aud_get_bool (nullptr, "recurse_folders"))
             add_folder (file, filter, user, result, false);
     }
 }
 
 static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,
- void * user, AddResult * result, bool save_title, bool allow_playlist)
+ void * user, AddResult * result, bool save_title, bool from_playlist)
 {
+    if (! strstr (item.filename, "://"))
+    {
+        /* Let's not add random junk to the playlist. */
+        AUDERR ("Invalid URI: %s\n", (const char *) item.filename);
+        return;
+    }
+
     if (filter && ! filter (item.filename, user))
     {
         result->filtered = true;
@@ -335,7 +342,7 @@ static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,
         VFSFileTest mode = VFSFile::test_file (item.filename,
          VFSFileTest (VFS_IS_DIR | VFS_NO_ACCESS), error);
 
-        if (mode & VFS_NO_ACCESS)
+        if ((! from_playlist) && (mode & VFS_NO_ACCESS))
             aud_ui_show_error (str_printf (_("Error reading %s:\n%s"),
              (const char *) item.filename, (const char *) error));
         else if (mode & VFS_IS_DIR)
@@ -343,7 +350,7 @@ static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,
             add_folder (item.filename, filter, user, result, save_title);
             result->saw_folder = true;
         }
-        else if (allow_playlist && Playlist::filename_is_playlist (item.filename))
+        else if ((! from_playlist) && Playlist::filename_is_playlist (item.filename))
             add_playlist (item.filename, filter, user, result, save_title);
         else
             add_file (std::move (item), filter, user, result, false);
@@ -474,7 +481,7 @@ static void * add_worker (void * unused)
         bool save_title = (task->items.len () == 1);
 
         for (auto & item : task->items)
-            add_generic (std::move (item), task->filter, task->user, result, save_title, true);
+            add_generic (std::move (item), task->filter, task->user, result, save_title, false);
 
         delete task;
 

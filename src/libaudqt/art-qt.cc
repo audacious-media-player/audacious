@@ -34,8 +34,11 @@ static QImage load_fallback ()
     static bool loaded = false;
 
     if (! loaded)
+    {
         fallback.load ((const char *) filename_build
          ({aud_get_path (AudPath::DataDir), "images", "album.png"}));
+        loaded = true;
+    }
 
     return fallback; // shallow copy
 }

@@ -19,6 +19,7 @@
 
 #include <pthread.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 #include <new>
@@ -34,18 +35,34 @@
 #endif
 #endif
 
+struct StringHeader
+{
+    StringHeader * next, * prev;
+    int len;
+};
+
 struct StringStack
 {
     static constexpr int Size = 1048576;  // 1 MB
 
-    char * top;
+    StringHeader * top;
     char buf[Size - sizeof top];
 };
 
-// adds one byte for null character and rounds up to word boundary
-static constexpr int align (int len)
+static constexpr intptr_t align (intptr_t ptr, intptr_t size)
 {
-    return (len + sizeof (void *)) & ~(sizeof (void *) - 1);
+    return (ptr + (size - 1)) / size * size;
+}
+
+static StringHeader * align_after (StringStack * stack, StringHeader * prev_header)
+{
+    char * base;
+    if (prev_header)
+        base = (char *) prev_header + sizeof (StringHeader) + prev_header->len + 1;
+    else
+        base = stack->buf;
+
+    return (StringHeader *) align ((intptr_t) base, alignof (StringHeader));
 }
 
 static pthread_key_t key;
@@ -99,7 +116,7 @@ static StringStack * get_stack ()
             throw std::bad_alloc ();
 #endif
 
-        stack->top = stack->buf;
+        stack->top = nullptr;
         pthread_setspecific (key, stack);
     }
 
@@ -109,82 +126,117 @@ static StringStack * get_stack ()
 EXPORT void StringBuf::resize (int len)
 {
     if (! stack)
-    {
         stack = get_stack ();
-        m_data = stack->top;
-    }
-    else
+
+    StringHeader * header = nullptr;
+    bool need_alloc = true;
+
+    if (m_data)
     {
-        if (m_data + align (m_len) != stack->top)
-            throw std::bad_alloc ();
+        header = (StringHeader *) (m_data - sizeof (StringHeader));
+
+        /* check if there is enough space in the current location */
+        char * limit = header->next ? (char *) header->next : (char *) stack + sizeof (StringStack);
+        int max_len = limit - 1 - m_data;
+
+        if ((len < 0 && ! header->next) || (len >= 0 && len < max_len))
+        {
+            m_len = header->len = (len < 0) ? max_len : len;
+            need_alloc = false;
+        }
     }
 
-    if (len < 0)
+    if (need_alloc)
     {
-        stack->top = stack->buf + sizeof stack->buf;
-        m_len = stack->top - m_data - 1;
+        /* allocate a new string at the top of the stack */
+        StringHeader * new_header = align_after (stack, stack->top);
+        char * new_data = (char *) new_header + sizeof (StringHeader);
+        char * limit = (char *) stack + sizeof (StringStack);
+        int max_len = limit - 1 - new_data;
 
-        if (m_len < 0)
+        if (max_len < aud::max (len, 0))
             throw std::bad_alloc ();
+
+        int new_len = (len < 0) ? max_len : len;
+
+        if (stack->top)
+            stack->top->next = new_header;
+
+        new_header->prev = stack->top;
+        new_header->next = nullptr;
+        new_header->len = new_len;
+
+        stack->top = new_header;
+
+        /* move the old data, if any */
+        if (m_data)
+        {
+            int bytes_to_copy = aud::min (m_len, new_len);
+            memcpy (new_data, m_data, bytes_to_copy);
+
+            if (header->prev)
+                header->prev->next = header->next;
+
+            /* we know header != stack->top */
+            header->next->prev = header->prev;
+        }
+
+        m_data = new_data;
+        m_len = new_len;
     }
-    else
-    {
-        stack->top = m_data + align (len);
 
-        if (stack->top - stack->buf > (int) sizeof stack->buf)
-            throw std::bad_alloc ();
-
+    /* Null-terminate the string except when the maximum length was requested
+     * (to avoid paging in the entire 1 MB stack prematurely).  The caller is
+     * expected to follow up with a more realistic resize() in this case. */
+    if (len >= 0)
         m_data[len] = 0;
-        m_len = len;
-    }
 }
 
-EXPORT StringBuf::~StringBuf () noexcept (false)
+EXPORT StringBuf::~StringBuf ()
 {
     if (m_data)
     {
-        if (m_data + align (m_len) != stack->top)
-            throw std::bad_alloc ();
+        auto header = (StringHeader *) (m_data - sizeof (StringHeader));
 
-        stack->top = m_data;
+        if (header->prev)
+            header->prev->next = header->next;
+
+        if (header == stack->top)
+            stack->top = header->prev;
+        else
+            header->next->prev = header->prev;
     }
 }
 
 EXPORT void StringBuf::steal (StringBuf && other)
 {
-    if (other.m_data)
-    {
-        if (m_data)
-        {
-            if (m_data + align (m_len) != other.m_data ||
-             other.m_data + align (other.m_len) != stack->top)
-                throw std::bad_alloc ();
+    (* this = std::move (other)).settle ();
+}
 
-            m_len = other.m_len;
-            memmove (m_data, other.m_data, m_len + 1);
-            stack->top = m_data + align (m_len);
-        }
-        else
-        {
-            stack = other.stack;
-            m_data = other.m_data;
-            m_len = other.m_len;
-        }
-
-        other.stack = nullptr;
-        other.m_data = nullptr;
-        other.m_len = 0;
-    }
-    else
+EXPORT StringBuf && StringBuf::settle ()
+{
+    if (m_data)
     {
-        if (m_data)
+        /* collapse any space preceding this string */
+        auto header = (StringHeader *) (m_data - sizeof (StringHeader));
+        StringHeader * new_header = align_after (stack, header->prev);
+
+        if (new_header != header)
         {
-            this->~StringBuf ();
-            stack = nullptr;
-            m_data = nullptr;
-            m_len = 0;
+            if (header->prev)
+                header->prev->next = new_header;
+
+            if (header == stack->top)
+                stack->top = new_header;
+            else
+                header->next->prev = new_header;
+
+            memmove (new_header, header, sizeof (StringHeader) + m_len + 1);
+            m_data = (char *) new_header + sizeof (StringHeader);
         }
     }
+
+    return std::move (* this);
 }
 
 EXPORT void StringBuf::combine (StringBuf && other)
@@ -192,29 +244,12 @@ EXPORT void StringBuf::combine (StringBuf && other)
     if (! other.m_data)
         return;
 
-    if (m_data)
-    {
-        if (m_data + align (m_len) != other.m_data ||
-         other.m_data + align (other.m_len) != stack->top)
-            throw std::bad_alloc ();
-
-        memmove (m_data + m_len, other.m_data, other.m_len + 1);
-        m_len += other.m_len;
-        stack->top = m_data + align (m_len);
-    }
-    else
-    {
-        stack = other.stack;
-        m_data = other.m_data;
-        m_len = other.m_len;
-    }
-
-    other.stack = nullptr;
-    other.m_data = nullptr;
-    other.m_len = 0;
+    insert (m_len, other.m_data, other.m_len);
+    other = StringBuf ();
+    settle ();
 }
 
-EXPORT void StringBuf::insert (int pos, const char * s, int len)
+EXPORT char * StringBuf::insert (int pos, const char * s, int len)
 {
     int len0 = m_len;
 
@@ -225,7 +260,11 @@ EXPORT void StringBuf::insert (int pos, const char * s, int len)
 
     resize (len0 + len);
     memmove (m_data + pos + len, m_data + pos, len0 - pos);
-    memcpy (m_data + pos, s, len);
+
+    if (s)
+        memcpy (m_data + pos, s, len);
+
+    return m_data + pos;
 }
 
 EXPORT void StringBuf::remove (int pos, int len)

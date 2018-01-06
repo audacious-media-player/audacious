@@ -26,6 +26,7 @@
 
 #include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
 
 #include "libaudqt.h"
@@ -34,6 +35,11 @@ namespace audqt {
 
 static QDialog * buildUrlDialog (bool open)
 {
+    static const PreferencesWidget widgets[] = {
+        WidgetCheck (N_("_Save to history"),
+            WidgetBool (0, "save_url_history"))
+    };
+
     const char * title, * verb, * icon;
 
     if (open)
@@ -59,6 +65,14 @@ static QDialog * buildUrlDialog (bool open)
     combobox->setEditable (true);
     combobox->setMinimumContentsLength (50);
 
+    auto clear_button = new QPushButton (translate_str (N_("C_lear history")), dialog);
+    clear_button->setIcon (QIcon::fromTheme ("edit-clear"));
+
+    auto hbox = make_hbox (nullptr);
+    prefs_populate (hbox, widgets, PACKAGE);
+    hbox->addStretch (1);
+    hbox->addWidget (clear_button);
+
     auto button1 = new QPushButton (translate_str (verb), dialog);
     button1->setIcon (QIcon::fromTheme (icon));
 
@@ -72,6 +86,7 @@ static QDialog * buildUrlDialog (bool open)
     auto layout = make_vbox (dialog);
     layout->addWidget (label);
     layout->addWidget (combobox);
+    layout->addLayout (hbox);
     layout->addStretch (1);
     layout->addWidget (buttonbox);
 
@@ -85,6 +100,11 @@ static QDialog * buildUrlDialog (bool open)
     }
     combobox->setCurrentIndex (-1);
 
+    QObject::connect (clear_button, & QPushButton::pressed, [combobox] () {
+        combobox->clear ();
+        aud_history_clear ();
+    });
+
     QObject::connect (buttonbox, & QDialogButtonBox::rejected, dialog, & QDialog::close);
 
     QObject::connect (buttonbox, & QDialogButtonBox::accepted, [dialog, combobox, open] () {
@@ -95,7 +115,9 @@ static QDialog * buildUrlDialog (bool open)
         else
             aud_drct_pl_add (url, -1);
 
-        aud_history_add (url);
+        if (aud_get_bool (nullptr, "save_url_history"))
+            aud_history_add (url);
+
         dialog->close ();
     });
 

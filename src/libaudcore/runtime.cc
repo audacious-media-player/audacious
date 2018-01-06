@@ -197,7 +197,7 @@ static void set_install_paths ()
         return;
     }
 
-    to.steal (filename_normalize (std::move (to)));
+    to = filename_normalize (std::move (to));
 
     const char * base = last_path_element (to);
 

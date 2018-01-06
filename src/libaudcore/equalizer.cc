@@ -38,14 +38,14 @@
 
 /* Q value for band-pass filters 1.2247 = (3/2)^(1/2)
  * Gives 4 dB suppression at Fc*2 and Fc/2 */
-#define Q 1.2247449
+#define Q 1.2247449f
 
 /* Center frequencies for band-pass filters (Hz) */
 /* These are not the historical WinAmp frequencies, because the IIR filters used
  * here are designed for each frequency to be twice the previous.  Using WinAmp
  * frequencies leads to too much gain in some bands and too little in others. */
-static const float CF[AUD_EQ_NBANDS] = {31.25, 62.5, 125, 250, 500, 1000, 2000,
- 4000, 8000, 16000};
+static const float CF[AUD_EQ_NBANDS] = {31.25f, 62.5f, 125, 250, 500, 1000,
+ 2000, 4000, 8000, 16000};
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool active;
@@ -59,13 +59,13 @@ static int K; /* Number of used EQ bands */
 /* 2nd order band-pass filter design */
 static void bp2 (float *a, float *b, float fc)
 {
-    float th = 2 * M_PI * fc;
+    float th = 2 * (float)M_PI * fc;
     float C = (1 - tanf (th * Q / 2)) / (1 + tanf (th * Q / 2));
 
     a[0] = (1 + C) * cosf (th);
     a[1] = -C;
     b[0] = (1 - C) / 2;
-    b[1] = -1.005;
+    b[1] = -1.005f;
 }
 
 void eq_set_format (int new_channels, int new_rate)
@@ -79,7 +79,7 @@ void eq_set_format (int new_channels, int new_rate)
      * than rate/2Q to avoid singularities in the tangent used in bp2() */
     K = AUD_EQ_NBANDS;
 
-    while (K > 0 && CF[K - 1] > (float) rate / (2.005 * Q))
+    while (K > 0 && CF[K - 1] > (float) rate / (2.005f * Q))
         K --;
 
     /* Generate filter taps */
@@ -102,7 +102,7 @@ static void eq_set_bands_real (double preamp, double *values)
     for (int c = 0; c < AUD_MAX_CHANNELS; c ++)
     {
         for (int i = 0; i < AUD_EQ_NBANDS; i ++)
-            gv[c][i] = pow (10, adj[i] / 20) - 1;
+            gv[c][i] = powf (10, adj[i] / 20) - 1;
     }
 }
 

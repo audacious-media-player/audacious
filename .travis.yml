@@ -1,0 +1,15 @@
+language:
+  - cpp
+compiler:
+  - gcc
+  - clang
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install libgtk2.0-dev qtbase5-dev
+script:
+  - ./autogen.sh
+  - ./configure --prefix=/opt/aud --enable-qt
+  - make
+  - cd src/libaudcore/tests
+  - make test
+  - ./test

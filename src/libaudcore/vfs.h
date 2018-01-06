@@ -42,6 +42,11 @@ enum VFSFileTest {
     VFS_NO_ACCESS     = (1 << 5)
 };
 
+enum VFSReadOptions {
+    VFS_APPEND_NULL    = (1 << 0),
+    VFS_IGNORE_MISSING = (1 << 1)
+};
+
 enum VFSSeekType {
     VFS_SEEK_SET = 0,
     VFS_SEEK_CUR = 1,
@@ -162,6 +167,10 @@ public:
 
     /* returns a sorted list of folder entries (as full URIs) */
     static Index<String> read_folder (const char * filename, String & error);
+
+    /* convenience functions to read/write entire files */
+    static Index<char> read_file (const char * filename, VFSReadOptions options);
+    static bool write_file (const char * filename, const void * data, int64_t len);
 
 private:
     String m_filename, m_error;
