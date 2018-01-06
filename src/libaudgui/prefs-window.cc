@@ -797,7 +797,7 @@ static void create_plugin_category ()
 
 static void create_advanced_category ()
 {
-    GtkWidget * advanced_page_vbox = gtk_vbox_new (false, 0);
+    GtkWidget * advanced_page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     audgui_create_widgets (advanced_page_vbox, advanced_page_widgets);
     gtk_container_add ((GtkContainer *) category_notebook, advanced_page_vbox);
 }
