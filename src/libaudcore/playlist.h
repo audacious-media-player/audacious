@@ -68,11 +68,11 @@ public:
         AlbumArtist,
         Date,            // release date (not modification time)
         Genre,
-        Description,
         Track,
         FormattedTitle,
         Length,
         Comment,
+        Description,
         n_sort_types
     };
 
