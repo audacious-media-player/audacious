@@ -111,7 +111,6 @@ static const struct {
     {"album-artist", Tuple::String, -1},
     {"comment", Tuple::String, -1},
     {"genre", Tuple::String, -1},
-    {"description", Tuple::String, -1},
     {"year", Tuple::Int, -1},
 
     {"composer", Tuple::String, -1},
@@ -146,6 +145,7 @@ static const struct {
     {"gain-peak-unit", Tuple::Int, -1},
 
     {"formatted-title", Tuple::String, -1},
+    {"description", Tuple::String, -1},
 
     /* fallbacks */
     {nullptr, Tuple::String, -1},
