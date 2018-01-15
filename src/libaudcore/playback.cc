@@ -52,6 +52,10 @@
 #include "plugins-internal.h"
 #include "runtime.h"
 
+#ifdef USE_QT
+#include <QThread>
+#endif // USE_QT
+
 struct PlaybackState {
     bool playing = false;
     bool thread_running = false;
@@ -429,6 +433,17 @@ static void * playback_thread (void *)
     return nullptr;
 }
 
+#ifdef USE_QT
+class PlaybackThread : public QThread
+{
+    void run() override
+    {
+        playback_thread(nullptr);
+        deleteLater();
+    }
+};
+#endif // USE_QT
+
 // main thread: starts playback of a new song
 void playback_play (int seek_time, bool pause)
 {
@@ -448,9 +463,15 @@ void playback_play (int seek_time, bool pause)
         pthread_cond_broadcast (& cond);
     else
     {
+#ifndef USE_QT
         pthread_t thread;
         pthread_create (& thread, nullptr, playback_thread, nullptr);
         pthread_detach (thread);
+#else // USE_QT
+        PlaybackThread *thread = new PlaybackThread();
+        thread->setObjectName(QStringLiteral("Playback Thread"));
+        thread->start();
+#endif // USE_QT
         pb_state.thread_running = true;
     }
 
