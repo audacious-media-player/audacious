@@ -224,13 +224,27 @@ public:
     }
 
     void stop ()
-        { deleteLater (); }
+    {
+        if (timerId)
+        {
+            killTimer(timerId);
+            timerId = 0;
+        }
+        deleteLater ();
+    }
 
 protected:
     void customEvent (QEvent *)
-        { startTimer (params.interval_ms); }
-    void timerEvent (QTimerEvent *)
-        { run (); }
+        { timerId = startTimer (params.interval_ms); }
+    void timerEvent (QTimerEvent * event)
+    {
+        if (event->timerId() == timerId)
+        {
+            run ();
+        }
+    }
+private:
+    int timerId = 0;
 };
 
 #endif // USE_QT
