@@ -23,6 +23,10 @@
 #include <QDesktopWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QDebug>
+#include <QStandardPaths>
+#include <QUrl>
+#include <QIcon>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
@@ -34,7 +38,40 @@
 namespace audqt {
 
 static int init_count;
-static QApplication * qapp;
+
+// wrap QApplication only so we can generate a debug trace
+class AudApplication : public QApplication
+{
+public:
+    AudApplication (int &argc, char **argv)
+        : QApplication (argc, argv)
+    {
+        setAttribute (Qt::AA_UseHighDpiPixmaps);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
+        setAttribute (Qt::AA_ForceRasterWidgets);
+#endif
+
+        setApplicationName (_("Audacious"));
+        if (windowIcon().isNull()) {
+            // find the likely icon theme directory
+            QString appIconUrl = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("icons/hicolor/scalable/apps/audacious.svg"));
+            // load the scalable icon we installed ourselves (QIcon::fromTheme() won't do that)
+            QIcon appIcon = QIcon(appIconUrl);
+            if (appIcon.isNull()) {
+                setWindowIcon (QIcon::fromTheme (argv[0]));
+            } else {
+                setWindowIcon (appIcon);
+            }
+        }
+        setQuitOnLastWindowClosed (true);
+    }
+    ~AudApplication()
+    {
+        qDebug() << Q_FUNC_INFO << "Destroying" << this;
+    }
+};
+
+static AudApplication * qapp;
 
 static PixelSizes sizes_local;
 static PixelMargins margins_local;
@@ -51,16 +88,7 @@ EXPORT void init ()
     static int dummy_argc = 1;
     static char * dummy_argv[] = {app_name, nullptr};
 
-    qapp = new QApplication (dummy_argc, dummy_argv);
-    atexit ([] () { delete qapp; });
-
-    qapp->setAttribute (Qt::AA_UseHighDpiPixmaps);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
-    qapp->setAttribute (Qt::AA_ForceRasterWidgets);
-#endif
-
-    qapp->setApplicationName (_("Audacious"));
-    qapp->setWindowIcon (QIcon::fromTheme (app_name));
+    qapp = new AudApplication (dummy_argc, dummy_argv);
 
     auto desktop = qapp->desktop ();
     sizes_local.OneInch = aud::max (96, (desktop->logicalDpiX () + desktop->logicalDpiY ()) / 2);
@@ -96,6 +124,11 @@ EXPORT void cleanup ()
     log_inspector_hide ();
     prefswin_hide ();
     queue_manager_hide ();
+    // we should delete the application instance here rather than allowing that
+    // to be done at some time outside our control during global destruction.
+    delete qapp;
+    // avoid leaving a stale global variable around
+    qapp = nullptr;
 
     log_cleanup ();
 }
