@@ -27,6 +27,7 @@
 #include <QItemSelectionModel>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <QApplication>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/playlist.h>
@@ -174,6 +175,7 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     m_treeview.setModel (& m_model);
     m_treeview.setSelectionMode (QAbstractItemView::ExtendedSelection);
     m_treeview.setHeaderHidden (true);
+    m_treeview.setFont(QApplication::font("QSmallFont"));
 
     update ();
 
