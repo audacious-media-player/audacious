@@ -130,6 +130,9 @@ void typed_func (T * obj)
 template<class T, void (T::* func) ()>
 static void obj_member (void * obj)
     { (((T *) obj)->* func) (); }
+template<class T, void (T::* func) () const>
+static void obj_member (void * obj)
+    { (((T *) obj)->* func) (); }
 
 // Wrapper class allowing enumerations to be used as array indexes;
 // the enumeration must begin with zero and have a "count" constant
