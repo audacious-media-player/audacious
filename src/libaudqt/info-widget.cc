@@ -22,7 +22,6 @@
 #include "libaudqt.h"
 
 #include <QHeaderView>
-#include <QApplication>
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/probe.h>
@@ -94,7 +93,7 @@ EXPORT InfoWidget::InfoWidget (QWidget * parent) :
     QTreeView (parent),
     m_model (new InfoModel (this))
 {
-    setFont(QApplication::font("QSmallFont"));
+    setFont(get_font_for_class ("QSmallFont"));
     setModel (m_model);
     header ()->hide ();
     setIndentation (0);

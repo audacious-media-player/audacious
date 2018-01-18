@@ -27,6 +27,8 @@
 #include <QStandardPaths>
 #include <QUrl>
 #include <QIcon>
+#include <QStyle>
+#include <QHash>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
@@ -147,6 +149,26 @@ EXPORT QVBoxLayout * make_vbox (QWidget * parent, int spacing)
     layout->setContentsMargins (0, 0, 0, 0);
     layout->setSpacing (spacing);
     return layout;
+}
+
+EXPORT QFont get_font_for_class (const char *className)
+{
+    QString currentStyle = qapp->style ()->objectName();
+    if (currentStyle.compare ("Macintosh", Qt::CaseInsensitive) == 0
+        || currentStyle.contains ("Aqua", Qt::CaseInsensitive))
+    {
+        static QHash<const QString, const char *> map = {
+            { "QListView", "QSmallFont" },
+            { "QListBox", "QSmallFont" },
+        };
+        if (map.contains (className))
+        {
+            QFont ret = QApplication::font (map[className]);
+            qDebug() << Q_FUNC_INFO << className << "->" << map[className] << "->" << ret.toString();
+            return ret;
+        }
+    }
+    return QApplication::font (className);
 }
 
 EXPORT void enable_layout (QLayout * layout, bool enabled)

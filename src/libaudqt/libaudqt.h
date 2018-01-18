@@ -30,6 +30,7 @@ class QBoxLayout;
 class QHBoxLayout;
 class QVBoxLayout;
 
+class QFont;
 class QPixmap;
 class QToolButton;
 class QWidget;
@@ -99,6 +100,8 @@ void cleanup ();
 
 QHBoxLayout * make_hbox (QWidget * parent, int spacing = sizes.FourPt);
 QVBoxLayout * make_vbox (QWidget * parent, int spacing = sizes.FourPt);
+
+QFont get_font_for_class (const char *className);
 
 void enable_layout (QLayout * layout, bool enabled);
 void clear_layout (QLayout * layout);

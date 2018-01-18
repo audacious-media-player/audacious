@@ -29,7 +29,6 @@
 #include <QPushButton>
 #include <QTreeView>
 #include <QWidget>
-#include <QApplication>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -205,7 +204,7 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     view->scrollToBottom ();
 
     // set a platform-appropriate font
-    view->setFont(QApplication::font("QSmallFont"));
+    view->setFont (get_font_for_class ("QSmallFont"));
 
     m_level_combobox.addItem (_("Debug"), audlog::Debug);
     m_level_combobox.addItem (_("Info"), audlog::Info);
