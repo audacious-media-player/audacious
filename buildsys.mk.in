@@ -587,7 +587,7 @@ locales: ${MO_FILES}
 	${COMPILE_STATUS}
 	in="$<"; \
 	out="$@"; \
-	if ${WINDRES} ${CPPFLAGS} -J rc -O coff -o $@ $<; then \
+	if ${WINDRES} -J rc -O coff -o $@ $<; then \
 		${COMPILE_OK}; \
 	else \
 		${COMPILE_FAILED}; \
