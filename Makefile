@@ -16,6 +16,7 @@ DATA = AUTHORS \
        images/plugins.png
 
 include buildsys.mk
+include extra.mk
 
 install-extra:
 	for i in audacious.pc; do \

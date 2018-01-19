@@ -3,6 +3,8 @@ USE_DBUS ?= @USE_DBUS@
 USE_GTK ?= @USE_GTK@
 USE_QT ?= @USE_QT@
 
+pkgconfigdir = @pkgconfigdir@
+
 GIO_CFLAGS ?= @GIO_CFLAGS@
 GIO_LIBS ?= @GIO_LIBS@
 GLIB_CFLAGS ?= @GLIB_CFLAGS@
