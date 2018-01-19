@@ -126,8 +126,8 @@ static StringBuf get_path_to_self ()
         throw std::bad_alloc ();
 
     buf.resize (lenw * sizeof (wchar_t));
-    buf.steal (str_convert (buf, buf.len (), UTF16_NATIVE, "UTF-8"));
-    return buf;
+    buf = str_convert (buf, buf.len (), UTF16_NATIVE, "UTF-8");
+    return buf.settle ();
 
 #elif defined __APPLE__
 

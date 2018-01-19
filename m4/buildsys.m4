@@ -1,5 +1,5 @@
 dnl
-dnl Copyright (c) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2016
+dnl Copyright (c) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2016, 2017
 dnl Jonathan Schleifer <js@heap.zone>
 dnl
 dnl https://heap.zone/git/?p=buildsys.git
@@ -59,6 +59,20 @@ AC_DEFUN([BUILDSYS_INIT], [
 					"$($TPUT setaf 4 2>/dev/null)")
 				AC_SUBST(TERM_SETAF6,
 					"$($TPUT setaf 6 2>/dev/null)")
+			dnl OpenBSD seems to want 3 parameters for terminals
+			dnl ending in -256color, but the additional two
+			dnl parameters don't seem to do anything, so we set
+			dnl them to 0.
+			elif x=$($TPUT setaf 1 0 0 2>/dev/null); then
+				AC_SUBST(TERM_SETAF1, "$x")
+				AC_SUBST(TERM_SETAF2,
+					"$($TPUT setaf 2 0 0 2>/dev/null)")
+				AC_SUBST(TERM_SETAF3,
+					"$($TPUT setaf 3 0 0 2>/dev/null)")
+				AC_SUBST(TERM_SETAF4,
+					"$($TPUT setaf 4 0 0 2>/dev/null)")
+				AC_SUBST(TERM_SETAF6,
+					"$($TPUT setaf 6 0 0 2>/dev/null)")
 			else
 				AC_SUBST(TERM_SETAF1,
 					"$($TPUT AF 1 2>/dev/null)")
@@ -100,7 +114,7 @@ AC_DEFUN([BUILDSYS_PROG_IMPLIB], [
 		cygwin* | mingw*)
 			AC_MSG_RESULT(yes)
 			PROG_IMPLIB_NEEDED='yes'
-			PROG_IMPLIB_LDFLAGS='-Wl,-export-all-symbols,--out-implib,lib${PROG}.a'
+			PROG_IMPLIB_LDFLAGS='-Wl,--export-all-symbols,--out-implib,lib${PROG}.a'
 			;;
 		*)
 			AC_MSG_RESULT(no)
@@ -121,10 +135,10 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT(Darwin)
 			LIB_CFLAGS='-fPIC -DPIC'
 			LIB_LDFLAGS='-dynamiclib -current_version ${LIB_MAJOR}.${LIB_MINOR} -compatibility_version ${LIB_MAJOR}'
+			LIB_LDFLAGS_INSTALL_NAME='-Wl,-install_name,${libdir}/$${out%.dylib}.${LIB_MAJOR}.dylib'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dylib'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
-			LDFLAGS_INSTALL_NAME='-Wl,-install_name,${libdir}/$${out%.dylib}.${LIB_MAJOR}.dylib'
 			PLUGIN_CFLAGS='-fPIC -DPIC'
 			PLUGIN_LDFLAGS='-bundle -undefined dynamic_lookup'
 			PLUGIN_SUFFIX='.bundle'
@@ -135,7 +149,8 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 		mingw* | cygwin*)
 			AC_MSG_RESULT(MinGW / Cygwin)
 			LIB_CFLAGS=''
-			LIB_LDFLAGS='-shared -Wl,--out-implib,${SHARED_LIB}.a'
+			LIB_LDFLAGS='-shared -Wl,--export-all-symbols,--out-implib,${SHARED_LIB}.a'
+			LIB_LDFLAGS_INSTALL_NAME=''
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dll'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
@@ -150,6 +165,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT(OpenBSD)
 			LIB_CFLAGS='-fPIC -DPIC'
 			LIB_LDFLAGS='-shared'
+			LIB_LDFLAGS_INSTALL_NAME=''
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.so.${LIB_MAJOR}.${LIB_MINOR}'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
@@ -164,6 +180,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT(Solaris)
 			LIB_CFLAGS='-fPIC -DPIC'
 			LIB_LDFLAGS='-shared -Wl,-soname=${SHARED_LIB}.${LIB_MAJOR}.${LIB_MINOR}'
+			LIB_LDFLAGS_INSTALL_NAME=''
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.so'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
@@ -178,6 +195,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT(Android)
 			LIB_CFLAGS='-fPIC -DPIC'
 			LIB_LDFLAGS='-shared -Wl,-soname=${SHARED_LIB}.${LIB_MAJOR}'
+			LIB_LDFLAGS_INSTALL_NAME=''
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.so'
 			LDFLAGS_RPATH=''
@@ -192,6 +210,7 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			AC_MSG_RESULT(ELF)
 			LIB_CFLAGS='-fPIC -DPIC'
 			LIB_LDFLAGS='-shared -Wl,-soname=${SHARED_LIB}.${LIB_MAJOR}'
+			LIB_LDFLAGS_INSTALL_NAME=''
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.so'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
@@ -206,14 +225,48 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 
 	AC_SUBST(LIB_CFLAGS)
 	AC_SUBST(LIB_LDFLAGS)
+	AC_SUBST(LIB_LDFLAGS_INSTALL_NAME)
 	AC_SUBST(LIB_PREFIX)
 	AC_SUBST(LIB_SUFFIX)
 	AC_SUBST(LDFLAGS_RPATH)
-	AC_SUBST(LDFLAGS_INSTALL_NAME)
 	AC_SUBST(PLUGIN_CFLAGS)
 	AC_SUBST(PLUGIN_LDFLAGS)
 	AC_SUBST(PLUGIN_SUFFIX)
 	AC_SUBST(INSTALL_LIB)
 	AC_SUBST(UNINSTALL_LIB)
 	AC_SUBST(CLEAN_LIB)
+])
+
+AC_DEFUN([BUILDSYS_FRAMEWORK], [
+	AC_REQUIRE([AC_CANONICAL_HOST])
+	AC_REQUIRE([BUILDSYS_SHARED_LIB])
+
+	AC_CHECK_TOOL(CODESIGN, codesign)
+
+	case "$host_os" in
+		darwin*)
+			AC_MSG_CHECKING(whether host is iOS)
+			AC_EGREP_CPP(yes, [
+				#include <TargetConditionals.h>
+
+				#if (defined(TARGET_OS_IPHONE) && \
+				    TARGET_OS_IPHONE) || \
+				    (defined(TARGET_OS_SIMULATOR) && \
+				    TARGET_OS_SIMULATOR)
+				yes
+				#endif
+			], [
+				AC_MSG_RESULT(yes)
+				FRAMEWORK_LDFLAGS='-dynamiclib -current_version ${LIB_MAJOR}.${LIB_MINOR} -compatibility_version ${LIB_MAJOR}'
+				FRAMEWORK_LDFLAGS_INSTALL_NAME='-Wl,-install_name,@executable_path/Frameworks/$$out/$${out%.framework}'
+			], [
+				AC_MSG_RESULT(no)
+				FRAMEWORK_LDFLAGS='-dynamiclib -current_version ${LIB_MAJOR}.${LIB_MINOR} -compatibility_version ${LIB_MAJOR}'
+				FRAMEWORK_LDFLAGS_INSTALL_NAME='-Wl,-install_name,@executable_path/../Frameworks/$$out/$${out%.framework}'
+			])
+
+			AC_SUBST(FRAMEWORK_LDFLAGS)
+			AC_SUBST(FRAMEWORK_LDFLAGS_INSTALL_NAME)
+			;;
+	esac
 ])
