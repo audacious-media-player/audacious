@@ -434,6 +434,9 @@ static void * playback_thread (void *)
 }
 
 #ifdef USE_QT
+// QtMultiMedia is likely to use QObject timers (it does on Mac), which
+// need to be started from a thread created by QThread. So we use a thin
+// QThread wrapper instead of forking in the usual fashion with pthread.
 class PlaybackThread : public QThread
 {
     void run() override
