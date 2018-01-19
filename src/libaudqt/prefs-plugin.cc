@@ -110,6 +110,10 @@ EXPORT void plugin_prefs (PluginHandle * ph)
             p->cleanup ();
 
         cw->root = nullptr;
+        // make sure the main preferences window is still in front when we exit
+        // when we close (won't be the case on Mac).
+        // Assumes that we were always called from that dialog!
+        prefswin_show ();
     });
 
     const char * name = header->info.name;

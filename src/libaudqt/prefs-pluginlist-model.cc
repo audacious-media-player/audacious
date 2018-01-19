@@ -154,14 +154,26 @@ QVariant PluginListModel::data (const QModelIndex & index, int role) const
         break;
 
     case AboutColumn:
-        if (role == Qt::DecorationRole && enabled && aud_plugin_has_about (p))
-            return QIcon::fromTheme ("dialog-information");
+        if (enabled && aud_plugin_has_about (p))
+        {
+            QIcon aboutIcon = QIcon::fromTheme ("dialog-information");
+            if (role == Qt::DecorationRole)
+                return aboutIcon;
+            else if (role == Qt::DisplayRole && aboutIcon.isNull())
+                return QString (_("About"));
+        }
 
         break;
 
     case SettingsColumn:
-        if (role == Qt::DecorationRole && enabled && aud_plugin_has_configure (p))
-            return QIcon::fromTheme ("preferences-system");
+        if (enabled && aud_plugin_has_configure (p))
+        {
+            QIcon prefsIcon = QIcon::fromTheme ("preferences-system");
+            if (role == Qt::DecorationRole)
+                return prefsIcon;
+            else if (role == Qt::DisplayRole && prefsIcon.isNull())
+                return QString (_("Settings"));
+        }
 
         break;
     }
