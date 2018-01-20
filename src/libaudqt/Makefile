@@ -50,5 +50,5 @@ LIBS := -L../libaudcore -laudcore \
 %.moc: %.h
 	moc $< -o $@
 
-qrc_%.cc: %.qrc
+qrc_%.cc: %.qrc icons/QtUi/index.theme
 	rcc $< -o $@

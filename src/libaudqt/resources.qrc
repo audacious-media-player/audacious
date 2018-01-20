@@ -11,5 +11,11 @@
 	<file alias="info.png">../../images/info.png</file>
 	<file alias="playlist.png">../../images/playlist.png</file>
 	<file alias="plugins.png">../../images/plugins.png</file>
+
+	<file>icons/QtUi/index.theme</file>
+	<file>icons/QtUi/16</file>
+	<file>icons/QtUi/22</file>
+	<file>icons/QtUi/32</file>
+	<file>icons/QtUi/44</file>
 </qresource>
 </RCC>

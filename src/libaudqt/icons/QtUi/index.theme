@@ -1,0 +1,21 @@
+[Icon Theme]
+Name=QtUi
+Comment=Theme for Audacious Qt Interface plugin, includes icons from Faience theme by Matthieu James
+Inherits=default
+Directories=16,22,32,44
+
+[16]
+Size=16
+Type=Fixed
+
+[22]
+Size=22
+Type=Fixed
+
+[32]
+Size=32
+Type=Fixed
+
+[44]
+Size=44
+Type=Fixed
