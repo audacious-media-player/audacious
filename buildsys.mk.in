@@ -658,7 +658,7 @@ locales: ${MO_FILES}
 		${COMPILE_PLUGIN_FAILED}; \
 	fi
 
-install: all install-extra
+install: install-extra
 	for i in "" ${SUBDIRS} ${SUBDIRS_AFTER}; do \
 		test x"$$i" = x"" && continue; \
 		${DIR_ENTER}; \
