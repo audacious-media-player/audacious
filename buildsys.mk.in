@@ -953,4 +953,4 @@ DELETE_OK = printf "@TERM_EL@@TERM_SETAF4@Deleted @TERM_BOLD@%s@TERM_SGR0@@TERM_
 DELETE_FAILED = err=$$?; printf "@TERM_EL@@TERM_SETAF1@Failed to delete @TERM_BOLD@%s@TERM_SGR0@@TERM_SETAF1@!@TERM_SGR0@\n" "$$i"; exit $$err
 
 .CURDIR ?= .
-include ${.CURDIR}/.deps
+-include ${.CURDIR}/.deps
