@@ -24,13 +24,8 @@
 #ifndef LIBAUDCORE_MAINLOOP_H
 #define LIBAUDCORE_MAINLOOP_H
 
-struct QueuedFuncHelper;
-struct QueuedFuncParams;
-
 class QueuedFunc
 {
-    friend struct QueuedFuncHelper;
-
 public:
     typedef void (* Func) (void * data);
 
@@ -61,8 +56,6 @@ public:
 
 private:
     bool _running = false;
-
-    void start (const QueuedFuncParams & params);
 };
 
 void mainloop_run ();

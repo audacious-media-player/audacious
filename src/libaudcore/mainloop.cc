@@ -55,22 +55,14 @@ struct QueuedFuncHelper
     // Cancels any scheduled run of the QueuedFunc and marks the helper for
     // deletion (it may not deleted immediately, but should not be accessed
     // again after calling this function)
-    void cancel ()
-    {
-        queued->_running = false;
-        cancel_impl ();
-    }
+    virtual void cancel () = 0;
 
     virtual ~QueuedFuncHelper () {}
 
 protected:
     QueuedFuncHelper (QueuedFunc * queued, const QueuedFuncParams & params) :
-        queued (queued), params (params)
-    {
-        queued->_running = params.repeat;
-    }
+        queued (queued), params (params) {}
 
-    virtual void cancel_impl () = 0;
 };
 
 // The following hash table implements a thread-safe "registry" of active
@@ -170,7 +162,7 @@ public:
          callback, this, aud::delete_obj<HelperGLib>);
     }
 
-    void cancel_impl ()
+    void cancel ()
     {
         // GLib will delete the helper after we return to the main loop
         g_source_remove (glib_source);
@@ -211,7 +203,7 @@ public:
         QCoreApplication::postEvent (& router, this, Qt::HighEventPriority);
     }
 
-    void cancel_impl () {} // Qt will delete the event after it fires
+    void cancel () {} // Qt will delete the event after it fires
 };
 
 void EventRouter::customEvent (QEvent * event)
@@ -236,7 +228,7 @@ public:
         QCoreApplication::postEvent (this, new QEvent (QEvent::User), Qt::HighEventPriority);
     }
 
-    void cancel_impl ()
+    void cancel ()
         { deleteLater (); }
 
 protected:
@@ -280,27 +272,30 @@ struct Starter
 };
 
 // common entry point used by all queue() and start() variants
-void QueuedFunc::start (const QueuedFuncParams & params)
+static void start_func (QueuedFunc * queued, const QueuedFuncParams & params)
 {
-    Starter s = {this, params};
-    func_table.lookup (this, ptr_hash (this), s);
+    Starter s = {queued, params};
+    func_table.lookup (queued, ptr_hash (queued), s);
 }
 
 EXPORT void QueuedFunc::queue (Func func, void * data)
 {
-    start ({func, data, 0, false});
+    start_func (this, {func, data, 0, false});
+    _running = false;
 }
 
 EXPORT void QueuedFunc::queue (int delay_ms, Func func, void * data)
 {
     g_return_if_fail (delay_ms >= 0);
-    start ({func, data, delay_ms, false});
+    start_func (this, {func, data, delay_ms, false});
+    _running = false;
 }
 
 EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
 {
     g_return_if_fail (interval_ms > 0);
-    start ({func, data, interval_ms, true});
+    start_func (this, {func, data, interval_ms, true});
+    _running = true;
 }
 
 // "stop" logic executed within the hash table lock
@@ -319,6 +314,7 @@ EXPORT void QueuedFunc::stop ()
 {
     Stopper s;
     func_table.lookup (this, ptr_hash (this), s);
+    _running = false;
 }
 
 // main loop implementation follows
