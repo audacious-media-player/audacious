@@ -157,6 +157,9 @@ static void load_fallback_icons ()
     int category_size = audgui_to_native_dpi (48);
     for (const char * icon : categories)
         load_fallback_icon (icon, category_size);
+
+    /* for the fallback album art */
+    load_fallback_icon ("audio-x-generic", audgui_to_native_dpi (64));
 }
 
 static void playlist_set_playing_cb (void *, void *)
