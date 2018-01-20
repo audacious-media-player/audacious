@@ -19,9 +19,6 @@
 
 #include "mainloop.h"
 
-#include <pthread.h>
-#include <stdlib.h>
-
 #include <glib.h>
 
 #ifdef USE_QT
@@ -31,13 +28,6 @@
 #include "internal.h"
 #include "multihash.h"
 #include "runtime.h"
-
-static pthread_mutex_t mainloop_mutex = PTHREAD_MUTEX_INITIALIZER;
-static GMainLoop * glib_mainloop;
-
-#ifdef USE_QT
-static QCoreApplication * qt_mainloop;
-#endif
 
 struct QueuedFuncParams {
     QueuedFunc::Func func;
@@ -340,56 +330,39 @@ EXPORT void QueuedFunc::stop ()
 
 // main loop implementation follows
 
+static GMainLoop * glib_mainloop;
+
 EXPORT void mainloop_run ()
 {
-    pthread_mutex_lock (& mainloop_mutex);
-
 #ifdef USE_QT
     if (aud_get_mainloop_type () == MainloopType::Qt)
     {
-        if (! qt_mainloop)
-        {
-            static char app_name[] = "audacious";
-            static int dummy_argc = 1;
-            static char * dummy_argv[] = {app_name, nullptr};
+        static char app_name[] = "audacious";
+        static int dummy_argc = 1;
+        static char * dummy_argv[] = {app_name, nullptr};
 
-            qt_mainloop = new QCoreApplication (dummy_argc, dummy_argv);
-            atexit ([] () { delete qt_mainloop; });
-        }
-
-        pthread_mutex_unlock (& mainloop_mutex);
-        qt_mainloop->exec ();
+        QCoreApplication (dummy_argc, dummy_argv).exec ();
     }
     else
 #endif
     {
-        if (! glib_mainloop)
-        {
-            glib_mainloop = g_main_loop_new (nullptr, true);
-            atexit ([] () { g_main_loop_unref (glib_mainloop); });
-        }
-
-        pthread_mutex_unlock (& mainloop_mutex);
+        glib_mainloop = g_main_loop_new (nullptr, true);
         g_main_loop_run (glib_mainloop);
+        g_main_loop_unref (glib_mainloop);
+        glib_mainloop = nullptr;
     }
 }
 
 EXPORT void mainloop_quit ()
 {
-    pthread_mutex_lock (& mainloop_mutex);
-
 #ifdef USE_QT
     if (aud_get_mainloop_type () == MainloopType::Qt)
     {
-        if (qt_mainloop)
-            qt_mainloop->quit ();
+        qApp->quit ();
     }
     else
 #endif
     {
-        if (glib_mainloop)
-            g_main_loop_quit (glib_mainloop);
+        g_main_loop_quit (glib_mainloop);
     }
-
-    pthread_mutex_unlock (& mainloop_mutex);
 }

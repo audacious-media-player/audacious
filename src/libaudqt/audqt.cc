@@ -34,7 +34,6 @@
 namespace audqt {
 
 static int init_count;
-static QApplication * qapp;
 
 static PixelSizes sizes_local;
 static PixelMargins margins_local;
@@ -44,15 +43,14 @@ EXPORT const PixelMargins & margins = margins_local;
 
 EXPORT void init ()
 {
-    if (init_count ++ || qapp)
+    if (init_count ++)
         return;
 
     static char app_name[] = "audacious";
     static int dummy_argc = 1;
     static char * dummy_argv[] = {app_name, nullptr};
 
-    qapp = new QApplication (dummy_argc, dummy_argv);
-    atexit ([] () { delete qapp; });
+    auto qapp = new QApplication (dummy_argc, dummy_argv);
 
     qapp->setAttribute (Qt::AA_UseHighDpiPixmaps);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
@@ -77,12 +75,12 @@ EXPORT void init ()
 
 EXPORT void run ()
 {
-    qapp->exec ();
+    qApp->exec ();
 }
 
 EXPORT void quit ()
 {
-    qapp->quit ();
+    qApp->quit ();
 }
 
 EXPORT void cleanup ()
@@ -98,6 +96,8 @@ EXPORT void cleanup ()
     queue_manager_hide ();
 
     log_cleanup ();
+
+    delete qApp;
 }
 
 EXPORT QHBoxLayout * make_hbox (QWidget * parent, int spacing)
