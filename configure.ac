@@ -107,18 +107,21 @@ CPPFLAGS="$CPPFLAGS -include config.h"
 ### ---------------------------------------------------------------------------
 dnl Output configuration files
 dnl ==========================
-AC_CONFIG_FILES([
-    audacious.pc
-    buildsys.mk
-    extra.mk
-    man/audtool.1
-    man/audacious.1
-    src/libaudcore/audio.h
-    src/libaudcore/tinylock.h
-    win32/audacious.nsi
-    win32/override/README.txt
-])
+define(GENERATED_FILES,
+       audacious.pc
+       buildsys.mk
+       extra.mk
+       man/audtool.1
+       man/audacious.1
+       src/libaudcore/audio.h
+       src/libaudcore/tinylock.h
+       win32/audacious.nsi
+       win32/override/README.txt)
 
+[GENERATED_FILES]="m4_normalize(GENERATED_FILES)"
+AC_SUBST([GENERATED_FILES])
+
+AC_CONFIG_FILES(GENERATED_FILES)
 AC_OUTPUT
 
 ### ---------------------------------------------------------------------------
