@@ -34,6 +34,7 @@ class QFont;
 class QPixmap;
 class QToolButton;
 class QWidget;
+class QIcon;
 
 enum class PluginType;
 class Playlist;
@@ -102,6 +103,12 @@ QHBoxLayout * make_hbox (QWidget * parent, int spacing = sizes.FourPt);
 QVBoxLayout * make_vbox (QWidget * parent, int spacing = sizes.FourPt);
 
 QFont get_font_for_class (const char *className);
+/// lookup a QIcon in the embedded Qt resource from
+/// its @p filename in the resource. The function will
+/// prepend the required resource search path.
+/// If the lookup fails, another attempt is made to find
+/// the icon in the image datadir.
+QIcon get_icon (const char *filename);
 
 void enable_layout (QLayout * layout, bool enabled);
 void clear_layout (QLayout * layout);

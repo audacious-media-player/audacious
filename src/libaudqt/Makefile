@@ -20,7 +20,8 @@ SRCS = about-qt.cc \
        prefs-pluginlist-model.cc \
        queue-manager-qt.cc \
        url-opener-qt.cc \
-       volumebutton.cc
+       volumebutton.cc \
+       qrc_resources.cc
 
 INCLUDES = export.h \
            iface.h \
@@ -48,3 +49,6 @@ LIBS := -L../libaudcore -laudcore \
 
 %.moc: %.h
 	moc $< -o $@
+
+qrc_%.cc: %.qrc
+	rcc $< -o $@

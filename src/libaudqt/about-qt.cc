@@ -54,8 +54,6 @@ static QTabWidget * buildCreditsNotebook (QWidget * parent)
 
 static QDialog * buildAboutWindow ()
 {
-    const char * data_dir = aud_get_path (AudPath::DataDir);
-    const char * logo_path = filename_build ({data_dir, "images", "about-logo.png"});
     const char * about_text = "<big><b>Audacious " VERSION "</b></big><br>" COPYRIGHT;
     const char * website = "http://audacious-media-player.org";
 
@@ -63,7 +61,7 @@ static QDialog * buildAboutWindow ()
     window->setWindowTitle (_("About Audacious"));
 
     auto logo = new QLabel (window);
-    logo->setPixmap (QPixmap (logo_path));
+    logo->setPixmap (QPixmap (":/about-logo.svg"));
     logo->setAlignment (Qt::AlignHCenter);
 
     auto text = new QLabel (about_text, window);

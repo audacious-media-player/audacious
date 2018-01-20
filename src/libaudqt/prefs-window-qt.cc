@@ -637,14 +637,13 @@ PrefsWindow::PrefsWindow () :
     QObject::connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
 
     QSignalMapper * mapper = new QSignalMapper (this);
-    const char * data_dir = aud_get_path (AudPath::DataDir);
 
     QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
                       s_category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
 
     for (int i = 0; i < CATEGORY_COUNT; i ++)
     {
-        QIcon ico (QString (filename_build ({data_dir, "images", categories[i].icon_path})));
+        QIcon ico = get_icon (categories[i].icon_path);
         QAction * a = new QAction (ico, translate_str (categories[i].name), toolbar);
 
         toolbar->addAction (a);

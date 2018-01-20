@@ -55,15 +55,8 @@ public:
 
         setApplicationName (_("Audacious"));
         if (windowIcon().isNull()) {
-            // find the likely icon theme directory
-            QString appIconUrl = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("icons/hicolor/scalable/apps/audacious.svg"));
-            // load the scalable icon we installed ourselves (QIcon::fromTheme() won't do that)
-            QIcon appIcon = QIcon(appIconUrl);
-            if (appIcon.isNull()) {
-                setWindowIcon (QIcon::fromTheme (argv[0]));
-            } else {
-                setWindowIcon (appIcon);
-            }
+            QIcon appIcon = get_icon ("audacious.svg");
+            setWindowIcon (appIcon);
         }
         setQuitOnLastWindowClosed (true);
     }
@@ -169,6 +162,29 @@ EXPORT QFont get_font_for_class (const char *className)
         }
     }
     return QApplication::font (className);
+}
+
+// icon lookup function that returns the requested icon
+// from the embedded Qt resource. This function has to be
+// provided by the library that contains the resource.
+// If the resource lookup fails, try to find the icon in the
+// images datadir.
+EXPORT QIcon get_icon (const char *filename)
+{
+    QString resourceName = QStringLiteral (":/%1").arg (filename);
+    QIcon icon (resourceName);
+    if (icon.isNull ())
+    {
+        const char * data_dir = aud_get_path (AudPath::DataDir);
+        const char * img_path = filename_build ({data_dir, "images", filename});
+        icon = QIcon (img_path);
+        qDebug() << Q_FUNC_INFO << filename << "->" << img_path << "->" << icon;
+    }
+    else
+    {
+        qDebug() << Q_FUNC_INFO << filename << "->" << resourceName << "->" << icon;
+    }
+    return icon;
 }
 
 EXPORT void enable_layout (QLayout * layout, bool enabled)
