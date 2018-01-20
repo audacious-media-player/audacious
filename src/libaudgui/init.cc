@@ -127,6 +127,38 @@ void audgui_hide_unique_window (int id)
         gtk_widget_destroy (windows[id]);
 }
 
+static void load_fallback_icon (const char * icon, int size)
+{
+    const char * data_dir = aud_get_path (AudPath::DataDir);
+    StringBuf svg_name = str_concat ({icon, ".svg"});
+    StringBuf path = filename_build ({data_dir, "images", svg_name});
+    auto pixbuf = gdk_pixbuf_new_from_file_at_size (path, size, size, nullptr);
+
+    if (pixbuf)
+    {
+        gtk_icon_theme_add_builtin_icon (icon, size, pixbuf);
+        g_object_unref (pixbuf);
+    }
+}
+
+static void load_fallback_icons ()
+{
+    /* keep this in sync with the list in prefs-window.cc */
+    static const char * const categories[] = {
+        "applications-graphics",
+        "applications-internet",
+        "applications-system",
+        "audio-volume-medium",
+        "audio-x-generic",
+        "dialog-information",
+        "preferences-system"
+    };
+
+    int category_size = audgui_to_native_dpi (48);
+    for (const char * icon : categories)
+        load_fallback_icon (icon, category_size);
+}
+
 static void playlist_set_playing_cb (void *, void *)
 {
     audgui_pixbuf_uncache ();
@@ -140,12 +172,19 @@ static void playlist_position_cb (void * list, void *)
 
 EXPORT void audgui_init ()
 {
+    static bool icons_loaded = false;
     assert (aud_get_mainloop_type () == MainloopType::GLib);
 
     if (init_count ++)
         return;
 
     gtk_init (nullptr, nullptr);
+
+    if (! icons_loaded)
+    {
+        load_fallback_icons ();
+        icons_loaded = true;
+    }
 
     aud_config_set_defaults ("audgui", audgui_defaults);
 

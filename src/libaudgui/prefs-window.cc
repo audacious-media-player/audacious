@@ -46,7 +46,7 @@ enum CategoryViewCols {
 };
 
 struct Category {
-    const char * icon_path;
+    const char * icon;
     const char * name;
 };
 
@@ -77,14 +77,15 @@ enum {
     CATEGORY_ADVANCED
 };
 
+/* keep this in sync with the list in load_fallback_icons (init.cc) */
 static const Category categories[] = {
-    { "appearance.png", N_("Appearance") },
-    { "audio.png", N_("Audio") },
-    { "connectivity.png", N_("Network") },
-    { "playlist.png", N_("Playlist")} ,
-    { "info.png", N_("Song Info") },
-    { "plugins.png", N_("Plugins") },
-    { "advanced.png", N_("Advanced") }
+    { "applications-graphics", N_("Appearance") },
+    { "audio-volume-medium", N_("Audio") },
+    { "applications-internet", N_("Network") },
+    { "audio-x-generic", N_("Playlist")} ,
+    { "dialog-information", N_("Song Info") },
+    { "applications-system", N_("Plugins") },
+    { "preferences-system", N_("Advanced") }
 };
 
 static const PluginCategory plugin_categories[] = {
@@ -480,7 +481,8 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
      GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
     gtk_tree_view_set_model (treeview, (GtkTreeModel *) store);
 
-    const char * data_dir = aud_get_path (AudPath::DataDir);
+    GtkIconTheme * icon_theme = gtk_icon_theme_get_default ();
+    int icon_size = audgui_to_native_dpi (48);
 
     for (const Category & category : categories)
     {
@@ -492,8 +494,8 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
         gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_NAME,
          gettext (category.name), -1);
 
-        StringBuf path = filename_build ({data_dir, "images", category.icon_path});
-        AudguiPixbuf img (gdk_pixbuf_new_from_file (path, nullptr));
+        AudguiPixbuf img (gtk_icon_theme_load_icon (icon_theme,
+         category.icon, icon_size, (GtkIconLookupFlags) 0, nullptr));
 
         if (img)
             gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_ICON, img.get (), -1);

@@ -13,7 +13,14 @@ DATA = AUTHORS \
        images/connectivity.png \
        images/info.png \
        images/playlist.png \
-       images/plugins.png
+       images/plugins.png \
+       images/applications-graphics.svg \
+       images/applications-internet.svg \
+       images/applications-system.svg \
+       images/audio-volume-medium.svg \
+       images/audio-x-generic.svg \
+       images/dialog-information.svg \
+       images/preferences-system.svg
 
 include buildsys.mk
 include extra.mk
