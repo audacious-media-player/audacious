@@ -2,16 +2,7 @@ SUBDIRS = src man images po
 
 DISTCLEAN = ${GENERATED_FILES} config.h config.log config.status
 
-DATA = AUTHORS \
-       COPYING \
-       images/about-logo.svg \
-       images/applications-graphics.svg \
-       images/applications-internet.svg \
-       images/applications-system.svg \
-       images/audio-volume-medium.svg \
-       images/audio-x-generic.svg \
-       images/dialog-information.svg \
-       images/preferences-system.svg
+DATA = AUTHORS COPYING
 
 include buildsys.mk
 include extra.mk
