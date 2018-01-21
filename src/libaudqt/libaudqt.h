@@ -25,6 +25,7 @@
 #include <QString>
 #include <libaudcore/objects.h>
 
+class QIcon;
 class QLayout;
 class QBoxLayout;
 class QHBoxLayout;
@@ -99,16 +100,16 @@ void run ();
 void quit ();
 void cleanup ();
 
+/// lookup a QIcon in the embedded Qt resource via
+/// its @p name. The function will first attempt a
+/// lookup from the current theme, if that fails,
+/// it looks for an icon with filename name.svg .
+QIcon get_icon (const char * name);
+
 QHBoxLayout * make_hbox (QWidget * parent, int spacing = sizes.FourPt);
 QVBoxLayout * make_vbox (QWidget * parent, int spacing = sizes.FourPt);
 
 QFont get_font_for_class (const char *className);
-/// lookup a QIcon in the embedded Qt resource from
-/// its @p filename in the resource. The function will
-/// prepend the required resource search path.
-/// If the lookup fails, another attempt is made to find
-/// the icon in the image datadir.
-QIcon get_icon (const char *filename);
 
 void enable_layout (QLayout * layout, bool enabled);
 void clear_layout (QLayout * layout);

@@ -1,6 +1,6 @@
 /*
  * prefs-window.cc
- * Copyright 2006-2014 William Pitcock, Tomasz Moń, Michael Färber, and
+ * Copyright 2006-2014 William Pitcock, Tomasz Mo?, Michael F�rber, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -112,7 +112,7 @@ PrefsWindow * PrefsWindow::instance = nullptr;
 int PrefsWindow::output_combo_selected;
 
 struct Category {
-    const char * icon_path;
+    const char * icon;
     const char * name;
 };
 
@@ -133,13 +133,13 @@ enum {
 };
 
 static const Category categories[] = {
-    { "appearance.png", N_("Appearance") },
-    { "audio.png", N_("Audio") },
-    { "connectivity.png", N_("Network") },
-    { "playlist.png", N_("Playlist")} ,
-    { "info.png", N_("Song Info") },
-    { "plugins.png", N_("Plugins") },
-    { "advanced.png", N_("Advanced") }
+    { "applications-graphics", N_("Appearance") },
+    { "audio-volume-medium", N_("Audio") },
+    { "applications-internet", N_("Network") },
+    { "audio-x-generic", N_("Playlist")} ,
+    { "dialog-information", N_("Song Info") },
+    { "applications-system", N_("Plugins") },
+    { "preferences-system", N_("Advanced") }
 };
 
 static const TitleFieldTag title_field_tags[] = {
@@ -449,7 +449,7 @@ static void * create_titlestring_table ()
     /* build menu */
     QPushButton * btn_mnu = new QPushButton (w);
     btn_mnu->setFixedWidth (btn_mnu->sizeHint ().height ());
-    btn_mnu->setIcon (QIcon::fromTheme ("list-add"));
+    btn_mnu->setIcon (audqt::get_icon ("list-add"));
     l->addWidget (btn_mnu, 1, 2);
 
     QMenu * mnu_fields = new QMenu (w);
@@ -643,8 +643,8 @@ PrefsWindow::PrefsWindow () :
 
     for (int i = 0; i < CATEGORY_COUNT; i ++)
     {
-        QIcon ico = get_icon (categories[i].icon_path);
-        QAction * a = new QAction (ico, translate_str (categories[i].name), toolbar);
+        auto a = new QAction (get_icon (categories[i].icon),
+        translate_str (categories[i].name), toolbar);
 
         toolbar->addAction (a);
         mapper->setMapping (a, i);

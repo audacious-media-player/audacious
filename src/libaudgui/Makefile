@@ -7,6 +7,7 @@ SRCS = about.cc \
        eq-preset.cc \
        equalizer.cc \
        file-opener.cc \
+       images.c \
        infopopup.cc \
        infowin.cc \
        init.cc \
@@ -35,6 +36,8 @@ INCLUDES = libaudgui.h \
            list.h \
            menu.h
 
+CLEAN = images.c images.h
+
 include ../../buildsys.mk
 include ../../extra.mk
 
@@ -53,3 +56,10 @@ LIBS := -L../libaudcore -laudcore \
         ${LIBS} -lm \
         ${GLIB_LIBS} \
         ${GTK_LIBS}
+
+pre-depend: images.c images.h
+
+images.h: images.gresource.xml
+	glib-compile-resources --sourcedir=../../images --generate-header --target=images.h images.gresource.xml
+images.c: images.gresource.xml
+	glib-compile-resources --sourcedir=../../images --generate-source --target=images.c images.gresource.xml

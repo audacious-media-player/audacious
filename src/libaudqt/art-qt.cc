@@ -19,28 +19,16 @@
 
 #include <QApplication>
 #include <QPixmap>
+#include <QIcon>
 #include <QImage>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
 #include <libaudcore/probe.h>
 #include <libaudcore/runtime.h>
+#include <libaudqt/libaudqt.h>
 
 namespace audqt {
-
-static QImage load_fallback ()
-{
-    static QImage fallback;
-    static bool loaded = false;
-
-    if (! loaded)
-    {
-        fallback.load (":/album.png");
-        loaded = true;
-    }
-
-    return fallback; // shallow copy
-}
 
 EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
 {
@@ -50,11 +38,7 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
     auto img = data ? QImage::fromData ((const uchar *) data->begin (), data->len ()) : QImage ();
 
     if (img.isNull ())
-    {
-        img = load_fallback ();
-        if (img.isNull ())
-            return QPixmap ();
-    }
+        return get_icon ("audio-x-generic").pixmap (w, h);
 
     // return original image if requested size is zero,
     // or original size is smaller than requested size

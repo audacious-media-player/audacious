@@ -24,13 +24,8 @@
 #ifndef LIBAUDCORE_MAINLOOP_H
 #define LIBAUDCORE_MAINLOOP_H
 
-struct QueuedFuncHelper;
-struct QueuedFuncParams;
-
 class QueuedFunc
 {
-    friend struct QueuedFuncHelper;
-
 public:
     typedef void (* Func) (void * data);
 
@@ -59,13 +54,13 @@ public:
     ~QueuedFunc ()
         { stop (); }
 
+    // cancels any pending callbacks
+    // inhibits all future callbacks
+    // needed to allow safe shutdown of some (Qt!) main loops
+    static void inhibit_all ();
+
 private:
-    struct Starter;
-    struct Stopper;
-
     bool _running = false;
-
-    void start (const QueuedFuncParams & params);
 };
 
 void mainloop_run ();

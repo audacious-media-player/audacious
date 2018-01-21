@@ -368,7 +368,7 @@ int main (int argc, char * * argv)
         return EXIT_SUCCESS;
     }
 
-#if USE_DBUS
+#ifdef USE_DBUS
     do_remote (); /* may exit */
 #endif
 

@@ -266,12 +266,15 @@ void config_save ()
 
     Index<ConfigItem> list;
 
-    s_config.iterate ([&] (ConfigNode * node) {
+    auto add_to_list = [&] (ConfigNode * node) {
         list.append (* node);
-
-        s_modified = false;  // must be inside MultiHash lock
         return false;
-    });
+    };
+    auto finish = [] () {
+        s_modified = false;  // must be inside MultiHash lock
+    };
+
+    s_config.iterate (add_to_list, finish);
 
     list.sort ([] (const ConfigItem & a, const ConfigItem & b) {
         if (a.section == b.section)

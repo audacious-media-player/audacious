@@ -34,8 +34,13 @@ EXPORT AudguiPixbuf audgui_pixbuf_fallback ()
     static AudguiPixbuf fallback;
 
     if (! fallback)
-        fallback.capture (gdk_pixbuf_new_from_file (filename_build
-         ({aud_get_path (AudPath::DataDir), "images", "album.png"}), nullptr));
+    {
+        GtkIconTheme * icon_theme = gtk_icon_theme_get_default ();
+        int icon_size = audgui_to_native_dpi (48);
+
+        fallback.capture (gtk_icon_theme_load_icon (icon_theme,
+         "audio-x-generic", icon_size, (GtkIconLookupFlags) 0, nullptr));
+    }
 
     return fallback.ref ();
 }

@@ -33,11 +33,16 @@ MainloopType aud_get_mainloop_type ()
 }
 
 static QueuedFunc counters[70];
-static QueuedFunc timer, delayed, restart;
+static QueuedFunc timer, delayed;
 
 static int count;
-static int restart_count;
 static pthread_t main_thread;
+
+static void never_called (void * data)
+{
+    bool called = true;
+    assert (! called);
+}
 
 static void count_up (void * data)
 {
@@ -54,14 +59,6 @@ static void count_up (void * data)
     printf ("%d%c", count, (count % 10) ? ' ' : '\n');
 }
 
-static void count_restart (void * data)
-{
-    assert (pthread_self () == main_thread);
-    assert (data == nullptr);
-
-    restart_count ++;
-}
-
 static void count_down (void * data)
 {
     assert (pthread_self () == main_thread);
@@ -76,11 +73,12 @@ static void count_down (void * data)
 
     if (! count)
     {
-        timer.stop ();
+        // stop the timer
+        // queue up an idle call so it's pending at shutdown
+        // initiate the shutdown sequence
+        timer.queue (never_called, nullptr);
+        QueuedFunc::inhibit_all ();
         mainloop_quit ();
-
-        // check queueing an event while main loop is restarting
-        restart.queue (count_restart, nullptr);
     }
 }
 
@@ -92,12 +90,6 @@ static void check_count (void * data)
     assert (count == (int) (size_t) data);
 
     printf ("CHECK: %d\n", count);
-}
-
-static void never_called (void * data)
-{
-    bool called = true;
-    assert (! called);
 }
 
 static void * worker (void * data)
@@ -119,39 +111,33 @@ int main (int argc, const char * * argv)
 
     main_thread = pthread_self ();
 
-    for (int j = 0; j < 2; j ++)
-    {
-        // queue up a bunch of idle calls
-        for (int i = 0; i < 50; i ++)
-            counters[i].queue (count_up, (void *) (size_t) (i - 30));
+    // queue up a bunch of idle calls
+    for (int i = 0; i < 50; i ++)
+        counters[i].queue (count_up, (void *) (size_t) (i - 30));
 
-        // stop some of them
-        for (int i = 10; i < 30; i ++)
-            counters[i].stop ();
+    // stop some of them
+    for (int i = 10; i < 30; i ++)
+        counters[i].stop ();
 
-        // restart some that were stopped and some that weren't
-        for (int i = 0; i < 20; i ++)
-            counters[i].queue (count_up, (void *) (size_t) (20 + i));
+    // restart some that were stopped and some that weren't
+    for (int i = 0; i < 20; i ++)
+        counters[i].queue (count_up, (void *) (size_t) (20 + i));
 
-        // start a countdown timer at 10 Hz
-        timer.start (100, count_down, & count);
+    // start a countdown timer at 10 Hz
+    timer.start (100, count_down, & count);
 
-        // queue up a call and then immediately delete the QueuedFunc
-        QueuedFunc ().queue (never_called, nullptr);
+    // queue up a call and then immediately delete the QueuedFunc
+    QueuedFunc ().queue (never_called, nullptr);
 
-        pthread_t thread;
-        pthread_create (& thread, nullptr, worker, nullptr);
+    pthread_t thread;
+    pthread_create (& thread, nullptr, worker, nullptr);
 
-        mainloop_run ();
+    mainloop_run ();
 
-        pthread_join (thread, nullptr);
+    pthread_join (thread, nullptr);
 
-        // check that the timer reports being stopped
-        assert (! timer.running ());
-    }
-
-    // check that events queued during restart are processed
-    assert (restart_count == 1);
+    // check that the timer reports being stopped
+    assert (! timer.running ());
 
     return 0;
 }

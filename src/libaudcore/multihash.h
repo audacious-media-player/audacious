@@ -107,6 +107,7 @@ public:
     typedef HashBase::Node Node;
     typedef HashBase::MatchFunc MatchFunc;
     typedef HashBase::FoundFunc FoundFunc;
+    typedef void (* FinalFunc) (void * state);
 
     /* Callback.  May create a new node representing <data> to be added to the
      * table.  Returns the new node or null. */
@@ -135,6 +136,11 @@ public:
      * state.  <func> is called on each node in order, and may return true to
      * remove the node from the table. */
     void iterate (FoundFunc func, void * state);
+
+    /* Variant of iterate() which runs a second callback after the iteration
+     * is complete, while the table is still locked.  This is useful when some
+     * operation needs to be performed with the table in a known state. */
+    void iterate (FoundFunc func, void * state, FinalFunc final, void * fstate);
 
 private:
     static constexpr int Channels = 16;  /* must be a power of two */
@@ -177,6 +183,10 @@ public:
     void iterate (F func)
         { MultiHash::iterate (WrapIterate<F>::run, & func); }
 
+    template<class F, class Final>
+    void iterate (F func, Final final)
+        { MultiHash::iterate (WrapIterate<F>::run, & func, WrapFinal<Final>::run, & final); }
+
 private:
     static bool match_cb (const Node * node, const void * data)
         { return (static_cast<const Node_T *> (node))->match
@@ -203,6 +213,12 @@ private:
         static bool run (Node * node, void * func)
             { return (* static_cast<F *> (func))
                       (static_cast<Node_T *> (node)); }
+    };
+
+    template<class Final>
+    struct WrapFinal {
+        static void run (void * func)
+            { (* static_cast<Final *> (func)) (); }
     };
 };
 

@@ -55,7 +55,7 @@ public:
 
         setApplicationName (_("Audacious"));
         if (windowIcon().isNull()) {
-            QIcon appIcon = get_icon ("audacious.svg");
+            QIcon appIcon = get_icon (argv[0]);
             setWindowIcon (appIcon);
         }
         setQuitOnLastWindowClosed (true);
@@ -76,7 +76,7 @@ EXPORT const PixelMargins & margins = margins_local;
 
 EXPORT void init ()
 {
-    if (init_count ++ || qapp)
+    if (init_count ++)
         return;
 
     static char app_name[] = "audacious";
@@ -119,13 +119,22 @@ EXPORT void cleanup ()
     log_inspector_hide ();
     prefswin_hide ();
     queue_manager_hide ();
-    // we should delete the application instance here rather than allowing that
-    // to be done at some time outside our control during global destruction.
+
+    log_cleanup ();
+
     delete qapp;
     // avoid leaving a stale global variable around
     qapp = nullptr;
+}
 
-    log_cleanup ();
+EXPORT QIcon get_icon (const char * name)
+{
+    auto icon = QIcon::fromTheme (name);
+
+    if (icon.isNull ())
+        icon = QIcon (QString (":/") + name + ".svg");
+
+    return icon;
 }
 
 EXPORT QHBoxLayout * make_hbox (QWidget * parent, int spacing)
@@ -162,29 +171,6 @@ EXPORT QFont get_font_for_class (const char *className)
         }
     }
     return QApplication::font (className);
-}
-
-// icon lookup function that returns the requested icon
-// from the embedded Qt resource. This function has to be
-// provided by the library that contains the resource.
-// If the resource lookup fails, try to find the icon in the
-// images datadir.
-EXPORT QIcon get_icon (const char *filename)
-{
-    QString resourceName = QStringLiteral (":/%1").arg (filename);
-    QIcon icon (resourceName);
-    if (icon.isNull ())
-    {
-        const char * data_dir = aud_get_path (AudPath::DataDir);
-        const char * img_path = filename_build ({data_dir, "images", filename});
-        icon = QIcon (img_path);
-        qDebug() << Q_FUNC_INFO << filename << "->" << img_path << "->" << icon;
-    }
-    else
-    {
-        qDebug() << Q_FUNC_INFO << filename << "->" << resourceName << "->" << icon;
-    }
-    return icon;
 }
 
 EXPORT void enable_layout (QLayout * layout, bool enabled)

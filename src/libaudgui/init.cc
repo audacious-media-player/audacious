@@ -30,6 +30,10 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
+extern "C" {
+#include "images.h"
+}
+
 static const char * const audgui_defaults[] = {
     "clear_song_fields", "TRUE",
     "close_dialog_add", "FALSE",
@@ -127,6 +131,195 @@ void audgui_hide_unique_window (int id)
         gtk_widget_destroy (windows[id]);
 }
 
+#ifdef _WIN32
+/* On Windows, the default icon sizes are fixed.
+ * Adjust them for varying screen resolutions. */
+void adjust_icon_sizes (void)
+{
+    struct Mapping {
+        GtkIconSize size;
+        const char * name;
+    };
+
+    static const Mapping mappings[] = {
+        {GTK_ICON_SIZE_MENU, "gtk-menu"},
+        {GTK_ICON_SIZE_SMALL_TOOLBAR, "gtk-small-toolbar"},
+        {GTK_ICON_SIZE_LARGE_TOOLBAR, "gtk-large-toolbar"},
+        {GTK_ICON_SIZE_BUTTON, "gtk-button"},
+        {GTK_ICON_SIZE_DND, "gtk-dnd"},
+        {GTK_ICON_SIZE_DIALOG, "gtk-dialog"}
+    };
+
+    StringBuf value;
+
+    for (auto & m : mappings)
+    {
+        int width, height;
+        if (gtk_icon_size_lookup (m.size, & width, & height))
+        {
+            width = audgui_to_native_dpi (width);
+            height = audgui_to_native_dpi (height);
+
+            const char * sep = value.len () ? ":" : "";
+            str_append_printf (value, "%s%s=%d,%d", sep, m.name, width, height);
+        }
+    }
+
+    GtkSettings * settings = gtk_settings_get_default ();
+    g_object_set ((GObject *) settings, "gtk-icon-sizes", (const char *) value, nullptr);
+}
+#endif
+
+static int get_icon_size (GtkIconSize size)
+{
+    int width, height;
+    if (gtk_icon_size_lookup (size, & width, & height))
+        return (width + height) / 2;
+
+    return audgui_to_native_dpi (16);
+}
+
+static void load_fallback_icon (const char * icon, int size)
+{
+    StringBuf resource = str_concat ({"/org/audacious/", icon, ".svg"});
+    auto pixbuf = gdk_pixbuf_new_from_resource_at_scale (resource, size, size, true, nullptr);
+
+    if (pixbuf)
+    {
+        gtk_icon_theme_add_builtin_icon (icon, size, pixbuf);
+        g_object_unref (pixbuf);
+    }
+}
+
+static void load_fallback_icons ()
+{
+    static const char * const all_icons[] = {
+        "application-exit",
+        "applications-graphics",
+        "applications-internet",
+        "applications-system",
+        "appointment-new",
+        "audacious",
+        "audio-card",
+        "audio-volume-high",
+        "audio-volume-low",
+        "audio-volume-medium",
+        "audio-volume-muted",
+        "audio-x-generic",
+        "dialog-error",
+        "dialog-information",
+        "dialog-question",
+        "dialog-warning",
+        "document-new",
+        "document-open-recent",
+        "document-open",
+        "document-save",
+        "edit-clear",
+        "edit-copy",
+        "edit-cut",
+        "edit-delete",
+        "edit-find",
+        "edit-paste",
+        "edit-select-all",
+        "face-smile",
+        "folder-remote",
+        "folder",
+        "go-down",
+        "go-jump",
+        "go-next",
+        "go-previous",
+        "go-up",
+        "help-about",
+        "insert-text",
+        "list-add",
+        "list-remove",
+        "media-optical",
+        "media-playback-pause",
+        "media-playback-start",
+        "media-playback-stop",
+        "media-playlist-repeat",
+        "media-playlist-shuffle",
+        "media-record",
+        "media-skip-backward",
+        "media-skip-forward",
+        "multimedia-volume-control",
+        "preferences-system",
+        "process-stop",
+        "system-run",
+        "text-x-generic",
+        "user-desktop",
+        "user-home",
+        "user-trash",
+        "view-refresh",
+        "view-sort-ascending",
+        "view-sort-descending",
+        "window-close"
+    };
+
+    static const char * const toolbar_icons[] = {
+        "audacious",
+        "audio-volume-high",
+        "audio-volume-low",
+        "audio-volume-medium",
+        "audio-volume-muted",
+        "document-open",
+        "edit-find",
+        "list-add",
+        "media-playback-pause",
+        "media-playback-start",
+        "media-playback-stop",
+        "media-playlist-repeat",
+        "media-playlist-shuffle",
+        "media-record",
+        "media-skip-backward",
+        "media-skip-forward"
+    };
+
+    static const char * const dialog_icons[] = {
+        "dialog-error",
+        "dialog-information",
+        "dialog-question",
+        "dialog-warning"
+    };
+
+    /* keep this in sync with the list in prefs-window.cc */
+    static const char * const category_icons[] = {
+        "applications-graphics",
+        "applications-internet",
+        "applications-system",
+        "audio-volume-medium",
+        "audio-x-generic", /* also used for fallback album art */
+        "dialog-information",
+        "preferences-system"
+    };
+
+    g_resources_register (images_get_resource ());
+
+#ifdef _WIN32
+    adjust_icon_sizes ();
+#endif
+
+    int menu_size = get_icon_size (GTK_ICON_SIZE_MENU);
+    for (const char * icon : all_icons)
+        load_fallback_icon (icon, menu_size);
+
+    GtkIconSize icon_size;
+    GtkSettings * settings = gtk_settings_get_default ();
+    g_object_get (settings, "gtk-toolbar-icon-size", & icon_size, NULL);
+
+    int toolbar_size = get_icon_size (icon_size);
+    for (const char * icon : toolbar_icons)
+        load_fallback_icon (icon, toolbar_size);
+
+    int dialog_size = get_icon_size (GTK_ICON_SIZE_DIALOG);
+    for (const char * icon : dialog_icons)
+        load_fallback_icon (icon, dialog_size);
+
+    int category_size = audgui_to_native_dpi (48);
+    for (const char * icon : category_icons)
+        load_fallback_icon (icon, category_size);
+}
+
 static void playlist_set_playing_cb (void *, void *)
 {
     audgui_pixbuf_uncache ();
@@ -140,12 +333,19 @@ static void playlist_position_cb (void * list, void *)
 
 EXPORT void audgui_init ()
 {
+    static bool icons_loaded = false;
     assert (aud_get_mainloop_type () == MainloopType::GLib);
 
     if (init_count ++)
         return;
 
     gtk_init (nullptr, nullptr);
+
+    if (! icons_loaded)
+    {
+        load_fallback_icons ();
+        icons_loaded = true;
+    }
 
     aud_config_set_defaults ("audgui", audgui_defaults);
 
