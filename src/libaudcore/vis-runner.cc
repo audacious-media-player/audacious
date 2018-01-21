@@ -112,7 +112,8 @@ static void flush_locked ()
     vis_list.clear ();
     vis_pool.clear ();
 
-    queued_clear.queue (send_clear, nullptr);
+    if (enabled)
+        queued_clear.queue (send_clear, nullptr);
 }
 
 void vis_runner_flush ()
