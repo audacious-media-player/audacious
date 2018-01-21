@@ -7,6 +7,7 @@ SRCS = about-qt.cc \
        audqt.cc \
        equalizer-qt.cc \
        fileopener.cc \
+       images.cc \
        infowin-qt.cc \
        info-widget.cc \
        log-inspector.cc \
@@ -46,5 +47,5 @@ LIBS := -L../libaudcore -laudcore \
         ${LIBS} -lm \
         ${QT_LIBS}
 
-%.moc: %.h
-	moc $< -o $@
+images.cc: images.qrc
+	rcc images.qrc -o images.cc

@@ -1,0 +1,13 @@
+<RCC>
+<qresource>
+    <file alias="about-logo.svg">../../images/about-logo.svg</file>
+    <file alias="applications-graphics.svg">../../images/applications-graphics.svg</file>
+    <file alias="applications-internet.svg">../../images/applications-internet.svg</file>
+    <file alias="applications-system.svg">../../images/applications-system.svg</file>
+    <file alias="audacious.svg">../../images/audacious.svg</file>
+    <file alias="audio-volume-medium.svg">../../images/audio-volume-medium.svg</file>
+    <file alias="audio-x-generic.svg">../../images/audio-x-generic.svg</file>
+    <file alias="dialog-information.svg">../../images/dialog-information.svg</file>
+    <file alias="preferences-system.svg">../../images/preferences-system.svg</file>
+</qresource>
+</RCC>
