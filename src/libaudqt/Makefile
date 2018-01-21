@@ -48,4 +48,4 @@ LIBS := -L../libaudcore -laudcore \
         ${QT_LIBS}
 
 images.cc: images.qrc
-	rcc images.qrc -o images.cc
+	${QT_BINPATH}/rcc images.qrc -o images.cc
