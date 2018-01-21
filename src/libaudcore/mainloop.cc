@@ -153,13 +153,8 @@ public:
     HelperGLib (QueuedFunc * queued, const QueuedFuncParams & params) :
         QueuedFuncHelper (queued, params)
     {
-        auto callback = [] (void * me) -> gboolean {
-            (static_cast<HelperGLib *> (me))->run ();
-            return G_SOURCE_CONTINUE;
-        };
-
         glib_source = g_timeout_add_full (G_PRIORITY_HIGH, params.interval_ms,
-         callback, this, aud::delete_obj<HelperGLib>);
+         run_cb, this, aud::delete_obj<HelperGLib>);
     }
 
     void cancel ()
@@ -169,6 +164,12 @@ public:
     }
 
 private:
+    static gboolean run_cb (void * me)
+    {
+        (static_cast<HelperGLib *> (me))->run ();
+        return G_SOURCE_CONTINUE;
+    }
+
     int glib_source = 0;
 };
 
