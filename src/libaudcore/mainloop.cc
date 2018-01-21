@@ -100,6 +100,7 @@ private:
 };
 
 static MultiHash_T<QueuedFuncNode, QueuedFunc> func_table;
+static bool in_lockdown = false;
 
 // Helper logic common between GLib and Qt
 
@@ -265,7 +266,7 @@ struct Starter
 
     // register a new helper for this QueuedFunc
     QueuedFuncNode * add (const QueuedFunc *)
-        { return new QueuedFuncNode (queued, params); }
+        { return in_lockdown ? nullptr : new QueuedFuncNode (queued, params); }
 
     // cancel the old helper and register a replacement
     bool found (QueuedFuncNode * node)
@@ -316,6 +317,18 @@ EXPORT void QueuedFunc::stop ()
     Stopper s;
     func_table.lookup (this, ptr_hash (this), s);
     _running = false;
+}
+
+// unregister a pending callback at shutdown
+static bool cleanup_node (QueuedFuncNode * node)
+    { delete node; return true; }
+// inhibit all future callbacks at shutdown
+static void enter_lockdown ()
+    { in_lockdown = true; }
+
+EXPORT void QueuedFunc::inhibit_all ()
+{
+    func_table.iterate (cleanup_node, enter_lockdown);
 }
 
 // main loop implementation follows

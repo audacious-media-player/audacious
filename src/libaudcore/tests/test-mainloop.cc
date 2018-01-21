@@ -38,6 +38,12 @@ static QueuedFunc timer, delayed;
 static int count;
 static pthread_t main_thread;
 
+static void never_called (void * data)
+{
+    bool called = true;
+    assert (! called);
+}
+
 static void count_up (void * data)
 {
     assert (pthread_self () == main_thread);
@@ -67,7 +73,11 @@ static void count_down (void * data)
 
     if (! count)
     {
-        timer.stop ();
+        // stop the timer
+        // queue up an idle call so it's pending at shutdown
+        // initiate the shutdown sequence
+        timer.queue (never_called, nullptr);
+        QueuedFunc::inhibit_all ();
         mainloop_quit ();
     }
 }
@@ -80,12 +90,6 @@ static void check_count (void * data)
     assert (count == (int) (size_t) data);
 
     printf ("CHECK: %d\n", count);
-}
-
-static void never_called (void * data)
-{
-    bool called = true;
-    assert (! called);
 }
 
 static void * worker (void * data)

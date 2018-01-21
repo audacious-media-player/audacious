@@ -167,6 +167,10 @@ void interface_run ()
 
 EXPORT void aud_quit ()
 {
+    // Qt is very sensitive to things being deleted in the correct order
+    // to avoid upsetting it, we'll stop all queued callbacks right now
+    QueuedFunc::inhibit_all ();
+
     if (current_interface)
         current_interface->quit ();
     else

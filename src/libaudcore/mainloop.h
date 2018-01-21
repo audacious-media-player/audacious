@@ -54,6 +54,11 @@ public:
     ~QueuedFunc ()
         { stop (); }
 
+    // cancels any pending callbacks
+    // inhibits all future callbacks
+    // needed to allow safe shutdown of some (Qt!) main loops
+    static void inhibit_all ();
+
 private:
     bool _running = false;
 };
