@@ -131,6 +131,15 @@ void audgui_hide_unique_window (int id)
         gtk_widget_destroy (windows[id]);
 }
 
+static int get_icon_size (GtkIconSize size)
+{
+    int width, height;
+    if (gtk_icon_size_lookup (size, & width, & height))
+        return (width + height) / 2;
+
+    return 16; // shouldn't happen?
+}
+
 static void load_fallback_icon (const char * icon, int size)
 {
     StringBuf resource = str_concat ({"/org/audacious/", icon, ".svg"});
@@ -145,8 +154,97 @@ static void load_fallback_icon (const char * icon, int size)
 
 static void load_fallback_icons ()
 {
+    static const char * const all_icons[] = {
+        "application-exit",
+        "applications-graphics",
+        "applications-internet",
+        "applications-system",
+        "appointment-new",
+        "audacious",
+        "audio-card",
+        "audio-volume-high",
+        "audio-volume-low",
+        "audio-volume-medium",
+        "audio-volume-muted",
+        "audio-x-generic",
+        "dialog-error",
+        "dialog-information",
+        "dialog-question",
+        "dialog-warning",
+        "document-new",
+        "document-open-recent",
+        "document-open",
+        "document-save",
+        "edit-clear",
+        "edit-copy",
+        "edit-cut",
+        "edit-delete",
+        "edit-find",
+        "edit-paste",
+        "edit-select-all",
+        "face-smile",
+        "folder-remote",
+        "folder",
+        "go-down",
+        "go-jump",
+        "go-next",
+        "go-previous",
+        "go-up",
+        "help-about",
+        "insert-text",
+        "list-add",
+        "list-remove",
+        "media-optical",
+        "media-playback-pause",
+        "media-playback-start",
+        "media-playback-stop",
+        "media-playlist-repeat",
+        "media-playlist-shuffle",
+        "media-record",
+        "media-skip-backward",
+        "media-skip-forward",
+        "multimedia-volume-control",
+        "preferences-system",
+        "process-stop",
+        "system-run",
+        "text-x-generic",
+        "user-desktop",
+        "user-home",
+        "user-trash",
+        "view-refresh",
+        "view-sort-ascending",
+        "view-sort-descending",
+        "window-close"
+    };
+
+    static const char * const toolbar_icons[] = {
+        "audacious",
+        "audio-volume-high",
+        "audio-volume-low",
+        "audio-volume-medium",
+        "audio-volume-muted",
+        "document-open",
+        "edit-find",
+        "list-add",
+        "media-playback-pause",
+        "media-playback-start",
+        "media-playback-stop",
+        "media-playlist-repeat",
+        "media-playlist-shuffle",
+        "media-record",
+        "media-skip-backward",
+        "media-skip-forward"
+    };
+
+    static const char * const dialog_icons[] = {
+        "dialog-error",
+        "dialog-information",
+        "dialog-question",
+        "dialog-warning"
+    };
+
     /* keep this in sync with the list in prefs-window.cc */
-    static const char * const categories[] = {
+    static const char * const category_icons[] = {
         "applications-graphics",
         "applications-internet",
         "applications-system",
@@ -158,8 +256,20 @@ static void load_fallback_icons ()
 
     g_resources_register (images_get_resource ());
 
+    int menu_size = get_icon_size (GTK_ICON_SIZE_MENU);
+    for (const char * icon : all_icons)
+        load_fallback_icon (icon, menu_size);
+
+    int toolbar_size = get_icon_size (GTK_ICON_SIZE_LARGE_TOOLBAR);
+    for (const char * icon : toolbar_icons)
+        load_fallback_icon (icon, toolbar_size);
+
+    int dialog_size = get_icon_size (GTK_ICON_SIZE_DIALOG);
+    for (const char * icon : dialog_icons)
+        load_fallback_icon (icon, dialog_size);
+
     int category_size = audgui_to_native_dpi (48);
-    for (const char * icon : categories)
+    for (const char * icon : category_icons)
         load_fallback_icon (icon, category_size);
 
     /* for the fallback album art */
