@@ -288,7 +288,7 @@ static void load_fallback_icons ()
         "applications-internet",
         "applications-system",
         "audio-volume-medium",
-        "audio-x-generic",
+        "audio-x-generic", /* also used for fallback album art */
         "dialog-information",
         "preferences-system"
     };
@@ -318,9 +318,6 @@ static void load_fallback_icons ()
     int category_size = audgui_to_native_dpi (48);
     for (const char * icon : category_icons)
         load_fallback_icon (icon, category_size);
-
-    /* for the fallback album art */
-    load_fallback_icon ("audio-x-generic", audgui_to_native_dpi (64));
 }
 
 static void playlist_set_playing_cb (void *, void *)

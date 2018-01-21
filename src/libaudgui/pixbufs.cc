@@ -36,7 +36,7 @@ EXPORT AudguiPixbuf audgui_pixbuf_fallback ()
     if (! fallback)
     {
         GtkIconTheme * icon_theme = gtk_icon_theme_get_default ();
-        int icon_size = audgui_to_native_dpi (64);
+        int icon_size = audgui_to_native_dpi (48);
 
         fallback.capture (gtk_icon_theme_load_icon (icon_theme,
          "audio-x-generic", icon_size, (GtkIconLookupFlags) 0, nullptr));
