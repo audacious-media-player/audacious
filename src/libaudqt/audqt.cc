@@ -100,6 +100,21 @@ EXPORT void cleanup ()
     delete qApp;
 }
 
+EXPORT QIcon get_icon (const char * name)
+{
+    auto icon = QIcon::fromTheme (name);
+
+    if (icon.isNull ())
+    {
+        const char * data_dir = aud_get_path (AudPath::DataDir);
+        StringBuf svg_name = str_concat ({name, ".svg"});
+        StringBuf path = filename_build ({data_dir, "images", svg_name});
+        icon = QIcon ((QString) path);
+    }
+
+    return icon;
+}
+
 EXPORT QHBoxLayout * make_hbox (QWidget * parent, int spacing)
 {
     auto layout = new QHBoxLayout (parent);

@@ -112,7 +112,7 @@ PrefsWindow * PrefsWindow::instance = nullptr;
 int PrefsWindow::output_combo_selected;
 
 struct Category {
-    const char * icon_path;
+    const char * icon;
     const char * name;
 };
 
@@ -133,13 +133,13 @@ enum {
 };
 
 static const Category categories[] = {
-    { "appearance.png", N_("Appearance") },
-    { "audio.png", N_("Audio") },
-    { "connectivity.png", N_("Network") },
-    { "playlist.png", N_("Playlist")} ,
-    { "info.png", N_("Song Info") },
-    { "plugins.png", N_("Plugins") },
-    { "advanced.png", N_("Advanced") }
+    { "applications-graphics", N_("Appearance") },
+    { "audio-volume-medium", N_("Audio") },
+    { "applications-internet", N_("Network") },
+    { "audio-x-generic", N_("Playlist")} ,
+    { "dialog-information", N_("Song Info") },
+    { "applications-system", N_("Plugins") },
+    { "preferences-system", N_("Advanced") }
 };
 
 static const TitleFieldTag title_field_tags[] = {
@@ -633,15 +633,14 @@ PrefsWindow::PrefsWindow () :
     QObject::connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
 
     QSignalMapper * mapper = new QSignalMapper (this);
-    const char * data_dir = aud_get_path (AudPath::DataDir);
 
     QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
                       s_category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
 
     for (int i = 0; i < CATEGORY_COUNT; i ++)
     {
-        QIcon ico (QString (filename_build ({data_dir, "images", categories[i].icon_path})));
-        QAction * a = new QAction (ico, translate_str (categories[i].name), toolbar);
+        auto a = new QAction (get_icon (categories[i].icon),
+         translate_str (categories[i].name), toolbar);
 
         toolbar->addAction (a);
         mapper->setMapping (a, i);
