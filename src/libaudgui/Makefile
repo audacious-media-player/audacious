@@ -60,6 +60,6 @@ LIBS := -L../libaudcore -laudcore \
 pre-depend: images.c images.h
 
 images.h: images.gresource.xml
-	glib-compile-resources --sourcedir=../../images --generate-header images.gresource.xml
+	glib-compile-resources --sourcedir=../../images --generate-header --target=images.h images.gresource.xml
 images.c: images.gresource.xml
-	glib-compile-resources --sourcedir=../../images --generate-source images.gresource.xml
+	glib-compile-resources --sourcedir=../../images --generate-source --target=images.c images.gresource.xml
