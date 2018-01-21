@@ -131,13 +131,52 @@ void audgui_hide_unique_window (int id)
         gtk_widget_destroy (windows[id]);
 }
 
+#ifdef _WIN32
+/* On Windows, the default icon sizes are fixed.
+ * Adjust them for varying screen resolutions. */
+void adjust_icon_sizes (void)
+{
+    struct Mapping {
+        GtkIconSize size;
+        const char * name;
+    };
+
+    static const Mapping mappings[] = {
+        {GTK_ICON_SIZE_MENU, "gtk-menu"},
+        {GTK_ICON_SIZE_SMALL_TOOLBAR, "gtk-small-toolbar"},
+        {GTK_ICON_SIZE_LARGE_TOOLBAR, "gtk-large-toolbar"},
+        {GTK_ICON_SIZE_BUTTON, "gtk-button"},
+        {GTK_ICON_SIZE_DND, "gtk-dnd"},
+        {GTK_ICON_SIZE_DIALOG, "gtk-dialog"}
+    };
+
+    StringBuf value;
+
+    for (auto & m : mappings)
+    {
+        int width, height;
+        if (gtk_icon_size_lookup (m.size, & width, & height))
+        {
+            width = audgui_to_native_dpi (width);
+            height = audgui_to_native_dpi (height);
+
+            const char * sep = value.len () ? ":" : "";
+            str_append_printf (value, "%s%s=%d,%d", sep, m.name, width, height);
+        }
+    }
+
+    GtkSettings * settings = gtk_settings_get_default ();
+    g_object_set ((GObject *) settings, "gtk-icon-sizes", (const char *) value, nullptr);
+}
+#endif
+
 static int get_icon_size (GtkIconSize size)
 {
     int width, height;
     if (gtk_icon_size_lookup (size, & width, & height))
         return (width + height) / 2;
 
-    return 16; // shouldn't happen?
+    return audgui_to_native_dpi (16);
 }
 
 static void load_fallback_icon (const char * icon, int size)
@@ -255,6 +294,10 @@ static void load_fallback_icons ()
     };
 
     g_resources_register (images_get_resource ());
+
+#ifdef _WIN32
+    adjust_icon_sizes ();
+#endif
 
     int menu_size = get_icon_size (GTK_ICON_SIZE_MENU);
     for (const char * icon : all_icons)
