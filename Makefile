@@ -4,16 +4,7 @@ DISTCLEAN = ${GENERATED_FILES} config.h config.log config.status
 
 DATA = AUTHORS \
        COPYING \
-       images/about-logo.png \
        images/about-logo.svg \
-       images/advanced.png \
-       images/album.png \
-       images/appearance.png \
-       images/audio.png \
-       images/connectivity.png \
-       images/info.png \
-       images/playlist.png \
-       images/plugins.png \
        images/applications-graphics.svg \
        images/applications-internet.svg \
        images/applications-system.svg \
