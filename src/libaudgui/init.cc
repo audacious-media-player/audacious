@@ -260,7 +260,11 @@ static void load_fallback_icons ()
     for (const char * icon : all_icons)
         load_fallback_icon (icon, menu_size);
 
-    int toolbar_size = get_icon_size (GTK_ICON_SIZE_LARGE_TOOLBAR);
+    GtkIconSize icon_size;
+    GtkSettings * settings = gtk_settings_get_default ();
+    g_object_get (settings, "gtk-toolbar-icon-size", & icon_size, NULL);
+
+    int toolbar_size = get_icon_size (icon_size);
     for (const char * icon : toolbar_icons)
         load_fallback_icon (icon, toolbar_size);
 
