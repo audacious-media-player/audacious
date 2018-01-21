@@ -30,6 +30,10 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
+extern "C" {
+#include "images.h"
+}
+
 static const char * const audgui_defaults[] = {
     "clear_song_fields", "TRUE",
     "close_dialog_add", "FALSE",
@@ -129,10 +133,8 @@ void audgui_hide_unique_window (int id)
 
 static void load_fallback_icon (const char * icon, int size)
 {
-    const char * data_dir = aud_get_path (AudPath::DataDir);
-    StringBuf svg_name = str_concat ({icon, ".svg"});
-    StringBuf path = filename_build ({data_dir, "images", svg_name});
-    auto pixbuf = gdk_pixbuf_new_from_file_at_size (path, size, size, nullptr);
+    StringBuf resource = str_concat ({"/org/audacious/", icon, ".svg"});
+    auto pixbuf = gdk_pixbuf_new_from_resource_at_scale (resource, size, size, true, nullptr);
 
     if (pixbuf)
     {
@@ -153,6 +155,8 @@ static void load_fallback_icons ()
         "dialog-information",
         "preferences-system"
     };
+
+    g_resources_register (images_get_resource ());
 
     int category_size = audgui_to_native_dpi (48);
     for (const char * icon : categories)

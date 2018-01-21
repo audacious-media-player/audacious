@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/audacious">
+    <file>about-logo.svg</file>
+    <file>applications-graphics.svg</file>
+    <file>applications-internet.svg</file>
+    <file>applications-system.svg</file>
+    <file>audacious.ico</file>
+    <file>audacious.png</file>
+    <file>audacious.svg</file>
+    <file>audio-volume-medium.svg</file>
+    <file>audio-x-generic.svg</file>
+    <file>dialog-information.svg</file>
+    <file>preferences-system.svg</file>
+  </gresource>
+</gresources>

@@ -78,8 +78,8 @@ static GtkWidget * create_about_window ()
     GtkWidget * vbox = gtk_vbox_new (false, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
-    StringBuf logo_path = filename_build ({data_dir, "images", "about-logo.svg"});
-    AudguiPixbuf logo (gdk_pixbuf_new_from_file_at_size (logo_path, 4 * dpi, 2 * dpi, nullptr));
+    AudguiPixbuf logo (gdk_pixbuf_new_from_resource_at_scale
+     ("/org/audacious/about-logo.svg", 4 * dpi, 2 * dpi, true, nullptr));
     GtkWidget * image = gtk_image_new_from_pixbuf (logo.get ());
     gtk_box_pack_start ((GtkBox *) vbox, image, false, false, 0);
 
