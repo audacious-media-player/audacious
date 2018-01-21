@@ -66,7 +66,7 @@ static QDialog * buildUrlDialog (bool open)
     combobox->setMinimumContentsLength (50);
 
     auto clear_button = new QPushButton (translate_str (N_("C_lear history")), dialog);
-    clear_button->setIcon (QIcon::fromTheme ("edit-clear"));
+    clear_button->setIcon (audqt::get_icon ("edit-clear"));
 
     auto hbox = make_hbox (nullptr);
     prefs_populate (hbox, widgets, PACKAGE);
@@ -74,10 +74,10 @@ static QDialog * buildUrlDialog (bool open)
     hbox->addWidget (clear_button);
 
     auto button1 = new QPushButton (translate_str (verb), dialog);
-    button1->setIcon (QIcon::fromTheme (icon));
+    button1->setIcon (audqt::get_icon (icon));
 
     auto button2 = new QPushButton (translate_str (N_("_Cancel")), dialog);
-    button2->setIcon (QIcon::fromTheme ("process-stop"));
+    button2->setIcon (audqt::get_icon ("process-stop"));
 
     auto buttonbox = new QDialogButtonBox (dialog);
     buttonbox->addButton (button1, QDialogButtonBox::AcceptRole);

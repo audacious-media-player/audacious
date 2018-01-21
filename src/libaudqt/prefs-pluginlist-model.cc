@@ -24,6 +24,7 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/plugins.h>
 #include <libaudcore/runtime.h>
+#include <libaudqt/libaudqt.h>
 
 namespace audqt {
 
@@ -155,13 +156,13 @@ QVariant PluginListModel::data (const QModelIndex & index, int role) const
 
     case AboutColumn:
         if (role == Qt::DecorationRole && enabled && aud_plugin_has_about (p))
-            return QIcon::fromTheme ("dialog-information");
+            return audqt::get_icon ("dialog-information");
 
         break;
 
     case SettingsColumn:
         if (role == Qt::DecorationRole && enabled && aud_plugin_has_configure (p))
-            return QIcon::fromTheme ("preferences-system");
+            return audqt::get_icon ("preferences-system");
 
         break;
     }

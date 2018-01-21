@@ -217,7 +217,7 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     auto btnbox = new QDialogButtonBox (this);
 
     auto btn1 = btnbox->addButton (translate_str (N_("Cl_ear")), QDialogButtonBox::ActionRole);
-    btn1->setIcon (QIcon::fromTheme ("edit-clear-all"));
+    btn1->setIcon (audqt::get_icon ("edit-clear-all"));
     btn1->setAutoDefault (false);
     QObject::connect (btn1, & QPushButton::clicked, [] () {
         s_model.get ()->cleanup ();
