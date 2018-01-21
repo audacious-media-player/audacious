@@ -47,6 +47,5 @@ LIBS := -L../libaudcore -laudcore \
         ${LIBS} -lm \
         ${QT_LIBS}
 
-# TODO: restore dependency on the embedded icon index.theme file if required
 images.cc: images.qrc
-	rcc $< -o $@
+	${QT_BINPATH}/rcc $< -o $@

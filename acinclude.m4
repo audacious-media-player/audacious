@@ -195,6 +195,7 @@ AC_ARG_ENABLE(qt,
 
 if test $USE_QT = yes ; then
     PKG_CHECK_MODULES([QTCORE], [Qt5Core >= 5.2])
+    PKG_CHECK_VAR([QTBINPATH], [Qt5Core >= 5.2], [host_bins])
     PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets >= 5.2])
     AC_DEFINE(USE_QT, 1, [Define if Qt support enabled])
 
@@ -206,5 +207,6 @@ fi
 AC_SUBST(USE_QT)
 AC_SUBST(QT_CFLAGS)
 AC_SUBST(QT_LIBS)
+AC_SUBST(QTBINPATH)
 
 ])
