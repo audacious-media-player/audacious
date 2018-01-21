@@ -27,9 +27,9 @@ from the use of this software.
 
 EXCEPTIONS
 
-Other than the Audacious logo itself, the images included with Audacious are
-either based on the Tango Icon Library (public domain) or the GNOME Icon Theme
-(CC BY-SA 3.0; see https://creativecommons.org/licenses/by-sa/3.0/us/).
+Audacious includes icons adapted from the Paper Icon Set by Sam Hewitt.  These
+icons are distributed under the Creative Commons Attribution-ShareAlike 4.0
+license (see https://creativecommons.org/licenses/by-sa/4.0/).
 
 Please note that many of the plugins distributed with Audacious are under
 different licenses, whose full text may be found either in the "About" window
