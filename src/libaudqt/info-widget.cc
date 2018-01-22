@@ -22,6 +22,10 @@
 #include "libaudqt.h"
 
 #include <QHeaderView>
+#include <QMenu>
+#include <QApplication>
+#include <QClipboard>
+#include <QMimeData>
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/probe.h>
@@ -55,6 +59,11 @@ static const TupleFieldMap tuple_field_map[] = {
     {N_("Codec"), Tuple::Codec, false},
     {N_("Quality"), Tuple::Quality, false},
     {N_("Bitrate"), Tuple::Bitrate, false},
+
+    {nullptr, Tuple::Invalid, false},
+    {N_("Folder"), Tuple::Path, false},
+    {N_("Filename"), Tuple::Basename, false},
+    {N_("Audio File URI"), Tuple::AudioFile, false},
 };
 
 class InfoModel : public QAbstractTableModel
@@ -98,6 +107,8 @@ EXPORT InfoWidget::InfoWidget (QWidget * parent) :
     header ()->hide ();
     setIndentation (0);
     resizeColumnToContents (0);
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect (this, &QTreeView::customContextMenuRequested, this, &InfoWidget::contextMenu);
 }
 
 EXPORT InfoWidget::~InfoWidget ()
@@ -115,6 +126,34 @@ EXPORT void InfoWidget::fillInfo (const char * filename, const Tuple & tuple,
 EXPORT bool InfoWidget::updateFile ()
 {
     return m_model->updateFile ();
+}
+
+void InfoWidget::toClipboard ()
+{
+    QAction *action = qobject_cast<QAction*>(sender ());
+    if (action)
+    {
+        QModelIndex index = action->data().toModelIndex ();
+        QMimeData *data = new QMimeData;
+        data->setText (m_model->data (index, Qt::DisplayRole).toString());
+        QApplication::clipboard ()->setMimeData (data);
+    }
+}
+
+void InfoWidget::contextMenu (const QPoint & pos)
+{
+    QModelIndex index = indexAt (pos);
+    if (index.column () == 1)
+    {
+        QMenu *contextMenu = new QMenu (this);
+        QAction *copyAction = new QAction ( audqt::get_icon ("edit-copy"), N_("Copy"), contextMenu);
+        copyAction->setData (QVariant (index));
+        connect (copyAction, &QAction::triggered, this, &InfoWidget::toClipboard);
+        contextMenu->addAction (copyAction);
+        // TODO: add a Paste action depending on or activating the edit state?
+        contextMenu->exec (mapToGlobal (pos));
+        contextMenu->deleteLater ();
+    }
 }
 
 bool InfoModel::updateFile () const
@@ -169,7 +208,13 @@ QVariant InfoModel::data (const QModelIndex & index, int role) const
             switch (m_tuple.get_value_type (field_id))
             {
             case Tuple::String:
-                return QString (m_tuple.get_str (field_id));
+                if (field_id == Tuple::Basename)
+                {
+                    return QString (m_tuple.get_str (field_id)) + QStringLiteral (".")
+                        + QString (m_tuple.get_str (Tuple::Suffix));
+                }
+                else
+                    return QString (m_tuple.get_str (field_id));
             case Tuple::Int:
                 return m_tuple.get_int (field_id);
             default:

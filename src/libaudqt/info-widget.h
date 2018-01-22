@@ -43,6 +43,8 @@ public:
 
 private:
     InfoModel * m_model;
+    void contextMenu (const QPoint & pos);
+    void toClipboard ();
 };
 
 } // namespace audqt
