@@ -63,7 +63,6 @@ static const TupleFieldMap tuple_field_map[] = {
     {nullptr, Tuple::Invalid, false},
     {N_("Folder"), Tuple::Path, false},
     {N_("Filename"), Tuple::Basename, false},
-    {N_("Audio File URI"), Tuple::AudioFile, false},
 };
 
 class InfoModel : public QAbstractTableModel
