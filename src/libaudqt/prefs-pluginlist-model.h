@@ -34,7 +34,7 @@ public:
         NameColumn,
         AboutColumn,
         SettingsColumn,
-        EmptyLastColumn,
+        SpacerColumn,
         NumColumns
     };
 

@@ -38,7 +38,10 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
     auto img = data ? QImage::fromData ((const uchar *) data->begin (), data->len ()) : QImage ();
 
     if (img.isNull ())
-        return get_icon ("audio-x-generic").pixmap (w, h);
+    {
+        unsigned size = to_native_dpi (48);
+        return get_icon ("audio-x-generic").pixmap (aud::min (w, size), aud::min (h, size));
+    }
 
     // return original image if requested size is zero,
     // or original size is smaller than requested size

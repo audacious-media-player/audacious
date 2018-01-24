@@ -18,13 +18,17 @@
  * the use of this software.
  */
 
+#include <math.h>
+
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QImage>
 #include <QLabel>
 #include <QPixmap>
+#include <QPainter>
 #include <QPushButton>
+#include <QTextDocument>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
@@ -39,6 +43,45 @@
 
 namespace audqt {
 
+/* This class remedies some of the deficiencies of QLabel (such as lack
+ * of proper wrapping).  It can be expanded and/or made more visible if
+ * it turns out to be useful outside InfoWindow. */
+class TextWidget : public QWidget
+{
+public:
+    void setText (const QString & text)
+    {
+        m_doc.setPlainText (text);
+        updateGeometry ();
+    }
+
+    void setWidth (int width)
+    {
+        m_doc.setTextWidth (width);
+        updateGeometry ();
+    }
+
+protected:
+    QSize sizeHint () const override
+    {
+        qreal width = m_doc.idealWidth ();
+        qreal height = m_doc.size ().height ();
+        return QSize (ceil (width), ceil (height));
+    }
+
+    QSize minimumSizeHint () const override
+        { return sizeHint (); }
+
+    void paintEvent (QPaintEvent * event) override
+    {
+        QPainter painter (this);
+        m_doc.drawContents (& painter);
+    }
+
+private:
+    QTextDocument m_doc;
+};
+
 class InfoWindow : public QDialog
 {
 public:
@@ -50,6 +93,7 @@ public:
 private:
     String m_filename;
     QLabel m_image;
+    TextWidget m_uri_label;
     InfoWidget m_infowidget;
 
     void displayImage (const char * filename);
@@ -63,8 +107,17 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     setWindowTitle (_("Song Info"));
     setContentsMargins (margins.TwoPt);
 
+    m_image.setAlignment (Qt::AlignCenter);
+    m_uri_label.setWidth (2 * audqt::sizes.OneInch);
+
+    auto left_vbox = make_vbox (nullptr);
+    left_vbox->addWidget (& m_image);
+    left_vbox->addWidget (& m_uri_label);
+    left_vbox->setStretch (0, 1);
+    left_vbox->setStretch (1, 0);
+
     auto hbox = make_hbox (nullptr);
-    hbox->addWidget (& m_image);
+    hbox->addLayout (left_vbox);
     hbox->addWidget (& m_infowidget);
 
     auto vbox = make_vbox (this);
@@ -87,6 +140,7 @@ void InfoWindow::fillInfo (const char * filename, const Tuple & tuple,
  PluginHandle * decoder, bool updating_enabled)
 {
     m_filename = String (filename);
+    m_uri_label.setText ((QString) uri_to_display (filename));
     displayImage (filename);
     m_infowidget.fillInfo (filename, tuple, decoder, updating_enabled);
 }
