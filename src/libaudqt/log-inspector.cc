@@ -204,7 +204,7 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     view->scrollToBottom ();
 
     // set a platform-appropriate font
-    view->setFont (get_font_for_class ("QSmallFont"));
+    view->setFont (get_font_for_class ("LogEntryInspector"));
 
     m_level_combobox.addItem (_("Debug"), audlog::Debug);
     m_level_combobox.addItem (_("Info"), audlog::Info);

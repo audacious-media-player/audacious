@@ -557,7 +557,6 @@ static void create_plugin_category (QStackedWidget * parent)
 
     s_plugin_view->setModel (s_plugin_model);
     s_plugin_view->setSelectionMode (QTreeView::NoSelection);
-    s_plugin_view->setFont (get_font_for_class ("QListView"));
     s_plugin_view->setAlternatingRowColors (true);
 
     auto header = s_plugin_view->header ();

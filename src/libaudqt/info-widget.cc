@@ -101,7 +101,7 @@ EXPORT InfoWidget::InfoWidget (QWidget * parent) :
     QTreeView (parent),
     m_model (new InfoModel (this))
 {
-    setFont(get_font_for_class ("QSmallFont"));
+    setFont (get_font_for_class ("InfoWidget"));
     setModel (m_model);
     header ()->hide ();
     setIndentation (0);

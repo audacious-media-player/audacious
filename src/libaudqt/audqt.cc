@@ -59,6 +59,29 @@ public:
             setWindowIcon (appIcon);
         }
         setQuitOnLastWindowClosed (true);
+
+        // set up our font preferences for the various classes used in our widgets
+        // Uses the get_font_for_class() wrapper defined below which hides platform-
+        // specific choices (Mac vs. all others at this time). This is why certain
+        // setFont calls seem to confirm the default and thus to be redundant.
+        // Note that widget classes like InfoWidget still have to call
+        // `setFont (get_font_for_class (classname));`explicitly
+        // even if the inherit QObject (though possibly not when the class definition
+        // includes the Q_OBJECT macro). Widget classes that do not inherit a QWidget
+        // create one as a member variable will evidently have to set the selected
+        // font explicitly too (e.g. QueueManagerDialog).
+        QApplication::setFont (get_font_for_class ("QDialog"), "QDialog");
+        QApplication::setFont (get_font_for_class ("QTreeView"), "QTreeView");
+        QApplication::setFont (get_font_for_class ("QSmallFont"), "InfoWidget");
+        QApplication::setFont (get_font_for_class ("QSmallFont"), "LogEntryInspector");
+        QApplication::setFont (get_font_for_class ("QSmallFont"), "QueueManagerDialog");
+        // the font used for (tool) tip labels is a good choice for the lyrics widget too
+        QApplication::setFont (get_font_for_class ("QTipLabel"), "LyricWikiQt");
+        // idem for the status bar (QTipLabel will be more consistently small but readable
+        // across the supported platforms).
+        QApplication::setFont (get_font_for_class ("QTipLabel"), "StatusBar");
+        // are QHeaderViews used in situations where QSmallFont is not appropriate?
+        QApplication::setFont (get_font_for_class ("QSmallFont"), "PlaylistHeader");
     }
     ~AudApplication()
     {
@@ -160,8 +183,10 @@ EXPORT QFont get_font_for_class (const char *className)
         || currentStyle.contains ("Aqua", Qt::CaseInsensitive))
     {
         static QHash<const QString, const char *> map = {
-            { "QListView", "QSmallFont" },
+            { "QDialog", "QSmallFont" },
             { "QListBox", "QSmallFont" },
+            { "QListView", "QSmallFont" },
+            { "QTreeView", "QSmallFont" },
         };
         if (map.contains (className))
         {

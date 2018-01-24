@@ -109,6 +109,12 @@ QIcon get_icon (const char * name);
 QHBoxLayout * make_hbox (QWidget * parent, int spacing = sizes.FourPt);
 QVBoxLayout * make_vbox (QWidget * parent, int spacing = sizes.FourPt);
 
+/// Returns the font defined for use by the @p className class.
+/// This function is a wrapper for QApplication::font(const QString &class)
+/// but extends it with a platform-specific remapping of certain class
+/// fonts (currently only on Mac).
+/// The audqt::init() function adds font attributions for a number
+/// of Audacious' own classes.
 QFont get_font_for_class (const char *className);
 
 void enable_layout (QLayout * layout, bool enabled);

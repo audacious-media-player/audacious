@@ -174,7 +174,7 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     m_treeview.setModel (& m_model);
     m_treeview.setSelectionMode (QAbstractItemView::ExtendedSelection);
     m_treeview.setHeaderHidden (true);
-    m_treeview.setFont(get_font_for_class ("QSmallFont"));
+    m_treeview.setFont(get_font_for_class ("QueueManagerDialog"));
 
     update ();
 
