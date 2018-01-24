@@ -557,12 +557,13 @@ static void create_plugin_category (QStackedWidget * parent)
 
     s_plugin_view->setModel (s_plugin_model);
     s_plugin_view->setSelectionMode (QTreeView::NoSelection);
+    s_plugin_view->setAlternatingRowColors (true);
 
     auto header = s_plugin_view->header ();
 
     header->hide ();
     header->setSectionResizeMode (header->ResizeToContents);
-    header->setStretchLastSection (false);
+    header->setStretchLastSection (true);
 
     parent->addWidget (s_plugin_view);
 
