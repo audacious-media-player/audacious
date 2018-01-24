@@ -1,6 +1,6 @@
 /*
  * prefs-window.cc
- * Copyright 2006-2014 William Pitcock, Tomasz Moń, Michael Färber, and
+ * Copyright 2006-2014 William Pitcock, Tomasz Mo?, Michael F�rber, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -641,7 +641,7 @@ PrefsWindow::PrefsWindow () :
     for (int i = 0; i < CATEGORY_COUNT; i ++)
     {
         auto a = new QAction (get_icon (categories[i].icon),
-         translate_str (categories[i].name), toolbar);
+        translate_str (categories[i].name), toolbar);
 
         toolbar->addAction (a);
         mapper->setMapping (a, i);
