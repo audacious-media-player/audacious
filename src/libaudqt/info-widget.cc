@@ -127,18 +127,6 @@ EXPORT bool InfoWidget::updateFile ()
     return m_model->updateFile ();
 }
 
-void InfoWidget::toClipboard ()
-{
-    QAction *action = qobject_cast<QAction*>(sender ());
-    if (action)
-    {
-        QModelIndex index = action->data().toModelIndex ();
-        QMimeData *data = new QMimeData;
-        data->setText (m_model->data (index, Qt::DisplayRole).toString());
-        QApplication::clipboard ()->setMimeData (data);
-    }
-}
-
 void InfoWidget::contextMenu (const QPoint & pos)
 {
     QModelIndex index = indexAt (pos);
@@ -146,8 +134,12 @@ void InfoWidget::contextMenu (const QPoint & pos)
     {
         QMenu *contextMenu = new QMenu (this);
         QAction *copyAction = new QAction ( audqt::get_icon ("edit-copy"), N_("Copy"), contextMenu);
-        copyAction->setData (QVariant (index));
-        connect (copyAction, &QAction::triggered, this, &InfoWidget::toClipboard);
+        const QString text = m_model->data (index, Qt::DisplayRole).toString();
+        connect (copyAction, &QAction::triggered, copyAction, [text] () {
+            QMimeData *data = new QMimeData;
+            data->setText (text);
+            QApplication::clipboard ()->setMimeData (data);
+        });
         contextMenu->addAction (copyAction);
         // TODO: add a Paste action depending on or activating the edit state?
         contextMenu->exec (mapToGlobal (pos));
