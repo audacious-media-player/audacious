@@ -73,7 +73,7 @@ EXPORT void init ()
     margins_local.FourPt = QMargins (sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
     margins_local.EightPt = QMargins (sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
 
-#ifdef Q_MAC_OS  // Mac-specific font tweaks
+#ifdef Q_OS_MAC  // Mac-specific font tweaks
     QApplication::setFont (QApplication::font ("QSmallFont"), "QDialog");
     QApplication::setFont (QApplication::font ("QSmallFont"), "QTreeView");
     QApplication::setFont (QApplication::font ("QTipLabel"), "QStatusBar");
