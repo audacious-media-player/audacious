@@ -563,8 +563,6 @@ static void create_plugin_category (QStackedWidget * parent)
 
     header->hide ();
     header->setSectionResizeMode (header->ResizeToContents);
-    // stretch the last section so the QTreeView takes the entire
-    // width of its parent QStackedWidget.
     header->setStretchLastSection (true);
 
     parent->addWidget (s_plugin_view);
