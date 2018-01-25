@@ -61,7 +61,8 @@ EXPORT void init ()
 #endif
 
     qapp->setApplicationName (_("Audacious"));
-    qapp->setWindowIcon (audqt::get_icon (app_name));
+    if (qapp->windowIcon ().isNull ())
+        qapp->setWindowIcon (audqt::get_icon (app_name));
 
     auto desktop = qapp->desktop ();
     sizes_local.OneInch = aud::max (96, (desktop->logicalDpiX () + desktop->logicalDpiY ()) / 2);
