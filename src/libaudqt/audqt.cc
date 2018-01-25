@@ -41,56 +41,6 @@ namespace audqt {
 
 static int init_count;
 
-// wrap QApplication only so we can generate a debug trace
-class AudApplication : public QApplication
-{
-public:
-    AudApplication (int &argc, char **argv)
-        : QApplication (argc, argv)
-    {
-        setAttribute (Qt::AA_UseHighDpiPixmaps);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
-        setAttribute (Qt::AA_ForceRasterWidgets);
-#endif
-
-        setApplicationName (_("Audacious"));
-        if (windowIcon().isNull()) {
-            QIcon appIcon = get_icon (argv[0]);
-            setWindowIcon (appIcon);
-        }
-        setQuitOnLastWindowClosed (true);
-
-        // set up our font preferences for the various classes used in our widgets
-        // Uses the get_font_for_class() wrapper defined below which hides platform-
-        // specific choices (Mac vs. all others at this time). This is why certain
-        // setFont calls seem to confirm the default and thus to be redundant.
-        // Note that widget classes like InfoWidget still have to call
-        // `setFont (get_font_for_class (classname));`explicitly
-        // even if the inherit QObject (though possibly not when the class definition
-        // includes the Q_OBJECT macro). Widget classes that do not inherit a QWidget
-        // create one as a member variable will evidently have to set the selected
-        // font explicitly too (e.g. QueueManagerDialog).
-        QApplication::setFont (get_font_for_class ("QDialog"), "QDialog");
-        QApplication::setFont (get_font_for_class ("QTreeView"), "QTreeView");
-        QApplication::setFont (get_font_for_class ("QSmallFont"), "InfoWidget");
-        QApplication::setFont (get_font_for_class ("QSmallFont"), "LogEntryInspector");
-        QApplication::setFont (get_font_for_class ("QSmallFont"), "QueueManagerDialog");
-        // the font used for (tool) tip labels is a good choice for the lyrics widget too
-        QApplication::setFont (get_font_for_class ("QTipLabel"), "LyricWikiQt");
-        // idem for the status bar (QTipLabel will be more consistently small but readable
-        // across the supported platforms).
-        QApplication::setFont (get_font_for_class ("QTipLabel"), "StatusBar");
-        // are QHeaderViews used in situations where QSmallFont is not appropriate?
-        QApplication::setFont (get_font_for_class ("QSmallFont"), "PlaylistHeader");
-    }
-    ~AudApplication()
-    {
-        qDebug() << Q_FUNC_INFO << "Destroying" << this;
-    }
-};
-
-static AudApplication * qapp;
-
 static PixelSizes sizes_local;
 static PixelMargins margins_local;
 
@@ -106,9 +56,46 @@ EXPORT void init ()
     static int dummy_argc = 1;
     static char * dummy_argv[] = {app_name, nullptr};
 
-    qapp = new AudApplication (dummy_argc, dummy_argv);
+    // call the local QApplication instance "app" to avoid
+    // confusion with the qApp macro.
+    auto app = new QApplication (dummy_argc, dummy_argv);
 
-    auto desktop = qapp->desktop ();
+    // stuff that could be done in qapp's ctor:
+    app->setAttribute (Qt::AA_UseHighDpiPixmaps);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
+    app->setAttribute (Qt::AA_ForceRasterWidgets);
+#endif
+
+    app->setApplicationName (_("Audacious"));
+    if (app->windowIcon ().isNull ()) {
+        QIcon appIcon = get_icon (app_name);
+        app->setWindowIcon (appIcon);
+    }
+
+    // set up our font preferences for the various classes used in our widgets
+    // Uses the get_font_for_class() wrapper defined below which hides platform-
+    // specific choices (Mac vs. all others at this time). This is why certain
+    // setFont calls seem to confirm the default and thus to be redundant.
+    // Note that widget classes like InfoWidget still have to call
+    // `setFont (get_font_for_class (classname));`explicitly
+    // even if the inherit QObject (though possibly not when the class definition
+    // includes the Q_OBJECT macro). Widget classes that do not inherit a QWidget
+    // create one as a member variable will evidently have to set the selected
+    // font explicitly too (e.g. QueueManagerDialog).
+    QApplication::setFont (get_font_for_class ("QDialog"), "QDialog");
+    QApplication::setFont (get_font_for_class ("QTreeView"), "QTreeView");
+    QApplication::setFont (get_font_for_class ("QSmallFont"), "InfoWidget");
+    QApplication::setFont (get_font_for_class ("QSmallFont"), "LogEntryInspector");
+    QApplication::setFont (get_font_for_class ("QSmallFont"), "QueueManagerDialog");
+    // the font used for (tool) tip labels is a good choice for the lyrics widget too
+    QApplication::setFont (get_font_for_class ("QTipLabel"), "LyricWikiQt");
+    // idem for the status bar (QTipLabel will be more consistently small but readable
+    // across the supported platforms).
+    QApplication::setFont (get_font_for_class ("QTipLabel"), "StatusBar");
+    // are QHeaderViews used in situations where QSmallFont is not appropriate?
+    QApplication::setFont (get_font_for_class ("QSmallFont"), "PlaylistHeader");
+
+    auto desktop = app->desktop ();
     sizes_local.OneInch = aud::max (96, (desktop->logicalDpiX () + desktop->logicalDpiY ()) / 2);
     sizes_local.TwoPt = aud::rescale (2, 72, sizes_local.OneInch);
     sizes_local.FourPt = aud::rescale (4, 72, sizes_local.OneInch);
@@ -123,12 +110,12 @@ EXPORT void init ()
 
 EXPORT void run ()
 {
-    qapp->exec ();
+    qApp->exec ();
 }
 
 EXPORT void quit ()
 {
-    qapp->quit ();
+    qApp->quit ();
 }
 
 EXPORT void cleanup ()
@@ -145,9 +132,9 @@ EXPORT void cleanup ()
 
     log_cleanup ();
 
-    delete qapp;
-    // avoid leaving a stale global variable around
-    qapp = nullptr;
+    // this is also where we need to delete our QApplication instance
+    // deleting qApp looks weird but should be safe.
+    delete qApp;
 }
 
 EXPORT QIcon get_icon (const char * name)
@@ -178,7 +165,7 @@ EXPORT QVBoxLayout * make_vbox (QWidget * parent, int spacing)
 
 EXPORT QFont get_font_for_class (const char *className)
 {
-    QString currentStyle = qapp->style ()->objectName();
+    QString currentStyle = qApp->style ()->objectName();
     if (currentStyle.compare ("Macintosh", Qt::CaseInsensitive) == 0
         || currentStyle.contains ("Aqua", Qt::CaseInsensitive))
     {
