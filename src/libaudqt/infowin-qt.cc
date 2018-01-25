@@ -22,6 +22,7 @@
 
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QEvent>
 #include <QHBoxLayout>
 #include <QImage>
 #include <QLabel>
@@ -49,6 +50,11 @@ namespace audqt {
 class TextWidget : public QWidget
 {
 public:
+    TextWidget ()
+    {
+        m_doc.setDefaultFont (font ());
+    }
+
     void setText (const QString & text)
     {
         m_doc.setPlainText (text);
@@ -71,6 +77,15 @@ protected:
 
     QSize minimumSizeHint () const override
         { return sizeHint (); }
+
+    void changeEvent (QEvent * event) override
+    {
+        if (event->type () == QEvent::FontChange)
+        {
+            m_doc.setDefaultFont (font ());
+            updateGeometry ();
+        }
+    }
 
     void paintEvent (QPaintEvent * event) override
     {
