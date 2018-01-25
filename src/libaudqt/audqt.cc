@@ -56,6 +56,9 @@ EXPORT void init ()
 #if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
     qapp->setAttribute (Qt::AA_ForceRasterWidgets);
 #endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+    qapp->setAttribute (Qt::AA_UseStyleSheetPropagationInWidgetStyles);
+#endif
 
     qapp->setApplicationName (_("Audacious"));
     qapp->setWindowIcon (audqt::get_icon (app_name));
