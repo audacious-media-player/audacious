@@ -41,6 +41,7 @@
 
 #include "info-widget.h"
 #include "libaudqt.h"
+#include "libaudqt-internal.h"
 
 namespace audqt {
 
@@ -124,6 +125,11 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
 
     m_image.setAlignment (Qt::AlignCenter);
     m_uri_label.setWidth (2 * audqt::sizes.OneInch);
+    m_uri_label.setContextMenuPolicy (Qt::CustomContextMenu);
+
+    connect (& m_uri_label, & QWidget::customContextMenuRequested, [this] (const QPoint & pos) {
+        show_copy_context_menu (this, m_uri_label.mapToGlobal (pos), QString (m_filename));
+    });
 
     auto left_vbox = make_vbox (nullptr);
     left_vbox->addWidget (& m_image);
@@ -143,12 +149,12 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
     vbox->addWidget (bbox);
 
-    QObject::connect (bbox, & QDialogButtonBox::accepted, [this] () {
+    connect (bbox, & QDialogButtonBox::accepted, [this] () {
         m_infowidget.updateFile ();
         deleteLater ();
     });
 
-    QObject::connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
+    connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
 }
 
 void InfoWindow::fillInfo (const char * filename, const Tuple & tuple,

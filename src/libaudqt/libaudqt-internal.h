@@ -1,6 +1,6 @@
 /*
  * libaudqt-internal.h
- * Copyright 2016 John Lindgren
+ * Copyright 2016-2017 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,11 +20,19 @@
 #ifndef LIBAUDQT_INTERNAL_H
 #define LIBAUDQT_INTERNAL_H
 
+class QPoint;
+class QString;
+class QWidget;
+
 namespace audqt {
 
 /* log-inspector.cc */
 void log_init ();
 void log_cleanup ();
+
+/* util-qt.cc */
+void show_copy_context_menu (QWidget * parent, const QPoint & global_pos,
+ const QString & text_to_copy);
 
 } // namespace audqt
 

@@ -1,7 +1,7 @@
 /*
  * info-widget.h
- * Copyright 2006-2014 William Pitcock, Tomasz Moń, Eugene Zagidullin,
- *                     John Lindgren, and Thomas Lange
+ * Copyright 2006-2017 René Bertin, Thomas Lange, John Lindgren,
+ *                     William Pitcock, Tomasz Moń, and Eugene Zagidullin
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,6 +20,7 @@
 
 #include "info-widget.h"
 #include "libaudqt.h"
+#include "libaudqt-internal.h"
 
 #include <QHeaderView>
 
@@ -97,6 +98,17 @@ EXPORT InfoWidget::InfoWidget (QWidget * parent) :
     header ()->hide ();
     setIndentation (0);
     resizeColumnToContents (0);
+    setContextMenuPolicy (Qt::CustomContextMenu);
+
+    connect (this, & QWidget::customContextMenuRequested, [this] (const QPoint & pos)
+    {
+        auto index = indexAt (pos);
+        if (index.column () != 1)
+            return;
+        auto text = m_model->data (index, Qt::DisplayRole).toString ();
+        if (! text.isEmpty ())
+            show_copy_context_menu (this, mapToGlobal (pos), text);
+    });
 }
 
 EXPORT InfoWidget::~InfoWidget ()

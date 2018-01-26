@@ -21,6 +21,7 @@ SRCS = about-qt.cc \
        prefs-pluginlist-model.cc \
        queue-manager-qt.cc \
        url-opener-qt.cc \
+       util-qt.cc \
        volumebutton.cc
 
 INCLUDES = export.h \
