@@ -47,6 +47,8 @@ enum class FileMode {
     OpenFolder,
     Add,
     AddFolder,
+    ImportPlaylist,
+    ExportPlaylist,
     count
 };
 

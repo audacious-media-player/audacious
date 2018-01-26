@@ -21,6 +21,7 @@
 
 #include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 
 #include <libaudqt/libaudqt.h>
@@ -28,6 +29,23 @@
 namespace audqt {
 
 static aud::array<FileMode, QFileDialog *> s_dialogs;
+
+static void import_playlist (Playlist playlist, const String & filename)
+{
+    playlist.set_filename (filename);
+    playlist.remove_all_entries ();
+    playlist.insert_entry (0, filename, Tuple (), false);
+}
+
+static void export_playlist (Playlist playlist, const String & filename)
+{
+    Playlist::GetMode mode = Playlist::Wait;
+    if (aud_get_bool (nullptr, "metadata_on_play"))
+        mode = Playlist::NoWait;
+
+    playlist.set_filename (filename);
+    playlist.save_to_file (filename, mode);
+}
 
 EXPORT void fileopener_show (FileMode mode)
 {
@@ -39,21 +57,27 @@ EXPORT void fileopener_show (FileMode mode)
             N_("Open Files"),
             N_("Open Folder"),
             N_("Add Files"),
-            N_("Add Folder")
+            N_("Add Folder"),
+            N_("Import Playlist"),
+            N_("Export Playlist")
         };
 
         static constexpr aud::array<FileMode, const char *> labels {
             N_("Open"),
             N_("Open"),
             N_("Add"),
-            N_("Add")
+            N_("Add"),
+            N_("Import"),
+            N_("Export")
         };
 
         static constexpr aud::array<FileMode, QFileDialog::FileMode> modes {
             QFileDialog::ExistingFiles,
             QFileDialog::Directory,
             QFileDialog::ExistingFiles,
-            QFileDialog::Directory
+            QFileDialog::Directory,
+            QFileDialog::ExistingFile,
+            QFileDialog::AnyFile
         };
 
         String path = aud_get_str ("audgui", "filesel_path");
@@ -66,16 +90,36 @@ EXPORT void fileopener_show (FileMode mode)
         QObject::connect (dialog, & QFileDialog::directoryEntered, [] (const QString & path)
             { aud_set_str ("audgui", "filesel_path", path.toUtf8 ().constData ()); });
 
-        QObject::connect (dialog, & QFileDialog::accepted, [dialog, mode] ()
+        auto playlist = Playlist::active_playlist ();
+
+        QObject::connect (dialog, & QFileDialog::accepted, [dialog, mode, playlist] ()
         {
             Index<PlaylistAddItem> files;
             for (const QUrl & url : dialog->selectedUrls ())
                 files.append (String (url.toEncoded ().constData ()));
 
-            if (mode == FileMode::Add || mode == FileMode::AddFolder)
+            switch (mode)
+            {
+            case FileMode::Add:
+            case FileMode::AddFolder:
                 aud_drct_pl_add_list (std::move (files), -1);
-            else
+                break;
+            case FileMode::Open:
+            case FileMode::OpenFolder:
                 aud_drct_pl_open_list (std::move (files));
+                break;
+            case FileMode::ImportPlaylist:
+                if (files.len () == 1)
+                    import_playlist (playlist, files[0].filename);
+                break;
+            case FileMode::ExportPlaylist:
+                if (files.len () == 1)
+                    export_playlist (playlist, files[0].filename);
+                break;
+            default:
+                /* not reached */
+                break;
+            }
         });
 
         QObject::connect (dialog, & QObject::destroyed, [& dialog] ()
