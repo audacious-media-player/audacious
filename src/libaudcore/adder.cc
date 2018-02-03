@@ -338,11 +338,16 @@ static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,
         add_file (std::move (item), filter, user, result, false);
     else
     {
-        String error;
-        VFSFileTest mode = VFSFile::test_file (item.filename,
-         VFSFileTest (VFS_IS_DIR | VFS_NO_ACCESS), error);
+        int tests = 0;
+        if (! from_playlist)
+            tests |= VFS_NO_ACCESS;
+        if (! from_playlist || aud_get_bool (nullptr, "folders_in_playlist"))
+            tests |= VFS_IS_DIR;
 
-        if ((! from_playlist) && (mode & VFS_NO_ACCESS))
+        String error;
+        VFSFileTest mode = VFSFile::test_file (item.filename, (VFSFileTest) tests, error);
+
+        if ((mode & VFS_NO_ACCESS))
             aud_ui_show_error (str_printf (_("Error reading %s:\n%s"),
              (const char *) item.filename, (const char *) error));
         else if (mode & VFS_IS_DIR)
