@@ -56,6 +56,32 @@ InputPlugin * load_input_plugin (PluginHandle * decoder, String * error)
     return ip;
 }
 
+/* figure out some basic info without opening the file */
+int probe_by_filename (const char * filename)
+{
+    int flags = 0;
+    auto & list = aud_plugin_list (PluginType::Input);
+
+    StringBuf scheme = uri_get_scheme (filename);
+    StringBuf ext = uri_get_extension (filename);
+
+    for (PluginHandle * plugin : list)
+    {
+        if (! aud_plugin_get_enabled (plugin))
+            continue;
+
+        if ((scheme && input_plugin_has_key (plugin, InputKey::Scheme, scheme)) ||
+            (ext && input_plugin_has_key (plugin, InputKey::Ext, ext)))
+        {
+            flags |= PROBE_FLAG_HAS_DECODER;
+            if (input_plugin_has_subtunes (plugin))
+                flags |= PROBE_FLAG_MIGHT_HAVE_SUBTUNES;
+        }
+    }
+
+    return flags;
+}
+
 EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast,
  VFSFile & file, String * error)
 {
