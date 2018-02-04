@@ -573,7 +573,7 @@ static void create_plugin_category (QStackedWidget * parent)
     QObject::connect (s_plugin_view, & QAbstractItemView::clicked, [] (const QModelIndex & index)
     {
         auto p = s_plugin_model->pluginForIndex (index);
-        if (! p)
+        if (! p || ! aud_plugin_get_enabled (p))
             return;
 
         switch (index.column ())
