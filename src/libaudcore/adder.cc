@@ -136,27 +136,63 @@ static void status_done_locked ()
 }
 
 static void add_file (PlaylistAddItem && item, Playlist::FilterFunc filter,
- void * user, AddResult * result, bool validate)
+ void * user, AddResult * result, bool skip_invalid)
 {
     AUDINFO ("Adding file: %s\n", (const char *) item.filename);
     status_update (item.filename, result->items.len ());
 
-    /* If the item doesn't already have a valid tuple, and isn't a subtune
-     * itself, then probe it to expand any subtunes.  The "validate" check (used
-     * to skip non-audio files when adding folders) is also nested within this
-     * block; note that "validate" is always false for subtunes. */
+    /*
+     * If possible, we'll wait until the file is added to the playlist to probe
+     * it.  There are a couple of reasons why we might need to probe it now:
+     *
+     * 1. We're adding a folder, and need to skip over non-audio files (the
+     *    "skip invalid" flag indicates this case).
+     * 2. The file might have subtunes, which we need to expand in order to add
+     *    them to the playlist correctly.
+     *
+     * If we already have metadata, or the file is itself a subtune, then
+     * neither of these reasons apply.
+     */
     if (! item.tuple.valid () && ! is_subtune (item.filename))
     {
+        /* If we open the file to identify the decoder, we can re-use the same
+         * handle to read metadata. */
         VFSFile file;
 
         if (! item.decoder)
         {
-            bool fast = ! aud_get_bool (nullptr, "slow_probe");
-            item.decoder = aud_file_find_decoder (item.filename, fast, file);
-            if (validate && ! item.decoder)
-                return;
+            if (aud_get_bool (nullptr, "slow_probe"))
+            {
+                /* The slow path.  User settings dictate that we should try to
+                 * find a decoder even if we don't recognize the file extension. */
+                item.decoder = aud_file_find_decoder (item.filename, false, file);
+                if (skip_invalid && ! item.decoder)
+                    return;
+            }
+            else
+            {
+                /* The fast path.  First see whether any plugins recognize the
+                 * file extension.  Note that it's possible for multiple plugins
+                 * to recognize the same extension (.ogg, for example). */
+                int flags = probe_by_filename (item.filename);
+                if (skip_invalid && ! (flags & PROBE_FLAG_HAS_DECODER))
+                    return;
+
+                if ((flags & PROBE_FLAG_MIGHT_HAVE_SUBTUNES))
+                {
+                    /* At least one plugin recognized the file extension and
+                     * indicated that there might be subtunes.  Figure out for
+                     * sure which decoder we need to use for this file. */
+                    item.decoder = aud_file_find_decoder (item.filename, true, file);
+                    if (skip_invalid && ! item.decoder)
+                        return;
+                }
+            }
         }
 
+        /* At this point we've either identified the decoder or determined that
+         * the file doesn't have any subtunes.  If the former, read the tag so
+         * so we can expand any subtunes we find. */
         if (item.decoder && input_plugin_has_subtunes (item.decoder))
             aud_file_read_tag (item.filename, item.decoder, file, item.tuple);
     }
@@ -338,11 +374,16 @@ static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,
         add_file (std::move (item), filter, user, result, false);
     else
     {
-        String error;
-        VFSFileTest mode = VFSFile::test_file (item.filename,
-         VFSFileTest (VFS_IS_DIR | VFS_NO_ACCESS), error);
+        int tests = 0;
+        if (! from_playlist)
+            tests |= VFS_NO_ACCESS;
+        if (! from_playlist || aud_get_bool (nullptr, "folders_in_playlist"))
+            tests |= VFS_IS_DIR;
 
-        if ((! from_playlist) && (mode & VFS_NO_ACCESS))
+        String error;
+        VFSFileTest mode = VFSFile::test_file (item.filename, (VFSFileTest) tests, error);
+
+        if ((mode & VFS_NO_ACCESS))
             aud_ui_show_error (str_printf (_("Error reading %s:\n%s"),
              (const char *) item.filename, (const char *) error));
         else if (mode & VFS_IS_DIR)

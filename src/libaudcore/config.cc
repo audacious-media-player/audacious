@@ -47,7 +47,6 @@ static const char * const core_defaults[] = {
  "eqpreset_default_file", "",
  "eqpreset_extension", "",
  "equalizer_active", "FALSE",
- "equalizer_autoload", "FALSE",
  "equalizer_bands", "0,0,0,0,0,0,0,0,0,0",
  "equalizer_preamp", "0",
 
@@ -73,6 +72,7 @@ static const char * const core_defaults[] = {
  "enable_clipping_prevention", "TRUE",
  "output_bit_depth", "-1",
  "output_buffer_size", "500",
+ "record", "FALSE",
  "record_stream", aud::numeric_string<(int) OutputStream::AfterReplayGain>::str,
  "replay_gain_mode", aud::numeric_string<(int) ReplayGainMode::Track>::str,
  "replay_gain_preamp", "0",
@@ -96,6 +96,7 @@ static const char * const core_defaults[] = {
  "convert_backslash", "FALSE",
 #endif
  "export_relative_paths", "TRUE",
+ "folders_in_playlist", "FALSE",
  "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
  "leading_zero", "FALSE",
  "show_hours", "TRUE",

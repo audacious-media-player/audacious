@@ -55,7 +55,7 @@ static QTabWidget * buildCreditsNotebook (QWidget * parent)
 static QDialog * buildAboutWindow ()
 {
     const char * about_text = "<big><b>Audacious " VERSION "</b></big><br>" COPYRIGHT;
-    const char * website = "http://audacious-media-player.org";
+    const char * website = "https://audacious-media-player.org";
 
     auto window = new QDialog;
     window->setWindowTitle (_("About Audacious"));
