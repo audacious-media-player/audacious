@@ -117,7 +117,7 @@ EXPORT QMenu * menu_build (ArrayRef<MenuItem> menu_items, const char * domain, Q
 
 EXPORT QMenuBar * menubar_build (ArrayRef<MenuItem> menu_items, const char * domain, QWidget * parent)
 {
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_MAC
     QMenuBar * m = new QMenuBar (nullptr);
 #else
     QMenuBar * m = new QMenuBar (parent);
