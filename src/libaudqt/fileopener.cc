@@ -87,6 +87,9 @@ EXPORT void fileopener_show (FileMode mode)
         dialog->setFileMode (modes[mode]);
         dialog->setLabelText (QFileDialog::Accept, _(labels[mode]));
 
+        if (mode == FileMode::ExportPlaylist)
+            dialog->setAcceptMode (QFileDialog::AcceptSave);
+
         QObject::connect (dialog, & QFileDialog::directoryEntered, [] (const QString & path)
             { aud_set_str ("audgui", "filesel_path", path.toUtf8 ().constData ()); });
 
