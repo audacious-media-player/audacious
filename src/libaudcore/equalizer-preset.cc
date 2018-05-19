@@ -135,7 +135,10 @@ EXPORT bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile & 
     if (file.fwrite ("Winamp EQ library file v1.1\x1a!--", 1, 31) != 31)
         return false;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-truncation"
     strncpy (name, preset.name, 257);
+#pragma GCC diagnostic pop
 
     if (file.fwrite (name, 1, 257) != 257)
         return false;
