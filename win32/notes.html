@@ -171,6 +171,8 @@ make install</tt></p></blockquote>
 <a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz">
 <tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz</tt></a></p>
 
+<p>Apply the patch <tt>gdk-pixbuf-util.c.diff</tt> to <tt>C:\gdk-pixbuf\gdk-pixbuf\gdk-pixbuf-util.c</tt>.</p>
+
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gdk-pixbuf<br>
 ./configure --prefix=/C/GTK --enable-relocations --without-gdiplus --without-libtiff --with-included-loaders=jpeg,png<br>
@@ -207,6 +209,8 @@ make install</tt></p></blockquote>
 <a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.24/atk-2.24.0.tar.xz">
 <tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.24/atk-2.24.0.tar.xz</tt></a></p>
 
+<p>Apply the patch <tt>atkprivate.c.diff</tt> to <tt>C:\atk\atk\atkprivate.c</tt>.</p>
+
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/atk<br>
 ./configure --prefix=/C/GTK<br>
@@ -220,7 +224,8 @@ make install</tt></p></blockquote>
 <tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.31.tar.xz</tt></a></p>
 
 <p>Apply the patch <tt>gdkwindow-win32.c.diff</tt> to <tt>C:\gtksrc\gdk\win32\gdkwindow-win32.c</tt>.<br>
-Apply the patch <tt>gtkicontheme.c.diff</tt> to <tt>C:\gtksrc\gtk\gtkicontheme.c</tt>.</p>
+Apply the patch <tt>gtkicontheme.c.diff</tt> to <tt>C:\gtksrc\gtk\gtkicontheme.c</tt>.<br>
+Apply the patch <tt>gtkmain.c.diff</tt> to <tt>C:\gtksrc\gtk\gtkmain.c</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gtksrc<br>
