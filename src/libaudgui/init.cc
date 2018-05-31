@@ -287,6 +287,7 @@ static void load_fallback_icons ()
         "applications-graphics",
         "applications-internet",
         "applications-system",
+        "audacious", /* for window icons */
         "audio-volume-medium",
         "audio-x-generic", /* also used for fallback album art */
         "dialog-information",
@@ -354,9 +355,7 @@ EXPORT void audgui_init ()
     hook_associate ("playlist set playing", playlist_set_playing_cb, nullptr);
     hook_associate ("playlist position", playlist_position_cb, nullptr);
 
-#ifndef _WIN32
     gtk_window_set_default_icon_name ("audacious");
-#endif
 }
 
 EXPORT void audgui_cleanup ()
