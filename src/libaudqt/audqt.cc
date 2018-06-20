@@ -100,6 +100,7 @@ EXPORT void cleanup ()
 
     aboutwindow_hide ();
     equalizer_hide ();
+    infopopup_hide ();
     infowin_hide ();
     log_inspector_hide ();
     prefswin_hide ();

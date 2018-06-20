@@ -8,6 +8,7 @@ SRCS = about-qt.cc \
        equalizer-qt.cc \
        fileopener.cc \
        images.cc \
+       infopopup-qt.cc \
        infowin-qt.cc \
        info-widget.cc \
        log-inspector.cc \

@@ -30,33 +30,37 @@
 
 namespace audqt {
 
-EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
+EXPORT QImage art_request (const char * filename, bool * queued)
 {
-    AudArtPtr art = aud_art_request (filename, AUD_ART_DATA);
+    AudArtPtr art = aud_art_request (filename, AUD_ART_DATA, queued);
 
     auto data = art.data ();
-    auto img = data ? QImage::fromData ((const uchar *) data->begin (), data->len ()) : QImage ();
+    return data ? QImage::fromData ((const uchar *) data->begin (), data->len ()) : QImage ();
+}
 
-    if (img.isNull ())
-    {
-        unsigned size = to_native_dpi (48);
-        return get_icon ("audio-x-generic").pixmap (aud::min (w, size), aud::min (h, size));
-    }
-
+EXPORT QPixmap art_scale (const QImage & image, unsigned int w, unsigned int h, bool want_hidpi)
+{
     // return original image if requested size is zero,
     // or original size is smaller than requested size
-    if ((w == 0 && h == 0) || ((unsigned) img.width () <= w && (unsigned) img.height () <= h))
-        return QPixmap::fromImage (img);
+    if ((w == 0 && h == 0) || ((unsigned) image.width () <= w && (unsigned) image.height () <= h))
+        return QPixmap::fromImage (image);
 
-    if (! want_hidpi)
-        return QPixmap::fromImage (img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    qreal r = want_hidpi ? qApp->devicePixelRatio () : 1;
+    auto pixmap = QPixmap::fromImage (image.scaled (w * r, h * r,
+     Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-    qreal r = qApp->devicePixelRatio ();
+    pixmap.setDevicePixelRatio (r);
+    return pixmap;
+}
 
-    QPixmap pm = QPixmap::fromImage (img.scaled (w * r, h * r, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    pm.setDevicePixelRatio (r);
+EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
+{
+    auto img = art_request (filename);
+    if (! img.isNull ())
+        return art_scale (img, w, h, want_hidpi);
 
-    return pm;
+    unsigned size = to_native_dpi (48);
+    return get_icon ("audio-x-generic").pixmap (aud::min (w, size), aud::min (h, size));
 }
 
 EXPORT QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi)

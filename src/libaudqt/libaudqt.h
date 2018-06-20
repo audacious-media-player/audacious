@@ -134,9 +134,16 @@ void prefswin_show_plugin_page (PluginType type);
 void log_inspector_show ();
 void log_inspector_hide ();
 
-/* art.cc */
+/* art-qt.cc */
+QImage art_request (const char * filename, bool * queued = nullptr);
+QPixmap art_scale (const QImage & image, unsigned int w, unsigned int h, bool want_hidpi = true);
 QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi = true);
 QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi = true);
+
+/* infopopup-qt.cc */
+void infopopup_show (Playlist playlist, int entry);
+void infopopup_show_current ();
+void infopopup_hide ();
 
 /* infowin.cc */
 void infowin_show (Playlist playlist, int entry);

@@ -23,12 +23,55 @@
 #include <QAction>
 #include <QApplication>
 #include <QClipboard>
+#include <QCursor>
 #include <QMenu>
 #include <QMimeData>
+#include <QWindow>
+#include <QScreen>
 
 #include <libaudcore/i18n.h>
 
 namespace audqt {
+
+void PopupWidget::showEvent (QShowEvent *)
+{
+    auto pos = QCursor::pos ();
+    auto geom = QApplication::primaryScreen ()->geometry ();
+
+    /* find the screen the cursor is on */
+    if (! geom.contains (pos))
+    {
+        for (auto screen : QApplication::screens ())
+        {
+            auto geom2 = screen->geometry ();
+            if (geom2.contains (pos))
+            {
+                geom = geom2;
+                break;
+            }
+        }
+    }
+
+    int x = pos.x ();
+    int y = pos.y ();
+    int w = width ();
+    int h = height ();
+
+    /* If we show the popup right under the cursor, the underlying window gets
+     * a leaveEvent and immediately hides the popup again.  So, we offset the
+     * popup slightly. */
+    if (x + w > geom.x () + geom.width ())
+        x -= w + 3;
+    else
+        x += 3;
+
+    if (y + h > geom.y () + geom.height ())
+        y -= h + 3;
+    else
+        y += 3;
+
+    move (x, y);
+}
 
 void show_copy_context_menu (QWidget * parent, const QPoint & global_pos,
  const QString & text_to_copy)

@@ -20,9 +20,11 @@
 #ifndef LIBAUDQT_INTERNAL_H
 #define LIBAUDQT_INTERNAL_H
 
+#include <QWidget>
+
 class QPoint;
+class QScreen;
 class QString;
-class QWidget;
 
 namespace audqt {
 
@@ -31,6 +33,12 @@ void log_init ();
 void log_cleanup ();
 
 /* util-qt.cc */
+class PopupWidget : public QWidget
+{
+protected:
+    void showEvent (QShowEvent *) override;
+};
+
 void show_copy_context_menu (QWidget * parent, const QPoint & global_pos,
  const QString & text_to_copy);
 
