@@ -141,8 +141,8 @@ QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool
 QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi = true);
 
 /* infopopup-qt.cc */
-void infopopup_show (Playlist playlist, int entry);
-void infopopup_show_current ();
+void infopopup_show (Playlist playlist, int entry, bool under_mouse = false);
+void infopopup_show_current (bool under_mouse = false);
 void infopopup_hide ();
 
 /* infowin.cc */

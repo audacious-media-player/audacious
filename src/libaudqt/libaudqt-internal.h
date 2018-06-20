@@ -35,9 +35,16 @@ void log_cleanup ();
 /* util-qt.cc */
 class PopupWidget : public QWidget
 {
+public:
+    PopupWidget (bool under_mouse) :
+        m_under_mouse (under_mouse) {}
+
 protected:
     void showEvent (QShowEvent *) override;
     void leaveEvent (QEvent *) override;
+
+private:
+    bool m_under_mouse;
 };
 
 void show_copy_context_menu (QWidget * parent, const QPoint & global_pos,

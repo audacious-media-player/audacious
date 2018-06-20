@@ -57,24 +57,32 @@ void PopupWidget::showEvent (QShowEvent *)
     int w = width ();
     int h = height ();
 
-    /* show the popup under the cursor */
+    /* List views want the popup slightly offset from the mouse so that
+     * they can still receive scroll events.  However, the status icon
+     * can't receive "leave" events, so it needs the popup to be right
+     * under the mouse to detect "leave" events itself.
+     */
+    int offset = m_under_mouse ? -3 : 3;
+
     if (x + w > geom.x () + geom.width ())
-        x -= w - 3;
+        x -= w + offset;
     else
-        x -= 3;
+        x += offset;
 
     if (y + h > geom.y () + geom.height ())
-        y -= h - 3;
+        y -= h + offset;
     else
-        y -= 3;
+        y += offset;
 
     move (x, y);
 }
 
 void PopupWidget::leaveEvent (QEvent *)
 {
-    /* hide the popup when the cursor moves away */
-    deleteLater ();
+    /* If the popup was placed under the mouse, hide it when the mouse
+     * moves away. */
+    if (m_under_mouse)
+        deleteLater ();
 }
 
 void show_copy_context_menu (QWidget * parent, const QPoint & global_pos,
