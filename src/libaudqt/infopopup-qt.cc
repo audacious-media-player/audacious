@@ -36,7 +36,7 @@ namespace audqt {
 class InfoPopup : public PopupWidget
 {
 public:
-    InfoPopup (const String & filename, const Tuple & tuple, bool under_mouse);
+    InfoPopup (const String & filename, const Tuple & tuple);
 
 private:
     void add_field (int row, const char * field, const char * value);
@@ -55,8 +55,7 @@ private:
     bool m_queued = false;
 };
 
-InfoPopup::InfoPopup (const String & filename, const Tuple & tuple, bool under_mouse) :
-    PopupWidget (under_mouse),
+InfoPopup::InfoPopup (const String & filename, const Tuple & tuple) :
     m_filename (filename)
 {
     setWindowFlags (Qt::ToolTip);
@@ -153,26 +152,26 @@ void InfoPopup::paintEvent (QPaintEvent *)
 
 static InfoPopup * s_infopopup;
 
-static void infopopup_show (const String & filename, const Tuple & tuple, bool under_mouse)
+static void infopopup_show (const String & filename, const Tuple & tuple)
 {
     delete s_infopopup;
-    s_infopopup = new InfoPopup (filename, tuple, under_mouse);
+    s_infopopup = new InfoPopup (filename, tuple);
 
     QObject::connect (s_infopopup, & QObject::destroyed, [] () {
         s_infopopup = nullptr;
     });
 }
 
-EXPORT void infopopup_show (Playlist playlist, int entry, bool under_mouse)
+EXPORT void infopopup_show (Playlist playlist, int entry)
 {
     String filename = playlist.entry_filename (entry);
     Tuple tuple = playlist.entry_tuple (entry);
 
     if (filename && tuple.valid ())
-        infopopup_show (filename, tuple, under_mouse);
+        infopopup_show (filename, tuple);
 }
 
-EXPORT void infopopup_show_current (bool under_mouse)
+EXPORT void infopopup_show_current ()
 {
     auto playlist = Playlist::playing_playlist ();
     if (playlist == Playlist ())
@@ -180,7 +179,7 @@ EXPORT void infopopup_show_current (bool under_mouse)
 
     int position = playlist.get_position ();
     if (position >= 0)
-        infopopup_show (playlist, position, under_mouse);
+        infopopup_show (playlist, position);
 }
 
 EXPORT void infopopup_hide ()
