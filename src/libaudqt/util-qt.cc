@@ -57,24 +57,20 @@ void PopupWidget::showEvent (QShowEvent *)
     int w = width ();
     int h = height ();
 
-    /* show the popup under the cursor */
+    /* If we show the popup right under the cursor, the underlying window gets
+     * a leaveEvent and immediately hides the popup again.  So, we offset the
+     * popup slightly. */
     if (x + w > geom.x () + geom.width ())
-        x -= w - 3;
+        x -= w + 3;
     else
-        x -= 3;
+        x += 3;
 
     if (y + h > geom.y () + geom.height ())
-        y -= h - 3;
+        y -= h + 3;
     else
-        y -= 3;
+        y += 3;
 
     move (x, y);
-}
-
-void PopupWidget::leaveEvent (QEvent *)
-{
-    /* hide the popup when the cursor moves away */
-    deleteLater ();
 }
 
 void show_copy_context_menu (QWidget * parent, const QPoint & global_pos,

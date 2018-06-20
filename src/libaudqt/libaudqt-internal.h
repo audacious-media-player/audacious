@@ -37,7 +37,6 @@ class PopupWidget : public QWidget
 {
 protected:
     void showEvent (QShowEvent *) override;
-    void leaveEvent (QEvent *) override;
 };
 
 void show_copy_context_menu (QWidget * parent, const QPoint & global_pos,
