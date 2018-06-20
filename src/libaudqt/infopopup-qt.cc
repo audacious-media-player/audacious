@@ -92,7 +92,7 @@ void InfoPopup::add_fields (const Tuple & tuple)
     if (album)
         add_field (row ++, _("Album"), album);
     if (genre)
-        add_field (row ++, _("Genre"), title);
+        add_field (row ++, _("Genre"), genre);
     if (year > 0)
         add_field (row ++, _("Year"), int_to_str (year));
     if (track > 0)
