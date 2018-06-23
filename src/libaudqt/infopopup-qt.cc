@@ -138,13 +138,15 @@ void InfoPopup::finish_loading ()
 
 void InfoPopup::paintEvent (QPaintEvent *)
 {
-    QLinearGradient grad (0, 0, 0, height ());
-    grad.setStops ({
+    static const QGradientStops stops = {
         {0, QColor (64, 64, 64)},
         {0.499, QColor (38, 38, 38)},
         {0.5, QColor (26, 26, 26)},
         {1, QColor (0, 0, 0)}
-    });
+    };
+
+    QLinearGradient grad (0, 0, 0, height ());
+    grad.setStops (stops);
 
     QPainter p (this);
     p.fillRect (rect (), grad);
