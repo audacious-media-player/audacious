@@ -1,0 +1,17 @@
+--- gtk/gtkmain.c.0	2016-01-19 14:03:55.000000000 -0500
++++ gtk/gtkmain.c	2018-05-30 22:19:18.138767100 -0400
+@@ -134,9 +134,13 @@
+       g_free (root);
+ 
+       /* gtk_localedir is passed to bindtextdomain() which isn't
+-       * UTF-8-aware.
++       * UTF-8-aware.  Try to convert the path back to the legacy
++       * 8-bit locale.  If that's impossible, there's not much we
++       * can do so just return the original build-time path.
+        */
+       gtk_localedir = g_win32_locale_filename_from_utf8 (temp);
++      if (gtk_localedir == NULL)
++	gtk_localedir = g_strdup (GTK_LOCALEDIR);
+       g_free (temp);
+     }
+   return gtk_localedir;

@@ -54,16 +54,15 @@ static QTabWidget * buildCreditsNotebook (QWidget * parent)
 
 static QDialog * buildAboutWindow ()
 {
-    const char * data_dir = aud_get_path (AudPath::DataDir);
-    const char * logo_path = filename_build ({data_dir, "images", "about-logo.png"});
     const char * about_text = "<big><b>Audacious " VERSION "</b></big><br>" COPYRIGHT;
-    const char * website = "http://audacious-media-player.org";
+    const char * website = "https://audacious-media-player.org";
 
     auto window = new QDialog;
     window->setWindowTitle (_("About Audacious"));
 
     auto logo = new QLabel (window);
-    logo->setPixmap (QPixmap (logo_path));
+    int logo_size = audqt::to_native_dpi (400);
+    logo->setPixmap (QIcon (":/about-logo.svg").pixmap (logo_size, logo_size));
     logo->setAlignment (Qt::AlignHCenter);
 
     auto text = new QLabel (about_text, window);
@@ -75,6 +74,7 @@ static QDialog * buildAboutWindow ()
     link_label->setOpenExternalLinks (true);
 
     auto layout = audqt::make_vbox (window);
+    layout->addSpacing (audqt::sizes.EightPt);
     layout->addWidget (logo);
     layout->addWidget (text);
     layout->addWidget (link_label);

@@ -19,58 +19,48 @@
 
 #include <QApplication>
 #include <QPixmap>
+#include <QIcon>
 #include <QImage>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
 #include <libaudcore/probe.h>
 #include <libaudcore/runtime.h>
+#include <libaudqt/libaudqt.h>
 
 namespace audqt {
 
-static QImage load_fallback ()
+EXPORT QImage art_request (const char * filename, bool * queued)
 {
-    static QImage fallback;
-    static bool loaded = false;
+    AudArtPtr art = aud_art_request (filename, AUD_ART_DATA, queued);
 
-    if (! loaded)
-    {
-        fallback.load ((const char *) filename_build
-         ({aud_get_path (AudPath::DataDir), "images", "album.png"}));
-        loaded = true;
-    }
+    auto data = art.data ();
+    return data ? QImage::fromData ((const uchar *) data->begin (), data->len ()) : QImage ();
+}
 
-    return fallback; // shallow copy
+EXPORT QPixmap art_scale (const QImage & image, unsigned int w, unsigned int h, bool want_hidpi)
+{
+    // return original image if requested size is zero,
+    // or original size is smaller than requested size
+    if ((w == 0 && h == 0) || ((unsigned) image.width () <= w && (unsigned) image.height () <= h))
+        return QPixmap::fromImage (image);
+
+    qreal r = want_hidpi ? qApp->devicePixelRatio () : 1;
+    auto pixmap = QPixmap::fromImage (image.scaled (w * r, h * r,
+     Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    pixmap.setDevicePixelRatio (r);
+    return pixmap;
 }
 
 EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
 {
-    AudArtPtr art = aud_art_request (filename, AUD_ART_DATA);
+    auto img = art_request (filename);
+    if (! img.isNull ())
+        return art_scale (img, w, h, want_hidpi);
 
-    auto data = art.data ();
-    auto img = data ? QImage::fromData ((const uchar *) data->begin (), data->len ()) : QImage ();
-
-    if (img.isNull ())
-    {
-        img = load_fallback ();
-        if (img.isNull ())
-            return QPixmap ();
-    }
-
-    // return original image if requested size is zero,
-    // or original size is smaller than requested size
-    if ((w == 0 && h == 0) || ((unsigned) img.width () <= w && (unsigned) img.height () <= h))
-        return QPixmap::fromImage (img);
-
-    if (! want_hidpi)
-        return QPixmap::fromImage (img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-
-    qreal r = qApp->devicePixelRatio ();
-
-    QPixmap pm = QPixmap::fromImage (img.scaled (w * r, h * r, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    pm.setDevicePixelRatio (r);
-
-    return pm;
+    unsigned size = to_native_dpi (48);
+    return get_icon ("audio-x-generic").pixmap (aud::min (w, size), aud::min (h, size));
 }
 
 EXPORT QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi)

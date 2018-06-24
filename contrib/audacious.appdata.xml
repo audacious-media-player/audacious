@@ -22,10 +22,10 @@
       lyrics for your music, to set an alarm in the morning, and more.
     </p>
   </description>
-  <url type="homepage">http://audacious-media-player.org</url>
+  <url type="homepage">https://audacious-media-player.org</url>
   <screenshots>
-    <screenshot type="default">http://audacious-media-player.org/images/gtk-interface.png</screenshot>
-    <screenshot>http://audacious-media-player.org/images/winamp-interface.png</screenshot>
-    <screenshot>http://audacious-media-player.org/images/settings-window.png</screenshot>
+    <screenshot type="default">https://audacious-media-player.org/images/gtk-interface.png</screenshot>
+    <screenshot>https://audacious-media-player.org/images/winamp-interface.png</screenshot>
+    <screenshot>https://audacious-media-player.org/images/settings-window.png</screenshot>
   </screenshots>
 </component>

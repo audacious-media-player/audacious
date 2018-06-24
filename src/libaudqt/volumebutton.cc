@@ -86,13 +86,13 @@ VolumeButton::VolumeButton (QWidget * parent) :
 void VolumeButton::updateIcon (int val)
 {
     if (val == 0)
-        setIcon (QIcon::fromTheme ("audio-volume-muted"));
+        setIcon (audqt::get_icon ("audio-volume-muted"));
     else if (val < 34)
-        setIcon (QIcon::fromTheme ("audio-volume-low"));
+        setIcon (audqt::get_icon ("audio-volume-low"));
     else if (val < 67)
-        setIcon (QIcon::fromTheme ("audio-volume-medium"));
+        setIcon (audqt::get_icon ("audio-volume-medium"));
     else
-        setIcon (QIcon::fromTheme ("audio-volume-high"));
+        setIcon (audqt::get_icon ("audio-volume-high"));
 
     setToolTip (QString ("%1 %").arg (val));
 }

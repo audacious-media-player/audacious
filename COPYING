@@ -1,6 +1,6 @@
 LICENSE
 
-Copyright © 2001-2017 Audacious developers and others
+Copyright © 2001-2018 Audacious developers and others
 
 (A list of the copyright holders is provided in the AUTHORS file.)
 
@@ -20,8 +20,9 @@ Copyright © 2001-2017 Audacious developers and others
 
 EXCEPTIONS
 
-Other than the Audacious logo itself, the images included with Audacious are
-based on the Tango Icon Library and are in the public domain.
+Audacious includes icons adapted from the Paper Icon Set by Sam Hewitt.  These
+icons are distributed under the Creative Commons Attribution-ShareAlike 4.0
+license (see https://creativecommons.org/licenses/by-sa/4.0/).
 
 Please note that many of the plugins distributed with Audacious are under
 different licenses.

@@ -7,12 +7,12 @@ dnl ==========
 
 AC_PREREQ([2.59])
 AC_INIT([audacious], [3.9])
-AC_COPYRIGHT([Copyright (C) 2001-2017 Audacious developers and others])
+AC_COPYRIGHT([Copyright (C) 2001-2018 Audacious developers and others])
 
 AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE_NAME", [Name of package])
 AC_DEFINE_UNQUOTED(VERSION, "$PACKAGE_VERSION", [Version number of package])
 
-COPYRIGHT="Copyright (C) 2001-2017 Audacious developers and others"
+COPYRIGHT="Copyright (C) 2001-2018 Audacious developers and others"
 AC_DEFINE_UNQUOTED(COPYRIGHT, "$COPYRIGHT", [Copyright])
 AC_SUBST(COPYRIGHT)
 
@@ -22,6 +22,7 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AUD_COMMON_PROGS
 
+BUILDSYS_INIT
 BUILDSYS_SHARED_LIB
 AC_DEFINE_UNQUOTED(PLUGIN_SUFFIX, "$PLUGIN_SUFFIX", [Suffix for plugins])
 
@@ -106,18 +107,21 @@ CPPFLAGS="$CPPFLAGS -include config.h"
 ### ---------------------------------------------------------------------------
 dnl Output configuration files
 dnl ==========================
-AC_CONFIG_FILES([
-    audacious.pc
-    buildsys.mk
-    extra.mk
-    man/audtool.1
-    man/audacious.1
-    src/libaudcore/audio.h
-    src/libaudcore/tinylock.h
-    win32/audacious.nsi
-    win32/override/README.txt
-])
+define(GENERATED_FILES,
+       audacious.pc
+       buildsys.mk
+       extra.mk
+       man/audtool.1
+       man/audacious.1
+       src/libaudcore/audio.h
+       src/libaudcore/tinylock.h
+       win32/audacious.nsi
+       win32/override/README.txt)
 
+[GENERATED_FILES]="m4_normalize(GENERATED_FILES)"
+AC_SUBST([GENERATED_FILES])
+
+AC_CONFIG_FILES(GENERATED_FILES)
 AC_OUTPUT
 
 ### ---------------------------------------------------------------------------

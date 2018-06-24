@@ -112,7 +112,7 @@ PrefsWindow * PrefsWindow::instance = nullptr;
 int PrefsWindow::output_combo_selected;
 
 struct Category {
-    const char * icon_path;
+    const char * icon;
     const char * name;
 };
 
@@ -133,13 +133,13 @@ enum {
 };
 
 static const Category categories[] = {
-    { "appearance.png", N_("Appearance") },
-    { "audio.png", N_("Audio") },
-    { "connectivity.png", N_("Network") },
-    { "playlist.png", N_("Playlist")} ,
-    { "info.png", N_("Song Info") },
-    { "plugins.png", N_("Plugins") },
-    { "advanced.png", N_("Advanced") }
+    { "applications-graphics", N_("Appearance") },
+    { "audio-volume-medium", N_("Audio") },
+    { "applications-internet", N_("Network") },
+    { "audio-x-generic", N_("Playlist")} ,
+    { "dialog-information", N_("Song Info") },
+    { "applications-system", N_("Plugins") },
+    { "preferences-system", N_("Advanced") }
 };
 
 static const TitleFieldTag title_field_tags[] = {
@@ -325,8 +325,6 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "clear_playlist")),
     WidgetCheck (N_("Open files in a temporary playlist"),
         WidgetBool (0, "open_to_temporary")),
-    WidgetCheck (N_("Add folders recursively"),
-        WidgetBool (0, "recurse_folders")),
     WidgetLabel (N_("<b>Song Display</b>")),
     WidgetCheck (N_("Show song numbers"),
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
@@ -371,6 +369,11 @@ static const PreferencesWidget advanced_page_widgets[] = {
     WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
         WidgetBool (0, "convert_backslash")),
     WidgetTable ({{chardet_elements}}),
+    WidgetLabel (N_("<b>Playlist</b>")),
+    WidgetCheck (N_("Add folders recursively"),
+        WidgetBool (0, "recurse_folders")),
+    WidgetCheck (N_("Add folders nested within playlist files"),
+        WidgetBool (0, "folders_in_playlist")),
     WidgetLabel (N_("<b>Metadata</b>")),
     WidgetCheck (N_("Guess missing metadata from file path"),
         WidgetBool (0, "metadata_fallbacks")),
@@ -449,7 +452,7 @@ static void * create_titlestring_table ()
     /* build menu */
     QPushButton * btn_mnu = new QPushButton (w);
     btn_mnu->setFixedWidth (btn_mnu->sizeHint ().height ());
-    btn_mnu->setIcon (QIcon::fromTheme ("list-add"));
+    btn_mnu->setIcon (audqt::get_icon ("list-add"));
     l->addWidget (btn_mnu, 1, 2);
 
     QMenu * mnu_fields = new QMenu (w);
@@ -557,19 +560,20 @@ static void create_plugin_category (QStackedWidget * parent)
 
     s_plugin_view->setModel (s_plugin_model);
     s_plugin_view->setSelectionMode (QTreeView::NoSelection);
+    s_plugin_view->setAlternatingRowColors (true);
 
     auto header = s_plugin_view->header ();
 
     header->hide ();
     header->setSectionResizeMode (header->ResizeToContents);
-    header->setStretchLastSection (false);
+    header->setStretchLastSection (true);
 
     parent->addWidget (s_plugin_view);
 
     QObject::connect (s_plugin_view, & QAbstractItemView::clicked, [] (const QModelIndex & index)
     {
         auto p = s_plugin_model->pluginForIndex (index);
-        if (! p)
+        if (! p || ! aud_plugin_get_enabled (p))
             return;
 
         switch (index.column ())
@@ -633,15 +637,14 @@ PrefsWindow::PrefsWindow () :
     QObject::connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
 
     QSignalMapper * mapper = new QSignalMapper (this);
-    const char * data_dir = aud_get_path (AudPath::DataDir);
 
     QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
                       s_category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
 
     for (int i = 0; i < CATEGORY_COUNT; i ++)
     {
-        QIcon ico (QString (filename_build ({data_dir, "images", categories[i].icon_path})));
-        QAction * a = new QAction (ico, translate_str (categories[i].name), toolbar);
+        auto a = new QAction (get_icon (categories[i].icon),
+         translate_str (categories[i].name), toolbar);
 
         toolbar->addAction (a);
         mapper->setMapping (a, i);

@@ -126,8 +126,8 @@ static StringBuf get_path_to_self ()
         throw std::bad_alloc ();
 
     buf.resize (lenw * sizeof (wchar_t));
-    buf.steal (str_convert (buf, buf.len (), UTF16_NATIVE, "UTF-8"));
-    return buf;
+    buf = str_convert (buf, buf.len (), UTF16_NATIVE, "UTF-8");
+    return buf.settle ();
 
 #elif defined __APPLE__
 
@@ -169,22 +169,22 @@ static String relocate_path (const char * path, const char * from, const char * 
 
 static void set_default_paths ()
 {
-    aud_paths[AudPath::BinDir] = String (HARDCODE_BINDIR);
-    aud_paths[AudPath::DataDir] = String (HARDCODE_DATADIR);
-    aud_paths[AudPath::PluginDir] = String (HARDCODE_PLUGINDIR);
-    aud_paths[AudPath::LocaleDir] = String (HARDCODE_LOCALEDIR);
-    aud_paths[AudPath::DesktopFile] = String (HARDCODE_DESKTOPFILE);
-    aud_paths[AudPath::IconFile] = String (HARDCODE_ICONFILE);
+    aud_paths[AudPath::BinDir] = String (INSTALL_BINDIR);
+    aud_paths[AudPath::DataDir] = String (INSTALL_DATADIR);
+    aud_paths[AudPath::PluginDir] = String (INSTALL_PLUGINDIR);
+    aud_paths[AudPath::LocaleDir] = String (INSTALL_LOCALEDIR);
+    aud_paths[AudPath::DesktopFile] = String (INSTALL_DESKTOPFILE);
+    aud_paths[AudPath::IconFile] = String (INSTALL_ICONFILE);
 }
 
 static void set_install_paths ()
 {
-    StringBuf bindir = filename_normalize (str_copy (HARDCODE_BINDIR));
-    StringBuf datadir = filename_normalize (str_copy (HARDCODE_DATADIR));
-    StringBuf plugindir = filename_normalize (str_copy (HARDCODE_PLUGINDIR));
-    StringBuf localedir = filename_normalize (str_copy (HARDCODE_LOCALEDIR));
-    StringBuf desktopfile = filename_normalize (str_copy (HARDCODE_DESKTOPFILE));
-    StringBuf iconfile = filename_normalize (str_copy (HARDCODE_ICONFILE));
+    StringBuf bindir = filename_normalize (str_copy (INSTALL_BINDIR));
+    StringBuf datadir = filename_normalize (str_copy (INSTALL_DATADIR));
+    StringBuf plugindir = filename_normalize (str_copy (INSTALL_PLUGINDIR));
+    StringBuf localedir = filename_normalize (str_copy (INSTALL_LOCALEDIR));
+    StringBuf desktopfile = filename_normalize (str_copy (INSTALL_DESKTOPFILE));
+    StringBuf iconfile = filename_normalize (str_copy (INSTALL_ICONFILE));
 
     StringBuf from = str_copy (bindir);
 

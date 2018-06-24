@@ -1,6 +1,6 @@
 /*
  * libaudqt-internal.h
- * Copyright 2016 John Lindgren
+ * Copyright 2016-2017 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,11 +20,27 @@
 #ifndef LIBAUDQT_INTERNAL_H
 #define LIBAUDQT_INTERNAL_H
 
+#include <QWidget>
+
+class QPoint;
+class QScreen;
+class QString;
+
 namespace audqt {
 
 /* log-inspector.cc */
 void log_init ();
 void log_cleanup ();
+
+/* util-qt.cc */
+class PopupWidget : public QWidget
+{
+protected:
+    void showEvent (QShowEvent *) override;
+};
+
+void show_copy_context_menu (QWidget * parent, const QPoint & global_pos,
+ const QString & text_to_copy);
 
 } // namespace audqt
 

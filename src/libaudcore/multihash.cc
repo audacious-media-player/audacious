@@ -162,11 +162,19 @@ EXPORT int MultiHash::lookup (const void * data, unsigned hash, AddFunc add,
 
 EXPORT void MultiHash::iterate (FoundFunc func, void * state)
 {
+    iterate (func, state, nullptr, nullptr);
+}
+
+EXPORT void MultiHash::iterate (FoundFunc func, void * state, FinalFunc final, void * fstate)
+{
     for (TinyLock & lock : locks)
         tiny_lock (& lock);
 
     for (HashBase & channel : channels)
         channel.iterate (func, state);
+
+    if (final)
+        final (fstate);
 
     for (TinyLock & lock : locks)
         tiny_unlock (& lock);

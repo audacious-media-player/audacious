@@ -264,7 +264,9 @@ static void end_cb (void *)
     }
     else
     {
-        if (failed_entries < 10)
+        // if 10 songs in a row have failed, or if the entire playlist
+        // (for playlists less than 10 songs) has failed, stop trying
+        if (failed_entries < aud::min (playlist.n_entries (), 10))
             do_next ();
         else
             do_stop ();
