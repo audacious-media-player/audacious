@@ -335,12 +335,17 @@ static void playlist_position_cb (void * list, void *)
 EXPORT void audgui_init ()
 {
     static bool icons_loaded = false;
+    /* Dummy args to get gtk to set WM_CLASS */
+    int argc = 1;
+    char *_argv[] = { "audacious", NULL };
+    char **argv = _argv;
+
     assert (aud_get_mainloop_type () == MainloopType::GLib);
 
     if (init_count ++)
         return;
 
-    gtk_init (nullptr, nullptr);
+    gtk_init (&argc, &argv);
 
     if (! icons_loaded)
     {
