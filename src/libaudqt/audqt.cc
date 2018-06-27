@@ -64,6 +64,8 @@ EXPORT void init ()
     if (qapp->windowIcon ().isNull ())
         qapp->setWindowIcon (audqt::get_icon (app_name));
 
+    qapp->setQuitOnLastWindowClosed (false);
+
     auto desktop = qapp->desktop ();
     sizes_local.OneInch = aud::max (96, (desktop->logicalDpiX () + desktop->logicalDpiY ()) / 2);
     sizes_local.TwoPt = aud::rescale (2, 72, sizes_local.OneInch);
