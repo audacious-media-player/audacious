@@ -680,13 +680,13 @@ int PlaylistData::queue_get_entry (int at) const
 int PlaylistData::queue_find_entry (int entry_num) const
 {
     auto entry = entry_at (entry_num);
-    return entry->queued ? m_queued.find ((PlaylistEntry *) entry) : -1;
+    return (entry && entry->queued) ? m_queued.find ((PlaylistEntry *) entry) : -1;
 }
 
 void PlaylistData::queue_insert (int at, int entry_num)
 {
     auto entry = entry_at (entry_num);
-    if (entry->queued)
+    if (! entry || entry->queued)
         return;
 
     if (at < 0 || at > m_queued.len ())
