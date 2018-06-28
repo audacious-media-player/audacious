@@ -112,15 +112,28 @@ static void infopopup_realized (GtkWidget * widget)
 /* borrowed from the gtkui infoarea */
 static gboolean infopopup_draw_bg (GtkWidget * widget)
 {
+    double r = 1, g = 1, b = 1;
+
+    /* In a dark theme, try to match the tone of the base color */
+    auto & c = (gtk_widget_get_style (widget))->base[GTK_STATE_NORMAL];
+    int v = aud::max (aud::max (c.red, c.green), c.blue);
+
+    if (v >= 10*256 && v < 80*256)
+    {
+        r = (double)c.red / v;
+        g = (double)c.green / v;
+        b = (double)c.blue / v;
+    }
+
     GtkAllocation alloc;
     gtk_widget_get_allocation (widget, & alloc);
 
     cairo_t * cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
     cairo_pattern_t * gradient = cairo_pattern_create_linear (0, 0, 0, alloc.height);
-    cairo_pattern_add_color_stop_rgb (gradient, 0, 0.25, 0.25, 0.25);
-    cairo_pattern_add_color_stop_rgb (gradient, 0.5, 0.15, 0.15, 0.15);
-    cairo_pattern_add_color_stop_rgb (gradient, 0.5, 0.1, 0.1, 0.1);
+    cairo_pattern_add_color_stop_rgb (gradient, 0, 0.25 * r, 0.25 * g, 0.25 * b);
+    cairo_pattern_add_color_stop_rgb (gradient, 0.5, 0.15 * r, 0.15 * g, 0.15 * b);
+    cairo_pattern_add_color_stop_rgb (gradient, 0.5, 0.1 * r, 0.1 * g, 0.1 * b);
     cairo_pattern_add_color_stop_rgb (gradient, 1, 0, 0, 0);
 
     cairo_set_source (cr, gradient);
@@ -209,10 +222,6 @@ static GtkWidget * infopopup_create ()
 
     /* override background drawing */
     gtk_widget_set_app_paintable (infopopup, true);
-
-    GtkStyle * style = gtk_style_new ();
-    gtk_widget_set_style (infopopup, style);
-    g_object_unref (style);
 
     g_signal_connect (infopopup, "realize", (GCallback) infopopup_realized, nullptr);
     g_signal_connect (infopopup, "expose-event", (GCallback) infopopup_draw_bg, nullptr);
