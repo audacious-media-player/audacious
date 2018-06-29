@@ -264,6 +264,11 @@ EXPORT bool Playlist::update_pending_any ()
     RETURN (pending);
 }
 
+EXPORT void Playlist::process_pending_update ()
+{
+    update (nullptr);
+}
+
 EXPORT bool Playlist::scan_in_progress () const
 {
     ENTER_GET_PLAYLIST (false);
