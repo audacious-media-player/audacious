@@ -36,6 +36,7 @@ struct VisNode : public ListNode
 {
     explicit VisNode (int channels) :
         channels (channels),
+        time (0),
         data (new float[channels * FRAMES_PER_NODE]) {}
 
     ~VisNode ()
