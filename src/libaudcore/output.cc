@@ -449,12 +449,12 @@ bool output_open_audio (const String & filename, const Tuple & tuple,
 
 void output_set_tuple (const Tuple & tuple)
 {
-    LOCK_ALL;
+    LOCK_MINOR;
 
     if (s_input)
         in_tuple = tuple.ref ();
 
-    UNLOCK_ALL;
+    UNLOCK_MINOR;
 }
 
 void output_set_replay_gain (const ReplayGainInfo & info)
