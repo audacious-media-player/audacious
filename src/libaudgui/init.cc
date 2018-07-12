@@ -340,7 +340,13 @@ EXPORT void audgui_init ()
     if (init_count ++)
         return;
 
-    gtk_init (nullptr, nullptr);
+    static char app_name[] = "audacious";
+    static char * app_args[] = {app_name, nullptr};
+
+    int dummy_argc = 1;
+    char * * dummy_argv = app_args;
+
+    gtk_init (& dummy_argc, & dummy_argv);
 
     if (! icons_loaded)
     {

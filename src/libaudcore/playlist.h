@@ -329,6 +329,9 @@ public:
     bool update_pending () const;
     static bool update_pending_any ();
 
+    /* Immediately calls any pending "playlist update" hook.  Use cautiously. */
+    static void process_pending_update ();
+
     /* May be called within the "playlist update" hook to determine the update
      * level and number of entries changed in a playlist. */
     Update update_detail () const;

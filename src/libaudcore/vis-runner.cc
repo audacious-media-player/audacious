@@ -34,8 +34,9 @@
 
 struct VisNode : public ListNode
 {
-    explicit VisNode (int channels) :
+    VisNode (int channels, int time) :
         channels (channels),
+        time (time),
         data (new float[channels * FRAMES_PER_NODE]) {}
 
     ~VisNode ()
@@ -194,11 +195,11 @@ void vis_runner_pass_audio (int time, const Index<float> & data, int channels, i
             {
                 assert (current_node->channels == channels);
                 vis_pool.remove (current_node);
+                current_node->time = node_time;
             }
             else
-                current_node = new VisNode (channels);
+                current_node = new VisNode (channels, node_time);
 
-            current_node->time = node_time;
             current_frames = 0;
         }
 

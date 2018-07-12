@@ -148,20 +148,17 @@ bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int 
     m_dirty = true;
 
     auto t = Tuple::field_get_type (field_id);
-    if (t == Tuple::String)
-    {
-        m_tuple.set_str (field_id, value.toString ().toUtf8 ());
-        emit dataChanged (index, index, {role});
-        return true;
-    }
-    else if (t == Tuple::Int)
-    {
-        m_tuple.set_int (field_id, value.toInt ());
-        emit dataChanged (index, index, {role});
-        return true;
-    }
+    auto str = value.toString ();
 
-    return false;
+    if (str.isEmpty ())
+        m_tuple.unset (field_id);
+    else if (t == Tuple::String)
+        m_tuple.set_str (field_id, str.toUtf8 ());
+    else /* t == Tuple::Int */
+        m_tuple.set_int (field_id, str.toInt ());
+
+    emit dataChanged (index, index, {role});
+    return true;
 }
 
 QVariant InfoModel::data (const QModelIndex & index, int role) const
@@ -182,7 +179,8 @@ QVariant InfoModel::data (const QModelIndex & index, int role) const
             case Tuple::String:
                 return QString (m_tuple.get_str (field_id));
             case Tuple::Int:
-                return m_tuple.get_int (field_id);
+                /* convert to string so Qt allows clearing the field */
+                return QString::number (m_tuple.get_int (field_id));
             default:
                 return QVariant ();
             }

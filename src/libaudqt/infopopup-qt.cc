@@ -49,14 +49,41 @@ private:
     HookReceiver<InfoPopup, const char *> art_ready_hook
         {"art ready", this, & InfoPopup::art_ready};
 
+    const String m_filename;
+    const QGradientStops m_stops;
+
     QHBoxLayout m_hbox;
     QGridLayout m_grid;
-    String m_filename;
     bool m_queued = false;
 };
 
+static QGradientStops get_stops (const QColor & base)
+{
+    QColor mid = QColor (64, 64, 64);
+    QColor dark = QColor (38, 38, 38);
+    QColor darker = QColor (26, 26, 26);
+
+    /* In a dark theme, try to match the tone of the base color */
+    int v = base.value ();
+    if (v >= 10 && v < 80)
+    {
+        int r = base.red (), g = base.green (), b = base.blue ();
+        mid = QColor (r * 64 / v, g * 64 / v, b * 64 / v);
+        dark = QColor (r * 38 / v, g * 38 / v, b * 38 / v);
+        darker = QColor (r * 26 / v, g * 26 / v, b * 26 / v);
+    }
+
+    return {
+        {0, mid},
+        {0.499, dark},
+        {0.5, darker},
+        {1, Qt::black}
+    };
+}
+
 InfoPopup::InfoPopup (const String & filename, const Tuple & tuple) :
-    m_filename (filename)
+    m_filename (filename),
+    m_stops (get_stops (palette ().color (QPalette::Window)))
 {
     setWindowFlags (Qt::ToolTip);
 
@@ -138,15 +165,8 @@ void InfoPopup::finish_loading ()
 
 void InfoPopup::paintEvent (QPaintEvent *)
 {
-    static const QGradientStops stops = {
-        {0, QColor (64, 64, 64)},
-        {0.499, QColor (38, 38, 38)},
-        {0.5, QColor (26, 26, 26)},
-        {1, QColor (0, 0, 0)}
-    };
-
     QLinearGradient grad (0, 0, 0, height ());
-    grad.setStops (stops);
+    grad.setStops (m_stops);
 
     QPainter p (this);
     p.fillRect (rect (), grad);

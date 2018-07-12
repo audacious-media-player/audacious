@@ -42,7 +42,7 @@ static void show_prefs ()
 }
 
 MenuItem default_menu_items[] = {
-    MenuCommand ({N_("Plugins ..."), "preferences-system"}, show_prefs),
+    MenuCommand ({N_("_Plugins ..."), "preferences-system"}, show_prefs),
 };
 
 void menu_rebuild (AudMenuID id)
