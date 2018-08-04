@@ -8,7 +8,6 @@
 #   'make update-pot' respectively.
 #
 LOCALES = ar.po \
-	  ast.po \
 	  be.po \
 	  bg.po \
 	  ca.po \
@@ -18,7 +17,6 @@ LOCALES = ar.po \
 	  de.po \
 	  el.po \
 	  en_GB.po \
-	  eo.po \
 	  es_AR.po \
 	  es_MX.po \
 	  es.po \
@@ -28,7 +26,6 @@ LOCALES = ar.po \
 	  fi.po \
 	  fr.po \
 	  gl.po \
-	  he.po \
 	  hu.po \
 	  id_ID.po \
 	  it.po \
@@ -47,15 +44,12 @@ LOCALES = ar.po \
 	  ru.po \
 	  si.po \
 	  sk.po \
-	  sq.po \
-	  sr@latin.po \
 	  sr.po \
 	  sr_RS.po \
 	  sv.po \
 	  ta.po \
 	  tr.po \
 	  uk.po \
-	  vi.po \
 	  zh_CN.po \
 	  zh_TW.po
 
@@ -68,7 +62,7 @@ update-pot:
 	@echo Updating $(POTTEMPLATE) ...
 	xgettext --default-domain=$(PACKAGE_NAME) --language=C \
 	--keyword=_ --keyword=N_ --from-code="utf-8" \
-	--msgid-bugs-address="http://redmine.audacious-media-player.org/" \
+	--msgid-bugs-address="https://redmine.audacious-media-player.org/" \
 	--directory=.. --files-from=POTFILES.in -o $(POTTEMPLATE)
 
 update-po: update-pot

@@ -17,10 +17,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
-"Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2017-08-19 19:12+0200\n"
-"PO-Revision-Date: 2017-08-03 11:12+0000\n"
-"Last-Translator: Mingcong Bai <jeffbai@aosc.xyz>\n"
+"Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
+"POT-Creation-Date: 2018-08-04 20:34+0200\n"
+"PO-Revision-Date: 2018-07-02 04:50+0000\n"
+"Last-Translator: zhangmin <zm1990s@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/audacious/audacious/"
 "language/zh_CN/)\n"
 "Language: zh_CN\n"
@@ -113,7 +113,7 @@ msgstr "用法: audacious [选项] ... [文件] ...\n"
 msgid "Select instance to run/control"
 msgstr "选择要运行/控制的实例"
 
-#: src/audacious/main.cc:367 src/libaudqt/util.cc:62
+#: src/audacious/main.cc:367 src/libaudqt/audqt.cc:63
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -123,7 +123,7 @@ msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "找到%d个文件"
 
-#: src/libaudcore/adder.cc:277 src/libaudcore/adder.cc:339
+#: src/libaudcore/adder.cc:313 src/libaudcore/adder.cc:387
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -132,24 +132,24 @@ msgstr ""
 "读取 %s 时出错：\n"
 "%s"
 
-#: src/libaudcore/adder.cc:397
+#: src/libaudcore/adder.cc:445
 msgid "No files found."
 msgstr "未找到额外你就。"
 
-#: src/libaudcore/adder.cc:419 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:467 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
 msgstr "新建播放列表"
 
-#: src/libaudcore/audstrings.cc:640 src/libaudcore/tuple.cc:520
+#: src/libaudcore/audstrings.cc:659 src/libaudcore/tuple.cc:520
 msgid "Standard input"
 msgstr "标准输入"
 
-#: src/libaudcore/audstrings.cc:642
+#: src/libaudcore/audstrings.cc:661
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "音频CD, 音轨 %s"
 
-#: src/libaudcore/audstrings.cc:646 src/libaudcore/tuple.cc:496
+#: src/libaudcore/audstrings.cc:665 src/libaudcore/tuple.cc:496
 msgid "(character encoding error)"
 msgstr "(字符编码错误)"
 
@@ -166,7 +166,7 @@ msgstr "打开输出流时出错"
 msgid "Error recording output stream"
 msgstr "录制输出流出错"
 
-#: src/libaudcore/playback.cc:369
+#: src/libaudcore/playback.cc:373
 #, c-format
 msgid ""
 "Error playing %s:\n"
@@ -175,7 +175,7 @@ msgstr ""
 "播放 %s 时出错：\n"
 "%s"
 
-#: src/libaudcore/playback.cc:501
+#: src/libaudcore/playback.cc:505
 msgid "Invalid audio format"
 msgstr "不可用音频格式"
 
@@ -184,7 +184,7 @@ msgid "Now Playing"
 msgstr "正在播放"
 
 #: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:489
-#: src/libaudqt/infowin.cc:143
+#: src/libaudqt/infowin-qt.cc:218
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -212,15 +212,15 @@ msgstr "无法保存 %s: 不支持的文件扩展名。"
 msgid "Error loading plugin"
 msgstr "加载插件出错"
 
-#: src/libaudcore/probe.cc:145
+#: src/libaudcore/probe.cc:171
 msgid "Seek error"
 msgstr "定位错误"
 
-#: src/libaudcore/probe.cc:153
+#: src/libaudcore/probe.cc:179
 msgid "File format not recognized"
 msgstr "不识别文件格式"
 
-#: src/libaudcore/probe.cc:181
+#: src/libaudcore/probe.cc:207
 msgid "Error reading metadata"
 msgstr "读取元数据时出错"
 
@@ -238,24 +238,20 @@ msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d声道"
 
-#: src/libaudcore/tuple.cc:742
+#: src/libaudcore/tuple.cc:768
 msgid "Audio CD"
 msgstr "音频CD"
 
-#: src/libaudcore/tuple.cc:824
+#: src/libaudcore/tuple.cc:850
 #, c-format
 msgid "Track %d"
 msgstr "音轨 %d"
 
-#: src/libaudcore/tuple.cc:829
+#: src/libaudcore/tuple.cc:855
 msgid "(unknown title)"
 msgstr "(未知标题)"
 
-#: src/libaudcore/vfs.cc:47
-msgid "Invalid URI"
-msgstr "未知 URI"
-
-#: src/libaudcore/vfs.cc:85
+#: src/libaudcore/vfs.cc:79
 msgid "Unknown URI scheme"
 msgstr "未知 URI 图表"
 
@@ -268,24 +264,24 @@ msgstr "无效的文件名"
 msgid "Invalid access mode"
 msgstr "无效的访问模式"
 
-#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:36
 msgid "Credits"
 msgstr "特别鸣谢"
 
-#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:36
 msgid "License"
 msgstr "许可"
 
-#: src/libaudgui/about.cc:71 src/libaudqt/about.cc:71
+#: src/libaudgui/about.cc:72 src/libaudqt/about-qt.cc:61
 msgid "About Audacious"
 msgstr "关于Audacious"
 
 #: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
 #: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
-#: src/libaudgui/plugin-prefs.cc:160 src/libaudgui/url-opener.cc:76
+#: src/libaudgui/plugin-prefs.cc:160 src/libaudgui/url-opener.cc:101
 #: src/libaudqt/playlist-management.cc:43
 #: src/libaudqt/playlist-management.cc:75 src/libaudqt/prefs-plugin.cc:131
-#: src/libaudqt/url-opener.cc:65
+#: src/libaudqt/url-opener-qt.cc:79
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -330,11 +326,11 @@ msgstr "EQF 文件 ..."
 msgid "Winamp Presets ..."
 msgstr "Winamp 预设 ..."
 
-#: src/libaudgui/eq-preset.cc:220
+#: src/libaudgui/eq-preset.cc:220 src/libaudqt/fileopener.cc:70
 msgid "Import"
 msgstr "导入"
 
-#: src/libaudgui/eq-preset.cc:221
+#: src/libaudgui/eq-preset.cc:221 src/libaudqt/fileopener.cc:71
 msgid "Export"
 msgstr "导出"
 
@@ -354,51 +350,51 @@ msgstr "删除选中项"
 msgid "Revert Changes"
 msgstr "复原更改"
 
-#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer.cc:114
+#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer-qt.cc:114
 msgid "_Enable"
 msgstr "启用(_E)"
 
-#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer.cc:116
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:116
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer.cc:116
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:116
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer.cc:118
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:118
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer.cc:118
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:118
 msgid "8 kHz"
 msgstr "加载"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer.cc:118
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:118
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer.cc:142
+#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:142
 msgid "Equalizer"
 msgstr "均衡器"
 
@@ -410,16 +406,16 @@ msgstr "预设 ..."
 msgid "Reset to Zero"
 msgstr "归零"
 
-#: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer.cc:123
+#: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer-qt.cc:123
 msgid "Preamp"
 msgstr "前置放大器"
 
-#: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:39
+#: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:57
 msgid "Open Files"
 msgstr "打开文件"
 
-#: src/libaudgui/file-opener.cc:79 src/libaudgui/url-opener.cc:50
-#: src/libaudqt/url-opener.cc:42
+#: src/libaudgui/file-opener.cc:79 src/libaudgui/url-opener.cc:64
+#: src/libaudqt/url-opener-qt.cc:48
 msgid "_Open"
 msgstr "打开(_O)"
 
@@ -427,12 +423,12 @@ msgstr "打开(_O)"
 msgid "Close _dialog on open"
 msgstr "打开时关闭对话框(_D)"
 
-#: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:41
+#: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:59
 msgid "Add Files"
 msgstr "添加文件"
 
-#: src/libaudgui/file-opener.cc:87 src/libaudgui/url-opener.cc:56
-#: src/libaudqt/url-opener.cc:48
+#: src/libaudgui/file-opener.cc:87 src/libaudgui/url-opener.cc:70
+#: src/libaudqt/url-opener-qt.cc:54
 msgid "_Add"
 msgstr "添加(_A)"
 
@@ -442,50 +438,52 @@ msgstr "添加时关闭对话框(_D)"
 
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:397
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:853 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:297 src/libaudqt/infowin.cc:75
-#: src/libaudqt/log-inspector.cc:227 src/libaudqt/prefs-plugin.cc:141
-#: src/libaudqt/prefs-window.cc:619 src/libaudqt/queue-manager.cc:161
-#: src/libaudqt/util.cc:168
+#: src/libaudgui/prefs-window.cc:876 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:191
+#: src/libaudqt/infowin-qt.cc:149 src/libaudqt/log-inspector.cc:227
+#: src/libaudqt/prefs-plugin.cc:141 src/libaudqt/prefs-window-qt.cc:634
+#: src/libaudqt/queue-manager-qt.cc:161
 msgid "_Close"
 msgstr "关闭(_C)"
 
-#: src/libaudgui/infopopup.cc:192 src/libaudgui/infowin.cc:351
-#: src/libaudgui/prefs-window.cc:101 src/libaudqt/info-widget.cc:42
-#: src/libaudqt/prefs-window.cc:147
+#: src/libaudgui/infopopup.cc:205 src/libaudgui/infowin.cc:351
+#: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:116
+#: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window-qt.cc:149
 msgid "Title"
 msgstr "标题"
 
-#: src/libaudgui/infopopup.cc:193 src/libaudgui/infowin.cc:354
-#: src/libaudgui/prefs-window.cc:98 src/libaudqt/info-widget.cc:40
-#: src/libaudqt/prefs-window.cc:144
+#: src/libaudgui/infopopup.cc:206 src/libaudgui/infowin.cc:354
+#: src/libaudgui/prefs-window.cc:101 src/libaudqt/infopopup-qt.cc:118
+#: src/libaudqt/info-widget.cc:41 src/libaudqt/prefs-window-qt.cc:146
 msgid "Artist"
 msgstr "艺术家"
 
-#: src/libaudgui/infopopup.cc:194 src/libaudgui/infowin.cc:357
-#: src/libaudgui/prefs-window.cc:99 src/libaudgui/prefs-window.cc:145
-#: src/libaudqt/info-widget.cc:41 src/libaudqt/prefs-window.cc:145
-#: src/libaudqt/prefs-window.cc:191
+#: src/libaudgui/infopopup.cc:207 src/libaudgui/infowin.cc:357
+#: src/libaudgui/prefs-window.cc:102 src/libaudgui/prefs-window.cc:148
+#: src/libaudqt/infopopup-qt.cc:120 src/libaudqt/info-widget.cc:42
+#: src/libaudqt/prefs-window-qt.cc:147 src/libaudqt/prefs-window-qt.cc:193
 msgid "Album"
 msgstr "专辑"
 
-#: src/libaudgui/infopopup.cc:195 src/libaudgui/infowin.cc:367
-#: src/libaudgui/prefs-window.cc:103 src/libaudqt/info-widget.cc:44
-#: src/libaudqt/prefs-window.cc:149
+#: src/libaudgui/infopopup.cc:208 src/libaudgui/infowin.cc:367
+#: src/libaudgui/prefs-window.cc:106 src/libaudqt/infopopup-qt.cc:122
+#: src/libaudqt/info-widget.cc:45 src/libaudqt/prefs-window-qt.cc:151
 msgid "Genre"
 msgstr "风格"
 
-#: src/libaudgui/infopopup.cc:196 src/libaudgui/infowin.cc:370
-#: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:153
+#: src/libaudgui/infopopup.cc:209 src/libaudgui/infowin.cc:370
+#: src/libaudgui/prefs-window.cc:110 src/libaudqt/infopopup-qt.cc:124
+#: src/libaudqt/prefs-window-qt.cc:155
 msgid "Year"
 msgstr "年份"
 
-#: src/libaudgui/infopopup.cc:197 src/libaudgui/prefs-window.cc:144
-#: src/libaudqt/prefs-window.cc:190
+#: src/libaudgui/infopopup.cc:210 src/libaudgui/prefs-window.cc:147
+#: src/libaudqt/infopopup-qt.cc:126 src/libaudqt/prefs-window-qt.cc:192
 msgid "Track"
 msgstr "音轨"
 
-#: src/libaudgui/infopopup.cc:198 src/libaudqt/info-widget.cc:54
+#: src/libaudgui/infopopup.cc:211 src/libaudqt/infopopup-qt.cc:128
+#: src/libaudqt/info-widget.cc:55
 msgid "Length"
 msgstr "长度"
 
@@ -665,22 +663,21 @@ msgstr "保存成功"
 msgid "Save error"
 msgstr "保存出错"
 
-#: src/libaudgui/infowin.cc:306 src/libaudgui/prefs-window.cc:84
-#: src/libaudqt/infowin.cc:63 src/libaudqt/prefs-window.cc:139
+#: src/libaudgui/infowin.cc:306 src/libaudgui/prefs-window.cc:86
+#: src/libaudqt/infowin-qt.cc:123 src/libaudqt/prefs-window-qt.cc:140
 msgid "Song Info"
 msgstr "歌曲信息"
 
-#: src/libaudgui/infowin.cc:360 src/libaudqt/info-widget.cc:46
-#: src/libaudqt/prefs-window.cc:146
+#: src/libaudgui/infowin.cc:360 src/libaudqt/info-widget.cc:47
 msgid "Album Artist"
 msgstr "专辑艺术家"
 
-#: src/libaudgui/infowin.cc:363 src/libaudgui/prefs-window.cc:108
-#: src/libaudqt/info-widget.cc:45 src/libaudqt/prefs-window.cc:154
+#: src/libaudgui/infowin.cc:363 src/libaudgui/prefs-window.cc:111
+#: src/libaudqt/info-widget.cc:46 src/libaudqt/prefs-window-qt.cc:156
 msgid "Comment"
 msgstr "备注"
 
-#: src/libaudgui/infowin.cc:373 src/libaudqt/info-widget.cc:43
+#: src/libaudgui/infowin.cc:373 src/libaudqt/info-widget.cc:44
 msgid "Track Number"
 msgstr "音轨序号"
 
@@ -688,7 +685,7 @@ msgstr "音轨序号"
 msgid "Clea_r fields when moving to next song"
 msgstr "当移动到下一首歌时清除此栏 (_R)"
 
-#: src/libaudgui/infowin.cc:394 src/libaudqt/infowin.cc:74
+#: src/libaudgui/infowin.cc:394 src/libaudqt/infowin-qt.cc:148
 msgid "_Save"
 msgstr "保存(_S)"
 
@@ -764,7 +761,7 @@ msgstr "请输入一个文件扩展名或从下拉列表选择一个文件格式
 msgid "Select Format by Extension"
 msgstr "根据扩展名选择格式"
 
-#: src/libaudgui/playlists.cc:167
+#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:62
 msgid "Export Playlist"
 msgstr "导出播放列表"
 
@@ -772,7 +769,7 @@ msgstr "导出播放列表"
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: src/libaudgui/playlists.cc:174
+#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:61
 msgid "Import Playlist"
 msgstr "导入播放列表"
 
@@ -780,7 +777,7 @@ msgstr "导入播放列表"
 msgid "_Import"
 msgstr "导入(_I)"
 
-#: src/libaudgui/plugin-menu.cc:40
+#: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:45
 msgid "_Plugins ..."
 msgstr "插件... (_P)"
 
@@ -798,15 +795,15 @@ msgstr "%s 设置"
 msgid "_Set"
 msgstr "设置 (_S)"
 
-#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:675
-#: src/libaudgui/prefs-window.cc:715 src/libaudqt/prefs-window.cc:581
-#: src/libaudqt/prefs-window.cc:584
+#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:690
+#: src/libaudgui/prefs-window.cc:730 src/libaudqt/prefs-window-qt.cc:595
+#: src/libaudqt/prefs-window-qt.cc:598
 msgid "_Settings"
 msgstr "设置 (_S)"
 
-#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:689
-#: src/libaudgui/prefs-window.cc:727 src/libaudqt/prefs-window.cc:582
-#: src/libaudqt/prefs-window.cc:585
+#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:704
+#: src/libaudgui/prefs-window.cc:742 src/libaudqt/prefs-window-qt.cc:596
+#: src/libaudqt/prefs-window-qt.cc:599
 msgid "_About"
 msgstr "关于 (_A)"
 
@@ -818,429 +815,454 @@ msgstr "选择文件"
 msgid "Choose Folder"
 msgstr "选择文件夹"
 
-#: src/libaudgui/prefs-window.cc:80 src/libaudqt/prefs-window.cc:135
+#: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window-qt.cc:136
 msgid "Appearance"
 msgstr "外观"
 
-#: src/libaudgui/prefs-window.cc:81 src/libaudqt/prefs-window.cc:136
+#: src/libaudgui/prefs-window.cc:83 src/libaudqt/prefs-window-qt.cc:137
 msgid "Audio"
 msgstr "音频"
 
-#: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:137
+#: src/libaudgui/prefs-window.cc:84 src/libaudqt/prefs-window-qt.cc:138
 msgid "Network"
 msgstr "网络"
 
-#: src/libaudgui/prefs-window.cc:83 src/libaudgui/prefs-window.cc:93
-#: src/libaudqt/prefs-pluginlist-model.cc:40 src/libaudqt/prefs-window.cc:138
+#: src/libaudgui/prefs-window.cc:85 src/libaudgui/prefs-window.cc:96
+#: src/libaudqt/prefs-pluginlist-model.cc:41
+#: src/libaudqt/prefs-window-qt.cc:139
 msgid "Playlist"
 msgstr "播放列表"
 
-#: src/libaudgui/prefs-window.cc:85 src/libaudqt/prefs-window.cc:140
+#: src/libaudgui/prefs-window.cc:87 src/libaudqt/prefs-window-qt.cc:141
 msgid "Plugins"
 msgstr "插件"
 
-#: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-pluginlist-model.cc:36
+#: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:142
+msgid "Advanced"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "General"
 msgstr "一般"
 
-#: src/libaudgui/prefs-window.cc:90 src/libaudqt/prefs-pluginlist-model.cc:37
+#: src/libaudgui/prefs-window.cc:93 src/libaudqt/prefs-pluginlist-model.cc:38
 msgid "Effect"
 msgstr "音效"
 
-#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-pluginlist-model.cc:38
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "Visualization"
 msgstr "虚拟效果"
 
-#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
+#: src/libaudgui/prefs-window.cc:95 src/libaudqt/prefs-pluginlist-model.cc:40
 msgid "Input"
 msgstr "输入"
 
-#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
+#: src/libaudgui/prefs-window.cc:97 src/libaudqt/prefs-pluginlist-model.cc:42
 msgid "Transport"
 msgstr "传输"
 
-#: src/libaudgui/prefs-window.cc:100
+#: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window-qt.cc:148
 msgid "Album artist"
 msgstr "专辑艺术家"
 
-#: src/libaudgui/prefs-window.cc:102 src/libaudqt/prefs-window.cc:148
+#: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window-qt.cc:150
 msgid "Track number"
 msgstr "音轨序号"
 
-#: src/libaudgui/prefs-window.cc:104 src/libaudqt/prefs-window.cc:150
+#: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window-qt.cc:152
 msgid "File name"
 msgstr "文件名"
 
-#: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:151
+#: src/libaudgui/prefs-window.cc:108 src/libaudqt/prefs-window-qt.cc:153
 msgid "File path"
 msgstr "文件路径"
 
-#: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:152
+#: src/libaudgui/prefs-window.cc:109 src/libaudqt/prefs-window-qt.cc:154
 msgid "Date"
 msgstr "时间"
 
-#: src/libaudgui/prefs-window.cc:109 src/libaudqt/info-widget.cc:55
-#: src/libaudqt/prefs-window.cc:155
+#: src/libaudgui/prefs-window.cc:112 src/libaudqt/info-widget.cc:56
+#: src/libaudqt/prefs-window-qt.cc:157
 msgid "Codec"
 msgstr "编码"
 
-#: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:56
-#: src/libaudqt/prefs-window.cc:156
+#: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:57
+#: src/libaudqt/prefs-window-qt.cc:158
 msgid "Quality"
 msgstr "音质"
 
-#: src/libaudgui/prefs-window.cc:114 src/libaudqt/prefs-window.cc:160
+#: src/libaudgui/prefs-window.cc:117 src/libaudqt/prefs-window-qt.cc:162
 msgid "None"
 msgstr "无"
 
-#: src/libaudgui/prefs-window.cc:115 src/libaudqt/prefs-window.cc:161
+#: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window-qt.cc:163
 msgid "Arabic"
 msgstr "阿拉伯语"
 
-#: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window.cc:162
+#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window-qt.cc:164
 msgid "Baltic"
 msgstr "波罗的语"
 
-#: src/libaudgui/prefs-window.cc:117 src/libaudqt/prefs-window.cc:163
+#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:165
 msgid "Chinese"
 msgstr "汉语"
 
-#: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window.cc:164
+#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window-qt.cc:166
 msgid "Greek"
 msgstr "希腊语"
 
-#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window.cc:165
+#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window-qt.cc:167
 msgid "Hebrew"
 msgstr "希伯来语"
 
-#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window.cc:166
+#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window-qt.cc:168
 msgid "Japanese"
 msgstr "日语"
 
-#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window.cc:167
+#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window-qt.cc:169
 msgid "Korean"
 msgstr "韩语"
 
-#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window.cc:168
+#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window-qt.cc:170
 msgid "Polish"
 msgstr "波兰语"
 
-#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window.cc:169
+#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window-qt.cc:171
 msgid "Russian"
 msgstr "俄语"
 
-#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window.cc:170
+#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window-qt.cc:172
 msgid "Taiwanese"
 msgstr "台语"
 
-#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window.cc:171
+#: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window-qt.cc:173
 msgid "Turkish"
 msgstr "土耳其语"
 
-#: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window.cc:175
+#: src/libaudgui/prefs-window.cc:132 src/libaudqt/prefs-window-qt.cc:177
 msgid "Automatic"
 msgstr "自动"
 
-#: src/libaudgui/prefs-window.cc:133 src/libaudqt/prefs-window.cc:179
+#: src/libaudgui/prefs-window.cc:136 src/libaudqt/prefs-window-qt.cc:181
 msgid "Floating point"
 msgstr "浮点"
 
-#: src/libaudgui/prefs-window.cc:137 src/libaudqt/prefs-window.cc:183
+#: src/libaudgui/prefs-window.cc:140 src/libaudqt/prefs-window-qt.cc:185
 msgid "As decoded"
 msgstr "与解码后一致"
 
-#: src/libaudgui/prefs-window.cc:138 src/libaudqt/prefs-window.cc:184
+#: src/libaudgui/prefs-window.cc:141 src/libaudqt/prefs-window-qt.cc:186
 msgid "After applying ReplayGain"
 msgstr "应用回放增益后"
 
-#: src/libaudgui/prefs-window.cc:139 src/libaudqt/prefs-window.cc:185
+#: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:187
 msgid "After applying effects"
 msgstr "应用特效后"
 
-#: src/libaudgui/prefs-window.cc:140 src/libaudqt/prefs-window.cc:186
+#: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:188
 msgid "After applying equalization"
 msgstr "应用均衡后"
 
-#: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window.cc:192
+#: src/libaudgui/prefs-window.cc:149 src/libaudqt/prefs-window-qt.cc:194
 msgid "Based on shuffle"
 msgstr "基于随机播放"
 
-#: src/libaudgui/prefs-window.cc:158 src/libaudqt/prefs-window.cc:204
+#: src/libaudgui/prefs-window.cc:161 src/libaudqt/prefs-window-qt.cc:206
 msgid "Interface:"
 msgstr "界面："
 
-#: src/libaudgui/prefs-window.cc:177 src/libaudqt/prefs-window.cc:214
+#: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:216
 msgid "Output plugin:"
 msgstr "输出插件："
 
-#: src/libaudgui/prefs-window.cc:198 src/libaudqt/prefs-window.cc:229
+#: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window-qt.cc:231
 msgid "Amplify all files:"
 msgstr "应用到文件："
 
-#: src/libaudgui/prefs-window.cc:200 src/libaudgui/prefs-window.cc:203
-#: src/libaudqt/prefs-window.cc:231 src/libaudqt/prefs-window.cc:234
+#: src/libaudgui/prefs-window.cc:203 src/libaudgui/prefs-window.cc:206
+#: src/libaudqt/prefs-window-qt.cc:233 src/libaudqt/prefs-window-qt.cc:236
 msgid "dB"
 msgstr "dB"
 
-#: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window.cc:232
+#: src/libaudgui/prefs-window.cc:204 src/libaudqt/prefs-window-qt.cc:234
 msgid "Amplify untagged files:"
 msgstr "应用到无标签文件："
 
-#: src/libaudgui/prefs-window.cc:207 src/libaudqt/prefs-window.cc:238
+#: src/libaudgui/prefs-window.cc:210 src/libaudqt/prefs-window-qt.cc:240
 msgid "<b>Output Settings</b>"
 msgstr "<b>输出设置</b>"
 
-#: src/libaudgui/prefs-window.cc:209 src/libaudqt/prefs-window.cc:240
+#: src/libaudgui/prefs-window.cc:212 src/libaudqt/prefs-window-qt.cc:242
 msgid "Bit depth:"
 msgstr "位深："
 
-#: src/libaudgui/prefs-window.cc:212 src/libaudgui/prefs-window.cc:257
-#: src/libaudqt/prefs-window.cc:243 src/libaudqt/prefs-window.cc:288
+#: src/libaudgui/prefs-window.cc:215 src/libaudgui/prefs-window.cc:260
+#: src/libaudqt/prefs-window-qt.cc:245 src/libaudqt/prefs-window-qt.cc:290
 msgid "Buffer size:"
 msgstr "缓冲大小："
 
-#: src/libaudgui/prefs-window.cc:214 src/libaudqt/prefs-window.cc:245
+#: src/libaudgui/prefs-window.cc:217 src/libaudqt/prefs-window-qt.cc:247
 msgid "ms"
 msgstr "毫秒"
 
-#: src/libaudgui/prefs-window.cc:215 src/libaudqt/prefs-window.cc:246
+#: src/libaudgui/prefs-window.cc:218 src/libaudqt/prefs-window-qt.cc:248
 msgid "Soft clipping"
 msgstr "柔性剪峰"
 
-#: src/libaudgui/prefs-window.cc:217 src/libaudqt/prefs-window.cc:248
+#: src/libaudgui/prefs-window.cc:220 src/libaudqt/prefs-window-qt.cc:250
 msgid "Use software volume control (not recommended)"
 msgstr "使用软音量控制（非建议）"
 
-#: src/libaudgui/prefs-window.cc:219 src/libaudqt/prefs-window.cc:250
+#: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window-qt.cc:252
 msgid "<b>Recording Settings</b>"
 msgstr "<b>录制设置</b>"
 
-#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:254
+#: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window-qt.cc:256
 msgid "Record stream:"
 msgstr "录制流："
 
-#: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:257
+#: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window-qt.cc:259
 msgid "<b>ReplayGain</b>"
 msgstr "<b>回放增益</b>"
 
-#: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:258
+#: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:260
 msgid "Enable ReplayGain"
 msgstr "启用回放增益"
 
-#: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window.cc:260
+#: src/libaudgui/prefs-window.cc:232 src/libaudqt/prefs-window-qt.cc:262
 msgid "Mode:"
 msgstr "模式："
 
-#: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window.cc:264
+#: src/libaudgui/prefs-window.cc:236 src/libaudqt/prefs-window-qt.cc:266
 msgid "Prevent clipping (recommended)"
 msgstr "避免爆音（推荐）"
 
-#: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window.cc:272
+#: src/libaudgui/prefs-window.cc:244 src/libaudqt/prefs-window-qt.cc:274
 msgid "Proxy hostname:"
 msgstr "主机地址："
 
-#: src/libaudgui/prefs-window.cc:243 src/libaudqt/prefs-window.cc:274
+#: src/libaudgui/prefs-window.cc:246 src/libaudqt/prefs-window-qt.cc:276
 msgid "Proxy port:"
 msgstr "连接端口："
 
-#: src/libaudgui/prefs-window.cc:248 src/libaudqt/prefs-window.cc:279
+#: src/libaudgui/prefs-window.cc:251 src/libaudqt/prefs-window-qt.cc:281
 msgid "Proxy username:"
 msgstr "认证用户："
 
-#: src/libaudgui/prefs-window.cc:250 src/libaudqt/prefs-window.cc:281
+#: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window-qt.cc:283
 msgid "Proxy password:"
 msgstr "认证密码："
 
-#: src/libaudgui/prefs-window.cc:256 src/libaudqt/prefs-window.cc:287
+#: src/libaudgui/prefs-window.cc:259 src/libaudqt/prefs-window-qt.cc:289
 msgid "<b>Network Settings</b>"
 msgstr "<b>网络设置</b>"
 
-#: src/libaudgui/prefs-window.cc:259 src/libaudqt/prefs-window.cc:290
+#: src/libaudgui/prefs-window.cc:262 src/libaudqt/prefs-window-qt.cc:292
 msgid "KiB"
 msgstr "KB"
 
-#: src/libaudgui/prefs-window.cc:260 src/libaudqt/prefs-window.cc:291
+#: src/libaudgui/prefs-window.cc:263 src/libaudqt/prefs-window-qt.cc:293
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>代理服务器设置</b>"
 
-#: src/libaudgui/prefs-window.cc:261 src/libaudqt/prefs-window.cc:292
+#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window-qt.cc:294
 msgid "Enable proxy usage"
 msgstr "启用代理服务器"
 
-#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window.cc:296
+#: src/libaudgui/prefs-window.cc:268 src/libaudqt/prefs-window-qt.cc:298
 msgid "Use authentication with proxy"
 msgstr "代理服务器要求认证"
 
-#: src/libaudgui/prefs-window.cc:272 src/libaudqt/prefs-window.cc:303
+#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window-qt.cc:305
 msgid "Auto character encoding detector for:"
 msgstr "自动检测下列编码："
 
-#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:306
+#: src/libaudgui/prefs-window.cc:278 src/libaudqt/prefs-window-qt.cc:308
 msgid "Fallback character encodings:"
 msgstr "备用字符编码："
 
-#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window.cc:314
+#: src/libaudgui/prefs-window.cc:286 src/libaudqt/prefs-window-qt.cc:316
 msgid "<b>Behavior</b>"
 msgstr "<b>行为</b>"
 
-#: src/libaudgui/prefs-window.cc:284 src/libaudqt/prefs-window.cc:315
+#: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window-qt.cc:317
 msgid "Resume playback on startup"
 msgstr "启动时恢复播放"
 
-#: src/libaudgui/prefs-window.cc:286 src/libaudqt/prefs-window.cc:317
+#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window-qt.cc:319
 msgid "Pause instead of resuming immediately"
 msgstr "立刻暂停，而不是继续播放"
 
-#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window.cc:320
+#: src/libaudgui/prefs-window.cc:292 src/libaudqt/prefs-window-qt.cc:322
 msgid "Advance when the current song is deleted"
 msgstr "歌曲播放中被删除则播放下一首"
 
-#: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window.cc:322
+#: src/libaudgui/prefs-window.cc:294 src/libaudqt/prefs-window-qt.cc:324
 msgid "Clear the playlist when opening files"
 msgstr "打开文件时清空当前播放列表"
 
-#: src/libaudgui/prefs-window.cc:293 src/libaudqt/prefs-window.cc:324
+#: src/libaudgui/prefs-window.cc:296 src/libaudqt/prefs-window-qt.cc:326
 msgid "Open files in a temporary playlist"
 msgstr "在临时播放列表打开文件"
 
-#: src/libaudgui/prefs-window.cc:295 src/libaudqt/prefs-window.cc:326
+#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window-qt.cc:328
 msgid "<b>Song Display</b>"
 msgstr "<b>歌曲显示</b>"
 
-#: src/libaudgui/prefs-window.cc:296 src/libaudqt/prefs-window.cc:327
+#: src/libaudgui/prefs-window.cc:299 src/libaudqt/prefs-window-qt.cc:329
 msgid "Show song numbers"
 msgstr "显示歌曲序号"
 
-#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window.cc:329
+#: src/libaudgui/prefs-window.cc:301 src/libaudqt/prefs-window-qt.cc:331
 msgid "Show leading zeroes (02:00 vs. 2:00)"
 msgstr "显示开头的 0（02:00 或 2:00）"
 
-#: src/libaudgui/prefs-window.cc:300 src/libaudqt/prefs-window.cc:331
+#: src/libaudgui/prefs-window.cc:303 src/libaudqt/prefs-window-qt.cc:333
 msgid "Show hours separately (1:30:00 vs. 90:00)"
 msgstr "单独显示小时（1:30:00 或 90:00）"
 
-#: src/libaudgui/prefs-window.cc:303 src/libaudqt/prefs-window.cc:334
-msgid "<b>Compatibility</b>"
-msgstr "<b>兼容性</b>"
+#: src/libaudgui/prefs-window.cc:306 src/libaudqt/prefs-window-qt.cc:336
+msgid "<b>Export</b>"
+msgstr ""
 
-#: src/libaudgui/prefs-window.cc:304 src/libaudqt/prefs-window.cc:335
-msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "说明 \\(反斜杠)作为一个文件夹分隔符"
+#: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:337
+msgid "Use relative paths when possible"
+msgstr ""
 
-#: src/libaudgui/prefs-window.cc:310 src/libaudqt/prefs-window.cc:341
+#: src/libaudgui/prefs-window.cc:312 src/libaudqt/prefs-window-qt.cc:342
 msgid "<b>Album Art</b>"
 msgstr "<b>专辑封面</b>"
 
-#: src/libaudgui/prefs-window.cc:311 src/libaudqt/prefs-window.cc:342
+#: src/libaudgui/prefs-window.cc:313 src/libaudqt/prefs-window-qt.cc:343
 msgid "Search for images matching these words (comma-separated):"
 msgstr "搜索匹配以下词语的图片(用逗号分隔)："
 
-#: src/libaudgui/prefs-window.cc:313 src/libaudqt/prefs-window.cc:344
+#: src/libaudgui/prefs-window.cc:315 src/libaudqt/prefs-window-qt.cc:345
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "排除匹配以下词语的图片(用逗号分隔)："
 
-#: src/libaudgui/prefs-window.cc:315 src/libaudqt/prefs-window.cc:346
+#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:347
 msgid "Search for images matching song file name"
 msgstr "搜索匹配歌曲文件名的图片"
 
-#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window.cc:348
+#: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window-qt.cc:349
 msgid "Search recursively"
 msgstr "递归搜索"
 
-#: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window.cc:350
+#: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window-qt.cc:351
 msgid "Search depth:"
 msgstr "搜索深度："
 
-#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window.cc:354
+#: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:355
 msgid "<b>Popup Information</b>"
 msgstr "<b>弹出信息</b>"
 
-#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window.cc:355
+#: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window-qt.cc:356
 msgid "Show popup information"
 msgstr "显示弹出信息"
 
-#: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window.cc:357
+#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:358
 msgid "Popup delay (tenths of a second):"
 msgstr "弹出延迟 (十分之一秒):"
 
-#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window.cc:361
+#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:362
 msgid "Show time scale for current song"
 msgstr "停止播放"
 
-#: src/libaudgui/prefs-window.cc:333 src/libaudqt/prefs-window.cc:364
-msgid "<b>Advanced</b>"
-msgstr "<b>高级</b>"
+#: src/libaudgui/prefs-window.cc:338 src/libaudqt/prefs-window-qt.cc:368
+msgid "<b>Compatibility</b>"
+msgstr "<b>兼容性</b>"
 
-#: src/libaudgui/prefs-window.cc:334 src/libaudqt/prefs-window.cc:365
+#: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window-qt.cc:369
+msgid "Interpret \\ (backward slash) as a folder delimiter"
+msgstr "说明 \\(反斜杠)作为一个文件夹分隔符"
+
+#: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:372
+msgid "<b>Playlist</b>"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:373
+msgid "Add folders recursively"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:375
+msgid "Add folders nested within playlist files"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:347 src/libaudqt/prefs-window-qt.cc:377
+msgid "<b>Metadata</b>"
+msgstr "<b>Metadata</b>"
+
+#: src/libaudgui/prefs-window.cc:348 src/libaudqt/prefs-window-qt.cc:378
 msgid "Guess missing metadata from file path"
 msgstr "从文件路径猜测缺失的元数据"
 
-#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window.cc:367
+#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:380
 msgid "Do not load metadata for songs until played"
 msgstr "未播放时切勿加载元数据"
 
-#: src/libaudgui/prefs-window.cc:338 src/libaudqt/prefs-window.cc:369
+#: src/libaudgui/prefs-window.cc:352 src/libaudqt/prefs-window-qt.cc:382
 msgid "Probe content of files with no recognized file name extension"
 msgstr "待检测文件包含不能识别的文件扩展名"
 
-#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window.cc:387
+#: src/libaudgui/prefs-window.cc:370 src/libaudqt/prefs-window-qt.cc:400
 msgid "TITLE"
 msgstr "标题"
 
-#: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window.cc:388
+#: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:401
 msgid "TITLE - ARTIST"
 msgstr "标题 - 艺术家"
 
-#: src/libaudgui/prefs-window.cc:358 src/libaudqt/prefs-window.cc:389
+#: src/libaudgui/prefs-window.cc:372 src/libaudqt/prefs-window-qt.cc:402
 msgid "TITLE - ARTIST - ALBUM"
 msgstr " 标题 - 艺术家 - 专辑"
 
-#: src/libaudgui/prefs-window.cc:359 src/libaudqt/prefs-window.cc:390
+#: src/libaudgui/prefs-window.cc:373 src/libaudqt/prefs-window-qt.cc:403
 msgid "ARTIST - TITLE"
 msgstr "艺术家 - 标题"
 
-#: src/libaudgui/prefs-window.cc:360 src/libaudqt/prefs-window.cc:391
+#: src/libaudgui/prefs-window.cc:374 src/libaudqt/prefs-window-qt.cc:404
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "艺术家 - 专辑 - 标题"
 
-#: src/libaudgui/prefs-window.cc:361 src/libaudqt/prefs-window.cc:392
+#: src/libaudgui/prefs-window.cc:375 src/libaudqt/prefs-window-qt.cc:405
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "艺术家 - 专辑 - 曲目号. 标题"
 
-#: src/libaudgui/prefs-window.cc:362 src/libaudqt/prefs-window.cc:393
+#: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:406
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "艺术家 [专辑] - 曲目号. 标题"
 
-#: src/libaudgui/prefs-window.cc:363 src/libaudqt/prefs-window.cc:394
+#: src/libaudgui/prefs-window.cc:377 src/libaudqt/prefs-window-qt.cc:407
 msgid "ALBUM - TITLE"
 msgstr "专辑 - 标题"
 
-#: src/libaudgui/prefs-window.cc:457
+#: src/libaudgui/prefs-window.cc:471
 msgid "Category"
 msgstr "分类"
 
-#: src/libaudgui/prefs-window.cc:520 src/libaudqt/prefs-window.cc:412
+#: src/libaudgui/prefs-window.cc:535 src/libaudqt/prefs-window-qt.cc:425
 msgid "Custom"
 msgstr "自定义"
 
-#: src/libaudgui/prefs-window.cc:538 src/libaudqt/prefs-window.cc:404
+#: src/libaudgui/prefs-window.cc:553 src/libaudqt/prefs-window-qt.cc:417
 msgid "Title format:"
 msgstr "标题样式："
 
-#: src/libaudgui/prefs-window.cc:542 src/libaudqt/prefs-window.cc:415
+#: src/libaudgui/prefs-window.cc:557 src/libaudqt/prefs-window-qt.cc:428
 msgid "Custom string:"
 msgstr "自定字符："
 
-#: src/libaudgui/prefs-window.cc:741 src/libaudqt/prefs-window.cc:705
+#: src/libaudgui/prefs-window.cc:756 src/libaudqt/prefs-window-qt.cc:719
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "使用 %s 开启音频流录制"
 
-#: src/libaudgui/prefs-window.cc:750 src/libaudqt/prefs-window.cc:716
+#: src/libaudgui/prefs-window.cc:765 src/libaudqt/prefs-window-qt.cc:730
 msgid "No audio recording plugin available"
 msgstr "无可用的音频录制插件"
 
-#: src/libaudgui/prefs-window.cc:803 src/libaudqt/prefs-window.cc:593
+#: src/libaudgui/prefs-window.cc:825 src/libaudqt/prefs-window-qt.cc:607
 msgid "Audacious Settings"
 msgstr "Audacious 设置"
 
@@ -1284,11 +1306,11 @@ msgstr "<name>.eqf"
 msgid "Import Winamp Presets"
 msgstr "导入 Winamp 预设"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager.cc:157
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:157
 msgid "Queue Manager"
 msgstr "队列管理器"
 
-#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager.cc:160
+#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:160
 msgid "_Unqueue"
 msgstr "从队列移除 (_U)"
 
@@ -1304,20 +1326,28 @@ msgstr "错误"
 msgid "Information"
 msgstr "信息"
 
-#: src/libaudgui/url-opener.cc:49 src/libaudqt/url-opener.cc:41
+#: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:39
+msgid "_Save to history"
+msgstr ""
+
+#: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
 msgstr "打开URL"
 
-#: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener.cc:47
+#: src/libaudgui/url-opener.cc:69 src/libaudqt/url-opener-qt.cc:53
 msgid "Add URL"
 msgstr "添加URL"
 
-#: src/libaudgui/url-opener.cc:79 src/libaudqt/url-opener.cc:56
+#: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:68
+msgid "C_lear history"
+msgstr ""
+
+#: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"
 msgstr "输入地址"
 
-#: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:46
-#: src/libaudqt/fileopener.cc:47
+#: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:66
+#: src/libaudqt/fileopener.cc:67
 msgid "Open"
 msgstr "打开"
 
@@ -1329,43 +1359,43 @@ msgstr ""
 "\n"
 "（详细信息已隐藏。）"
 
-#: src/libaudqt/fileopener.cc:40
+#: src/libaudqt/fileopener.cc:58
 msgid "Open Folder"
 msgstr "打开文件夹"
 
-#: src/libaudqt/fileopener.cc:42
+#: src/libaudqt/fileopener.cc:60
 msgid "Add Folder"
 msgstr "添加文件夹"
 
-#: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
+#: src/libaudqt/fileopener.cc:68 src/libaudqt/fileopener.cc:69
 msgid "Add"
 msgstr "添加"
 
-#: src/libaudqt/info-widget.cc:39
+#: src/libaudqt/info-widget.cc:40
 msgid "Metadata"
 msgstr "元数据"
 
-#: src/libaudqt/info-widget.cc:47
+#: src/libaudqt/info-widget.cc:48
 msgid "Composer"
 msgstr "作曲"
 
-#: src/libaudqt/info-widget.cc:48
+#: src/libaudqt/info-widget.cc:49
 msgid "Performer"
 msgstr "演奏"
 
-#: src/libaudqt/info-widget.cc:49
+#: src/libaudqt/info-widget.cc:50
 msgid "Recording Year"
 msgstr "录制年代"
 
-#: src/libaudqt/info-widget.cc:50
+#: src/libaudqt/info-widget.cc:51
 msgid "Recording Date"
 msgstr "录制日期"
 
-#: src/libaudqt/info-widget.cc:53
+#: src/libaudqt/info-widget.cc:54
 msgid "Technical"
 msgstr "技术员"
 
-#: src/libaudqt/info-widget.cc:57
+#: src/libaudqt/info-widget.cc:58
 msgid "Bitrate"
 msgstr "比特率"
 
@@ -1405,10 +1435,13 @@ msgstr "清空(_E)"
 msgid "Log Level:"
 msgstr "日志级别："
 
-#: src/libaudqt/plugin-menu.cc:45
-msgid "Plugins ..."
-msgstr "插件 ..."
-
-#: src/libaudqt/plugin-menu.cc:53
+#: src/libaudqt/plugin-menu-qt.cc:53
 msgid "Services"
 msgstr "服务"
+
+#: src/libaudqt/util-qt.cc:80
+msgid "Copy"
+msgstr "复制"
+
+#~ msgid "Plugins ..."
+#~ msgstr "插件 ..."
