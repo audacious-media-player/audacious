@@ -388,10 +388,7 @@ static bool write_frame (VFSFile & file, const GenericFrame & frame, int version
 
     ID3v2FrameHeader header;
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wstringop-truncation"
     strncpy (header.key, frame.key, 4);
-#pragma GCC diagnostic pop
 
     uint32_t size = frame.len ();
     if (version > 3)

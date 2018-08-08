@@ -108,6 +108,7 @@ if test "x$GCC" = "xyes"; then
         CXXFLAGS="$CXXFLAGS -std=gnu++11 -ffast-math -Wall -pipe"
     fi
     AUD_CHECK_CFLAGS(-Wtype-limits)
+    AUD_CHECK_CFLAGS(-Wno-stringop-truncation)
     AUD_CHECK_CXXFLAGS(-Woverloaded-virtual)
 fi
 
