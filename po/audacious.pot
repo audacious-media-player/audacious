@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2018-07-01 20:33-0400\n"
+"Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
+"POT-Creation-Date: 2018-08-04 20:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -762,7 +762,7 @@ msgstr ""
 msgid "_Import"
 msgstr ""
 
-#: src/libaudgui/plugin-menu.cc:40
+#: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:45
 msgid "_Plugins ..."
 msgstr ""
 
@@ -1416,10 +1416,6 @@ msgstr ""
 
 #: src/libaudqt/log-inspector.cc:232
 msgid "Log Level:"
-msgstr ""
-
-#: src/libaudqt/plugin-menu-qt.cc:45
-msgid "Plugins ..."
 msgstr ""
 
 #: src/libaudqt/plugin-menu-qt.cc:53
