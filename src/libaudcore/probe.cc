@@ -242,6 +242,15 @@ EXPORT bool aud_custom_infowin (const char * filename, PluginHandle * decoder)
     if (! strncmp (filename, "stdin://", 8))
         return false;
 
+    // In hindsight, a flag should have been added indicating whether a
+    // plugin provides a custom info window or not.  Currently, only two
+    // plugins do so.  Since custom info windows are deprecated anyway,
+    // check for those two plugins explicitly and in all other cases,
+    // don't open the input file to prevent freezing the UI.
+    const char * base = aud_plugin_get_basename (decoder);
+    if (strcmp (base, "amidi-plug") && strcmp (base, "vtx"))
+        return false;
+
     auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
     if (! ip)
         return false;
