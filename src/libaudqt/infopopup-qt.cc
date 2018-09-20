@@ -176,7 +176,7 @@ static InfoPopup * s_infopopup;
 
 static void infopopup_show (const String & filename, const Tuple & tuple)
 {
-    delete s_infopopup;
+    if(s_infopopup) s_infopopup->deleteLater();
     s_infopopup = new InfoPopup (filename, tuple);
 
     QObject::connect (s_infopopup, & QObject::destroyed, [] () {
@@ -206,7 +206,7 @@ EXPORT void infopopup_show_current ()
 
 EXPORT void infopopup_hide ()
 {
-    delete s_infopopup;
+    s_infopopup->deleteLater();
 }
 
 } // namespace audqt
