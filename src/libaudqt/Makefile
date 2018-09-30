@@ -25,13 +25,15 @@ SRCS = about-qt.cc \
        queue-manager-qt.cc \
        url-opener-qt.cc \
        util-qt.cc \
+       treeview.cc \
        volumebutton.cc
 
 INCLUDES = export.h \
            iface.h \
            info-widget.h \
            libaudqt.h \
-           menu.h
+           menu.h \
+           treeview.h
 
 include ../../buildsys.mk
 include ../../extra.mk
