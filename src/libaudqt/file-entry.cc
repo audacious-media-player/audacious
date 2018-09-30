@@ -37,7 +37,7 @@ public:
         m_title (title),
         m_file_mode (file_mode),
         m_accept_mode (accept_mode),
-        m_action (get_icon ("document-open"), _("Browse"))
+        m_action (get_icon ("document-open"), _("Browse"), nullptr)
     {
         addAction (& m_action, TrailingPosition);
         connect (& m_action, & QAction::triggered, this, & FileEntry::show_dialog);
