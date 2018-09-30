@@ -101,6 +101,7 @@ EXPORT void cleanup ()
         return;
 
     aboutwindow_hide ();
+    eq_presets_hide ();
     equalizer_hide ();
     infopopup_hide ();
     infowin_hide ();

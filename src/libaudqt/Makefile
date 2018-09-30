@@ -5,6 +5,7 @@ LIB_MINOR = 2
 SRCS = about-qt.cc \
        art-qt.cc \
        audqt.cc \
+       eq-preset-qt.cc \
        equalizer-qt.cc \
        file-entry.cc \
        fileopener.cc \

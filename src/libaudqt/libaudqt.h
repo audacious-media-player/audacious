@@ -80,6 +80,10 @@ void playlist_confirm_delete (Playlist playlist);
 void equalizer_show ();
 void equalizer_hide ();
 
+/* eq-preset-qt.cc */
+void eq_presets_show ();
+void eq_presets_hide ();
+
 /* fileopener.cc */
 void fileopener_show (FileMode mode);
 

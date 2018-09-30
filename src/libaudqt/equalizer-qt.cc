@@ -23,6 +23,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPainter>
+#include <QPushButton>
 #include <QSlider>
 #include <QStyle>
 #include <QVBoxLayout>
@@ -134,9 +135,18 @@ EqualizerWindow::EqualizerWindow () :
         slider_layout->addWidget (m_sliders[i]);
     }
 
+    auto zero_button = new QPushButton (_("Reset to Zero"), this);
+    auto preset_button = new QPushButton (_("Presets ..."), this);
+
+    auto hbox = audqt::make_hbox (nullptr);
+    hbox->addWidget (& m_onoff_checkbox);
+    hbox->addStretch (1);
+    hbox->addWidget (zero_button);
+    hbox->addWidget (preset_button);
+
     auto layout = audqt::make_vbox (this);
     layout->setSizeConstraint (QLayout::SetFixedSize);
-    layout->addWidget (& m_onoff_checkbox);
+    layout->addLayout (hbox);
     layout->addWidget (slider_container);
 
     setWindowTitle (_("Equalizer"));
@@ -151,6 +161,12 @@ EqualizerWindow::EqualizerWindow () :
     connect (& m_onoff_checkbox, & QCheckBox::stateChanged, [] (int state) {
         aud_set_bool (nullptr, "equalizer_active", (state == Qt::Checked));
     });
+
+    connect (zero_button, & QPushButton::clicked, [] () {
+        aud_eq_apply_preset (EqualizerPreset ());
+    });
+
+    connect (preset_button, & QPushButton::clicked, audqt::eq_presets_show);
 
     connect (& m_preamp_slider->slider, & QSlider::valueChanged, [] (int value) {
         aud_set_int (nullptr, "equalizer_preamp", value);
