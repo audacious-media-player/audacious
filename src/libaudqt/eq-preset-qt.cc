@@ -18,15 +18,16 @@
  */
 
 #include "libaudqt.h"
+#include "treeview.h"
 
 #include <QBoxLayout>
 #include <QDialog>
 #include <QPointer>
 #include <QStandardItemModel>
-#include <QTreeView>
 
 #include "libaudcore/equalizer.h"
 #include "libaudcore/i18n.h"
+#include "libaudcore/runtime.h"
 
 namespace audqt {
 
@@ -42,15 +43,41 @@ public:
     const EqualizerPreset preset;
 };
 
-static QStandardItemModel * create_model (QObject * parent)
+class PresetView : public TreeView
 {
-    auto model = new QStandardItemModel (0, 1, parent);
+public:
+    PresetView ();
+
+protected:
+    void activate (const QModelIndex & index) override;
+};
+
+PresetView::PresetView ()
+{
+    setEditTriggers (QTreeView::NoEditTriggers);
+    setHeaderHidden (true);
+    setIndentation (0);
+    setUniformRowHeights (true);
+
+    auto smodel = new QStandardItemModel (0, 1, this);
     auto presets = aud_eq_read_presets ("eq.preset");
 
     for (const EqualizerPreset & preset : presets)
-        model->appendRow (new PresetItem (preset));
+        smodel->appendRow (new PresetItem (preset));
 
-    return model;
+    setModel (smodel);
+}
+
+void PresetView::activate (const QModelIndex & index)
+{
+    auto smodel = static_cast<QStandardItemModel *> (model ());
+    auto item = static_cast<PresetItem *> (smodel->itemFromIndex (index));
+
+    if (item)
+    {
+        aud_eq_apply_preset (item->preset);
+        aud_set_bool (nullptr, "equalizer_active", true);
+    }
 }
 
 static QDialog * create_preset_win ()
@@ -60,13 +87,7 @@ static QDialog * create_preset_win ()
     win->setWindowTitle (_("Equalizer Presets"));
     win->setContentsMargins (margins.TwoPt);
 
-    auto view = new QTreeView;
-    view->setModel (create_model (view));
-    view->setEditTriggers (QTreeView::NoEditTriggers);
-    view->setHeaderHidden (true);
-    view->setIndentation (0);
-    view->setUniformRowHeights (true);
-
+    auto view = new PresetView;
     auto vbox = make_vbox (win);
     vbox->addWidget (view);
 
