@@ -190,8 +190,8 @@ EXPORT GtkWidget * audgui_file_entry_new (GtkFileChooserAction action, const cha
     GtkWidget * entry = gtk_entry_new ();
 
     auto data = new FileEntryData {action, String (title)};
-    auto destroy_cb = [] (void * data) { delete (FileEntryData *) data; };
-    g_object_set_data_full ((GObject *) entry, "file-entry-data", data, destroy_cb);
+    g_object_set_data_full ((GObject *) entry, "file-entry-data", data,
+     aud::delete_obj<FileEntryData>);
 
     gtk_entry_set_icon_from_icon_name ((GtkEntry *) entry,
      GTK_ENTRY_ICON_SECONDARY, "document-open");
