@@ -20,19 +20,20 @@
 #ifndef LIBAUDQT_H
 #define LIBAUDQT_H
 
+#include <QFileDialog>
 #include <QMargins>
 #include <QMessageBox>
 #include <QString>
 #include <libaudcore/objects.h>
 
-class QIcon;
-class QLayout;
 class QBoxLayout;
 class QHBoxLayout;
-class QVBoxLayout;
-
+class QIcon;
+class QLayout;
+class QLineEdit;
 class QPixmap;
 class QToolButton;
+class QVBoxLayout;
 class QWidget;
 
 enum class PluginType;
@@ -116,6 +117,12 @@ QString translate_str (const char * str, const char * domain);
 static inline QString translate_str (const char * str)
     { return translate_str (str, PACKAGE); }
 #endif
+
+/* file-entry.cc */
+QLineEdit * file_entry_new (QWidget * parent, const char * title,
+ QFileDialog::FileMode file_mode, QFileDialog::AcceptMode accept_mode);
+String file_entry_get_uri (QLineEdit * entry);
+void file_entry_set_uri (QLineEdit * entry, const char * uri);
 
 /* prefs-builder.cc */
 void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain);
