@@ -25,6 +25,13 @@
 
 #include "audtool.h"
 
+#ifdef _WIN32
+void g_print_no_convert(const gchar *buf)
+{
+    fputs(buf, stdout);
+}
+#endif
+
 const struct commandhandler handlers[] =
 {
     {"<sep>", NULL, "Current song information", 0},
@@ -186,6 +193,9 @@ int main (int argc, char * * argv)
 {
     int instance = 1;
     int i, j, k = 0;
+#ifdef _WIN32
+    g_set_print_handler(g_print_no_convert);
+#endif
 
     setlocale (LC_CTYPE, "");
 
