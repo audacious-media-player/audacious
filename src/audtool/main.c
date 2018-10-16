@@ -23,6 +23,10 @@
 #include <string.h>
 #include <locale.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include "audtool.h"
 
 const struct commandhandler handlers[] =
@@ -182,6 +186,35 @@ static void audtool_connect (int instance)
     atexit (audtool_disconnect);
 }
 
+#ifdef _WIN32
+static void print_utf8 (const char * str)
+{
+    HANDLE h = GetStdHandle (STD_OUTPUT_HANDLE);
+    DWORD mode;
+
+    if (h != INVALID_HANDLE_VALUE && GetConsoleMode (h, & mode))
+    {
+        // stdout is the console, which needs special handling to display
+        // non-ASCII characters correctly (in 2018, the MS runtime *still*
+        // doesn't handle UTF-8 reliably).
+        glong n_converted;
+        gunichar2 * utf16 = g_utf8_to_utf16 (str, -1, NULL, & n_converted, NULL);
+
+        if (utf16)
+        {
+            DWORD n_written;
+            WriteConsoleW (h, utf16, n_converted, & n_written, NULL);
+            g_free (utf16);
+        }
+    }
+    else
+    {
+        // fputs() works fine when stdout is redirected.
+        fputs (str, stdout);
+    }
+}
+#endif // _WIN32
+
 int main (int argc, char * * argv)
 {
     int instance = 1;
@@ -191,6 +224,10 @@ int main (int argc, char * * argv)
 
 #if ! GLIB_CHECK_VERSION (2, 36, 0)
     g_type_init();
+#endif
+
+#ifdef _WIN32
+    g_set_print_handler (print_utf8);
 #endif
 
     // parse instance number (must come first)
