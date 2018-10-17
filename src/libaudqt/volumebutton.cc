@@ -28,6 +28,7 @@
 
 #include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 
 namespace audqt {
 
@@ -37,16 +38,21 @@ public:
     VolumeButton (QWidget * parent = nullptr);
 
 private:
+    void updateDelta ();
     void updateIcon (int val);
     void updateVolume ();
     void showSlider ();
     void setVolume (int val);
-    QToolButton * newSliderButton (int delta);
+    QToolButton * newSliderButton (int dir);
 
     void wheelEvent (QWheelEvent * e);
 
     QSlider * m_slider;
     QFrame * m_container;
+    int m_scroll_delta = 0;
+
+    HookReceiver<VolumeButton> update_hook
+        {"set volume_delta", this, & VolumeButton::updateDelta};
 };
 
 VolumeButton::VolumeButton (QWidget * parent) :
@@ -60,15 +66,15 @@ VolumeButton::VolumeButton (QWidget * parent) :
     m_slider = new QSlider (Qt::Vertical, this);
     m_slider->setMinimumHeight (audqt::sizes.OneInch);
     m_slider->setRange (0, 100);
-    m_slider->setSingleStep (2);
-    m_slider->setPageStep (20);
+
+    updateDelta ();
 
     auto layout = make_vbox (m_container, sizes.TwoPt);
     layout->setContentsMargins (margins.TwoPt);
 
-    layout->addWidget (newSliderButton (5));
+    layout->addWidget (newSliderButton (1));
     layout->addWidget (m_slider);
-    layout->addWidget (newSliderButton (-5));
+    layout->addWidget (newSliderButton (-1));
 
     int val = aud_drct_get_volume_main ();
     m_slider->setValue (val);
@@ -81,6 +87,13 @@ VolumeButton::VolumeButton (QWidget * parent) :
     connect (this, & QObject::destroyed, [timer] () { delete timer; });
 
     timer->start ();
+}
+
+void VolumeButton::updateDelta ()
+{
+    int delta = aud_get_int (0, "volume_delta");
+    m_slider->setSingleStep (delta);
+    m_slider->setPageStep (delta);
 }
 
 void VolumeButton::updateIcon (int val)
@@ -133,16 +146,15 @@ void VolumeButton::setVolume (int val)
     updateIcon (val);
 }
 
-QToolButton * VolumeButton::newSliderButton (int delta)
+QToolButton * VolumeButton::newSliderButton (int dir)
 {
     auto button = new QToolButton (this);
-    button->setText (delta < 0 ? "-" : "+");
+    button->setText (dir < 0 ? "-" : "+");
     button->setAutoRaise (true);
     button->setSizePolicy (QSizePolicy::Ignored, QSizePolicy::Preferred);
 
-    connect (button, & QAbstractButton::clicked, [this, delta] () {
-        int val = aud_drct_get_volume_main ();
-        m_slider->setValue (val + delta);
+    connect (button, & QAbstractButton::clicked, [this, dir] () {
+        m_slider->setValue (m_slider->value () + dir * aud_get_int (0, "volume_delta"));
     });
 
     return button;
@@ -150,13 +162,15 @@ QToolButton * VolumeButton::newSliderButton (int delta)
 
 void VolumeButton::wheelEvent (QWheelEvent * e)
 {
-    int val = m_slider->value ();
-    int y = e->angleDelta ().y ();
+    m_scroll_delta += e->angleDelta ().y ();
 
-    if (y < 0)
-        m_slider->setValue (-- val);
-    else
-        m_slider->setValue (++ val);
+    /* we want discrete steps here */
+    int steps = m_scroll_delta / 120;
+    if (steps != 0)
+    {
+        m_scroll_delta -= 120 * steps;
+        m_slider->setValue (m_slider->value () + steps * aud_get_int (0, "volume_delta"));
+    }
 }
 
 EXPORT QToolButton * volume_button_new (QWidget * parent)
