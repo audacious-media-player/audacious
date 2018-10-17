@@ -350,7 +350,14 @@ static const PreferencesWidget advanced_page_widgets[] = {
     WidgetCheck (N_("Do not load metadata for songs until played"),
         WidgetBool (0, "metadata_on_play")),
     WidgetCheck (N_("Probe content of files with no recognized file name extension"),
-        WidgetBool (0, "slow_probe"))
+        WidgetBool (0, "slow_probe")),
+    WidgetLabel (N_("<b>Miscellaneous</b>")),
+    WidgetSpin (N_("Step forward/backward by:"),
+        WidgetInt (0, "step_size"),
+        {1, 60, 1, N_("seconds")}),
+    WidgetSpin (N_("Adjust volume by:"),
+        WidgetInt (0, "volume_delta"),
+        {1, 25, 1, N_("percent")})
 };
 
 #define TITLESTRING_NPRESETS 8

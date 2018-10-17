@@ -80,12 +80,14 @@ static const char * const core_defaults[] = {
  "software_volume_control", "FALSE",
  "sw_volume_left", "100",
  "sw_volume_right", "100",
+ "volume_delta", "5",
 
  /* playback */
  "album_shuffle", "FALSE",
  "no_playlist_advance", "FALSE",
  "repeat", "FALSE",
  "shuffle", "FALSE",
+ "step_size", "5",
  "stop_after_current_song", "FALSE",
 
  /* playlist */
@@ -257,6 +259,20 @@ void config_load ()
     {
         aud_set_str (0, "replay_gain_album", "");
         aud_set_int (0, "replay_gain_mode", (int) ReplayGainMode::Album);
+    }
+
+    double step_size = aud_get_double ("gtkui", "step_size");
+    if (step_size > 0)
+    {
+        aud_set_int (0, "step_size", (int) step_size);
+        aud_set_str ("gtkui", "step_size", "");
+    }
+
+    int volume_delta = aud_get_int ("statusicon", "volume_delta");
+    if (volume_delta > 0)
+    {
+        aud_set_int (0, "volume_delta", volume_delta);
+        aud_set_str ("statusicon", "volume_delta", "");
     }
 }
 
