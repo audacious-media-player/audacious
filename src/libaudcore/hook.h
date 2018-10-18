@@ -99,9 +99,9 @@ void hook_call (const char * name, void * data);
 
 typedef void (* EventDestroyFunc) (void * data);
 
-/* Schedules a call of the hook <name> from the program's main loop, to be
- * executed in <time> milliseconds.  If <destroy> is not nullptr, it will be called
- * on <data> after the hook is called. */
+/* Schedules a call of the hook <name> from the program's main loop.
+ * If <destroy> is not nullptr, it will be called on <data> after the
+ * hook is called. */
 void event_queue (const char * name, void * data, EventDestroyFunc destroy = nullptr);
 
 /* Cancels pending hook calls matching <name> and <data>.  If <data> is nullptr,
