@@ -22,7 +22,9 @@
 
 #include <QBoxLayout>
 #include <QDialog>
+#include <QLineEdit>
 #include <QPointer>
+#include <QPushButton>
 #include <QStandardItemModel>
 
 #include "libaudcore/equalizer.h"
@@ -36,49 +38,109 @@ class PresetItem : public QStandardItem
 public:
     explicit PresetItem (const EqualizerPreset & preset) :
         QStandardItem ((const char *) preset.name),
-        preset (preset)
-    {
-    }
+        preset (preset) {}
 
     const EqualizerPreset preset;
 };
 
+class PresetModel : public QStandardItemModel
+{
+public:
+    explicit PresetModel (QObject * parent) :
+        QStandardItemModel (0, 1, parent) {}
+
+    void load_all ();
+    void save_all ();
+    void add_preset (const char * name);
+    void apply_preset (int row);
+
+    const EqualizerPreset * preset_at (int row) const
+    {
+        auto pitem = static_cast<PresetItem *> (item (row));
+        return pitem ? & pitem->preset : nullptr;
+    }
+
+private:
+    bool m_changed = false;
+};
+
+void PresetModel::load_all ()
+{
+    clear ();
+
+    auto presets = aud_eq_read_presets ("eq.preset");
+    for (const EqualizerPreset & preset : presets)
+        appendRow (new PresetItem (preset));
+
+    m_changed = false;
+}
+
+void PresetModel::save_all ()
+{
+    if (! m_changed)
+        return;
+
+    Index<EqualizerPreset> presets;
+    for (int row = 0; row < rowCount (); row ++)
+        presets.append (* preset_at (row));
+
+    presets.sort ([] (const EqualizerPreset & a, const EqualizerPreset & b)
+        { return strcmp (a.name, b.name); });
+
+    aud_eq_write_presets (presets, "eq.preset");
+    m_changed = false;
+}
+
+void PresetModel::add_preset (const char * name)
+{
+    int insert_idx = rowCount ();
+    for (int row = 0; row < rowCount (); row ++)
+    {
+        if (! strcmp (preset_at (row)->name, name))
+        {
+            insert_idx = row;
+            break;
+        }
+    }
+
+    EqualizerPreset preset {String (name)};
+    aud_eq_update_preset (preset);
+    setItem (insert_idx, new PresetItem (preset));
+    m_changed = true;
+}
+
+void PresetModel::apply_preset (int row)
+{
+    auto preset = preset_at (row);
+    if (! preset)
+        return;
+
+    aud_eq_apply_preset (* preset);
+    aud_set_bool (nullptr, "equalizer_active", true);
+}
+
 class PresetView : public TreeView
 {
 public:
-    PresetView ();
+    PresetView ()
+    {
+        setEditTriggers (QTreeView::NoEditTriggers);
+        setHeaderHidden (true);
+        setIndentation (0);
+        setUniformRowHeights (true);
+
+        auto pmodel = new PresetModel (this);
+        pmodel->load_all ();
+        setModel (pmodel);
+    }
+
+    PresetModel * pmodel () const
+        { return static_cast<PresetModel *> (model ()); }
 
 protected:
-    void activate (const QModelIndex & index) override;
+    void activate (const QModelIndex & index) override
+        { pmodel ()->apply_preset (index.row ()); }
 };
-
-PresetView::PresetView ()
-{
-    setEditTriggers (QTreeView::NoEditTriggers);
-    setHeaderHidden (true);
-    setIndentation (0);
-    setUniformRowHeights (true);
-
-    auto smodel = new QStandardItemModel (0, 1, this);
-    auto presets = aud_eq_read_presets ("eq.preset");
-
-    for (const EqualizerPreset & preset : presets)
-        smodel->appendRow (new PresetItem (preset));
-
-    setModel (smodel);
-}
-
-void PresetView::activate (const QModelIndex & index)
-{
-    auto smodel = static_cast<QStandardItemModel *> (model ());
-    auto item = static_cast<PresetItem *> (smodel->itemFromIndex (index));
-
-    if (item)
-    {
-        aud_eq_apply_preset (item->preset);
-        aud_set_bool (nullptr, "equalizer_active", true);
-    }
-}
 
 static QDialog * create_preset_win ()
 {
@@ -87,9 +149,32 @@ static QDialog * create_preset_win ()
     win->setWindowTitle (_("Equalizer Presets"));
     win->setContentsMargins (margins.TwoPt);
 
+    auto edit = new QLineEdit;
+    auto save_btn = new QPushButton (_("Save Preset"));
+    save_btn->setDisabled (true);
+
+    auto hbox = make_hbox (nullptr);
+    hbox->addWidget (edit);
+    hbox->addWidget (save_btn);
+
     auto view = new PresetView;
     auto vbox = make_vbox (win);
+    vbox->addLayout (hbox);
     vbox->addWidget (view);
+
+    auto pmodel = view->pmodel ();
+
+    QObject::connect (edit, & QLineEdit::textChanged, [save_btn] (const QString & text) {
+        save_btn->setEnabled (! text.isEmpty ());
+    });
+
+    QObject::connect (save_btn, & QPushButton::clicked, [pmodel, edit] () {
+        pmodel->add_preset (edit->text ().toUtf8 ());
+    });
+
+    QObject::connect (win, & QObject::destroyed, [pmodel] () {
+        pmodel->save_all ();
+    });
 
     return win;
 }
