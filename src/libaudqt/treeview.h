@@ -25,13 +25,16 @@
 
 namespace audqt {
 
-// This class extends QTreeView.  Currently it adds an "activate" event
-// (double click or Enter key).  Other features might be added in future.
+// This class extends QTreeView and adds a couple of features:
+//  - An "activate" event (double click or Enter key)
+//  - A method to remove all selected rows (Delete key)
 class LIBAUDQT_PUBLIC TreeView : public QTreeView
 {
 public:
     TreeView (QWidget * parent = nullptr);
     ~TreeView () override;
+
+    void removeSelectedRows ();
 
 protected:
     void keyPressEvent (QKeyEvent * event) override;

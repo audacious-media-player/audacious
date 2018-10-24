@@ -60,6 +60,13 @@ public:
         return pitem ? & pitem->preset : nullptr;
     }
 
+    bool removeRows (int row, int count, const QModelIndex & parent = QModelIndex ()) override
+    {
+        bool removed = QStandardItemModel::removeRows (row, count, parent);
+        m_changed = m_changed || removed;
+        return removed;
+    }
+
 private:
     bool m_changed = false;
 };
@@ -127,6 +134,7 @@ public:
         setEditTriggers (QTreeView::NoEditTriggers);
         setHeaderHidden (true);
         setIndentation (0);
+        setSelectionMode (QTreeView::ExtendedSelection);
         setUniformRowHeights (true);
 
         auto pmodel = new PresetModel (this);

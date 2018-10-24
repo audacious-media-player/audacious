@@ -21,6 +21,7 @@
 
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <libaudcore/index.h>
 
 namespace audqt {
 
@@ -40,12 +41,34 @@ EXPORT void TreeView::keyPressEvent (QKeyEvent * event)
         case Qt::Key_Return:
             activate (currentIndex ());
             return;
+
+        case Qt::Key_Delete:
+            removeSelectedRows ();
+            return;
+
         default:
             break;
         }
     }
 
     QTreeView::keyPressEvent (event);
+}
+
+EXPORT void TreeView::removeSelectedRows ()
+{
+    // get all selected rows
+    Index<int> rows;
+    for (auto & idx : selectionModel ()->selectedRows ())
+        rows.append (idx.row ());
+
+    // sort in reverse order
+    rows.sort ([] (const int & a, const int & b)
+        { return b - a; });
+
+    // remove rows in reverse order
+    auto m = model ();
+    for (int row : rows)
+        m->removeRow (row);
 }
 
 EXPORT void TreeView::mouseDoubleClickEvent (QMouseEvent * event)
