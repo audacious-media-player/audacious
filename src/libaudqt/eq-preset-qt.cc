@@ -159,6 +159,7 @@ static QDialog * create_preset_win ()
 
     auto edit = new QLineEdit;
     auto save_btn = new QPushButton (_("Save Preset"));
+    save_btn->setIcon (get_icon ("document-save"));
     save_btn->setDisabled (true);
 
     auto hbox = make_hbox (nullptr);
@@ -166,9 +167,23 @@ static QDialog * create_preset_win ()
     hbox->addWidget (save_btn);
 
     auto view = new PresetView;
+
+    auto revert_btn = new QPushButton (_("Revert Changes"));
+    revert_btn->setIcon (get_icon ("edit-undo"));
+    revert_btn->setDisabled (true);
+
+    auto close_btn = new QPushButton (_("Close"));
+    close_btn->setIcon (get_icon ("window-close"));
+
+    auto hbox2 = make_hbox (nullptr);
+    hbox2->addWidget (revert_btn);
+    hbox2->addStretch (1);
+    hbox2->addWidget (close_btn);
+
     auto vbox = make_vbox (win);
     vbox->addLayout (hbox);
     vbox->addWidget (view);
+    vbox->addLayout (hbox2);
 
     auto pmodel = view->pmodel ();
 
@@ -176,9 +191,21 @@ static QDialog * create_preset_win ()
         save_btn->setEnabled (! text.isEmpty ());
     });
 
-    QObject::connect (save_btn, & QPushButton::clicked, [pmodel, edit] () {
+    QObject::connect (save_btn, & QPushButton::clicked, [pmodel, edit, revert_btn] () {
         pmodel->add_preset (edit->text ().toUtf8 ());
+        revert_btn->setDisabled (false);
     });
+
+    QObject::connect (pmodel, & PresetModel::rowsRemoved, [revert_btn] () {
+        revert_btn->setDisabled (false);
+    });
+
+    QObject::connect (revert_btn, & QPushButton::clicked, [pmodel, revert_btn] () {
+        pmodel->load_all ();
+        revert_btn->setDisabled (true);
+    });
+
+    QObject::connect (close_btn, & QPushButton::clicked, win, & QObject::deleteLater);
 
     QObject::connect (win, & QObject::destroyed, [pmodel] () {
         pmodel->save_all ();
