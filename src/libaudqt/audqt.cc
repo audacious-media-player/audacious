@@ -103,7 +103,7 @@ EXPORT void cleanup ()
     aboutwindow_hide ();
     eq_presets_hide ();
     equalizer_hide ();
-    infopopup_hide ();
+    infopopup_hide_now ();
     infowin_hide ();
     log_inspector_hide ();
     prefswin_hide ();

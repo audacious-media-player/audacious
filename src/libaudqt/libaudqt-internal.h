@@ -28,6 +28,9 @@ class QString;
 
 namespace audqt {
 
+/* infopopup.cc */
+void infopopup_hide_now ();
+
 /* log-inspector.cc */
 void log_init ();
 void log_cleanup ();

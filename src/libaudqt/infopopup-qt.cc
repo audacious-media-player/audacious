@@ -215,4 +215,10 @@ EXPORT void infopopup_hide ()
         s_infopopup->deleteLater ();
 }
 
+void infopopup_hide_now ()
+{
+    /* On exit, we really do want to delete the widget immediately. */
+    delete s_infopopup;
+}
+
 } // namespace audqt
