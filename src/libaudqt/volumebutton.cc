@@ -134,7 +134,9 @@ void VolumeButton::showSlider ()
     int dy = container_size.height () / 2 - button_size.height () / 2;
 
     QPoint pos = mapToGlobal (QPoint (0, 0));
-    pos += QPoint (-dx, -dy);
+    pos -= QPoint (dx, dy);
+    pos.setX(qMax(pos.x(), 0));
+    pos.setY(qMax(pos.y(), 0));
 
     m_container->move (pos);
     window_bring_to_front (m_container);
