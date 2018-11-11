@@ -308,6 +308,7 @@ static void add_folder (const char * filename, Playlist::FilterFunc filter,
 
     String error;
     Index<String> files = VFSFile::read_folder (filename, error);
+    Index<String> folders;
 
     if (error)
         aud_ui_show_error (str_printf (_("Error reading %s:\n%s"), filename, (const char *) error));
@@ -327,7 +328,7 @@ static void add_folder (const char * filename, Playlist::FilterFunc filter,
     // sort file list in natural order (must come after add_cuesheets)
     files.sort (str_compare_encoded);
 
-    for (const char * file : files)
+    for (const String & file : files)
     {
         if (filter && ! filter (file, user))
         {
@@ -340,16 +341,20 @@ static void add_folder (const char * filename, Playlist::FilterFunc filter,
          VFSFileTest (VFS_IS_REGULAR | VFS_IS_SYMLINK | VFS_IS_DIR), error);
 
         if (error)
-            AUDERR ("%s: %s\n", file, (const char *) error);
+            AUDERR ("%s: %s\n", (const char *) file, (const char *) error);
 
         if (mode & VFS_IS_SYMLINK)
             continue;
 
         if (mode & VFS_IS_REGULAR)
-            add_file ({String (file)}, filter, user, result, true);
+            add_file ({file}, filter, user, result, true);
         else if ((mode & VFS_IS_DIR) && aud_get_bool (nullptr, "recurse_folders"))
-            add_folder (file, filter, user, result, false);
+            folders.append (file);
     }
+
+    // add folders after files
+    for (const String & folder : folders)
+        add_folder (folder, filter, user, result, false);
 }
 
 static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,

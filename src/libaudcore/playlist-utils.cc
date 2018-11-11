@@ -37,6 +37,19 @@ static const char * get_basename (const char * filename)
     return slash ? slash + 1 : filename;
 }
 
+static int filename_compare_path (const char * a, const char * b)
+{
+    int dirlen_a = get_basename (a) - a;
+    int dirlen_b = get_basename (b) - b;
+
+    // if one folder is a subfolder of the other, sort it last
+    if (dirlen_a != dirlen_b && memcmp (a, b, aud::min (dirlen_a, dirlen_b)) == 0)
+        return dirlen_a - dirlen_b;
+
+    // in all other cases, compare the entire paths
+    return str_compare_encoded (a, b);
+}
+
 static int filename_compare_basename (const char * a, const char * b)
 {
     return str_compare_encoded (get_basename (a), get_basename (b));
@@ -88,7 +101,7 @@ static int tuple_compare_comment (const Tuple & a, const Tuple & b)
     { return tuple_compare_string (a, b, Tuple::Comment); }
 
 static const Playlist::StringCompareFunc filename_comparisons[] = {
-    str_compare_encoded,  // path
+    filename_compare_path,  // path
     filename_compare_basename,  // filename
     nullptr,  // title
     nullptr,  // album
