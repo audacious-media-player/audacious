@@ -38,7 +38,11 @@ void log_cleanup ();
 /* util-qt.cc */
 class PopupWidget : public QWidget
 {
+public:
+    PopupWidget (QWidget * parent = nullptr);
+
 protected:
+    bool eventFilter (QObject *, QEvent * e) override;
     void showEvent (QShowEvent *) override;
 };
 
