@@ -33,6 +33,38 @@
 
 namespace audqt {
 
+PopupWidget::PopupWidget (QWidget * parent) :
+    QWidget (parent)
+{
+    qApp->installEventFilter (this);
+}
+
+// This event filter mimics QToolTip by hiding the popup widget when
+// certain events are received by any widget.
+bool PopupWidget::eventFilter (QObject *, QEvent * e)
+{
+    switch (e->type ())
+    {
+    case QEvent::Leave:
+    case QEvent::WindowActivate:
+    case QEvent::WindowDeactivate:
+    case QEvent::FocusIn:
+    case QEvent::FocusOut:
+    case QEvent::Close:
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::Wheel:
+        deleteLater ();
+        break;
+
+    default:
+        break;
+    }
+
+    return false;
+}
+
 void PopupWidget::showEvent (QShowEvent *)
 {
     auto pos = QCursor::pos ();
