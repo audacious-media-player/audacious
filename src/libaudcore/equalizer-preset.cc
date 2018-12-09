@@ -92,8 +92,27 @@ EXPORT bool aud_eq_write_presets (const Index<EqualizerPreset> & list, const cha
 
 /* Note: Winamp 2.x had a +/- 20 dB range.
  *       Winamp 5.x had a +/- 12 dB range, which we use here. */
-#define FROM_WINAMP_VAL(x)  ((31.5 - (x)) * (12.0 / 31.5))
-#define TO_WINAMP_VAL(x)  (round (31.5 - (x) * (31.5 / 12.0)))
+
+/* Encoded values range from 0 (+12 dB) to 63 (-12 dB).  The sign is
+ * reversed for some unknown reason.  Mathematically, there is no way
+ * to represent 0 dB exactly (31 is +0.19 dB, 32 is -0.19 dB) but we
+ * mimic WinAmp in letting 31 mean 0 dB as a special case. */
+
+static float decode_winamp_val (int val)
+{
+    if (val == 31)
+        return 0.0f;
+
+    return (31.5f - val) * (12.0f / 31.5f);
+}
+
+static int encode_winamp_val (float val)
+{
+    if (val == 0.0f)
+        return 31;
+
+    return lroundf (31.5f - val * (31.5f / 12.0f));
+}
 
 EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile & file)
 {
@@ -118,10 +137,10 @@ EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile & file)
             break;
 
         EqualizerPreset & preset = list.append (String (preset_name));
-        preset.preamp = FROM_WINAMP_VAL (bands[10]);
+        preset.preamp = decode_winamp_val (bands[10]);
 
         for (int i = 0; i < AUD_EQ_NBANDS; i ++)
-            preset.bands[i] = FROM_WINAMP_VAL (bands[i]);
+            preset.bands[i] = decode_winamp_val (bands[i]);
     }
 
     return list;
@@ -141,9 +160,9 @@ EXPORT bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile & 
         return false;
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
-        bands[i] = TO_WINAMP_VAL (preset.bands[i]);
+        bands[i] = encode_winamp_val (preset.bands[i]);
 
-    bands[10] = TO_WINAMP_VAL (preset.preamp);
+    bands[10] = encode_winamp_val (preset.preamp);
 
     if (file.fwrite (bands, 1, 11) != 11)
         return false;
