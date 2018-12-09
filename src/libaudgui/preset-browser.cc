@@ -83,10 +83,7 @@ static void do_load_eqf (const char * filename)
     if (! file)
         return;
 
-    Index<EqualizerPreset> presets = aud_import_winamp_presets (file);
-
-    if (presets.len ())
-        aud_eq_apply_preset (presets[0]);
+    audgui_import_eq_presets (aud_import_winamp_presets (file));
 }
 
 void eq_preset_load_eqf ()
@@ -125,18 +122,4 @@ static void do_save_eqf (const char * filename)
 void eq_preset_save_eqf ()
 {
     show_preset_browser (_("Save EQF File"), true, _("<name>.eqf"), do_save_eqf);
-}
-
-static void do_import_winamp (const char * filename)
-{
-    VFSFile file (filename, "r");
-    if (! file)
-        return;
-
-    audgui_import_eq_presets (aud_import_winamp_presets (file));
-}
-
-void eq_preset_import_winamp ()
-{
-    show_preset_browser (_("Import Winamp Presets"), false, nullptr, do_import_winamp);
 }
