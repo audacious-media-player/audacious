@@ -188,6 +188,9 @@ static void revert_changes ()
 
 static void cleanup_eq_preset_window ()
 {
+    // also hide the preset browser window
+    audgui_hide_unique_window (AUDGUI_PRESET_BROWSER_WINDOW);
+
     if (changes_made)
     {
         save_list ();
@@ -312,22 +315,14 @@ static void merge_presets (const Index<EqualizerPreset> & presets)
 
 EXPORT void audgui_import_eq_presets (const Index<EqualizerPreset> & presets)
 {
-    if (list)
-    {
-        /* import via presets window if it exists */
-        audgui_list_delete_rows (list, 0, preset_list.len ());
-        merge_presets (presets);
-        audgui_list_insert_rows (list, 0, preset_list.len ());
+    // make sure the presets window is displayed
+    if (! list)
+        return;
 
-        changes_made = true;
-        gtk_widget_set_sensitive (revert, true);
-    }
-    else
-    {
-        /* otherwise import directly to ~/.config/audacious/eq.preset */
-        populate_list ();
-        merge_presets (presets);
-        save_list ();
-        preset_list.clear ();
-    }
+    audgui_list_delete_rows (list, 0, preset_list.len ());
+    merge_presets (presets);
+    audgui_list_insert_rows (list, 0, preset_list.len ());
+
+    changes_made = true;
+    gtk_widget_set_sensitive (revert, true);
 }
