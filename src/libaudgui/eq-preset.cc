@@ -20,6 +20,7 @@
 #include <string.h>
 
 #include <libaudcore/equalizer.h>
+#include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
@@ -129,6 +130,30 @@ static int find_by_name (const char * name)
     return -1;
 }
 
+static const EqualizerPreset * find_one_selected ()
+{
+    const EqualizerPreset * preset = nullptr;
+
+    for (PresetItem & item : preset_list)
+    {
+        if (item.selected)
+        {
+            if (preset)
+            {
+                preset = nullptr;
+                break;
+            }
+
+            preset = & item.preset;
+        }
+    }
+
+    if (! preset)
+        hook_call ("ui show error", _("Please select one preset to export."));
+
+    return preset;
+}
+
 static void text_changed ()
 {
     const char * name = gtk_entry_get_text ((GtkEntry *) entry);
@@ -191,6 +216,20 @@ static void revert_changes ()
     gtk_widget_set_sensitive (revert, false);
 }
 
+static void do_save_file (void)
+{
+    auto preset = find_one_selected ();
+    if (preset)
+        eq_preset_save_file (* preset);
+}
+
+static void do_save_eqf (void)
+{
+    auto preset = find_one_selected ();
+    if (preset)
+        eq_preset_save_eqf (* preset);
+}
+
 static void cleanup_eq_preset_window ()
 {
     // also hide the preset browser window
@@ -218,8 +257,8 @@ static GtkWidget * create_menu_bar ()
     };
 
     static const AudguiMenuItem export_items[] = {
-        MenuCommand (N_("Preset File ..."), nullptr, 0, (GdkModifierType) 0, eq_preset_save_file),
-        MenuCommand (N_("EQF File ..."), nullptr, 0, (GdkModifierType) 0, eq_preset_save_eqf)
+        MenuCommand (N_("Preset File ..."), nullptr, 0, (GdkModifierType) 0, do_save_file),
+        MenuCommand (N_("EQF File ..."), nullptr, 0, (GdkModifierType) 0, do_save_eqf)
     };
 
     static const AudguiMenuItem menus[] = {
