@@ -142,14 +142,21 @@ EXPORT bool Playlist::save_to_file (const char * filename, GetMode mode) const
 
             VFSFile file (filename, "w");
             if (! file)
+            {
+                aud_ui_show_error (str_printf (_("Error opening %s:\n%s"),
+                 filename, file.error ()));
                 return false;
+            }
 
-            return pp->save (filename, file, title, items) && file.fflush () == 0;
+            if (pp->save (filename, file, title, items) && file.fflush () == 0)
+                return true;
+
+            aud_ui_show_error (str_printf (_("Error saving %s."), filename));
+            return false;
         }
     }
 
     aud_ui_show_error (str_printf (_("Cannot save %s: unsupported file name extension."), filename));
-
     return false;
 }
 
