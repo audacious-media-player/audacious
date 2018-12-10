@@ -730,6 +730,17 @@ EXPORT StringBuf uri_get_extension (const char * uri)
     return str_copy (ext, qmark ? qmark - ext : -1);
 }
 
+EXPORT StringBuf uri_get_display_base (const char * uri)
+{
+    const char * base, * ext;
+    uri_parse (uri, & base, & ext, nullptr, nullptr);
+
+    if (ext > base)
+        return str_to_utf8 (str_decode_percent (base, ext - base));
+
+    return StringBuf ();
+}
+
 /* Constructs a full URI given:
  *   1. path: one of the following:
  *     a. a full URI (returned unchanged)

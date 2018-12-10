@@ -83,7 +83,6 @@ StringBuf filename_get_base (const char * filename);
 StringBuf filename_build (const std::initializer_list<const char *> & elems);
 StringBuf filename_to_uri (const char * filename);
 StringBuf uri_to_filename (const char * uri, bool use_locale = true);
-StringBuf uri_to_display (const char * uri);
 
 void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
  const char * * sub_p, int * isub_p);
@@ -92,6 +91,8 @@ StringBuf uri_get_scheme (const char * uri);
 StringBuf uri_get_extension (const char * uri);
 
 /* Requires: aud_init() */
+StringBuf uri_to_display (const char * uri);
+StringBuf uri_get_display_base (const char * uri);
 StringBuf uri_construct (const char * path, const char * reference);
 StringBuf uri_deconstruct (const char * uri, const char * reference);
 

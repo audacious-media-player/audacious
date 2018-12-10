@@ -49,7 +49,7 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
     for (int p = 0;; p ++)
     {
         CharPtr name (g_key_file_get_string (rcfile, "Presets", str_printf ("Preset%d", p), nullptr));
-        if (! name)
+        if (! name || ! name[0])
             break;
 
         EqualizerPreset & preset = list.append (String (name));
@@ -126,7 +126,7 @@ EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile & file)
      strncmp (header, "Winamp EQ library file v1.1", 27))
         return list;
 
-    while (file.fread (preset_name, 1, 180) == 180)
+    while (file.fread (preset_name, 1, 180) == 180 && preset_name[0])
     {
         preset_name[180] = 0; /* protect against buffer overflow */
 
@@ -192,6 +192,11 @@ EXPORT bool aud_save_preset_file (const EqualizerPreset & preset, VFSFile & file
 
 EXPORT bool aud_load_preset_file (EqualizerPreset & preset, VFSFile & file)
 {
+    /* get the preset name from the file name */
+    StringBuf name = uri_get_display_base (file.filename ());
+    if (! name || ! name[0])
+        return false;
+
     GKeyFile * rcfile = g_key_file_new ();
 
     Index<char> data = file.read_all ();
@@ -203,7 +208,7 @@ EXPORT bool aud_load_preset_file (EqualizerPreset & preset, VFSFile & file)
         return false;
     }
 
-    preset.name = String ("");
+    preset.name = String (name);
     preset.preamp = g_key_file_get_double (rcfile, "Equalizer preset", "Preamp", nullptr);
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)

@@ -70,13 +70,14 @@ static void show_preset_browser (const char * title, gboolean save,
 
 static void do_load_file (const char * filename, const EqualizerPreset *)
 {
-    EqualizerPreset preset;
+    Index<EqualizerPreset> presets;
+    presets.append ();
 
     VFSFile file (filename, "r");
-    if (! file || ! aud_load_preset_file (preset, file))
+    if (! file || ! aud_load_preset_file (presets[0], file))
         return;
 
-    aud_eq_apply_preset (preset);
+    audgui_import_eq_presets (presets);
 }
 
 void eq_preset_load_file ()
