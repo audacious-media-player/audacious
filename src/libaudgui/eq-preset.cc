@@ -23,6 +23,7 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/index.h>
+#include <libaudcore/interface.h>
 #include <libaudcore/runtime.h>
 
 #include "internal.h"
@@ -149,7 +150,7 @@ static const EqualizerPreset * find_one_selected ()
     }
 
     if (! preset)
-        hook_call ("ui show error", _("Please select one preset to export."));
+        aud_ui_show_error (_("Please select one preset to export."));
 
     return preset;
 }
