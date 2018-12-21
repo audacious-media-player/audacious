@@ -172,11 +172,14 @@ static void setup_output (bool new_input)
     bool automatic;
     int format = get_format (automatic);
 
-    AUDINFO ("Setup output, format %d, %d channels, %d Hz.\n", format, effect_channels, effect_rate);
-
-    if (s_output && format == out_format && effect_channels == out_channels &&
+    if (s_output && effect_channels == out_channels &&
      effect_rate == out_rate && ! (new_input && cop->force_reopen))
+    {
+        AUDINFO ("Reuse output, %d channels, %d Hz.\n", effect_channels, effect_rate);
         return;
+    }
+
+    AUDINFO ("Setup output, format %d, %d channels, %d Hz.\n", format, effect_channels, effect_rate);
 
     cleanup_output ();
     cop->set_info (in_filename, in_tuple);
