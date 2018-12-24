@@ -141,22 +141,32 @@ static GtkWidget * small_label_new (const char * text)
 }
 
 static void set_entry_str_from_field (GtkWidget * widget, const Tuple & tuple,
- Tuple::Field field, bool editable, bool clear)
+ Tuple::Field field, bool editable, bool clear, bool & changed)
 {
     String text = tuple.get_str (field);
+
     if (! text && ! clear)
+    {
+        if (gtk_entry_get_text_length ((GtkEntry *) widget) > 0)
+            changed = true;
         return;
+    }
 
     gtk_entry_set_text ((GtkEntry *) widget, text ? text : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
 static void set_entry_int_from_field (GtkWidget * widget, const Tuple & tuple,
- Tuple::Field field, bool editable, bool clear)
+ Tuple::Field field, bool editable, bool clear, bool & changed)
 {
     int value = tuple.get_int (field);
+
     if (value <= 0 && ! clear)
+    {
+        if (gtk_entry_get_text_length ((GtkEntry *) widget) > 0)
+            changed = true;
         return;
+    }
 
     gtk_entry_set_text ((GtkEntry *) widget, (value > 0) ? (const char *) int_to_str (value) : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
@@ -424,19 +434,20 @@ static void infowin_show (Playlist list, int entry, const String & filename,
     can_write = writable;
 
     bool clear = aud_get_bool ("audgui", "clear_song_fields");
+    bool changed = false;
 
-    set_entry_str_from_field (widgets.title, tuple, Tuple::Title, writable, clear);
-    set_entry_str_from_field (widgets.artist, tuple, Tuple::Artist, writable, clear);
-    set_entry_str_from_field (widgets.album, tuple, Tuple::Album, writable, clear);
-    set_entry_str_from_field (widgets.album_artist, tuple, Tuple::AlbumArtist, writable, clear);
-    set_entry_str_from_field (widgets.comment, tuple, Tuple::Comment, writable, clear);
+    set_entry_str_from_field (widgets.title, tuple, Tuple::Title, writable, clear, changed);
+    set_entry_str_from_field (widgets.artist, tuple, Tuple::Artist, writable, clear, changed);
+    set_entry_str_from_field (widgets.album, tuple, Tuple::Album, writable, clear, changed);
+    set_entry_str_from_field (widgets.album_artist, tuple, Tuple::AlbumArtist, writable, clear, changed);
+    set_entry_str_from_field (widgets.comment, tuple, Tuple::Comment, writable, clear, changed);
     set_entry_str_from_field (gtk_bin_get_child ((GtkBin *) widgets.genre),
-     tuple, Tuple::Genre, writable, clear);
+     tuple, Tuple::Genre, writable, clear, changed);
 
     gtk_label_set_text ((GtkLabel *) widgets.location, uri_to_display (filename));
 
-    set_entry_int_from_field (widgets.year, tuple, Tuple::Year, writable, clear);
-    set_entry_int_from_field (widgets.track, tuple, Tuple::Track, writable, clear);
+    set_entry_int_from_field (widgets.year, tuple, Tuple::Year, writable, clear, changed);
+    set_entry_int_from_field (widgets.track, tuple, Tuple::Track, writable, clear, changed);
 
     String codec_values[CODEC_ITEMS];
 
@@ -455,9 +466,7 @@ static void infowin_show (Playlist list, int entry, const String & filename,
 
     infowin_display_image (filename);
 
-    /* nothing has been changed yet */
-    gtk_widget_set_sensitive (widgets.apply, false);
-
+    gtk_widget_set_sensitive (widgets.apply, changed);
     gtk_widget_grab_focus (widgets.title);
 
     if (! audgui_reshow_unique_window (AUDGUI_INFO_WINDOW))
