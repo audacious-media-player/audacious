@@ -9,7 +9,8 @@
 # Imnune <alikoc@hush.ai>, 2012
 # Ali Orhun Akkirman <the.alorak@gmail.com>, 2013
 # hsngrms <dead-bodies-everywhere@hotmail.com>, 2012
-# Dragon xarax <dodokur@gmail.com>, 2016
+# Dragon Blogger <dodokur@gmail.com>, 2018
+# Dragon Blogger <dodokur@gmail.com>, 2016
 # Emre FIRAT <emrefirat93@gmail.com>, 2013
 # Emin Tufan <etcetin@gmail.com>, 2016
 # Emre FIRAT <emrefirat93@gmail.com>, 2013
@@ -27,14 +28,15 @@
 # M. Tayyip Yel <m.tayyib.yel@gmail.com>, 2013
 # tarkan255 <t.oguzman@hotmail.com>, 2012
 # Volkan Gezer <volkangezer@gmail.com>, 2014-2015
+# yaşar çiv <yasarciv67@gmail.com>, 2018
 # Zekeriya Cihan <zekeriya.cihan@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-02 04:50+0000\n"
-"Last-Translator: Akferzan <akferzan@gmail.com>\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
+"Last-Translator: yaşar çiv <yasarciv67@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/audacious/audacious/"
 "language/tr/)\n"
 "Language: tr\n"
@@ -127,7 +129,7 @@ msgstr ""
 
 #: src/audacious/main.cc:185
 msgid "Select instance to run/control"
-msgstr ""
+msgstr "Çalıştırılacak/kontrol edilecek örneği seçin"
 
 #: src/audacious/main.cc:367 src/libaudqt/audqt.cc:63
 msgid "Audacious"
@@ -173,7 +175,7 @@ msgstr "(karakter kodlama hatası)"
 #: src/libaudcore/drct.cc:96
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
-msgstr ""
+msgstr "Akış kaydı, kullanılmadan önce Ses Ayarları'nda yapılandırılmalıdır."
 
 #: src/libaudcore/output.cc:195
 msgid "Error opening output stream"
@@ -181,7 +183,7 @@ msgstr "Çıktı akışı açılırken hata"
 
 #: src/libaudcore/output.cc:248
 msgid "Error recording output stream"
-msgstr ""
+msgstr "Çıkış akışı kaydedilirken hata oluştu"
 
 #: src/libaudcore/playback.cc:373
 #, c-format
@@ -858,7 +860,7 @@ msgstr "Eklentiler"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:142
 msgid "Advanced"
-msgstr ""
+msgstr "Gelişmiş"
 
 #: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "General"
@@ -972,7 +974,7 @@ msgstr "Çözüldüğü gibi"
 
 #: src/libaudgui/prefs-window.cc:141 src/libaudqt/prefs-window-qt.cc:186
 msgid "After applying ReplayGain"
-msgstr ""
+msgstr "ReplayGain'i uyguladıktan sonra"
 
 #: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:187
 msgid "After applying effects"
@@ -984,11 +986,11 @@ msgstr "Dengeleme uygulandıktan sonra"
 
 #: src/libaudgui/prefs-window.cc:149 src/libaudqt/prefs-window-qt.cc:194
 msgid "Based on shuffle"
-msgstr ""
+msgstr "Karıştırmaya dayalı"
 
 #: src/libaudgui/prefs-window.cc:161 src/libaudqt/prefs-window-qt.cc:206
 msgid "Interface:"
-msgstr ""
+msgstr "Arayüz:"
 
 #: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:216
 msgid "Output plugin:"
@@ -1042,7 +1044,7 @@ msgstr "Akışı kaydet:"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window-qt.cc:259
 msgid "<b>ReplayGain</b>"
-msgstr ""
+msgstr "<b>ReplayGain</b>"
 
 #: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:260
 msgid "Enable ReplayGain"
@@ -1050,7 +1052,7 @@ msgstr "ReplayGain'i etkinleştir"
 
 #: src/libaudgui/prefs-window.cc:232 src/libaudqt/prefs-window-qt.cc:262
 msgid "Mode:"
-msgstr ""
+msgstr "Mod:"
 
 #: src/libaudgui/prefs-window.cc:236 src/libaudqt/prefs-window-qt.cc:266
 msgid "Prevent clipping (recommended)"
@@ -1142,11 +1144,11 @@ msgstr "Saatleri ayrı ayrı göster (1:30:00'a karşı 90:00)"
 
 #: src/libaudgui/prefs-window.cc:306 src/libaudqt/prefs-window-qt.cc:336
 msgid "<b>Export</b>"
-msgstr ""
+msgstr "<b>Dışa1Dışa aktar</b>"
 
 #: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:337
 msgid "Use relative paths when possible"
-msgstr ""
+msgstr "Mümkün olduğunda göreli yollar kullanın"
 
 #: src/libaudgui/prefs-window.cc:312 src/libaudqt/prefs-window-qt.cc:342
 msgid "<b>Album Art</b>"
@@ -1198,15 +1200,15 @@ msgstr "Geriye yatık taksimi ( \\ ) klasör sınırlayıcı olarak yorumla"
 
 #: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:372
 msgid "<b>Playlist</b>"
-msgstr ""
+msgstr "<b>Oynatma Liistesi</b>"
 
 #: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:373
 msgid "Add folders recursively"
-msgstr ""
+msgstr "Dizinleri tekrarlı olarak ekle"
 
 #: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:375
 msgid "Add folders nested within playlist files"
-msgstr ""
+msgstr "Oynatma listesi dosyalarında yuvalanmış dizinler ekle"
 
 #: src/libaudgui/prefs-window.cc:347 src/libaudqt/prefs-window-qt.cc:377
 msgid "<b>Metadata</b>"
@@ -1275,7 +1277,7 @@ msgstr "Özel metin:"
 #: src/libaudgui/prefs-window.cc:756 src/libaudqt/prefs-window-qt.cc:719
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr ""
+msgstr "%s ile ses akışı kaydını etkinleştir "
 
 #: src/libaudgui/prefs-window.cc:765 src/libaudqt/prefs-window-qt.cc:730
 msgid "No audio recording plugin available"
@@ -1311,7 +1313,7 @@ msgstr "Önayar Dosyasını Kaydet"
 
 #: src/libaudgui/preset-browser.cc:109
 msgid "<name>.preset"
-msgstr ""
+msgstr "<name>.preset"
 
 #: src/libaudgui/preset-browser.cc:127
 msgid "Save EQF File"
@@ -1319,7 +1321,7 @@ msgstr "EQF Dosyasını Kaydet"
 
 #: src/libaudgui/preset-browser.cc:127
 msgid "<name>.eqf"
-msgstr ""
+msgstr "<name>.eqf"
 
 #: src/libaudgui/preset-browser.cc:141
 msgid "Import Winamp Presets"
@@ -1347,7 +1349,7 @@ msgstr "Bilgi"
 
 #: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:39
 msgid "_Save to history"
-msgstr ""
+msgstr "_Geçmişe kaydet"
 
 #: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
@@ -1359,7 +1361,7 @@ msgstr "URL Ekle"
 
 #: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:68
 msgid "C_lear history"
-msgstr ""
+msgstr "Geçmişi temiz_le"
 
 #: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"
@@ -1448,7 +1450,7 @@ msgstr "Uyarı"
 
 #: src/libaudqt/log-inspector.cc:219
 msgid "Cl_ear"
-msgstr ""
+msgstr "Temizl_e"
 
 #: src/libaudqt/log-inspector.cc:232
 msgid "Log Level:"

@@ -3,23 +3,23 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# French language coordinator <french.coordinator@rbox.me>, 2012-2013
-# French language coordinator <french.coordinator@rbox.me>, 2017-2018
-# French language coordinator <french.coordinator@rbox.me>, 2016
-# French language coordinator <french.coordinator@rbox.me>, 2016
+# AO <ao@localizationlab.org>, 2012-2013
+# AO <ao@localizationlab.org>, 2017-2018
+# AO <ao@localizationlab.org>, 2016
+# AO <ao@localizationlab.org>, 2016
 # Oxayotl <jagw40k@free.fr>, 2013-2014
 # Oxayotl <jagw40k@free.fr>, 2011-2012
 # Oxayotl <jagw40k@free.fr>, 2011
 # Oxayotl <jagw40k@free.fr>, 2011,2013
-# French language coordinator <french.coordinator@rbox.me>, 2015
-# French language coordinator <french.coordinator@rbox.me>, 2013-2015
+# AO <ao@localizationlab.org>, 2015
+# AO <ao@localizationlab.org>, 2013-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-04 21:45+0000\n"
-"Last-Translator: French language coordinator <french.coordinator@rbox.me>\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
+"Last-Translator: AO <ao@localizationlab.org>\n"
 "Language-Team: French (http://www.transifex.com/audacious/audacious/language/"
 "fr/)\n"
 "Language: fr\n"

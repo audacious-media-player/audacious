@@ -18,14 +18,14 @@
 # fri, 2012
 # Petr Písař <petr.pisar@atlas.cz>, 2007-2012
 # Petr Šimáček <petr.simacek@gmail.com>, 2014,2017
-# Roman Horník <roman.hornik@debian-linux.cz>, 2016
+# Roman Horník <roman.hornik@debian-linux.cz>, 2016,2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-02 04:50+0000\n"
-"Last-Translator: John Lindgren <john@jlindgren.net>\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
+"Last-Translator: Roman Horník <roman.hornik@debian-linux.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/audacious/audacious/language/"
 "cs/)\n"
 "Language: cs\n"
@@ -818,7 +818,7 @@ msgstr "_Nastavení"
 #: src/libaudgui/prefs-window.cc:742 src/libaudqt/prefs-window-qt.cc:596
 #: src/libaudqt/prefs-window-qt.cc:599
 msgid "_About"
-msgstr "_O Programu"
+msgstr "_O programu"
 
 #: src/libaudgui/prefs-widget.cc:277
 msgid "Choose File"
@@ -852,7 +852,7 @@ msgstr "Moduly"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:142
 msgid "Advanced"
-msgstr ""
+msgstr "Pokročilé"
 
 #: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "General"
@@ -1020,7 +1020,7 @@ msgstr "ms"
 
 #: src/libaudgui/prefs-window.cc:218 src/libaudqt/prefs-window-qt.cc:248
 msgid "Soft clipping"
-msgstr "Měké oříznutí"
+msgstr "Měkké oříznutí"
 
 #: src/libaudgui/prefs-window.cc:220 src/libaudqt/prefs-window-qt.cc:250
 msgid "Use software volume control (not recommended)"
@@ -1084,7 +1084,7 @@ msgstr "Používat proxy"
 
 #: src/libaudgui/prefs-window.cc:268 src/libaudqt/prefs-window-qt.cc:298
 msgid "Use authentication with proxy"
-msgstr "Autentizovat se na proxy"
+msgstr "Použít ověřování pomocí proxy serveru"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window-qt.cc:305
 msgid "Auto character encoding detector for:"
@@ -1112,7 +1112,7 @@ msgstr "Přejít dál, když současná skladba je smazána"
 
 #: src/libaudgui/prefs-window.cc:294 src/libaudqt/prefs-window-qt.cc:324
 msgid "Clear the playlist when opening files"
-msgstr "Při otvírání souborů vyprázdnit seznam skladeb"
+msgstr "Při otevírání souborů vyprázdnit seznam skladeb"
 
 #: src/libaudgui/prefs-window.cc:296 src/libaudqt/prefs-window-qt.cc:326
 msgid "Open files in a temporary playlist"
@@ -1136,11 +1136,11 @@ msgstr "Zobrazit hodiny odděleně (1:30:00 oproti 90:00)"
 
 #: src/libaudgui/prefs-window.cc:306 src/libaudqt/prefs-window-qt.cc:336
 msgid "<b>Export</b>"
-msgstr ""
+msgstr "<b>Exportovat</b>"
 
 #: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:337
 msgid "Use relative paths when possible"
-msgstr ""
+msgstr "Použít relativní cesty kdykoliv je to možné"
 
 #: src/libaudgui/prefs-window.cc:312 src/libaudqt/prefs-window-qt.cc:342
 msgid "<b>Album Art</b>"
@@ -1156,7 +1156,7 @@ msgstr "Vyloučit obrázky vyhovují těmto slovům (oddělené čárkou):"
 
 #: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:347
 msgid "Search for images matching song file name"
-msgstr "Hledat obrázky odpovídající názevu hudebního souboru"
+msgstr "Hledat obrázky odpovídající názvu hudebního souboru"
 
 #: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window-qt.cc:349
 msgid "Search recursively"
@@ -1172,7 +1172,7 @@ msgstr "<b>Vyskakovací okno s podrobnostmi</b>"
 
 #: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window-qt.cc:356
 msgid "Show popup information"
-msgstr "Zobrazit popup informace"
+msgstr "Zobrazit informace ve vyskakovacím oknu"
 
 #: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:358
 msgid "Popup delay (tenths of a second):"
@@ -1188,19 +1188,19 @@ msgstr "<b>Kompatibilita</b>"
 
 #: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window-qt.cc:369
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Interpret \\ (zpětné lomítko) jako oddělovač složky"
+msgstr "Interpretovat \\ (zpětné lomítko) jako oddělovač složek"
 
 #: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:372
 msgid "<b>Playlist</b>"
-msgstr ""
+msgstr "<b>Playlist</b>"
 
 #: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:373
 msgid "Add folders recursively"
-msgstr ""
+msgstr "Přidat složky rekurzivně"
 
 #: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:375
 msgid "Add folders nested within playlist files"
-msgstr ""
+msgstr "Přidat složky vnořené do souborů playlistu"
 
 #: src/libaudgui/prefs-window.cc:347 src/libaudqt/prefs-window-qt.cc:377
 msgid "<b>Metadata</b>"
@@ -1341,7 +1341,7 @@ msgstr "Informace"
 
 #: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:39
 msgid "_Save to history"
-msgstr ""
+msgstr "_Uložit do historie"
 
 #: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
@@ -1353,7 +1353,7 @@ msgstr "Přidat URL"
 
 #: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:68
 msgid "C_lear history"
-msgstr ""
+msgstr "_Vyčistit historii"
 
 #: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"

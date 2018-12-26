@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-02 06:30+0000\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
 "Last-Translator: No Ne\n"
 "Language-Team: Polish (http://www.transifex.com/audacious/audacious/language/"
 "pl/)\n"
@@ -85,7 +85,7 @@ msgstr "Wyświetl główne okno programu"
 
 #: src/audacious/main.cc:76
 msgid "Display the jump-to-song window"
-msgstr "Wyświetla okno \"Przejdź do ścieżki\""
+msgstr "Wyświetla okno przejścia do piosenki"
 
 #: src/audacious/main.cc:77
 msgid "Start without a graphical interface"
@@ -231,7 +231,7 @@ msgstr "Błąd wczytywania wtyczki"
 
 #: src/libaudcore/probe.cc:171
 msgid "Seek error"
-msgstr "Znajdź błąd"
+msgstr "Błąd wyszukiwania"
 
 #: src/libaudcore/probe.cc:179
 msgid "File format not recognized"
@@ -500,7 +500,7 @@ msgstr "Rok wydania"
 #: src/libaudgui/infopopup.cc:210 src/libaudgui/prefs-window.cc:147
 #: src/libaudqt/infopopup-qt.cc:126 src/libaudqt/prefs-window-qt.cc:192
 msgid "Track"
-msgstr "Utwór"
+msgstr "Ścieżka"
 
 #: src/libaudgui/infopopup.cc:211 src/libaudqt/infopopup-qt.cc:128
 #: src/libaudqt/info-widget.cc:55
@@ -686,11 +686,11 @@ msgstr "Błąd zapisu"
 #: src/libaudgui/infowin.cc:306 src/libaudgui/prefs-window.cc:86
 #: src/libaudqt/infowin-qt.cc:123 src/libaudqt/prefs-window-qt.cc:140
 msgid "Song Info"
-msgstr "Informacje o nagraniu"
+msgstr "Informacje o piosence"
 
 #: src/libaudgui/infowin.cc:360 src/libaudqt/info-widget.cc:47
 msgid "Album Artist"
-msgstr "Artysta albumu"
+msgstr "Wykonawca albumu"
 
 #: src/libaudgui/infowin.cc:363 src/libaudgui/prefs-window.cc:111
 #: src/libaudqt/info-widget.cc:46 src/libaudqt/prefs-window-qt.cc:156
@@ -699,11 +699,11 @@ msgstr "Komentarz"
 
 #: src/libaudgui/infowin.cc:373 src/libaudqt/info-widget.cc:44
 msgid "Track Number"
-msgstr "Numer nagrania"
+msgstr "Numer ścieżki"
 
 #: src/libaudgui/infowin.cc:380
 msgid "Clea_r fields when moving to next song"
-msgstr "Czyść pola podczas p_rzechodzenia do następnego utworu"
+msgstr "Czyść pola podczas p_rzechodzenia do następnej piosenki"
 
 #: src/libaudgui/infowin.cc:394 src/libaudqt/infowin-qt.cc:148
 msgid "_Save"
@@ -745,7 +745,7 @@ msgstr "U_suń z kolejki"
 
 #: src/libaudgui/jump-to-track.cc:240
 msgid "Jump to Song"
-msgstr "Przejdź do ścieżki"
+msgstr "Przejdź do piosenki"
 
 #: src/libaudgui/jump-to-track.cc:265
 msgid "Filter: "
@@ -884,7 +884,7 @@ msgstr "Transport"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window-qt.cc:148
 msgid "Album artist"
-msgstr "Artysta albumu"
+msgstr "Wykonawca albumu"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window-qt.cc:150
 msgid "Track number"
@@ -1116,7 +1116,7 @@ msgstr "Wstrzymaj zamiast natychmiastowego wznowienia"
 
 #: src/libaudgui/prefs-window.cc:292 src/libaudqt/prefs-window-qt.cc:322
 msgid "Advance when the current song is deleted"
-msgstr "Przejdź do następnej gdy usunę odtwarzaną ścieżkę"
+msgstr "Przejdź do następnej, gdy usunę odtwarzaną piosenkę"
 
 #: src/libaudgui/prefs-window.cc:294 src/libaudqt/prefs-window-qt.cc:324
 msgid "Clear the playlist when opening files"
@@ -1128,11 +1128,11 @@ msgstr "Dodaj pliki do tymczasowej listy odtwarzania"
 
 #: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window-qt.cc:328
 msgid "<b>Song Display</b>"
-msgstr "<b>Wyświetlanie ścieżki</b>"
+msgstr "<b>Wyświetlanie piosenki</b>"
 
 #: src/libaudgui/prefs-window.cc:299 src/libaudqt/prefs-window-qt.cc:329
 msgid "Show song numbers"
-msgstr "Numery ścieżek"
+msgstr "Pokaż numery piosenek"
 
 #: src/libaudgui/prefs-window.cc:301 src/libaudqt/prefs-window-qt.cc:331
 msgid "Show leading zeroes (02:00 vs. 2:00)"
@@ -1164,7 +1164,7 @@ msgstr "Wyklucz obrazy pasujące do tych słów (oddzielone przecinkiem):"
 
 #: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:347
 msgid "Search for images matching song file name"
-msgstr "Wyszukaj obrazy pasujące do nazwy pliku utworu"
+msgstr "Wyszukaj obrazy pasujące do nazwy pliku piosenki"
 
 #: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window-qt.cc:349
 msgid "Search recursively"
@@ -1188,7 +1188,7 @@ msgstr "Opóźnij wyskakujące komunikaty (dziesiąte sekundy):"
 
 #: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:362
 msgid "Show time scale for current song"
-msgstr "Pokaż skalę czasową dla bieżącej ścieżki"
+msgstr "Pokaż skalę czasową dla bieżącej piosenki"
 
 #: src/libaudgui/prefs-window.cc:338 src/libaudqt/prefs-window-qt.cc:368
 msgid "<b>Compatibility</b>"
@@ -1220,7 +1220,7 @@ msgstr "Odgadnij brakujące metadane ze ścieżki pliku"
 
 #: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:380
 msgid "Do not load metadata for songs until played"
-msgstr "Opóźnij wczytywanie metadanych ścieżek do czasu odtworzenia"
+msgstr "Opóźnij wczytywanie metadanych piosenek do czasu odtworzenia"
 
 #: src/libaudgui/prefs-window.cc:352 src/libaudqt/prefs-window-qt.cc:382
 msgid "Probe content of files with no recognized file name extension"
