@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-02 04:50+0000\n"
-"Last-Translator: Γιάννης Ανθυμίδης\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
+"Last-Translator: Ioannis LM\n"
 "Language-Team: Greek (http://www.transifex.com/audacious/audacious/language/"
 "el/)\n"
 "Language: el\n"
@@ -533,7 +533,7 @@ msgstr "Bluegrass"
 
 #: src/libaudgui/infowin.cc:91
 msgid "Blues"
-msgstr "Μπλουζ"
+msgstr "Blues"
 
 #: src/libaudgui/infowin.cc:92
 msgid "Chamber Music"
@@ -545,7 +545,7 @@ msgstr "Κλασική Μουσική"
 
 #: src/libaudgui/infowin.cc:94
 msgid "Country"
-msgstr "Κάντρι"
+msgstr "Country"
 
 #: src/libaudgui/infowin.cc:95
 msgid "Death Metal"
@@ -553,7 +553,7 @@ msgstr "Death Metal"
 
 #: src/libaudgui/infowin.cc:96
 msgid "Disco"
-msgstr "Ντίσκο"
+msgstr "Disco"
 
 #: src/libaudgui/infowin.cc:97
 msgid "Easy Listening"
@@ -561,11 +561,11 @@ msgstr "Easy Listening"
 
 #: src/libaudgui/infowin.cc:98
 msgid "Folk"
-msgstr "Φολκ"
+msgstr "Folk"
 
 #: src/libaudgui/infowin.cc:99
 msgid "Funk"
-msgstr "Φανκ"
+msgstr "Funk"
 
 #: src/libaudgui/infowin.cc:100
 msgid "Gangsta Rap"
@@ -589,7 +589,7 @@ msgstr "Heavy Metal"
 
 #: src/libaudgui/infowin.cc:105
 msgid "Hip-hop"
-msgstr "Χιπ χοπ"
+msgstr "Hip-hop"
 
 #: src/libaudgui/infowin.cc:106
 msgid "House"
@@ -597,7 +597,7 @@ msgstr "House"
 
 #: src/libaudgui/infowin.cc:107
 msgid "Jazz"
-msgstr "Τζαζ"
+msgstr "Jazz"
 
 #: src/libaudgui/infowin.cc:108
 msgid "Jungle"
@@ -605,7 +605,7 @@ msgstr "Jungle"
 
 #: src/libaudgui/infowin.cc:109
 msgid "Metal"
-msgstr "Μέταλ"
+msgstr "Metal"
 
 #: src/libaudgui/infowin.cc:110
 msgid "New Age"
@@ -621,7 +621,7 @@ msgstr "Noise"
 
 #: src/libaudgui/infowin.cc:113
 msgid "Pop"
-msgstr "Ποπ"
+msgstr "Pop"
 
 #: src/libaudgui/infowin.cc:114
 msgid "Punk Rock"
@@ -629,15 +629,15 @@ msgstr "Punk Rock"
 
 #: src/libaudgui/infowin.cc:115
 msgid "Rap"
-msgstr "Ραπ"
+msgstr "Rap"
 
 #: src/libaudgui/infowin.cc:116
 msgid "Reggae"
-msgstr "Ρέγκε"
+msgstr "Reggae"
 
 #: src/libaudgui/infowin.cc:117
 msgid "Rock"
-msgstr "Ροκ"
+msgstr "Rock"
 
 #: src/libaudgui/infowin.cc:118
 msgid "Rock and Roll"
@@ -657,11 +657,11 @@ msgstr "Soul"
 
 #: src/libaudgui/infowin.cc:122
 msgid "Swing"
-msgstr "Σουίνγκ"
+msgstr "Swing"
 
 #: src/libaudgui/infowin.cc:123
 msgid "Techno"
-msgstr "Τέκνο"
+msgstr "Techno"
 
 #: src/libaudgui/infowin.cc:124
 msgid "Trip-hop"
@@ -827,7 +827,7 @@ msgstr "Επιλογή αρχείου"
 
 #: src/libaudgui/prefs-widget.cc:281
 msgid "Choose Folder"
-msgstr "Επιλογή Φακέλου"
+msgstr "Επιλογή φακέλου"
 
 #: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window-qt.cc:136
 msgid "Appearance"
@@ -853,7 +853,7 @@ msgstr "Πρόσθετα"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:142
 msgid "Advanced"
-msgstr ""
+msgstr "Προχωρημένα"
 
 #: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "General"
@@ -1037,7 +1037,7 @@ msgstr "Καταγραφή ροής:"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window-qt.cc:259
 msgid "<b>ReplayGain</b>"
-msgstr "<b>ReplayGain</b>"
+msgstr "<b>ReplayGain (ομαλοποίηση έντασης)</b>"
 
 #: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:260
 msgid "Enable ReplayGain"
@@ -1137,11 +1137,11 @@ msgstr "Εμφάνιση της ώρας χωριστά (1:30:00 αντί 90:00)
 
 #: src/libaudgui/prefs-window.cc:306 src/libaudqt/prefs-window-qt.cc:336
 msgid "<b>Export</b>"
-msgstr ""
+msgstr "<b>Εξαγωγή</b>"
 
 #: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:337
 msgid "Use relative paths when possible"
-msgstr ""
+msgstr "Χρήση των σχετικών διαδρομών, όταν είναι δυνατόν"
 
 #: src/libaudgui/prefs-window.cc:312 src/libaudqt/prefs-window-qt.cc:342
 msgid "<b>Album Art</b>"
@@ -1150,12 +1150,12 @@ msgstr "<b>Άλμπουμ</b>"
 #: src/libaudgui/prefs-window.cc:313 src/libaudqt/prefs-window-qt.cc:343
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
-"Αναζήτηση εικόνων που ταιριάζουν με αυτά τα λόγια (διαχωρισμένα με κόμμα):"
+"Αναζήτηση εικόνων που ταιριάζουν με τις λέξεις (διαχωρισμένες με κόμμα):"
 
 #: src/libaudgui/prefs-window.cc:315 src/libaudqt/prefs-window-qt.cc:345
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
-"Εξαίρεση εικόνων που ταιριάζουν με αυτά τα λόγια (διαχωρισμένα με κόμμα):"
+"Εξαίρεση εικόνων που ταιριάζουν με τις λέξεις (διαχωρισμένες με κόμμα):"
 
 #: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:347
 msgid "Search for images matching song file name"
@@ -1163,7 +1163,7 @@ msgstr "Αναζήτηση εικόνων που ταιριάζουν με το 
 
 #: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window-qt.cc:349
 msgid "Search recursively"
-msgstr "Αναζήτηση αναδρομικά"
+msgstr "Αναδρομική αναζήτηση"
 
 #: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window-qt.cc:351
 msgid "Search depth:"
@@ -1195,15 +1195,15 @@ msgstr "Εξήγηση με \\\\ (αντιπλάγια μπάρα) ως διαχ
 
 #: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:372
 msgid "<b>Playlist</b>"
-msgstr ""
+msgstr "<b>Λίστα αναπαραγωγής</b>"
 
 #: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:373
 msgid "Add folders recursively"
-msgstr ""
+msgstr "Αναδρομική προσθήκη φακέλων"
 
 #: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:375
 msgid "Add folders nested within playlist files"
-msgstr ""
+msgstr "Προσθήκη των ενσωματωμένων φακέλων στα αρχεία της λίστας αναπαραγωγής"
 
 #: src/libaudgui/prefs-window.cc:347 src/libaudqt/prefs-window-qt.cc:377
 msgid "<b>Metadata</b>"
@@ -1316,7 +1316,7 @@ msgstr "Αποθήκευση αρχείου EQF"
 
 #: src/libaudgui/preset-browser.cc:127
 msgid "<name>.eqf"
-msgstr "<όνομα>.eqf"
+msgstr "<name>.eqf"
 
 #: src/libaudgui/preset-browser.cc:141
 msgid "Import Winamp Presets"
@@ -1344,7 +1344,7 @@ msgstr "Πληροφόρηση"
 
 #: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:39
 msgid "_Save to history"
-msgstr ""
+msgstr "_Αποθήκευση"
 
 #: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
@@ -1356,7 +1356,7 @@ msgstr "Προσθήκη διεύθυνσης URL"
 
 #: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:68
 msgid "C_lear history"
-msgstr ""
+msgstr "_Καθαρισμός ιστορικού"
 
 #: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"

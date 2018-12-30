@@ -28,6 +28,9 @@ class QString;
 
 namespace audqt {
 
+/* infopopup.cc */
+void infopopup_hide_now ();
+
 /* log-inspector.cc */
 void log_init ();
 void log_cleanup ();
@@ -35,7 +38,11 @@ void log_cleanup ();
 /* util-qt.cc */
 class PopupWidget : public QWidget
 {
+public:
+    PopupWidget (QWidget * parent = nullptr);
+
 protected:
+    bool eventFilter (QObject *, QEvent * e) override;
     void showEvent (QShowEvent *) override;
 };
 

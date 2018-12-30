@@ -24,15 +24,15 @@
 #  <sakrasemangat@gmail.com>, 2012
 #  <samsul@kplibanyumas.org>, 2012
 # se7entime <se7entime@openmailbox.org>, 2012
-# Yoza Aprilio <yoza1404@gmail.com>, 2012
-# Yoza Aprilio <yoza1404@gmail.com>, 2012
-# Yoza Aprilio <yoza1404@gmail.com>, 2012
+# Adrianus Yoza Aprilio <yoza1404@gmail.com>, 2012
+# Adrianus Yoza Aprilio <yoza1404@gmail.com>, 2012
+# Adrianus Yoza Aprilio <yoza1404@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-02 04:50+0000\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
 "Last-Translator: Rahman Yusri Aftian <aftian@yahoo.com>\n"
 "Language-Team: Indonesian (Indonesia) (http://www.transifex.com/audacious/"
 "audacious/language/id_ID/)\n"

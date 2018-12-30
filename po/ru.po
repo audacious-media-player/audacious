@@ -7,7 +7,7 @@
 # Денис <alpi_bel@mail.ru>, 2014
 # michurin <a.michurin@gmail.com>, 2011
 # Andrei Stepanov, 2014,2016
-# Andrei Stepanov, 2014,2016
+# Andrei Stepanov <adem4ik@gmail.com>, 2014,2016
 # Ilyas B Arinov <arinov.ilyas@gmail.com>, 2014
 # Danila E <KnightDanila@gmail.com>, 2018
 # dartraiden, 2018
@@ -45,7 +45,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-29 18:16+0000\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
 "Last-Translator: dartraiden\n"
 "Language-Team: Russian (http://www.transifex.com/audacious/audacious/"
 "language/ru/)\n"

@@ -6,6 +6,7 @@
 # Alexandro Casanova <shorterfire@gmail.com>, 2012
 # Pitxyoki <Pitxyoki@gmail.com>, 2010
 # Pitxyoki <Pitxyoki@gmail.com>, 2010
+# Rui <xymarior@yandex.com>, 2018
 # Alexandro Casanova <shorterfire@gmail.com>, 2012
 # Sérgio Marques <smarquespt@gmail.com>, 2012-2018
 # Alexandro Casanova <shorterfire@gmail.com>, 2012
@@ -15,8 +16,8 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-05 23:06+0000\n"
-"Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
+"Last-Translator: Rui <xymarior@yandex.com>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/audacious/"
 "audacious/language/pt_PT/)\n"
 "Language: pt_PT\n"
@@ -1189,7 +1190,7 @@ msgstr "Adicionar pastas recursivamente"
 
 #: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:375
 msgid "Add folders nested within playlist files"
-msgstr ""
+msgstr "Adicionar pastas dentro de ficheiros de listas de reprodução"
 
 #: src/libaudgui/prefs-window.cc:347 src/libaudqt/prefs-window-qt.cc:377
 msgid "<b>Metadata</b>"

@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-31 15:57+0000\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/audacious/audacious/"
 "language/sv/)\n"
@@ -402,7 +402,7 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:142
 msgid "Equalizer"
-msgstr "Equalisation"
+msgstr "Equalizer"
 
 #: src/libaudgui/equalizer.cc:143
 msgid "Presets ..."
@@ -599,7 +599,7 @@ msgstr "Jungle"
 
 #: src/libaudgui/infowin.cc:109
 msgid "Metal"
-msgstr "Metall"
+msgstr "Metal"
 
 #: src/libaudgui/infowin.cc:110
 msgid "New Age"
@@ -1161,15 +1161,15 @@ msgstr "Sökdjup:"
 
 #: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:355
 msgid "<b>Popup Information</b>"
-msgstr "<b>Popup-information</b>"
+msgstr "<b>Poppupp-information</b>"
 
 #: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window-qt.cc:356
 msgid "Show popup information"
-msgstr "Visa popup-information"
+msgstr "Visa poppupp-information"
 
 #: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:358
 msgid "Popup delay (tenths of a second):"
-msgstr "Popup-fördröjning (tiondelar av en sekund):"
+msgstr "Poppupp-fördröjning (tiondelar av en sekund):"
 
 #: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:362
 msgid "Show time scale for current song"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-03 21:07+0000\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish (http://www.transifex.com/audacious/audacious/language/"
 "da/)\n"
@@ -280,7 +280,7 @@ msgstr "Om Audacious"
 #: src/libaudqt/playlist-management.cc:75 src/libaudqt/prefs-plugin.cc:131
 #: src/libaudqt/url-opener-qt.cc:79
 msgid "_Cancel"
-msgstr "_Afbryd"
+msgstr "_Annuller"
 
 #: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:73
 msgid "_Don’t ask again"
@@ -494,7 +494,7 @@ msgstr "Kvalitet:"
 
 #: src/libaudgui/infowin.cc:52
 msgid "Bitrate:"
-msgstr "Bitfrekvens:"
+msgstr "Bithastighed:"
 
 #: src/libaudgui/infowin.cc:86
 msgid "Acid Jazz"
@@ -1265,7 +1265,7 @@ msgstr "Indstillinger for Audacious"
 
 #: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:172
 msgid "Cancel"
-msgstr "Afbryd"
+msgstr "Annuller"
 
 #: src/libaudgui/preset-browser.cc:51
 msgid "Save"
@@ -1394,7 +1394,7 @@ msgstr "Teknisk"
 
 #: src/libaudqt/info-widget.cc:58
 msgid "Bitrate"
-msgstr "Bitfrekvens"
+msgstr "Bithastighed"
 
 #: src/libaudqt/log-inspector.cc:137
 msgid "Level"

@@ -635,26 +635,29 @@ static gboolean do_song_title (Obj * obj, Invoc * invoc, unsigned pos)
 static gboolean do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const char * key)
 {
     Tuple::Field field = Tuple::field_by_name (key);
-    Tuple tuple;
-    GVariant * var;
+    GVariant * var = nullptr;
 
     if (field >= 0)
-        tuple = CURRENT.entry_tuple (pos);
-
-    switch (tuple.get_value_type (field))
     {
-    case Tuple::String:
-        var = g_variant_new_string (tuple.get_str (field));
-        break;
+        Tuple tuple = CURRENT.entry_tuple (pos);
 
-    case Tuple::Int:
-        var = g_variant_new_int32 (tuple.get_int (field));
-        break;
+        switch (tuple.get_value_type (field))
+        {
+        case Tuple::String:
+            var = g_variant_new_string (tuple.get_str (field));
+            break;
 
-    default:
-        var = g_variant_new_string ("");
-        break;
+        case Tuple::Int:
+            var = g_variant_new_int32 (tuple.get_int (field));
+            break;
+
+        default:
+            break;
+        }
     }
+
+    if (! var)
+        var = g_variant_new_string ("");
 
     FINISH2 (song_tuple, g_variant_new_variant (var));
     return true;

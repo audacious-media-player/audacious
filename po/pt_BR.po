@@ -4,6 +4,7 @@
 #
 # Translators:
 # Alexandro Casanova <shorterfire@gmail.com>, 2012-2014
+# Bruno Lima <brunolima.18@outlook.com>, 2018
 # Cleber de Souza Corrêa <cscorrea@gmail.com>, 2014
 # Cleiton Lima <cleitoncfl@yahoo.com.br>, 2011
 # Cleiton Lima <cleitoncfl@yahoo.com.br>, 2011
@@ -22,6 +23,7 @@
 # Rodrigo de Araujo <araujorodrigo1984@gmail.com>, 2016
 # Rodrigo de Araujo <araujorodrigo1984@gmail.com>, 2016
 # Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2012
+# Rui <xymarior@yandex.com>, 2018
 # Alexandro Casanova <shorterfire@gmail.com>, 2012-2013
 # Alexandro Casanova <shorterfire@gmail.com>, 2012
 # vitorgatti <vitorgatti@yahoo.com.br>, 2012
@@ -31,9 +33,8 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-02 04:50+0000\n"
-"Last-Translator: Rodrigo de Almeida Sottomaior Macedo "
-"<rmsolucoeseminformatic4@gmail.com>\n"
+"PO-Revision-Date: 2018-12-26 05:38+0000\n"
+"Last-Translator: Rui <xymarior@yandex.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/audacious/"
 "audacious/language/pt_BR/)\n"
 "Language: pt_BR\n"
@@ -150,7 +151,7 @@ msgstr ""
 
 #: src/libaudcore/adder.cc:445
 msgid "No files found."
-msgstr "Nenum arquivo encontrado."
+msgstr "Nenhum arquivo encontrado."
 
 #: src/libaudcore/adder.cc:467 src/libaudcore/playlist.cc:88
 msgid "New Playlist"
@@ -545,7 +546,7 @@ msgstr "Blues"
 
 #: src/libaudgui/infowin.cc:92
 msgid "Chamber Music"
-msgstr "Música de cámara"
+msgstr "Chamber Music"
 
 #: src/libaudgui/infowin.cc:93
 msgid "Classical"
@@ -565,7 +566,7 @@ msgstr "Disco"
 
 #: src/libaudgui/infowin.cc:97
 msgid "Easy Listening"
-msgstr "Fácil de escutar"
+msgstr "Easy Listening"
 
 #: src/libaudgui/infowin.cc:98
 msgid "Folk"
@@ -617,15 +618,15 @@ msgstr "Metal"
 
 #: src/libaudgui/infowin.cc:110
 msgid "New Age"
-msgstr "New age"
+msgstr "New Age"
 
 #: src/libaudgui/infowin.cc:111
 msgid "New Wave"
-msgstr "New wave"
+msgstr "New Wave"
 
 #: src/libaudgui/infowin.cc:112
 msgid "Noise"
-msgstr "Ruído"
+msgstr "Noise"
 
 #: src/libaudgui/infowin.cc:113
 msgid "Pop"
@@ -861,7 +862,7 @@ msgstr "Plugins"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:142
 msgid "Advanced"
-msgstr ""
+msgstr "Avançado"
 
 #: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:37
 msgid "General"
@@ -1145,11 +1146,11 @@ msgstr "Mostrar horas separadamente (1:30:00 vs. 90:00)"
 
 #: src/libaudgui/prefs-window.cc:306 src/libaudqt/prefs-window-qt.cc:336
 msgid "<b>Export</b>"
-msgstr ""
+msgstr "<b>Exportar</b>"
 
 #: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:337
 msgid "Use relative paths when possible"
-msgstr ""
+msgstr "Use caminhos relativos quando possível"
 
 #: src/libaudgui/prefs-window.cc:312 src/libaudqt/prefs-window-qt.cc:342
 msgid "<b>Album Art</b>"
@@ -1203,11 +1204,11 @@ msgstr ""
 
 #: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:372
 msgid "<b>Playlist</b>"
-msgstr ""
+msgstr "<b>Lista de Reprodução</b>"
 
 #: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:373
 msgid "Add folders recursively"
-msgstr ""
+msgstr "Adicionar pastas recursivamente"
 
 #: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:375
 msgid "Add folders nested within playlist files"
@@ -1353,7 +1354,7 @@ msgstr "Informação "
 
 #: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:39
 msgid "_Save to history"
-msgstr ""
+msgstr "_Adicionar ao histórico"
 
 #: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
@@ -1365,7 +1366,7 @@ msgstr "Adicionar URL"
 
 #: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:68
 msgid "C_lear history"
-msgstr ""
+msgstr "_Limpar histórico"
 
 #: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"

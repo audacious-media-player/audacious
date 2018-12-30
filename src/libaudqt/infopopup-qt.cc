@@ -176,7 +176,9 @@ static InfoPopup * s_infopopup;
 
 static void infopopup_show (const String & filename, const Tuple & tuple)
 {
-    delete s_infopopup;
+    if (s_infopopup)
+        s_infopopup->deleteLater ();
+
     s_infopopup = new InfoPopup (filename, tuple);
 
     QObject::connect (s_infopopup, & QObject::destroyed, [] () {
@@ -206,6 +208,16 @@ EXPORT void infopopup_show_current ()
 
 EXPORT void infopopup_hide ()
 {
+    /* This function can be called from an enter/leave event, and Qt does not
+     * like widgets being deleted from such events.  This is debatably a bug in
+     * Qt, but deleteLater() is an effective workaround. */
+    if (s_infopopup)
+        s_infopopup->deleteLater ();
+}
+
+void infopopup_hide_now ()
+{
+    /* On exit, we really do want to delete the widget immediately. */
     delete s_infopopup;
 }
 
