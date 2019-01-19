@@ -65,7 +65,7 @@ static struct {
     GtkWidget * image;
     GtkWidget * codec[3];
     GtkWidget * apply;
-    GtkWidget * clear;
+    GtkWidget * autofill;
     GtkWidget * ministatus;
 } widgets;
 
@@ -192,7 +192,7 @@ static void set_field_int_from_entry (Tuple & tuple, Tuple::Field field, GtkWidg
         tuple.unset (field);
 }
 
-static void entry_changed (GtkEditable * editable)
+static void entry_changed ()
 {
     if (can_write)
         gtk_widget_set_sensitive (widgets.apply, true);
@@ -201,12 +201,12 @@ static void entry_changed (GtkEditable * editable)
 static void ministatus_display_message (const char * text)
 {
     gtk_label_set_text ((GtkLabel *) widgets.ministatus, text);
-    gtk_widget_hide (widgets.clear);
+    gtk_widget_hide (widgets.autofill);
     gtk_widget_show (widgets.ministatus);
 
     ministatus_timer.queue (AUDGUI_STATUS_TIMEOUT, [] (void *) {
         gtk_widget_hide (widgets.ministatus);
-        gtk_widget_show (widgets.clear);
+        gtk_widget_show (widgets.autofill);
     }, nullptr);
 }
 
@@ -231,11 +231,9 @@ static void infowin_update_tuple ()
         ministatus_display_message (_("Save error"));
 }
 
-static void infowin_next ()
+static void infowin_select_entry (int entry)
 {
-    int entry = current_entry + 1;
-
-    if (entry < current_playlist.n_entries ())
+    if (entry >= 0 && entry < current_playlist.n_entries ())
     {
         current_playlist.select_all (false);
         current_playlist.select_entry (entry, true);
@@ -244,6 +242,16 @@ static void infowin_next ()
     }
     else
         audgui_infowin_hide ();
+}
+
+static void infowin_prev ()
+{
+    infowin_select_entry (current_entry - 1);
+}
+
+static void infowin_next ()
+{
+    infowin_select_entry (current_entry + 1);
 }
 
 static void genre_fill (GtkWidget * combo)
@@ -262,9 +270,9 @@ static void genre_fill (GtkWidget * combo)
     g_list_free (list);
 }
 
-static void clear_toggled (GtkToggleButton * toggle)
+static void autofill_toggled (GtkToggleButton * toggle)
 {
-    aud_set_bool ("audgui", "clear_song_fields", gtk_toggle_button_get_active (toggle));
+    aud_set_bool ("audgui", "clear_song_fields", ! gtk_toggle_button_get_active (toggle));
 }
 
 static void infowin_display_image (const char * filename)
@@ -386,16 +394,15 @@ static void create_infowin ()
     gtk_table_attach ((GtkTable *) main_grid, bottom_hbox, 0, 2, 3, 4,
      GTK_FILL, GTK_FILL, 0, 0);
 
-    widgets.clear = gtk_check_button_new_with_mnemonic
-     (_("Clea_r fields when moving to next song"));
+    widgets.autofill = gtk_check_button_new_with_mnemonic (_("_Auto-fill empty fields"));
 
-    gtk_toggle_button_set_active ((GtkToggleButton *) widgets.clear,
-     aud_get_bool ("audgui", "clear_song_fields"));
-    g_signal_connect (widgets.clear, "toggled", (GCallback) clear_toggled, nullptr);
+    gtk_toggle_button_set_active ((GtkToggleButton *) widgets.autofill,
+     ! aud_get_bool ("audgui", "clear_song_fields"));
+    g_signal_connect (widgets.autofill, "toggled", (GCallback) autofill_toggled, nullptr);
 
-    gtk_widget_set_no_show_all (widgets.clear, true);
-    gtk_widget_show (widgets.clear);
-    gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.clear, false, false, 0);
+    gtk_widget_set_no_show_all (widgets.autofill, true);
+    gtk_widget_show (widgets.autofill);
+    gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.autofill, false, false, 0);
 
     widgets.ministatus = small_label_new (nullptr);
     gtk_widget_set_no_show_all (widgets.ministatus, true);
@@ -407,12 +414,16 @@ static void create_infowin ()
     GtkWidget * close_button = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) audgui_infowin_hide, nullptr);
 
+    GtkWidget * prev_button = audgui_button_new (_("_Previous"), "go-previous",
+     (AudguiCallback) infowin_prev, nullptr);
+
     GtkWidget * next_button = audgui_button_new (_("_Next"), "go-next",
      (AudguiCallback) infowin_next, nullptr);
 
     gtk_box_pack_end ((GtkBox *) bottom_hbox, close_button, false, false, 0);
-    gtk_box_pack_end ((GtkBox *) bottom_hbox, next_button, false, false, 0);
     gtk_box_pack_end ((GtkBox *) bottom_hbox, widgets.apply, false, false, 0);
+    gtk_box_pack_end ((GtkBox *) bottom_hbox, next_button, false, false, 0);
+    gtk_box_pack_end ((GtkBox *) bottom_hbox, prev_button, false, false, 0);
 
     audgui_destroy_on_escape (infowin);
     g_signal_connect (infowin, "destroy", (GCallback) infowin_destroyed, nullptr);
