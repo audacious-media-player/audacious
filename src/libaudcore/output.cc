@@ -163,6 +163,13 @@ static void apply_pause ()
     vis_runner_start_stop (true, s_paused);
 }
 
+static bool open_audio_with_info (OutputPlugin * op, const char * filename,
+ const Tuple & tuple, int format, int rate, int chans, String & error)
+{
+    op->set_info (filename, tuple);
+    return op->open_audio (format, rate, chans, error);
+}
+
 /* assumes LOCK_ALL, s_input */
 static void setup_output (bool new_input)
 {
@@ -182,10 +189,10 @@ static void setup_output (bool new_input)
     AUDINFO ("Setup output, format %d, %d channels, %d Hz.\n", format, effect_channels, effect_rate);
 
     cleanup_output ();
-    cop->set_info (in_filename, in_tuple);
 
     String error;
-    while (! cop->open_audio (format, effect_rate, effect_channels, error))
+    while (! open_audio_with_info (cop, in_filename, in_tuple, format,
+     effect_rate, effect_channels, error))
     {
         if (automatic && format == FMT_FLOAT)
             format = FMT_S32_NE;
@@ -243,10 +250,9 @@ static void setup_secondary (bool new_input)
         return;
 
     cleanup_secondary ();
-    sop->set_info (in_filename, in_tuple);
 
     String error;
-    if (! sop->open_audio (FMT_FLOAT, rate, channels, error))
+    if (! open_audio_with_info (sop, in_filename, in_tuple, FMT_FLOAT, rate, channels, error))
     {
         aud_ui_show_error (error ? (const char *) error : _("Error recording output stream"));
         return;
