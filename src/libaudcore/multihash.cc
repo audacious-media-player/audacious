@@ -136,7 +136,7 @@ EXPORT int MultiHash::lookup (const void * data, unsigned hash, AddFunc add,
     HashBase & channel = channels[c];
 
     int status = 0;
-    tiny_lock (& locks[c]);
+    auto lh = locks[c].take ();
 
     HashBase::NodeLoc loc;
     Node * node = channel.lookup (match, data, hash, & loc);
@@ -156,7 +156,6 @@ EXPORT int MultiHash::lookup (const void * data, unsigned hash, AddFunc add,
         channel.add (node, hash);
     }
 
-    tiny_unlock (& locks[c]);
     return status;
 }
 
@@ -167,15 +166,13 @@ EXPORT void MultiHash::iterate (FoundFunc func, void * state)
 
 EXPORT void MultiHash::iterate (FoundFunc func, void * state, FinalFunc final, void * fstate)
 {
-    for (TinyLock & lock : locks)
-        tiny_lock (& lock);
+    aud::spinlock::holder lh[Channels];
+    for (int i = 0; i < Channels; i ++)
+        lh[i] = locks[i].take ();
 
     for (HashBase & channel : channels)
         channel.iterate (func, state);
 
     if (final)
         final (fstate);
-
-    for (TinyLock & lock : locks)
-        tiny_unlock (& lock);
 }

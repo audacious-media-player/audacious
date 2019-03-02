@@ -1,6 +1,6 @@
 /*
  * templates.h
- * Copyright 2014 John Lindgren
+ * Copyright 2014-2019 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -133,6 +133,28 @@ static void obj_member (void * obj)
 template<class T, void (T::* func) () const>
 static void obj_member (void * obj)
     { (((T *) obj)->* func) (); }
+
+// Class which provides scope-based "ownership" of an object
+// (similar to std::unique_lock, but more flexible)
+// =========================================================
+
+template<class T, void (T::* acquire) (), void (T::* release) ()>
+class owner
+{
+public:
+    explicit owner (T * obj = nullptr) : m_obj (obj)
+        { if (m_obj) (m_obj->* acquire) (); }
+    ~owner ()
+        { if (m_obj) (m_obj->* release) (); }
+
+    owner (owner && b) : m_obj (b.m_obj)
+        { b.m_obj = nullptr; }
+    owner & operator= (owner && b)
+        { return move_assign (* this, std::move (b)); }
+
+private:
+    T * m_obj;
+};
 
 // Wrapper class allowing enumerations to be used as array indexes;
 // the enumeration must begin with zero and have a "count" constant

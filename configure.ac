@@ -114,7 +114,6 @@ define(GENERATED_FILES,
        man/audtool.1
        man/audacious.1
        src/libaudcore/audio.h
-       src/libaudcore/tinylock.h
        win32/audacious.nsi
        win32/override/README.txt)
 

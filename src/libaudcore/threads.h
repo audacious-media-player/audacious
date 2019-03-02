@@ -1,0 +1,53 @@
+/*
+ * threads.h
+ * Copyright 2019 John Lindgren
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions, and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions, and the following disclaimer in the documentation
+ *    provided with the distribution.
+ *
+ * This software is provided "as is" and without any warranty, express or
+ * implied. In no event shall the authors be liable for any damages arising from
+ * the use of this software.
+ */
+
+#ifndef LIBAUDCORE_THREADS_H
+#define LIBAUDCORE_THREADS_H
+
+#include <libaudcore/tinylock.h>
+#include <libaudcore/templates.h>
+
+namespace aud {
+
+/* A wrapper class around TinyLock, encouraging correct usage */
+class spinlock
+{
+public:
+    spinlock () = default;
+
+    /* Not copyable or movable */
+    spinlock (const spinlock &) = delete;
+    spinlock & operator= (const spinlock &) = delete;
+
+    /* Explicit lock/unlock */
+    void lock () { tiny_lock (& m_lock); }
+    void unlock () { tiny_unlock (& m_lock); }
+
+    /* Scope-based lock ownership */
+    typedef owner<spinlock, & spinlock::lock, & spinlock::unlock> holder;
+    /* Convenience method for taking ownership of the lock */
+    holder take () __attribute__ ((warn_unused_result)) { return holder (this); }
+
+private:
+    TinyLock m_lock = 0;
+};
+
+} // namespace aud
+
+#endif // LIBAUDCORE_THREADS_H

@@ -16,7 +16,6 @@ src/audtool/audtool
 src/dbus/aud-dbus.c
 src/dbus/aud-dbus.h
 src/libaudcore/audio.h
-src/libaudcore/tinylock.h
 src/libaudcore/tests/test
 src/libaudcore/tests/test-mainloop
 src/libaudgui/images.c

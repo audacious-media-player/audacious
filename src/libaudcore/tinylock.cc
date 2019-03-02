@@ -19,8 +19,6 @@
 
 #include "tinylock.h"
 
-#ifndef VALGRIND_FRIENDLY
-
 #include <limits.h>
 #include <sched.h>
 
@@ -61,5 +59,3 @@ EXPORT void tiny_unlock_write (TinyRWLock * lock)
 {
     __sync_fetch_and_sub (lock, WRITE_BIT);
 }
-
-#endif /* ! VALGRIND_FRIENDLY */

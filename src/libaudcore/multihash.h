@@ -21,7 +21,7 @@
 #define LIBAUDCORE_MULTIHASH_H
 
 #include <utility>
-#include <libaudcore/tinylock.h>
+#include <libaudcore/threads.h>
 
 /* HashBase is a low-level hash table implementation.  It is used as a backend
  * for SimpleHash as well as for a single channel of MultiHash. */
@@ -147,7 +147,7 @@ private:
     static constexpr int Shift = 24;  /* bit shift for channel selection */
 
     const MatchFunc match;
-    TinyLock locks[Channels];
+    aud::spinlock locks[Channels];
     HashBase channels[Channels];
 };
 
