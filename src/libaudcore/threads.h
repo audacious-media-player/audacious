@@ -48,6 +48,33 @@ private:
     TinyLock m_lock = 0;
 };
 
+/* A wrapper class around TinyRWLock, encouraging correct usage */
+class spinlock_rw
+{
+public:
+    spinlock_rw () = default;
+
+    /* Not copyable or movable */
+    spinlock_rw (const spinlock_rw &) = delete;
+    spinlock_rw & operator= (const spinlock_rw &) = delete;
+
+    /* Explicit lock/unlock */
+    void lock_r () { tiny_lock_read (& m_lock); }
+    void unlock_r () { tiny_unlock_read (& m_lock); }
+    void lock_w () { tiny_lock_write (& m_lock); }
+    void unlock_w () { tiny_unlock_write (& m_lock); }
+
+    /* Scope-based lock ownership */
+    typedef owner<spinlock_rw, & spinlock_rw::lock_r, & spinlock_rw::unlock_r> reader;
+    typedef owner<spinlock_rw, & spinlock_rw::lock_w, & spinlock_rw::unlock_w> writer;
+    /* Convenience methods for taking ownership of the lock */
+    reader read () __attribute__ ((warn_unused_result)) { return reader (this); }
+    writer write () __attribute__ ((warn_unused_result)) { return writer (this); }
+
+private:
+    TinyRWLock m_lock = 0;
+};
+
 } // namespace aud
 
 #endif // LIBAUDCORE_THREADS_H

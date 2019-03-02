@@ -33,7 +33,7 @@
 #include "hook.h"
 #include "index.h"
 #include "runtime.h"
-#include "tinylock.h"
+#include "threads.h"
 
 EXPORT StringBuf str_convert (const char * str, int len, const char * from_charset,
  const char * to_charset)
@@ -119,13 +119,13 @@ EXPORT StringBuf str_to_locale (const char * str, int len)
     }
 }
 
-static TinyRWLock settings_lock;
+static aud::spinlock_rw settings_lock;
 static String detect_region;
 static Index<String> fallback_charsets;
 
 static void set_charsets (const char * region, const char * fallbacks)
 {
-    tiny_lock_write (& settings_lock);
+    auto wr = settings_lock.write ();
 
     detect_region = String (region);
 
@@ -133,12 +133,12 @@ static void set_charsets (const char * region, const char * fallbacks)
         fallback_charsets = str_list_to_index (fallbacks, ", ");
     else
         fallback_charsets.clear ();
-
-    tiny_unlock_write (& settings_lock);
 }
 
-static StringBuf convert_to_utf8_locked (const char * str, int len)
+static StringBuf convert_to_utf8 (const char * str, int len)
 {
+    auto rd = settings_lock.read ();
+
     if (len < 0)
         len = strlen (str);
 
@@ -172,10 +172,7 @@ EXPORT StringBuf str_to_utf8 (const char * str, int len)
     if (g_utf8_validate (str, len, nullptr))
         return str_copy (str, len);
 
-    tiny_lock_read (& settings_lock);
-    StringBuf utf8 = convert_to_utf8_locked (str, len);
-    tiny_unlock_read (& settings_lock);
-    return utf8;
+    return convert_to_utf8 (str, len);
 }
 
 EXPORT StringBuf str_to_utf8 (StringBuf && str)
@@ -184,9 +181,7 @@ EXPORT StringBuf str_to_utf8 (StringBuf && str)
     if (g_utf8_validate (str, str.len (), nullptr))
         return std::move (str);
 
-    tiny_lock_read (& settings_lock);
-    str = convert_to_utf8_locked (str, str.len ());
-    tiny_unlock_read (& settings_lock);
+    str = convert_to_utf8 (str, str.len ());
     return str.settle ();
 }
 

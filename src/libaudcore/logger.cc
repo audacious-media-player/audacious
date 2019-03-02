@@ -20,7 +20,7 @@
 #include "audstrings.h"
 #include "index.h"
 #include "runtime.h"
-#include "tinylock.h"
+#include "threads.h"
 
 #include <stdio.h>
 
@@ -31,15 +31,14 @@ struct HandlerData {
     Level level;
 };
 
-static TinyRWLock lock;
+static aud::spinlock_rw lock;
 static Index<HandlerData> handlers;
 static Level stderr_level = Warning;
 static Level min_level = Warning;
 
 EXPORT void set_stderr_level (Level level)
 {
-    tiny_lock_write (& lock);
-
+    auto wr = lock.write ();
     min_level = stderr_level = level;
 
     for (const HandlerData & h : handlers)
@@ -47,31 +46,24 @@ EXPORT void set_stderr_level (Level level)
         if (h.level < min_level)
             min_level = h.level;
     }
-
-    tiny_unlock_write (& lock);
 }
 
 EXPORT void subscribe (Handler handler, Level level)
 {
-    tiny_lock_write (& lock);
-
+    auto wr = lock.write ();
     handlers.append (handler, level);
 
     if (level < min_level)
         min_level = level;
-
-    tiny_unlock_write (& lock);
 }
 
 EXPORT void unsubscribe (Handler handler)
 {
-    tiny_lock_write (& lock);
-
-    auto is_match = [=] (const HandlerData & data)
+    auto is_match = [handler] (const HandlerData & data)
         { return data.handler == handler; };
 
+    auto wr = lock.write ();
     handlers.remove_if (is_match, true);
-
     min_level = stderr_level;
 
     for (const HandlerData & h : handlers)
@@ -79,8 +71,6 @@ EXPORT void unsubscribe (Handler handler)
         if (h.level < min_level)
             min_level = h.level;
     }
-
-    tiny_unlock_write (& lock);
 }
 
 EXPORT const char * get_level_name (Level level)
@@ -99,7 +89,7 @@ EXPORT const char * get_level_name (Level level)
 EXPORT void log (Level level, const char * file, int line, const char * func,
  const char * format, ...)
 {
-    tiny_lock_read (& lock);
+    auto rd = lock.read ();
 
     if (level >= min_level)
     {
@@ -118,8 +108,6 @@ EXPORT void log (Level level, const char * file, int line, const char * func,
                 h.handler (level, file, line, func, message);
         }
     }
-
-    tiny_unlock_read (& lock);
 }
 
 } // namespace audlog
