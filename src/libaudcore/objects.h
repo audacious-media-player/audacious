@@ -67,10 +67,12 @@ public:
     ~SmartPtr ()
         { if (ptr) deleter (ptr); }
 
-    void capture (T * ptr2)
+    bool capture (T * ptr2)
     {
-        if (ptr) deleter (ptr);
+        if (ptr)
+            deleter (ptr);
         ptr = ptr2;
+        return (bool) ptr;
     }
 
     T * release ()

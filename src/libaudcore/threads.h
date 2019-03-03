@@ -23,6 +23,10 @@
 #include <libaudcore/tinylock.h>
 #include <libaudcore/templates.h>
 
+#include <condition_variable>
+#include <mutex>
+#include <thread>
+
 namespace aud {
 
 /* A wrapper class around TinyLock, encouraging correct usage */
@@ -74,6 +78,19 @@ public:
 private:
     TinyRWLock m_lock = 0;
 };
+
+/* An alias for std::mutex */
+class mutex : public std::mutex
+{
+public:
+    /* Scope-based lock ownership */
+    typedef std::unique_lock<std::mutex> holder;
+    /* Convenience method for taking ownership of the lock */
+    holder take () __attribute__ ((warn_unused_result)) { return holder (* this); }
+};
+
+/* An alias for std::condition_variable */
+typedef std::condition_variable condvar;
 
 } // namespace aud
 

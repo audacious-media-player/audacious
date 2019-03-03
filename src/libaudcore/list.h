@@ -74,6 +74,14 @@ public:
     void clear ()
         { ListBase::clear (destroy); }
 
+    C * pop_head ()
+    {
+        C * node = head ();
+        if (node)
+            remove (node);
+        return node;
+    }
+
     template<class MatchFunc>
     C * find (MatchFunc match)
     {

@@ -20,7 +20,6 @@
 #include "playlist-internal.h"
 #include "internal.h"
 
-#include <pthread.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -32,6 +31,7 @@
 #include "plugins-internal.h"
 #include "probe.h"
 #include "runtime.h"
+#include "threads.h"
 #include "tuple.h"
 #include "interface.h"
 #include "vfs.h"
@@ -66,16 +66,15 @@ struct AddResult : public ListNode
     bool saw_folder, filtered;
 };
 
-static void * add_worker (void * unused);
+static void add_worker ();
 
 static List<AddTask> add_tasks;
 static List<AddResult> add_results;
 static Playlist current_playlist;
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static bool add_thread_started = false;
+static aud::mutex mutex;
+static std::thread add_thread;
 static bool add_thread_exited = false;
-static pthread_t add_thread;
 static QueuedFunc queued_add;
 static QueuedFunc status_timer;
 
@@ -85,7 +84,7 @@ static bool status_shown = false;
 
 static void status_cb (void * unused)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     char scratch[128];
     snprintf (scratch, sizeof scratch, dngettext (PACKAGE, "%d file found",
@@ -103,21 +102,17 @@ static void status_cb (void * unused)
     }
 
     status_shown = true;
-
-    pthread_mutex_unlock (& mutex);
 }
 
 static void status_update (const char * filename, int found)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     snprintf (status_path, sizeof status_path, "%s", filename);
     status_count = found;
 
     if (! status_timer.running ())
         status_timer.start (250, status_cb, nullptr);
-
-    pthread_mutex_unlock (& mutex);
 }
 
 static void status_done_locked ()
@@ -407,53 +402,45 @@ static void start_thread_locked ()
 {
     if (add_thread_exited)
     {
-        pthread_mutex_unlock (& mutex);
-        pthread_join (add_thread, nullptr);
-        pthread_mutex_lock (& mutex);
+        mutex.unlock ();
+        add_thread.join ();
+        mutex.lock ();
     }
 
-    if (! add_thread_started || add_thread_exited)
+    if (! add_thread.joinable ())
     {
-        pthread_create (& add_thread, nullptr, add_worker, nullptr);
-        add_thread_started = true;
+        add_thread = std::thread (add_worker);
         add_thread_exited = false;
     }
 }
 
 static void stop_thread_locked ()
 {
-    if (add_thread_started)
+    if (add_thread.joinable ())
     {
-        pthread_mutex_unlock (& mutex);
-        pthread_join (add_thread, nullptr);
-        pthread_mutex_lock (& mutex);
-        add_thread_started = false;
+        mutex.unlock ();
+        add_thread.join ();
+        mutex.lock ();
         add_thread_exited = false;
     }
 }
 
 static void add_finish (void * unused)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
-    AddResult * result;
-    while ((result = add_results.head ()))
+    for (SmartPtr<AddResult> result; result.capture (add_results.pop_head ());)
     {
-        add_results.remove (result);
-
-        PlaylistEx playlist;
-        int count;
-
         if (! result->items.len ())
         {
             if (result->saw_folder && ! result->filtered)
                 aud_ui_show_error (_("No files found."));
-            goto FREE;
+            continue;
         }
 
-        playlist = result->playlist;
+        PlaylistEx playlist = result->playlist;
         if (! playlist.exists ()) /* playlist deleted */
-            goto FREE;
+            continue;
 
         if (result->play)
         {
@@ -463,7 +450,7 @@ static void add_finish (void * unused)
                 playlist.queue_remove_all ();
         }
 
-        count = playlist.n_entries ();
+        int count = playlist.n_entries ();
         if (result->at < 0 || result->at > count)
             result->at = count;
 
@@ -488,9 +475,6 @@ static void add_finish (void * unused)
         }
 
         playlist_enable_scan (true);
-
-    FREE:
-        delete result;
     }
 
     if (add_thread_exited)
@@ -499,22 +483,19 @@ static void add_finish (void * unused)
         status_done_locked ();
     }
 
-    pthread_mutex_unlock (& mutex);
+    mh.unlock ();  // before calling hook
 
     hook_call ("playlist add complete", nullptr);
 }
 
-static void * add_worker (void * unused)
+static void add_worker ()
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
-    AddTask * task;
-    while ((task = add_tasks.head ()))
+    for (SmartPtr<AddTask> task; task.capture (add_tasks.pop_head ());)
     {
-        add_tasks.remove (task);
-
         current_playlist = task->playlist;
-        pthread_mutex_unlock (& mutex);
+        mh.unlock ();
 
         playlist_cache_load (task->items);
 
@@ -529,9 +510,7 @@ static void * add_worker (void * unused)
         for (auto & item : task->items)
             add_generic (std::move (item), task->filter, task->user, result, save_title, false);
 
-        delete task;
-
-        pthread_mutex_lock (& mutex);
+        mh.lock ();
         current_playlist = Playlist ();
 
         if (! add_results.head ())
@@ -541,13 +520,11 @@ static void * add_worker (void * unused)
     }
 
     add_thread_exited = true;
-    pthread_mutex_unlock (& mutex);
-    return nullptr;
 }
 
 void adder_cleanup ()
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     add_tasks.clear ();
 
@@ -557,8 +534,6 @@ void adder_cleanup ()
     add_results.clear ();
 
     queued_add.stop ();
-
-    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT void Playlist::insert_entry (int at,
@@ -580,7 +555,7 @@ EXPORT void Playlist::insert_filtered (int at,
  Index<PlaylistAddItem> && items, Playlist::FilterFunc filter, void * user,
  bool play) const
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     AddTask * task = new AddTask ();
 
@@ -593,45 +568,35 @@ EXPORT void Playlist::insert_filtered (int at,
 
     add_tasks.append (task);
     start_thread_locked ();
-
-    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT bool Playlist::add_in_progress () const
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     for (AddTask * task = add_tasks.head (); task; task = add_tasks.next (task))
     {
         if (task->playlist == * this)
-            goto YES;
+            return true;
     }
 
     if (current_playlist == * this)
-        goto YES;
+        return true;
 
     for (AddResult * result = add_results.head (); result; result = add_results.next (result))
     {
         if (result->playlist == * this)
-            goto YES;
+            return true;
     }
 
-    pthread_mutex_unlock (& mutex);
     return false;
-
-YES:
-    pthread_mutex_unlock (& mutex);
-    return true;
 }
 
 EXPORT bool Playlist::add_in_progress_any ()
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
-    bool in_progress = (add_tasks.head () ||
-                        current_playlist != Playlist () ||
-                        add_results.head ());
-
-    pthread_mutex_unlock (& mutex);
-    return in_progress;
+    return (add_tasks.head () ||
+            current_playlist != Playlist () ||
+            add_results.head ());
 }
