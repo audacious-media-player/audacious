@@ -91,7 +91,7 @@ static void infopopup_progress_cb (void *)
         time = aud_drct_get_time ();
     }
 
-    if (aud_get_bool (nullptr, "filepopup_showprogressbar") && filename &&
+    if (aud_get_bool ("filepopup_showprogressbar") && filename &&
      current_file && ! strcmp (filename, current_file) && length > 0)
     {
         gtk_progress_bar_set_fraction ((GtkProgressBar *) widgets.progress, time / (float) length);

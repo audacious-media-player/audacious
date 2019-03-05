@@ -61,7 +61,7 @@ static void slider_moved (GtkRange * slider)
     double value = round (gtk_range_get_value (slider));
 
     if (band == -1)
-        aud_set_double (nullptr, "equalizer_preamp", value);
+        aud_set_double ("equalizer_preamp", value);
     else
         aud_eq_set_band (band, value);
 }
@@ -99,7 +99,7 @@ static void set_slider (GtkWidget * slider, double value)
 static void update_sliders (void *, GtkWidget * window)
 {
     GtkWidget * preamp = (GtkWidget *) g_object_get_data ((GObject *) window, "preamp");
-    set_slider (preamp, aud_get_double (nullptr, "equalizer_preamp"));
+    set_slider (preamp, aud_get_double ("equalizer_preamp"));
 
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);

@@ -187,8 +187,8 @@ EXPORT StringBuf str_to_utf8 (StringBuf && str)
 
 static void chardet_update (void * = nullptr, void * = nullptr)
 {
-    String region = aud_get_str (nullptr, "chardet_detector");
-    String fallbacks = aud_get_str (nullptr, "chardet_fallback");
+    String region = aud_get_str ("chardet_detector");
+    String fallbacks = aud_get_str ("chardet_fallback");
 
     set_charsets (region[0] ? (const char *) region : nullptr, fallbacks);
 }

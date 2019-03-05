@@ -74,7 +74,7 @@ static bool interface_load (PluginHandle * plugin)
 
     add_menu_items ();
 
-    if (aud_get_bool (0, "show_interface"))
+    if (aud_get_bool ("show_interface"))
         current_interface->show (true);
 
     return true;
@@ -87,7 +87,7 @@ static void interface_unload ()
     // call before unloading interface
     hook_call ("config save", nullptr);
 
-    if (aud_get_bool (0, "show_interface"))
+    if (aud_get_bool ("show_interface"))
         current_interface->show (false);
 
     remove_menu_items ();
@@ -101,7 +101,7 @@ EXPORT void aud_ui_show (bool show)
     if (! current_interface)
         return;
 
-    aud_set_bool (0, "show_interface", show);
+    aud_set_bool ("show_interface", show);
 
     current_interface->show (show);
 
@@ -113,7 +113,7 @@ EXPORT bool aud_ui_is_shown ()
     if (! current_interface)
         return false;
 
-    return aud_get_bool (0, "show_interface");
+    return aud_get_bool ("show_interface");
 }
 
 EXPORT void aud_ui_startup_notify (const char * id)
@@ -158,7 +158,7 @@ void interface_run ()
     }
     else if (current_interface)
     {
-        vis_activate (aud_get_bool (0, "show_interface"));
+        vis_activate (aud_get_bool ("show_interface"));
 
         current_interface->run ();
         interface_unload ();

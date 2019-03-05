@@ -99,8 +99,8 @@ PlaylistEntry::~PlaylistEntry ()
 
 void PlaylistData::update_formatter () // static
 {
-    s_tuple_formatter.compile (aud_get_str (nullptr, "generic_title_format"));
-    s_use_tuple_fallbacks = aud_get_bool (nullptr, "metadata_fallbacks");
+    s_tuple_formatter.compile (aud_get_str ("generic_title_format"));
+    s_use_tuple_fallbacks = aud_get_bool ("metadata_fallbacks");
 }
 
 void PlaylistData::cleanup_formatter () // static
@@ -298,8 +298,8 @@ void PlaylistData::remove_entries (int at, int number)
 
     if (position_changed)
     {
-        if (aud_get_bool (nullptr, "advance_on_delete"))
-            next_song_with_hint (aud_get_bool (nullptr, "repeat"), at);
+        if (aud_get_bool ("advance_on_delete"))
+            next_song_with_hint (aud_get_bool ("repeat"), at);
 
         queue_position_change ();
     }
@@ -551,8 +551,8 @@ void PlaylistData::remove_selected ()
 
     if (position_changed)
     {
-        if (aud_get_bool (nullptr, "advance_on_delete"))
-            next_song_with_hint (aud_get_bool (nullptr, "repeat"), n_entries - after);
+        if (aud_get_bool ("advance_on_delete"))
+            next_song_with_hint (aud_get_bool ("repeat"), n_entries - after);
 
         queue_position_change ();
     }
@@ -817,7 +817,7 @@ bool PlaylistData::shuffle_prev ()
 
 bool PlaylistData::shuffle_next ()
 {
-    bool by_album = aud_get_bool (nullptr, "album_shuffle");
+    bool by_album = aud_get_bool ("album_shuffle");
 
     // helper #1: determine whether two entries are in the same album
     auto same_album = [] (const Tuple & a, const Tuple & b)
@@ -944,7 +944,7 @@ void PlaylistData::shuffle_replay (const Index<int> & history)
 
 bool PlaylistData::prev_song ()
 {
-    if (aud_get_bool (nullptr, "shuffle"))
+    if (aud_get_bool ("shuffle"))
     {
         if (! shuffle_prev ())
             return false;
@@ -975,7 +975,7 @@ bool PlaylistData::next_song_with_hint (bool repeat, int hint)
         return true;
     }
 
-    if (aud_get_bool (nullptr, "shuffle"))
+    if (aud_get_bool ("shuffle"))
     {
         if (shuffle_next ())
             return true;

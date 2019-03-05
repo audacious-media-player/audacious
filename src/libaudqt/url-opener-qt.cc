@@ -115,7 +115,7 @@ static QDialog * buildUrlDialog (bool open)
         else
             aud_drct_pl_add (url, -1);
 
-        if (aud_get_bool (nullptr, "save_url_history"))
+        if (aud_get_bool ("save_url_history"))
             aud_history_add (url);
 
         dialog->close ();

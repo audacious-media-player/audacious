@@ -461,7 +461,7 @@ static void update_titlestring_cbox (GtkComboBox * cbox, const char * format)
 static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
 {
     const char * format = gtk_entry_get_text (entry);
-    aud_set_str (nullptr, "generic_title_format", format);
+    aud_set_str ("generic_title_format", format);
     update_titlestring_cbox (cbox, format);
 }
 
@@ -543,7 +543,7 @@ static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
 
     * entry = gtk_entry_new ();
 
-    String format = aud_get_str (nullptr, "generic_title_format");
+    String format = aud_get_str ("generic_title_format");
     update_titlestring_cbox ((GtkComboBox *) * cbox, format);
     gtk_entry_set_text ((GtkEntry *) * entry, format);
 

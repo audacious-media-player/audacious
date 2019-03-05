@@ -156,11 +156,11 @@ static void eq_update (void *data, void *user)
 {
     pthread_mutex_lock (& mutex);
 
-    active = aud_get_bool (nullptr, "equalizer_active");
+    active = aud_get_bool ("equalizer_active");
 
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
-    eq_set_bands_real (aud_get_double (nullptr, "equalizer_preamp"), values);
+    eq_set_bands_real (aud_get_double ("equalizer_preamp"), values);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -183,13 +183,13 @@ void eq_cleanup ()
 EXPORT void aud_eq_set_bands (const double values[AUD_EQ_NBANDS])
 {
     StringBuf string = double_array_to_str (values, AUD_EQ_NBANDS);
-    aud_set_str (nullptr, "equalizer_bands", string);
+    aud_set_str ("equalizer_bands", string);
 }
 
 EXPORT void aud_eq_get_bands (double values[AUD_EQ_NBANDS])
 {
     memset (values, 0, sizeof (double) * AUD_EQ_NBANDS);
-    String string = aud_get_str (nullptr, "equalizer_bands");
+    String string = aud_get_str ("equalizer_bands");
     str_to_double_array (string, values, AUD_EQ_NBANDS);
 }
 
@@ -221,7 +221,7 @@ EXPORT void aud_eq_apply_preset (const EqualizerPreset & preset)
         bands[i] = preset.bands[i];
 
     aud_eq_set_bands (bands);
-    aud_set_double (nullptr, "equalizer_preamp", preset.preamp);
+    aud_set_double ("equalizer_preamp", preset.preamp);
 }
 
 EXPORT void aud_eq_update_preset (EqualizerPreset & preset)
@@ -233,5 +233,5 @@ EXPORT void aud_eq_update_preset (EqualizerPreset & preset)
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         preset.bands[i] = bands[i];
 
-    preset.preamp = aud_get_double (nullptr, "equalizer_preamp");
+    preset.preamp = aud_get_double ("equalizer_preamp");
 }

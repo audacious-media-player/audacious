@@ -270,7 +270,7 @@ static void do_remote ()
 
 static void do_commands ()
 {
-    bool resume = aud_get_bool (nullptr, "resume_playback_on_startup");
+    bool resume = aud_get_bool ("resume_playback_on_startup");
 
     if (filenames.len ())
     {

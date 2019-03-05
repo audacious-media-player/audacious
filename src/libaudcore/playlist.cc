@@ -580,7 +580,7 @@ static void pl_hook_reformat_titles (void *, void *)
 static void pl_hook_trigger_scan (void *, void *)
 {
     ENTER;
-    scan_enabled = scan_enabled_nominal && ! aud_get_bool (nullptr, "metadata_on_play");
+    scan_enabled = scan_enabled_nominal && ! aud_get_bool ("metadata_on_play");
     scan_restart ();
     LEAVE;
 }
@@ -614,7 +614,7 @@ void playlist_enable_scan (bool enable)
     ENTER;
 
     scan_enabled_nominal = enable;
-    scan_enabled = scan_enabled_nominal && ! aud_get_bool (nullptr, "metadata_on_play");
+    scan_enabled = scan_enabled_nominal && ! aud_get_bool ("metadata_on_play");
     scan_restart ();
 
     LEAVE;
@@ -1271,7 +1271,7 @@ void playlist_load_state ()
 
 EXPORT void aud_resume ()
 {
-    if (aud_get_bool (nullptr, "always_resume_paused"))
+    if (aud_get_bool ("always_resume_paused"))
         resume_paused = true;
 
     Playlist::by_index (resume_playlist).start_playback (resume_paused);

@@ -66,7 +66,7 @@ static String fileinfo_recursive_get_image (const char * path,
 
     const char * name;
 
-    if (aud_get_bool (nullptr, "use_file_cover") && ! depth)
+    if (aud_get_bool ("use_file_cover") && ! depth)
     {
         /* Look for images matching file name */
         while ((name = g_dir_read_name (d)))
@@ -102,7 +102,7 @@ static String fileinfo_recursive_get_image (const char * path,
 
     g_dir_rewind (d);
 
-    if (aud_get_bool (nullptr, "recurse_for_cover") && depth < aud_get_int (nullptr, "recurse_for_cover_depth"))
+    if (aud_get_bool ("recurse_for_cover") && depth < aud_get_int ("recurse_for_cover_depth"))
     {
         /* Descend into directories recursively. */
         while ((name = g_dir_read_name (d)))
@@ -136,8 +136,8 @@ String art_search (const char * filename)
     if (! elem)
         return String ();
 
-    String include = aud_get_str (nullptr, "cover_name_include");
-    String exclude = aud_get_str (nullptr, "cover_name_exclude");
+    String include = aud_get_str ("cover_name_include");
+    String exclude = aud_get_str ("cover_name_exclude");
 
     SearchParams params = {
         String (elem),

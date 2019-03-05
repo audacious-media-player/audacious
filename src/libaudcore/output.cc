@@ -176,7 +176,7 @@ static inline int get_format (bool & automatic)
 {
     automatic = false;
 
-    switch (aud_get_int (0, "output_bit_depth"))
+    switch (aud_get_int ("output_bit_depth"))
     {
         case 16: return FMT_S16_NE;
         case 24: return FMT_S24_3NE;
@@ -305,7 +305,7 @@ static void setup_secondary (SafeLock & lock, bool new_input)
         return;
 
     int rate, channels;
-    record_stream = (OutputStream) aud_get_int (0, "record_stream");
+    record_stream = (OutputStream) aud_get_int ("record_stream");
 
     if (record_stream < OutputStream::AfterEffects)
     {
@@ -350,19 +350,19 @@ static void flush_output (SafeLock &)
 
 static void apply_replay_gain (SafeLock &, Index<float> & data)
 {
-    if (! aud_get_bool (0, "enable_replay_gain"))
+    if (! aud_get_bool ("enable_replay_gain"))
         return;
 
-    float factor = powf (10, aud_get_double (0, "replay_gain_preamp") / 20);
+    float factor = powf (10, aud_get_double ("replay_gain_preamp") / 20);
 
     if (gain_info_valid)
     {
         float peak;
 
-        auto mode = (ReplayGainMode) aud_get_int (0, "replay_gain_mode");
+        auto mode = (ReplayGainMode) aud_get_int ("replay_gain_mode");
         if ((mode == ReplayGainMode::Album) ||
             (mode == ReplayGainMode::Automatic &&
-             (! aud_get_bool (0, "shuffle") || aud_get_bool (0, "album_shuffle"))))
+             (! aud_get_bool ("shuffle") || aud_get_bool ("album_shuffle"))))
         {
             factor *= powf (10, gain_info.album_gain / 20);
             peak = gain_info.album_peak;
@@ -373,11 +373,11 @@ static void apply_replay_gain (SafeLock &, Index<float> & data)
             peak = gain_info.track_peak;
         }
 
-        if (aud_get_bool (0, "enable_clipping_prevention") && peak * factor > 1)
+        if (aud_get_bool ("enable_clipping_prevention") && peak * factor > 1)
             factor = 1 / peak;
     }
     else
-        factor *= powf (10, aud_get_double (0, "default_gain") / 20);
+        factor *= powf (10, aud_get_double ("default_gain") / 20);
 
     if (factor < 0.99 || factor > 1.01)
         audio_amplify (data.begin (), 1, data.len (), & factor);
@@ -412,13 +412,13 @@ static void write_output (UnsafeLock & lock, Index<float> & data)
     if (state.secondary () && record_stream == OutputStream::AfterEqualizer)
         write_secondary (lock, data);
 
-    if (aud_get_bool (0, "software_volume_control"))
+    if (aud_get_bool ("software_volume_control"))
     {
-        StereoVolume v = {aud_get_int (0, "sw_volume_left"), aud_get_int (0, "sw_volume_right")};
+        StereoVolume v = {aud_get_int ("sw_volume_left"), aud_get_int ("sw_volume_right")};
         audio_amplify (data.begin (), out_channels, data.len () / out_channels, v);
     }
 
-    if (aud_get_bool (0, "soft_clipping"))
+    if (aud_get_bool ("soft_clipping"))
         audio_soft_clip (data.begin (), data.len ());
 
     const void * out_data = data.begin ();
@@ -530,7 +530,7 @@ bool output_open_audio (const String & filename, const Tuple & tuple,
     setup_effects (lock);
     setup_output (lock, true);
 
-    if (aud_get_bool (0, "record"))
+    if (aud_get_bool ("record"))
         setup_secondary (lock, true);
 
     return true;
@@ -737,7 +737,7 @@ static void output_reset (OutputReset type, OutputPlugin * op)
 
         setup_output (lock2, false);
 
-        if (aud_get_bool (0, "record"))
+        if (aud_get_bool ("record"))
             setup_secondary (lock2, false);
     }
 
@@ -754,8 +754,8 @@ EXPORT StereoVolume aud_drct_get_volume ()
     auto lock = state.lock_safe ();
     StereoVolume volume = {0, 0};
 
-    if (aud_get_bool (0, "software_volume_control"))
-        volume = {aud_get_int (0, "sw_volume_left"), aud_get_int (0, "sw_volume_right")};
+    if (aud_get_bool ("software_volume_control"))
+        volume = {aud_get_int ("sw_volume_left"), aud_get_int ("sw_volume_right")};
     else if (cop)
         volume = cop->get_volume ();
 
@@ -769,10 +769,10 @@ EXPORT void aud_drct_set_volume (StereoVolume volume)
     volume.left = aud::clamp (volume.left, 0, 100);
     volume.right = aud::clamp (volume.right, 0, 100);
 
-    if (aud_get_bool (0, "software_volume_control"))
+    if (aud_get_bool ("software_volume_control"))
     {
-        aud_set_int (0, "sw_volume_left", volume.left);
-        aud_set_int (0, "sw_volume_right", volume.right);
+        aud_set_int ("sw_volume_left", volume.left);
+        aud_set_int ("sw_volume_right", volume.right);
     }
     else if (cop)
         cop->set_volume (volume);
@@ -807,7 +807,7 @@ bool output_plugin_set_secondary (PluginHandle * plugin)
     if (sop && ! sop->init ())
         sop = nullptr;
 
-    if (state.input () && aud_get_bool (0, "record"))
+    if (state.input () && aud_get_bool ("record"))
         setup_secondary (lock, false);
 
     return (! plugin || sop);
@@ -817,7 +817,7 @@ static void record_settings_changed (void *, void *)
 {
     auto lock = state.lock_safe ();
 
-    if (state.input () && aud_get_bool (0, "record"))
+    if (state.input () && aud_get_bool ("record"))
         setup_secondary (lock, false);
     else
         cleanup_secondary (lock);

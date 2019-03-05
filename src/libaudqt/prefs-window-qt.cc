@@ -438,7 +438,7 @@ static void * create_titlestring_table ()
     QLineEdit * le = new QLineEdit (w);
     l->addWidget (le, 1, 1);
 
-    String format = aud_get_str (nullptr, "generic_title_format");
+    String format = aud_get_str ("generic_title_format");
     le->setText ((const char *) format);
     for (int i = 0; i < TITLESTRING_NPRESETS; i ++)
     {
@@ -447,7 +447,7 @@ static void * create_titlestring_table ()
     }
 
     QObject::connect (le, & QLineEdit::textChanged, [] (const QString & text) {
-        aud_set_str (nullptr, "generic_title_format", text.toUtf8 ().data ());
+        aud_set_str ("generic_title_format", text.toUtf8 ().data ());
     });
 
     void (QComboBox::* signal) (int) = & QComboBox::currentIndexChanged;

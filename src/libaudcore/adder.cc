@@ -156,7 +156,7 @@ static void add_file (PlaylistAddItem && item, Playlist::FilterFunc filter,
 
         if (! item.decoder)
         {
-            if (aud_get_bool (nullptr, "slow_probe"))
+            if (aud_get_bool ("slow_probe"))
             {
                 /* The slow path.  User settings dictate that we should try to
                  * find a decoder even if we don't recognize the file extension. */
@@ -343,7 +343,7 @@ static void add_folder (const char * filename, Playlist::FilterFunc filter,
 
         if (mode & VFS_IS_REGULAR)
             add_file ({file}, filter, user, result, true);
-        else if ((mode & VFS_IS_DIR) && aud_get_bool (nullptr, "recurse_folders"))
+        else if ((mode & VFS_IS_DIR) && aud_get_bool ("recurse_folders"))
             folders.append (file);
     }
 
@@ -377,7 +377,7 @@ static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,
         int tests = 0;
         if (! from_playlist)
             tests |= VFS_NO_ACCESS;
-        if (! from_playlist || aud_get_bool (nullptr, "folders_in_playlist"))
+        if (! from_playlist || aud_get_bool ("folders_in_playlist"))
             tests |= VFS_IS_DIR;
 
         String error;
@@ -444,7 +444,7 @@ static void add_finish (void * unused)
 
         if (result->play)
         {
-            if (aud_get_bool (nullptr, "clear_playlist"))
+            if (aud_get_bool ("clear_playlist"))
                 playlist.remove_all_entries ();
             else
                 playlist.queue_remove_all ();
@@ -468,7 +468,7 @@ static void add_finish (void * unused)
 
         if (result->play)
         {
-            if (! aud_get_bool (0, "shuffle"))
+            if (! aud_get_bool ("shuffle"))
                 playlist.set_position (result->at);
 
             playlist.start_playback ();

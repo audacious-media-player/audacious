@@ -118,6 +118,26 @@ int aud_get_int (const char * section, const char * name);
 void aud_set_double (const char * section, const char * name, double value);
 double aud_get_double (const char * section, const char * name);
 
+/* overloads for main ("audacious") config section */
+static inline void aud_set_str (const char * name, const char * value)
+    { aud_set_str (nullptr, name, value); }
+static inline String aud_get_str (const char * name)
+    { return aud_get_str (nullptr, name); }
+static inline void aud_set_bool (const char * name, bool value)
+    { aud_set_bool (nullptr, name, value); }
+static inline bool aud_get_bool (const char * name)
+    { return aud_get_bool (nullptr, name); }
+static inline void aud_toggle_bool (const char * name)
+    { aud_toggle_bool (nullptr, name); }
+static inline void aud_set_int (const char * name, int value)
+    { aud_set_int (nullptr, name, value); }
+static inline int aud_get_int (const char * name)
+    { return aud_get_int (nullptr, name); }
+static inline void aud_set_double (const char * name, double value)
+    { aud_set_double (nullptr, name, value); }
+static inline double aud_get_double (const char * name)
+    { return aud_get_double (nullptr, name); }
+
 void aud_init ();
 void aud_resume ();
 void aud_run ();

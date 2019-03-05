@@ -88,7 +88,7 @@ static bool record_plugin_watcher (PluginHandle *, void *)
 
 static void validate_record_setting (void *, void *)
 {
-    if (aud_get_bool (nullptr, "record") && ! aud_drct_get_record_enabled ())
+    if (aud_get_bool ("record") && ! aud_drct_get_record_enabled ())
     {
         /* User attempted to start recording without a recording plugin enabled.
          * This is probably not the best response, but better than nothing. */
@@ -198,7 +198,7 @@ EXPORT void aud_drct_pl_next ()
     if (playlist == Playlist ())
         playlist = Playlist::active_playlist ();
 
-    playlist.next_song (aud_get_bool (nullptr, "repeat"));
+    playlist.next_song (aud_get_bool ("repeat"));
 }
 
 EXPORT void aud_drct_pl_prev ()
@@ -234,12 +234,12 @@ EXPORT void aud_drct_pl_open (const char * filename)
 {
     Index<PlaylistAddItem> items;
     items.append (String (filename));
-    add_list (std::move (items), -1, aud_get_bool (nullptr, "open_to_temporary"), true);
+    add_list (std::move (items), -1, aud_get_bool ("open_to_temporary"), true);
 }
 
 EXPORT void aud_drct_pl_open_list (Index<PlaylistAddItem> && items)
 {
-    add_list (std::move (items), -1, aud_get_bool (nullptr, "open_to_temporary"), true);
+    add_list (std::move (items), -1, aud_get_bool ("open_to_temporary"), true);
 }
 
 EXPORT void aud_drct_pl_open_temp (const char * filename)

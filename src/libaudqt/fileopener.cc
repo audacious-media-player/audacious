@@ -40,7 +40,7 @@ static void import_playlist (Playlist playlist, const String & filename)
 static void export_playlist (Playlist playlist, const String & filename)
 {
     Playlist::GetMode mode = Playlist::Wait;
-    if (aud_get_bool (nullptr, "metadata_on_play"))
+    if (aud_get_bool ("metadata_on_play"))
         mode = Playlist::NoWait;
 
     playlist.set_filename (filename);

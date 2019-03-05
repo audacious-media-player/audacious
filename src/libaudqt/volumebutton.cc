@@ -91,7 +91,7 @@ VolumeButton::VolumeButton (QWidget * parent) :
 
 void VolumeButton::updateDelta ()
 {
-    int delta = aud_get_int (0, "volume_delta");
+    int delta = aud_get_int ("volume_delta");
     m_slider->setSingleStep (delta);
     m_slider->setPageStep (delta);
 }
@@ -156,7 +156,7 @@ QToolButton * VolumeButton::newSliderButton (int dir)
     button->setSizePolicy (QSizePolicy::Ignored, QSizePolicy::Preferred);
 
     connect (button, & QAbstractButton::clicked, [this, dir] () {
-        m_slider->setValue (m_slider->value () + dir * aud_get_int (0, "volume_delta"));
+        m_slider->setValue (m_slider->value () + dir * aud_get_int ("volume_delta"));
     });
 
     return button;
@@ -171,7 +171,7 @@ void VolumeButton::wheelEvent (QWheelEvent * e)
     if (steps != 0)
     {
         m_scroll_delta -= 120 * steps;
-        m_slider->setValue (m_slider->value () + steps * aud_get_int (0, "volume_delta"));
+        m_slider->setValue (m_slider->value () + steps * aud_get_int ("volume_delta"));
     }
 }
 

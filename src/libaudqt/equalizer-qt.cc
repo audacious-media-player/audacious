@@ -169,7 +169,7 @@ EqualizerWindow::EqualizerWindow () :
     connect (preset_button, & QPushButton::clicked, audqt::eq_presets_show);
 
     connect (& m_preamp_slider->slider, & QSlider::valueChanged, [] (int value) {
-        aud_set_int (nullptr, "equalizer_preamp", value);
+        aud_set_int ("equalizer_preamp", value);
     });
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
@@ -182,13 +182,13 @@ EqualizerWindow::EqualizerWindow () :
 
 void EqualizerWindow::updateActive ()
 {
-    bool active = aud_get_bool (nullptr, "equalizer_active");
+    bool active = aud_get_bool ("equalizer_active");
     m_onoff_checkbox.setCheckState (active ? Qt::Checked : Qt::Unchecked);
 }
 
 void EqualizerWindow::updatePreamp ()
 {
-    m_preamp_slider->slider.setValue (aud_get_int (nullptr, "equalizer_preamp"));
+    m_preamp_slider->slider.setValue (aud_get_int ("equalizer_preamp"));
 }
 
 void EqualizerWindow::updateBands ()

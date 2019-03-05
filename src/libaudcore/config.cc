@@ -255,23 +255,23 @@ void config_load ()
     aud_config_set_defaults (nullptr, core_defaults);
 
     /* migrate from previous versions */
-    if (aud_get_bool (0, "replay_gain_album"))
+    if (aud_get_bool ("replay_gain_album"))
     {
-        aud_set_str (0, "replay_gain_album", "");
-        aud_set_int (0, "replay_gain_mode", (int) ReplayGainMode::Album);
+        aud_set_str ("replay_gain_album", "");
+        aud_set_int ("replay_gain_mode", (int) ReplayGainMode::Album);
     }
 
     double step_size = aud_get_double ("gtkui", "step_size");
     if (step_size > 0)
     {
-        aud_set_int (0, "step_size", (int) step_size);
+        aud_set_int ("step_size", (int) step_size);
         aud_set_str ("gtkui", "step_size", "");
     }
 
     int volume_delta = aud_get_int ("statusicon", "volume_delta");
     if (volume_delta > 0)
     {
-        aud_set_int (0, "volume_delta", volume_delta);
+        aud_set_int ("volume_delta", volume_delta);
         aud_set_str ("statusicon", "volume_delta", "");
     }
 }

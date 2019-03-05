@@ -244,20 +244,20 @@ static void end_cb (void *)
 
     auto do_next = [playlist] ()
     {
-        if (! playlist.next_song (aud_get_bool (nullptr, "repeat")))
+        if (! playlist.next_song (aud_get_bool ("repeat")))
         {
             playlist.set_position (-1);
             hook_call ("playlist end reached", nullptr);
         }
     };
 
-    if (aud_get_bool (nullptr, "no_playlist_advance"))
+    if (aud_get_bool ("no_playlist_advance"))
     {
         // we assume here that repeat is not enabled;
         // single-song repeats are handled in run_playback()
         do_stop ();
     }
-    else if (aud_get_bool (nullptr, "stop_after_current_song"))
+    else if (aud_get_bool ("stop_after_current_song"))
     {
         do_stop ();
         do_next ();
@@ -342,7 +342,7 @@ static void run_playback ()
 
         // check whether we need to repeat
         pb_info.ended = (pb_control.repeat_a < 0 && ! (aud_get_bool (nullptr,
-         "repeat") && aud_get_bool (nullptr, "no_playlist_advance")));
+         "repeat") && aud_get_bool ("no_playlist_advance")));
 
         if (! pb_info.ended)
             request_seek_locked (pb_control.repeat_a);
@@ -666,7 +666,7 @@ EXPORT String aud_drct_get_title ()
 
     unlock ();
 
-    StringBuf prefix = aud_get_bool (nullptr, "show_numbers_in_pl") ?
+    StringBuf prefix = aud_get_bool ("show_numbers_in_pl") ?
      str_printf ("%d. ", 1 + entry) : StringBuf (0);
 
     StringBuf time = (length > 0) ? str_format_time (length) : StringBuf ();
