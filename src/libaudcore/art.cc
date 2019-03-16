@@ -22,7 +22,6 @@
 
 #include <assert.h>
 #include <errno.h>
-#include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -35,6 +34,7 @@
 #include "multihash.h"
 #include "runtime.h"
 #include "scanner.h"
+#include "threads.h"
 #include "vfs.h"
 
 #define FLAG_DONE 1
@@ -53,16 +53,15 @@ struct AudArtItem {
     bool is_temp;
 };
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
+static aud::mutex mutex;
 static SimpleHash<String, AudArtItem> art_items;
 static AudArtItem * current_item;
 static QueuedFunc queued_requests;
 
 static Index<AudArtItem *> get_queued ()
 {
+    auto mh = mutex.take ();
     Index<AudArtItem *> queued;
-    pthread_mutex_lock (& mutex);
 
     art_items.iterate ([&] (const String &, AudArtItem & item)
     {
@@ -75,7 +74,6 @@ static Index<AudArtItem *> get_queued ()
 
     queued_requests.stop ();
 
-    pthread_mutex_unlock (& mutex);
     return queued;
 }
 
@@ -89,7 +87,8 @@ static void send_requests (void *)
     }
 }
 
-static void finish_item_locked (AudArtItem * item, Index<char> && data, String && art_file)
+static void finish_item (aud::mutex::holder &, AudArtItem * item,
+ Index<char> && data, String && art_file)
 {
     /* already finished? */
     if (item->flag)
@@ -104,17 +103,14 @@ static void finish_item_locked (AudArtItem * item, Index<char> && data, String &
 
 static void request_callback (ScanRequest * request)
 {
-    pthread_mutex_lock (& mutex);
-
+    auto mh = mutex.take ();
     AudArtItem * item = art_items.lookup (request->filename);
 
     if (item)
-        finish_item_locked (item, std::move (request->image_data), std::move (request->image_file));
-
-    pthread_mutex_unlock (& mutex);
+        finish_item (mh, item, std::move (request->image_data), std::move (request->image_file));
 }
 
-static AudArtItem * art_item_get_locked (const String & filename, bool * queued)
+static AudArtItem * art_item_get (aud::mutex::holder &, const String & filename, bool * queued)
 {
     if (queued)
         * queued = false;
@@ -146,7 +142,7 @@ static AudArtItem * art_item_get_locked (const String & filename, bool * queued)
     return nullptr;
 }
 
-static void art_item_unref_locked (AudArtItem * item)
+static void art_item_unref (aud::mutex::holder &, AudArtItem * item)
 {
     if (! -- item->refcount)
     {
@@ -162,20 +158,19 @@ static void art_item_unref_locked (AudArtItem * item)
     }
 }
 
-static void clear_current_locked ()
+static void clear_current (aud::mutex::holder & mh)
 {
     if (current_item)
     {
-        art_item_unref_locked (current_item);
+        art_item_unref (mh, current_item);
         current_item = nullptr;
     }
 }
 
 void art_cache_current (const String & filename, Index<char> && data, String && art_file)
 {
-    pthread_mutex_lock (& mutex);
-
-    clear_current_locked ();
+    auto mh = mutex.take ();
+    clear_current (mh);
 
     AudArtItem * item = art_items.lookup (filename);
 
@@ -186,19 +181,16 @@ void art_cache_current (const String & filename, Index<char> && data, String && 
         item->refcount = 1; /* temporary reference */
     }
 
-    finish_item_locked (item, std::move (data), std::move (art_file));
+    finish_item (mh, item, std::move (data), std::move (art_file));
 
     item->refcount ++;
     current_item = item;
-
-    pthread_mutex_unlock (& mutex);
 }
 
 void art_clear_current ()
 {
-    pthread_mutex_lock (& mutex);
-    clear_current_locked ();
-    pthread_mutex_unlock (& mutex);
+    auto mh = mutex.take ();
+    clear_current (mh);
 }
 
 void art_cleanup ()
@@ -216,14 +208,11 @@ void art_cleanup ()
 
 EXPORT AudArtPtr aud_art_request (const char * file, int format, bool * queued)
 {
-    pthread_mutex_lock (& mutex);
-
-    String key (file);
-    AudArtItem * item = art_item_get_locked (key, queued);
-    bool good = true;
+    auto mh = mutex.take ();
+    AudArtItem * item = art_item_get (mh, String (file), queued);
 
     if (! item)
-        goto UNLOCK;
+        return AudArtPtr ();
 
     if (format & AUD_ART_DATA)
     {
@@ -236,7 +225,10 @@ EXPORT AudArtPtr aud_art_request (const char * file, int format, bool * queued)
         }
 
         if (! item->data.len ())
-            good = false;
+        {
+            art_item_unref (mh, item);
+            return AudArtPtr ();
+        }
     }
 
     if (format & AUD_ART_FILE)
@@ -253,17 +245,12 @@ EXPORT AudArtPtr aud_art_request (const char * file, int format, bool * queued)
         }
 
         if (! item->art_file)
-            good = false;
+        {
+            art_item_unref (mh, item);
+            return AudArtPtr ();
+        }
     }
 
-    if (! good)
-    {
-        art_item_unref_locked (item);
-        item = nullptr;
-    }
-
-UNLOCK:
-    pthread_mutex_unlock (& mutex);
     return AudArtPtr (item);
 }
 
@@ -274,7 +261,6 @@ EXPORT const char * aud_art_file (const AudArtItem * item)
 
 EXPORT void aud_art_unref (AudArtItem * item)
 {
-    pthread_mutex_lock (& mutex);
-    art_item_unref_locked (item);
-    pthread_mutex_unlock (& mutex);
+    auto mh = mutex.take ();
+    art_item_unref (mh, item);
 }
