@@ -87,11 +87,14 @@ void ScanRequest::run ()
         if (! (ip = load_input_plugin (decoder, & error)))
             goto err;
 
+        Tuple dummy_tuple;
+        /* don't overwrite tuple if already valid (e.g. from a cuesheet) */
+        Tuple & rtuple = need_tuple ? tuple : dummy_tuple;
         Index<char> * pimage = need_image ? & image_data : nullptr;
-        if (! aud_file_read_tag (audio_file, decoder, file, tuple, pimage, & error))
+        if (! aud_file_read_tag (audio_file, decoder, file, rtuple, pimage, & error))
             goto err;
 
-        if ((flags & SCAN_IMAGE) && ! image_data.len ())
+        if (need_image && ! image_data.len ())
             image_file = art_search (audio_file);
     }
 
