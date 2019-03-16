@@ -285,6 +285,15 @@ static const PreferencesWidget proxy_auth_elements[] = {
         {true})
 };
 
+static const PreferencesWidget proxy_socks_elements[] = {
+    WidgetRadio (N_("SOCKS v4a"),
+        WidgetInt (0, "socks_type"),
+        {0}),
+    WidgetRadio (N_("SOCKS v5"),
+        WidgetInt (0, "socks_type"),
+        {1})
+};
+
 static const PreferencesWidget connectivity_page_widgets[] = {
     WidgetLabel (N_("<b>Network Settings</b>")),
     WidgetSpin (N_("Buffer size:"),
@@ -298,6 +307,10 @@ static const PreferencesWidget connectivity_page_widgets[] = {
     WidgetCheck (N_("Use authentication with proxy"),
         WidgetBool (0, "use_proxy_auth")),
     WidgetTable ({{proxy_auth_elements}},
+        WIDGET_CHILD),
+    WidgetCheck (N_("SOCKS proxy?"),
+        WidgetBool (0, "socks_proxy")),
+    WidgetTable ({{proxy_socks_elements}},
         WIDGET_CHILD)
 };
 
