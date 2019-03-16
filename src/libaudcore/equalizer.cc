@@ -28,13 +28,13 @@
 
 #include <assert.h>
 #include <math.h>
-#include <pthread.h>
 #include <string.h>
 
 #include "audio.h"
 #include "audstrings.h"
 #include "hook.h"
 #include "runtime.h"
+#include "threads.h"
 
 /* Q value for band-pass filters 1.2247 = (3/2)^(1/2)
  * Gives 4 dB suppression at Fc*2 and Fc/2 */
@@ -47,7 +47,7 @@
 static const float CF[AUD_EQ_NBANDS] = {31.25f, 62.5f, 125, 250, 500, 1000,
  2000, 4000, 8000, 16000};
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static aud::mutex mutex;
 static bool active;
 static int channels, rate;
 static float a[AUD_EQ_NBANDS][2]; /* A weights */
@@ -70,7 +70,7 @@ static void bp2 (float *a, float *b, float fc)
 
 void eq_set_format (int new_channels, int new_rate)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     channels = new_channels;
     rate = new_rate;
@@ -88,11 +88,9 @@ void eq_set_format (int new_channels, int new_rate)
 
     /* Reset state */
     memset (wqv[0][0], 0, sizeof wqv);
-
-    pthread_mutex_unlock (& mutex);
 }
 
-static void eq_set_bands_real (double preamp, double *values)
+static void eq_set_bands_real (aud::mutex::holder &, double preamp, double *values)
 {
     float adj[AUD_EQ_NBANDS];
 
@@ -108,28 +106,21 @@ static void eq_set_bands_real (double preamp, double *values)
 
 void eq_filter (float *data, int samples)
 {
-    int channel;
-
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     if (! active)
-    {
-        pthread_mutex_unlock (& mutex);
         return;
-    }
 
-    for (channel = 0; channel < channels; channel ++)
+    for (int channel = 0; channel < channels; channel ++)
     {
         float *g = gv[channel]; /* Gain factor */
         float *end = data + samples;
-        float *f;
 
-        for (f = data + channel; f < end; f += channels)
+        for (float *f = data + channel; f < end; f += channels)
         {
-            int k; /* Frequency band index */
             float yt = *f; /* Current input sample */
 
-            for (k = 0; k < K; k ++)
+            for (int k = 0; k < K; k ++)
             {
                 /* Pointer to circular buffer wq */
                 float *wq = wqv[channel][k];
@@ -148,21 +139,17 @@ void eq_filter (float *data, int samples)
             *f = yt;
         }
     }
-
-    pthread_mutex_unlock (& mutex);
 }
 
-static void eq_update (void *data, void *user)
+static void eq_update (void *, void *)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     active = aud_get_bool ("equalizer_active");
 
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
-    eq_set_bands_real (aud_get_double ("equalizer_preamp"), values);
-
-    pthread_mutex_unlock (& mutex);
+    eq_set_bands_real (mh, aud_get_double ("equalizer_preamp"), values);
 }
 
 void eq_init ()

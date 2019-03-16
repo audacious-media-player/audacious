@@ -19,13 +19,12 @@
 
 #include "hook.h"
 
-#include <pthread.h>
-
 #include "index.h"
 #include "internal.h"
 #include "multihash.h"
 #include "objects.h"
 #include "runtime.h"
+#include "threads.h"
 
 struct HookItem {
     HookFunction func;
@@ -46,12 +45,12 @@ struct HookList
     }
 };
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static aud::mutex mutex;
 static SimpleHash<String, HookList> hooks;
 
 EXPORT void hook_associate (const char * name, HookFunction func, void * user)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     String key (name);
     HookList * list = hooks.lookup (key);
@@ -59,18 +58,16 @@ EXPORT void hook_associate (const char * name, HookFunction func, void * user)
         list = hooks.add (key, HookList ());
 
     list->items.append (func, user);
-
-    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT void hook_dissociate (const char * name, HookFunction func, void * user)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     String key (name);
     HookList * list = hooks.lookup (key);
     if (! list)
-        goto DONE;
+        return;
 
     for (HookItem & item : list->items)
     {
@@ -84,19 +81,16 @@ EXPORT void hook_dissociate (const char * name, HookFunction func, void * user)
         if (! list->items.len ())
             hooks.remove (key);
     }
-
-DONE:
-    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT void hook_call (const char * name, void * data)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     String key (name);
     HookList * list = hooks.lookup (key);
     if (! list)
-        goto DONE;
+        return;
 
     list->use_count ++;
 
@@ -108,9 +102,9 @@ EXPORT void hook_call (const char * name, void * data)
 
         if (item.func)
         {
-            pthread_mutex_unlock (& mutex);
+            mh.unlock ();
             item.func (data, item.user);
-            pthread_mutex_lock (& mutex);
+            mh.lock ();
         }
     }
 
@@ -122,20 +116,15 @@ EXPORT void hook_call (const char * name, void * data)
         if (! list->items.len ())
             hooks.remove (key);
     }
-
-DONE:
-    pthread_mutex_unlock (& mutex);
 }
 
 void hook_cleanup ()
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     hooks.iterate ([] (const String & name, HookList & list) {
         AUDWARN ("Hook not disconnected: %s (%d)\n", (const char *) name, list.items.len ());
     });
 
     hooks.clear ();
-
-    pthread_mutex_unlock (& mutex);
 }

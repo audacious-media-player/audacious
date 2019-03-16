@@ -19,13 +19,12 @@
 
 #include "internal.h"
 
-#include <pthread.h>
-
 #include "drct.h"
 #include "list.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "runtime.h"
+#include "threads.h"
 
 struct Effect : public ListNode
 {
@@ -36,13 +35,13 @@ struct Effect : public ListNode
     bool remove_flag;
 };
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static aud::mutex mutex;
 static List<Effect> effects;
 static int input_channels, input_rate;
 
 void effect_start (int & channels, int & rate)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     AUDDBG ("Starting effects.\n");
 
@@ -77,14 +76,12 @@ void effect_start (int & channels, int & rate)
 
         effects.append (effect);
     }
-
-    pthread_mutex_unlock (& mutex);
 }
 
 Index<float> & effect_process (Index<float> & data)
 {
+    auto mh = mutex.take ();
     Index<float> * cur = & data;
-    pthread_mutex_lock (& mutex);
 
     Effect * e = effects.head ();
     while (e)
@@ -113,14 +110,13 @@ Index<float> & effect_process (Index<float> & data)
         e = next;
     }
 
-    pthread_mutex_unlock (& mutex);
     return * cur;
 }
 
 bool effect_flush (bool force)
 {
+    auto mh = mutex.take ();
     bool flushed = true;
-    pthread_mutex_lock (& mutex);
 
     for (Effect * e = effects.head (); e; e = effects.next (e))
     {
@@ -131,34 +127,31 @@ bool effect_flush (bool force)
         }
     }
 
-    pthread_mutex_unlock (& mutex);
     return flushed;
 }
 
 Index<float> & effect_finish (Index<float> & data, bool end_of_playlist)
 {
+    auto mh = mutex.take ();
     Index<float> * cur = & data;
-    pthread_mutex_lock (& mutex);
 
     for (Effect * e = effects.head (); e; e = effects.next (e))
         cur = & e->header->finish (* cur, end_of_playlist);
 
-    pthread_mutex_unlock (& mutex);
     return * cur;
 }
 
 int effect_adjust_delay (int delay)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     for (Effect * e = effects.tail (); e; e = effects.prev (e))
         delay = e->header->adjust_delay (delay);
 
-    pthread_mutex_unlock (& mutex);
     return delay;
 }
 
-static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
+static void effect_insert (aud::mutex::holder &, PluginHandle * plugin, EffectPlugin * header)
 {
     int position = aud_plugin_list (PluginType::Effect).find (plugin);
 
@@ -208,7 +201,7 @@ static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
     effects.insert_after (prev, effect);
 }
 
-static void effect_remove (PluginHandle * plugin)
+static void effect_remove (aud::mutex::holder &, PluginHandle * plugin)
 {
     for (Effect * e = effects.head (); e; e = effects.next (e))
     {
@@ -225,14 +218,12 @@ static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, bool enable
 {
     if (ep->preserves_format)
     {
-        pthread_mutex_lock (& mutex);
+        auto mh = mutex.take ();
 
         if (enable)
-            effect_insert (plugin, ep);
+            effect_insert (mh, plugin, ep);
         else
-            effect_remove (plugin);
-
-        pthread_mutex_unlock (& mutex);
+            effect_remove (mh, plugin);
     }
     else
     {

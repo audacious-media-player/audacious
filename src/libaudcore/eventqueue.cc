@@ -19,13 +19,13 @@
 
 #include "hook.h"
 
-#include <pthread.h>
 #include <string.h>
 
 #include "internal.h"
 #include "list.h"
 #include "mainloop.h"
 #include "objects.h"
+#include "threads.h"
 
 struct Event : public ListNode
 {
@@ -45,45 +45,41 @@ struct Event : public ListNode
     }
 };
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static aud::mutex mutex;
 static List<Event> events;
 static QueuedFunc queued_events;
 
 static void events_execute (void *)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     Event * event;
     while ((event = events.head ()))
     {
         events.remove (event);
 
-        pthread_mutex_unlock (& mutex);
+        mh.unlock ();
 
         hook_call (event->name, event->data);
         delete event;
 
-        pthread_mutex_lock (& mutex);
+        mh.lock ();
     }
-
-    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT void event_queue (const char * name, void * data, EventDestroyFunc destroy)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     if (! events.head ())
         queued_events.queue (events_execute, nullptr);
 
     events.append (new Event (name, data, destroy));
-
-    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT void event_queue_cancel (const char * name, void * data)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     Event * event = events.head ();
     while (event)
@@ -98,13 +94,10 @@ EXPORT void event_queue_cancel (const char * name, void * data)
 
         event = next;
     }
-
-    pthread_mutex_unlock (& mutex);
 }
 
 void event_queue_cancel_all ()
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
     events.clear ();
-    pthread_mutex_unlock (& mutex);
 }
