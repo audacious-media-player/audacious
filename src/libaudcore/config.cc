@@ -63,6 +63,8 @@ static const char * const core_defaults[] = {
  /* network */
  "net_buffer_kb", "128",
  "save_url_history", "TRUE",
+ "socks_proxy", "FALSE",
+ "socks_type", "0",
  "use_proxy", "FALSE",
  "use_proxy_auth", "FALSE",
 

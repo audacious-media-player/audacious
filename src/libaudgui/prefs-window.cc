@@ -269,7 +269,7 @@ static const PreferencesWidget connectivity_page_widgets[] = {
         WidgetBool (0, "use_proxy_auth")),
     WidgetTable ({{proxy_auth_elements}},
         WIDGET_CHILD),
-    WidgetCheck (N_("SOCKS proxy?"),
+    WidgetCheck (N_("Use SOCKS proxy"),
         WidgetBool (0, "socks_proxy")),
     WidgetRadio (N_("SOCKS v4a"),
         WidgetInt (0, "socks_type"),
