@@ -681,7 +681,7 @@ void output_drain ()
 
     if (! state.input ())
     {
-        if (state.output ())
+        if (state.output () && state.active ())
             finish_effects (lock, true); /* second time for end of playlist */
 
         cleanup_output (lock);
