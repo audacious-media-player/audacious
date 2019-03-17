@@ -38,7 +38,6 @@
 #include "internal.h"
 
 #include <assert.h>
-#include <pthread.h>
 
 #include "audstrings.h"
 #include "hook.h"
@@ -51,6 +50,7 @@
 #include "plugins.h"
 #include "plugins-internal.h"
 #include "runtime.h"
+#include "threads.h"
 
 struct PlaybackState {
     bool playing = false;
@@ -91,8 +91,8 @@ struct PlaybackInfo {
     String error_s;
 };
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+static aud::mutex mutex;
+static aud::condvar cond;
 
 static PlaybackState pb_state;
 static PlaybackControl pb_control;
@@ -102,28 +102,13 @@ static QueuedFunc end_queue;
 static bool song_finished = false;
 static int failed_entries = 0;
 
-static void lock ()
-    { pthread_mutex_lock (& mutex); }
-static void unlock ()
-    { pthread_mutex_unlock (& mutex); }
-
-static bool lock_if (bool (* test) ())
-{
-    lock ();
-    if (test ())
-        return true;
-
-    unlock ();
-    return false;
-}
-
 // check that the playback thread is not lagging
-static bool in_sync ()
+static bool in_sync (aud::mutex::holder &)
     { return pb_state.playing && pb_state.control_serial == pb_state.playback_serial; }
 
 // check that the playback thread is not lagging and playback is "ready"
-static bool is_ready ()
-    { return in_sync () && pb_info.ready; }
+static bool is_ready (aud::mutex::holder & mh)
+    { return in_sync (mh) && pb_info.ready; }
 
 // called by playback_entry_set_tuple() to ensure that the tuple still applies
 // to the current song from the perspective of the main/playlist thread; the
@@ -131,10 +116,8 @@ static bool is_ready ()
 // the playback thread
 bool playback_check_serial (int serial)
 {
-    lock ();
-    bool okay = (pb_state.playing && pb_state.control_serial == serial);
-    unlock ();
-    return okay;
+    auto mh = mutex.take ();
+    return pb_state.playing && pb_state.control_serial == serial;
 }
 
 // called from the playlist to update the tuple for the current song
@@ -142,7 +125,8 @@ void playback_set_info (int entry, Tuple && tuple)
 {
     // do nothing if the playback thread is lagging behind;
     // in that case, playback_set_info() will get called again anyway
-    if (! lock_if (in_sync))
+    auto mh = mutex.take ();
+    if (! in_sync (mh))
         return;
 
     if (tuple.valid () && tuple != pb_info.tuple)
@@ -150,7 +134,7 @@ void playback_set_info (int entry, Tuple && tuple)
         pb_info.tuple = std::move (tuple);
 
         // don't call "tuple change" before "playback ready"
-        if (is_ready ())
+        if (is_ready (mh))
         {
             event_queue ("tuple change", nullptr);
             output_set_tuple (pb_info.tuple);
@@ -164,15 +148,13 @@ void playback_set_info (int entry, Tuple && tuple)
         pb_info.title = title;
 
         // don't call "title change" before "playback ready"
-        if (is_ready ())
+        if (is_ready (mh))
             event_queue ("title change", nullptr);
     }
-
-    unlock ();
 }
 
 // cleanup common to both playback_play() and playback_stop()
-static void playback_cleanup_locked ()
+static void playback_cleanup (aud::mutex::holder &)
 {
     pb_state.playing = false;
     pb_control = PlaybackControl ();
@@ -202,10 +184,10 @@ void playback_stop (bool exiting)
     if (! pb_state.playing && ! exiting)
         return;
 
-    lock ();
+    auto mh = mutex.take ();
 
     if (pb_state.playing)
-        playback_cleanup_locked ();
+        playback_cleanup (mh);
 
     if (pb_state.thread_running)
     {
@@ -215,14 +197,12 @@ void playback_stop (bool exiting)
 
         // signal playback thread to drain audio buffer
         pb_state.control_serial ++;
-        pthread_cond_broadcast (& cond);
+        cond.notify_all ();
 
         // wait for playback thread to finish if exiting
         while (exiting && pb_state.thread_running)
-            pthread_cond_wait (& cond, & mutex);
+            cond.wait (mh);
     }
-
-    unlock ();
 
     // miscellaneous cleanup
     failed_entries = 0;
@@ -274,14 +254,14 @@ static void end_cb (void *)
 }
 
 // helper, can be called from either main or playback thread
-static void request_seek_locked (int time)
+static void request_seek (aud::mutex::holder & mh, int time)
 {
     // set up "seek" command whether ready or not;
     // if not ready, it will take effect upon open_audio()
     pb_control.seek = aud::max (0, time);
 
     // trigger seek immediately if ready
-    if (is_ready () && pb_info.length > 0)
+    if (is_ready (mh) && pb_info.length > 0)
     {
         output_flush (aud::clamp (time, 0, pb_info.length));
         event_queue ("playback seek", nullptr);
@@ -289,13 +269,11 @@ static void request_seek_locked (int time)
 }
 
 // playback thread helper
-static void run_playback ()
+static bool setup_playback (const DecodeInfo & dec)
 {
-    // due to mutex ordering, we cannot call into the playlist while locked
-    DecodeInfo dec = playback_entry_read (pb_state.playback_serial);
-
-    if (! lock_if (in_sync))
-        return;
+    auto mh = mutex.take ();
+    if (! in_sync (mh))
+        return false;
 
     // for a cuesheet entry, determine the source filename
     pb_info.filename = pb_info.tuple.get_str (Tuple::AudioFile);
@@ -308,8 +286,7 @@ static void run_playback ()
     {
         pb_info.error = true;
         pb_info.error_s = std::move (dec.error);
-        unlock ();
-        return;
+        return false;
     }
 
     // get various other bits of info from the tuple
@@ -323,7 +300,37 @@ static void run_playback ()
     if (pb_info.time_offset > 0 && pb_control.seek < 0)
         pb_control.seek = 0;
 
-    unlock ();
+    return true;
+}
+
+// playback thread helper
+static bool check_playback_repeat ()
+{
+    auto mh = mutex.take ();
+    if (! in_sync (mh))
+        return false;
+
+    // check whether we need to repeat
+    if (pb_control.repeat_a >= 0 ||
+     (aud_get_bool ("repeat") && aud_get_bool ("no_playlist_advance")))
+    {
+        pb_info.ended = false;
+        request_seek (mh, pb_control.repeat_a);
+        return true;
+    }
+
+    pb_info.ended = true;
+    return false;
+}
+
+// playback thread helper
+static void run_playback ()
+{
+    // due to mutex ordering, we cannot call into the playlist while locked
+    DecodeInfo dec = playback_entry_read (pb_state.playback_serial);
+
+    if (! setup_playback (dec))
+        return;
 
     while (1)
     {
@@ -337,19 +344,7 @@ static void run_playback ()
         if (pb_info.error || pb_info.length <= 0)
             break;
 
-        if (! lock_if (in_sync))
-            break;
-
-        // check whether we need to repeat
-        pb_info.ended = (pb_control.repeat_a < 0 && ! (aud_get_bool (nullptr,
-         "repeat") && aud_get_bool ("no_playlist_advance")));
-
-        if (! pb_info.ended)
-            request_seek_locked (pb_control.repeat_a);
-
-        unlock ();
-
-        if (pb_info.ended)
+        if (! check_playback_repeat ())
             break;
 
         // rewind file pointer before repeating
@@ -362,7 +357,7 @@ static void run_playback ()
 }
 
 // playback thread helper
-static void finish_playback_locked ()
+static void finish_playback (aud::mutex::holder &)
 {
     // record any playback error that occurred
     if (pb_info.error)
@@ -383,15 +378,15 @@ static void finish_playback_locked ()
 }
 
 // playback thread
-static void * playback_thread (void *)
+static void playback_thread ()
 {
-    lock ();
+    auto mh = mutex.take ();
 
     while (1)
     {
         // wait for a command
         while (pb_state.control_serial == pb_state.playback_serial)
-            pthread_cond_wait (& cond, & mutex);
+            cond.wait (mh);
 
         // fetch the command (either "play" or "drain")
         bool play = pb_state.playing;
@@ -399,20 +394,20 @@ static void * playback_thread (void *)
         // update playback thread serial number
         pb_state.playback_serial = pb_state.control_serial;
 
-        unlock ();
+        mh.unlock ();
 
         if (play)
             run_playback ();
         else
             output_drain ();
 
-        lock ();
+        mh.lock ();
 
         if (play)
         {
             // don't report errors or queue next song if another command is pending
-            if (in_sync ())
-                finish_playback_locked ();
+            if (in_sync (mh))
+                finish_playback (mh);
 
             pb_info = PlaybackInfo ();
         }
@@ -426,18 +421,16 @@ static void * playback_thread (void *)
 
     // signal the main thread that we are quitting
     pb_state.thread_running = false;
-    pthread_cond_broadcast (& cond);
-    unlock ();
-    return nullptr;
+    cond.notify_all ();
 }
 
 // main thread: starts playback of a new song
 void playback_play (int seek_time, bool pause)
 {
-    lock ();
+    auto mh = mutex.take ();
 
     if (pb_state.playing)
-        playback_cleanup_locked ();
+        playback_cleanup (mh);
 
     // set up "play" command
     pb_state.playing = true;
@@ -447,16 +440,12 @@ void playback_play (int seek_time, bool pause)
 
     // start playback thread (or signal it if it's already running)
     if (pb_state.thread_running)
-        pthread_cond_broadcast (& cond);
+        cond.notify_all ();
     else
     {
-        pthread_t thread;
-        pthread_create (& thread, nullptr, playback_thread, nullptr);
-        pthread_detach (thread);
+        std::thread (playback_thread).detach ();
         pb_state.thread_running = true;
     }
-
-    unlock ();
 }
 
 // main thread
@@ -465,7 +454,7 @@ EXPORT void aud_drct_pause ()
     if (! pb_state.playing)
         return;
 
-    lock ();
+    auto mh = mutex.take ();
 
     // set up "pause" command whether ready or not;
     // if not ready, it will take effect upon open_audio()
@@ -473,12 +462,10 @@ EXPORT void aud_drct_pause ()
     pb_control.paused = pause;
 
     // apply pause immediately if ready
-    if (is_ready ())
+    if (is_ready (mh))
         output_pause (pause);
 
     event_queue (pause ? "playback pause" : "playback unpause", nullptr);
-
-    unlock ();
 }
 
 // main thread
@@ -487,15 +474,15 @@ EXPORT void aud_drct_seek (int time)
     if (! pb_state.playing)
         return;
 
-    lock ();
-    request_seek_locked (time);
-    unlock ();
+    auto mh = mutex.take ();
+    request_seek (mh, time);
 }
 
 EXPORT void InputPlugin::open_audio (int format, int rate, int channels)
 {
     // don't open audio if playback thread is lagging
-    if (! lock_if (in_sync))
+    auto mh = mutex.take ();
+    if (! in_sync (mh))
         return;
 
     if (! output_open_audio (pb_info.filename, pb_info.tuple, format, rate,
@@ -503,7 +490,6 @@ EXPORT void InputPlugin::open_audio (int format, int rate, int channels)
     {
         pb_info.error = true;
         pb_info.error_s = String (_("Invalid audio format"));
-        unlock ();
         return;
     }
 
@@ -521,32 +507,37 @@ EXPORT void InputPlugin::open_audio (int format, int rate, int channels)
         event_queue ("playback ready", nullptr);
 
     pb_info.ready = true;
-
-    unlock ();
 }
 
 EXPORT void InputPlugin::set_replay_gain (const ReplayGainInfo & gain)
 {
-    lock ();
+    auto mh = mutex.take ();
+
     pb_info.gain = gain;
     pb_info.gain_valid = true;
 
-    if (is_ready ())
+    if (is_ready (mh))
         output_set_replay_gain (gain);
+}
 
-    unlock ();
+// playback thread helper
+static bool get_ab_repeat (int & a, int & b)
+{
+    auto mh = mutex.take ();
+    if (! in_sync (mh))
+        return false;
+
+    // fetch A-B repeat settings
+    a = pb_control.repeat_a;
+    b = pb_control.repeat_b;
+    return true;
 }
 
 EXPORT void InputPlugin::write_audio (const void * data, int length)
 {
-    if (! lock_if (in_sync))
+    int a, b;
+    if (! get_ab_repeat (a, b))
         return;
-
-    // fetch A-B repeat settings
-    int a = pb_control.repeat_a;
-    int b = pb_control.repeat_b;
-
-    unlock ();
 
     // it's okay to call output_write_audio() even if we are no longer in sync,
     // since it will return immediately if output_flush() has been called
@@ -554,7 +545,8 @@ EXPORT void InputPlugin::write_audio (const void * data, int length)
     if (output_write_audio (data, length, stop_time))
         return;
 
-    if (! lock_if (in_sync))
+    auto mh = mutex.take ();
+    if (! in_sync (mh))
         return;
 
     // if we are still in sync, then one of the following happened:
@@ -564,19 +556,16 @@ EXPORT void InputPlugin::write_audio (const void * data, int length)
     if (pb_control.seek < 0)
     {
         if (b >= 0)
-            request_seek_locked (a);
+            request_seek (mh, a);
         else
             pb_info.ended = true;
     }
-
-    unlock ();
 }
 
 EXPORT Tuple InputPlugin::get_playback_tuple ()
 {
-    lock ();
+    auto mh = mutex.take ();
     Tuple tuple = pb_info.tuple.ref ();
-    unlock ();
 
     // tuples passed to us from input plugins do not have fallback fields
     // generated; for consistency, tuples passed back should not either
@@ -594,125 +583,101 @@ EXPORT void InputPlugin::set_playback_tuple (Tuple && tuple)
 
 EXPORT void InputPlugin::set_stream_bitrate (int bitrate)
 {
-    lock ();
+    auto mh = mutex.take ();
     pb_info.bitrate = bitrate;
 
-    if (is_ready ())
+    if (is_ready (mh))
         event_queue ("info change", nullptr);
-
-    unlock ();
 }
 
 EXPORT bool InputPlugin::check_stop ()
 {
-    lock ();
-    bool stop = ! is_ready () || pb_info.ended || pb_info.error;
-    unlock ();
-    return stop;
+    auto mh = mutex.take ();
+    return ! is_ready (mh) || pb_info.ended || pb_info.error;
 }
 
 EXPORT int InputPlugin::check_seek ()
 {
-    lock ();
+    auto mh = mutex.take ();
     int seek = -1;
 
-    if (is_ready () && pb_control.seek >= 0 && pb_info.length > 0)
+    if (is_ready (mh) && pb_control.seek >= 0 && pb_info.length > 0)
     {
         seek = pb_info.time_offset + aud::min (pb_control.seek, pb_info.length);
         pb_control.seek = -1;
         output_resume ();
     }
 
-    unlock ();
     return seek;
 }
 
 // thread-safe
 EXPORT bool aud_drct_get_playing ()
 {
-    lock ();
-    bool playing = pb_state.playing;
-    unlock ();
-    return playing;
+    auto mh = mutex.take ();
+    return pb_state.playing;
 }
 
 // thread-safe
 EXPORT bool aud_drct_get_ready ()
 {
-    lock ();
-    bool ready = is_ready ();
-    unlock ();
-    return ready;
+    auto mh = mutex.take ();
+    return is_ready (mh);
 }
 
 // thread-safe
 EXPORT bool aud_drct_get_paused ()
 {
-    lock ();
-    bool paused = pb_control.paused;
-    unlock ();
-    return paused;
+    auto mh = mutex.take ();
+    return pb_control.paused;
 }
 
 // thread-safe
 EXPORT String aud_drct_get_title ()
 {
-    if (! lock_if (is_ready))
+    auto mh = mutex.take ();
+    if (! is_ready (mh))
         return String ();
 
-    String title = pb_info.title;
-    int entry = pb_info.entry;
-    int length = pb_info.length;
-
-    unlock ();
-
     StringBuf prefix = aud_get_bool ("show_numbers_in_pl") ?
-     str_printf ("%d. ", 1 + entry) : StringBuf (0);
+     str_printf ("%d. ", 1 + pb_info.entry) : StringBuf (0);
 
-    StringBuf time = (length > 0) ? str_format_time (length) : StringBuf ();
+    StringBuf time = (pb_info.length > 0) ? str_format_time (pb_info.length) : StringBuf ();
     StringBuf suffix = time ? str_concat ({" (", time, ")"}) : StringBuf (0);
 
-    return String (str_concat ({prefix, title, suffix}));
+    return String (str_concat ({prefix, pb_info.title, suffix}));
 }
 
 // thread-safe
 EXPORT Tuple aud_drct_get_tuple ()
 {
-    lock ();
-    Tuple tuple = is_ready () ? pb_info.tuple.ref () : Tuple ();
-    unlock ();
-    return tuple;
+    auto mh = mutex.take ();
+    return is_ready (mh) ? pb_info.tuple.ref () : Tuple ();
 }
 
 // thread-safe
 EXPORT void aud_drct_get_info (int & bitrate, int & samplerate, int & channels)
 {
-    lock ();
+    auto mh = mutex.take ();
+    bool ready = is_ready (mh);
 
-    bool ready = is_ready ();
     bitrate = ready ? pb_info.bitrate : 0;
     samplerate = ready ? pb_info.samplerate : 0;
     channels = ready ? pb_info.channels : 0;
-
-    unlock ();
 }
 
 // thread-safe
 EXPORT int aud_drct_get_time ()
 {
-    lock ();
-    int time = is_ready () ? output_get_time () : 0;
-    unlock ();
-    return time;
+    auto mh = mutex.take ();
+    return is_ready (mh) ? output_get_time () : 0;
 }
 
 // thread-safe
 EXPORT int aud_drct_get_length ()
 {
-    lock ();
-    int length = is_ready () ? pb_info.length : -1;
-    unlock ();
-    return length;
+    auto mh = mutex.take ();
+    return is_ready (mh) ? pb_info.length : -1;
 }
 
 // main thread
@@ -721,22 +686,20 @@ EXPORT void aud_drct_set_ab_repeat (int a, int b)
     if (! pb_state.playing)
         return;
 
-    lock ();
+    auto mh = mutex.take ();
 
     pb_control.repeat_a = a;
     pb_control.repeat_b = b;
 
-    if (b >= 0 && is_ready () && output_get_time () >= b)
-        request_seek_locked (a);
-
-    unlock ();
+    if (b >= 0 && is_ready (mh) && output_get_time () >= b)
+        request_seek (mh, a);
 }
 
 // thread-safe
 EXPORT void aud_drct_get_ab_repeat (int & a, int & b)
 {
-    lock ();
+    auto mh = mutex.take ();
+
     a = pb_control.repeat_a;
     b = pb_control.repeat_b;
-    unlock ();
 }
