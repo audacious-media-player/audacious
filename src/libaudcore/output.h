@@ -30,7 +30,7 @@ void output_init ();
 void output_cleanup ();
 
 bool output_open_audio (const String & filename, const Tuple & tuple,
- int format, int rate, int channels, int start_time);
+ int format, int rate, int channels, int start_time, bool pause);
 void output_set_tuple (const Tuple & tuple);
 void output_set_replay_gain (const ReplayGainInfo & info);
 bool output_write_audio (const void * data, int size, int stop_time);

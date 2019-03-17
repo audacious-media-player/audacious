@@ -229,12 +229,18 @@ static void cleanup_secondary (SafeLock & lock)
     sop->close_audio ();
 }
 
-static void apply_pause (SafeLock &)
+static void apply_pause (SafeLock & lock, bool pause, bool new_output = false)
 {
-    assert (state.output ());
+    if (state.output ())
+    {
+        // assume output plugin is unpaused after open_audio()
+        if (pause != (new_output ? false : state.paused ()))
+            cop->pause (pause);
 
-    cop->pause (state.paused ());
-    vis_runner_start_stop (true, state.paused ());
+        vis_runner_start_stop (true, pause);
+    }
+
+    state.set_paused (lock, pause);
 }
 
 static bool open_audio_with_info (OutputPlugin * op, const char * filename,
@@ -244,7 +250,7 @@ static bool open_audio_with_info (OutputPlugin * op, const char * filename,
     return op->open_audio (format, rate, chans, error);
 }
 
-static void setup_output (UnsafeLock & lock, bool new_input)
+static void setup_output (UnsafeLock & lock, bool new_input, bool pause)
 {
     assert (state.input ());
 
@@ -258,6 +264,7 @@ static void setup_output (UnsafeLock & lock, bool new_input)
      effect_rate == out_rate && ! (new_input && cop->force_reopen))
     {
         AUDINFO ("Reuse output, %d channels, %d Hz.\n", effect_channels, effect_rate);
+        apply_pause (lock, pause);
         return;
     }
 
@@ -294,7 +301,7 @@ static void setup_output (UnsafeLock & lock, bool new_input)
     out_bytes_held = 0;
     out_bytes_written = 0;
 
-    apply_pause (lock);
+    apply_pause (lock, pause, true);
 }
 
 static void setup_secondary (SafeLock & lock, bool new_input)
@@ -499,7 +506,7 @@ static void finish_effects (UnsafeLock & lock, bool end_of_playlist)
 }
 
 bool output_open_audio (const String & filename, const Tuple & tuple,
- int format, int rate, int channels, int start_time)
+ int format, int rate, int channels, int start_time, bool pause)
 {
     /* prevent division by zero */
     if (rate < 1 || channels < 1 || channels > AUD_MAX_CHANNELS)
@@ -507,14 +514,7 @@ bool output_open_audio (const String & filename, const Tuple & tuple,
 
     auto lock = state.lock_unsafe ();
 
-    if (state.output () && state.paused ())
-    {
-        effect_flush (true);
-        cleanup_output (lock);
-    }
-
     state.set_input (lock, true);
-    state.set_paused (lock, false);
     state.set_flushed (lock, false);
 
     seek_time = start_time;
@@ -528,7 +528,7 @@ bool output_open_audio (const String & filename, const Tuple & tuple,
     in_frames = 0;
 
     setup_effects (lock);
-    setup_output (lock, true);
+    setup_output (lock, true, pause);
 
     if (aud_get_bool ("record"))
         setup_secondary (lock, true);
@@ -621,13 +621,8 @@ void output_pause (bool pause)
 {
     auto lock = state.lock_safe ();
 
-    if (state.input () && state.paused () != pause)
-    {
-        state.set_paused (lock, pause);
-
-        if (state.output ())
-            apply_pause (lock);
-    }
+    if (state.input ())
+        apply_pause (lock, pause);
 }
 
 int output_get_time ()
@@ -735,7 +730,7 @@ static void output_reset (OutputReset type, OutputPlugin * op)
         if (type == OutputReset::EffectsOnly)
             setup_effects (lock2);
 
-        setup_output (lock2, false);
+        setup_output (lock2, false, state.paused ());
 
         if (aud_get_bool ("record"))
             setup_secondary (lock2, false);
