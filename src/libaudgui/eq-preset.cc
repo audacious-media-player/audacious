@@ -70,7 +70,7 @@ static void select_all (void *, bool selected)
 static void activate_preset (const EqualizerPreset & preset)
 {
     aud_eq_apply_preset (preset);
-    aud_set_bool (nullptr, "equalizer_active", true);
+    aud_set_bool ("equalizer_active", true);
 }
 
 static void activate_row (void *, int row)

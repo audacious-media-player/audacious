@@ -80,7 +80,7 @@ static PluginHandle * record_plugin;
 static bool record_plugin_watcher (PluginHandle *, void *)
 {
     if (! aud_drct_get_record_enabled ())
-        aud_set_bool (nullptr, "record", false);
+        aud_set_bool ("record", false);
 
     hook_call ("enable record", nullptr);
     return true;
@@ -92,7 +92,7 @@ static void validate_record_setting (void *, void *)
     {
         /* User attempted to start recording without a recording plugin enabled.
          * This is probably not the best response, but better than nothing. */
-        aud_set_bool (nullptr, "record", false);
+        aud_set_bool ("record", false);
         aud_ui_show_error (_("Stream recording must be configured in Audio "
          "Settings before it can be used."));
     }
@@ -108,7 +108,7 @@ void record_init ()
     }
 
     if (! aud_drct_get_record_enabled ())
-        aud_set_bool (nullptr, "record", false);
+        aud_set_bool ("record", false);
 
     hook_associate ("set record", validate_record_setting, nullptr);
 }

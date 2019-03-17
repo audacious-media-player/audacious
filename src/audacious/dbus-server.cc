@@ -150,7 +150,7 @@ static gboolean do_eject (Obj * obj, Invoc * invoc)
 
 static gboolean do_equalizer_activate (Obj * obj, Invoc * invoc, gboolean active)
 {
-    aud_set_bool (nullptr, "equalizer_active", active);
+    aud_set_bool ("equalizer_active", active);
     FINISH (equalizer_activate);
     return true;
 }
@@ -423,7 +423,7 @@ static gboolean do_quit (Obj * obj, Invoc * invoc)
 static gboolean do_record (Obj * obj, Invoc * invoc)
 {
     if (aud_drct_get_record_enabled ())
-        aud_set_bool (nullptr, "record", ! aud_get_bool ("record"));
+        aud_set_bool ("record", ! aud_get_bool ("record"));
 
     FINISH (record);
     return true;

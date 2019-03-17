@@ -175,7 +175,7 @@ static void playback_cleanup (aud::mutex::holder &)
     event_queue_cancel ("title change");
     event_queue_cancel ("tuple change");
 
-    aud_set_bool (nullptr, "stop_after_current_song", false);
+    aud_set_bool ("stop_after_current_song", false);
 }
 
 // main thread: stops playback when no more songs are to be played

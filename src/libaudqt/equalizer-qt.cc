@@ -159,7 +159,7 @@ EqualizerWindow::EqualizerWindow () :
     updateBands ();
 
     connect (& m_onoff_checkbox, & QCheckBox::stateChanged, [] (int state) {
-        aud_set_bool (nullptr, "equalizer_active", (state == Qt::Checked));
+        aud_set_bool ("equalizer_active", (state == Qt::Checked));
     });
 
     connect (zero_button, & QPushButton::clicked, [] () {

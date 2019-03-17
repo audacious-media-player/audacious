@@ -123,7 +123,7 @@ void PresetModel::apply_preset (int row)
         return;
 
     aud_eq_apply_preset (* preset);
-    aud_set_bool (nullptr, "equalizer_active", true);
+    aud_set_bool ("equalizer_active", true);
 }
 
 class PresetView : public TreeView

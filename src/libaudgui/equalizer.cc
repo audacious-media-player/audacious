@@ -31,7 +31,7 @@
 
 static void on_off_cb (GtkToggleButton * on_off)
 {
-    aud_set_bool (nullptr, "equalizer_active", gtk_toggle_button_get_active (on_off));
+    aud_set_bool ("equalizer_active", gtk_toggle_button_get_active (on_off));
 }
 
 static void on_off_update (void *, GtkWidget * on_off)
