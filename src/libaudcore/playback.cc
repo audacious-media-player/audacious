@@ -159,10 +159,6 @@ static void playback_cleanup (aud::mutex::holder &)
     pb_state.playing = false;
     pb_control = PlaybackControl ();
 
-    // discard audio buffer if the song did not end on its own
-    if (! song_finished)
-        output_flush (0);
-
     // miscellaneous cleanup
     end_queue.stop ();
     song_finished = false;
@@ -186,15 +182,15 @@ void playback_stop (bool exiting)
 
     auto mh = mutex.take ();
 
+    // discard audio buffer on a user-initiated stop
+    if (! song_finished || exiting)
+        output_flush (0, exiting);
+
     if (pb_state.playing)
         playback_cleanup (mh);
 
     if (pb_state.thread_running)
     {
-        // discard audio buffer if exiting
-        if (exiting)
-            output_flush (0, true);
-
         // signal playback thread to drain audio buffer
         pb_state.control_serial ++;
         cond.notify_all ();
@@ -428,6 +424,10 @@ static void playback_thread ()
 void playback_play (int seek_time, bool pause)
 {
     auto mh = mutex.take ();
+
+    // discard audio buffer unless progressing to the next song
+    if (! song_finished)
+        output_flush (0);
 
     if (pb_state.playing)
         playback_cleanup (mh);

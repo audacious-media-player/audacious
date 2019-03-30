@@ -80,8 +80,6 @@ struct UnsafeLock : SafeLock {
     aud::mutex::holder major;
 };
 
-enum class WriteMode { SKIP, WAIT, GO };
-
 class OutputState
 {
 public:
@@ -91,9 +89,6 @@ public:
     bool paused () const { return (m_flags & PAUSED); }
     bool flushed () const { return (m_flags & FLUSHED); }
     bool resetting () const { return (m_flags & RESETTING); }
-
-    bool active () const
-        { return ! paused () && ! flushed () && ! resetting (); }
 
     SafeLock lock_safe ()
         { return {mutex_minor.take ()}; }
@@ -115,15 +110,8 @@ public:
     void set_input (UnsafeLock &, bool on) { set_flag (INPUT, on); }
     void set_output (UnsafeLock &, bool on) { set_flag (OUTPUT, on); }
 
-    /* determine how write_audio() should behave */
-    WriteMode write_mode () const {
-        return (! input () || flushed ()) ? WriteMode::SKIP :
-               (! output () || paused () || resetting ()) ? WriteMode::WAIT :
-               WriteMode::GO;
-    }
-
-    void wait_to_write (SafeLock & lock)
-        { write_cond.wait (lock.minor); }
+    void await_change (SafeLock & lock)
+        { cond.wait (lock.minor); }
 
 private:
     static constexpr int INPUT     = (1 << 0);  /* input plugin connected */
@@ -138,15 +126,13 @@ private:
     aud::mutex mutex_major;
     aud::mutex mutex_minor;
 
-    aud::condvar write_cond;
+    aud::condvar cond;
 
     void set_flag (int flag, bool on)
     {
-        auto old_mode = write_mode ();
         m_flags = on ? (m_flags | flag) : (m_flags & ~flag);
-        /* wake the input thread if no longer blocked */
-        if (old_mode == WriteMode::WAIT && write_mode () != WriteMode::WAIT)
-            write_cond.notify_all ();
+        /* wake any thread waiting for a state change */
+        cond.notify_all ();
     }
 };
 
@@ -204,7 +190,9 @@ static void cleanup_output (UnsafeLock & lock)
     if (! state.output ())
         return;
 
-    if (state.active ())
+    // avoid locking up if the input thread reaches close_audio() while
+    // paused (unlikely but possible with perfect timing)
+    if (! state.paused ())
     {
         lock.minor.unlock ();
         cop->drain ();
@@ -439,8 +427,19 @@ static void write_output (UnsafeLock & lock, Index<float> & data)
 
     out_bytes_held = FMT_SIZEOF (out_format) * data.len ();
 
-    while (state.active ())
+    while (! state.flushed () && ! state.resetting ())
     {
+        if (state.paused ())
+        {
+            // avoid locking up if the input thread reaches close_audio() while
+            // paused (unlikely but possible with perfect timing)
+            if (! state.input ())
+                break;
+
+            state.await_change (lock);
+            continue;
+        }
+
         int written = cop->write_audio (out_data, out_bytes_held);
 
         out_data = (const char *) out_data + written;
@@ -567,16 +566,14 @@ bool output_write_audio (const void * data, int size, int stop_time)
     while (1)
     {
         auto lock = state.lock_unsafe ();
-        auto mode = state.write_mode ();
-
-        if (mode == WriteMode::SKIP)
+        if (! state.input () || state.flushed ())
             return false;
 
-        if (mode == WriteMode::GO)
+        if (state.output () && ! state.resetting ())
             return process_audio (lock, data, size, stop_time);
 
         lock.major.unlock ();
-        state.wait_to_write (lock);
+        state.await_change (lock);
     }
 }
 
@@ -584,26 +581,18 @@ void output_flush (int time, bool force)
 {
     auto lock = state.lock_safe ();
 
-    if (state.input () && ! state.flushed ())
+    if (state.input () || state.output ())
     {
-        if (state.output () && ! state.resetting ())
-        {
-            // allow effect plugins to prevent the flush, but
-            // always flush if paused to prevent locking up
-            if (effect_flush (state.paused () || force))
-            {
-                flush_output (lock);
-                state.set_flushed (lock, true);
-            }
-        }
-        else
-        {
-            state.set_flushed (lock, true);
-        }
+        // allow effect plugins to prevent the flush, but
+        // always flush if paused to prevent locking up
+        bool flush = effect_flush (state.paused () || force);
+        if (flush && state.output ())
+            flush_output (lock);
     }
 
     if (state.input ())
     {
+        state.set_flushed (lock, true);
         seek_time = time;
         in_frames = 0;
     }
@@ -670,7 +659,7 @@ void output_close_audio ()
         in_filename = String ();
         in_tuple = Tuple ();
 
-        if (state.output () && state.active ())
+        if (state.output ())
             finish_effects (lock, false); /* first time for end of song */
     }
 }
@@ -681,7 +670,7 @@ void output_drain ()
 
     if (! state.input ())
     {
-        if (state.output () && state.active ())
+        if (state.output ())
             finish_effects (lock, true); /* second time for end of playlist */
 
         cleanup_output (lock);
@@ -695,7 +684,7 @@ static void output_reset (OutputReset type, OutputPlugin * op)
 
     state.set_resetting (lock1, true);
 
-    if (state.output () && ! state.flushed ())
+    if (state.output ())
         flush_output (lock1);
 
     lock1.minor.unlock ();
