@@ -303,15 +303,22 @@ static bool setup_playback (const DecodeInfo & dec)
 static bool check_playback_repeat ()
 {
     auto mh = mutex.take ();
-    if (! in_sync (mh))
+    if (! is_ready (mh))
         return false;
 
     // check whether we need to repeat
     if (pb_control.repeat_a >= 0 ||
      (aud_get_bool ("repeat") && aud_get_bool ("no_playlist_advance")))
     {
+        // treat the repeat as a seek (takes effect at open_audio())
+        pb_control.seek = pb_control.repeat_a;
+
+        // force initial seek if we are playing a segmented track
+        if (pb_info.time_offset > 0 && pb_control.seek < 0)
+            pb_control.seek = 0;
+
+        event_queue ("playback seek", nullptr);
         pb_info.ended = false;
-        request_seek (mh, pb_control.repeat_a);
         return true;
     }
 
