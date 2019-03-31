@@ -856,7 +856,7 @@ EXPORT int str_compare (const char * ap, const char * bp)
     return 0;
 }
 
-/* Decodes percent-encoded strings, then compares then with str_compare. */
+/* Decodes percent-encoded strings, then compares them with str_compare. */
 
 EXPORT int str_compare_encoded (const char * ap, const char * bp)
 {
