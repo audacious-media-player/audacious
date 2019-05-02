@@ -525,24 +525,17 @@ EXPORT void InputPlugin::set_replay_gain (const ReplayGainInfo & gain)
         output_set_replay_gain (gain);
 }
 
-// playback thread helper
-static bool get_ab_repeat (int & a, int & b)
+EXPORT void InputPlugin::write_audio (const void * data, int length)
 {
     auto mh = mutex.take ();
     if (! in_sync (mh))
-        return false;
+        return;
 
     // fetch A-B repeat settings
-    a = pb_control.repeat_a;
-    b = pb_control.repeat_b;
-    return true;
-}
+    int a = pb_control.repeat_a;
+    int b = pb_control.repeat_b;
 
-EXPORT void InputPlugin::write_audio (const void * data, int length)
-{
-    int a, b;
-    if (! get_ab_repeat (a, b))
-        return;
+    mh.unlock ();
 
     // it's okay to call output_write_audio() even if we are no longer in sync,
     // since it will return immediately if output_flush() has been called
@@ -550,7 +543,8 @@ EXPORT void InputPlugin::write_audio (const void * data, int length)
     if (output_write_audio (data, length, stop_time))
         return;
 
-    auto mh = mutex.take ();
+    mh.lock ();
+
     if (! in_sync (mh))
         return;
 
