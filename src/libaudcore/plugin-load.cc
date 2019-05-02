@@ -21,7 +21,6 @@
 
 #include <assert.h>
 #include <errno.h>
-#include <pthread.h>
 #include <string.h>
 #include <sys/stat.h>
 

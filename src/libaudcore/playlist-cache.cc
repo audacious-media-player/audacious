@@ -20,17 +20,15 @@
 #include "playlist-internal.h"
 #include "mainloop.h"
 #include "multihash.h"
-
-#include <pthread.h>
+#include "threads.h"
 
 static SimpleHash<String, PlaylistAddItem> cache;
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static aud::mutex mutex;
 static QueuedFunc clear_timer;
 
 EXPORT void Playlist::cache_selected () const
 {
-    pthread_mutex_lock (& mutex);
-
+    auto mh = mutex.take ();
     int entries = n_entries ();
 
     for (int i = 0; i < entries; i ++)
@@ -47,16 +45,14 @@ EXPORT void Playlist::cache_selected () const
     }
 
     clear_timer.queue (30000, playlist_cache_clear, nullptr);
-
-    pthread_mutex_unlock (& mutex);
 }
 
 void playlist_cache_load (Index<PlaylistAddItem> & items)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     if (! cache.n_items ())
-        goto out;
+        return;
 
     for (auto & item : items)
     {
@@ -72,17 +68,12 @@ void playlist_cache_load (Index<PlaylistAddItem> & items)
         if (! item.decoder && node->decoder)
             item.decoder = node->decoder;
     }
-
-out:
-    pthread_mutex_unlock (& mutex);
 }
 
 void playlist_cache_clear (void *)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     cache.clear ();
     clear_timer.stop ();
-
-    pthread_mutex_unlock (& mutex);
 }

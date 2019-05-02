@@ -20,7 +20,6 @@
 #include "plugins-internal.h"
 
 #include <errno.h>
-#include <pthread.h>
 #include <string.h>
 
 #include <glib/gstdio.h>
@@ -31,6 +30,7 @@
 #include "parse.h"
 #include "plugin.h"
 #include "runtime.h"
+#include "threads.h"
 
 #define FILENAME "plugin-registry"
 
@@ -117,7 +117,7 @@ static constexpr aud::array<InputKey, const char *> input_key_names = {
 
 static aud::array<PluginType, Index<PluginHandle *>> plugins;
 static aud::array<PluginType, Index<PluginHandle *>> compatible;
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static aud::mutex mutex;
 static bool modified = false;
 
 static StringBuf get_basename (const char * path)
@@ -598,7 +598,7 @@ EXPORT const char * aud_plugin_get_basename (PluginHandle * plugin)
 
 EXPORT const void * aud_plugin_get_header (PluginHandle * plugin)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     if (! plugin->loaded)
     {
@@ -609,7 +609,6 @@ EXPORT const void * aud_plugin_get_header (PluginHandle * plugin)
         plugin->loaded = true;
     }
 
-    pthread_mutex_unlock (& mutex);
     return plugin->header;
 }
 

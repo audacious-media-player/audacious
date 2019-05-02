@@ -18,13 +18,11 @@
  */
 
 #include "hook.h"
-
-#include <pthread.h>
-
 #include "index.h"
 #include "internal.h"
 #include "mainloop.h"
 #include "runtime.h"
+#include "threads.h"
 
 static const aud::array<TimerRate, int> rate_to_ms = {1000, 250, 100, 33};
 
@@ -65,13 +63,13 @@ struct TimerList
     }
 };
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static aud::mutex mutex;
 static aud::array<TimerRate, TimerList> lists;
 
 static void timer_run (void * list_)
 {
     auto & list = * (TimerList *) list_;
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     list.use_count ++;
 
@@ -83,22 +81,20 @@ static void timer_run (void * list_)
 
         if (item.func)
         {
-            pthread_mutex_unlock (& mutex);
+            mh.unlock ();
             item.func (item.data);
-            pthread_mutex_lock (& mutex);
+            mh.lock ();
         }
     }
 
     list.use_count --;
     list.check_stop ();
-
-    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT void timer_add (TimerRate rate, TimerFunc func, void * data)
 {
     auto & list = lists[rate];
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     if (! list.contains (func, data))
     {
@@ -107,14 +103,12 @@ EXPORT void timer_add (TimerRate rate, TimerFunc func, void * data)
         if (! list.source.running ())
             list.source.start (rate_to_ms[rate], timer_run, & list);
     }
-
-    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT void timer_remove (TimerRate rate, TimerFunc func, void * data)
 {
     auto & list = lists[rate];
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     for (TimerItem & item : list.items)
     {
@@ -123,13 +117,11 @@ EXPORT void timer_remove (TimerRate rate, TimerFunc func, void * data)
     }
 
     list.check_stop ();
-
-    pthread_mutex_unlock (& mutex);
 }
 
 void timer_cleanup ()
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     int timers_running = 0;
     for (TimerList & list : lists)
@@ -137,6 +129,4 @@ void timer_cleanup ()
 
     if (timers_running)
         AUDWARN ("%d timers still registered at exit\n", timers_running);
-
-    pthread_mutex_unlock (& mutex);
 }

@@ -20,7 +20,6 @@
 #include "internal.h"
 
 #include <assert.h>
-#include <pthread.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -28,6 +27,7 @@
 #include "list.h"
 #include "mainloop.h"
 #include "output.h"
+#include "threads.h"
 
 #define INTERVAL 33 /* milliseconds */
 #define FRAMES_PER_NODE 512
@@ -47,7 +47,7 @@ struct VisNode : public ListNode
     float * data;
 };
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static aud::mutex mutex;
 static bool enabled = false;
 static bool playing = false, paused = false;
 static VisNode * current_node = nullptr;
@@ -61,13 +61,10 @@ static void send_audio (void *)
     /* call before locking mutex to avoid deadlock */
     int outputted = output_get_raw_time ();
 
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     if (! enabled || ! playing || paused)
-    {
-        pthread_mutex_unlock (& mutex);
         return;
-    }
 
     VisNode * node = nullptr;
     VisNode * next;
@@ -88,16 +85,14 @@ static void send_audio (void *)
         vis_list.remove (node);
     }
 
-    pthread_mutex_unlock (& mutex);
-
     if (! node)
         return;
 
+    mh.unlock ();
     vis_send_audio (node->data, node->channels);
+    mh.lock ();
 
-    pthread_mutex_lock (& mutex);
     vis_pool.prepend (node);
-    pthread_mutex_unlock (& mutex);
 }
 
 static void send_clear (void *)
@@ -105,7 +100,7 @@ static void send_clear (void *)
     vis_send_clear ();
 }
 
-static void flush_locked ()
+static void flush (aud::mutex::holder &)
 {
     delete current_node;
     current_node = nullptr;
@@ -119,12 +114,11 @@ static void flush_locked ()
 
 void vis_runner_flush ()
 {
-    pthread_mutex_lock (& mutex);
-    flush_locked ();
-    pthread_mutex_unlock (& mutex);
+    auto mh = mutex.take ();
+    flush (mh);
 }
 
-static void start_stop_locked (bool new_playing, bool new_paused)
+static void start_stop (aud::mutex::holder & mh, bool new_playing, bool new_paused)
 {
     playing = new_playing;
     paused = new_paused;
@@ -132,7 +126,7 @@ static void start_stop_locked (bool new_playing, bool new_paused)
     queued_clear.stop ();
 
     if (! enabled || ! playing)
-        flush_locked ();
+        flush (mh);
 
     if (enabled && playing && ! paused)
         timer_add (TimerRate::Hz30, send_audio);
@@ -142,20 +136,16 @@ static void start_stop_locked (bool new_playing, bool new_paused)
 
 void vis_runner_start_stop (bool new_playing, bool new_paused)
 {
-    pthread_mutex_lock (& mutex);
-    start_stop_locked (new_playing, new_paused);
-    pthread_mutex_unlock (& mutex);
+    auto mh = mutex.take ();
+    start_stop (mh, new_playing, new_paused);
 }
 
 void vis_runner_pass_audio (int time, const Index<float> & data, int channels, int rate)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     if (! enabled || ! playing)
-    {
-        pthread_mutex_unlock (& mutex);
         return;
-    }
 
     /* We can build a single node from multiple calls; we can also build
      * multiple nodes from the same call.  If current_node is present, it was
@@ -218,14 +208,11 @@ void vis_runner_pass_audio (int time, const Index<float> & data, int channels, i
         vis_list.append (current_node);
         current_node = nullptr;
     }
-
-    pthread_mutex_unlock (& mutex);
 }
 
 void vis_runner_enable (bool enable)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
     enabled = enable;
-    start_stop_locked (playing, paused);
-    pthread_mutex_unlock (& mutex);
+    start_stop (mh, playing, paused);
 }

@@ -17,10 +17,9 @@
  * the use of this software.
  */
 
-#include <pthread.h>
-
 #include "list.h"
 #include "mainloop.h"
+#include "threads.h"
 #include "vfs.h"
 #include "vfs_async.h"
 
@@ -30,7 +29,7 @@ struct QueuedData : public ListNode
     const VFSConsumer cons_f;
     void * const user;
 
-    pthread_t thread;
+    std::thread thread;
 
     Index<char> buf;
 
@@ -42,50 +41,43 @@ struct QueuedData : public ListNode
 
 static QueuedFunc queued_func;
 static List<QueuedData> queue;
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static aud::mutex mutex;
 
 static void send_data (void *)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     QueuedData * data;
     while ((data = queue.head ()))
     {
         queue.remove (data);
 
-        pthread_mutex_unlock (& mutex);
+        mh.unlock ();
 
-        pthread_join (data->thread, nullptr);
+        data->thread.join ();
         data->cons_f (data->filename, data->buf, data->user);
         delete data;
 
-        pthread_mutex_lock (& mutex);
+        mh.lock ();
     }
-
-    pthread_mutex_unlock (& mutex);
 }
 
-static void * read_worker (void * data0)
+static void read_worker (QueuedData * data)
 {
-    auto data = (QueuedData *) data0;
-
     VFSFile file (data->filename, "r");
     if (file)
         data->buf = file.read_all ();
 
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take ();
 
     if (! queue.head ())
         queued_func.queue (send_data, nullptr);
 
     queue.append (data);
-
-    pthread_mutex_unlock (& mutex);
-    return nullptr;
 }
 
 EXPORT void vfs_async_file_get_contents (const char * filename, VFSConsumer cons_f, void * user)
 {
     auto data = new QueuedData (filename, cons_f, user);
-    pthread_create (& data->thread, nullptr, read_worker, data);
+    data->thread = std::thread (read_worker, data);
 }
