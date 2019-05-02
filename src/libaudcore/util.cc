@@ -20,7 +20,6 @@
 #include "internal.h"
 
 #include <errno.h>
-#include <pthread.h>
 #include <stdint.h>
 #include <string.h>
 #include <unistd.h>
@@ -29,16 +28,17 @@
 
 #include "audstrings.h"
 #include "runtime.h"
+#include "threads.h"
 
 const char * get_home_utf8 ()
 {
-    static pthread_once_t once = PTHREAD_ONCE_INIT;
+    static std::once_flag once;
     static char * home_utf8;
 
     auto init = [] ()
         { home_utf8 = g_filename_to_utf8 (g_get_home_dir (), -1, nullptr, nullptr, nullptr); };
 
-    pthread_once (& once, init);
+    std::call_once (once, init);
     return home_utf8;
 }
 

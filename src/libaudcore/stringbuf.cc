@@ -25,6 +25,7 @@
 #include <new>
 
 #include "objects.h"
+#include "threads.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -66,7 +67,7 @@ static StringHeader * align_after (StringStack * stack, StringHeader * prev_head
 }
 
 static pthread_key_t key;
-static pthread_once_t once = PTHREAD_ONCE_INIT;
+static std::once_flag once;
 
 #ifdef _WIN32
 static HANDLE mapping;
@@ -97,7 +98,7 @@ static void make_key ()
 
 static StringStack * get_stack ()
 {
-    pthread_once (& once, make_key);
+    std::call_once (once, make_key);
 
     StringStack * stack = (StringStack *) pthread_getspecific (key);
 
