@@ -20,7 +20,6 @@
 #include "playlist-internal.h"
 
 #include <assert.h>
-#include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -38,6 +37,7 @@
 #include "parse.h"
 #include "playlist-data.h"
 #include "runtime.h"
+#include "threads.h"
 
 enum {
     ResumeStop,
@@ -61,35 +61,25 @@ enum class UpdateState {
 
 #define STATE_FILE "playlist-state"
 
-#define ENTER pthread_mutex_lock (& mutex)
-#define LEAVE pthread_mutex_unlock (& mutex)
-
-#define RETURN(...) do { \
-    pthread_mutex_unlock (& mutex); \
-    return __VA_ARGS__; \
-} while (0)
-
 #define ENTER_GET_PLAYLIST(...) \
-    ENTER; \
+    auto mh = mutex.take (); \
     PlaylistData * playlist = m_id ? m_id->data : nullptr; \
     if (! playlist) \
-        RETURN (__VA_ARGS__)
+        return __VA_ARGS__
 
 #define SIMPLE_WRAPPER(type, failcode, func, ...) \
     ENTER_GET_PLAYLIST (failcode); \
-    type retval = playlist->func (__VA_ARGS__); \
-    RETURN (retval)
+    return playlist->func (__VA_ARGS__)
 
 #define SIMPLE_VOID_WRAPPER(func, ...) \
     ENTER_GET_PLAYLIST (); \
-    playlist->func (__VA_ARGS__); \
-    LEAVE
+    playlist->func (__VA_ARGS__)
 
 static const char * const default_title = N_("New Playlist");
 static const char * const temp_title = N_("Now Playing");
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+static aud::mutex mutex;
+static aud::condvar condvar;
 
 /*
  * Each playlist is associated with its own ID struct, which contains a unique
@@ -178,7 +168,7 @@ static void number_playlists (int at, int length)
 
 static void update (void *)
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     int hooks = update_hooks;
     auto level = update_level;
@@ -198,7 +188,7 @@ static void update (void *)
     update_level = Playlist::NoUpdate;
     update_state = UpdateState::None;
 
-    LEAVE;
+    mh.unlock ();
 
     if (level != Playlist::NoUpdate)
         hook_call ("playlist update", aud::to_ptr (level));
@@ -259,9 +249,8 @@ static void queue_global_update (Playlist::UpdateLevel level, int flags = 0)
 
 EXPORT bool Playlist::update_pending_any ()
 {
-    ENTER;
-    bool pending = (update_level != Playlist::NoUpdate);
-    RETURN (pending);
+    auto mh = mutex.take ();
+    return (update_level != Playlist::NoUpdate);
 }
 
 EXPORT void Playlist::process_pending_update ()
@@ -272,22 +261,20 @@ EXPORT void Playlist::process_pending_update ()
 EXPORT bool Playlist::scan_in_progress () const
 {
     ENTER_GET_PLAYLIST (false);
-    bool scanning = (playlist->scan_status != PlaylistData::NotScanning);
-    RETURN (scanning);
+    return (playlist->scan_status != PlaylistData::NotScanning);
 }
 
 EXPORT bool Playlist::scan_in_progress_any ()
 {
-    ENTER;
+    auto mh = mutex.take ();
 
-    bool scanning = false;
     for (auto & p : playlists)
     {
         if (p->scan_status != PlaylistData::NotScanning)
-            scanning = true;
+            return true;
     }
 
-    RETURN (scanning);
+    return false;
 }
 
 static ScanItem * scan_list_find_entry (PlaylistEntry * entry)
@@ -403,14 +390,14 @@ static void scan_schedule ()
 
 static void scan_finish (ScanRequest * request)
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     auto match = [request] (const ScanItem & item)
         { return item.request == request; };
 
     ScanItem * item = scan_list.find (match);
     if (! item)
-        RETURN ();
+        return;
 
     PlaylistData * playlist = item->playlist;
     PlaylistEntry * entry = item->entry;
@@ -429,9 +416,7 @@ static void scan_finish (ScanRequest * request)
     scan_check_complete (playlist);
     scan_schedule ();
 
-    pthread_cond_broadcast (& cond);
-
-    LEAVE;
+    condvar.notify_all ();
 }
 
 static void scan_cancel (PlaylistEntry * entry)
@@ -452,7 +437,8 @@ static void scan_restart ()
 }
 
 /* mutex may be unlocked during the call */
-static void wait_for_entry (PlaylistData * playlist, int entry_num, bool need_decoder, bool need_tuple)
+static void wait_for_entry (aud::mutex::holder & mh, PlaylistData * playlist,
+ int entry_num, bool need_decoder, bool need_tuple)
 {
     bool scan_started = false;
 
@@ -476,7 +462,7 @@ static void wait_for_entry (PlaylistData * playlist, int entry_num, bool need_de
 
         // wait for scan to finish
         scan_started = true;
-        pthread_cond_wait (& cond, & mutex);
+        condvar.wait (mh);
     }
 }
 
@@ -567,29 +553,26 @@ void pl_signal_playlist_deleted (Playlist::ID * id)
 
 static void pl_hook_reformat_titles (void *, void *)
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     PlaylistData::update_formatter ();
 
     for (auto & playlist : playlists)
         playlist->reformat_titles ();
-
-    LEAVE;
 }
 
 static void pl_hook_trigger_scan (void *, void *)
 {
-    ENTER;
+    auto mh = mutex.take ();
     scan_enabled = scan_enabled_nominal && ! aud_get_bool ("metadata_on_play");
     scan_restart ();
-    LEAVE;
 }
 
 void playlist_init ()
 {
     srand (time (nullptr));
 
-    ENTER;
+    auto mh = mutex.take ();
 
     PlaylistData::update_formatter ();
 
@@ -599,7 +582,7 @@ void playlist_init ()
     scan_enabled = scan_enabled_nominal = false;
     scan_playlist = scan_row = 0;
 
-    LEAVE;
+    mh.unlock ();
 
     hook_associate ("set generic_title_format", pl_hook_reformat_titles, nullptr);
     hook_associate ("set leading_zero", pl_hook_reformat_titles, nullptr);
@@ -611,18 +594,16 @@ void playlist_init ()
 
 void playlist_enable_scan (bool enable)
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     scan_enabled_nominal = enable;
     scan_enabled = scan_enabled_nominal && ! aud_get_bool ("metadata_on_play");
     scan_restart ();
-
-    LEAVE;
 }
 
 void playlist_clear_updates ()
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     /* clear updates queued during init sequence */
     for (auto & playlist : playlists)
@@ -632,8 +613,6 @@ void playlist_clear_updates ()
     update_level = Playlist::NoUpdate;
     update_hooks = 0;
     update_state = UpdateState::None;
-
-    LEAVE;
 }
 
 void playlist_end ()
@@ -647,7 +626,7 @@ void playlist_end ()
 
     playlist_cache_clear ();
 
-    ENTER;
+    auto mh = mutex.take ();
 
     /* playback should already be stopped */
     assert (! playing_id);
@@ -663,8 +642,6 @@ void playlist_end ()
     id_table.clear ();
 
     PlaylistData::cleanup_formatter ();
-
-    LEAVE;
 }
 
 EXPORT int Playlist::n_entries () const
@@ -752,29 +729,26 @@ void PlaylistEx::insert_flat_items (int at, Index<PlaylistAddItem> && items) con
 EXPORT int Playlist::index () const
 {
     ENTER_GET_PLAYLIST (-1);
-    int at = m_id->index;
-    RETURN (at);
+    return m_id->index;
 }
 
 EXPORT int PlaylistEx::stamp () const
 {
     ENTER_GET_PLAYLIST (-1);
-    int stamp = m_id->stamp;
-    RETURN (stamp);
+    return m_id->stamp;
 }
 
 EXPORT int Playlist::n_playlists ()
 {
-    ENTER;
-    int count = playlists.len ();
-    RETURN (count);
+    auto mh = mutex.take ();
+    return playlists.len ();
 }
 
 EXPORT Playlist Playlist::by_index (int at)
 {
-    ENTER;
+    auto mh = mutex.take ();
     Playlist::ID * id = (at >= 0 && at < playlists.len ()) ? playlists[at]->id () : nullptr;
-    RETURN (Playlist (id));
+    return Playlist (id);
 }
 
 static Playlist::ID * insert_playlist_locked (int at, int stamp = -1)
@@ -808,25 +782,25 @@ static Playlist::ID * get_blank_locked ()
 
 Playlist PlaylistEx::insert_with_stamp (int at, int stamp)
 {
-    ENTER;
+    auto mh = mutex.take ();
     auto id = insert_playlist_locked (at, stamp);
-    RETURN (Playlist (id));
+    return Playlist (id);
 }
 
 EXPORT Playlist Playlist::insert_playlist (int at)
 {
-    ENTER;
+    auto mh = mutex.take ();
     auto id = insert_playlist_locked (at);
-    RETURN (Playlist (id));
+    return Playlist (id);
 }
 
 EXPORT void Playlist::reorder_playlists (int from, int to, int count)
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     if (from < 0 || from + count > playlists.len () || to < 0 || to +
      count > playlists.len () || count < 0)
-        RETURN ();
+        return;
 
     Index<SmartPtr<PlaylistData>> displaced;
 
@@ -849,7 +823,6 @@ EXPORT void Playlist::reorder_playlists (int from, int to, int count)
     }
 
     queue_global_update (Structure);
-    LEAVE;
 }
 
 EXPORT void Playlist::remove_playlist () const
@@ -879,7 +852,6 @@ EXPORT void Playlist::remove_playlist () const
     }
 
     queue_global_update (Structure);
-    LEAVE;
 }
 
 EXPORT void Playlist::set_filename (const char * filename) const
@@ -890,14 +862,12 @@ EXPORT void Playlist::set_filename (const char * filename) const
     playlist->modified = true;
 
     queue_global_update (Metadata);
-    LEAVE;
 }
 
 EXPORT String Playlist::get_filename () const
 {
     ENTER_GET_PLAYLIST (String ());
-    String filename = playlist->filename;
-    RETURN (filename);
+    return playlist->filename;
 }
 
 EXPORT void Playlist::set_title (const char * title) const
@@ -908,28 +878,24 @@ EXPORT void Playlist::set_title (const char * title) const
     playlist->modified = true;
 
     queue_global_update (Metadata);
-    LEAVE;
 }
 
 EXPORT String Playlist::get_title () const
 {
     ENTER_GET_PLAYLIST (String ());
-    String title = playlist->title;
-    RETURN (title);
+    return playlist->title;
 }
 
 void PlaylistEx::set_modified (bool modified) const
 {
     ENTER_GET_PLAYLIST ();
     playlist->modified = modified;
-    LEAVE;
 }
 
 bool PlaylistEx::get_modified () const
 {
     ENTER_GET_PLAYLIST (false);
-    bool modified = playlist->modified;
-    RETURN (modified);
+    return playlist->modified;
 }
 
 EXPORT void Playlist::activate () const
@@ -941,20 +907,17 @@ EXPORT void Playlist::activate () const
         active_id = m_id;
         queue_update_hooks (SetActive);
     }
-
-    LEAVE;
 }
 
 EXPORT Playlist Playlist::active_playlist ()
 {
-    ENTER;
-    auto id = active_id;
-    RETURN (Playlist (id));
+    auto mh = mutex.take ();
+    return Playlist (active_id);
 }
 
 EXPORT Playlist Playlist::new_playlist ()
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     int at = active_id->index + 1;
     auto id = insert_playlist_locked (at);
@@ -962,7 +925,7 @@ EXPORT Playlist Playlist::new_playlist ()
     active_id = id;
     queue_update_hooks (SetActive);
 
-    RETURN (Playlist (id));
+    return Playlist (id);
 }
 
 static void set_playing_locked (Playlist::ID * id, bool paused)
@@ -1001,33 +964,30 @@ EXPORT void Playlist::start_playback (bool paused) const
 {
     ENTER_GET_PLAYLIST ();
     set_playing_locked (m_id, paused);
-    LEAVE;
 }
 
 EXPORT void aud_drct_stop ()
 {
-    ENTER;
+    auto mh = mutex.take ();
     set_playing_locked (nullptr, false);
-    LEAVE;
 }
 
 EXPORT Playlist Playlist::playing_playlist ()
 {
-    ENTER;
-    auto id = playing_id;
-    RETURN (Playlist (id));
+    auto mh = mutex.take ();
+    return Playlist (playing_id);
 }
 
 EXPORT Playlist Playlist::blank_playlist ()
 {
-    ENTER;
+    auto mh = mutex.take ();
     auto id = get_blank_locked ();
-    RETURN (Playlist (id));
+    return Playlist (id);
 }
 
 EXPORT Playlist Playlist::temporary_playlist ()
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     const char * title = _(temp_title);
     ID * id = nullptr;
@@ -1047,39 +1007,35 @@ EXPORT Playlist Playlist::temporary_playlist ()
         id->data->title = String (title);
     }
 
-    RETURN (Playlist (id));
+    return Playlist (id);
 }
 
 EXPORT PluginHandle * Playlist::entry_decoder (int entry_num, GetMode mode, String * error) const
 {
     ENTER_GET_PLAYLIST (nullptr);
-    wait_for_entry (playlist, entry_num, (mode == Wait), false);
-    PluginHandle * decoder = playlist->entry_decoder (entry_num, error);
-    RETURN (decoder);
+    wait_for_entry (mh, playlist, entry_num, (mode == Wait), false);
+    return playlist->entry_decoder (entry_num, error);
 }
 
 EXPORT Tuple Playlist::entry_tuple (int entry_num, GetMode mode, String * error) const
 {
     ENTER_GET_PLAYLIST (Tuple ());
-    wait_for_entry (playlist, entry_num, false, (mode == Wait));
-    Tuple tuple = playlist->entry_tuple (entry_num, error);
-    RETURN (tuple);
+    wait_for_entry (mh, playlist, entry_num, false, (mode == Wait));
+    return playlist->entry_tuple (entry_num, error);
 }
 
 EXPORT void Playlist::rescan_file (const char * filename)
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     for (auto & playlist : playlists)
         playlist->reset_tuple_of_file (filename);
-
-    LEAVE;
 }
 
 // called from playback thread
 DecodeInfo playback_entry_read (int serial)
 {
-    ENTER;
+    auto mh = mutex.take ();
     DecodeInfo dec;
 
     if (playback_check_serial (serial))
@@ -1093,9 +1049,9 @@ DecodeInfo playback_entry_read (int serial)
         ScanRequest * request = item->request;
         item->handled_by_playback = true;
 
-        LEAVE;
+        mh.unlock ();
         request->run ();
-        ENTER;
+        mh.lock ();
 
         if (playback_check_serial (serial))
         {
@@ -1116,18 +1072,16 @@ DecodeInfo playback_entry_read (int serial)
         delete request;
     }
 
-    RETURN (dec);
+    return dec;
 }
 
 // called from playback thread
 void playback_entry_set_tuple (int serial, Tuple && tuple)
 {
-    ENTER;
+    auto mh = mutex.take ();
 
     if (playback_check_serial (serial))
         playing_id->data->update_playback_entry (std::move (tuple));
-
-    LEAVE;
 }
 
 void playlist_save_state ()
@@ -1136,14 +1090,14 @@ void playlist_save_state ()
     bool paused = aud_drct_get_paused ();
     int time = aud_drct_get_time ();
 
-    ENTER;
+    auto mh = mutex.take ();
 
     const char * user_dir = aud_get_path (AudPath::UserDir);
     StringBuf path = filename_build ({user_dir, STATE_FILE});
 
     FILE * handle = g_fopen (path, "w");
     if (! handle)
-        RETURN ();
+        return;
 
     fprintf (handle, "active %d\n", active_id ? active_id->index : -1);
     fprintf (handle, "playing %d\n", playing_id ? playing_id->index : -1);
@@ -1174,12 +1128,11 @@ void playlist_save_state ()
     }
 
     fclose (handle);
-    LEAVE;
 }
 
 void playlist_load_state ()
 {
-    ENTER;
+    auto mh = mutex.take ();
     int playlist_num;
 
     const char * user_dir = aud_get_path (AudPath::UserDir);
@@ -1187,7 +1140,7 @@ void playlist_load_state ()
 
     FILE * handle = g_fopen (path, "r");
     if (! handle)
-        RETURN ();
+        return;
 
     TextParser parser (handle);
 
@@ -1265,8 +1218,6 @@ void playlist_load_state ()
             playlist->select_entry (focus, true);
         }
     }
-
-    LEAVE;
 }
 
 EXPORT void aud_resume ()

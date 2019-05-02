@@ -145,7 +145,7 @@ public:
         raw (nullptr) {}
 
     ~String ()
-        { raw_unref (raw); }
+        { if (raw) raw_unref (raw); }
 
     String (const String & b) :
         raw (raw_ref (b.raw)) {}
