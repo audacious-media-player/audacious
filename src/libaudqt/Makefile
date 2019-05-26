@@ -5,6 +5,7 @@ LIB_MINOR = 2
 SRCS = about-qt.cc \
        art-qt.cc \
        audqt.cc \
+       colorbutton.cc \
        eq-preset-qt.cc \
        equalizer-qt.cc \
        file-entry.cc \
@@ -28,7 +29,8 @@ SRCS = about-qt.cc \
        treeview.cc \
        volumebutton.cc
 
-INCLUDES = export.h \
+INCLUDES = colorbutton.h \
+           export.h \
            iface.h \
            info-widget.h \
            libaudqt.h \
