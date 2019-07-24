@@ -653,21 +653,16 @@ PrefsWindow::PrefsWindow () :
 
     QObject::connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
 
-    QSignalMapper * mapper = new QSignalMapper (this);
-
-    QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
-                      s_category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
-
     for (int i = 0; i < CATEGORY_COUNT; i ++)
     {
         auto a = new QAction (get_icon (categories[i].icon),
          translate_str (categories[i].name), toolbar);
 
         toolbar->addAction (a);
-        mapper->setMapping (a, i);
 
-        void (QSignalMapper::* slot) () = & QSignalMapper::map;
-        QObject::connect (a, & QAction::triggered, mapper, slot);
+        connect (a, & QAction::triggered, [i] () {
+            s_category_notebook->setCurrentIndex (i);
+        });
     }
 
     output_setup ();
