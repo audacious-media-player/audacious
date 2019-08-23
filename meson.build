@@ -92,7 +92,10 @@ install_plugindir = join_paths(get_option('libdir'), 'audacious')
 install_localedir = get_option('localedir')
 install_desktoppath = join_paths(get_option('datadir'), 'applications')
 install_desktopfile = join_paths(install_desktoppath, 'audacious.desktop')
-install_iconfile = join_paths(get_option('datadir'), 'icons', 'hicolor', '48x48', 'apps', 'audacious.png')
+install_iconpath = join_paths(get_option('datadir'), 'icons')
+install_unscalable_iconpath = join_paths(install_iconpath, 'hicolor', '48x48', 'apps')
+install_scalable_iconpath = join_paths(install_iconpath, 'hicolor', 'scalable', 'apps')
+install_iconfile = join_paths(install_unscalable_iconpath, 'audacious.png')
 
 
 conf.set_quoted('INSTALL_BINDIR', install_bindir)
@@ -118,6 +121,7 @@ endif
 subdir('src')
 subdir('po')
 subdir('man')
+subdir('images')
 
 
 install_data('AUTHORS', 'COPYING')
