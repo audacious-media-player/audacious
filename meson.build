@@ -61,6 +61,7 @@ conf.set_quoted('BUILDSTAMP', '???')
 conf.set_quoted('COPYRIGHT', copyright)
 conf.set_quoted('PACKAGE', meson.project_name())
 conf.set_quoted('VERSION', meson.project_version())
+conf.set('PACKAGE_VERSION', meson.project_version())
 if host_machine.endian() == 'big'
   conf.set10('WORDS_BIGENDIAN', true)
 endif
@@ -89,7 +90,8 @@ install_bindir = get_option('bindir')
 install_datadir = join_paths(get_option('datadir'), 'audacious')
 install_plugindir = join_paths(get_option('libdir'), 'audacious')
 install_localedir = get_option('localedir')
-install_desktopfile = join_paths(get_option('datadir'), 'applications', 'audacious.desktop')
+install_desktoppath = join_paths(get_option('datadir'), 'applications')
+install_desktopfile = join_paths(install_desktoppath, 'audacious.desktop')
 install_iconfile = join_paths(get_option('datadir'), 'icons', 'hicolor', '48x48', 'apps', 'audacious.png')
 
 
@@ -99,6 +101,8 @@ conf.set_quoted('INSTALL_PLUGINDIR', install_plugindir)
 conf.set_quoted('INSTALL_LOCALEDIR', install_localedir)
 conf.set_quoted('INSTALL_DESKTOPFILE', install_desktopfile)
 conf.set_quoted('INSTALL_ICONFILE', install_iconfile)
+conf.set('plugindir', install_plugindir)
+conf.set('datarootdir', get_option('datadir'))
 
 
 if get_option('dbus')
@@ -113,3 +117,31 @@ endif
 
 subdir('src')
 subdir('po')
+subdir('man')
+
+
+install_data('AUTHORS', 'COPYING')
+
+
+install_data('audacious.desktop', install_dir: install_desktoppath)
+
+
+pkg = import('pkgconfig')
+
+# When Meson fixes the utter disappointment that is
+# https://github.com/mesonbuild/meson/issues/5836,
+# use libaudcore_lib as base dependency here.
+pkg.generate(
+  libraries: ['-L${libdir} -laudcore'],
+  variables: [
+    'plugindir=${libdir}/audacious',
+
+    # Appease broken third-party plugin build systems.
+    'audacious_include_dir=${includedir}',
+    'include_dir=${includedir}',
+    'lib_dir=${libdir}'
+  ],
+  description: 'versatile and handy multi platform media player',
+  name: 'audacious',
+  url: 'https://audacious-media-player.org'
+)
