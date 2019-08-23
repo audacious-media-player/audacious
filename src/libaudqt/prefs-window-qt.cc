@@ -1,6 +1,6 @@
 /*
  * prefs-window.cc
- * Copyright 2006-2014 William Pitcock, Tomasz Moń, Michael Färber, and
+ * Copyright 2006-2014 Ariadne Conill, Tomasz Moń, Michael Färber, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without

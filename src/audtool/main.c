@@ -1,6 +1,6 @@
 /*
  * main.c
- * Copyright 2005-2013 George Averill, William Pitcock, Yoshiki Yazawa, and
+ * Copyright 2005-2013 George Averill, Ariadne Conill, Yoshiki Yazawa, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without

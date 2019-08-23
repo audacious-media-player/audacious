@@ -1,6 +1,6 @@
 /*
  * i18n.h
- * Copyright 2007 William Pitcock
+ * Copyright 2007 Ariadne Conill
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

@@ -1,7 +1,7 @@
 /*
  * info-widget.h
  * Copyright 2006-2017 René Bertin, Thomas Lange, John Lindgren,
- *                     William Pitcock, Tomasz Moń, and Eugene Zagidullin
+ *                     Ariadne Conill, Tomasz Moń, and Eugene Zagidullin
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

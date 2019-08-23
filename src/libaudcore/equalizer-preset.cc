@@ -1,6 +1,6 @@
 /*
  * equalizer_preset.c
- * Copyright 2003-2013 Eugene Zagidullin, William Pitcock, John Lindgren, and
+ * Copyright 2003-2013 Eugene Zagidullin, Ariadne Conill, John Lindgren, and
  *                     Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without

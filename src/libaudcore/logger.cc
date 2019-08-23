@@ -1,6 +1,6 @@
 /*
  * logger.cc
- * Copyright 2014 John Lindgren and William Pitcock
+ * Copyright 2014 John Lindgren and Ariadne Conill
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

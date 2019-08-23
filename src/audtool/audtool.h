@@ -1,6 +1,6 @@
 /*
  * audtool.h
- * Copyright 2005-2011 William Pitcock, George Averill, Giacomo Lozito,
+ * Copyright 2005-2011 Ariadne Conill, George Averill, Giacomo Lozito,
  *                     Yoshiki Yazawa, Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without

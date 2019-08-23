@@ -1,6 +1,6 @@
 /*
  * handlers_general.c
- * Copyright 2005-2013 George Averill, William Pitcock, Giacomo Lozito,
+ * Copyright 2005-2013 George Averill, Ariadne Conill, Giacomo Lozito,
  *                     Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without

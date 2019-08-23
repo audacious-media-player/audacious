@@ -1,7 +1,7 @@
 /*
  * id3v22.c
  * Copyright 2009-2014 Paula Stanciu, Tony Vroon, John Lindgren,
- *                     and William Pitcock
+ *                     and Ariadne Conill
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

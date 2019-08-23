@@ -1,6 +1,6 @@
 /*
  * info-widget.h
- * Copyright 2006-2014 William Pitcock, Tomasz Moń, Eugene Zagidullin,
+ * Copyright 2006-2014 Ariadne Conill, Tomasz Moń, Eugene Zagidullin,
  *                     John Lindgren, and Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without

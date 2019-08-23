@@ -1,6 +1,6 @@
 /*
  * vfs.h
- * Copyright 2006-2013 William Pitcock, Daniel Barkalow, Ralf Ertzinger,
+ * Copyright 2006-2013 Ariadne Conill, Daniel Barkalow, Ralf Ertzinger,
  *                     Yoshiki Yazawa, Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without

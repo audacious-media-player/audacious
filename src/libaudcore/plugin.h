@@ -1,6 +1,6 @@
 /*
  * plugin.h
- * Copyright 2005-2013 William Pitcock, Yoshiki Yazawa, Eugene Zagidullin, and
+ * Copyright 2005-2013 Ariadne Conill, Yoshiki Yazawa, Eugene Zagidullin, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without

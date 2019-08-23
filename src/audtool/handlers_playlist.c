@@ -1,6 +1,6 @@
 /*
  * handlers_playlist.c
- * Copyright 2005-2013 George Averill, William Pitcock, Yoshiki Yazawa,
+ * Copyright 2005-2013 George Averill, Ariadne Conill, Yoshiki Yazawa,
  *                     Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without

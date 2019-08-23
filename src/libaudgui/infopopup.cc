@@ -1,6 +1,6 @@
 /*
  * infopopup.c
- * Copyright 2006-2012 William Pitcock, Giacomo Lozito, John Lindgren, and
+ * Copyright 2006-2012 Ariadne Conill, Giacomo Lozito, John Lindgren, and
  *                     Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without

@@ -1,6 +1,6 @@
 /*
  * infowin.c
- * Copyright 2006-2013 William Pitcock, Tomasz Moń, Eugene Zagidullin,
+ * Copyright 2006-2013 Ariadne Conill, Tomasz Moń, Eugene Zagidullin,
  *                     John Lindgren, and Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without

@@ -1,6 +1,6 @@
 /*
  * report.c
- * Copyright 2007-2008 William Pitcock and Matti Hämäläinen
+ * Copyright 2007-2008 Ariadne Conill and Matti Hämäläinen
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
