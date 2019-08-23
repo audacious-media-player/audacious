@@ -112,3 +112,4 @@ endif
 
 
 subdir('src')
+subdir('po')
