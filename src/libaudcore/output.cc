@@ -192,7 +192,7 @@ static void cleanup_output (UnsafeLock & lock)
 
     // avoid locking up if the input thread reaches close_audio() while
     // paused (unlikely but possible with perfect timing)
-    if (! state.paused ())
+    if (out_bytes_written && ! state.paused ())
     {
         lock.minor.unlock ();
         cop->drain ();
@@ -427,7 +427,7 @@ static void write_output (UnsafeLock & lock, Index<float> & data)
 
     out_bytes_held = FMT_SIZEOF (out_format) * data.len ();
 
-    while (! state.flushed () && ! state.resetting ())
+    while (out_bytes_held && ! state.resetting ())
     {
         if (state.paused ())
         {
