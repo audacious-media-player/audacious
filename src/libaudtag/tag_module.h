@@ -37,6 +37,7 @@ protected:
     constexpr TagModule (const char * name, TagType type) :
         m_name (name),
         m_type (type) {}
+    virtual ~TagModule() = default;
 };
 
 TagModule * find_tag_module (VFSFile & handle, TagType new_type);
