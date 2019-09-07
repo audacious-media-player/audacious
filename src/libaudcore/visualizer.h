@@ -34,6 +34,7 @@ public:
     const int type_mask;
     constexpr Visualizer (int type_mask) :
         type_mask (type_mask) {}
+    virtual ~Visualizer () = default;
 
     /* reset internal state and clear display */
     virtual void clear () = 0;
