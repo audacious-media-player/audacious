@@ -172,6 +172,9 @@ public:
     static Index<char> read_file (const char * filename, VFSReadOptions options);
     static bool write_file (const char * filename, const void * data, int64_t len);
 
+    /* returns a list of supported URI schemes */
+    static Index<const char *> supported_uri_schemes ();
+
 private:
     String m_filename, m_error;
     SmartPtr<VFSImpl> m_impl;

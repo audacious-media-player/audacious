@@ -417,3 +417,26 @@ EXPORT bool VFSFile::write_file (const char * filename, const void * data, int64
 
     return written;
 }
+
+EXPORT Index<const char *> VFSFile::supported_uri_schemes ()
+{
+    Index<const char *> schemes;
+
+    schemes.append ("file");
+    schemes.append ("stdin");
+
+    for (PluginHandle * plugin : aud_plugin_list (PluginType::Transport))
+    {
+        if (! aud_plugin_get_enabled (plugin))
+            continue;
+
+        auto tp = (TransportPlugin *) aud_plugin_get_header (plugin);
+
+        for (auto scheme : tp->schemes)
+            schemes.append (scheme);
+    }
+
+    schemes.append ((char *) nullptr);
+
+    return schemes;
+}
