@@ -65,4 +65,6 @@ typedef bool (* PluginWatchFunc) (PluginHandle * plugin, void * data);
 void aud_plugin_add_watch (PluginHandle * plugin, PluginWatchFunc func, void * data);
 void aud_plugin_remove_watch (PluginHandle * plugin, PluginWatchFunc func, void * data);
 
+Index<const char *> aud_plugin_get_supported_mime_types ();
+
 #endif

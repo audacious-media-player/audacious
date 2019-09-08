@@ -742,3 +742,18 @@ bool input_plugin_can_write_tuple (PluginHandle * plugin)
 {
     return plugin->writes_tag;
 }
+
+EXPORT Index<const char *> aud_plugin_get_supported_mime_types ()
+{
+    Index<const char *> mimes;
+
+    for (PluginHandle * p : aud_plugin_list (PluginType::Input))
+    {
+        for (auto k : p->keys[InputKey::MIME])
+            mimes.append ((const char *) k);
+    }
+
+    mimes.append (nullptr);
+
+    return mimes;
+}
