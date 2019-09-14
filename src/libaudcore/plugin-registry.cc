@@ -690,6 +690,11 @@ EXPORT void aud_plugin_remove_watch (PluginHandle * plugin, PluginWatchFunc func
     plugin->watches.remove_if (is_match);
 }
 
+const Index<String> & transport_plugin_get_schemes (PluginHandle * plugin)
+{
+    return plugin->schemes;
+}
+
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme)
 {
     for (String & s : plugin->schemes)

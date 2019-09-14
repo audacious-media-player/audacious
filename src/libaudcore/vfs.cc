@@ -430,13 +430,11 @@ EXPORT Index<const char *> VFSFile::supported_uri_schemes ()
         if (! aud_plugin_get_enabled (plugin))
             continue;
 
-        auto tp = (TransportPlugin *) aud_plugin_get_header (plugin);
-
-        for (auto scheme : tp->schemes)
-            schemes.append (scheme);
+        for (auto s : transport_plugin_get_schemes (plugin))
+            schemes.append ((const char *) s);
     }
 
-    schemes.append ((char *) nullptr);
+    schemes.append (nullptr);
 
     return schemes;
 }

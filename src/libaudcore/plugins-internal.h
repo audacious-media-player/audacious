@@ -57,6 +57,7 @@ PluginEnabled plugin_get_enabled (PluginHandle * plugin);
 void plugin_set_enabled (PluginHandle * plugin, PluginEnabled enabled);
 void plugin_set_failed (PluginHandle * plugin);
 
+const Index<String> & transport_plugin_get_schemes (PluginHandle * plugin);
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme);
 bool playlist_plugin_can_save (PluginHandle * plugin);
 const Index<String> & playlist_plugin_get_exts (PluginHandle * plugin);
