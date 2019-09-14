@@ -749,6 +749,9 @@ EXPORT Index<const char *> aud_plugin_get_supported_mime_types ()
 
     for (PluginHandle * p : aud_plugin_list (PluginType::Input))
     {
+        if (! aud_plugin_get_enabled (p))
+            continue;
+
         for (auto k : p->keys[InputKey::MIME])
             mimes.append ((const char *) k);
     }
