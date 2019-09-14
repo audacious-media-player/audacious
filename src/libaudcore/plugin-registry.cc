@@ -761,6 +761,17 @@ EXPORT Index<const char *> aud_plugin_get_supported_mime_types ()
             mimes.append ((const char *) k);
     }
 
+    /* sort and remove duplicates */
+    mimes.sort (strcmp);
+
+    int len = mimes.len ();
+    for (int i = 0; i + 1 < len; i ++)
+    {
+        if (! strcmp (mimes[i], mimes[i + 1]))
+            mimes[i] = nullptr;
+    }
+
+    mimes.remove_if ([] (const char * m) { return m == nullptr; });
     mimes.append (nullptr);
 
     return mimes;
