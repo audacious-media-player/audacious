@@ -117,7 +117,6 @@ public:
     constexpr Plugin (PluginType type, PluginInfo info) :
         type (type),
         info (info) {}
-    virtual ~Plugin() = default;
 
     const int magic = _AUD_PLUGIN_MAGIC;
     const int version = _AUD_PLUGIN_VERSION;
