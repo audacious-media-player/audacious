@@ -762,7 +762,8 @@ EXPORT Index<const char *> aud_plugin_get_supported_mime_types ()
     }
 
     /* sort and remove duplicates */
-    mimes.sort (strcmp);
+    /* lambda needed to avoid -Wnoexcept-type with GCC */
+    mimes.sort ([] (const char * a, const char * b) { return strcmp (a, b); });
 
     int len = mimes.len ();
     for (int i = 0; i + 1 < len; i ++)
