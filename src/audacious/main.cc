@@ -199,9 +199,7 @@ static void do_remote ()
     ObjAudacious * obj = nullptr;
     GError * error = nullptr;
 
-#if ! GLIB_CHECK_VERSION (2, 36, 0)
     g_type_init ();
-#endif
 
     /* check whether the selected instance is running */
     if (dbus_server_init () != StartupType::Client)

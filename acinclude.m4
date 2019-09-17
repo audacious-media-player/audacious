@@ -177,6 +177,9 @@ dnl =======================
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.32)
 PKG_CHECK_MODULES(GMODULE, gmodule-2.0 >= 2.32)
 
+AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_32], [target GLib 2.32])
+AC_DEFINE([GLIB_VERSION_MAX_ALLOWED], [GLIB_VERSION_2_32], [target GLib 2.32])
+
 dnl GTK+ support
 dnl =============
 
@@ -186,7 +189,7 @@ AC_ARG_ENABLE(gtk,
 
 if test $USE_GTK = yes ; then
     PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.24)
-    AC_DEFINE(USE_GTK, 1, [Define if GTK+ support enabled])
+    AC_DEFINE([USE_GTK], [1], [Define if GTK+ support enabled])
 fi
 
 AC_SUBST(USE_GTK)
@@ -217,7 +220,7 @@ if test $USE_QT = yes ; then
     PKG_CHECK_MODULES([QTCORE], [Qt5Core >= 5.2])
     PKG_CHECK_VAR([QTBINPATH], [Qt5Core >= 5.2], [host_bins])
     PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets >= 5.2])
-    AC_DEFINE(USE_QT, 1, [Define if Qt support enabled])
+    AC_DEFINE([USE_QT], [1], [Define if Qt support enabled])
 
     # needed if Qt was built with -reduce-relocations
     QTCORE_CFLAGS="$QTCORE_CFLAGS -fPIC"
