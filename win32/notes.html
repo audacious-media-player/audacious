@@ -24,7 +24,7 @@ April 13, 2017</em></p>
 
 <p>Edit <tt>C:\msys32\home\&lt;user&gt;\.bashrc</tt> and add the following lines:</p>
 <blockquote><p><tt>export PATH="$PATH:/C/cmake/bin:/C/GTK/bin:/C/libs/bin:/C/aud/bin"<br>
-export PKG_CONFIG_PATH=/C/GTK/lib/pkgconfig:/C/libs/lib/pkgconfig:/C/aud/lib/pkgconfig<br>
+export PKG_CONFIG_PATH=/C/Qt/5.12.5/mingw73_32/lib/pkgconfig:/C/GTK/lib/pkgconfig:/C/libs/lib/pkgconfig:/C/aud/lib/pkgconfig<br>
 export C_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
 export CPLUS_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
 export LIBRARY_PATH=/C/GTK/lib:/C/libs/lib</tt></p></blockquote>
@@ -41,6 +41,17 @@ pacman -S autoconf automake bison gperf libtool mingw-w64-i686-gcc mingw-w64-i68
 <tt>https://cmake.org/files/v3.8/cmake-3.8.2-win32-x86.msi</tt></a></p>
 
 <p>Install to <tt>C:\cmake</tt>.</p>
+
+<h3>Install Qt (for Qt builds)</h3>
+
+<p>Download and run (choose another mirror if desired):<br>
+<a href="http://qt.mirror.constant.com/archive/online_installers/3.1/qt-unified-windows-x86-3.1.1-online.exe">
+<tt>http://qt.mirror.constant.com/archive/online_installers/3.1/qt-unified-windows-x86-3.1.1-online.exe</tt></a></p>
+
+<p>Choose the following install options:<br>
+<ul><li>Skip the Qt account login page</li>
+<li>Use the default installation path (<tt>C:\Qt</tt>)</li>
+<li>Install Qt 5.12.5 for MinGW 7.3.0 32-bit</li></ul></p>
 
 <h3>Install libpng</h3>
 

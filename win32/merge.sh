@@ -10,6 +10,8 @@ for i in `find -type f` ; do
         cp /C/audacious/win32/override/$i $i
     elif test -f /C/msys32/mingw32/$i ; then
         cp /C/msys32/mingw32/$i $i
+    elif test -f /C/Qt/5.12.5/mingw73_32/$i ; then
+        cp /C/Qt/5.12.5/mingw73_32/$i $i
     elif test -f /C/GTK/$i ; then
         cp /C/GTK/$i $i
     elif test -f /C/libs/$i ; then
