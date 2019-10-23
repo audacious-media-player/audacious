@@ -50,7 +50,7 @@ static struct {
     int mainwin, show_jump_box;
     int headless, quit_after_play;
     int verbose;
-    int qt;
+    int gtk;
 } options;
 
 static bool initted = false;
@@ -78,7 +78,7 @@ static const struct {
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
     {"verbose", 'V', & options.verbose, N_("Print debugging messages (may be used twice)")},
 #if defined(USE_QT) && defined(USE_GTK)
-    {"qt", 'Q', & options.qt, N_("Run in Qt mode")},
+    {"gtk", 'G', & options.gtk, N_("Run in GTK mode")},
 #endif
 };
 
@@ -171,8 +171,8 @@ static bool parse_options (int argc, char * * argv)
     else if (options.verbose)
         audlog::set_stderr_level (audlog::Info);
 
-    if (options.qt)
-        aud_set_mainloop_type (MainloopType::Qt);
+    if (options.gtk)
+        aud_set_mainloop_type (MainloopType::GLib);
 
     return true;
 }

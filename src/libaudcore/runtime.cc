@@ -67,10 +67,10 @@ size_t misc_bytes_allocated;
 static bool headless_mode;
 static int instance_number = 1;
 
-#if defined(USE_QT) && ! defined(USE_GTK)
-static MainloopType mainloop_type = MainloopType::Qt;
-#else
+#if defined(USE_GTK) && ! defined(USE_QT)
 static MainloopType mainloop_type = MainloopType::GLib;
+#else
+static MainloopType mainloop_type = MainloopType::Qt;
 #endif
 
 static aud::array<AudPath, String> aud_paths;
