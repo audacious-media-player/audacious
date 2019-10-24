@@ -59,25 +59,30 @@ private:
 
 static QGradientStops get_stops (const QColor & base)
 {
-    QColor mid = QColor (64, 64, 64);
-    QColor dark = QColor (38, 38, 38);
-    QColor darker = QColor (26, 26, 26);
+    constexpr int s[4] = {40, 28, 16, 24};
+
+    QColor c[4];
+    for (int i = 0; i < 4; i ++)
+        c[i] = QColor (s[i], s[i], s[i]);
 
     /* In a dark theme, try to match the tone of the base color */
     int v = base.value ();
     if (v >= 10 && v < 80)
     {
         int r = base.red (), g = base.green (), b = base.blue ();
-        mid = QColor (r * 64 / v, g * 64 / v, b * 64 / v);
-        dark = QColor (r * 38 / v, g * 38 / v, b * 38 / v);
-        darker = QColor (r * 26 / v, g * 26 / v, b * 26 / v);
+        for (int i = 0; i < 4; i ++)
+        {
+            c[i] = QColor (r * s[i] / v,
+                           g * s[i] / v,
+                           b * s[i] / v);
+        }
     }
 
     return {
-        {0, mid},
-        {0.499, dark},
-        {0.5, darker},
-        {1, Qt::black}
+        {0, c[0]},
+        {0.45, c[1]},
+        {0.55, c[2]},
+        {1, c[3]}
     };
 }
 
