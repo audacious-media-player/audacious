@@ -1,5 +1,5 @@
 project('audacious', 'c', 'cpp',
-        version: '3.11-devel',
+        version: '4.0-devel',
         meson_version: '>= 0.50')
 
 
