@@ -124,6 +124,52 @@ EXPORT QIcon get_icon (const char * name)
     return icon;
 }
 
+EXPORT QGradientStops dark_bg_gradient (const QColor & base)
+{
+    constexpr int s[4] = {40, 28, 16, 24};
+
+    QColor c[4];
+    for (int i = 0; i < 4; i ++)
+        c[i] = QColor (s[i], s[i], s[i]);
+
+    /* in a dark theme, try to match the tone of the base color */
+    int v = base.value ();
+    if (v >= 10 && v < 80)
+    {
+        int r = base.red (),
+            g = base.green (),
+            b = base.blue ();
+
+        for (int i = 0; i < 4; i ++)
+        {
+            c[i] = QColor (r * s[i] / v,
+                           g * s[i] / v,
+                           b * s[i] / v);
+        }
+    }
+
+    return {
+        {0, c[0]},
+        {0.45, c[1]},
+        {0.55, c[2]},
+        {1, c[3]}
+    };
+}
+
+EXPORT QColor vis_bar_color (const QColor & hue, int bar, int n_bars)
+{
+    qreal h, s, v;
+    hue.getHsvF (& h, & s, & v);
+
+    if (s < 0.1) /* monochrome? use blue instead */
+        h = 0.67;
+
+    s = 1 - 0.9 * bar / (n_bars - 1);
+    v = 0.75 + 0.25 * bar / (n_bars - 1);
+
+    return QColor::fromHsvF (h, s, v);
+}
+
 EXPORT QHBoxLayout * make_hbox (QWidget * parent, int spacing)
 {
     auto layout = new QHBoxLayout (parent);

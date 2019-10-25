@@ -57,38 +57,9 @@ private:
     bool m_queued = false;
 };
 
-static QGradientStops get_stops (const QColor & base)
-{
-    constexpr int s[4] = {40, 28, 16, 24};
-
-    QColor c[4];
-    for (int i = 0; i < 4; i ++)
-        c[i] = QColor (s[i], s[i], s[i]);
-
-    /* In a dark theme, try to match the tone of the base color */
-    int v = base.value ();
-    if (v >= 10 && v < 80)
-    {
-        int r = base.red (), g = base.green (), b = base.blue ();
-        for (int i = 0; i < 4; i ++)
-        {
-            c[i] = QColor (r * s[i] / v,
-                           g * s[i] / v,
-                           b * s[i] / v);
-        }
-    }
-
-    return {
-        {0, c[0]},
-        {0.45, c[1]},
-        {0.55, c[2]},
-        {1, c[3]}
-    };
-}
-
 InfoPopup::InfoPopup (const String & filename, const Tuple & tuple) :
     m_filename (filename),
-    m_stops (get_stops (palette ().color (QPalette::Window)))
+    m_stops (dark_bg_gradient (palette ().color (QPalette::Window)))
 {
     setWindowFlags (Qt::ToolTip);
 

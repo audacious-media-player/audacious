@@ -90,8 +90,7 @@ void fileopener_show (FileMode mode);
 /* url-opener.cc */
 void urlopener_show (bool open);
 
-/* util.cc */
-
+/* audqt.cc */
 extern const PixelSizes & sizes;
 extern const PixelMargins & margins;
 
@@ -106,6 +105,9 @@ void quit ();
 void cleanup ();
 
 QIcon get_icon (const char * name);
+
+QGradientStops dark_bg_gradient (const QColor & base);
+QColor vis_bar_color (const QColor & hue, int bar, int n_bars);
 
 QHBoxLayout * make_hbox (QWidget * parent, int spacing = sizes.FourPt);
 QVBoxLayout * make_vbox (QWidget * parent, int spacing = sizes.FourPt);
