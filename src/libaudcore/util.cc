@@ -1,6 +1,6 @@
 /*
  * util.c
- * Copyright 2009-2013 John Lindgren and Michał Lipski
+ * Copyright 2009-2019 John Lindgren and Michał Lipski
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -18,8 +18,10 @@
  */
 
 #include "internal.h"
+#include "visualizer.h"
 
 #include <errno.h>
+#include <math.h>
 #include <stdint.h>
 #include <string.h>
 #include <unistd.h>
@@ -161,4 +163,36 @@ unsigned ptr_hash (const void * ptr)
     unsigned addr_low = (uint64_t) (uintptr_t) ptr;
     unsigned addr_high = (uint64_t) (uintptr_t) ptr >> 32;
     return int32_hash (addr_low + addr_high);
+}
+
+EXPORT void Visualizer::compute_log_xscale (float * xscale, int bands)
+{
+    for (int i = 0; i <= bands; i ++)
+        xscale[i] = powf (256, (float) i / bands) - 0.5f;
+}
+
+EXPORT float Visualizer::compute_freq_band (const float * freq, const float * xscale,
+                                            int band, int bands)
+{
+    int a = ceilf (xscale[band]);
+    int b = floorf (xscale[band + 1]);
+    float n = 0;
+
+    if (b < a)
+        n += freq[b] * (xscale[band + 1] - xscale[band]);
+    else
+    {
+        if (a > 0)
+            n += freq[a - 1] * (a - xscale[band]);
+        for (; a < b; a ++)
+            n += freq[a];
+        if (b < 256)
+            n += freq[b] * (xscale[band + 1] - b);
+    }
+
+    /* fudge factor to make the graph have the same overall height as a
+       12-band one no matter how many bands there are */
+    n *= (float) bands / 12;
+
+    return 20 * log10f (n);
 }

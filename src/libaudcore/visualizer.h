@@ -46,6 +46,11 @@ public:
 
     /* intensity of frequencies 1/512, 2/512, ..., 256/512 of sample rate */
     virtual void render_freq (const float * freq) {}
+
+    /* common math for rendering a frequency graph (see util.cc) */
+    static void compute_log_xscale (float * xscale, int bands);
+    static float compute_freq_band (const float * freq, const float * xscale,
+                                    int band, int bands);
 };
 
 #endif /* LIBAUDCORE_VISUALIZER_H */
