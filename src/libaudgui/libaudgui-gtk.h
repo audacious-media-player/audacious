@@ -88,4 +88,8 @@ GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2);
 void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget);
 
+cairo_pattern_t * audgui_dark_bg_gradient (const GdkColor & base, int height);
+void audgui_vis_bar_color (const GdkColor & hue, int bar, int n_bars,
+                           float & r, float & g, float & b);
+
 #endif

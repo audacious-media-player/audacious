@@ -109,32 +109,14 @@ static void infopopup_realized (GtkWidget * widget)
     infopopup_move_to_mouse (widget);
 }
 
-/* borrowed from the gtkui infoarea */
 static gboolean infopopup_draw_bg (GtkWidget * widget)
 {
-    double r = 1, g = 1, b = 1;
-
-    /* In a dark theme, try to match the tone of the base color */
-    auto & c = (gtk_widget_get_style (widget))->base[GTK_STATE_NORMAL];
-    int v = aud::max (aud::max (c.red, c.green), c.blue);
-
-    if (v >= 10*256 && v < 80*256)
-    {
-        r = (double)c.red / v;
-        g = (double)c.green / v;
-        b = (double)c.blue / v;
-    }
-
     GtkAllocation alloc;
     gtk_widget_get_allocation (widget, & alloc);
 
     cairo_t * cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-    cairo_pattern_t * gradient = cairo_pattern_create_linear (0, 0, 0, alloc.height);
-    cairo_pattern_add_color_stop_rgb (gradient, 0, 0.25 * r, 0.25 * g, 0.25 * b);
-    cairo_pattern_add_color_stop_rgb (gradient, 0.5, 0.15 * r, 0.15 * g, 0.15 * b);
-    cairo_pattern_add_color_stop_rgb (gradient, 0.5, 0.1 * r, 0.1 * g, 0.1 * b);
-    cairo_pattern_add_color_stop_rgb (gradient, 1, 0, 0, 0);
+    auto & c = (gtk_widget_get_style (widget))->base[GTK_STATE_NORMAL];
+    cairo_pattern_t * gradient = audgui_dark_bg_gradient (c, alloc.height);
 
     cairo_set_source (cr, gradient);
     cairo_rectangle (cr, 0, 0, alloc.width, alloc.height);

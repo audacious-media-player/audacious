@@ -303,3 +303,92 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
         gtk_widget_show_all (* widget);
     }
 }
+
+EXPORT cairo_pattern_t * audgui_dark_bg_gradient (const GdkColor & base, int height)
+{
+    float r = 1, g = 1, b = 1;
+
+    /* in a dark theme, try to match the tone of the base color */
+    int v = aud::max (aud::max (base.red, base.green), base.blue);
+
+    if (v >= 10*256 && v < 80*256)
+    {
+        r = (float) base.red / v;
+        g = (float) base.green / v;
+        b = (float) base.blue / v;
+    }
+
+    cairo_pattern_t * gradient = cairo_pattern_create_linear (0, 0, 0, height);
+    cairo_pattern_add_color_stop_rgb (gradient, 0, 0.16 * r, 0.16 * g, 0.16 * b);
+    cairo_pattern_add_color_stop_rgb (gradient, 0.45, 0.11 * r, 0.11 * g, 0.11 * b);
+    cairo_pattern_add_color_stop_rgb (gradient, 0.55, 0.06 * r, 0.06 * g, 0.06 * b);
+    cairo_pattern_add_color_stop_rgb (gradient, 1, 0.09 * r, 0.09 * g, 0.09 * b);
+    return gradient;
+}
+
+static void rgb_to_hsv (float r, float g, float b, float * h, float * s, float * v)
+{
+    float max = aud::max (aud::max (r, g), b);
+    float min = aud::min (aud::min (r, g), b);
+
+    * v = max;
+
+    if (max == min)
+    {
+        * h = 0;
+        * s = 0;
+        return;
+    }
+
+    if (r == max)
+        * h = 1 + (g - b) / (max - min);
+    else if (g == max)
+        * h = 3 + (b - r) / (max - min);
+    else
+        * h = 5 + (r - g) / (max - min);
+
+    * s = (max - min) / max;
+}
+
+static void hsv_to_rgb (float h, float s, float v, float * r, float * g, float * b)
+{
+    for (; h >= 2; h -= 2)
+    {
+        float * p = r;
+        r = g;
+        g = b;
+        b = p;
+    }
+
+    if (h < 1)
+    {
+        * r = 1;
+        * g = 0;
+        * b = 1 - h;
+    }
+    else
+    {
+        * r = 1;
+        * g = h - 1;
+        * b = 0;
+    }
+
+    * r = v * (1 - s * (1 - * r));
+    * g = v * (1 - s * (1 - * g));
+    * b = v * (1 - s * (1 - * b));
+}
+
+EXPORT void audgui_vis_bar_color (const GdkColor & hue, int bar, int n_bars,
+                                  float & r, float & g, float & b)
+{
+    float h, s, v;
+    rgb_to_hsv (hue.red / 65535.0, hue.green / 65535.0, hue.blue / 65535.0, & h, & s, & v);
+
+    if (s < 0.1) /* monochrome theme? use blue instead */
+        h = 4.6;
+
+    s = 1 - 0.9 * bar / (n_bars - 1);
+    v = 0.75 + 0.25 * bar / (n_bars - 1);
+
+    hsv_to_rgb (h, s, v, & r, & g, & b);
+}
