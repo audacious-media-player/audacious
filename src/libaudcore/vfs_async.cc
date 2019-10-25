@@ -26,17 +26,14 @@
 struct QueuedData : public ListNode
 {
     const String filename;
-    const VFSConsumer cons_f;
-    void * const user;
+    const VFSConsumer2 cons_f;
 
     std::thread thread;
-
     Index<char> buf;
 
-    QueuedData (const char * filename, VFSConsumer cons_f, void * user) :
+    QueuedData (const char * filename, VFSConsumer2 cons_f) :
         filename (filename),
-        cons_f (cons_f),
-        user (user) {}
+        cons_f (cons_f) {}
 };
 
 static QueuedFunc queued_func;
@@ -55,7 +52,7 @@ static void send_data (void *)
         mh.unlock ();
 
         data->thread.join ();
-        data->cons_f (data->filename, data->buf, data->user);
+        data->cons_f (data->filename, data->buf);
         delete data;
 
         mh.lock ();
@@ -76,8 +73,16 @@ static void read_worker (QueuedData * data)
     queue.append (data);
 }
 
+EXPORT void vfs_async_file_get_contents (const char * filename, VFSConsumer2 cons_f)
+{
+    auto data = new QueuedData (filename, cons_f);
+    data->thread = std::thread (read_worker, data);
+}
+
 EXPORT void vfs_async_file_get_contents (const char * filename, VFSConsumer cons_f, void * user)
 {
-    auto data = new QueuedData (filename, cons_f, user);
-    data->thread = std::thread (read_worker, data);
+    auto functor = [cons_f, user] (const char * filename, const Index<char> & buf)
+        { cons_f (filename, buf, user); };
+
+    vfs_async_file_get_contents (filename, functor);
 }
