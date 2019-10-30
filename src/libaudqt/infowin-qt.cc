@@ -111,6 +111,7 @@ private:
     QLabel m_image;
     TextWidget m_uri_label;
     InfoWidget m_infowidget;
+    QLabel m_hint_icon, m_hint_text;
 
     void displayImage (const char * filename);
 
@@ -137,9 +138,23 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     left_vbox->setStretch (0, 1);
     left_vbox->setStretch (1, 0);
 
+    int size = style ()->pixelMetric (QStyle::PM_SmallIconSize);
+    m_hint_icon.setPixmap (get_icon ("dialog-information").pixmap (size));
+    m_hint_text.setText (_("Click on a value and press Ctrl+C to copy.\n"
+                           "Click on a value twice to edit."));
+
+    auto hint_hbox = make_hbox (nullptr);
+    hint_hbox->addWidget (& m_hint_icon);
+    hint_hbox->addWidget (& m_hint_text);
+    hint_hbox->addStretch (1);
+
+    auto right_vbox = make_vbox (nullptr);
+    right_vbox->addWidget (& m_infowidget);
+    right_vbox->addLayout (hint_hbox);
+
     auto hbox = make_hbox (nullptr);
     hbox->addLayout (left_vbox);
-    hbox->addWidget (& m_infowidget);
+    hbox->addLayout (right_vbox);
 
     auto vbox = make_vbox (this);
     vbox->addLayout (hbox);
