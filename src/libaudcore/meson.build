@@ -89,6 +89,11 @@ libaudcore_headers = [
 ]
 
 
+audio_h = configure_file(input: 'audio.h.in',
+  output: 'audio.h',
+  configuration: conf)
+
+
 libaudcore_deps = [glib_dep, gmodule_dep]
 
 if get_option('qt')
