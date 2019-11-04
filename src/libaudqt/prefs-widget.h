@@ -37,18 +37,6 @@ class QSpinBox;
 
 namespace audqt {
 
-/*
- * basic idea is this.  create classes which wrap the PreferencesWidgets.
- * Each should have it's own get(), set() and widget() methods.  those are the
- * functions that we really care about.
- * get() and set() allow for introspection and manipulation of the underlying
- * objects.  they also handle pinging the plugin which owns the PreferencesWidget,
- * i.e. calling PreferencesWidget::callback().
- * widget() builds the actual Qt side of the widget, hooks up the relevant signals
- * to slots, etc.  the result of widget() is not const as it is linked into a
- * layout manager or shown or whatever.
- */
-
 /* base class which provides plumbing for hooks. */
 class HookableWidget {
 public:
