@@ -119,6 +119,15 @@ private:
     QLineEdit * m_lineedit;
 };
 
+/* file widget (audqt::FileEntry) */
+class FileWidget : public QWidget, HookableWidget {
+public:
+    FileWidget (const PreferencesWidget * parent, const char * domain);
+private:
+    void update ();
+    QLineEdit * m_lineedit;
+};
+
 /* font widget (audqt::FontEntry) */
 class FontWidget : public QWidget, HookableWidget {
 public:
