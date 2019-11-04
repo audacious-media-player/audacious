@@ -7,6 +7,7 @@ libaudqt_sources = [
   'equalizer-qt.cc',
   'file-entry.cc',
   'fileopener.cc',
+  'font-entry.cc',
   'infopopup-qt.cc',
   'infowin-qt.cc',
   'info-widget.cc',

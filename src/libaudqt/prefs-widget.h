@@ -131,6 +131,15 @@ private:
     QLineEdit * m_lineedit;
 };
 
+/* font widget (audqt::FontEntry) */
+class FontWidget : public QWidget, HookableWidget {
+public:
+    FontWidget (const PreferencesWidget * parent, const char * domain);
+private:
+    void update ();
+    QLineEdit * m_lineedit;
+};
+
 /* combo box (string or int) */
 class ComboBoxWidget : public QWidget, HookableWidget {
 public:

@@ -213,6 +213,31 @@ void StringWidget::update ()
     m_lineedit->setText ((const char *) m_parent->cfg.get_string ());
 }
 
+/* font widget (audqt::FontEntry) */
+FontWidget::FontWidget (const PreferencesWidget * parent, const char * domain) :
+    HookableWidget (parent, domain),
+    m_lineedit (font_entry_new (this, nullptr))
+{
+    auto layout = make_hbox (this);
+
+    if (parent->label)
+        layout->addWidget (new QLabel (translate_str (parent->label, domain)));
+
+    layout->addWidget (m_lineedit, 1);
+
+    update ();
+
+    QObject::connect (m_lineedit, & QLineEdit::textChanged, [this] (const QString & value) {
+        if (! m_updating)
+            m_parent->cfg.set_string (value.toUtf8 ());
+    });
+}
+
+void FontWidget::update ()
+{
+    m_lineedit->setText ((const char *) m_parent->cfg.get_string ());
+}
+
 /* combo box widget (string or int) */
 ComboBoxWidget::ComboBoxWidget (const PreferencesWidget * parent, const char * domain) :
     HookableWidget (parent, domain),

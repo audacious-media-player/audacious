@@ -151,8 +151,11 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
         case PreferencesWidget::Entry:
         /* TODO: implement file chooser and font selector */
         case PreferencesWidget::FileEntry:
-        case PreferencesWidget::FontButton:
             layout->addWidget (new StringWidget (& w, domain));
+            break;
+
+        case PreferencesWidget::FontButton:
+            layout->addWidget (new FontWidget (& w, domain));
             break;
 
         case PreferencesWidget::RadioButton:

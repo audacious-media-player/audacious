@@ -10,6 +10,7 @@ SRCS = about-qt.cc \
        equalizer-qt.cc \
        file-entry.cc \
        fileopener.cc \
+       font-entry.cc \
        images.cc \
        infopopup-qt.cc \
        infowin-qt.cc \
