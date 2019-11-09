@@ -107,6 +107,7 @@ static const TitleFieldTag title_field_tags[] = {
     { N_("File name")   , "${file-name}" },
     { N_("File path")   , "${file-path}" },
     { N_("Date")        , "${date}" },
+    { N_("Description") , "${description}" },
     { N_("Year")        , "${year}" },
     { N_("Comment")     , "${comment}" },
     { N_("Codec")       , "${codec}" },
