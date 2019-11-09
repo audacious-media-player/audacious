@@ -54,7 +54,7 @@ private:
 };
 
 /* parse a subset of Pango font descriptions */
-static QFont * qfont_from_string (const char * name)
+static QFont qfont_from_string (const char * name)
 {
     auto family = str_copy (name);
     int size = 0;
@@ -95,24 +95,22 @@ static QFont * qfont_from_string (const char * name)
 
         if (! attr_found)
         {
-            auto font = new QFont ((const char *) family);
+            QFont font ((const char *) family);
 
             /* check for a recognized font family */
-            if (! space || font->exactMatch ())
+            if (! space || font.exactMatch ())
             {
                 if (size > 0)
-                    font->setPointSize (size);
+                    font.setPointSize (size);
                 if (weight != QFont::Normal)
-                    font->setWeight (weight);
+                    font.setWeight (weight);
                 if (style != QFont::StyleNormal)
-                    font->setStyle (style);
+                    font.setStyle (style);
                 if (stretch != QFont::Unstretched)
-                    font->setStretch (stretch);
+                    font.setStretch (stretch);
 
                 return font;
             }
-
-            delete font;
         }
 
         family.resize (space - family);
@@ -162,16 +160,7 @@ void FontEntry::show_dialog ()
     if (! m_dialog)
         m_dialog = create_dialog ();
 
-    auto font = qfont_from_string (text ().toUtf8 ());
-    if (! font)
-    {
-        window_bring_to_front (m_dialog);
-        return;
-    }
-
-    m_dialog->setCurrentFont (*font);
-    delete font;
-
+    m_dialog->setCurrentFont (qfont_from_string (text ().toUtf8 ()));
     window_bring_to_front (m_dialog);
 }
 
