@@ -96,20 +96,16 @@ EXPORT QFont qfont_from_string (const char * name)
         {
             QFont font ((const char *) family);
 
-            /* check for a recognized font family */
-            if (! space || font.exactMatch ())
-            {
-                if (size > 0)
-                    font.setPointSize (size);
-                if (weight != QFont::Normal)
-                    font.setWeight (weight);
-                if (style != QFont::StyleNormal)
-                    font.setStyle (style);
-                if (stretch != QFont::Unstretched)
-                    font.setStretch (stretch);
+            if (size > 0)
+                font.setPointSize (size);
+            if (weight != QFont::Normal)
+                font.setWeight (weight);
+            if (style != QFont::StyleNormal)
+                font.setStyle (style);
+            if (stretch != QFont::Unstretched)
+                font.setStretch (stretch);
 
-                return font;
-            }
+            return font;
         }
 
         family.resize (space - family);
