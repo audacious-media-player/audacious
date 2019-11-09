@@ -146,6 +146,9 @@ static const struct {
 
     {"formatted-title", Tuple::String, -1},
 
+    {"description", Tuple::String, -1},
+    {"musicbrainz-id", Tuple::String, -1},
+
     /* fallbacks */
     {nullptr, Tuple::String, -1},
     {nullptr, Tuple::String, -1},
@@ -171,6 +174,7 @@ static const FieldDictEntry field_dict[] = {
     {"composer", Tuple::Composer},
     {"copyright", Tuple::Copyright},
     {"date", Tuple::Date},
+    {"description", Tuple::Description},
     {"file-ext", Tuple::Suffix},
     {"file-name", Tuple::Basename},
     {"file-path", Tuple::Path},
@@ -183,6 +187,7 @@ static const FieldDictEntry field_dict[] = {
     {"gain-track-peak", Tuple::TrackPeak},
     {"genre", Tuple::Genre},
     {"length", Tuple::Length},
+    {"musicbrainz-id", Tuple::MusicBrainzID},
     {"performer", Tuple::Performer},
     {"quality", Tuple::Quality},
     {"segment-end", Tuple::EndTime},

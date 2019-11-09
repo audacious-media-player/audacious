@@ -98,6 +98,10 @@ public:
         /* Title formatted for display; input plugins do not need to set this field */
         FormattedTitle,
 
+        /* TODO: reorder these at next ABI break! */
+        Description,           /* Track description */
+        MusicBrainzID,         /* MusicBrainz identifier */
+
         n_fields
     };
 
