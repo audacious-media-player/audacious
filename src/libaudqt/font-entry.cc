@@ -150,7 +150,8 @@ QFontDialog * FontEntry::create_dialog ()
 
         font_str = str_concat({font_str, " ", int_to_str (font.pointSize ())});
 
-        font_entry_set_font (this, font_str);
+        setText ((const char *) font_str);
+        end (false);
     });
 
     return dialog;
@@ -161,7 +162,7 @@ void FontEntry::show_dialog ()
     if (! m_dialog)
         m_dialog = create_dialog ();
 
-    auto font = qfont_from_string (font_entry_get_font (this));
+    auto font = qfont_from_string (text ().toUtf8 ());
     if (! font)
     {
         window_bring_to_front (m_dialog);
@@ -177,19 +178,6 @@ void FontEntry::show_dialog ()
 EXPORT QLineEdit * font_entry_new (QWidget * parent, const char * font)
 {
     return new FontEntry (parent, font);
-}
-
-EXPORT String font_entry_get_font (QLineEdit * entry)
-{
-    QByteArray text = entry->text ().toUtf8 ();
-
-    return String (text);
-}
-
-EXPORT void font_entry_set_font (QLineEdit * entry, const char * font)
-{
-    entry->setText (font);
-    entry->end (false);
 }
 
 } // namespace audqt
