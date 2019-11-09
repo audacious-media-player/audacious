@@ -244,15 +244,15 @@ FileWidget::FileWidget (const PreferencesWidget * parent, const char * domain) :
 
     update ();
 
-    QObject::connect (m_lineedit, & QLineEdit::textChanged, [this] (const QString & value) {
+    QObject::connect (m_lineedit, & QLineEdit::textChanged, [this] (const QString &) {
         if (! m_updating)
-            m_parent->cfg.set_string (value.toUtf8 ());
+            m_parent->cfg.set_string (file_entry_get_uri (m_lineedit));
     });
 }
 
 void FileWidget::update ()
 {
-    m_lineedit->setText ((const char *) m_parent->cfg.get_string ());
+    file_entry_set_uri (m_lineedit, m_parent->cfg.get_string ());
 }
 
 /* font widget (audqt::FontEntry) */
