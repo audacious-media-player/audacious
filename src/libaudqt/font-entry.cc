@@ -34,7 +34,7 @@ class FontEntry : public QLineEdit {
 public:
     FontEntry (QWidget * parent = nullptr, const char * font = nullptr) :
         QLineEdit (parent),
-        m_action (get_icon ("dialog-text-and-font"), _("Set Font"), nullptr)
+        m_action (get_icon ("preferences-desktop-font"), _("Set Font"), nullptr)
     {
         addAction (& m_action, TrailingPosition);
         connect (& m_action, & QAction::triggered, this, & FontEntry::show_dialog);
