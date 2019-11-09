@@ -75,8 +75,10 @@ QFileDialog * FileEntry::create_dialog ()
             dialog->selectUrl (QUrl ((const char *) uri));
     }
 
-    QObject::connect (dialog, & QFileDialog::urlSelected, [this] (const QUrl & url) {
-        file_entry_set_uri (this, url.toEncoded ().constData ());
+    QObject::connect (dialog, & QFileDialog::accepted, [this, dialog] () {
+        auto urls = dialog->selectedUrls ();
+        if (urls.length () == 1)
+            file_entry_set_uri (this, urls[0].toEncoded ().constData ());
     });
 
     return dialog;
