@@ -54,6 +54,7 @@ void HookableWidget::update_from_cfg ()
 ButtonWidget::ButtonWidget (const PreferencesWidget * parent, const char * domain) :
     QPushButton (translate_str (parent->label, domain))
 {
+    setAutoDefault (false);
     QObject::connect (this, & QPushButton::clicked, parent->data.button.callback);
 }
 

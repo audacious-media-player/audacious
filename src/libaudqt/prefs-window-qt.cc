@@ -625,6 +625,11 @@ PrefsWindow::PrefsWindow () :
     setWindowTitle (_("Audacious Settings"));
     setContentsMargins (0, 0, 0, 0);
 
+    output_config_button->setAutoDefault (false);
+    output_about_button->setAutoDefault (false);
+    record_config_button->setAutoDefault (false);
+    record_about_button->setAutoDefault (false);
+
     QToolBar * toolbar = new QToolBar;
     toolbar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
 
