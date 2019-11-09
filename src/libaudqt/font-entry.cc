@@ -132,21 +132,22 @@ QFontDialog * FontEntry::create_dialog ()
         auto stretch = font.stretch ();
 
         if (weight == QFont::Light)
-            font_str = str_concat({font_str, " Light"});
+            font_str.insert (-1, " Light");
         else if (weight == QFont::Bold)
-            font_str = str_concat({font_str, " Bold"});
+            font_str.insert (-1, " Bold");
 
         if (style == QFont::StyleOblique)
-            font_str = str_concat({font_str, " Oblique"});
+            font_str.insert (-1, " Oblique");
         else if (style == QFont::StyleItalic)
-            font_str = str_concat({font_str, " Italic"});
+            font_str.insert (-1, " Italic");
 
         if (stretch == QFont::Condensed)
-            font_str = str_concat ({font_str, " Condensed"});
+            font_str.insert (-1, " Condensed");
         else if (stretch == QFont::Expanded)
-            font_str = str_concat ({font_str, " Expanded"});
+            font_str.insert (-1, " Expanded");
 
-        font_str = str_concat({font_str, " ", int_to_str (font.pointSize ())});
+        font_str.insert (-1, " ");
+        str_insert_int (font_str, -1, font.pointSize ());
 
         setText ((const char *) font_str);
         end (false);
