@@ -46,7 +46,6 @@ public:
     }
 
 private:
-    QFontDialog * create_dialog ();
     void show_dialog ();
 
     QAction m_action;
@@ -54,7 +53,7 @@ private:
 };
 
 /* parse a subset of Pango font descriptions */
-static QFont qfont_from_string (const char * name)
+EXPORT QFont qfont_from_string (const char * name)
 {
     auto family = str_copy (name);
     int size = 0;
@@ -117,49 +116,45 @@ static QFont qfont_from_string (const char * name)
     }
 }
 
-QFontDialog * FontEntry::create_dialog ()
+EXPORT StringBuf qfont_to_string (const QFont & font)
 {
-    auto dialog = new QFontDialog (this);
+    StringBuf font_str = str_copy (font.family ().toUtf8 ());
 
-    QObject::connect (dialog, & QFontDialog::fontSelected, [this] (const QFont & font) {
-        auto family = font.family ().toUtf8 ();
+    auto weight = font.weight ();
+    auto style = font.style ();
+    auto stretch = font.stretch ();
 
-        // build the description string
-        StringBuf font_str = str_copy ((const char *) family);
+    if (weight == QFont::Light)
+        font_str.insert (-1, " Light");
+    else if (weight == QFont::Bold)
+        font_str.insert (-1, " Bold");
 
-        auto weight = font.weight ();
-        auto style = font.style ();
-        auto stretch = font.stretch ();
+    if (style == QFont::StyleOblique)
+        font_str.insert (-1, " Oblique");
+    else if (style == QFont::StyleItalic)
+        font_str.insert (-1, " Italic");
 
-        if (weight == QFont::Light)
-            font_str.insert (-1, " Light");
-        else if (weight == QFont::Bold)
-            font_str.insert (-1, " Bold");
+    if (stretch == QFont::Condensed)
+        font_str.insert (-1, " Condensed");
+    else if (stretch == QFont::Expanded)
+        font_str.insert (-1, " Expanded");
 
-        if (style == QFont::StyleOblique)
-            font_str.insert (-1, " Oblique");
-        else if (style == QFont::StyleItalic)
-            font_str.insert (-1, " Italic");
+    str_append_printf (font_str, " %d", font.pointSize ());
 
-        if (stretch == QFont::Condensed)
-            font_str.insert (-1, " Condensed");
-        else if (stretch == QFont::Expanded)
-            font_str.insert (-1, " Expanded");
-
-        font_str.insert (-1, " ");
-        str_insert_int (font_str, -1, font.pointSize ());
-
-        setText ((const char *) font_str);
-        end (false);
-    });
-
-    return dialog;
+    return font_str;
 }
 
 void FontEntry::show_dialog ()
 {
     if (! m_dialog)
-        m_dialog = create_dialog ();
+    {
+        m_dialog = new QFontDialog (this);
+
+        QObject::connect (m_dialog, & QFontDialog::fontSelected, [this] (const QFont & font) {
+            setText ((const char *) qfont_to_string (font));
+            end (false);
+        });
+    }
 
     m_dialog->setCurrentFont (qfont_from_string (text ().toUtf8 ()));
     window_bring_to_front (m_dialog);

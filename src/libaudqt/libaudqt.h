@@ -132,6 +132,8 @@ void file_entry_set_uri (QLineEdit * entry, const char * uri);
 
 /* font-entry.cc */
 QLineEdit * font_entry_new (QWidget * parent, const char * font);
+QFont qfont_from_string (const char * name);
+StringBuf qfont_to_string (const QFont & font);
 
 /* prefs-builder.cc */
 void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain);
