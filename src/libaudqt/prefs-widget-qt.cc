@@ -222,6 +222,7 @@ FileWidget::FileWidget (const PreferencesWidget * parent, const char * domain) :
 
     switch (parent->data.file_entry.mode)
     {
+    default:
     case FileSelectMode::File:
         file_mode = QFileDialog::ExistingFile;
         title = _("Choose File");
