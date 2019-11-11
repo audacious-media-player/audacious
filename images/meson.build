@@ -1,2 +1,2 @@
-install_data('audacious.png', install_dir: join_paths(install_unscalable_iconpath, 'audacious.png'))
-install_data('audacious.svg', install_dir: join_paths(install_scalable_iconpath, 'audacious.svg'))
+install_data('audacious.png', install_dir: install_unscalable_iconpath)
+install_data('audacious.svg', install_dir: install_scalable_iconpath)
