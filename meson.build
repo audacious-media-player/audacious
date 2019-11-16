@@ -101,12 +101,12 @@ install_scalable_iconpath = join_paths(install_iconpath, 'hicolor', 'scalable', 
 install_iconfile = join_paths(install_unscalable_iconpath, 'audacious.png')
 
 
-conf.set_quoted('INSTALL_BINDIR', install_bindir)
-conf.set_quoted('INSTALL_DATADIR', install_datadir)
-conf.set_quoted('INSTALL_PLUGINDIR', install_plugindir)
-conf.set_quoted('INSTALL_LOCALEDIR', install_localedir)
-conf.set_quoted('INSTALL_DESKTOPFILE', install_desktopfile)
-conf.set_quoted('INSTALL_ICONFILE', install_iconfile)
+conf.set_quoted('INSTALL_BINDIR', join_paths(get_option('prefix'), install_bindir))
+conf.set_quoted('INSTALL_DATADIR', join_paths(get_option('prefix'), install_datadir))
+conf.set_quoted('INSTALL_PLUGINDIR', join_paths(get_option('prefix'), install_plugindir))
+conf.set_quoted('INSTALL_LOCALEDIR', join_paths(get_option('prefix'), install_localedir))
+conf.set_quoted('INSTALL_DESKTOPFILE', join_paths(get_option('prefix'), install_desktopfile))
+conf.set_quoted('INSTALL_ICONFILE', join_paths(get_option('prefix'), install_iconfile))
 conf.set('plugindir', install_plugindir)
 conf.set('datarootdir', get_option('datadir'))
 
