@@ -141,7 +141,7 @@ pkg = import('pkgconfig')
 pkg.generate(
   libraries: ['-L${libdir} -laudcore'],
   variables: [
-    'plugindir=${libdir}/audacious',
+    'plugin_dir=${libdir}/audacious',
 
     # Appease broken third-party plugin build systems.
     'audacious_include_dir=${includedir}',
