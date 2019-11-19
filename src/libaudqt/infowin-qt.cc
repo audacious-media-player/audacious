@@ -144,7 +144,6 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
                            "Click on a value twice to edit."));
 
     auto hint_hbox = make_hbox (nullptr);
-    hint_hbox->addStretch (1);
     hint_hbox->addWidget (& m_hint_icon);
     hint_hbox->addWidget (& m_hint_text);
     hint_hbox->addStretch (1);
