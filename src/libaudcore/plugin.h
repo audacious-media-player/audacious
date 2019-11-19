@@ -50,6 +50,9 @@ struct PluginPreferences;
 #define _AUD_PLUGIN_VERSION_MIN 48 /* 3.8-devel */
 #define _AUD_PLUGIN_VERSION     48 /* 3.8-devel */
 
+/* Default priority. */
+#define _AUD_PLUGIN_DEFAULT_PRIO 5
+
 /* A NOTE ON THREADS
  *
  * How thread-safe a plugin must be depends on the type of plugin.  Note that
@@ -331,7 +334,7 @@ public:
         aud::array<InputKey, List> keys;
 
         constexpr InputInfo (int flags = 0) :
-            flags (flags), priority (0), keys {} {}
+            flags (flags), priority (_AUD_PLUGIN_DEFAULT_PRIO), keys {} {}
 
         /* Associates file extensions with the plugin. */
         constexpr InputInfo with_exts (List exts) const
