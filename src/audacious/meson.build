@@ -11,7 +11,7 @@ audacious_sources = [
 if get_option('dbus')
   audacious_sources += ['dbus-server.cc']
   audacious_libs += [aud_dbus_lib]
-  audacious_deps += [gio_dep]
+  audacious_deps += [aud_dbus_deps]
 endif
 
 

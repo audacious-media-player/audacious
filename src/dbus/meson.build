@@ -16,6 +16,7 @@ aud_dbus_src = gnome.gdbus_codegen('aud-dbus',
   interface_prefix: 'org.atheme.',
   namespace: 'Obj'
 )
+aud_dbus_deps += declare_dependency(sources: aud_dbus_src)
 
 
 aud_dbus_lib = static_library('aud-dbus',
