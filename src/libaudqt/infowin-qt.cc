@@ -144,12 +144,22 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     auto vbox = make_vbox (this);
     vbox->addLayout (hbox);
 
-    auto bbox = new QDialogButtonBox (QDialogButtonBox::Save | QDialogButtonBox::Close, this);
-    bbox->button (QDialogButtonBox::Save)->setText (translate_str (N_("_Save")));
-    bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
-    vbox->addWidget (bbox);
+    auto bbox = new QDialogButtonBox (QDialogButtonBox::Save |
+                                      QDialogButtonBox::Close |
+                                      QDialogButtonBox::Reset, this);
 
-    m_infowidget.linkEnabled (bbox->button (QDialogButtonBox::Save));
+    auto save_btn = bbox->button (QDialogButtonBox::Save),
+         close_btn = bbox->button (QDialogButtonBox::Close),
+         revert_btn = bbox->button (QDialogButtonBox::Reset);
+
+    save_btn->setText (translate_str (N_("_Save")));
+    close_btn->setText (translate_str (N_("_Close")));
+    revert_btn->setText (translate_str (N_("_Revert")));
+
+    m_infowidget.linkEnabled (save_btn);
+    m_infowidget.linkEnabled (revert_btn);
+
+    vbox->addWidget (bbox);
 
     connect (bbox, & QDialogButtonBox::accepted, [this] () {
         m_infowidget.updateFile ();
@@ -157,6 +167,7 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     });
 
     connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
+    connect (revert_btn, & QPushButton::clicked, & m_infowidget, & InfoWidget::revertInfo);
 }
 
 void InfoWindow::fillInfo (const char * filename, const Tuple & tuple,
@@ -165,7 +176,7 @@ void InfoWindow::fillInfo (const char * filename, const Tuple & tuple,
     m_filename = String (filename);
     m_uri_label.setText ((QString) uri_to_display (filename));
     displayImage (filename);
-    m_infowidget.fillInfo (filename, tuple, decoder, updating_enabled);
+    m_infowidget.fillInfo (m_filename, tuple, decoder, updating_enabled);
 }
 
 void InfoWindow::displayImage (const char * filename)

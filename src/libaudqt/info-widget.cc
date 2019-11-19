@@ -110,8 +110,15 @@ public:
     void setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin)
     {
         m_tuple = tuple.ref ();
+        m_orig_tuple = tuple.ref ();
         m_filename = filename;
         m_plugin = plugin;
+        setDirty (false);
+    }
+
+    void revertTupleData ()
+    {
+        m_tuple = m_orig_tuple.ref ();
         setDirty (false);
     }
 
@@ -134,7 +141,7 @@ private:
         }
     }
 
-    Tuple m_tuple;
+    Tuple m_tuple, m_orig_tuple;
     String m_filename;
     PluginHandle * m_plugin = nullptr;
     bool m_dirty = false;
@@ -172,18 +179,22 @@ EXPORT void InfoWidget::fillInfo (const char * filename, const Tuple & tuple,
     m_model->setTupleData (tuple, String (filename), decoder);
     reset ();
 
-    setEditTriggers (updating_enabled ? QAbstractItemView::CurrentChanged :
+    setEditTriggers (updating_enabled ? QAbstractItemView::AllEditTriggers :
                                         QAbstractItemView::NoEditTriggers);
 
     auto initial_index = m_model->index (1 /* title */, InfoModel::Col_Value);
     setCurrentIndex (initial_index);
-    if (updating_enabled)
-        edit (initial_index);
 }
 
 EXPORT void InfoWidget::linkEnabled (QWidget * widget)
 {
     m_model->linkEnabled (widget);
+}
+
+EXPORT void InfoWidget::revertInfo ()
+{
+    m_model->revertTupleData ();
+    reset ();
 }
 
 EXPORT bool InfoWidget::updateFile ()

@@ -40,6 +40,7 @@ public:
     void fillInfo (const char * filename, const Tuple & tuple,
      PluginHandle * decoder, bool updating_enabled);
     void linkEnabled (QWidget * widget);
+    void revertInfo ();
     bool updateFile ();
 
 protected:
