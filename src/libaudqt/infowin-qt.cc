@@ -149,6 +149,8 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
     vbox->addWidget (bbox);
 
+    m_infowidget.linkEnabled (bbox->button (QDialogButtonBox::Save));
+
     connect (bbox, & QDialogButtonBox::accepted, [this] () {
         m_infowidget.updateFile ();
         deleteLater ();

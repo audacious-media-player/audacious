@@ -24,6 +24,7 @@
 
 #include <QHeaderView>
 #include <QKeyEvent>
+#include <QPointer>
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/probe.h>
@@ -111,16 +112,33 @@ public:
         m_tuple = tuple.ref ();
         m_filename = filename;
         m_plugin = plugin;
-        m_dirty = false;
+        setDirty (false);
+    }
+
+    void linkEnabled (QWidget * widget)
+    {
+        widget->setEnabled (m_dirty);
+        m_linked_widgets.append (widget);
     }
 
     bool updateFile () const;
 
 private:
+    void setDirty (bool dirty)
+    {
+        m_dirty = dirty;
+        for (auto & widget : m_linked_widgets)
+        {
+            if (widget)
+                widget->setEnabled (dirty);
+        }
+    }
+
     Tuple m_tuple;
     String m_filename;
     PluginHandle * m_plugin = nullptr;
     bool m_dirty = false;
+    QList<QPointer<QWidget>> m_linked_widgets;
 };
 
 EXPORT InfoWidget::InfoWidget (QWidget * parent) :
@@ -163,6 +181,11 @@ EXPORT void InfoWidget::fillInfo (const char * filename, const Tuple & tuple,
         edit (initial_index);
 }
 
+EXPORT void InfoWidget::linkEnabled (QWidget * widget)
+{
+    m_model->linkEnabled (widget);
+}
+
 EXPORT bool InfoWidget::updateFile ()
 {
     return m_model->updateFile ();
@@ -201,17 +224,31 @@ bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int 
     if (! map || map->field == Tuple::Invalid)
         return false;
 
-    m_dirty = true;
-
     auto t = Tuple::field_get_type (map->field);
     auto str = value.toString ();
 
+    bool changed = false;
+
     if (str.isEmpty ())
+    {
+        changed = m_tuple.is_set (map->field);
         m_tuple.unset (map->field);
+    }
     else if (t == Tuple::String)
-        m_tuple.set_str (map->field, str.toUtf8 ());
+    {
+        auto utf8 = str.toUtf8 ();
+        changed = (!m_tuple.is_set (map->field) || m_tuple.get_str (map->field) != utf8);
+        m_tuple.set_str (map->field, utf8);
+    }
     else /* t == Tuple::Int */
-        m_tuple.set_int (map->field, str.toInt ());
+    {
+        int val = str.toInt ();
+        changed = (!m_tuple.is_set (map->field) || m_tuple.get_int (map->field) != val);
+        m_tuple.set_int (map->field, val);
+    }
+
+    if (changed)
+        setDirty (true);
 
     emit dataChanged (index, index, {role});
     return true;
