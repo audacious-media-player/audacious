@@ -41,6 +41,9 @@ public:
      PluginHandle * decoder, bool updating_enabled);
     bool updateFile ();
 
+protected:
+    void keyPressEvent (QKeyEvent * event) override;
+
 private:
     InfoModel * m_model;
 };
