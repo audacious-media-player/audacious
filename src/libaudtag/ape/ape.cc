@@ -246,19 +246,19 @@ bool APETagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * imag
 
     for (const ValuePair & pair : list)
     {
-        if (! strcmp (pair.key, "Artist"))
+        if (! strcmp_nocase (pair.key, "Artist"))
             tuple.set_str (Tuple::Artist, pair.value);
-        else if (! strcmp (pair.key, "Title"))
+        else if (! strcmp_nocase (pair.key, "Title"))
             tuple.set_str (Tuple::Title, pair.value);
-        else if (! strcmp (pair.key, "Album"))
+        else if (! strcmp_nocase (pair.key, "Album"))
             tuple.set_str (Tuple::Album, pair.value);
-        else if (! strcmp (pair.key, "Comment"))
+        else if (! strcmp_nocase (pair.key, "Comment"))
             tuple.set_str (Tuple::Comment, pair.value);
-        else if (! strcmp (pair.key, "Genre"))
+        else if (! strcmp_nocase (pair.key, "Genre"))
             tuple.set_str (Tuple::Genre, pair.value);
-        else if (! strcmp (pair.key, "Track"))
+        else if (! strcmp_nocase (pair.key, "Track"))
             tuple.set_int (Tuple::Track, atoi (pair.value));
-        else if (! strcmp (pair.key, "Year"))
+        else if (! strcmp_nocase (pair.key, "Year"))
             tuple.set_int (Tuple::Year, atoi (pair.value));
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_TRACK_GAIN"))
             tuple.set_gain (Tuple::TrackGain, Tuple::GainDivisor, pair.value);
@@ -387,10 +387,10 @@ bool APETagModule::write_tag (VFSFile & handle, const Tuple & tuple)
 
     for (const ValuePair & pair : list)
     {
-        if (! strcmp (pair.key, "Artist") || ! strcmp (pair.key, "Title") ||
-         ! strcmp (pair.key, "Album") || ! strcmp (pair.key, "Comment") ||
-         ! strcmp (pair.key, "Genre") || ! strcmp (pair.key, "Track") ||
-         ! strcmp (pair.key, "Year"))
+        if (! strcmp_nocase (pair.key, "Artist") || ! strcmp_nocase (pair.key, "Title") ||
+         ! strcmp_nocase (pair.key, "Album") || ! strcmp_nocase (pair.key, "Comment") ||
+         ! strcmp_nocase (pair.key, "Genre") || ! strcmp_nocase (pair.key, "Track") ||
+         ! strcmp_nocase (pair.key, "Year"))
             continue;
 
         if (! ape_write_item (handle, pair.key, pair.value, & length))
