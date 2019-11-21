@@ -20,12 +20,8 @@
 #include "libaudqt.h"
 
 #include <QCheckBox>
-#include <QDialog>
-#include <QDialogButtonBox>
-#include <QLabel>
-#include <QLineEdit>
+#include <QInputDialog>
 #include <QPushButton>
-#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
@@ -36,33 +32,18 @@ namespace audqt {
 
 static QDialog * buildRenameDialog (Playlist playlist)
 {
-    auto dialog = new QDialog;
-    auto prompt = new QLabel (_("What would you like to call this playlist?"), dialog);
-    auto entry = new QLineEdit ((const char *) playlist.get_title (), dialog);
-    auto rename = new QPushButton (translate_str (N_("_Rename")), dialog);
-    auto cancel = new QPushButton (translate_str (N_("_Cancel")), dialog);
+    auto dialog = new QInputDialog;
+    dialog->setInputMode (QInputDialog::TextInput);
+    dialog->setWindowTitle (_("Rename Playlist"));
+    dialog->setLabelText (_("What would you like to call this playlist?"));
+    dialog->setOkButtonText (translate_str (N_("_Rename")));
+    dialog->setCancelButtonText (translate_str (N_("_Cancel")));
+    dialog->setTextValue ((const char *) playlist.get_title ());
 
-    auto buttonbox = new QDialogButtonBox (dialog);
-    buttonbox->addButton (rename, QDialogButtonBox::AcceptRole);
-    buttonbox->addButton (cancel, QDialogButtonBox::RejectRole);
-
-    QObject::connect (buttonbox, & QDialogButtonBox::accepted, [dialog, entry, playlist] () {
-        playlist.set_title (entry->text ().toUtf8 ());
+    QObject::connect (dialog, & QInputDialog::textValueSelected, [dialog, playlist] (const QString & text) {
+        playlist.set_title (text.toUtf8 ());
         dialog->close ();
     });
-
-    QObject::connect (buttonbox, & QDialogButtonBox::rejected, dialog, & QDialog::close);
-
-    auto layout = make_vbox (dialog);
-    layout->addWidget (prompt);
-    layout->addWidget (entry);
-    layout->addStretch (1);
-    layout->addWidget (buttonbox);
-
-    dialog->setWindowTitle (_("Rename Playlist"));
-    dialog->setContentsMargins (margins.EightPt);
-
-    entry->selectAll ();
 
     return dialog;
 }
