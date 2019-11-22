@@ -165,6 +165,7 @@ void infopopup_hide ();
 
 /* infowin.cc */
 void infowin_show (Playlist playlist, int entry);
+void infowin_show_selected (Playlist playlist);
 void infowin_show_current ();
 void infowin_hide ();
 

@@ -103,8 +103,7 @@ class InfoWindow : public QDialog
 public:
     InfoWindow (QWidget * parent = nullptr);
 
-    void fillInfo (const char * filename, const Tuple & tuple,
-     PluginHandle * decoder, bool updating_enabled);
+    void fillInfo (Index<PlaylistAddItem> && items, bool updating_enabled);
 
 private:
     String m_filename;
@@ -170,13 +169,22 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     connect (revert_btn, & QPushButton::clicked, & m_infowidget, & InfoWidget::revertInfo);
 }
 
-void InfoWindow::fillInfo (const char * filename, const Tuple & tuple,
- PluginHandle * decoder, bool updating_enabled)
+void InfoWindow::fillInfo (Index<PlaylistAddItem> && items, bool updating_enabled)
 {
-    m_filename = String (filename);
-    m_uri_label.setText ((QString) uri_to_display (filename));
-    displayImage (filename);
-    m_infowidget.fillInfo (m_filename, tuple, decoder, updating_enabled);
+    if (items.len () == 1)
+    {
+        m_filename = String (items[0].filename);
+        m_uri_label.setText ((QString) uri_to_display (m_filename));
+        displayImage (m_filename);
+    }
+    else
+    {
+        m_filename = String ();
+        m_uri_label.setText ((QString) str_printf (_("%d files selected"), items.len ()));
+        m_image.setPixmap (get_icon ("audio-x-generic").pixmap (to_native_dpi (48)));
+    }
+
+    m_infowidget.fillInfo (std::move (items), updating_enabled);
 }
 
 void InfoWindow::displayImage (const char * filename)
@@ -187,8 +195,7 @@ void InfoWindow::displayImage (const char * filename)
 
 static InfoWindow * s_infowin = nullptr;
 
-static void show_infowin (const char * filename,
- const Tuple & tuple, PluginHandle * decoder, bool can_write)
+static void show_infowin (Index<PlaylistAddItem> && items, bool can_write)
 {
     if (! s_infowin)
     {
@@ -200,12 +207,13 @@ static void show_infowin (const char * filename,
         });
     }
 
-    s_infowin->fillInfo (filename, tuple, decoder, can_write);
+    s_infowin->fillInfo (std::move (items), can_write);
     s_infowin->resize (6 * sizes.OneInch, 3 * sizes.OneInch);
     window_bring_to_front (s_infowin);
 }
 
-EXPORT void infowin_show (Playlist playlist, int entry)
+static void fetch_entry (Playlist playlist, int entry,
+                         Index<PlaylistAddItem> & items, bool & can_write)
 {
     String filename = playlist.entry_filename (entry);
     if (! filename)
@@ -215,21 +223,50 @@ EXPORT void infowin_show (Playlist playlist, int entry)
     PluginHandle * decoder = playlist.entry_decoder (entry, Playlist::Wait, & error);
     Tuple tuple = decoder ? playlist.entry_tuple (entry, Playlist::Wait, & error) : Tuple ();
 
-    if (decoder && tuple.valid () && ! aud_custom_infowin (filename, decoder))
+    if (decoder && tuple.valid ())
     {
         /* cuesheet entries cannot be updated */
-        bool can_write = aud_file_can_write_tuple (filename, decoder) &&
-         ! tuple.is_set (Tuple::StartTime);
+        can_write = (can_write && aud_file_can_write_tuple (filename, decoder)
+                               && ! tuple.is_set (Tuple::StartTime));
 
         tuple.delete_fallbacks ();
-        show_infowin (filename, tuple, decoder, can_write);
+        items.append (filename, std::move (tuple), decoder);
     }
-    else
-        infowin_hide ();
 
     if (error)
         aud_ui_show_error (str_printf (_("Error opening %s:\n%s"),
          (const char *) filename, (const char *) error));
+}
+
+EXPORT void infowin_show (Playlist playlist, int entry)
+{
+    Index<PlaylistAddItem> items;
+    bool can_write = true;
+
+    fetch_entry (playlist, entry, items, can_write);
+
+    if (items.len ())
+        show_infowin (std::move (items), can_write);
+    else
+        infowin_hide ();
+}
+
+EXPORT void infowin_show_selected (Playlist playlist)
+{
+    Index<PlaylistAddItem> items;
+    bool can_write = true;
+
+    int n_entries = playlist.n_entries ();
+    for (int entry = 0; entry < n_entries; entry ++)
+    {
+        if (playlist.entry_selected (entry))
+            fetch_entry (playlist, entry, items, can_write);
+    }
+
+    if (items.len ())
+        show_infowin (std::move (items), can_write);
+    else
+        infowin_hide ();
 }
 
 EXPORT void infowin_show_current ()

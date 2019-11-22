@@ -28,6 +28,7 @@
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/probe.h>
+#include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 
 namespace audqt {
@@ -37,6 +38,8 @@ struct TupleFieldMap {
     Tuple::Field field;
     bool editable;
 };
+
+static const char * varied_str = N_("<various>");
 
 static const TupleFieldMap tuple_field_map[] = {
     {N_("Metadata"), Tuple::Invalid, false},
@@ -107,44 +110,40 @@ public:
     bool setData (const QModelIndex & index, const QVariant & value, int role) override;
     Qt::ItemFlags flags (const QModelIndex & index) const override;
 
-    void setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin)
+    void setItems (Index<PlaylistAddItem> && items)
     {
-        m_tuple = tuple.ref ();
-        m_orig_tuple = tuple.ref ();
-        m_filename = filename;
-        m_plugin = plugin;
-        setDirty (false);
-    }
-
-    void revertTupleData ()
-    {
-        m_tuple = m_orig_tuple.ref ();
-        setDirty (false);
+        m_items = std::move (items);
+        revertTupleData ();
     }
 
     void linkEnabled (QWidget * widget)
     {
-        widget->setEnabled (m_dirty);
+        widget->setEnabled (m_changed_mask != 0);
         m_linked_widgets.append (widget);
     }
 
+    void revertTupleData ();
     bool updateFile () const;
 
 private:
-    void setDirty (bool dirty)
+    void updateEnabled ()
     {
-        m_dirty = dirty;
         for (auto & widget : m_linked_widgets)
         {
             if (widget)
-                widget->setEnabled (dirty);
+                widget->setEnabled (m_changed_mask != 0);
         }
     }
 
-    Tuple m_tuple, m_orig_tuple;
-    String m_filename;
-    PluginHandle * m_plugin = nullptr;
-    bool m_dirty = false;
+    /* set of filenames, original tuples, decoders */
+    Index<PlaylistAddItem> m_items;
+    /* local (possibly edited) tuple */
+    Tuple m_tuple;
+    /* bitmask of fields which vary between tuples and will be preserved */
+    uint64_t m_varied_mask = 0;
+    /* bitmask of fields which have been edited */
+    uint64_t m_changed_mask = 0;
+    /* list of widgets to enable when edits have been made */
     QList<QPointer<QWidget>> m_linked_widgets;
 };
 
@@ -176,7 +175,14 @@ EXPORT InfoWidget::~InfoWidget ()
 EXPORT void InfoWidget::fillInfo (const char * filename, const Tuple & tuple,
  PluginHandle * decoder, bool updating_enabled)
 {
-    m_model->setTupleData (tuple, String (filename), decoder);
+    Index<PlaylistAddItem> items;
+    items.append (String (filename), tuple.ref (), decoder);
+    fillInfo (std::move (items), updating_enabled);
+}
+
+EXPORT void InfoWidget::fillInfo (Index<PlaylistAddItem> && items, bool updating_enabled)
+{
+    m_model->setItems (std::move (items));
     reset ();
 
     setEditTriggers (updating_enabled ? QAbstractItemView::AllEditTriggers :
@@ -218,12 +224,67 @@ void InfoWidget::keyPressEvent (QKeyEvent * event)
     QTreeView::keyPressEvent (event);
 }
 
+void InfoModel::revertTupleData ()
+{
+    m_tuple = Tuple ();
+    m_varied_mask = 0;
+    m_changed_mask = 0;
+
+    for (auto field : Tuple::all_fields ())
+    {
+        bool varied = false;
+
+        for (auto & item : m_items)
+        {
+            if (! item.tuple.is_set (field))
+                continue;
+
+            switch (item.tuple.get_value_type (field))
+            {
+            case Tuple::String:
+                if (! m_tuple.is_set (field))
+                    m_tuple.set_str (field, item.tuple.get_str (field));
+                else if (item.tuple.get_str (field) != m_tuple.get_str (field))
+                    varied = true;
+                break;
+
+            case Tuple::Int:
+                if (! m_tuple.is_set (field))
+                    m_tuple.set_int (field, item.tuple.get_int (field));
+                else if (item.tuple.get_int (field) != m_tuple.get_int (field))
+                    varied = true;
+                break;
+
+            case Tuple::Empty:
+                break;
+            }
+
+            if (varied)
+                break;
+        }
+
+        if (varied)
+        {
+            m_varied_mask |= (uint64_t) 1 << (int) field;
+            m_tuple.unset (field);
+        }
+    }
+
+    updateEnabled ();
+}
+
 bool InfoModel::updateFile () const
 {
-    if (! m_dirty)
+    if (m_changed_mask == 0)
         return true;
 
-    return aud_file_write_tuple (m_filename, m_plugin, m_tuple);
+    if (m_items.len () != 1)
+    {
+        AUDERR ("Saving multiple tags is not yet supported\n");
+        return false;
+    }
+
+    return aud_file_write_tuple (m_items[0].filename, m_items[0].decoder, m_tuple);
 }
 
 bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int role)
@@ -235,8 +296,12 @@ bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int 
     if (! map || map->field == Tuple::Invalid)
         return false;
 
-    auto t = Tuple::field_get_type (map->field);
+    uint64_t mask = ((uint64_t) 1 << (int) map->field);
     auto str = value.toString ();
+
+    /* prevent accidental overwrite of varied values */
+    if ((m_varied_mask & mask) != 0 && str == _(varied_str))
+        return false;
 
     bool changed = false;
 
@@ -245,21 +310,25 @@ bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int 
         changed = m_tuple.is_set (map->field);
         m_tuple.unset (map->field);
     }
-    else if (t == Tuple::String)
+    else if (Tuple::field_get_type (map->field) == Tuple::String)
     {
         auto utf8 = str.toUtf8 ();
         changed = (!m_tuple.is_set (map->field) || m_tuple.get_str (map->field) != utf8);
         m_tuple.set_str (map->field, utf8);
     }
-    else /* t == Tuple::Int */
+    else /* Tuple::Int */
     {
         int val = str.toInt ();
         changed = (!m_tuple.is_set (map->field) || m_tuple.get_int (map->field) != val);
         m_tuple.set_int (map->field, val);
     }
 
-    if (changed)
-        setDirty (true);
+    if (changed || (m_varied_mask & mask) != 0)
+    {
+        m_varied_mask &= ~mask;
+        m_changed_mask |= mask;
+        updateEnabled ();
+    }
 
     emit dataChanged (index, index, {role});
     return true;
@@ -271,6 +340,10 @@ QVariant InfoModel::data (const QModelIndex & index, int role) const
     if (! map)
         return QVariant ();
 
+    uint64_t mask = 0;
+    if (map->field != Tuple::Invalid)
+        mask = ((uint64_t) 1 << (int) map->field);
+
     if (role == Qt::DisplayRole || role == Qt::EditRole)
     {
         if (index.column () == InfoModel::Col_Name)
@@ -280,6 +353,9 @@ QVariant InfoModel::data (const QModelIndex & index, int role) const
             if (map->field == Tuple::Invalid)
                 return QVariant ();
 
+            if ((m_varied_mask & mask) != 0)
+                return QString (_(varied_str));
+
             switch (m_tuple.get_value_type (map->field))
             {
             case Tuple::String:
@@ -287,19 +363,27 @@ QVariant InfoModel::data (const QModelIndex & index, int role) const
             case Tuple::Int:
                 /* convert to string so Qt allows clearing the field */
                 return QString::number (m_tuple.get_int (map->field));
-            default:
+            case Tuple::Empty:
                 return QVariant ();
             }
         }
     }
     else if (role == Qt::FontRole)
     {
-        if (map->field == Tuple::Invalid)
+        if ((index.column () == Col_Name && map->field == Tuple::Invalid) ||
+            (index.column () == Col_Value && (m_changed_mask & mask) != 0))
         {
             QFont f;
             f.setBold (true);
             return f;
         }
+        else if (index.column () == Col_Value && (m_varied_mask & mask) != 0)
+        {
+            QFont f;
+            f.setItalic (true);
+            return f;
+        }
+
         return QVariant ();
     }
 
