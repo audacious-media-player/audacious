@@ -90,6 +90,46 @@ static QModelIndex sibling_field_index (const QModelIndex & current, int directi
     }
 }
 
+static QString tuple_field_to_str (const Tuple & tuple, Tuple::Field field)
+{
+    switch (tuple.get_value_type (field))
+    {
+    case Tuple::String:
+        return QString (tuple.get_str (field));
+    case Tuple::Int:
+        return QString::number (tuple.get_int (field));
+    default:
+        return QString ();
+    }
+}
+
+static void tuple_field_set_from_str (Tuple & tuple, Tuple::Field field, const QString & str)
+{
+    if (str.isEmpty ())
+        tuple.unset (field);
+    else if (Tuple::field_get_type (field) == Tuple::String)
+        tuple.set_str (field, str.toUtf8 ());
+    else
+        tuple.set_int (field, str.toInt ());
+}
+
+static bool tuple_field_is_same (const Tuple & a, const Tuple & b, Tuple::Field field)
+{
+    auto a_type = a.get_value_type (field);
+    if (a_type != b.get_value_type (field))
+        return false;
+
+    switch (a_type)
+    {
+    case Tuple::String:
+        return (a.get_str (field) == b.get_str (field));
+    case Tuple::Int:
+        return (a.get_int (field) == b.get_int (field));
+    default:
+        return true;
+    }
+}
+
 class InfoModel : public QAbstractTableModel
 {
 public:
@@ -226,46 +266,16 @@ void InfoWidget::keyPressEvent (QKeyEvent * event)
 
 void InfoModel::revertTupleData ()
 {
-    m_tuple = Tuple ();
+    m_tuple = (m_items.len () > 0) ? m_items[0].tuple.ref () : Tuple ();
     m_varied_mask = 0;
     m_changed_mask = 0;
 
-    for (auto field : Tuple::all_fields ())
+    for (auto & item : m_items)
     {
-        bool varied = false;
-
-        for (auto & item : m_items)
+        for (auto field : Tuple::all_fields ())
         {
-            switch (item.tuple.get_value_type (field))
-            {
-            case Tuple::String:
-                if (! m_tuple.is_set (field))
-                    m_tuple.set_str (field, item.tuple.get_str (field));
-                else if (item.tuple.get_str (field) != m_tuple.get_str (field))
-                    varied = true;
-                break;
-
-            case Tuple::Int:
-                if (! m_tuple.is_set (field))
-                    m_tuple.set_int (field, item.tuple.get_int (field));
-                else if (item.tuple.get_int (field) != m_tuple.get_int (field))
-                    varied = true;
-                break;
-
-            case Tuple::Empty:
-                if (m_tuple.is_set (field))
-                    varied = true;
-                break;
-            }
-
-            if (varied)
-                break;
-        }
-
-        if (varied)
-        {
-            m_varied_mask |= (uint64_t) 1 << (int) field;
-            m_tuple.unset (field);
+            if (! tuple_field_is_same (item.tuple, m_tuple, field))
+                m_varied_mask |= (uint64_t) 1 << (int) field;
         }
     }
 
@@ -302,28 +312,9 @@ bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int 
     if ((m_varied_mask & mask) != 0 && str == _(varied_str))
         return false;
 
-    bool changed = false;
-
-    if (str.isEmpty ())
+    if ((m_varied_mask & mask) != 0 || str != tuple_field_to_str (m_tuple, map->field))
     {
-        changed = m_tuple.is_set (map->field);
-        m_tuple.unset (map->field);
-    }
-    else if (Tuple::field_get_type (map->field) == Tuple::String)
-    {
-        auto utf8 = str.toUtf8 ();
-        changed = (!m_tuple.is_set (map->field) || m_tuple.get_str (map->field) != utf8);
-        m_tuple.set_str (map->field, utf8);
-    }
-    else /* Tuple::Int */
-    {
-        int val = str.toInt ();
-        changed = (!m_tuple.is_set (map->field) || m_tuple.get_int (map->field) != val);
-        m_tuple.set_int (map->field, val);
-    }
-
-    if (changed || (m_varied_mask & mask) != 0)
-    {
+        tuple_field_set_from_str (m_tuple, map->field, str);
         m_varied_mask &= ~mask;
         m_changed_mask |= mask;
         updateEnabled ();
@@ -355,16 +346,7 @@ QVariant InfoModel::data (const QModelIndex & index, int role) const
             if ((m_varied_mask & mask) != 0)
                 return QString (_(varied_str));
 
-            switch (m_tuple.get_value_type (map->field))
-            {
-            case Tuple::String:
-                return QString (m_tuple.get_str (map->field));
-            case Tuple::Int:
-                /* convert to string so Qt allows clearing the field */
-                return QString::number (m_tuple.get_int (map->field));
-            case Tuple::Empty:
-                return QVariant ();
-            }
+            return tuple_field_to_str (m_tuple, map->field);
         }
     }
     else if (role == Qt::FontRole)
