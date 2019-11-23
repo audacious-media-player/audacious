@@ -236,9 +236,6 @@ void InfoModel::revertTupleData ()
 
         for (auto & item : m_items)
         {
-            if (! item.tuple.is_set (field))
-                continue;
-
             switch (item.tuple.get_value_type (field))
             {
             case Tuple::String:
@@ -256,6 +253,8 @@ void InfoModel::revertTupleData ()
                 break;
 
             case Tuple::Empty:
+                if (m_tuple.is_set (field))
+                    varied = true;
                 break;
             }
 
