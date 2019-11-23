@@ -130,6 +130,22 @@ static bool tuple_field_is_same (const Tuple & a, const Tuple & b, Tuple::Field 
     }
 }
 
+static void tuple_field_copy (Tuple & dest, const Tuple & src, Tuple::Field field)
+{
+    switch (src.get_value_type (field))
+    {
+    case Tuple::String:
+        dest.set_str (field, src.get_str (field));
+        break;
+    case Tuple::Int:
+        dest.set_int (field, src.get_int (field));
+        break;
+    default:
+        dest.unset (field);
+        break;
+    }
+}
+
 class InfoModel : public QAbstractTableModel
 {
 public:
@@ -287,13 +303,24 @@ bool InfoModel::updateFile () const
     if (m_changed_mask == 0)
         return true;
 
-    if (m_items.len () != 1)
+    int n_saved = 0;
+
+    for (auto & item : m_items)
     {
-        AUDERR ("Saving multiple tags is not yet supported\n");
-        return false;
+        auto new_tuple = item.tuple.ref ();
+
+        for (auto field : Tuple::all_fields ())
+        {
+            uint64_t mask = ((uint64_t) 1 << (int) field);
+            if ((m_changed_mask & mask) != 0)
+                tuple_field_copy (new_tuple, m_tuple, field);
+        }
+
+        if (aud_file_write_tuple (item.filename, item.decoder, new_tuple))
+            n_saved ++;
     }
 
-    return aud_file_write_tuple (m_items[0].filename, m_items[0].decoder, m_tuple);
+    return (n_saved == m_items.len ());
 }
 
 bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int role)
