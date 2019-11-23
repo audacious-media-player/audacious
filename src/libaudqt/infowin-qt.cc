@@ -110,6 +110,7 @@ private:
     QLabel m_image;
     TextWidget m_uri_label;
     InfoWidget m_infowidget;
+    QPushButton * m_save_btn;
 
     void displayImage (const char * filename);
 
@@ -147,15 +148,14 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
                                       QDialogButtonBox::Close |
                                       QDialogButtonBox::Reset, this);
 
-    auto save_btn = bbox->button (QDialogButtonBox::Save),
-         close_btn = bbox->button (QDialogButtonBox::Close),
+    m_save_btn = bbox->button (QDialogButtonBox::Save);
+    auto close_btn = bbox->button (QDialogButtonBox::Close),
          revert_btn = bbox->button (QDialogButtonBox::Reset);
 
-    save_btn->setText (translate_str (N_("_Save")));
     close_btn->setText (translate_str (N_("_Close")));
     revert_btn->setText (translate_str (N_("_Revert")));
 
-    m_infowidget.linkEnabled (save_btn);
+    m_infowidget.linkEnabled (m_save_btn);
     m_infowidget.linkEnabled (revert_btn);
 
     vbox->addWidget (bbox);
@@ -176,12 +176,14 @@ void InfoWindow::fillInfo (Index<PlaylistAddItem> && items, bool updating_enable
         m_filename = String (items[0].filename);
         m_uri_label.setText ((QString) uri_to_display (m_filename));
         displayImage (m_filename);
+        m_save_btn->setText (translate_str (N_("_Save")));
     }
     else
     {
         m_filename = String ();
-        m_uri_label.setText ((QString) str_printf (_("%d files selected"), items.len ()));
+        m_uri_label.setText (translate_str (N_("%1 files selected")).arg (items.len ()));
         m_image.setPixmap (get_icon ("audio-x-generic").pixmap (to_native_dpi (48)));
+        m_save_btn->setText (translate_str (N_("_Save %1 files")).arg (items.len ()));
     }
 
     m_infowidget.fillInfo (std::move (items), updating_enabled);
