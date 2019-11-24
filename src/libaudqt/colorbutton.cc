@@ -33,7 +33,7 @@ void ColorButton::setColor (const QColor & color)
     {
         m_color = color;
 
-        QString style = QStringLiteral ("QWidget { background-color: %1 }").arg (m_color.name ());
+        QString style = QStringLiteral ("QWidget { background-color: %1; border: none; }").arg (m_color.name ());
         setStyleSheet (style);
 
         onColorChanged ();
