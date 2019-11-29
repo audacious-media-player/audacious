@@ -20,13 +20,25 @@
 #ifndef AUDACIOUS_I18N_H
 #define AUDACIOUS_I18N_H
 
+#ifdef HAVE_GETTEXT
+
 #include <libintl.h>
 
 #define _(String) dgettext (PACKAGE, String)
+
 #ifdef gettext_noop
-#define N_(String) gettext_noop (String)
+# define N_(String) gettext_noop (String)
 #else
+# define N_(String) (String)
+#endif
+
+#else
+
+#define _(String) (String)
 #define N_(String) (String)
+#define dgettext(package, str) (str)
+#define dngettext(package, str1, str2, count) (count > 1 ? str2 : str1)
+
 #endif
 
 #endif /* AUDACIOUS_I18N_H */
