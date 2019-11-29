@@ -25,7 +25,7 @@
 #include <libaudcore/index.h>
 #include <libaudqt/export.h>
 
-class PlaylistAddItem;
+struct PlaylistAddItem;
 class PluginHandle;
 class Tuple;
 
