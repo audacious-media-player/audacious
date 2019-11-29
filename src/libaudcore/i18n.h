@@ -38,6 +38,7 @@
 #define N_(String) (String)
 #define dgettext(package, str) (str)
 #define dngettext(package, str1, str2, count) (count > 1 ? str2 : str1)
+#define ngettext(str1, str2, count) (count > 1 ? str2 : str1)
 
 #endif
 
