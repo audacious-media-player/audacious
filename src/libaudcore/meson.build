@@ -102,6 +102,15 @@ if get_option('qt')
 endif
 
 
+if cc.has_function('iconv')
+  iconv_dep = []
+else
+  iconv_dep = cc.find_library('iconv', required: true)
+endif
+
+libaudcore_deps += [iconv_dep]
+
+
 libaudcore_lib = library('audcore',
   libaudcore_sources,
   cpp_args: ['-DLIBAUDCORE_BUILD'],
