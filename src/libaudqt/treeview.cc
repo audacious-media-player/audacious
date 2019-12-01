@@ -26,29 +26,21 @@
 namespace audqt {
 
 EXPORT TreeView::TreeView (QWidget * parent) :
-    QTreeView (parent) {}
+    QTreeView (parent)
+{
+    // activate() is perhaps a bit redundant with activated()
+    connect (this, & QTreeView::activated, this, & TreeView::activate);
+}
 
 EXPORT TreeView::~TreeView () {}
 
 EXPORT void TreeView::keyPressEvent (QKeyEvent * event)
 {
     auto CtrlShiftAlt = Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier;
-    if (! (event->modifiers () & CtrlShiftAlt))
+    if (event->key () == Qt::Key_Delete && ! (event->modifiers () & CtrlShiftAlt))
     {
-        switch (event->key ())
-        {
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
-            activate (currentIndex ());
-            return;
-
-        case Qt::Key_Delete:
-            removeSelectedRows ();
-            return;
-
-        default:
-            break;
-        }
+        removeSelectedRows ();
+        return;
     }
 
     QTreeView::keyPressEvent (event);
@@ -71,12 +63,10 @@ EXPORT void TreeView::removeSelectedRows ()
         m->removeRow (row);
 }
 
+// TODO: unnecessary, remove at next API break
 EXPORT void TreeView::mouseDoubleClickEvent (QMouseEvent * event)
 {
-    if (event->button () == Qt::LeftButton)
-        activate (currentIndex ());
-    else
-        QTreeView::mouseDoubleClickEvent (event);
+    QTreeView::mouseDoubleClickEvent (event);
 }
 
 EXPORT void TreeView::activate (const QModelIndex & index)
