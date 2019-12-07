@@ -18,13 +18,24 @@
  */
 
 #include "colorbutton.h"
+#include "libaudqt.h"
 
 namespace audqt {
 
 ColorButton::ColorButton (QWidget * parent) :
     QPushButton (parent)
 {
-    connect (this, &QPushButton::clicked, this, &ColorButton::onClicked);
+    connect (this, & QPushButton::clicked, [this] ()
+    {
+        auto dialog = findChild<QColorDialog *> ();
+        if (! dialog)
+        {
+            dialog = new QColorDialog (m_color, this);
+            connect (dialog, & QColorDialog::colorSelected, this, & ColorButton::setColor);
+        }
+
+        window_bring_to_front (dialog);
+    });
 }
 
 void ColorButton::setColor (const QColor & color)
@@ -38,14 +49,6 @@ void ColorButton::setColor (const QColor & color)
 
         onColorChanged ();
     }
-}
-
-void ColorButton::onClicked ()
-{
-    QColorDialog dialog (m_color);
-
-    if (dialog.exec() == QDialog::Accepted)
-        setColor (dialog.selectedColor ());
 }
 
 }

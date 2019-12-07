@@ -42,9 +42,6 @@ public:
 protected:
     virtual void onColorChanged () {};
 
-private slots:
-    void onClicked ();
-
 private:
     QColor m_color;
 };
