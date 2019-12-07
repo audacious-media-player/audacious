@@ -20,6 +20,9 @@
 #include "colorbutton.h"
 #include "libaudqt.h"
 
+#include <QColorDialog>
+#include <QPainter>
+
 namespace audqt {
 
 ColorButton::ColorButton (QWidget * parent) :
@@ -43,12 +46,16 @@ void ColorButton::setColor (const QColor & color)
     if (color != m_color)
     {
         m_color = color;
-
-        QString style = QStringLiteral ("QWidget { background-color: %1; border: none; }").arg (m_color.name ());
-        setStyleSheet (style);
+        update ();
 
         onColorChanged ();
     }
+}
+
+void ColorButton::paintEvent (QPaintEvent * event)
+{
+    QPushButton::paintEvent (event);
+    QPainter (this).fillRect (rect () - margins.FourPt, m_color);
 }
 
 }

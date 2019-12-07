@@ -23,7 +23,6 @@
 #include "libaudqt/export.h"
 
 #include <QPushButton>
-#include <QColorDialog>
 #include <QColor>
 
 namespace audqt {
@@ -43,6 +42,8 @@ protected:
     virtual void onColorChanged () {};
 
 private:
+    void paintEvent (QPaintEvent *) override;
+
     QColor m_color;
 };
 
