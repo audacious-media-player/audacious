@@ -205,6 +205,15 @@ EXPORT void aud_drct_pl_next ()
     playlist.next_song (aud_get_bool ("repeat"));
 }
 
+EXPORT void aud_drct_pl_next_album ()
+{
+    PlaylistEx playlist = Playlist::playing_playlist ();
+    if (playlist == Playlist ())
+        playlist = Playlist::active_playlist ();
+
+    playlist.next_album (aud_get_bool ("repeat"));
+}
+
 EXPORT void aud_drct_pl_prev ()
 {
     PlaylistEx playlist = Playlist::playing_playlist ();
@@ -212,6 +221,15 @@ EXPORT void aud_drct_pl_prev ()
         playlist = Playlist::active_playlist ();
 
     playlist.prev_song ();
+}
+
+EXPORT void aud_drct_pl_prev_album ()
+{
+    PlaylistEx playlist = Playlist::playing_playlist ();
+    if (playlist == Playlist ())
+        playlist = Playlist::active_playlist ();
+
+    playlist.prev_album ();
 }
 
 static void add_list (Index<PlaylistAddItem> && items, int at, bool to_temp, bool play)

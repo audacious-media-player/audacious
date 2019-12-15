@@ -166,6 +166,12 @@ Tuple PlaylistData::entry_tuple (int i, String * error) const
     return entry ? entry->tuple.ref () : Tuple ();
 }
 
+bool PlaylistData::same_album (const Tuple & a, const Tuple & b)
+{
+    String album = a.get_str (Tuple::Album);
+    return (album && album == b.get_str (Tuple::Album));
+}
+
 void PlaylistData::set_entry_tuple (PlaylistEntry * entry, Tuple && tuple)
 {
     m_total_length -= entry->length;
@@ -819,14 +825,7 @@ bool PlaylistData::shuffle_next ()
 {
     bool by_album = aud_get_bool ("album_shuffle");
 
-    // helper #1: determine whether two entries are in the same album
-    auto same_album = [] (const Tuple & a, const Tuple & b)
-    {
-        String album = a.get_str (Tuple::Album);
-        return (album && album == b.get_str (Tuple::Album));
-    };
-
-    // helper #2: determine whether an entry is among the shuffle choices
+    // helper: determine whether an entry is among the shuffle choices
     auto is_choice = [&] (PlaylistEntry * prev, PlaylistEntry * entry)
     {
         return (! entry->shuffle_num) && (! by_album || ! prev ||
@@ -962,6 +961,40 @@ bool PlaylistData::prev_song ()
     return true;
 }
 
+bool PlaylistData::prev_album ()
+{
+    // walk backwards to the previous album, then a second
+    for (int i = 0; i < 2; i++) {
+        int start_position = position ();
+
+        if (start_position == -1)
+            return false;
+
+        if (! entry_at (start_position))
+            return false;
+
+        Tuple start_tuple = entry_tuple (start_position, nullptr);
+
+        for (;;) {
+            if (! prev_song())
+                return false;
+
+            if ( position() == start_position)
+                return false;
+
+            if (! same_album (m_position->tuple, start_tuple))
+                break;
+        }
+    }
+
+    // then go forward one song, and we should be at the start of the album
+    // prior to where we started
+    next_song (true);
+
+    queue_position_change ();
+    return true;
+}
+
 bool PlaylistData::next_song_with_hint (bool repeat, int hint)
 {
     int n_entries = m_entries.len ();
@@ -1004,6 +1037,33 @@ bool PlaylistData::next_song (bool repeat)
 {
     if (! next_song_with_hint (repeat, position () + 1)) // -1 becomes 0
         return false;
+
+    queue_position_change ();
+    return true;
+}
+
+bool PlaylistData::next_album (bool repeat)
+{
+    int start_position = position ();
+
+    if (start_position == -1)
+        return false;
+
+    if (! entry_at (start_position))
+        return false;
+
+    Tuple start_tuple = entry_tuple (start_position, nullptr);
+
+    for (;;) {
+        if (! next_song_with_hint (repeat, position () + 1)) // -1 becomes 0
+            return false;
+
+        if ( position() == start_position)
+            return false;
+
+        if (! same_album (m_position->tuple, start_tuple))
+            break;
+    }
 
     queue_position_change ();
     return true;

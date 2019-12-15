@@ -657,8 +657,12 @@ EXPORT void Playlist::set_position (int entry_num) const
     { SIMPLE_VOID_WRAPPER (set_position, entry_num); }
 EXPORT bool Playlist::prev_song () const
     { SIMPLE_WRAPPER (bool, false, prev_song); }
+EXPORT bool Playlist::prev_album () const
+    { SIMPLE_WRAPPER (bool, false, prev_album); }
 EXPORT bool Playlist::next_song (bool repeat) const
     { SIMPLE_WRAPPER (bool, false, next_song, repeat); }
+EXPORT bool Playlist::next_album (bool repeat) const
+    { SIMPLE_WRAPPER (bool, false, next_album, repeat); }
 EXPORT int Playlist::get_focus () const
     { SIMPLE_WRAPPER (int, -1, focus); }
 EXPORT void Playlist::set_focus (int entry_num) const
