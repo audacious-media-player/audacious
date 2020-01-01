@@ -3,7 +3,7 @@ project('audacious', 'c', 'cpp',
         meson_version: '>= 0.50')
 
 
-copyright = 'Copyright (C) 2001-2018 Audacious developers and others'
+copyright = 'Copyright (C) 2001-2020 Audacious developers and others'
 
 
 qt5 = import('qt5')
