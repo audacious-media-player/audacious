@@ -161,8 +161,10 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     vbox->addWidget (bbox);
 
     connect (bbox, & QDialogButtonBox::accepted, [this] () {
-        m_infowidget.updateFile ();
-        deleteLater ();
+        if (m_infowidget.updateFile ())
+            deleteLater ();
+        else
+            aud_ui_show_error (str_printf (_("Error writing tag(s).")));
     });
 
     connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
