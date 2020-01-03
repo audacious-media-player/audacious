@@ -43,14 +43,14 @@ static const char * varied_str = N_("<various>");
 
 static const TupleFieldMap tuple_field_map[] = {
     {N_("Metadata"), Tuple::Invalid, false},
+    {N_("Title"), Tuple::Title, true},
     {N_("Artist"), Tuple::Artist, true},
     {N_("Album"), Tuple::Album, true},
-    {N_("Title"), Tuple::Title, true},
+    {N_("Album Artist"), Tuple::AlbumArtist, true},
     {N_("Track Number"), Tuple::Track, true},
     {N_("Genre"), Tuple::Genre, true},
     {N_("Comment"), Tuple::Comment, true},
     {N_("Description"), Tuple::Description, true},
-    {N_("Album Artist"), Tuple::AlbumArtist, true},
     {N_("Composer"), Tuple::Composer, true},
     {N_("Performer"), Tuple::Performer, true},
     {N_("Recording Year"), Tuple::Year, true},
