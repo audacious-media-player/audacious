@@ -98,7 +98,9 @@ public:
     void shuffle_replay (const Index<int> & history);
 
     bool prev_song ();
+    bool prev_album ();
     bool next_song (bool repeat);
+    bool next_album (bool repeat);
 
     int next_unscanned_entry (int entry_num) const;
     bool entry_needs_rescan (PlaylistEntry * entry, bool need_decoder, bool need_tuple);
@@ -133,6 +135,8 @@ private:
     void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
     void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
     void queue_position_change ();
+
+    bool same_album (const Tuple & a, const Tuple & b);
 
     static void sort_entries (Index<EntryPtr> & entries, const CompareData & data);
 

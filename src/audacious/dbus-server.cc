@@ -91,6 +91,13 @@ static gboolean do_advance (Obj * obj, Invoc * invoc)
     return true;
 }
 
+static gboolean do_advance_album (Obj * obj, Invoc * invoc)
+{
+    CURRENT.next_album (aud_get_bool ("repeat"));
+    FINISH (advance_album);
+    return true;
+}
+
 static gboolean do_auto_advance (Obj * obj, Invoc * invoc)
 {
     FINISH2 (auto_advance, ! aud_get_bool ("no_playlist_advance"));
@@ -452,6 +459,13 @@ static gboolean do_reverse (Obj * obj, Invoc * invoc)
     return true;
 }
 
+static gboolean do_reverse_album (Obj * obj, Invoc * invoc)
+{
+    CURRENT.prev_album ();
+    FINISH (reverse_album);
+    return true;
+}
+
 static gboolean do_seek (Obj * obj, Invoc * invoc, unsigned pos)
 {
     aud_drct_seek (pos);
@@ -757,6 +771,7 @@ handlers[] =
     {"handle-add-list", (GCallback) do_add_list},
     {"handle-add-url", (GCallback) do_add_url},
     {"handle-advance", (GCallback) do_advance},
+    {"handle-advance-album", (GCallback) do_advance_album},
     {"handle-auto-advance", (GCallback) do_auto_advance},
     {"handle-balance", (GCallback) do_balance},
     {"handle-clear", (GCallback) do_clear},
@@ -805,6 +820,7 @@ handlers[] =
     {"handle-record", (GCallback) do_record},
     {"handle-repeat", (GCallback) do_repeat},
     {"handle-reverse", (GCallback) do_reverse},
+    {"handle-reverse-album", (GCallback) do_reverse_album},
     {"handle-seek", (GCallback) do_seek},
     {"handle-select-displayed-playlist", (GCallback) do_select_displayed_playlist},
     {"handle-select-playing-playlist", (GCallback) do_select_playing_playlist},
