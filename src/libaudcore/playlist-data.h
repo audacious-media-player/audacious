@@ -136,13 +136,15 @@ private:
     void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
     void queue_position_change ();
 
-    bool same_album (const Tuple & a, const Tuple & b);
-
     static void sort_entries (Index<EntryPtr> & entries, const CompareData & data);
 
     void set_position (PlaylistEntry * entry, bool update_shuffle);
 
-    bool shuffle_prev ();
+    int shuffle_pos_before (int ref_pos) const;
+
+    int pos_before (int ref_pos, bool shuffle) const
+        { return shuffle ? shuffle_pos_before (ref_pos) : aud::max (ref_pos - 1, -1); }
+
     bool shuffle_next ();
     void shuffle_reset ();
 

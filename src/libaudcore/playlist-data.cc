@@ -166,7 +166,7 @@ Tuple PlaylistData::entry_tuple (int i, String * error) const
     return entry ? entry->tuple.ref () : Tuple ();
 }
 
-bool PlaylistData::same_album (const Tuple & a, const Tuple & b)
+static bool same_album (const Tuple & a, const Tuple & b)
 {
     String album = a.get_str (Tuple::Album);
     return (album && album == b.get_str (Tuple::Album));
@@ -800,25 +800,22 @@ void PlaylistData::set_position (int entry_num)
     queue_position_change ();
 }
 
-bool PlaylistData::shuffle_prev ()
+int PlaylistData::shuffle_pos_before (int ref_pos) const
 {
-    PlaylistEntry * found = nullptr;
+    const PlaylistEntry * ref_entry = entry_at (ref_pos);
+    const PlaylistEntry * found = nullptr;
 
     for (auto & entry : m_entries)
     {
         if (entry->shuffle_num &&
-            (! m_position || entry->shuffle_num < m_position->shuffle_num) &&
+            (! ref_entry || entry->shuffle_num < ref_entry->shuffle_num) &&
             (! found || entry->shuffle_num > found->shuffle_num))
         {
             found = entry.get ();
         }
     }
 
-    if (! found)
-        return false;
-
-    set_position (found, false);
-    return true;
+    return found ? found->number : -1;
 }
 
 bool PlaylistData::shuffle_next ()
@@ -943,54 +940,49 @@ void PlaylistData::shuffle_replay (const Index<int> & history)
 
 bool PlaylistData::prev_song ()
 {
-    if (aud_get_bool ("shuffle"))
-    {
-        if (! shuffle_prev ())
-            return false;
-    }
-    else
-    {
-        int pos = position ();
-        if (pos < 1)
-            return false;
+    bool shuffle = aud_get_bool ("shuffle");
+    auto entry = entry_at (pos_before (position (), shuffle));
+    if (! entry)
+        return false;
 
-        set_position (m_entries[pos - 1].get (), true);
-    }
-
+    // update shuffle list if entry didn't come from it
+    set_position (entry, ! shuffle);
     queue_position_change ();
     return true;
 }
 
 bool PlaylistData::prev_album ()
 {
-    // walk backwards to the previous album, then a second
-    for (int i = 0; i < 2; i++) {
-        int start_position = position ();
+    bool shuffle = aud_get_bool ("shuffle");
+    int pos = position ();
 
-        if (start_position == -1)
+    // find the start of the previous album
+    for (bool in_prev_album = false;;)
+    {
+        auto entry = entry_at (pos);
+        if (! entry)
             return false;
 
-        if (! entry_at (start_position))
-            return false;
-
-        Tuple start_tuple = entry_tuple (start_position, nullptr);
-
-        for (;;) {
-            if (! prev_song())
-                return false;
-
-            if ( position() == start_position)
-                return false;
-
-            if (! same_album (m_position->tuple, start_tuple))
+        while (1)
+        {
+            auto prev_entry = entry_at (pos_before (pos, shuffle));
+            if (! prev_entry || ! same_album (entry->tuple, prev_entry->tuple))
                 break;
+
+            pos = prev_entry->number;
         }
+
+        if (in_prev_album)
+            break; // we're at the start of the previous album
+
+        // we're at the start of the current album
+        // one more song back puts us in the previous album
+        pos = pos_before (pos, shuffle);
+        in_prev_album = true;
     }
 
-    // then go forward one song, and we should be at the start of the album
-    // prior to where we started
-    next_song (true);
-
+    // update shuffle list if entry didn't come from it
+    set_position (entry_at (pos), ! shuffle);
     queue_position_change ();
     return true;
 }
