@@ -871,6 +871,20 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
     return NO_POS;
 }
 
+PlaylistData::PosChange PlaylistData::pos_after (int ref_pos, bool shuffle, bool by_album) const
+{
+    if (m_queued.len ())
+        return NO_POS;  // let pos_new() handle queue entries
+
+    if (shuffle)
+        return shuffle_pos_after (ref_pos, by_album);
+
+    if (ref_pos >= 0 && ref_pos + 1 < m_entries.len ())
+        return {ref_pos + 1, true};
+
+    return NO_POS;
+}
+
 PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool by_album) const
 {
     Index<const PlaylistEntry *> choices;
@@ -893,6 +907,20 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool by_album) const
 
     if (choices.len ())
         return {choices[rand () % choices.len ()]->number, true};
+
+    return NO_POS;
+}
+
+PlaylistData::PosChange PlaylistData::pos_new (bool shuffle, bool by_album, int hint_pos) const
+{
+    if (m_queued.len ())
+        return {m_queued[0]->number, true};
+
+    if (shuffle)
+        return shuffle_pos_random (by_album);
+
+    if (hint_pos >= 0 && hint_pos < m_entries.len ())
+        return {hint_pos, true};
 
     return NO_POS;
 }
@@ -988,49 +1016,27 @@ bool PlaylistData::prev_album ()
 
 bool PlaylistData::next_song_with_hint (bool repeat, int hint)
 {
-    int n_entries = m_entries.len ();
-    if (! n_entries)
-        return false;
+    bool shuffle = aud_get_bool ("shuffle");
+    bool by_album = aud_get_bool ("album_shuffle");
 
-    if (m_queued.len ())
-    {
-        change_position ({m_queued[0]->number, true});
-        return true;
-    }
+    auto change = pos_after (position (), shuffle, by_album);
 
-    if (aud_get_bool ("shuffle"))
-    {
-        bool by_album = aud_get_bool ("album_shuffle");
-        auto change = shuffle_pos_after (position (), by_album);
+    if (change.new_pos < 0)
+        change = pos_new (shuffle, by_album, hint);
 
-        if (change.new_pos < 0)
-            change = shuffle_pos_random (by_album);
-
-        if (change.new_pos < 0)
-        {
-            if (! repeat)
-                return false;
-
-            shuffle_reset ();
-            change = shuffle_pos_random (by_album);
-
-            if (change.new_pos < 0)
-                return false;
-        }
-
-        change_position (change);
-        return true;
-    }
-
-    if (hint < 0 || hint >= n_entries)
+    if (change.new_pos < 0)
     {
         if (! repeat)
             return false;
 
-        hint = 0;
+        shuffle_reset ();
+        change = pos_new (shuffle, by_album, 0);
+
+        if (change.new_pos < 0)
+            return false;
     }
 
-    change_position ({hint, true});
+    change_position (change);
     return true;
 }
 

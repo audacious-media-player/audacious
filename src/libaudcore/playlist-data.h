@@ -148,7 +148,9 @@ private:
     int shuffle_pos_before (int ref_pos) const;
     int pos_before (int ref_pos, bool shuffle) const;
     PosChange shuffle_pos_after (int ref_pos, bool by_album) const;
+    PosChange pos_after (int ref_pos, bool shuffle, bool by_album) const;
     PosChange shuffle_pos_random (bool by_album) const;
+    PosChange pos_new (bool shuffle, bool by_album, int hint_pos) const;
 
     void shuffle_reset ();
     bool next_song_with_hint (bool repeat, int hint);
