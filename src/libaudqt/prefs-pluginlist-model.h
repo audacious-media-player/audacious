@@ -25,12 +25,14 @@
 enum class PluginType;
 class PluginHandle;
 
-namespace audqt {
+namespace audqt
+{
 
 class PluginListModel : public QAbstractItemModel
 {
 public:
-    enum {
+    enum
+    {
         NameColumn,
         AboutColumn,
         SettingsColumn,
@@ -38,20 +40,20 @@ public:
         NumColumns
     };
 
-    PluginListModel (QObject * parent) : QAbstractItemModel (parent) {}
+    PluginListModel(QObject * parent) : QAbstractItemModel(parent) {}
 
-    QModelIndex index (int row, int column, const QModelIndex & parent) const;
-    QModelIndex parent (const QModelIndex & child) const;
+    QModelIndex index(int row, int column, const QModelIndex & parent) const;
+    QModelIndex parent(const QModelIndex & child) const;
 
-    PluginHandle * pluginForIndex (const QModelIndex & index) const;
-    QModelIndex indexForType (PluginType type) const;
+    PluginHandle * pluginForIndex(const QModelIndex & index) const;
+    QModelIndex indexForType(PluginType type) const;
 
-    int rowCount (const QModelIndex & parent) const;
-    int columnCount (const QModelIndex & parent) const;
+    int rowCount(const QModelIndex & parent) const;
+    int columnCount(const QModelIndex & parent) const;
 
-    QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
-    bool setData (const QModelIndex & index, const QVariant & value, int role);
-    Qt::ItemFlags flags (const QModelIndex & parent) const;
+    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+    bool setData(const QModelIndex & index, const QVariant & value, int role);
+    Qt::ItemFlags flags(const QModelIndex & parent) const;
 };
 
 } // namespace audqt

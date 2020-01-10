@@ -41,9 +41,11 @@ class Playlist;
 class PluginHandle;
 struct PreferencesWidget;
 
-namespace audqt {
+namespace audqt
+{
 
-enum class FileMode {
+enum class FileMode
+{
     Open,
     OpenFolder,
     Add,
@@ -53,14 +55,16 @@ enum class FileMode {
     count
 };
 
-struct PixelSizes {
+struct PixelSizes
+{
     int OneInch;
     int TwoPt;
     int FourPt;
     int EightPt;
 };
 
-struct PixelMargins {
+struct PixelMargins
+{
     QMargins TwoPt;
     QMargins FourPt;
     QMargins EightPt;
@@ -69,112 +73,124 @@ struct PixelMargins {
 struct MenuItem;
 
 /* about.cc */
-void aboutwindow_show ();
-void aboutwindow_hide ();
+void aboutwindow_show();
+void aboutwindow_hide();
 
 /* playlist-management.cc */
-void playlist_show_rename (Playlist playlist);
-void playlist_confirm_delete (Playlist playlist);
+void playlist_show_rename(Playlist playlist);
+void playlist_confirm_delete(Playlist playlist);
 
 /* equalizer.cc */
-void equalizer_show ();
-void equalizer_hide ();
+void equalizer_show();
+void equalizer_hide();
 
 /* eq-preset-qt.cc */
-void eq_presets_show ();
-void eq_presets_hide ();
+void eq_presets_show();
+void eq_presets_hide();
 
 /* fileopener.cc */
-void fileopener_show (FileMode mode);
+void fileopener_show(FileMode mode);
 
 /* url-opener.cc */
-void urlopener_show (bool open);
+void urlopener_show(bool open);
 
 /* audqt.cc */
 extern const PixelSizes & sizes;
 extern const PixelMargins & margins;
 
-static inline int to_native_dpi (int x)
-    { return aud::rescale (x, 96, sizes.OneInch); }
-static inline int to_portable_dpi (int x)
-    { return aud::rescale (x, sizes.OneInch, 96); }
+static inline int to_native_dpi(int x)
+{
+    return aud::rescale(x, 96, sizes.OneInch);
+}
+static inline int to_portable_dpi(int x)
+{
+    return aud::rescale(x, sizes.OneInch, 96);
+}
 
-void init ();
-void run ();
-void quit ();
-void cleanup ();
+void init();
+void run();
+void quit();
+void cleanup();
 
-QIcon get_icon (const char * name);
+QIcon get_icon(const char * name);
 
-QGradientStops dark_bg_gradient (const QColor & base);
-QColor vis_bar_color (const QColor & hue, int bar, int n_bars);
+QGradientStops dark_bg_gradient(const QColor & base);
+QColor vis_bar_color(const QColor & hue, int bar, int n_bars);
 
-QHBoxLayout * make_hbox (QWidget * parent, int spacing = sizes.FourPt);
-QVBoxLayout * make_vbox (QWidget * parent, int spacing = sizes.FourPt);
+QHBoxLayout * make_hbox(QWidget * parent, int spacing = sizes.FourPt);
+QVBoxLayout * make_vbox(QWidget * parent, int spacing = sizes.FourPt);
 
-void enable_layout (QLayout * layout, bool enabled);
-void clear_layout (QLayout * layout);
-void window_bring_to_front (QWidget * win);
-void simple_message (const char * title, const char * text);
-void simple_message (const char * title, const char * text, QMessageBox::Icon icon);
-QString translate_str (const char * str, const char * domain);
+void enable_layout(QLayout * layout, bool enabled);
+void clear_layout(QLayout * layout);
+void window_bring_to_front(QWidget * win);
+void simple_message(const char * title, const char * text);
+void simple_message(const char * title, const char * text,
+                    QMessageBox::Icon icon);
+QString translate_str(const char * str, const char * domain);
 
 #ifdef PACKAGE
-static inline QString translate_str (const char * str)
-    { return translate_str (str, PACKAGE); }
+static inline QString translate_str(const char * str)
+{
+    return translate_str(str, PACKAGE);
+}
 #endif
 
 /* file-entry.cc */
-QLineEdit * file_entry_new (QWidget * parent, const char * title,
- QFileDialog::FileMode file_mode, QFileDialog::AcceptMode accept_mode);
-String file_entry_get_uri (QLineEdit * entry);
-void file_entry_set_uri (QLineEdit * entry, const char * uri);
+QLineEdit * file_entry_new(QWidget * parent, const char * title,
+                           QFileDialog::FileMode file_mode,
+                           QFileDialog::AcceptMode accept_mode);
+String file_entry_get_uri(QLineEdit * entry);
+void file_entry_set_uri(QLineEdit * entry, const char * uri);
 
 /* font-entry.cc */
-QLineEdit * font_entry_new (QWidget * parent, const char * font);
-QFont qfont_from_string (const char * name);
-StringBuf qfont_to_string (const QFont & font);
+QLineEdit * font_entry_new(QWidget * parent, const char * font);
+QFont qfont_from_string(const char * name);
+StringBuf qfont_to_string(const QFont & font);
 
 /* prefs-builder.cc */
-void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain);
+void prefs_populate(QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets,
+                    const char * domain);
 
 /* prefs-plugin.cc */
-void plugin_about (PluginHandle * ph);
-void plugin_prefs (PluginHandle * ph);
+void plugin_about(PluginHandle * ph);
+void plugin_prefs(PluginHandle * ph);
 
 /* prefs-window.cc */
-void prefswin_show ();
-void prefswin_hide ();
-void prefswin_show_page (int id, bool show = true);
-void prefswin_show_plugin_page (PluginType type);
+void prefswin_show();
+void prefswin_hide();
+void prefswin_show_page(int id, bool show = true);
+void prefswin_show_plugin_page(PluginType type);
 
 /* log-inspector.cc */
-void log_inspector_show ();
-void log_inspector_hide ();
+void log_inspector_show();
+void log_inspector_hide();
 
 /* art-qt.cc */
-QImage art_request (const char * filename, bool * queued = nullptr);
-QPixmap art_scale (const QImage & image, unsigned int w, unsigned int h, bool want_hidpi = true);
-QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi = true);
-QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi = true);
+QImage art_request(const char * filename, bool * queued = nullptr);
+QPixmap art_scale(const QImage & image, unsigned int w, unsigned int h,
+                  bool want_hidpi = true);
+QPixmap art_request(const char * filename, unsigned int w, unsigned int h,
+                    bool want_hidpi = true);
+QPixmap art_request_current(unsigned int w, unsigned int h,
+                            bool want_hidpi = true);
 
 /* infopopup-qt.cc */
-void infopopup_show (Playlist playlist, int entry);
-void infopopup_show_current ();
-void infopopup_hide ();
+void infopopup_show(Playlist playlist, int entry);
+void infopopup_show_current();
+void infopopup_hide();
 
 /* infowin.cc */
-void infowin_show (Playlist playlist, int entry);
-void infowin_show_selected (Playlist playlist);
-void infowin_show_current ();
-void infowin_hide ();
+void infowin_show(Playlist playlist, int entry);
+void infowin_show_selected(Playlist playlist);
+void infowin_show_current();
+void infowin_hide();
 
 /* queue-manager.cc */
-void queue_manager_show ();
-void queue_manager_hide ();
+void queue_manager_show();
+void queue_manager_hide();
 
 /* volumebutton.cc */
-QToolButton * volume_button_new (QWidget * parent = nullptr);
+QToolButton * volume_button_new(QWidget * parent = nullptr);
 
 } // namespace audqt
 

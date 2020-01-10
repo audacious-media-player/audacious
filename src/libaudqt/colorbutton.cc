@@ -23,40 +23,40 @@
 #include <QColorDialog>
 #include <QPainter>
 
-namespace audqt {
-
-ColorButton::ColorButton (QWidget * parent) :
-    QPushButton (parent)
+namespace audqt
 {
-    connect (this, & QPushButton::clicked, [this] ()
-    {
-        auto dialog = findChild<QColorDialog *> ();
-        if (! dialog)
+
+ColorButton::ColorButton(QWidget * parent) : QPushButton(parent)
+{
+    connect(this, &QPushButton::clicked, [this]() {
+        auto dialog = findChild<QColorDialog *>();
+        if (!dialog)
         {
-            dialog = new QColorDialog (m_color, this);
-            dialog->setAttribute (Qt::WA_DeleteOnClose);
-            connect (dialog, & QColorDialog::colorSelected, this, & ColorButton::setColor);
+            dialog = new QColorDialog(m_color, this);
+            dialog->setAttribute(Qt::WA_DeleteOnClose);
+            connect(dialog, &QColorDialog::colorSelected, this,
+                    &ColorButton::setColor);
         }
 
-        window_bring_to_front (dialog);
+        window_bring_to_front(dialog);
     });
 }
 
-void ColorButton::setColor (const QColor & color)
+void ColorButton::setColor(const QColor & color)
 {
     if (color != m_color)
     {
         m_color = color;
-        update ();
+        update();
 
-        onColorChanged ();
+        onColorChanged();
     }
 }
 
-void ColorButton::paintEvent (QPaintEvent * event)
+void ColorButton::paintEvent(QPaintEvent * event)
 {
-    QPushButton::paintEvent (event);
-    QPainter (this).fillRect (rect () - margins.FourPt, m_color);
+    QPushButton::paintEvent(event);
+    QPainter(this).fillRect(rect() - margins.FourPt, m_color);
 }
 
-}
+} // namespace audqt

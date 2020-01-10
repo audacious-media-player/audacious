@@ -30,79 +30,81 @@
 
 #include "libaudqt.h"
 
-static QTabWidget * buildCreditsNotebook (QWidget * parent)
+static QTabWidget * buildCreditsNotebook(QWidget * parent)
 {
-    const char * data_dir = aud_get_path (AudPath::DataDir);
+    const char * data_dir = aud_get_path(AudPath::DataDir);
     const char * titles[2] = {N_("Credits"), N_("License")};
     const char * filenames[2] = {"AUTHORS", "COPYING"};
 
-    auto tabs = new QTabWidget (parent);
-    tabs->setDocumentMode (true);
-    tabs->setMinimumSize (6 * audqt::sizes.OneInch, 2 * audqt::sizes.OneInch);
+    auto tabs = new QTabWidget(parent);
+    tabs->setDocumentMode(true);
+    tabs->setMinimumSize(6 * audqt::sizes.OneInch, 2 * audqt::sizes.OneInch);
 
-    for (int i = 0; i < 2; i ++)
+    for (int i = 0; i < 2; i++)
     {
-        auto text = VFSFile::read_file (filename_build ({data_dir, filenames[i]}), VFS_APPEND_NULL);
-        auto edit = new QPlainTextEdit (text.begin (), parent);
-        edit->setReadOnly (true);
-        edit->setFrameStyle (QFrame::NoFrame);
-        tabs->addTab (edit, _(titles[i]));
+        auto text = VFSFile::read_file(filename_build({data_dir, filenames[i]}),
+                                       VFS_APPEND_NULL);
+        auto edit = new QPlainTextEdit(text.begin(), parent);
+        edit->setReadOnly(true);
+        edit->setFrameStyle(QFrame::NoFrame);
+        tabs->addTab(edit, _(titles[i]));
     }
 
     return tabs;
 }
 
-static QDialog * buildAboutWindow ()
+static QDialog * buildAboutWindow()
 {
-    const char * about_text = "<big><b>Audacious " VERSION "</b></big><br>" COPYRIGHT;
+    const char * about_text =
+        "<big><b>Audacious " VERSION "</b></big><br>" COPYRIGHT;
     const char * website = "https://audacious-media-player.org";
 
     auto window = new QDialog;
-    window->setWindowTitle (_("About Audacious"));
+    window->setWindowTitle(_("About Audacious"));
 
-    auto logo = new QLabel (window);
-    int logo_size = audqt::to_native_dpi (400);
-    logo->setPixmap (QIcon (":/about-logo.svg").pixmap (logo_size, logo_size));
-    logo->setAlignment (Qt::AlignHCenter);
+    auto logo = new QLabel(window);
+    int logo_size = audqt::to_native_dpi(400);
+    logo->setPixmap(QIcon(":/about-logo.svg").pixmap(logo_size, logo_size));
+    logo->setAlignment(Qt::AlignHCenter);
 
-    auto text = new QLabel (about_text, window);
-    text->setAlignment (Qt::AlignHCenter);
+    auto text = new QLabel(about_text, window);
+    text->setAlignment(Qt::AlignHCenter);
 
-    auto anchor = QString ("<a href='%1'>%1</a>").arg (website);
-    auto link_label = new QLabel (anchor, window);
-    link_label->setAlignment (Qt::AlignHCenter);
-    link_label->setOpenExternalLinks (true);
+    auto anchor = QString("<a href='%1'>%1</a>").arg(website);
+    auto link_label = new QLabel(anchor, window);
+    link_label->setAlignment(Qt::AlignHCenter);
+    link_label->setOpenExternalLinks(true);
 
-    auto layout = audqt::make_vbox (window);
-    layout->addSpacing (audqt::sizes.EightPt);
-    layout->addWidget (logo);
-    layout->addWidget (text);
-    layout->addWidget (link_label);
-    layout->addWidget (buildCreditsNotebook (window));
+    auto layout = audqt::make_vbox(window);
+    layout->addSpacing(audqt::sizes.EightPt);
+    layout->addWidget(logo);
+    layout->addWidget(text);
+    layout->addWidget(link_label);
+    layout->addWidget(buildCreditsNotebook(window));
 
     return window;
 }
 
 static QDialog * s_aboutwin = nullptr;
 
-namespace audqt {
-
-EXPORT void aboutwindow_show ()
+namespace audqt
 {
-    if (! s_aboutwin)
-    {
-        s_aboutwin = buildAboutWindow ();
-        s_aboutwin->setAttribute (Qt::WA_DeleteOnClose);
 
-        QObject::connect (s_aboutwin, & QObject::destroyed, [] () {
-            s_aboutwin = nullptr;
-        });
+EXPORT void aboutwindow_show()
+{
+    if (!s_aboutwin)
+    {
+        s_aboutwin = buildAboutWindow();
+        s_aboutwin->setAttribute(Qt::WA_DeleteOnClose);
+
+        QObject::connect(s_aboutwin, &QObject::destroyed,
+                         []() { s_aboutwin = nullptr; });
     }
 
-    window_bring_to_front (s_aboutwin);
+    window_bring_to_front(s_aboutwin);
 }
 
-EXPORT void aboutwindow_hide ()
+EXPORT void aboutwindow_hide()
 {
     if (s_aboutwin)
         delete s_aboutwin;

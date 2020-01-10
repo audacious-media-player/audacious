@@ -28,104 +28,109 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/runtime.h>
 
-namespace audqt {
+namespace audqt
+{
 
 class MenuAction : public QAction
 {
 public:
-    MenuAction (const MenuItem & item, const char * domain, QWidget * parent);
+    MenuAction(const MenuItem & item, const char * domain, QWidget * parent);
 
 private:
-    void toggle (bool checked);
-    void update ();
+    void toggle(bool checked);
+    void update();
 
     const MenuItem & m_item;
     SmartPtr<HookReceiver<MenuAction>> m_hook;
 };
 
-MenuAction::MenuAction (const MenuItem & item, const char * domain, QWidget * parent) :
-    QAction (parent),
-    m_item (item)
+MenuAction::MenuAction(const MenuItem & item, const char * domain,
+                       QWidget * parent)
+    : QAction(parent), m_item(item)
 {
     if (item.sep)
     {
-        setSeparator (true);
+        setSeparator(true);
         return;
     }
 
-    setText (translate_str (item.text.name, domain));
+    setText(translate_str(item.text.name, domain));
 
     if (item.cfg.name)
     {
-        setCheckable (true);
-        setChecked (aud_get_bool (item.cfg.sect, item.cfg.name));
+        setCheckable(true);
+        setChecked(aud_get_bool(item.cfg.sect, item.cfg.name));
 
-        QObject::connect (this, & QAction::toggled, this, & MenuAction::toggle);
+        QObject::connect(this, &QAction::toggled, this, &MenuAction::toggle);
 
         if (item.cfg.hook)
-            m_hook.capture (new HookReceiver<MenuAction> (item.cfg.hook, this, & MenuAction::update));
+            m_hook.capture(new HookReceiver<MenuAction>(item.cfg.hook, this,
+                                                        &MenuAction::update));
     }
     else if (item.func)
-        QObject::connect (this, & QAction::triggered, item.func);
+        QObject::connect(this, &QAction::triggered, item.func);
     else if (item.items.len)
-        setMenu (menu_build (item.items, domain, parent));
+        setMenu(menu_build(item.items, domain, parent));
     else if (item.submenu)
-        setMenu (item.submenu ());
+        setMenu(item.submenu());
 
 #ifndef Q_OS_MAC
-    if (item.text.icon && QIcon::hasThemeIcon (item.text.icon))
-        setIcon (audqt::get_icon (item.text.icon));
+    if (item.text.icon && QIcon::hasThemeIcon(item.text.icon))
+        setIcon(audqt::get_icon(item.text.icon));
 #endif
 
     if (item.text.shortcut)
-        setShortcut (QString (item.text.shortcut));
+        setShortcut(QString(item.text.shortcut));
 
     if (parent)
-        parent->addAction (this);
+        parent->addAction(this);
 }
 
-void MenuAction::toggle (bool checked)
+void MenuAction::toggle(bool checked)
 {
-    if (aud_get_bool (m_item.cfg.sect, m_item.cfg.name) != checked)
+    if (aud_get_bool(m_item.cfg.sect, m_item.cfg.name) != checked)
     {
-        aud_set_bool (m_item.cfg.sect, m_item.cfg.name, checked);
+        aud_set_bool(m_item.cfg.sect, m_item.cfg.name, checked);
 
         if (m_item.func)
-            m_item.func ();
+            m_item.func();
     }
 }
 
-void MenuAction::update ()
+void MenuAction::update()
 {
-    setChecked (aud_get_bool (m_item.cfg.sect, m_item.cfg.name));
+    setChecked(aud_get_bool(m_item.cfg.sect, m_item.cfg.name));
 }
 
-EXPORT QAction * menu_action (const MenuItem & menu_item, const char * domain, QWidget * parent)
+EXPORT QAction * menu_action(const MenuItem & menu_item, const char * domain,
+                             QWidget * parent)
 {
-    return new MenuAction (menu_item, domain, parent);
+    return new MenuAction(menu_item, domain, parent);
 }
 
-EXPORT QMenu * menu_build (ArrayRef<MenuItem> menu_items, const char * domain, QWidget * parent)
+EXPORT QMenu * menu_build(ArrayRef<MenuItem> menu_items, const char * domain,
+                          QWidget * parent)
 {
-    QMenu * m = new QMenu (parent);
+    QMenu * m = new QMenu(parent);
 
     for (auto & it : menu_items)
-        m->addAction (new MenuAction (it, domain, parent));
+        m->addAction(new MenuAction(it, domain, parent));
 
     return m;
 }
 
-EXPORT QMenuBar * menubar_build (ArrayRef<MenuItem> menu_items, const char * domain, QWidget * parent)
+EXPORT QMenuBar * menubar_build(ArrayRef<MenuItem> menu_items,
+                                const char * domain, QWidget * parent)
 {
 #ifdef Q_OS_MAC
-    QMenuBar * m = new QMenuBar (nullptr);
+    QMenuBar * m = new QMenuBar(nullptr);
 #else
-    QMenuBar * m = new QMenuBar (parent);
-    m->setContextMenuPolicy (Qt::PreventContextMenu);
+    QMenuBar * m = new QMenuBar(parent);
+    m->setContextMenuPolicy(Qt::PreventContextMenu);
 #endif
 
     for (auto & it : menu_items)
-        m->addAction (new MenuAction (it, domain, parent));
+        m->addAction(new MenuAction(it, domain, parent));
 
     return m;
 }

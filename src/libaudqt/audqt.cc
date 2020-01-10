@@ -31,7 +31,8 @@
 #include "libaudqt-internal.h"
 #include "libaudqt.h"
 
-namespace audqt {
+namespace audqt
+{
 
 static int init_count;
 
@@ -41,125 +42,114 @@ static PixelMargins margins_local;
 EXPORT const PixelSizes & sizes = sizes_local;
 EXPORT const PixelMargins & margins = margins_local;
 
-EXPORT void init ()
+EXPORT void init()
 {
-    if (init_count ++)
+    if (init_count++)
         return;
 
     static char app_name[] = "audacious";
     static int dummy_argc = 1;
     static char * dummy_argv[] = {app_name, nullptr};
 
-    auto qapp = new QApplication (dummy_argc, dummy_argv);
+    auto qapp = new QApplication(dummy_argc, dummy_argv);
 
-    qapp->setAttribute (Qt::AA_UseHighDpiPixmaps);
+    qapp->setAttribute(Qt::AA_UseHighDpiPixmaps);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
-    qapp->setAttribute (Qt::AA_ForceRasterWidgets);
+    qapp->setAttribute(Qt::AA_ForceRasterWidgets);
 #endif
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-    qapp->setAttribute (Qt::AA_UseStyleSheetPropagationInWidgetStyles);
+    qapp->setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles);
 #endif
 
-    qapp->setApplicationName (_("Audacious"));
-    if (qapp->windowIcon ().isNull ())
-        qapp->setWindowIcon (audqt::get_icon (app_name));
+    qapp->setApplicationName(_("Audacious"));
+    if (qapp->windowIcon().isNull())
+        qapp->setWindowIcon(audqt::get_icon(app_name));
 
-    qapp->setQuitOnLastWindowClosed (false);
+    qapp->setQuitOnLastWindowClosed(false);
 
-    auto desktop = qapp->desktop ();
-    sizes_local.OneInch = aud::max (96, (desktop->logicalDpiX () + desktop->logicalDpiY ()) / 2);
-    sizes_local.TwoPt = aud::rescale (2, 72, sizes_local.OneInch);
-    sizes_local.FourPt = aud::rescale (4, 72, sizes_local.OneInch);
-    sizes_local.EightPt = aud::rescale (8, 72, sizes_local.OneInch);
+    auto desktop = qapp->desktop();
+    sizes_local.OneInch =
+        aud::max(96, (desktop->logicalDpiX() + desktop->logicalDpiY()) / 2);
+    sizes_local.TwoPt = aud::rescale(2, 72, sizes_local.OneInch);
+    sizes_local.FourPt = aud::rescale(4, 72, sizes_local.OneInch);
+    sizes_local.EightPt = aud::rescale(8, 72, sizes_local.OneInch);
 
-    margins_local.TwoPt = QMargins (sizes.TwoPt, sizes.TwoPt, sizes.TwoPt, sizes.TwoPt);
-    margins_local.FourPt = QMargins (sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
-    margins_local.EightPt = QMargins (sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
+    margins_local.TwoPt =
+        QMargins(sizes.TwoPt, sizes.TwoPt, sizes.TwoPt, sizes.TwoPt);
+    margins_local.FourPt =
+        QMargins(sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
+    margins_local.EightPt =
+        QMargins(sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
 
-#ifdef Q_OS_MAC  // Mac-specific font tweaks
-    QApplication::setFont (QApplication::font ("QSmallFont"), "QDialog");
-    QApplication::setFont (QApplication::font ("QSmallFont"), "QTreeView");
-    QApplication::setFont (QApplication::font ("QTipLabel"), "QStatusBar");
+#ifdef Q_OS_MAC // Mac-specific font tweaks
+    QApplication::setFont(QApplication::font("QSmallFont"), "QDialog");
+    QApplication::setFont(QApplication::font("QSmallFont"), "QTreeView");
+    QApplication::setFont(QApplication::font("QTipLabel"), "QStatusBar");
 #endif
 
-    log_init ();
+    log_init();
 }
 
-EXPORT void run ()
-{
-    qApp->exec ();
-}
+EXPORT void run() { qApp->exec(); }
 
-EXPORT void quit ()
-{
-    qApp->quit ();
-}
+EXPORT void quit() { qApp->quit(); }
 
-EXPORT void cleanup ()
+EXPORT void cleanup()
 {
-    if (-- init_count)
+    if (--init_count)
         return;
 
-    aboutwindow_hide ();
-    eq_presets_hide ();
-    equalizer_hide ();
-    infopopup_hide_now ();
-    infowin_hide ();
-    log_inspector_hide ();
-    prefswin_hide ();
-    queue_manager_hide ();
+    aboutwindow_hide();
+    eq_presets_hide();
+    equalizer_hide();
+    infopopup_hide_now();
+    infowin_hide();
+    log_inspector_hide();
+    prefswin_hide();
+    queue_manager_hide();
 
-    log_cleanup ();
+    log_cleanup();
 
     delete qApp;
 }
 
-EXPORT QIcon get_icon (const char * name)
+EXPORT QIcon get_icon(const char * name)
 {
-    auto icon = QIcon::fromTheme (name);
+    auto icon = QIcon::fromTheme(name);
 
-    if (icon.isNull ())
-        icon = QIcon (QString (":/") + name + ".svg");
+    if (icon.isNull())
+        icon = QIcon(QString(":/") + name + ".svg");
 
     return icon;
 }
 
-EXPORT QGradientStops dark_bg_gradient (const QColor & base)
+EXPORT QGradientStops dark_bg_gradient(const QColor & base)
 {
     constexpr int s[4] = {40, 28, 16, 24};
 
     QColor c[4];
-    for (int i = 0; i < 4; i ++)
-        c[i] = QColor (s[i], s[i], s[i]);
+    for (int i = 0; i < 4; i++)
+        c[i] = QColor(s[i], s[i], s[i]);
 
     /* in a dark theme, try to match the tone of the base color */
-    int v = base.value ();
+    int v = base.value();
     if (v >= 10 && v < 80)
     {
-        int r = base.red (),
-            g = base.green (),
-            b = base.blue ();
+        int r = base.red(), g = base.green(), b = base.blue();
 
-        for (int i = 0; i < 4; i ++)
+        for (int i = 0; i < 4; i++)
         {
-            c[i] = QColor (r * s[i] / v,
-                           g * s[i] / v,
-                           b * s[i] / v);
+            c[i] = QColor(r * s[i] / v, g * s[i] / v, b * s[i] / v);
         }
     }
 
-    return {
-        {0, c[0]},
-        {0.45, c[1]},
-        {0.55, c[2]},
-        {1, c[3]}
-    };
+    return {{0, c[0]}, {0.45, c[1]}, {0.55, c[2]}, {1, c[3]}};
 }
 
-EXPORT QColor vis_bar_color (const QColor & hue, int bar, int n_bars)
+EXPORT QColor vis_bar_color(const QColor & hue, int bar, int n_bars)
 {
     qreal h, s, v;
-    hue.getHsvF (& h, & s, & v);
+    hue.getHsvF(&h, &s, &v);
 
     if (s < 0.1) /* monochrome? use blue instead */
         h = 0.67;
@@ -167,45 +157,45 @@ EXPORT QColor vis_bar_color (const QColor & hue, int bar, int n_bars)
     s = 1 - 0.9 * bar / (n_bars - 1);
     v = 0.75 + 0.25 * bar / (n_bars - 1);
 
-    return QColor::fromHsvF (h, s, v);
+    return QColor::fromHsvF(h, s, v);
 }
 
-EXPORT QHBoxLayout * make_hbox (QWidget * parent, int spacing)
+EXPORT QHBoxLayout * make_hbox(QWidget * parent, int spacing)
 {
-    auto layout = new QHBoxLayout (parent);
-    layout->setContentsMargins (0, 0, 0, 0);
-    layout->setSpacing (spacing);
+    auto layout = new QHBoxLayout(parent);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(spacing);
     return layout;
 }
 
-EXPORT QVBoxLayout * make_vbox (QWidget * parent, int spacing)
+EXPORT QVBoxLayout * make_vbox(QWidget * parent, int spacing)
 {
-    auto layout = new QVBoxLayout (parent);
-    layout->setContentsMargins (0, 0, 0, 0);
-    layout->setSpacing (spacing);
+    auto layout = new QVBoxLayout(parent);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(spacing);
     return layout;
 }
 
-EXPORT void enable_layout (QLayout * layout, bool enabled)
+EXPORT void enable_layout(QLayout * layout, bool enabled)
 {
-    int count = layout->count ();
-    for (int i = 0; i < count; i ++)
+    int count = layout->count();
+    for (int i = 0; i < count; i++)
     {
-        auto item = layout->itemAt (i);
-        if (QLayout * layout2 = item->layout ())
-            enable_layout (layout2, enabled);
-        if (QWidget * widget = item->widget ())
-            widget->setEnabled (enabled);
+        auto item = layout->itemAt(i);
+        if (QLayout * layout2 = item->layout())
+            enable_layout(layout2, enabled);
+        if (QWidget * widget = item->widget())
+            widget->setEnabled(enabled);
     }
 }
 
-EXPORT void clear_layout (QLayout * layout)
+EXPORT void clear_layout(QLayout * layout)
 {
-    while (QLayoutItem * item = layout->takeAt (0))
+    while (QLayoutItem * item = layout->takeAt(0))
     {
-        if (QLayout * layout2 = item->layout ())
-            clear_layout (layout2);
-        if (QWidget * widget = item->widget ())
+        if (QLayout * layout2 = item->layout())
+            clear_layout(layout2);
+        if (QWidget * widget = item->widget())
             delete widget;
 
         delete item;
@@ -213,42 +203,43 @@ EXPORT void clear_layout (QLayout * layout)
 }
 
 /* the goal is to force a window to come to the front on any Qt platform */
-EXPORT void window_bring_to_front (QWidget * window)
+EXPORT void window_bring_to_front(QWidget * window)
 {
-    window->show ();
+    window->show();
 
-    Qt::WindowStates state = window->windowState ();
+    Qt::WindowStates state = window->windowState();
 
     state &= ~Qt::WindowMinimized;
     state |= Qt::WindowActive;
 
-    window->setWindowState (state);
-    window->raise ();
-    window->activateWindow ();
+    window->setWindowState(state);
+    window->raise();
+    window->activateWindow();
 }
 
-EXPORT void simple_message (const char * title, const char * text)
+EXPORT void simple_message(const char * title, const char * text)
 {
-    simple_message (title, text, QMessageBox::NoIcon);
+    simple_message(title, text, QMessageBox::NoIcon);
 }
 
-EXPORT void simple_message (const char * title, const char * text, QMessageBox::Icon icon)
+EXPORT void simple_message(const char * title, const char * text,
+                           QMessageBox::Icon icon)
 {
-    auto msgbox = new QMessageBox (icon, title, text, QMessageBox::Close);
-    msgbox->button (QMessageBox::Close)->setText (translate_str (N_("_Close")));
-    msgbox->setAttribute (Qt::WA_DeleteOnClose);
-    msgbox->show ();
+    auto msgbox = new QMessageBox(icon, title, text, QMessageBox::Close);
+    msgbox->button(QMessageBox::Close)->setText(translate_str(N_("_Close")));
+    msgbox->setAttribute(Qt::WA_DeleteOnClose);
+    msgbox->show();
 }
 
 /* translate GTK+ accelerators and also handle dgettext() */
-EXPORT QString translate_str (const char * str, const char * domain)
+EXPORT QString translate_str(const char * str, const char * domain)
 {
     /* handle null and empty strings */
-    if (! str || ! str[0])
-        return QString (str);
+    if (!str || !str[0])
+        return QString(str);
 
     /* translate the GTK+ accelerator (_) into a Qt accelerator (&) */
-    return QString (dgettext (domain, str)).replace ('_', '&');
+    return QString(dgettext(domain, str)).replace('_', '&');
 }
 
 } // namespace audqt

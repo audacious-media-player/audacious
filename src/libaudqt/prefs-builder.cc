@@ -28,9 +28,11 @@
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
 
-namespace audqt {
+namespace audqt
+{
 
-void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain)
+void prefs_populate(QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets,
+                    const char * domain)
 {
     /* layout prior to header label */
     QBoxLayout * orig_layout = layout;
@@ -46,27 +48,27 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
     {
         if (w.child)
         {
-            if (! parent_layout)
+            if (!parent_layout)
             {
                 /* save prior layouts */
                 parent_layout = layout;
                 parent_orig_layout = orig_layout;
 
                 /* create new layout for child widgets */
-                if (dynamic_cast<QHBoxLayout *> (parent_layout))
-                    layout = make_hbox (nullptr, sizes.TwoPt);
+                if (dynamic_cast<QHBoxLayout *>(parent_layout))
+                    layout = make_hbox(nullptr, sizes.TwoPt);
                 else
                 {
-                    layout = make_vbox (nullptr, sizes.TwoPt);
-                    layout->setContentsMargins (sizes.EightPt, 0, 0, 0);
+                    layout = make_vbox(nullptr, sizes.TwoPt);
+                    layout->setContentsMargins(sizes.EightPt, 0, 0, 0);
                 }
 
-                parent_layout->addLayout (layout);
+                parent_layout->addLayout(layout);
 
                 orig_layout = layout;
 
                 if (parent_widget)
-                    parent_widget->set_child_layout (layout);
+                    parent_widget->set_child_layout(layout);
             }
         }
         else
@@ -83,28 +85,28 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
             /* enable/disable child widgets */
             if (parent_widget)
-                parent_widget->update_from_cfg ();
+                parent_widget->update_from_cfg();
 
             parent_widget = nullptr;
         }
 
         if (w.type != PreferencesWidget::RadioButton)
             radio_btn_group[w.child] = nullptr;
-        if (! w.child)
+        if (!w.child)
             radio_btn_group[true] = nullptr;
 
         switch (w.type)
         {
         case PreferencesWidget::Button:
-            layout->addWidget (new ButtonWidget (& w, domain));
+            layout->addWidget(new ButtonWidget(&w, domain));
             break;
 
         case PreferencesWidget::CheckButton:
         {
-            auto checkbox = new BooleanWidget (& w, domain);
-            layout->addWidget (checkbox);
+            auto checkbox = new BooleanWidget(&w, domain);
+            layout->addWidget(checkbox);
 
-            if (! w.child)
+            if (!w.child)
                 parent_widget = checkbox;
 
             break;
@@ -112,23 +114,23 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
         case PreferencesWidget::Label:
         {
-            auto label = new QLabel (translate_str (w.label, domain));
+            auto label = new QLabel(translate_str(w.label, domain));
 
-            if (strstr (w.label, "<b>"))
+            if (strstr(w.label, "<b>"))
             {
                 /* extra spacing above a header */
-                if (orig_layout->itemAt (0))
-                    orig_layout->addSpacing (sizes.EightPt);
+                if (orig_layout->itemAt(0))
+                    orig_layout->addSpacing(sizes.EightPt);
 
-                orig_layout->addWidget (label);
+                orig_layout->addWidget(label);
 
                 /* create indented layout below header */
-                layout = make_vbox (nullptr, sizes.TwoPt);
-                layout->setContentsMargins (sizes.EightPt, 0, 0, 0);
-                orig_layout->addLayout (layout);
+                layout = make_vbox(nullptr, sizes.TwoPt);
+                layout->setContentsMargins(sizes.EightPt, 0, 0, 0);
+                orig_layout->addLayout(layout);
             }
             else
-                layout->addWidget (label);
+                layout->addWidget(label);
 
             break;
         }
@@ -137,89 +139,94 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
             switch (w.cfg.type)
             {
             case WidgetConfig::Int:
-                layout->addWidget (new IntegerWidget (& w, domain));
+                layout->addWidget(new IntegerWidget(&w, domain));
                 break;
             case WidgetConfig::Float:
-                layout->addWidget (new DoubleWidget (& w, domain));
+                layout->addWidget(new DoubleWidget(&w, domain));
                 break;
             default:
-                AUDDBG ("encountered unhandled configuration type %d for PreferencesWidget::SpinButton\n", w.cfg.type);
+                AUDDBG("encountered unhandled configuration type %d for "
+                       "PreferencesWidget::SpinButton\n",
+                       w.cfg.type);
                 break;
             }
             break;
 
         case PreferencesWidget::Entry:
-            layout->addWidget (new StringWidget (& w, domain));
+            layout->addWidget(new StringWidget(&w, domain));
             break;
 
         case PreferencesWidget::FileEntry:
-            layout->addWidget (new FileWidget (& w, domain));
+            layout->addWidget(new FileWidget(&w, domain));
             break;
 
         case PreferencesWidget::FontButton:
-            layout->addWidget (new FontWidget (& w, domain));
+            layout->addWidget(new FontWidget(&w, domain));
             break;
 
         case PreferencesWidget::RadioButton:
         {
-            if (! radio_btn_group[w.child])
+            if (!radio_btn_group[w.child])
                 radio_btn_group[w.child] = new QButtonGroup;
 
-            auto radio_btn = new RadioButtonWidget (& w, domain, radio_btn_group[w.child]);
-            layout->addWidget (radio_btn);
+            auto radio_btn =
+                new RadioButtonWidget(&w, domain, radio_btn_group[w.child]);
+            layout->addWidget(radio_btn);
 
-            if (! w.child)
+            if (!w.child)
                 parent_widget = radio_btn;
 
             break;
         }
 
         case PreferencesWidget::ComboBox:
-            layout->addWidget (new ComboBoxWidget (& w, domain));
+            layout->addWidget(new ComboBoxWidget(&w, domain));
             break;
 
         case PreferencesWidget::CustomQt:
             if (w.data.populate)
-                layout->addWidget ((QWidget *) w.data.populate ());
+                layout->addWidget((QWidget *)w.data.populate());
             break;
 
         /* layout widgets follow */
         case PreferencesWidget::Box:
-            layout->addWidget (new BoxWidget (& w, domain,
-             (bool) dynamic_cast<QHBoxLayout *> (layout)));
+            layout->addWidget(new BoxWidget(
+                &w, domain, (bool)dynamic_cast<QHBoxLayout *>(layout)));
             break;
 
         case PreferencesWidget::Table:
-            layout->addWidget (new TableWidget (& w, domain));
+            layout->addWidget(new TableWidget(&w, domain));
             break;
 
         case PreferencesWidget::Notebook:
-            layout->addWidget (new NotebookWidget (& w, domain));
+            layout->addWidget(new NotebookWidget(&w, domain));
             break;
 
         case PreferencesWidget::Separator:
         {
             QFrame * f = new QFrame;
-            f->setFrameShape (w.data.separator.horizontal ? QFrame::HLine : QFrame::VLine);
-            f->setFrameShadow (QFrame::Sunken);
+            f->setFrameShape(w.data.separator.horizontal ? QFrame::HLine
+                                                         : QFrame::VLine);
+            f->setFrameShadow(QFrame::Sunken);
 
-            layout->addSpacing (sizes.FourPt);
-            layout->addWidget (f);
-            layout->addSpacing (sizes.FourPt);
+            layout->addSpacing(sizes.FourPt);
+            layout->addWidget(f);
+            layout->addSpacing(sizes.FourPt);
 
             break;
         }
 
         /* stub handler */
         default:
-            AUDDBG ("invoked stub handler for PreferencesWidget type %d\n", w.type);
+            AUDDBG("invoked stub handler for PreferencesWidget type %d\n",
+                   w.type);
             break;
         }
     }
 
     /* enable/disable child widgets */
     if (parent_widget)
-        parent_widget->update_from_cfg ();
+        parent_widget->update_from_cfg();
 }
 
 } // namespace audqt

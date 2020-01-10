@@ -26,28 +26,29 @@ class QPoint;
 class QScreen;
 class QString;
 
-namespace audqt {
+namespace audqt
+{
 
 /* infopopup.cc */
-void infopopup_hide_now ();
+void infopopup_hide_now();
 
 /* log-inspector.cc */
-void log_init ();
-void log_cleanup ();
+void log_init();
+void log_cleanup();
 
 /* util-qt.cc */
 class PopupWidget : public QWidget
 {
 public:
-    PopupWidget (QWidget * parent = nullptr);
+    PopupWidget(QWidget * parent = nullptr);
 
 protected:
-    bool eventFilter (QObject *, QEvent * e) override;
-    void showEvent (QShowEvent *) override;
+    bool eventFilter(QObject *, QEvent * e) override;
+    void showEvent(QShowEvent *) override;
 };
 
-void show_copy_context_menu (QWidget * parent, const QPoint & global_pos,
- const QString & text_to_copy);
+void show_copy_context_menu(QWidget * parent, const QPoint & global_pos,
+                            const QString & text_to_copy);
 
 } // namespace audqt
 

@@ -22,31 +22,31 @@
 
 #include "libaudqt/export.h"
 
-#include <QPushButton>
 #include <QColor>
+#include <QPushButton>
 
-namespace audqt {
+namespace audqt
+{
 
-class LIBAUDQT_PUBLIC ColorButton : public QPushButton {
+class LIBAUDQT_PUBLIC ColorButton : public QPushButton
+{
 public:
-    ColorButton (QWidget * parent = nullptr);
-    ~ColorButton () {};
+    ColorButton(QWidget * parent = nullptr);
+    ~ColorButton(){};
 
-    void setColor (const QColor &);
+    void setColor(const QColor &);
 
-    QColor color() const {
-        return m_color;
-    }
+    QColor color() const { return m_color; }
 
 protected:
-    virtual void onColorChanged () {};
+    virtual void onColorChanged(){};
 
 private:
-    void paintEvent (QPaintEvent *) override;
+    void paintEvent(QPaintEvent *) override;
 
     QColor m_color;
 };
 
-}
+} // namespace audqt
 
 #endif

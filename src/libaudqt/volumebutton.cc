@@ -30,154 +30,159 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/runtime.h>
 
-namespace audqt {
+namespace audqt
+{
 
 class VolumeButton : public QToolButton
 {
 public:
-    VolumeButton (QWidget * parent = nullptr);
+    VolumeButton(QWidget * parent = nullptr);
 
 private:
-    void updateDelta ();
-    void updateIcon (int val);
-    void updateVolume ();
-    void showSlider ();
-    void setVolume (int val);
-    QToolButton * newSliderButton (int dir);
+    void updateDelta();
+    void updateIcon(int val);
+    void updateVolume();
+    void showSlider();
+    void setVolume(int val);
+    QToolButton * newSliderButton(int dir);
 
-    void wheelEvent (QWheelEvent * e);
+    void wheelEvent(QWheelEvent * e);
 
     QSlider * m_slider;
     QFrame * m_container;
     int m_scroll_delta = 0;
 
-    HookReceiver<VolumeButton> update_hook
-        {"set volume_delta", this, & VolumeButton::updateDelta};
+    HookReceiver<VolumeButton> update_hook{"set volume_delta", this,
+                                           &VolumeButton::updateDelta};
 };
 
-VolumeButton::VolumeButton (QWidget * parent) :
-    QToolButton (parent)
+VolumeButton::VolumeButton(QWidget * parent) : QToolButton(parent)
 {
-    setFocusPolicy (Qt::NoFocus);
+    setFocusPolicy(Qt::NoFocus);
 
-    m_container = new QFrame (this, Qt::Popup);
-    m_container->setFrameShape (QFrame::StyledPanel);
+    m_container = new QFrame(this, Qt::Popup);
+    m_container->setFrameShape(QFrame::StyledPanel);
 
-    m_slider = new QSlider (Qt::Vertical, this);
-    m_slider->setMinimumHeight (audqt::sizes.OneInch);
-    m_slider->setRange (0, 100);
+    m_slider = new QSlider(Qt::Vertical, this);
+    m_slider->setMinimumHeight(audqt::sizes.OneInch);
+    m_slider->setRange(0, 100);
 
-    updateDelta ();
+    updateDelta();
 
-    auto layout = make_vbox (m_container, sizes.TwoPt);
-    layout->setContentsMargins (margins.TwoPt);
+    auto layout = make_vbox(m_container, sizes.TwoPt);
+    layout->setContentsMargins(margins.TwoPt);
 
-    layout->addWidget (newSliderButton (1));
-    layout->addWidget (m_slider);
-    layout->addWidget (newSliderButton (-1));
+    layout->addWidget(newSliderButton(1));
+    layout->addWidget(m_slider);
+    layout->addWidget(newSliderButton(-1));
 
-    int val = aud_drct_get_volume_main ();
-    m_slider->setValue (val);
-    updateIcon (val);
+    int val = aud_drct_get_volume_main();
+    m_slider->setValue(val);
+    updateIcon(val);
 
-    connect (this, & QAbstractButton::clicked, this, & VolumeButton::showSlider);
-    connect (m_slider, & QAbstractSlider::valueChanged, this, & VolumeButton::setVolume);
+    connect(this, &QAbstractButton::clicked, this, &VolumeButton::showSlider);
+    connect(m_slider, &QAbstractSlider::valueChanged, this,
+            &VolumeButton::setVolume);
 
-    auto timer = new Timer<VolumeButton> (TimerRate::Hz4, this, & VolumeButton::updateVolume);
-    connect (this, & QObject::destroyed, [timer] () { delete timer; });
+    auto timer = new Timer<VolumeButton>(TimerRate::Hz4, this,
+                                         &VolumeButton::updateVolume);
+    connect(this, &QObject::destroyed, [timer]() { delete timer; });
 
-    timer->start ();
+    timer->start();
 }
 
-void VolumeButton::updateDelta ()
+void VolumeButton::updateDelta()
 {
-    int delta = aud_get_int ("volume_delta");
-    m_slider->setSingleStep (delta);
-    m_slider->setPageStep (delta);
+    int delta = aud_get_int("volume_delta");
+    m_slider->setSingleStep(delta);
+    m_slider->setPageStep(delta);
 }
 
-void VolumeButton::updateIcon (int val)
+void VolumeButton::updateIcon(int val)
 {
     if (val == 0)
-        setIcon (audqt::get_icon ("audio-volume-muted"));
+        setIcon(audqt::get_icon("audio-volume-muted"));
     else if (val < 34)
-        setIcon (audqt::get_icon ("audio-volume-low"));
+        setIcon(audqt::get_icon("audio-volume-low"));
     else if (val < 67)
-        setIcon (audqt::get_icon ("audio-volume-medium"));
+        setIcon(audqt::get_icon("audio-volume-medium"));
     else
-        setIcon (audqt::get_icon ("audio-volume-high"));
+        setIcon(audqt::get_icon("audio-volume-high"));
 
-    setToolTip (QString ("%1 %").arg (val));
+    setToolTip(QString("%1 %").arg(val));
 }
 
-void VolumeButton::updateVolume ()
+void VolumeButton::updateVolume()
 {
-    if (m_slider->isSliderDown ())
+    if (m_slider->isSliderDown())
         return;
 
-    int val = aud_drct_get_volume_main ();
-    if (val != m_slider->value ())
+    int val = aud_drct_get_volume_main();
+    if (val != m_slider->value())
     {
-        disconnect (m_slider, nullptr, this, nullptr);
-        m_slider->setValue (val);
-        updateIcon (val);
-        connect (m_slider, & QAbstractSlider::valueChanged, this, & VolumeButton::setVolume);
+        disconnect(m_slider, nullptr, this, nullptr);
+        m_slider->setValue(val);
+        updateIcon(val);
+        connect(m_slider, &QAbstractSlider::valueChanged, this,
+                &VolumeButton::setVolume);
     }
 }
 
-void VolumeButton::showSlider ()
+void VolumeButton::showSlider()
 {
-    QSize button_size = sizeHint ();
-    QSize container_size = m_container->sizeHint ();
+    QSize button_size = sizeHint();
+    QSize container_size = m_container->sizeHint();
 
-    int dx = container_size.width () / 2 - button_size.width () / 2;
-    int dy = container_size.height () / 2 - button_size.height () / 2;
+    int dx = container_size.width() / 2 - button_size.width() / 2;
+    int dy = container_size.height() / 2 - button_size.height() / 2;
 
-    QPoint pos = mapToGlobal (QPoint (0, 0));
-    pos -= QPoint (dx, dy);
+    QPoint pos = mapToGlobal(QPoint(0, 0));
+    pos -= QPoint(dx, dy);
     pos.setX(qMax(pos.x(), 0));
     pos.setY(qMax(pos.y(), 0));
 
-    m_container->move (pos);
-    window_bring_to_front (m_container);
+    m_container->move(pos);
+    window_bring_to_front(m_container);
 }
 
-void VolumeButton::setVolume (int val)
+void VolumeButton::setVolume(int val)
 {
-    aud_drct_set_volume_main (val);
-    updateIcon (val);
+    aud_drct_set_volume_main(val);
+    updateIcon(val);
 }
 
-QToolButton * VolumeButton::newSliderButton (int dir)
+QToolButton * VolumeButton::newSliderButton(int dir)
 {
-    auto button = new QToolButton (this);
-    button->setText (dir < 0 ? "-" : "+");
-    button->setAutoRaise (true);
-    button->setSizePolicy (QSizePolicy::Ignored, QSizePolicy::Preferred);
+    auto button = new QToolButton(this);
+    button->setText(dir < 0 ? "-" : "+");
+    button->setAutoRaise(true);
+    button->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
 
-    connect (button, & QAbstractButton::clicked, [this, dir] () {
-        m_slider->setValue (m_slider->value () + dir * aud_get_int ("volume_delta"));
+    connect(button, &QAbstractButton::clicked, [this, dir]() {
+        m_slider->setValue(m_slider->value() +
+                           dir * aud_get_int("volume_delta"));
     });
 
     return button;
 }
 
-void VolumeButton::wheelEvent (QWheelEvent * e)
+void VolumeButton::wheelEvent(QWheelEvent * e)
 {
-    m_scroll_delta += e->angleDelta ().y ();
+    m_scroll_delta += e->angleDelta().y();
 
     /* we want discrete steps here */
     int steps = m_scroll_delta / 120;
     if (steps != 0)
     {
         m_scroll_delta -= 120 * steps;
-        m_slider->setValue (m_slider->value () + steps * aud_get_int ("volume_delta"));
+        m_slider->setValue(m_slider->value() +
+                           steps * aud_get_int("volume_delta"));
     }
 }
 
-EXPORT QToolButton * volume_button_new (QWidget * parent)
+EXPORT QToolButton * volume_button_new(QWidget * parent)
 {
-    return new VolumeButton (parent);
+    return new VolumeButton(parent);
 }
 
 } // namespace audqt

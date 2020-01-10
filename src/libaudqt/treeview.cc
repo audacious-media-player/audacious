@@ -23,55 +23,55 @@
 #include <QMouseEvent>
 #include <libaudcore/index.h>
 
-namespace audqt {
+namespace audqt
+{
 
-EXPORT TreeView::TreeView (QWidget * parent) :
-    QTreeView (parent)
+EXPORT TreeView::TreeView(QWidget * parent) : QTreeView(parent)
 {
     // activate() is perhaps a bit redundant with activated()
-    connect (this, & QTreeView::activated, this, & TreeView::activate);
+    connect(this, &QTreeView::activated, this, &TreeView::activate);
 }
 
-EXPORT TreeView::~TreeView () {}
+EXPORT TreeView::~TreeView() {}
 
-EXPORT void TreeView::keyPressEvent (QKeyEvent * event)
+EXPORT void TreeView::keyPressEvent(QKeyEvent * event)
 {
-    auto CtrlShiftAlt = Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier;
-    if (event->key () == Qt::Key_Delete && ! (event->modifiers () & CtrlShiftAlt))
+    auto CtrlShiftAlt =
+        Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier;
+    if (event->key() == Qt::Key_Delete && !(event->modifiers() & CtrlShiftAlt))
     {
-        removeSelectedRows ();
+        removeSelectedRows();
         return;
     }
 
-    QTreeView::keyPressEvent (event);
+    QTreeView::keyPressEvent(event);
 }
 
-EXPORT void TreeView::removeSelectedRows ()
+EXPORT void TreeView::removeSelectedRows()
 {
     // get all selected rows
     Index<int> rows;
-    for (auto & idx : selectionModel ()->selectedRows ())
-        rows.append (idx.row ());
+    for (auto & idx : selectionModel()->selectedRows())
+        rows.append(idx.row());
 
     // sort in reverse order
-    rows.sort ([] (const int & a, const int & b)
-        { return b - a; });
+    rows.sort([](const int & a, const int & b) { return b - a; });
 
     // remove rows in reverse order
-    auto m = model ();
+    auto m = model();
     for (int row : rows)
-        m->removeRow (row);
+        m->removeRow(row);
 }
 
 // TODO: unnecessary, remove at next API break
-EXPORT void TreeView::mouseDoubleClickEvent (QMouseEvent * event)
+EXPORT void TreeView::mouseDoubleClickEvent(QMouseEvent * event)
 {
-    QTreeView::mouseDoubleClickEvent (event);
+    QTreeView::mouseDoubleClickEvent(event);
 }
 
-EXPORT void TreeView::activate (const QModelIndex & index)
+EXPORT void TreeView::activate(const QModelIndex & index)
 {
-    (void) index;  // base implementation does nothing
+    (void)index; // base implementation does nothing
 }
 
 } // namespace audqt

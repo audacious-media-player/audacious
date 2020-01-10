@@ -23,7 +23,8 @@
 #include <QTreeView>
 #include <libaudqt/export.h>
 
-namespace audqt {
+namespace audqt
+{
 
 // This class extends QTreeView and adds a couple of features:
 //  - An "activate" event (double click or Enter key)
@@ -31,16 +32,16 @@ namespace audqt {
 class LIBAUDQT_PUBLIC TreeView : public QTreeView
 {
 public:
-    TreeView (QWidget * parent = nullptr);
-    ~TreeView () override;
+    TreeView(QWidget * parent = nullptr);
+    ~TreeView() override;
 
-    void removeSelectedRows ();
+    void removeSelectedRows();
 
 protected:
-    void keyPressEvent (QKeyEvent * event) override;
-    void mouseDoubleClickEvent (QMouseEvent * event) override;
+    void keyPressEvent(QKeyEvent * event) override;
+    void mouseDoubleClickEvent(QMouseEvent * event) override;
 
-    virtual void activate (const QModelIndex & index);
+    virtual void activate(const QModelIndex & index);
 };
 
 } // namespace audqt
