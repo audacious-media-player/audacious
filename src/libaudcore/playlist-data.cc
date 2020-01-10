@@ -264,7 +264,7 @@ void PlaylistData::remove_entries (int at, int number)
 
     if (m_position && m_position->number >= at && m_position->number < at + number)
     {
-        change_position ({-1, false});
+        change_position (NoPos);
         position_changed = true;
     }
 
@@ -510,7 +510,7 @@ void PlaylistData::remove_selected ()
 
     if (m_position && m_position->selected)
     {
-        change_position ({-1, false});
+        change_position (NoPos);
         position_changed = true;
     }
 
@@ -828,13 +828,6 @@ int PlaylistData::pos_before (int ref_pos, bool shuffle) const
 
 PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_album) const
 {
-    // helper: determine whether an entry is among the shuffle choices
-    auto is_choice = [&] (const PlaylistEntry * prev, const PlaylistEntry * entry)
-    {
-        return (! entry->shuffle_num) && (! by_album || ! prev ||
-         prev->shuffle_num || ! same_album (prev->tuple, entry->tuple));
-    };
-
     auto ref_entry = entry_at (ref_pos);
     if (ref_entry)
     {
@@ -861,6 +854,18 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
         }
     }
 
+    return NoPos;
+}
+
+PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool by_album) const
+{
+    // helper: determine whether an entry is among the shuffle choices
+    auto is_choice = [&] (const PlaylistEntry * prev, const PlaylistEntry * entry)
+    {
+        return (! entry->shuffle_num) && (! by_album || ! prev ||
+         prev->shuffle_num || ! same_album (prev->tuple, entry->tuple));
+    };
+
     // step #3: count the number of possible shuffle choices
     int choices = 0;
     const PlaylistEntry * prev = nullptr;
@@ -874,7 +879,7 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
     }
 
     if (! choices)
-        return {-1, false};
+        return NoPos;
 
     // step #4: pick one of those choices by random and find it again
     choices = rand () % choices;
@@ -893,7 +898,7 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
         prev = entry.get ();
     }
 
-    return {-1, false};  // never reached
+    return NoPos;  // never reached
 }
 
 void PlaylistData::shuffle_reset ()
@@ -1004,12 +1009,15 @@ bool PlaylistData::next_song_with_hint (bool repeat, int hint)
         auto change = shuffle_pos_after (position (), by_album);
 
         if (change.new_pos < 0)
+            change = shuffle_pos_random (by_album);
+
+        if (change.new_pos < 0)
         {
             if (! repeat)
                 return false;
 
             shuffle_reset ();
-            change = shuffle_pos_after (position (), by_album);
+            change = shuffle_pos_random (by_album);
 
             if (change.new_pos < 0)
                 return false;

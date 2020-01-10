@@ -133,6 +133,8 @@ private:
         bool update_shuffle;
     };
 
+    static constexpr PosChange NoPos = {-1, false};
+
     static void delete_entry (PlaylistEntry * entry);
     typedef SmartPtr<PlaylistEntry, delete_entry> EntryPtr;
 
@@ -148,6 +150,7 @@ private:
     int shuffle_pos_before (int ref_pos) const;
     int pos_before (int ref_pos, bool shuffle) const;
     PosChange shuffle_pos_after (int ref_pos, bool by_album) const;
+    PosChange shuffle_pos_random (bool by_album) const;
 
     void shuffle_reset ();
 
