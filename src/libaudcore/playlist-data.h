@@ -128,6 +128,11 @@ public:
     static void cleanup_formatter ();
 
 private:
+    struct PosChange {
+        int new_pos;
+        bool update_shuffle;
+    };
+
     static void delete_entry (PlaylistEntry * entry);
     typedef SmartPtr<PlaylistEntry, delete_entry> EntryPtr;
 
@@ -138,12 +143,12 @@ private:
 
     static void sort_entries (Index<EntryPtr> & entries, const CompareData & data);
 
-    void set_position (PlaylistEntry * entry, bool update_shuffle);
+    void change_position (PosChange change);
 
     int shuffle_pos_before (int ref_pos) const;
     int pos_before (int ref_pos, bool shuffle) const;
+    PosChange shuffle_pos_after (int ref_pos, bool by_album) const;
 
-    bool shuffle_next ();
     void shuffle_reset ();
 
     bool next_song_with_hint (bool repeat, int hint);
