@@ -92,14 +92,14 @@ public:
     void queue_remove (int at, int number);
     void queue_remove_selected ();
 
-    void set_position (int entry_num);
-
     Index<int> shuffle_history () const;
     void shuffle_replay (const Index<int> & history);
 
+    void set_position (int entry_num);
+
     bool prev_song ();
-    bool prev_album ();
     bool next_song (bool repeat);
+    bool prev_album ();
     bool next_album (bool repeat);
 
     int next_unscanned_entry (int entry_num) const;
@@ -144,15 +144,16 @@ private:
     static void sort_entries (Index<EntryPtr> & entries, const CompareData & data);
 
     int shuffle_pos_before (int ref_pos) const;
-    int pos_before (int ref_pos, bool shuffle) const;
     PosChange shuffle_pos_after (int ref_pos, bool by_album) const;
-    PosChange pos_after (int ref_pos, bool shuffle, bool by_album) const;
     PosChange shuffle_pos_random (bool by_album) const;
+
+    int pos_before (int ref_pos, bool shuffle) const;
+    PosChange pos_after (int ref_pos, bool shuffle, bool by_album) const;
     PosChange pos_new (bool shuffle, bool by_album, int hint_pos) const;
 
-    void shuffle_reset ();
     void change_position (PosChange change);
     bool change_position_to_next (bool repeat, int hint_pos);
+    void shuffle_reset ();
 
     PlaylistEntry * find_unselected_focus ();
 public:

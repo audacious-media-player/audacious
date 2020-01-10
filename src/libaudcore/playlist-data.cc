@@ -786,30 +786,6 @@ void PlaylistData::queue_remove_selected ()
         queue_update (Playlist::Selection, first, last + 1 - first, QueueChanged);
 }
 
-void PlaylistData::change_position (PosChange change)
-{
-    m_position = entry_at (change.new_pos);
-    resume_time = 0;
-
-    /* move entry to top of shuffle list */
-    if (m_position && change.update_shuffle)
-        m_position->shuffle_num = ++ m_last_shuffle_num;
-
-    /* remove from queue if it's the first entry */
-    if (m_queued.len () && m_position == m_queued[0])
-    {
-        m_queued.remove (0, 1);
-        m_position->queued = false;
-        queue_update (Playlist::Selection, m_position->number, 1, QueueChanged);
-    }
-}
-
-void PlaylistData::set_position (int entry_num)
-{
-    change_position ({entry_num, true});
-    queue_position_change ();
-}
-
 int PlaylistData::shuffle_pos_before (int ref_pos) const
 {
     const PlaylistEntry * ref_entry = entry_at (ref_pos);
@@ -828,14 +804,6 @@ int PlaylistData::shuffle_pos_before (int ref_pos) const
     return found ? found->number : -1;
 }
 
-int PlaylistData::pos_before (int ref_pos, bool shuffle) const
-{
-    if (shuffle)
-        return shuffle_pos_before (ref_pos);
-
-    return (ref_pos > 0) ? ref_pos - 1 : -1;
-}
-
 PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_album) const
 {
     auto ref_entry = entry_at (ref_pos);
@@ -847,8 +815,10 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
     for (auto & entry : m_entries)
     {
         if (entry->shuffle_num > ref_entry->shuffle_num &&
-         (! next || entry->shuffle_num < next->shuffle_num))
+            (! next || entry->shuffle_num < next->shuffle_num))
+        {
             next = entry.get ();
+        }
     }
 
     if (next)
@@ -867,20 +837,6 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
         if (! next->shuffle_num)
             return {pos, true};
     }
-
-    return NO_POS;
-}
-
-PlaylistData::PosChange PlaylistData::pos_after (int ref_pos, bool shuffle, bool by_album) const
-{
-    if (m_queued.len ())
-        return NO_POS;  // let pos_new() handle queue entries
-
-    if (shuffle)
-        return shuffle_pos_after (ref_pos, by_album);
-
-    if (ref_pos >= 0 && ref_pos + 1 < m_entries.len ())
-        return {ref_pos + 1, true};
 
     return NO_POS;
 }
@@ -911,6 +867,28 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool by_album) const
     return NO_POS;
 }
 
+int PlaylistData::pos_before (int ref_pos, bool shuffle) const
+{
+    if (shuffle)
+        return shuffle_pos_before (ref_pos);
+
+    return (ref_pos > 0) ? ref_pos - 1 : -1;
+}
+
+PlaylistData::PosChange PlaylistData::pos_after (int ref_pos, bool shuffle, bool by_album) const
+{
+    if (m_queued.len ())
+        return NO_POS;  // let pos_new() handle queue entries
+
+    if (shuffle)
+        return shuffle_pos_after (ref_pos, by_album);
+
+    if (ref_pos >= 0 && ref_pos + 1 < m_entries.len ())
+        return {ref_pos + 1, true};
+
+    return NO_POS;
+}
+
 PlaylistData::PosChange PlaylistData::pos_new (bool shuffle, bool by_album, int hint_pos) const
 {
     if (m_queued.len ())
@@ -923,6 +901,50 @@ PlaylistData::PosChange PlaylistData::pos_new (bool shuffle, bool by_album, int 
         return {hint_pos, true};
 
     return NO_POS;
+}
+
+void PlaylistData::change_position (PosChange change)
+{
+    m_position = entry_at (change.new_pos);
+    resume_time = 0;
+
+    /* move entry to top of shuffle list */
+    if (m_position && change.update_shuffle)
+        m_position->shuffle_num = ++ m_last_shuffle_num;
+
+    /* remove from queue if it's the first entry */
+    if (m_queued.len () && m_position == m_queued[0])
+    {
+        m_queued.remove (0, 1);
+        m_position->queued = false;
+        queue_update (Playlist::Selection, m_position->number, 1, QueueChanged);
+    }
+}
+
+bool PlaylistData::change_position_to_next (bool repeat, int hint_pos)
+{
+    bool shuffle = aud_get_bool ("shuffle");
+    bool by_album = aud_get_bool ("album_shuffle");
+
+    auto change = pos_after (position (), shuffle, by_album);
+
+    if (change.new_pos < 0)
+        change = pos_new (shuffle, by_album, hint_pos);
+
+    if (change.new_pos < 0)
+    {
+        if (! repeat)
+            return false;
+
+        shuffle_reset ();
+        change = pos_new (shuffle, by_album, 0);
+
+        if (change.new_pos < 0)
+            return false;
+    }
+
+    change_position (change);
+    return true;
 }
 
 void PlaylistData::shuffle_reset ()
@@ -965,6 +987,12 @@ void PlaylistData::shuffle_replay (const Index<int> & history)
     }
 }
 
+void PlaylistData::set_position (int entry_num)
+{
+    change_position ({entry_num, true});
+    queue_position_change ();
+}
+
 bool PlaylistData::prev_song ()
 {
     bool shuffle = aud_get_bool ("shuffle");
@@ -974,6 +1002,15 @@ bool PlaylistData::prev_song ()
 
     // update shuffle list if entry didn't come from it
     change_position ({pos, ! shuffle});
+    queue_position_change ();
+    return true;
+}
+
+bool PlaylistData::next_song (bool repeat)
+{
+    if (! change_position_to_next (repeat, -1))
+        return false;
+
     queue_position_change ();
     return true;
 }
@@ -1010,41 +1047,6 @@ bool PlaylistData::prev_album ()
 
     // update shuffle list if entry didn't come from it
     change_position ({pos, ! shuffle});
-    queue_position_change ();
-    return true;
-}
-
-bool PlaylistData::change_position_to_next (bool repeat, int hint_pos)
-{
-    bool shuffle = aud_get_bool ("shuffle");
-    bool by_album = aud_get_bool ("album_shuffle");
-
-    auto change = pos_after (position (), shuffle, by_album);
-
-    if (change.new_pos < 0)
-        change = pos_new (shuffle, by_album, hint_pos);
-
-    if (change.new_pos < 0)
-    {
-        if (! repeat)
-            return false;
-
-        shuffle_reset ();
-        change = pos_new (shuffle, by_album, 0);
-
-        if (change.new_pos < 0)
-            return false;
-    }
-
-    change_position (change);
-    return true;
-}
-
-bool PlaylistData::next_song (bool repeat)
-{
-    if (! change_position_to_next (repeat, -1))
-        return false;
-
     queue_position_change ();
     return true;
 }
