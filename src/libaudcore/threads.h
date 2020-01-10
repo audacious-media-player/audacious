@@ -20,33 +20,34 @@
 #ifndef LIBAUDCORE_THREADS_H
 #define LIBAUDCORE_THREADS_H
 
-#include <libaudcore/tinylock.h>
 #include <libaudcore/templates.h>
+#include <libaudcore/tinylock.h>
 
 #include <condition_variable>
 #include <mutex>
 #include <thread>
 
-namespace aud {
+namespace aud
+{
 
 /* A wrapper class around TinyLock, encouraging correct usage */
 class spinlock
 {
 public:
-    spinlock () = default;
+    spinlock() = default;
 
     /* Not copyable or movable */
-    spinlock (const spinlock &) = delete;
-    spinlock & operator= (const spinlock &) = delete;
+    spinlock(const spinlock &) = delete;
+    spinlock & operator=(const spinlock &) = delete;
 
     /* Explicit lock/unlock */
-    void lock () { tiny_lock (& m_lock); }
-    void unlock () { tiny_unlock (& m_lock); }
+    void lock() { tiny_lock(&m_lock); }
+    void unlock() { tiny_unlock(&m_lock); }
 
     /* Scope-based lock ownership */
-    typedef owner<spinlock, & spinlock::lock, & spinlock::unlock> holder;
+    typedef owner<spinlock, &spinlock::lock, &spinlock::unlock> holder;
     /* Convenience method for taking ownership of the lock */
-    holder take () __attribute__ ((warn_unused_result)) { return holder (this); }
+    holder take() __attribute__((warn_unused_result)) { return holder(this); }
 
 private:
     TinyLock m_lock = 0;
@@ -56,24 +57,26 @@ private:
 class spinlock_rw
 {
 public:
-    spinlock_rw () = default;
+    spinlock_rw() = default;
 
     /* Not copyable or movable */
-    spinlock_rw (const spinlock_rw &) = delete;
-    spinlock_rw & operator= (const spinlock_rw &) = delete;
+    spinlock_rw(const spinlock_rw &) = delete;
+    spinlock_rw & operator=(const spinlock_rw &) = delete;
 
     /* Explicit lock/unlock */
-    void lock_r () { tiny_lock_read (& m_lock); }
-    void unlock_r () { tiny_unlock_read (& m_lock); }
-    void lock_w () { tiny_lock_write (& m_lock); }
-    void unlock_w () { tiny_unlock_write (& m_lock); }
+    void lock_r() { tiny_lock_read(&m_lock); }
+    void unlock_r() { tiny_unlock_read(&m_lock); }
+    void lock_w() { tiny_lock_write(&m_lock); }
+    void unlock_w() { tiny_unlock_write(&m_lock); }
 
     /* Scope-based lock ownership */
-    typedef owner<spinlock_rw, & spinlock_rw::lock_r, & spinlock_rw::unlock_r> reader;
-    typedef owner<spinlock_rw, & spinlock_rw::lock_w, & spinlock_rw::unlock_w> writer;
+    typedef owner<spinlock_rw, &spinlock_rw::lock_r, &spinlock_rw::unlock_r>
+        reader;
+    typedef owner<spinlock_rw, &spinlock_rw::lock_w, &spinlock_rw::unlock_w>
+        writer;
     /* Convenience methods for taking ownership of the lock */
-    reader read () __attribute__ ((warn_unused_result)) { return reader (this); }
-    writer write () __attribute__ ((warn_unused_result)) { return writer (this); }
+    reader read() __attribute__((warn_unused_result)) { return reader(this); }
+    writer write() __attribute__((warn_unused_result)) { return writer(this); }
 
 private:
     TinyRWLock m_lock = 0;
@@ -86,7 +89,7 @@ public:
     /* Scope-based lock ownership */
     typedef std::unique_lock<std::mutex> holder;
     /* Convenience method for taking ownership of the lock */
-    holder take () __attribute__ ((warn_unused_result)) { return holder (* this); }
+    holder take() __attribute__((warn_unused_result)) { return holder(*this); }
 };
 
 /* An alias for std::condition_variable */

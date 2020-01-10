@@ -21,13 +21,13 @@
 #define LIBAUDCORE_EXPORT_H
 
 #ifdef _WIN32
-  #ifdef LIBAUDCORE_BUILD
-    #define LIBAUDCORE_PUBLIC __declspec(dllexport)
-  #else
-    #define LIBAUDCORE_PUBLIC __declspec(dllimport)
-  #endif
+#ifdef LIBAUDCORE_BUILD
+#define LIBAUDCORE_PUBLIC __declspec(dllexport)
 #else
-  #define LIBAUDCORE_PUBLIC __attribute__ ((visibility ("default")))
+#define LIBAUDCORE_PUBLIC __declspec(dllimport)
+#endif
+#else
+#define LIBAUDCORE_PUBLIC __attribute__((visibility("default")))
 #endif
 
 #endif // LIBAUDCORE_EXPORT_H

@@ -24,38 +24,36 @@
 
 #define WRITE_BIT (SHRT_MAX + 1)
 
-EXPORT void tiny_lock (TinyLock * lock)
+EXPORT void tiny_lock(TinyLock * lock)
 {
-    while (__builtin_expect (__sync_lock_test_and_set (lock, 1), 0))
-        sched_yield ();
+    while (__builtin_expect(__sync_lock_test_and_set(lock, 1), 0))
+        sched_yield();
 }
 
-EXPORT void tiny_unlock (TinyLock * lock)
-{
-    __sync_lock_release (lock);
-}
+EXPORT void tiny_unlock(TinyLock * lock) { __sync_lock_release(lock); }
 
-EXPORT void tiny_lock_read (TinyRWLock * lock)
+EXPORT void tiny_lock_read(TinyRWLock * lock)
 {
-    while (__builtin_expect (__sync_fetch_and_add (lock, 1) & WRITE_BIT, 0))
+    while (__builtin_expect(__sync_fetch_and_add(lock, 1) & WRITE_BIT, 0))
     {
-        __sync_fetch_and_sub (lock, 1);
-        sched_yield ();
+        __sync_fetch_and_sub(lock, 1);
+        sched_yield();
     }
 }
 
-EXPORT void tiny_unlock_read (TinyRWLock * lock)
+EXPORT void tiny_unlock_read(TinyRWLock * lock)
 {
-    __sync_fetch_and_sub (lock, 1);
+    __sync_fetch_and_sub(lock, 1);
 }
 
-EXPORT void tiny_lock_write (TinyRWLock * lock)
+EXPORT void tiny_lock_write(TinyRWLock * lock)
 {
-    while (! __builtin_expect (__sync_bool_compare_and_swap (lock, 0, WRITE_BIT), 1))
-        sched_yield ();
+    while (
+        !__builtin_expect(__sync_bool_compare_and_swap(lock, 0, WRITE_BIT), 1))
+        sched_yield();
 }
 
-EXPORT void tiny_unlock_write (TinyRWLock * lock)
+EXPORT void tiny_unlock_write(TinyRWLock * lock)
 {
-    __sync_fetch_and_sub (lock, WRITE_BIT);
+    __sync_fetch_and_sub(lock, WRITE_BIT);
 }

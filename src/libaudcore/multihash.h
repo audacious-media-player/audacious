@@ -20,8 +20,8 @@
 #ifndef LIBAUDCORE_MULTIHASH_H
 #define LIBAUDCORE_MULTIHASH_H
 
-#include <utility>
 #include <libaudcore/threads.h>
+#include <utility>
 
 /* HashBase is a low-level hash table implementation.  It is used as a backend
  * for SimpleHash as well as for a single channel of MultiHash. */
@@ -32,60 +32,58 @@ public:
     /* Skeleton structure containing internal members of a hash node (except for
      * "refs", which is not used internally and included here only to fill an
      * alignment gap).  Actual node structures should subclass Node. */
-    struct Node {
+    struct Node
+    {
         Node * next;
         unsigned hash;
         unsigned refs;
     };
 
     /* Represents the location of a node within the table. */
-    struct NodeLoc {
-        Node * * ptr;
+    struct NodeLoc
+    {
+        Node ** ptr;
         Node * next;
     };
 
     /* Callback.  Returns true if <node> matches <data>, otherwise false. */
-    typedef bool (* MatchFunc) (const Node * node, const void * data);
+    typedef bool (*MatchFunc)(const Node * node, const void * data);
 
     /* Callback.  Called when a node is found.  Returns true if <node> is to be
      * removed, otherwise false. */
-    typedef bool (* FoundFunc) (Node * node, void * state);
+    typedef bool (*FoundFunc)(Node * node, void * state);
 
-    constexpr HashBase () :
-        buckets (nullptr),
-        size (0),
-        used (0) {}
+    constexpr HashBase() : buckets(nullptr), size(0), used(0) {}
 
-    void clear ()  // use as destructor
+    void clear() // use as destructor
     {
         delete[] buckets;
-        * this = HashBase ();
+        *this = HashBase();
     }
 
-    int n_items () const
-        { return used; }
+    int n_items() const { return used; }
 
     /* Adds a node.  Does not check for duplicates. */
-    void add (Node * node, unsigned hash);
+    void add(Node * node, unsigned hash);
 
     /* Locates the node matching <data>.  Returns null if no node is found.  If
      * <loc> is not null, also returns the location of the node, which can be
      * used to remove it from the table. */
-    Node * lookup (MatchFunc match, const void * data, unsigned hash,
-     NodeLoc * loc = nullptr) const;
+    Node * lookup(MatchFunc match, const void * data, unsigned hash,
+                  NodeLoc * loc = nullptr) const;
 
     /* Removes a node, given a location returned by lookup_full(). */
-    void remove (const NodeLoc & loc);
+    void remove(const NodeLoc & loc);
 
     /* Iterates over all nodes in the table, removing them as desired. */
-    void iterate (FoundFunc func, void * state);
+    void iterate(FoundFunc func, void * state);
 
 private:
     static constexpr unsigned InitialSize = 16;
 
-    void resize (unsigned new_size);
+    void resize(unsigned new_size);
 
-    Node * * buckets;
+    Node ** buckets;
     unsigned size, used;
 };
 
@@ -107,16 +105,13 @@ public:
     typedef HashBase::Node Node;
     typedef HashBase::MatchFunc MatchFunc;
     typedef HashBase::FoundFunc FoundFunc;
-    typedef void (* FinalFunc) (void * state);
+    typedef void (*FinalFunc)(void * state);
 
     /* Callback.  May create a new node representing <data> to be added to the
      * table.  Returns the new node or null. */
-    typedef Node * (* AddFunc) (const void * data, void * state);
+    typedef Node * (*AddFunc)(const void * data, void * state);
 
-    MultiHash (MatchFunc match) :
-        match (match),
-        locks (),
-        channels () {}
+    MultiHash(MatchFunc match) : match(match), locks(), channels() {}
 
     /* There is no destructor.  In some instances, such as the string pool, it
      * is never safe to destroy the hash table, since it can be referenced from
@@ -129,22 +124,23 @@ public:
      * the table.  <found> is called if a matching node is found, and may return
      * true to remove the node from the table.  Returns the status of the lookup
      * as a bitmask of Found, Added, and Removed. */
-    int lookup (const void * data, unsigned hash, AddFunc add, FoundFunc found, void * state);
+    int lookup(const void * data, unsigned hash, AddFunc add, FoundFunc found,
+               void * state);
 
     /* All-purpose iteration function.  All channels of the table are locked
      * simultaneously during the iteration to freeze the table in a consistent
      * state.  <func> is called on each node in order, and may return true to
      * remove the node from the table. */
-    void iterate (FoundFunc func, void * state);
+    void iterate(FoundFunc func, void * state);
 
     /* Variant of iterate() which runs a second callback after the iteration
      * is complete, while the table is still locked.  This is useful when some
      * operation needs to be performed with the table in a known state. */
-    void iterate (FoundFunc func, void * state, FinalFunc final, void * fstate);
+    void iterate(FoundFunc func, void * state, FinalFunc final, void * fstate);
 
 private:
-    static constexpr int Channels = 16;  /* must be a power of two */
-    static constexpr int Shift = 24;  /* bit shift for channel selection */
+    static constexpr int Channels = 16; /* must be a power of two */
+    static constexpr int Shift = 24;    /* bit shift for channel selection */
 
     const MatchFunc match;
     aud::spinlock locks[Channels];
@@ -170,55 +166,70 @@ public:
     //     bool found (Node_T * node);
     // };
 
-    MultiHash_T () : MultiHash (match_cb) {}
+    MultiHash_T() : MultiHash(match_cb) {}
 
-    void clear ()
-        { MultiHash::iterate (remove_cb, nullptr); }
+    void clear() { MultiHash::iterate(remove_cb, nullptr); }
 
     template<class Op>
-    int lookup (const Data_T * data, unsigned hash, Op & op)
-        { return MultiHash::lookup (data, hash, WrapOp<Op>::add, WrapOp<Op>::found, & op); }
+    int lookup(const Data_T * data, unsigned hash, Op & op)
+    {
+        return MultiHash::lookup(data, hash, WrapOp<Op>::add, WrapOp<Op>::found,
+                                 &op);
+    }
 
     template<class F>
-    void iterate (F func)
-        { MultiHash::iterate (WrapIterate<F>::run, & func); }
+    void iterate(F func)
+    {
+        MultiHash::iterate(WrapIterate<F>::run, &func);
+    }
 
     template<class F, class Final>
-    void iterate (F func, Final final)
-        { MultiHash::iterate (WrapIterate<F>::run, & func, WrapFinal<Final>::run, & final); }
+    void iterate(F func, Final final)
+    {
+        MultiHash::iterate(WrapIterate<F>::run, &func, WrapFinal<Final>::run,
+                           &final);
+    }
 
 private:
-    static bool match_cb (const Node * node, const void * data)
-        { return (static_cast<const Node_T *> (node))->match
-                  (static_cast<const Data_T *> (data)); }
-
-    static bool remove_cb (Node * node, void *)
+    static bool match_cb(const Node * node, const void * data)
     {
-        delete static_cast<Node_T *> (node);
+        return (static_cast<const Node_T *>(node))
+            ->match(static_cast<const Data_T *>(data));
+    }
+
+    static bool remove_cb(Node * node, void *)
+    {
+        delete static_cast<Node_T *>(node);
         return true;
     }
 
     template<class Op>
-    struct WrapOp {
-        static Node * add (const void * data, void * op)
-            { return (static_cast<Op *> (op))->add
-                      (static_cast<const Data_T *> (data)); }
-        static bool found (Node * node, void * op)
-            { return (static_cast<Op *> (op))->found
-                      (static_cast<Node_T *> (node)); }
+    struct WrapOp
+    {
+        static Node * add(const void * data, void * op)
+        {
+            return (static_cast<Op *>(op))
+                ->add(static_cast<const Data_T *>(data));
+        }
+        static bool found(Node * node, void * op)
+        {
+            return (static_cast<Op *>(op))->found(static_cast<Node_T *>(node));
+        }
     };
 
     template<class F>
-    struct WrapIterate {
-        static bool run (Node * node, void * func)
-            { return (* static_cast<F *> (func))
-                      (static_cast<Node_T *> (node)); }
+    struct WrapIterate
+    {
+        static bool run(Node * node, void * func)
+        {
+            return (*static_cast<F *>(func))(static_cast<Node_T *>(node));
+        }
     };
 
     template<class Final>
-    struct WrapFinal {
-        static void run (void * func)
-            { (* static_cast<Final *> (func)) (); }
+    struct WrapFinal
+    {
+        static void run(void * func) { (*static_cast<Final *>(func))(); }
     };
 };
 
@@ -228,80 +239,87 @@ template<class Key, class Value>
 class SimpleHash : private HashBase
 {
 public:
-    typedef void (* IterFunc) (const Key & key, Value & value, void * state);
+    typedef void (*IterFunc)(const Key & key, Value & value, void * state);
 
-    ~SimpleHash ()
-        { clear (); }
+    ~SimpleHash() { clear(); }
 
     using HashBase::n_items;
 
-    Value * lookup (const Key & key)
+    Value * lookup(const Key & key)
     {
-        auto node = static_cast<Node *> (HashBase::lookup (match_cb, & key, key.hash ()));
-        return node ? & node->value : nullptr;
+        auto node =
+            static_cast<Node *>(HashBase::lookup(match_cb, &key, key.hash()));
+        return node ? &node->value : nullptr;
     }
 
-    Value * add (const Key & key, Value && value)
+    Value * add(const Key & key, Value && value)
     {
-        unsigned hash = key.hash ();
-        auto node = static_cast<Node *> (HashBase::lookup (match_cb, & key, hash));
+        unsigned hash = key.hash();
+        auto node = static_cast<Node *>(HashBase::lookup(match_cb, &key, hash));
 
         if (node)
-            node->value = std::move (value);
+            node->value = std::move(value);
         else
         {
-            node = new Node (key, std::move (value));
-            HashBase::add (node, hash);
+            node = new Node(key, std::move(value));
+            HashBase::add(node, hash);
         }
 
-        return & node->value;
+        return &node->value;
     }
 
-    void remove (const Key & key)
+    void remove(const Key & key)
     {
         NodeLoc loc;
-        auto node = static_cast<Node *> (HashBase::lookup (match_cb, & key, key.hash (), & loc));
+        auto node = static_cast<Node *>(
+            HashBase::lookup(match_cb, &key, key.hash(), &loc));
 
         if (node)
         {
             delete node;
-            HashBase::remove (loc);
+            HashBase::remove(loc);
         }
     }
 
-    void clear ()
+    void clear()
     {
-        HashBase::iterate (remove_cb, nullptr);
-        HashBase::clear ();
+        HashBase::iterate(remove_cb, nullptr);
+        HashBase::clear();
     }
 
     template<class F>
-    void iterate (F func)
-        { HashBase::iterate (WrapIterate<F>::run, & func); }
+    void iterate(F func)
+    {
+        HashBase::iterate(WrapIterate<F>::run, &func);
+    }
 
 private:
     struct Node : public HashBase::Node
     {
-        Node (const Key & key, Value && value) :
-            key (key),
-            value (std::move (value)) {}
+        Node(const Key & key, Value && value)
+            : key(key), value(std::move(value))
+        {
+        }
 
         Key key;
         Value value;
     };
 
-    struct IterData {
+    struct IterData
+    {
         IterFunc func;
         void * state;
     };
 
-    static bool match_cb (const HashBase::Node * node, const void * data)
-        { return (static_cast<const Node *> (node))->key ==
-                 * static_cast<const Key *> (data); }
-
-    static bool remove_cb (HashBase::Node * node, void *)
+    static bool match_cb(const HashBase::Node * node, const void * data)
     {
-        delete static_cast<Node *> (node);
+        return (static_cast<const Node *>(node))->key ==
+               *static_cast<const Key *>(data);
+    }
+
+    static bool remove_cb(HashBase::Node * node, void *)
+    {
+        delete static_cast<Node *>(node);
         return true;
     }
 
@@ -309,10 +327,10 @@ private:
     template<class F>
     struct WrapIterate
     {
-        static bool run (HashBase::Node * node_, void * func)
+        static bool run(HashBase::Node * node_, void * func)
         {
-            auto node = static_cast<Node *> (node_);
-            (* static_cast<F *> (func)) (node->key, node->value);
+            auto node = static_cast<Node *>(node_);
+            (*static_cast<F *>(func))(node->key, node->value);
             return false;
         }
     };

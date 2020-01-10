@@ -39,88 +39,88 @@ static aud::mutex mutex;
 static List<Effect> effects;
 static int input_channels, input_rate;
 
-void effect_start (int & channels, int & rate)
+void effect_start(int & channels, int & rate)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    AUDDBG ("Starting effects.\n");
+    AUDDBG("Starting effects.\n");
 
-    effects.clear ();
+    effects.clear();
 
     input_channels = channels;
     input_rate = rate;
 
-    auto & list = aud_plugin_list (PluginType::Effect);
+    auto & list = aud_plugin_list(PluginType::Effect);
 
-    for (int i = 0; i < list.len (); i ++)
+    for (int i = 0; i < list.len(); i++)
     {
         PluginHandle * plugin = list[i];
-        if (! aud_plugin_get_enabled (plugin))
+        if (!aud_plugin_get_enabled(plugin))
             continue;
 
-        AUDINFO ("Starting %s at %d channels, %d Hz.\n",
-         aud_plugin_get_name (plugin), channels, rate);
+        AUDINFO("Starting %s at %d channels, %d Hz.\n",
+                aud_plugin_get_name(plugin), channels, rate);
 
-        EffectPlugin * header = (EffectPlugin *) aud_plugin_get_header (plugin);
-        if (! header)
+        EffectPlugin * header = (EffectPlugin *)aud_plugin_get_header(plugin);
+        if (!header)
             continue;
 
-        header->start (channels, rate);
+        header->start(channels, rate);
 
-        Effect * effect = new Effect ();
+        Effect * effect = new Effect();
         effect->plugin = plugin;
         effect->position = i;
         effect->header = header;
         effect->channels_returned = channels;
         effect->rate_returned = rate;
 
-        effects.append (effect);
+        effects.append(effect);
     }
 }
 
-Index<float> & effect_process (Index<float> & data)
+Index<float> & effect_process(Index<float> & data)
 {
-    auto mh = mutex.take ();
-    Index<float> * cur = & data;
+    auto mh = mutex.take();
+    Index<float> * cur = &data;
 
-    Effect * e = effects.head ();
+    Effect * e = effects.head();
     while (e)
     {
-        Effect * next = effects.next (e);
+        Effect * next = effects.next(e);
 
         if (e->remove_flag)
         {
-            cur = & e->header->finish (* cur, false);
+            cur = &e->header->finish(*cur, false);
 
             // simulate end-of-playlist call
             // first save the current data
-            Index<float> save = std::move (* cur);
-            cur = & e->header->finish (* cur, true);
+            Index<float> save = std::move(*cur);
+            cur = &e->header->finish(*cur, true);
 
             // combine the saved and new data
-            save.move_from (* cur, 0, -1, -1, true, true);
-            * cur = std::move (save);
+            save.move_from(*cur, 0, -1, -1, true, true);
+            *cur = std::move(save);
 
-            effects.remove (e);
+            effects.remove(e);
             delete e;
         }
         else
-            cur = & e->header->process (* cur);
+            cur = &e->header->process(*cur);
 
         e = next;
     }
 
-    return * cur;
+    return *cur;
 }
 
-bool effect_flush (bool force)
+bool effect_flush(bool force)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
     bool flushed = true;
 
-    for (Effect * e = effects.head (); e; e = effects.next (e))
+    for (Effect * e = effects.head(); e; e = effects.next(e))
     {
-        if (! e->header->flush (force) && ! force)
+        if (!e->header->flush(force) && !force)
         {
             flushed = false;
             break;
@@ -130,34 +130,35 @@ bool effect_flush (bool force)
     return flushed;
 }
 
-Index<float> & effect_finish (Index<float> & data, bool end_of_playlist)
+Index<float> & effect_finish(Index<float> & data, bool end_of_playlist)
 {
-    auto mh = mutex.take ();
-    Index<float> * cur = & data;
+    auto mh = mutex.take();
+    Index<float> * cur = &data;
 
-    for (Effect * e = effects.head (); e; e = effects.next (e))
-        cur = & e->header->finish (* cur, end_of_playlist);
+    for (Effect * e = effects.head(); e; e = effects.next(e))
+        cur = &e->header->finish(*cur, end_of_playlist);
 
-    return * cur;
+    return *cur;
 }
 
-int effect_adjust_delay (int delay)
+int effect_adjust_delay(int delay)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    for (Effect * e = effects.tail (); e; e = effects.prev (e))
-        delay = e->header->adjust_delay (delay);
+    for (Effect * e = effects.tail(); e; e = effects.prev(e))
+        delay = e->header->adjust_delay(delay);
 
     return delay;
 }
 
-static void effect_insert (aud::mutex::holder &, PluginHandle * plugin, EffectPlugin * header)
+static void effect_insert(aud::mutex::holder &, PluginHandle * plugin,
+                          EffectPlugin * header)
 {
-    int position = aud_plugin_list (PluginType::Effect).find (plugin);
+    int position = aud_plugin_list(PluginType::Effect).find(plugin);
 
     Effect * prev = nullptr;
 
-    for (Effect * e = effects.head (); e; e = effects.next (e))
+    for (Effect * e = effects.head(); e; e = effects.next(e))
     {
         if (e->plugin == plugin)
         {
@@ -171,89 +172,90 @@ static void effect_insert (aud::mutex::holder &, PluginHandle * plugin, EffectPl
         prev = e;
     }
 
-    AUDDBG ("Adding %s without reset.\n", aud_plugin_get_name (plugin));
+    AUDDBG("Adding %s without reset.\n", aud_plugin_get_name(plugin));
 
     int channels, rate;
     if (prev)
     {
-        AUDDBG ("Adding %s after %s.\n", aud_plugin_get_name (plugin),
-         aud_plugin_get_name (prev->plugin));
+        AUDDBG("Adding %s after %s.\n", aud_plugin_get_name(plugin),
+               aud_plugin_get_name(prev->plugin));
         channels = prev->channels_returned;
         rate = prev->rate_returned;
     }
     else
     {
-        AUDDBG ("Adding %s as first effect.\n", aud_plugin_get_name (plugin));
+        AUDDBG("Adding %s as first effect.\n", aud_plugin_get_name(plugin));
         channels = input_channels;
         rate = input_rate;
     }
 
-    AUDINFO ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin), channels, rate);
-    header->start (channels, rate);
+    AUDINFO("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name(plugin),
+            channels, rate);
+    header->start(channels, rate);
 
-    Effect * effect = new Effect ();
+    Effect * effect = new Effect();
     effect->plugin = plugin;
     effect->position = position;
     effect->header = header;
     effect->channels_returned = channels;
     effect->rate_returned = rate;
 
-    effects.insert_after (prev, effect);
+    effects.insert_after(prev, effect);
 }
 
-static void effect_remove (aud::mutex::holder &, PluginHandle * plugin)
+static void effect_remove(aud::mutex::holder &, PluginHandle * plugin)
 {
-    for (Effect * e = effects.head (); e; e = effects.next (e))
+    for (Effect * e = effects.head(); e; e = effects.next(e))
     {
         if (e->plugin == plugin)
         {
-            AUDDBG ("Removing %s without reset.\n", aud_plugin_get_name (plugin));
+            AUDDBG("Removing %s without reset.\n", aud_plugin_get_name(plugin));
             e->remove_flag = true;
             return;
         }
     }
 }
 
-static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, bool enable)
+static void effect_enable(PluginHandle * plugin, EffectPlugin * ep, bool enable)
 {
     if (ep->preserves_format)
     {
-        auto mh = mutex.take ();
+        auto mh = mutex.take();
 
         if (enable)
-            effect_insert (mh, plugin, ep);
+            effect_insert(mh, plugin, ep);
         else
-            effect_remove (mh, plugin);
+            effect_remove(mh, plugin);
     }
     else
     {
-        AUDDBG ("Reset to add/remove %s.\n", aud_plugin_get_name (plugin));
-        aud_output_reset (OutputReset::EffectsOnly);
+        AUDDBG("Reset to add/remove %s.\n", aud_plugin_get_name(plugin));
+        aud_output_reset(OutputReset::EffectsOnly);
     }
 }
 
-bool effect_plugin_start (PluginHandle * plugin)
+bool effect_plugin_start(PluginHandle * plugin)
 {
-    if (aud_drct_get_playing ())
+    if (aud_drct_get_playing())
     {
-        EffectPlugin * ep = (EffectPlugin *) aud_plugin_get_header (plugin);
-        if (! ep)
+        EffectPlugin * ep = (EffectPlugin *)aud_plugin_get_header(plugin);
+        if (!ep)
             return false;
 
-        effect_enable (plugin, ep, true);
+        effect_enable(plugin, ep, true);
     }
 
     return true;
 }
 
-void effect_plugin_stop (PluginHandle * plugin)
+void effect_plugin_stop(PluginHandle * plugin)
 {
-    if (aud_drct_get_playing ())
+    if (aud_drct_get_playing())
     {
-        EffectPlugin * ep = (EffectPlugin *) aud_plugin_get_header (plugin);
-        if (! ep)
+        EffectPlugin * ep = (EffectPlugin *)aud_plugin_get_header(plugin);
+        if (!ep)
             return;
 
-        effect_enable (plugin, ep, false);
+        effect_enable(plugin, ep, false);
     }
 }

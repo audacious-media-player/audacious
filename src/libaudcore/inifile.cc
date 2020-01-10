@@ -21,32 +21,32 @@
 
 #include <string.h>
 
-#include <glib.h>  /* for g_ascii_isspace */
+#include <glib.h> /* for g_ascii_isspace */
 
 #include "audstrings.h"
 #include "vfs.h"
 
-static char * strskip (char * str, char * end)
+static char * strskip(char * str, char * end)
 {
-    while (str < end && g_ascii_isspace (* str))
-        str ++;
+    while (str < end && g_ascii_isspace(*str))
+        str++;
 
     return str;
 }
 
-static char * strtrim (char * str, char * end)
+static char * strtrim(char * str, char * end)
 {
-    while (end > str && g_ascii_isspace (end[-1]))
-        end --;
+    while (end > str && g_ascii_isspace(end[-1]))
+        end--;
 
-    * end = 0;
+    *end = 0;
     return str;
 }
 
-EXPORT void IniParser::parse (VFSFile & file)
+EXPORT void IniParser::parse(VFSFile & file)
 {
     int size = 512;
-    StringBuf buf (size);
+    StringBuf buf(size);
 
     char * pos = buf;
     int len = 0;
@@ -54,55 +54,56 @@ EXPORT void IniParser::parse (VFSFile & file)
 
     while (1)
     {
-        char * newline = (char *) memchr (pos, '\n', len);
+        char * newline = (char *)memchr(pos, '\n', len);
 
-        while (! newline && ! eof)
+        while (!newline && !eof)
         {
-            memmove (buf, pos, len);
+            memmove(buf, pos, len);
             pos = buf;
 
             if (len >= size - 1)
             {
                 size <<= 1;
-                buf.resize (size);
+                buf.resize(size);
                 pos = buf;
             }
 
-            len += file.fread (buf + len, 1, size - 1 - len);
+            len += file.fread(buf + len, 1, size - 1 - len);
 
             if (len < size - 1)
                 eof = true;
 
-            newline = (char *) memchr (pos, '\n', len);
+            newline = (char *)memchr(pos, '\n', len);
         }
 
         char * end = newline ? newline : pos + len;
-        char * start = strskip (pos, end);
+        char * start = strskip(pos, end);
         char * sep;
 
         if (start < end)
         {
-            switch (* start)
+            switch (*start)
             {
             case '#':
             case ';':
                 break;
 
             case '[':
-                if ((end = (char *) memchr (start, ']', end - start)))
-                    handle_heading (strtrim (strskip (start + 1, end), end));
+                if ((end = (char *)memchr(start, ']', end - start)))
+                    handle_heading(strtrim(strskip(start + 1, end), end));
 
                 break;
 
             default:
-                if ((sep = (char *) memchr (start, '=', end - start)))
-                    handle_entry (strtrim (start, sep), strtrim (strskip (sep + 1, end), end));
+                if ((sep = (char *)memchr(start, '=', end - start)))
+                    handle_entry(strtrim(start, sep),
+                                 strtrim(strskip(sep + 1, end), end));
 
                 break;
             }
         }
 
-        if (! newline)
+        if (!newline)
             break;
 
         len -= newline + 1 - pos;
@@ -110,14 +111,15 @@ EXPORT void IniParser::parse (VFSFile & file)
     }
 }
 
-EXPORT bool inifile_write_heading (VFSFile & file, const char * heading)
+EXPORT bool inifile_write_heading(VFSFile & file, const char * heading)
 {
-    StringBuf line = str_concat ({"\n[", heading, "]\n"});
-    return (file.fwrite (line, 1, line.len ()) == line.len ());
+    StringBuf line = str_concat({"\n[", heading, "]\n"});
+    return (file.fwrite(line, 1, line.len()) == line.len());
 }
 
-EXPORT bool inifile_write_entry (VFSFile & file, const char * key, const char * value)
+EXPORT bool inifile_write_entry(VFSFile & file, const char * key,
+                                const char * value)
 {
-    StringBuf line = str_concat ({key, "=", value, "\n"});
-    return (file.fwrite (line, 1, line.len ()) == line.len ());
+    StringBuf line = str_concat({key, "=", value, "\n"});
+    return (file.fwrite(line, 1, line.len()) == line.len());
 }

@@ -32,62 +32,54 @@ private:
 class ListBase
 {
 protected:
-    typedef void (* DestroyFunc) (ListNode *);
+    typedef void (*DestroyFunc)(ListNode *);
 
     ListNode * head = nullptr;
     ListNode * tail = nullptr;
 
-    void insert_after (ListNode * prev, ListNode * node);
-    void remove (ListNode * node);
-    void clear (DestroyFunc destroy);
+    void insert_after(ListNode * prev, ListNode * node);
+    void remove(ListNode * node);
+    void clear(DestroyFunc destroy);
 
-    static ListNode * prev (ListNode * node)
-        { return node->prev; }
-    static ListNode * next (ListNode * node)
-        { return node->next; }
+    static ListNode * prev(ListNode * node) { return node->prev; }
+    static ListNode * next(ListNode * node) { return node->next; }
 };
 
 template<class C>
 class List : private ListBase
 {
 public:
-    C * head () const
-        { return (C *) ListBase::head; }
-    C * tail () const
-        { return (C *) ListBase::tail; }
+    C * head() const { return (C *)ListBase::head; }
+    C * tail() const { return (C *)ListBase::tail; }
 
-    static C * prev (C * node)
-        { return (C *) ListBase::prev (node); }
-    static C * next (C * node)
-        { return (C *) ListBase::next (node); }
+    static C * prev(C * node) { return (C *)ListBase::prev(node); }
+    static C * next(C * node) { return (C *)ListBase::next(node); }
 
-    void insert_after (C * prev, C * node)
-        { ListBase::insert_after (prev, node); }
-    void remove (C * node)
-        { ListBase::remove (node); }
-
-    void prepend (C * node)
-        { insert_after (nullptr, node); }
-    void append (C * node)
-        { insert_after (tail (), node); }
-
-    void clear ()
-        { ListBase::clear (destroy); }
-
-    C * pop_head ()
+    void insert_after(C * prev, C * node)
     {
-        C * node = head ();
+        ListBase::insert_after(prev, node);
+    }
+    void remove(C * node) { ListBase::remove(node); }
+
+    void prepend(C * node) { insert_after(nullptr, node); }
+    void append(C * node) { insert_after(tail(), node); }
+
+    void clear() { ListBase::clear(destroy); }
+
+    C * pop_head()
+    {
+        C * node = head();
         if (node)
-            remove (node);
+            remove(node);
         return node;
     }
 
     template<class MatchFunc>
-    C * find (MatchFunc match)
+    C * find(MatchFunc match)
     {
-        for (C * node = head (); node; node = next (node))
+        for (C * node = head(); node; node = next(node))
         {
-            if (match (* node))
+            if (match(*node))
                 return node;
         }
 
@@ -95,8 +87,7 @@ public:
     }
 
 private:
-    static void destroy (ListNode * node)
-        { delete (C *) node; }
+    static void destroy(ListNode * node) { delete (C *)node; }
 };
 
 #endif // LIBAUDCORE_LIST_H

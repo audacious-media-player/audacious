@@ -22,7 +22,8 @@
 
 #include <libaudcore/index.h>
 
-enum class PluginType {
+enum class PluginType
+{
     Transport,
     Playlist,
     Input,
@@ -38,33 +39,37 @@ class PluginHandle;
 
 /* CAUTION: These functions are not thread safe. */
 
-PluginHandle * aud_plugin_get_current (PluginType type);
-bool aud_plugin_get_enabled (PluginHandle * plugin);
-bool aud_plugin_enable (PluginHandle * plugin, bool enable);
+PluginHandle * aud_plugin_get_current(PluginType type);
+bool aud_plugin_get_enabled(PluginHandle * plugin);
+bool aud_plugin_enable(PluginHandle * plugin, bool enable);
 
-int aud_plugin_send_message (PluginHandle * plugin, const char * code, const void * data, int size);
-void * aud_plugin_get_gtk_widget (PluginHandle * plugin);  // returns (GtkWidget *)
-void * aud_plugin_get_qt_widget (PluginHandle * plugin);  // return (QWidget *)
+int aud_plugin_send_message(PluginHandle * plugin, const char * code,
+                            const void * data, int size);
+void *
+aud_plugin_get_gtk_widget(PluginHandle * plugin);       // returns (GtkWidget *)
+void * aud_plugin_get_qt_widget(PluginHandle * plugin); // return (QWidget *)
 
-PluginType aud_plugin_get_type (PluginHandle * plugin);
-const char * aud_plugin_get_basename (PluginHandle * plugin);
-PluginHandle * aud_plugin_lookup_basename (const char * basename);
+PluginType aud_plugin_get_type(PluginHandle * plugin);
+const char * aud_plugin_get_basename(PluginHandle * plugin);
+PluginHandle * aud_plugin_lookup_basename(const char * basename);
 
-const void * aud_plugin_get_header (PluginHandle * plugin);
-PluginHandle * aud_plugin_by_header (const void * header);
+const void * aud_plugin_get_header(PluginHandle * plugin);
+PluginHandle * aud_plugin_by_header(const void * header);
 
-const Index<PluginHandle *> & aud_plugin_list (PluginType type);
+const Index<PluginHandle *> & aud_plugin_list(PluginType type);
 
-const char * aud_plugin_get_name (PluginHandle * plugin);
-bool aud_plugin_has_about (PluginHandle * plugin);
-bool aud_plugin_has_configure (PluginHandle * plugin);
+const char * aud_plugin_get_name(PluginHandle * plugin);
+bool aud_plugin_has_about(PluginHandle * plugin);
+bool aud_plugin_has_configure(PluginHandle * plugin);
 
 /* returns true to continue watching, false to stop */
-typedef bool (* PluginWatchFunc) (PluginHandle * plugin, void * data);
+typedef bool (*PluginWatchFunc)(PluginHandle * plugin, void * data);
 
-void aud_plugin_add_watch (PluginHandle * plugin, PluginWatchFunc func, void * data);
-void aud_plugin_remove_watch (PluginHandle * plugin, PluginWatchFunc func, void * data);
+void aud_plugin_add_watch(PluginHandle * plugin, PluginWatchFunc func,
+                          void * data);
+void aud_plugin_remove_watch(PluginHandle * plugin, PluginWatchFunc func,
+                             void * data);
 
-Index<const char *> aud_plugin_get_supported_mime_types ();
+Index<const char *> aud_plugin_get_supported_mime_types();
 
 #endif

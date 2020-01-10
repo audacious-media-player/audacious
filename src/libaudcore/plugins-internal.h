@@ -20,50 +20,52 @@
 #ifndef LIBAUDCORE_PLUGINS_INTERNAL_H
 #define LIBAUDCORE_PLUGINS_INTERNAL_H
 
-#include "plugins.h"
 #include "objects.h"
+#include "plugins.h"
 
 enum class InputKey;
 class Plugin;
 
-enum class PluginEnabled {
+enum class PluginEnabled
+{
     Disabled = 0,
     Primary = 1,
     Secondary = 2
 };
 
 /* plugin-init.c */
-void start_plugins_one ();
-void start_plugins_two ();
-void stop_plugins_two ();
-void stop_plugins_one ();
+void start_plugins_one();
+void start_plugins_two();
+void stop_plugins_two();
+void stop_plugins_one();
 
-bool plugin_enable_secondary (PluginHandle * plugin, bool enable);
+bool plugin_enable_secondary(PluginHandle * plugin, bool enable);
 
 /* plugin-load.c */
-void plugin_system_init ();
-void plugin_system_cleanup ();
-bool plugin_check_flags (int flags);
-Plugin * plugin_load (const char * path);
+void plugin_system_init();
+void plugin_system_cleanup();
+bool plugin_check_flags(int flags);
+Plugin * plugin_load(const char * path);
 
 /* plugin-registry.c */
-void plugin_registry_load ();
-void plugin_registry_prune ();
-void plugin_registry_save ();
-void plugin_registry_cleanup ();
+void plugin_registry_load();
+void plugin_registry_prune();
+void plugin_registry_save();
+void plugin_registry_cleanup();
 
-void plugin_register (const char * path, int timestamp);
-PluginEnabled plugin_get_enabled (PluginHandle * plugin);
-void plugin_set_enabled (PluginHandle * plugin, PluginEnabled enabled);
-void plugin_set_failed (PluginHandle * plugin);
+void plugin_register(const char * path, int timestamp);
+PluginEnabled plugin_get_enabled(PluginHandle * plugin);
+void plugin_set_enabled(PluginHandle * plugin, PluginEnabled enabled);
+void plugin_set_failed(PluginHandle * plugin);
 
-const Index<String> & transport_plugin_get_schemes (PluginHandle * plugin);
-bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme);
-bool playlist_plugin_can_save (PluginHandle * plugin);
-const Index<String> & playlist_plugin_get_exts (PluginHandle * plugin);
-bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext);
-bool input_plugin_has_key (PluginHandle * plugin, InputKey key, const char * value);
-bool input_plugin_has_subtunes (PluginHandle * plugin);
-bool input_plugin_can_write_tuple (PluginHandle * plugin);
+const Index<String> & transport_plugin_get_schemes(PluginHandle * plugin);
+bool transport_plugin_has_scheme(PluginHandle * plugin, const char * scheme);
+bool playlist_plugin_can_save(PluginHandle * plugin);
+const Index<String> & playlist_plugin_get_exts(PluginHandle * plugin);
+bool playlist_plugin_has_ext(PluginHandle * plugin, const char * ext);
+bool input_plugin_has_key(PluginHandle * plugin, InputKey key,
+                          const char * value);
+bool input_plugin_has_subtunes(PluginHandle * plugin);
+bool input_plugin_can_write_tuple(PluginHandle * plugin);
 
 #endif

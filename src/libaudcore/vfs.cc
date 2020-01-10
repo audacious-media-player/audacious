@@ -37,24 +37,24 @@
 static LocalTransport local_transport;
 static StdinTransport stdin_transport;
 
-static TransportPlugin * lookup_transport (const char * filename,
- String & error, bool * custom_input = nullptr)
+static TransportPlugin * lookup_transport(const char * filename, String & error,
+                                          bool * custom_input = nullptr)
 {
-    StringBuf scheme = uri_get_scheme (filename);
+    StringBuf scheme = uri_get_scheme(filename);
 
-    if (! scheme || ! strcmp (scheme, "file"))
-        return & local_transport;
-    if (! strcmp (scheme, "stdin"))
-        return & stdin_transport;
+    if (!scheme || !strcmp(scheme, "file"))
+        return &local_transport;
+    if (!strcmp(scheme, "stdin"))
+        return &stdin_transport;
 
-    for (PluginHandle * plugin : aud_plugin_list (PluginType::Transport))
+    for (PluginHandle * plugin : aud_plugin_list(PluginType::Transport))
     {
-        if (! aud_plugin_get_enabled (plugin))
+        if (!aud_plugin_get_enabled(plugin))
             continue;
 
-        if (transport_plugin_has_scheme (plugin, scheme))
+        if (transport_plugin_has_scheme(plugin, scheme))
         {
-            auto tp = (TransportPlugin *) aud_plugin_get_header (plugin);
+            auto tp = (TransportPlugin *)aud_plugin_get_header(plugin);
             if (tp)
                 return tp;
         }
@@ -62,21 +62,21 @@ static TransportPlugin * lookup_transport (const char * filename,
 
     if (custom_input)
     {
-        for (PluginHandle * plugin : aud_plugin_list (PluginType::Input))
+        for (PluginHandle * plugin : aud_plugin_list(PluginType::Input))
         {
-            if (! aud_plugin_get_enabled (plugin))
+            if (!aud_plugin_get_enabled(plugin))
                 continue;
 
-            if (input_plugin_has_key (plugin, InputKey::Scheme, scheme))
+            if (input_plugin_has_key(plugin, InputKey::Scheme, scheme))
             {
-                * custom_input = true;
+                *custom_input = true;
                 return nullptr;
             }
         }
     }
 
-    AUDERR ("Unknown URI scheme: %s://\n", (const char *) scheme);
-    error = String (_("Unknown URI scheme"));
+    AUDERR("Unknown URI scheme: %s://\n", (const char *)scheme);
+    error = String(_("Unknown URI scheme"));
     return nullptr;
 }
 
@@ -88,29 +88,29 @@ static TransportPlugin * lookup_transport (const char * filename,
  * @param mode The preferred access privileges (not guaranteed).
  * @return On success, a #VFSFile object representing the stream.
  */
-EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
+EXPORT VFSFile::VFSFile(const char * filename, const char * mode)
 {
-    auto tp = lookup_transport (filename, m_error);
-    if (! tp)
+    auto tp = lookup_transport(filename, m_error);
+    if (!tp)
         return;
 
-    VFSImpl * impl = tp->fopen (strip_subtune (filename), mode, m_error);
-    if (! impl)
+    VFSImpl * impl = tp->fopen(strip_subtune(filename), mode, m_error);
+    if (!impl)
         return;
 
     /* enable buffering for read-only handles */
-    if (mode[0] == 'r' && ! strchr (mode, '+'))
-        impl = new ProbeBuffer (filename, impl);
+    if (mode[0] == 'r' && !strchr(mode, '+'))
+        impl = new ProbeBuffer(filename, impl);
 
-    AUDINFO ("<%p> open (mode %s) %s\n", impl, mode, filename);
-    m_filename = String (filename);
-    m_impl.capture (impl);
+    AUDINFO("<%p> open (mode %s) %s\n", impl, mode, filename);
+    m_filename = String(filename);
+    m_impl.capture(impl);
 }
 
-EXPORT VFSFile VFSFile::tmpfile ()
+EXPORT VFSFile VFSFile::tmpfile()
 {
     VFSFile file;
-    file.m_impl.capture (vfs_tmpfile (file.m_error));
+    file.m_impl.capture(vfs_tmpfile(file.m_error));
     return file;
 }
 
@@ -123,12 +123,12 @@ EXPORT VFSFile VFSFile::tmpfile ()
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully read.
  */
-EXPORT int64_t VFSFile::fread (void * ptr, int64_t size, int64_t nmemb)
+EXPORT int64_t VFSFile::fread(void * ptr, int64_t size, int64_t nmemb)
 {
-    int64_t readed = m_impl->fread (ptr, size, nmemb);
+    int64_t readed = m_impl->fread(ptr, size, nmemb);
 
-    AUDDBG ("<%p> read %" PRId64 " elements of size %" PRId64 " = %" PRId64 "\n",
-     m_impl.get (), nmemb, size, readed);
+    AUDDBG("<%p> read %" PRId64 " elements of size %" PRId64 " = %" PRId64 "\n",
+           m_impl.get(), nmemb, size, readed);
 
     return readed;
 }
@@ -142,12 +142,13 @@ EXPORT int64_t VFSFile::fread (void * ptr, int64_t size, int64_t nmemb)
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully written.
  */
-EXPORT int64_t VFSFile::fwrite (const void * ptr, int64_t size, int64_t nmemb)
+EXPORT int64_t VFSFile::fwrite(const void * ptr, int64_t size, int64_t nmemb)
 {
-    int64_t written = m_impl->fwrite (ptr, size, nmemb);
+    int64_t written = m_impl->fwrite(ptr, size, nmemb);
 
-    AUDDBG ("<%p> write %" PRId64 " elements of size %" PRId64 " = %" PRId64 "\n",
-     m_impl.get (), nmemb, size, written);
+    AUDDBG("<%p> write %" PRId64 " elements of size %" PRId64 " = %" PRId64
+           "\n",
+           m_impl.get(), nmemb, size, written);
 
     return written;
 }
@@ -165,16 +166,19 @@ EXPORT int64_t VFSFile::fwrite (const void * ptr, int64_t size, int64_t nmemb)
  * @param whence Type of the seek: SEEK_CUR, SEEK_SET or SEEK_END.
  * @return On success, 0. Otherwise, -1.
  */
-EXPORT int VFSFile::fseek (int64_t offset, VFSSeekType whence)
+EXPORT int VFSFile::fseek(int64_t offset, VFSSeekType whence)
 {
-    AUDDBG ("<%p> seek to %" PRId64 " from %s\n", m_impl.get (), offset,
-     whence == VFS_SEEK_CUR ? "current" : whence == VFS_SEEK_SET ? "beginning" :
-     whence == VFS_SEEK_END ? "end" : "invalid");
+    AUDDBG("<%p> seek to %" PRId64 " from %s\n", m_impl.get(), offset,
+           whence == VFS_SEEK_CUR
+               ? "current"
+               : whence == VFS_SEEK_SET
+                     ? "beginning"
+                     : whence == VFS_SEEK_END ? "end" : "invalid");
 
-    if (m_impl->fseek (offset, whence) == 0)
+    if (m_impl->fseek(offset, whence) == 0)
         return 0;
 
-    AUDDBG ("<%p> seek failed!\n", m_impl.get ());
+    AUDDBG("<%p> seek failed!\n", m_impl.get());
 
     return -1;
 }
@@ -185,11 +189,11 @@ EXPORT int VFSFile::fseek (int64_t offset, VFSSeekType whence)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the current position. Otherwise, -1.
  */
-EXPORT int64_t VFSFile::ftell ()
+EXPORT int64_t VFSFile::ftell()
 {
-    int64_t told = m_impl->ftell ();
+    int64_t told = m_impl->ftell();
 
-    AUDDBG ("<%p> tell = %" PRId64 "\n", m_impl.get (), told);
+    AUDDBG("<%p> tell = %" PRId64 "\n", m_impl.get(), told);
 
     return told;
 }
@@ -198,13 +202,14 @@ EXPORT int64_t VFSFile::ftell ()
  * Returns whether or not the VFS stream has reached EOF.
  *
  * @param file #VFSFile object that represents the VFS stream.
- * @return On success, whether or not the VFS stream is at EOF. Otherwise, false.
+ * @return On success, whether or not the VFS stream is at EOF. Otherwise,
+ * false.
  */
-EXPORT bool VFSFile::feof ()
+EXPORT bool VFSFile::feof()
 {
-    bool eof = m_impl->feof ();
+    bool eof = m_impl->feof();
 
-    AUDDBG ("<%p> eof = %s\n", m_impl.get (), eof ? "yes" : "no");
+    AUDDBG("<%p> eof = %s\n", m_impl.get(), eof ? "yes" : "no");
 
     return eof;
 }
@@ -216,26 +221,26 @@ EXPORT bool VFSFile::feof ()
  * @param length The length to truncate at.
  * @return On success, 0. Otherwise, -1.
  */
-EXPORT int VFSFile::ftruncate (int64_t length)
+EXPORT int VFSFile::ftruncate(int64_t length)
 {
-    AUDDBG ("<%p> truncate to %" PRId64 "\n", m_impl.get (), length);
+    AUDDBG("<%p> truncate to %" PRId64 "\n", m_impl.get(), length);
 
-    if (m_impl->ftruncate (length) == 0)
+    if (m_impl->ftruncate(length) == 0)
         return 0;
 
-    AUDDBG ("<%p> truncate failed!\n", m_impl.get ());
+    AUDDBG("<%p> truncate failed!\n", m_impl.get());
 
     return -1;
 }
 
-EXPORT int VFSFile::fflush ()
+EXPORT int VFSFile::fflush()
 {
-    AUDDBG ("<%p> flush\n", m_impl.get ());
+    AUDDBG("<%p> flush\n", m_impl.get());
 
-    if (m_impl->fflush () == 0)
+    if (m_impl->fflush() == 0)
         return 0;
 
-    AUDDBG ("<%p> flush failed!\n", m_impl.get ());
+    AUDDBG("<%p> flush failed!\n", m_impl.get());
 
     return -1;
 }
@@ -246,11 +251,11 @@ EXPORT int VFSFile::fflush ()
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the size of the file in bytes. Otherwise, -1.
  */
-EXPORT int64_t VFSFile::fsize ()
+EXPORT int64_t VFSFile::fsize()
 {
-    int64_t size = m_impl->fsize ();
+    int64_t size = m_impl->fsize();
 
-    AUDDBG ("<%p> size = %" PRId64 "\n", m_impl.get (), size);
+    AUDDBG("<%p> size = %" PRId64 "\n", m_impl.get(), size);
 
     return size;
 }
@@ -262,76 +267,76 @@ EXPORT int64_t VFSFile::fsize ()
  * @param field The string constant field name to get.
  * @return On success, a copy of the value of the field. Otherwise, nullptr.
  */
-EXPORT String VFSFile::get_metadata (const char * field)
+EXPORT String VFSFile::get_metadata(const char * field)
 {
-    return m_impl->get_metadata (field);
+    return m_impl->get_metadata(field);
 }
 
-EXPORT void VFSFile::set_limit_to_buffer (bool limit)
+EXPORT void VFSFile::set_limit_to_buffer(bool limit)
 {
-    auto buffer = dynamic_cast<ProbeBuffer *> (m_impl.get ());
+    auto buffer = dynamic_cast<ProbeBuffer *>(m_impl.get());
     if (buffer)
-        buffer->set_limit_to_buffer (limit);
+        buffer->set_limit_to_buffer(limit);
     else
-        AUDERR ("<%p> buffering not supported!\n", m_impl.get ());
+        AUDERR("<%p> buffering not supported!\n", m_impl.get());
 }
 
-EXPORT Index<char> VFSFile::read_all ()
+EXPORT Index<char> VFSFile::read_all()
 {
     constexpr int maxbuf = 16777216;
     constexpr int pagesize = 4096;
 
     Index<char> buf;
-    int64_t size = fsize ();
-    int64_t pos = ftell ();
+    int64_t size = fsize();
+    int64_t pos = ftell();
 
     if (size >= 0 && pos >= 0 && pos <= size)
     {
-        buf.insert (0, aud::min (size - pos, (int64_t) maxbuf));
-        size = fread (buf.begin (), 1, buf.len ());
+        buf.insert(0, aud::min(size - pos, (int64_t)maxbuf));
+        size = fread(buf.begin(), 1, buf.len());
     }
     else
     {
         size = 0;
 
-        buf.insert (0, pagesize);
+        buf.insert(0, pagesize);
 
         int64_t readsize;
-        while ((readsize = fread (& buf[size], 1, buf.len () - size)))
+        while ((readsize = fread(&buf[size], 1, buf.len() - size)))
         {
             size += readsize;
 
-            if (size == buf.len ())
+            if (size == buf.len())
             {
-                if (buf.len () > maxbuf - pagesize)
+                if (buf.len() > maxbuf - pagesize)
                     break;
 
-                buf.insert (-1, pagesize);
+                buf.insert(-1, pagesize);
             }
         }
     }
 
-    buf.remove (size, -1);
+    buf.remove(size, -1);
 
     return buf;
 }
 
-EXPORT bool VFSFile::copy_from (VFSFile & source, int64_t size)
+EXPORT bool VFSFile::copy_from(VFSFile & source, int64_t size)
 {
     constexpr int bufsize = 65536;
 
     Index<char> buf;
-    buf.resize (bufsize);
+    buf.resize(bufsize);
 
     while (size < 0 || size > 0)
     {
         int64_t to_read = (size > 0 && size < bufsize) ? size : bufsize;
-        int64_t readsize = source.fread (buf.begin (), 1, to_read);
+        int64_t readsize = source.fread(buf.begin(), 1, to_read);
 
         if (size > 0)
             size -= readsize;
 
-        if (fwrite (buf.begin (), 1, readsize) != readsize)
+        if (fwrite(buf.begin(), 1, readsize) != readsize)
             return false;
 
         if (readsize < to_read)
@@ -340,101 +345,104 @@ EXPORT bool VFSFile::copy_from (VFSFile & source, int64_t size)
 
     /* if a fixed size was requested, return true only if all the data was read.
      * otherwise, return true only if the end of the source file was reached. */
-    return size == 0 || (size < 0 && source.feof ());
+    return size == 0 || (size < 0 && source.feof());
 }
 
-EXPORT bool VFSFile::replace_with (VFSFile & source)
+EXPORT bool VFSFile::replace_with(VFSFile & source)
 {
-    if (source.fseek (0, VFS_SEEK_SET) < 0)
+    if (source.fseek(0, VFS_SEEK_SET) < 0)
         return false;
 
-    if (fseek (0, VFS_SEEK_SET) < 0)
+    if (fseek(0, VFS_SEEK_SET) < 0)
         return false;
 
-    if (ftruncate (0) < 0)
+    if (ftruncate(0) < 0)
         return false;
 
-    return copy_from (source, -1);
+    return copy_from(source, -1);
 }
 
-EXPORT bool VFSFile::test_file (const char * filename, VFSFileTest test)
+EXPORT bool VFSFile::test_file(const char * filename, VFSFileTest test)
 {
-    String error;  /* discarded */
-    return test_file (filename, test, error) == test;
+    String error; /* discarded */
+    return test_file(filename, test, error) == test;
 }
 
-EXPORT VFSFileTest VFSFile::test_file (const char * filename, VFSFileTest test, String & error)
+EXPORT VFSFileTest VFSFile::test_file(const char * filename, VFSFileTest test,
+                                      String & error)
 {
     bool custom_input = false;
-    auto tp = lookup_transport (filename, error, & custom_input);
+    auto tp = lookup_transport(filename, error, &custom_input);
 
     /* for URI schemes handled by input plugins, return 0, indicating that we
      * have no way of testing file attributes */
     if (custom_input)
-        return VFSFileTest (0);
+        return VFSFileTest(0);
 
     /* for unsupported URI schemes, return VFS_NO_ACCESS */
-    if (! tp)
-        return VFSFileTest (test & VFS_NO_ACCESS);
+    if (!tp)
+        return VFSFileTest(test & VFS_NO_ACCESS);
 
-    return tp->test_file (strip_subtune (filename), test, error);
+    return tp->test_file(strip_subtune(filename), test, error);
 }
 
-EXPORT Index<String> VFSFile::read_folder (const char * filename, String & error)
+EXPORT Index<String> VFSFile::read_folder(const char * filename, String & error)
 {
-    auto tp = lookup_transport (filename, error);
-    return tp ? tp->read_folder (filename, error) : Index<String> ();
+    auto tp = lookup_transport(filename, error);
+    return tp ? tp->read_folder(filename, error) : Index<String>();
 }
 
-EXPORT Index<char> VFSFile::read_file (const char * filename, VFSReadOptions options)
+EXPORT Index<char> VFSFile::read_file(const char * filename,
+                                      VFSReadOptions options)
 {
     Index<char> text;
 
-    if (! (options & VFS_IGNORE_MISSING) || test_file (filename, VFS_EXISTS))
+    if (!(options & VFS_IGNORE_MISSING) || test_file(filename, VFS_EXISTS))
     {
-        VFSFile file (filename, "r");
+        VFSFile file(filename, "r");
         if (file)
-            text = file.read_all ();
+            text = file.read_all();
         else
-            AUDERR ("Cannot open %s for reading: %s\n", filename, file.error ());
+            AUDERR("Cannot open %s for reading: %s\n", filename, file.error());
     }
 
     if ((options & VFS_APPEND_NULL))
-        text.append (0);
+        text.append(0);
 
     return text;
 }
 
-EXPORT bool VFSFile::write_file (const char * filename, const void * data, int64_t len)
+EXPORT bool VFSFile::write_file(const char * filename, const void * data,
+                                int64_t len)
 {
     bool written = false;
 
-    VFSFile file (filename, "w");
+    VFSFile file(filename, "w");
     if (file)
-        written = (file.fwrite (data, 1, len) == len && file.fflush () == 0);
+        written = (file.fwrite(data, 1, len) == len && file.fflush() == 0);
     else
-        AUDERR ("Cannot open %s for writing: %s\n", filename, file.error ());
+        AUDERR("Cannot open %s for writing: %s\n", filename, file.error());
 
     return written;
 }
 
-EXPORT Index<const char *> VFSFile::supported_uri_schemes ()
+EXPORT Index<const char *> VFSFile::supported_uri_schemes()
 {
     Index<const char *> schemes;
 
-    schemes.append ("file");
-    schemes.append ("stdin");
+    schemes.append("file");
+    schemes.append("stdin");
 
-    for (PluginHandle * plugin : aud_plugin_list (PluginType::Transport))
+    for (PluginHandle * plugin : aud_plugin_list(PluginType::Transport))
     {
-        if (! aud_plugin_get_enabled (plugin))
+        if (!aud_plugin_get_enabled(plugin))
             continue;
 
-        for (auto s : transport_plugin_get_schemes (plugin))
-            schemes.append ((const char *) s);
+        for (auto s : transport_plugin_get_schemes(plugin))
+            schemes.append((const char *)s);
     }
 
-    schemes.append (nullptr);
+    schemes.append(nullptr);
 
     return schemes;
 }

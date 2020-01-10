@@ -34,13 +34,13 @@
 
 struct VisNode : public ListNode
 {
-    VisNode (int channels, int time) :
-        channels (channels),
-        time (time),
-        data (new float[channels * FRAMES_PER_NODE]) {}
+    VisNode(int channels, int time)
+        : channels(channels), time(time),
+          data(new float[channels * FRAMES_PER_NODE])
+    {
+    }
 
-    ~VisNode ()
-        { delete[] data; }
+    ~VisNode() { delete[] data; }
 
     const int channels;
     int time;
@@ -56,20 +56,20 @@ static List<VisNode> vis_list;
 static List<VisNode> vis_pool;
 static QueuedFunc queued_clear;
 
-static void send_audio (void *)
+static void send_audio(void *)
 {
     /* call before locking mutex to avoid deadlock */
-    int outputted = output_get_raw_time ();
+    int outputted = output_get_raw_time();
 
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    if (! enabled || ! playing || paused)
+    if (!enabled || !playing || paused)
         return;
 
     VisNode * node = nullptr;
     VisNode * next;
 
-    while ((next = vis_list.head ()))
+    while ((next = vis_list.head()))
     {
         /* If we are considering a node, stop searching and use it if it is the
          * most recent (that is, the next one is in the future).  Otherwise,
@@ -79,72 +79,71 @@ static void send_audio (void *)
             break;
 
         if (node)
-            vis_pool.prepend (node);
+            vis_pool.prepend(node);
 
         node = next;
-        vis_list.remove (node);
+        vis_list.remove(node);
     }
 
-    if (! node)
+    if (!node)
         return;
 
-    mh.unlock ();
-    vis_send_audio (node->data, node->channels);
-    mh.lock ();
+    mh.unlock();
+    vis_send_audio(node->data, node->channels);
+    mh.lock();
 
-    vis_pool.prepend (node);
+    vis_pool.prepend(node);
 }
 
-static void send_clear (void *)
-{
-    vis_send_clear ();
-}
+static void send_clear(void *) { vis_send_clear(); }
 
-static void flush (aud::mutex::holder &)
+static void flush(aud::mutex::holder &)
 {
     delete current_node;
     current_node = nullptr;
 
-    vis_list.clear ();
-    vis_pool.clear ();
+    vis_list.clear();
+    vis_pool.clear();
 
     if (enabled)
-        queued_clear.queue (send_clear, nullptr);
+        queued_clear.queue(send_clear, nullptr);
 }
 
-void vis_runner_flush ()
+void vis_runner_flush()
 {
-    auto mh = mutex.take ();
-    flush (mh);
+    auto mh = mutex.take();
+    flush(mh);
 }
 
-static void start_stop (aud::mutex::holder & mh, bool new_playing, bool new_paused)
+static void start_stop(aud::mutex::holder & mh, bool new_playing,
+                       bool new_paused)
 {
     playing = new_playing;
     paused = new_paused;
 
-    queued_clear.stop ();
+    queued_clear.stop();
 
-    if (! enabled || ! playing)
-        flush (mh);
+    if (!enabled || !playing)
+        flush(mh);
 
-    if (enabled && playing && ! paused)
-        timer_add (TimerRate::Hz30, send_audio);
+    if (enabled && playing && !paused)
+        timer_add(TimerRate::Hz30, send_audio);
     else
-        timer_remove (TimerRate::Hz30, send_audio);
+        timer_remove(TimerRate::Hz30, send_audio);
 }
 
-void vis_runner_start_stop (bool new_playing, bool new_paused)
+void vis_runner_start_stop(bool new_playing, bool new_paused)
 {
-    auto mh = mutex.take ();
-    start_stop (mh, new_playing, new_paused);
+    auto mh = mutex.take();
+    start_stop(mh, new_playing, new_paused);
 }
 
-void vis_runner_pass_audio (int time, const Index<float> & data, int channels, int rate)
+void vis_runner_pass_audio(int time, const Index<float> & data, int channels,
+                           int rate)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    if (! enabled || ! playing)
+    if (!enabled || !playing)
         return;
 
     /* We can build a single node from multiple calls; we can also build
@@ -156,7 +155,7 @@ void vis_runner_pass_audio (int time, const Index<float> & data, int channels, i
     while (1)
     {
         if (current_node)
-            assert (current_node->channels == channels);
+            assert(current_node->channels == channels);
         else
         {
             int node_time = time;
@@ -168,27 +167,27 @@ void vis_runner_pass_audio (int time, const Index<float> & data, int channels, i
              * queue, we are at the beginning of the song or had an underrun,
              * and we want to copy the earliest audio data we have. */
 
-            VisNode * tail = vis_list.tail ();
+            VisNode * tail = vis_list.tail();
             if (tail)
                 node_time = tail->time + INTERVAL;
 
-            at = channels * (int) ((int64_t) (node_time - time) * rate / 1000);
+            at = channels * (int)((int64_t)(node_time - time) * rate / 1000);
 
             if (at < 0)
                 at = 0;
-            if (at >= data.len ())
+            if (at >= data.len())
                 break;
 
-            current_node = vis_pool.head ();
+            current_node = vis_pool.head();
 
             if (current_node)
             {
-                assert (current_node->channels == channels);
-                vis_pool.remove (current_node);
+                assert(current_node->channels == channels);
+                vis_pool.remove(current_node);
                 current_node->time = node_time;
             }
             else
-                current_node = new VisNode (channels, node_time);
+                current_node = new VisNode(channels, node_time);
 
             current_frames = 0;
         }
@@ -198,21 +197,23 @@ void vis_runner_pass_audio (int time, const Index<float> & data, int channels, i
          * wait for more data to be passed in the next call.  If we do fill the
          * node, we loop and start building a new one. */
 
-        int copy = aud::min (data.len () - at, channels * (FRAMES_PER_NODE - current_frames));
-        memcpy (current_node->data + channels * current_frames, & data[at], sizeof (float) * copy);
+        int copy = aud::min(data.len() - at,
+                            channels * (FRAMES_PER_NODE - current_frames));
+        memcpy(current_node->data + channels * current_frames, &data[at],
+               sizeof(float) * copy);
         current_frames += copy / channels;
 
         if (current_frames < FRAMES_PER_NODE)
             break;
 
-        vis_list.append (current_node);
+        vis_list.append(current_node);
         current_node = nullptr;
     }
 }
 
-void vis_runner_enable (bool enable)
+void vis_runner_enable(bool enable)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
     enabled = enable;
-    start_stop (mh, playing, paused);
+    start_stop(mh, playing, paused);
 }

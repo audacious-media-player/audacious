@@ -32,86 +32,89 @@
 #include "runtime.h"
 #include "threads.h"
 
-const char * get_home_utf8 ()
+const char * get_home_utf8()
 {
     static std::once_flag once;
     static char * home_utf8;
 
-    auto init = [] ()
-        { home_utf8 = g_filename_to_utf8 (g_get_home_dir (), -1, nullptr, nullptr, nullptr); };
+    auto init = []() {
+        home_utf8 =
+            g_filename_to_utf8(g_get_home_dir(), -1, nullptr, nullptr, nullptr);
+    };
 
-    std::call_once (once, init);
+    std::call_once(once, init);
     return home_utf8;
 }
 
-bool dir_foreach (const char * path, DirForeachFunc func, void * user)
+bool dir_foreach(const char * path, DirForeachFunc func, void * user)
 {
-    GDir * dir = g_dir_open (path, 0, nullptr);
-    if (! dir)
+    GDir * dir = g_dir_open(path, 0, nullptr);
+    if (!dir)
         return false;
 
     const char * name;
-    while ((name = g_dir_read_name (dir)))
+    while ((name = g_dir_read_name(dir)))
     {
-        if (func (filename_build ({path, name}), name, user))
+        if (func(filename_build({path, name}), name, user))
             break;
     }
 
-    g_dir_close (dir);
+    g_dir_close(dir);
     return true;
 }
 
-String write_temp_file (const void * data, int64_t len)
+String write_temp_file(const void * data, int64_t len)
 {
-    StringBuf name = filename_build ({g_get_tmp_dir (), "audacious-temp-XXXXXX"});
+    StringBuf name = filename_build({g_get_tmp_dir(), "audacious-temp-XXXXXX"});
 
-    int handle = g_mkstemp (name);
+    int handle = g_mkstemp(name);
     if (handle < 0)
     {
-        AUDERR ("Error creating temporary file: %s\n", strerror (errno));
-        return String ();
+        AUDERR("Error creating temporary file: %s\n", strerror(errno));
+        return String();
     }
 
     while (len)
     {
-        int64_t written = write (handle, data, len);
+        int64_t written = write(handle, data, len);
         if (written < 0)
         {
-            AUDERR ("Error writing %s: %s\n", (const char *) name, strerror (errno));
-            close (handle);
-            return String ();
+            AUDERR("Error writing %s: %s\n", (const char *)name,
+                   strerror(errno));
+            close(handle);
+            return String();
         }
 
-        data = (char *) data + written;
+        data = (char *)data + written;
         len -= written;
     }
 
-    if (close (handle) < 0)
+    if (close(handle) < 0)
     {
-        AUDERR ("Error closing %s: %s\n", (const char *) name, strerror (errno));
-        return String ();
+        AUDERR("Error closing %s: %s\n", (const char *)name, strerror(errno));
+        return String();
     }
 
-    return String (name);
+    return String(name);
 }
 
-bool same_basename (const char * a, const char * b)
+bool same_basename(const char * a, const char * b)
 {
-    const char * dot_a = strrchr (a, '.');
-    const char * dot_b = strrchr (b, '.');
-    int len_a = dot_a ? dot_a - a : strlen (a);
-    int len_b = dot_b ? dot_b - b : strlen (b);
+    const char * dot_a = strrchr(a, '.');
+    const char * dot_b = strrchr(b, '.');
+    int len_a = dot_a ? dot_a - a : strlen(a);
+    int len_b = dot_b ? dot_b - b : strlen(b);
 
-    return len_a == len_b && ! strcmp_nocase (a, b, len_a);
+    return len_a == len_b && !strcmp_nocase(a, b, len_a);
 }
 
-const char * last_path_element (const char * path)
+const char * last_path_element(const char * path)
 {
-    const char * slash = strrchr (path, G_DIR_SEPARATOR);
+    const char * slash = strrchr(path, G_DIR_SEPARATOR);
     return (slash && slash[1]) ? slash + 1 : nullptr;
 }
 
-void cut_path_element (char * path, int pos)
+void cut_path_element(char * path, int pos)
 {
 #ifdef _WIN32
     if (pos > 3)
@@ -123,31 +126,32 @@ void cut_path_element (char * path, int pos)
         path[pos] = 0; /* leave [drive letter and] leading slash */
 }
 
-bool is_cuesheet_entry (const char * filename)
+bool is_cuesheet_entry(const char * filename)
 {
-    const char * ext, * sub;
-    uri_parse (filename, nullptr, & ext, & sub, nullptr);
-    return sub[0] && sub - ext == 4 && ! strcmp_nocase (ext, ".cue", 4);
+    const char *ext, *sub;
+    uri_parse(filename, nullptr, &ext, &sub, nullptr);
+    return sub[0] && sub - ext == 4 && !strcmp_nocase(ext, ".cue", 4);
 }
 
-bool is_subtune (const char * filename)
+bool is_subtune(const char * filename)
 {
     const char * sub;
-    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
+    uri_parse(filename, nullptr, nullptr, &sub, nullptr);
     return sub[0];
 }
 
-StringBuf strip_subtune (const char * filename)
+StringBuf strip_subtune(const char * filename)
 {
     const char * sub;
-    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
-    return str_copy (filename, sub - filename);
+    uri_parse(filename, nullptr, nullptr, &sub, nullptr);
+    return str_copy(filename, sub - filename);
 }
 
 /* Thomas Wang's 32-bit mix function.  See:
- * http://web.archive.org/web/20070307172248/http://www.concentric.net/~Ttwang/tech/inthash.htm */
+ * http://web.archive.org/web/20070307172248/http://www.concentric.net/~Ttwang/tech/inthash.htm
+ */
 
-unsigned int32_hash (unsigned val)
+unsigned int32_hash(unsigned val)
 {
     val = ~val + (val << 15);
     val = val ^ (val >> 12);
@@ -158,24 +162,25 @@ unsigned int32_hash (unsigned val)
     return val;
 }
 
-unsigned ptr_hash (const void * ptr)
+unsigned ptr_hash(const void * ptr)
 {
-    unsigned addr_low = (uint64_t) (uintptr_t) ptr;
-    unsigned addr_high = (uint64_t) (uintptr_t) ptr >> 32;
-    return int32_hash (addr_low + addr_high);
+    unsigned addr_low = (uint64_t)(uintptr_t)ptr;
+    unsigned addr_high = (uint64_t)(uintptr_t)ptr >> 32;
+    return int32_hash(addr_low + addr_high);
 }
 
-EXPORT void Visualizer::compute_log_xscale (float * xscale, int bands)
+EXPORT void Visualizer::compute_log_xscale(float * xscale, int bands)
 {
-    for (int i = 0; i <= bands; i ++)
-        xscale[i] = powf (256, (float) i / bands) - 0.5f;
+    for (int i = 0; i <= bands; i++)
+        xscale[i] = powf(256, (float)i / bands) - 0.5f;
 }
 
-EXPORT float Visualizer::compute_freq_band (const float * freq, const float * xscale,
-                                            int band, int bands)
+EXPORT float Visualizer::compute_freq_band(const float * freq,
+                                           const float * xscale, int band,
+                                           int bands)
 {
-    int a = ceilf (xscale[band]);
-    int b = floorf (xscale[band + 1]);
+    int a = ceilf(xscale[band]);
+    int b = floorf(xscale[band + 1]);
     float n = 0;
 
     if (b < a)
@@ -184,7 +189,7 @@ EXPORT float Visualizer::compute_freq_band (const float * freq, const float * xs
     {
         if (a > 0)
             n += freq[a - 1] * (a - xscale[band]);
-        for (; a < b; a ++)
+        for (; a < b; a++)
             n += freq[a];
         if (b < 256)
             n += freq[b] * (xscale[band + 1] - b);
@@ -192,7 +197,7 @@ EXPORT float Visualizer::compute_freq_band (const float * freq, const float * xs
 
     /* fudge factor to make the graph have the same overall height as a
        12-band one no matter how many bands there are */
-    n *= (float) bands / 12;
+    n *= (float)bands / 12;
 
-    return 20 * log10f (n);
+    return 20 * log10f(n);
 }

@@ -30,14 +30,14 @@
 
 typedef char TinyLock;
 
-void tiny_lock (TinyLock * lock);
-void tiny_unlock (TinyLock * lock);
+void tiny_lock(TinyLock * lock);
+void tiny_unlock(TinyLock * lock);
 
 typedef unsigned short TinyRWLock;
 
-void tiny_lock_read (TinyRWLock * lock);
-void tiny_unlock_read (TinyRWLock * lock);
-void tiny_lock_write (TinyRWLock * lock);
-void tiny_unlock_write (TinyRWLock * lock);
+void tiny_lock_read(TinyRWLock * lock);
+void tiny_unlock_read(TinyRWLock * lock);
+void tiny_lock_write(TinyRWLock * lock);
+void tiny_unlock_write(TinyRWLock * lock);
 
 #endif /* LIBAUDCORE_TINYLOCK_H */

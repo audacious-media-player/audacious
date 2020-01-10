@@ -19,9 +19,9 @@
 
 #include "multihash.h"
 
-EXPORT void HashBase::add (Node * node, unsigned hash)
+EXPORT void HashBase::add(Node * node, unsigned hash)
 {
-    if (! buckets)
+    if (!buckets)
     {
         buckets = new Node *[InitialSize]();
         size = InitialSize;
@@ -32,31 +32,31 @@ EXPORT void HashBase::add (Node * node, unsigned hash)
     node->hash = hash;
     buckets[b] = node;
 
-    used ++;
+    used++;
     if (used > size)
-        resize (size << 1);
+        resize(size << 1);
 }
 
-EXPORT HashBase::Node * HashBase::lookup (MatchFunc match, const void * data,
- unsigned hash, NodeLoc * loc) const
+EXPORT HashBase::Node * HashBase::lookup(MatchFunc match, const void * data,
+                                         unsigned hash, NodeLoc * loc) const
 {
-    if (! buckets)
+    if (!buckets)
         return nullptr;
 
     unsigned b = hash & (size - 1);
-    Node * * node_ptr = & buckets[b];
-    Node * node = * node_ptr;
+    Node ** node_ptr = &buckets[b];
+    Node * node = *node_ptr;
 
     while (1)
     {
-        if (! node)
+        if (!node)
             return nullptr;
 
-        if (node->hash == hash && match (node, data))
+        if (node->hash == hash && match(node, data))
             break;
 
-        node_ptr = & node->next;
-        node = * node_ptr;
+        node_ptr = &node->next;
+        node = *node_ptr;
     }
 
     if (loc)
@@ -68,47 +68,47 @@ EXPORT HashBase::Node * HashBase::lookup (MatchFunc match, const void * data,
     return node;
 }
 
-EXPORT void HashBase::remove (const NodeLoc & loc)
+EXPORT void HashBase::remove(const NodeLoc & loc)
 {
-    * loc.ptr = loc.next;
+    *loc.ptr = loc.next;
 
-    used --;
-    if (used < size >> 2 && size > InitialSize)
-        resize (size >> 1);
+    used--;
+    if (used<size>> 2 && size > InitialSize)
+        resize(size >> 1);
 }
 
-EXPORT void HashBase::iterate (FoundFunc func, void * state)
+EXPORT void HashBase::iterate(FoundFunc func, void * state)
 {
-    for (unsigned b = 0; b < size; b ++)
+    for (unsigned b = 0; b < size; b++)
     {
-        Node * * ptr = & buckets[b];
-        Node * node = * ptr;
+        Node ** ptr = &buckets[b];
+        Node * node = *ptr;
 
         while (node)
         {
             Node * next = node->next;
 
-            if (func (node, state))
+            if (func(node, state))
             {
-                * ptr = next;
-                used --;
+                *ptr = next;
+                used--;
             }
             else
-                ptr = & node->next;
+                ptr = &node->next;
 
             node = next;
         }
     }
 
-    if (used < size >> 2 && size > InitialSize)
-        resize (size >> 1);
+    if (used<size>> 2 && size > InitialSize)
+        resize(size >> 1);
 }
 
-void HashBase::resize (unsigned new_size)
+void HashBase::resize(unsigned new_size)
 {
-    Node * * new_buckets = new Node *[new_size]();
+    Node ** new_buckets = new Node *[new_size]();
 
-    for (unsigned b1 = 0; b1 < size; b1 ++)
+    for (unsigned b1 = 0; b1 < size; b1++)
     {
         Node * node = buckets[b1];
 
@@ -129,50 +129,51 @@ void HashBase::resize (unsigned new_size)
     size = new_size;
 }
 
-EXPORT int MultiHash::lookup (const void * data, unsigned hash, AddFunc add,
- FoundFunc found, void * state)
+EXPORT int MultiHash::lookup(const void * data, unsigned hash, AddFunc add,
+                             FoundFunc found, void * state)
 {
     const unsigned c = (hash >> Shift) & (Channels - 1);
     HashBase & channel = channels[c];
 
     int status = 0;
-    auto lh = locks[c].take ();
+    auto lh = locks[c].take();
 
     HashBase::NodeLoc loc;
-    Node * node = channel.lookup (match, data, hash, & loc);
+    Node * node = channel.lookup(match, data, hash, &loc);
 
     if (node)
     {
         status |= Found;
-        if (found && found (node, state))
+        if (found && found(node, state))
         {
             status |= Removed;
-            channel.remove (loc);
+            channel.remove(loc);
         }
     }
-    else if (add && (node = add (data, state)))
+    else if (add && (node = add(data, state)))
     {
         status |= Added;
-        channel.add (node, hash);
+        channel.add(node, hash);
     }
 
     return status;
 }
 
-EXPORT void MultiHash::iterate (FoundFunc func, void * state)
+EXPORT void MultiHash::iterate(FoundFunc func, void * state)
 {
-    iterate (func, state, nullptr, nullptr);
+    iterate(func, state, nullptr, nullptr);
 }
 
-EXPORT void MultiHash::iterate (FoundFunc func, void * state, FinalFunc final, void * fstate)
+EXPORT void MultiHash::iterate(FoundFunc func, void * state, FinalFunc final,
+                               void * fstate)
 {
     aud::spinlock::holder lh[Channels];
-    for (int i = 0; i < Channels; i ++)
-        lh[i] = locks[i].take ();
+    for (int i = 0; i < Channels; i++)
+        lh[i] = locks[i].take();
 
     for (HashBase & channel : channels)
-        channel.iterate (func, state);
+        channel.iterate(func, state);
 
     if (final)
-        final (fstate);
+        final(fstate);
 }

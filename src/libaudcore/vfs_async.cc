@@ -17,11 +17,11 @@
  * the use of this software.
  */
 
+#include "vfs_async.h"
 #include "list.h"
 #include "mainloop.h"
 #include "threads.h"
 #include "vfs.h"
-#include "vfs_async.h"
 
 struct QueuedData : public ListNode
 {
@@ -31,58 +31,63 @@ struct QueuedData : public ListNode
     std::thread thread;
     Index<char> buf;
 
-    QueuedData (const char * filename, VFSConsumer2 cons_f) :
-        filename (filename),
-        cons_f (cons_f) {}
+    QueuedData(const char * filename, VFSConsumer2 cons_f)
+        : filename(filename), cons_f(cons_f)
+    {
+    }
 };
 
 static QueuedFunc queued_func;
 static List<QueuedData> queue;
 static aud::mutex mutex;
 
-static void send_data (void *)
+static void send_data(void *)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
     QueuedData * data;
-    while ((data = queue.head ()))
+    while ((data = queue.head()))
     {
-        queue.remove (data);
+        queue.remove(data);
 
-        mh.unlock ();
+        mh.unlock();
 
-        data->thread.join ();
-        data->cons_f (data->filename, data->buf);
+        data->thread.join();
+        data->cons_f(data->filename, data->buf);
         delete data;
 
-        mh.lock ();
+        mh.lock();
     }
 }
 
-static void read_worker (QueuedData * data)
+static void read_worker(QueuedData * data)
 {
-    VFSFile file (data->filename, "r");
+    VFSFile file(data->filename, "r");
     if (file)
-        data->buf = file.read_all ();
+        data->buf = file.read_all();
 
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    if (! queue.head ())
-        queued_func.queue (send_data, nullptr);
+    if (!queue.head())
+        queued_func.queue(send_data, nullptr);
 
-    queue.append (data);
+    queue.append(data);
 }
 
-EXPORT void vfs_async_file_get_contents (const char * filename, VFSConsumer2 cons_f)
+EXPORT void vfs_async_file_get_contents(const char * filename,
+                                        VFSConsumer2 cons_f)
 {
-    auto data = new QueuedData (filename, cons_f);
-    data->thread = std::thread (read_worker, data);
+    auto data = new QueuedData(filename, cons_f);
+    data->thread = std::thread(read_worker, data);
 }
 
-EXPORT void vfs_async_file_get_contents (const char * filename, VFSConsumer cons_f, void * user)
+EXPORT void vfs_async_file_get_contents(const char * filename,
+                                        VFSConsumer cons_f, void * user)
 {
-    auto functor = [cons_f, user] (const char * filename, const Index<char> & buf)
-        { cons_f (filename, buf, user); };
+    auto functor = [cons_f, user](const char * filename,
+                                  const Index<char> & buf) {
+        cons_f(filename, buf, user);
+    };
 
-    vfs_async_file_get_contents (filename, functor);
+    vfs_async_file_get_contents(filename, functor);
 }

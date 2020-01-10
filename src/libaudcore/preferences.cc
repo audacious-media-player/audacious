@@ -22,102 +22,102 @@
 
 #include <assert.h>
 
-EXPORT bool WidgetConfig::get_bool () const
+EXPORT bool WidgetConfig::get_bool() const
 {
-    assert (type == Bool);
+    assert(type == Bool);
 
     if (value)
-        return * (bool *) value;
+        return *(bool *)value;
     else if (name)
-        return aud_get_bool (section, name);
+        return aud_get_bool(section, name);
     else
         return false;
 }
 
-EXPORT void WidgetConfig::set_bool (bool val) const
+EXPORT void WidgetConfig::set_bool(bool val) const
 {
-    assert (type == Bool);
+    assert(type == Bool);
 
     if (value)
-        * (bool *) value = val;
+        *(bool *)value = val;
     else if (name)
-        aud_set_bool (section, name, val);
+        aud_set_bool(section, name, val);
 
     if (callback)
-        callback ();
+        callback();
 }
 
-EXPORT int WidgetConfig::get_int () const
+EXPORT int WidgetConfig::get_int() const
 {
-    assert (type == Int);
+    assert(type == Int);
 
     if (value)
-        return * (int *) value;
+        return *(int *)value;
     else if (name)
-        return aud_get_int (section, name);
+        return aud_get_int(section, name);
     else
         return 0;
 }
 
-EXPORT void WidgetConfig::set_int (int val) const
+EXPORT void WidgetConfig::set_int(int val) const
 {
-    assert (type == Int);
+    assert(type == Int);
 
     if (value)
-        * (int *) value = val;
+        *(int *)value = val;
     else if (name)
-        aud_set_int (section, name, val);
+        aud_set_int(section, name, val);
 
     if (callback)
-        callback ();
+        callback();
 }
 
-EXPORT double WidgetConfig::get_float () const
+EXPORT double WidgetConfig::get_float() const
 {
-    assert (type == Float);
+    assert(type == Float);
 
     if (value)
-        return * (double *) value;
+        return *(double *)value;
     else if (name)
-        return aud_get_double (section, name);
+        return aud_get_double(section, name);
     else
         return 0;
 }
 
-EXPORT void WidgetConfig::set_float (double val) const
+EXPORT void WidgetConfig::set_float(double val) const
 {
-    assert (type == Float);
+    assert(type == Float);
 
     if (value)
-        * (double *) value = val;
+        *(double *)value = val;
     else if (name)
-        aud_set_double (section, name, val);
+        aud_set_double(section, name, val);
 
     if (callback)
-        callback ();
+        callback();
 }
 
-EXPORT String WidgetConfig::get_string () const
+EXPORT String WidgetConfig::get_string() const
 {
-    assert (type == String);
+    assert(type == String);
 
     if (value)
-        return * (::String *) value;
+        return *(::String *)value;
     else if (name)
-        return aud_get_str (section, name);
+        return aud_get_str(section, name);
     else
-        return ::String ();
+        return ::String();
 }
 
-EXPORT void WidgetConfig::set_string (const char * val) const
+EXPORT void WidgetConfig::set_string(const char * val) const
 {
-    assert (type == String);
+    assert(type == String);
 
     if (value)
-        * (::String *) value = ::String (val);
+        *(::String *)value = ::String(val);
     else if (name)
-        aud_set_str (section, name, val);
+        aud_set_str(section, name, val);
 
     if (callback)
-        callback ();
+        callback();
 }

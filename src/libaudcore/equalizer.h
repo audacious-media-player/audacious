@@ -28,27 +28,29 @@ class VFSFile;
 #define AUD_EQ_NBANDS 10
 #define AUD_EQ_MAX_GAIN 12
 
-struct EqualizerPreset {
+struct EqualizerPreset
+{
     String name;
     float preamp;
     float bands[AUD_EQ_NBANDS];
 };
 
-void aud_eq_set_bands (const double values[AUD_EQ_NBANDS]);
-void aud_eq_get_bands (double values[AUD_EQ_NBANDS]);
-void aud_eq_set_band (int band, double value);
-double aud_eq_get_band (int band);
+void aud_eq_set_bands(const double values[AUD_EQ_NBANDS]);
+void aud_eq_get_bands(double values[AUD_EQ_NBANDS]);
+void aud_eq_set_band(int band, double value);
+double aud_eq_get_band(int band);
 
-void aud_eq_apply_preset (const EqualizerPreset & preset);
-void aud_eq_update_preset (EqualizerPreset & preset);
+void aud_eq_apply_preset(const EqualizerPreset & preset);
+void aud_eq_update_preset(EqualizerPreset & preset);
 
-Index<EqualizerPreset> aud_eq_read_presets (const char * basename);
-bool aud_eq_write_presets (const Index<EqualizerPreset> & list, const char * basename);
+Index<EqualizerPreset> aud_eq_read_presets(const char * basename);
+bool aud_eq_write_presets(const Index<EqualizerPreset> & list,
+                          const char * basename);
 
-bool aud_load_preset_file (EqualizerPreset & preset, VFSFile & file);
-bool aud_save_preset_file (const EqualizerPreset & preset, VFSFile & file);
+bool aud_load_preset_file(EqualizerPreset & preset, VFSFile & file);
+bool aud_save_preset_file(const EqualizerPreset & preset, VFSFile & file);
 
-Index<EqualizerPreset> aud_import_winamp_presets (VFSFile & file);
-bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile & file);
+Index<EqualizerPreset> aud_import_winamp_presets(VFSFile & file);
+bool aud_export_winamp_preset(const EqualizerPreset & preset, VFSFile & file);
 
 #endif /* LIBAUDCORE_EQUALIZER_H */

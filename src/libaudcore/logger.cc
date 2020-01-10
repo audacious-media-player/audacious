@@ -24,9 +24,11 @@
 
 #include <stdio.h>
 
-namespace audlog {
+namespace audlog
+{
 
-struct HandlerData {
+struct HandlerData
+{
     Handler handler;
     Level level;
 };
@@ -36,9 +38,9 @@ static Index<HandlerData> handlers;
 static Level stderr_level = Warning;
 static Level min_level = Warning;
 
-EXPORT void set_stderr_level (Level level)
+EXPORT void set_stderr_level(Level level)
 {
-    auto wr = lock.write ();
+    auto wr = lock.write();
     min_level = stderr_level = level;
 
     for (const HandlerData & h : handlers)
@@ -48,22 +50,23 @@ EXPORT void set_stderr_level (Level level)
     }
 }
 
-EXPORT void subscribe (Handler handler, Level level)
+EXPORT void subscribe(Handler handler, Level level)
 {
-    auto wr = lock.write ();
-    handlers.append (handler, level);
+    auto wr = lock.write();
+    handlers.append(handler, level);
 
     if (level < min_level)
         min_level = level;
 }
 
-EXPORT void unsubscribe (Handler handler)
+EXPORT void unsubscribe(Handler handler)
 {
-    auto is_match = [handler] (const HandlerData & data)
-        { return data.handler == handler; };
+    auto is_match = [handler](const HandlerData & data) {
+        return data.handler == handler;
+    };
 
-    auto wr = lock.write ();
-    handlers.remove_if (is_match, true);
+    auto wr = lock.write();
+    handlers.remove_if(is_match, true);
     min_level = stderr_level;
 
     for (const HandlerData & h : handlers)
@@ -73,39 +76,43 @@ EXPORT void unsubscribe (Handler handler)
     }
 }
 
-EXPORT const char * get_level_name (Level level)
+EXPORT const char * get_level_name(Level level)
 {
     switch (level)
     {
-        case Debug: return "DEBUG";
-        case Info: return "INFO";
-        case Warning: return "WARNING";
-        case Error: return "ERROR";
+    case Debug:
+        return "DEBUG";
+    case Info:
+        return "INFO";
+    case Warning:
+        return "WARNING";
+    case Error:
+        return "ERROR";
     };
 
     return nullptr;
 }
 
-EXPORT void log (Level level, const char * file, int line, const char * func,
- const char * format, ...)
+EXPORT void log(Level level, const char * file, int line, const char * func,
+                const char * format, ...)
 {
-    auto rd = lock.read ();
+    auto rd = lock.read();
 
     if (level >= min_level)
     {
         va_list args;
-        va_start (args, format);
-        StringBuf message = str_vprintf (format, args);
-        va_end (args);
+        va_start(args, format);
+        StringBuf message = str_vprintf(format, args);
+        va_end(args);
 
         if (level >= stderr_level)
-            fprintf (stderr, "%s %s:%d [%s]: %s", get_level_name (level), file,
-             line, func, (const char *) message);
+            fprintf(stderr, "%s %s:%d [%s]: %s", get_level_name(level), file,
+                    line, func, (const char *)message);
 
         for (const HandlerData & h : handlers)
         {
             if (level >= h.level)
-                h.handler (level, file, line, func, message);
+                h.handler(level, file, line, func, message);
         }
     }
 }

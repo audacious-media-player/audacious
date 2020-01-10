@@ -22,7 +22,8 @@
 
 #include <libaudcore/objects.h>
 
-enum class AudPath {
+enum class AudPath
+{
     BinDir,
     DataDir,
     PluginDir,
@@ -34,25 +35,29 @@ enum class AudPath {
     count
 };
 
-enum class MainloopType {
+enum class MainloopType
+{
     GLib,
     Qt
 };
 
-enum class OutputReset {
+enum class OutputReset
+{
     EffectsOnly,
     ReopenStream,
     ResetPlugin
 };
 
-enum class OutputStream {
+enum class OutputStream
+{
     AsDecoded,
     AfterReplayGain,
     AfterEffects,
     AfterEqualizer
 };
 
-enum class ReplayGainMode {
+enum class ReplayGainMode
+{
     Track,
     Album,
     Automatic
@@ -60,96 +65,138 @@ enum class ReplayGainMode {
 
 namespace audlog
 {
-    enum Level {
-        Debug,
-        Info,
-        Warning,
-        Error
-    };
+enum Level
+{
+    Debug,
+    Info,
+    Warning,
+    Error
+};
 
-    typedef void (* Handler) (Level level, const char * file, int line,
-     const char * func, const char * message);
+typedef void (*Handler)(Level level, const char * file, int line,
+                        const char * func, const char * message);
 
-    void set_stderr_level (Level level);
-    void subscribe (Handler handler, Level level);
-    void unsubscribe (Handler handler);
+void set_stderr_level(Level level);
+void subscribe(Handler handler, Level level);
+void unsubscribe(Handler handler);
 
 #ifdef _WIN32
-    void log (Level level, const char * file, int line, const char * func,
-     const char * format, ...) __attribute__ ((__format__ (gnu_printf, 5, 6)));
+void log(Level level, const char * file, int line, const char * func,
+         const char * format, ...)
+    __attribute__((__format__(gnu_printf, 5, 6)));
 #else
-    void log (Level level, const char * file, int line, const char * func,
-     const char * format, ...) __attribute__ ((__format__ (__printf__, 5, 6)));
+void log(Level level, const char * file, int line, const char * func,
+         const char * format, ...)
+    __attribute__((__format__(__printf__, 5, 6)));
 #endif
 
-    const char * get_level_name (Level level);
-}
+const char * get_level_name(Level level);
+} // namespace audlog
 
-#define AUDERR(...) do { audlog::log (audlog::Error, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
-#define AUDWARN(...) do { audlog::log (audlog::Warning, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
-#define AUDINFO(...) do { audlog::log (audlog::Info, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
-#define AUDDBG(...) do { audlog::log (audlog::Debug, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
+#define AUDERR(...)                                                            \
+    do                                                                         \
+    {                                                                          \
+        audlog::log(audlog::Error, __FILE__, __LINE__, __FUNCTION__,           \
+                    __VA_ARGS__);                                              \
+    } while (0)
+#define AUDWARN(...)                                                           \
+    do                                                                         \
+    {                                                                          \
+        audlog::log(audlog::Warning, __FILE__, __LINE__, __FUNCTION__,         \
+                    __VA_ARGS__);                                              \
+    } while (0)
+#define AUDINFO(...)                                                           \
+    do                                                                         \
+    {                                                                          \
+        audlog::log(audlog::Info, __FILE__, __LINE__, __FUNCTION__,            \
+                    __VA_ARGS__);                                              \
+    } while (0)
+#define AUDDBG(...)                                                            \
+    do                                                                         \
+    {                                                                          \
+        audlog::log(audlog::Debug, __FILE__, __LINE__, __FUNCTION__,           \
+                    __VA_ARGS__);                                              \
+    } while (0)
 
-const char * aud_get_path (AudPath id);
+const char * aud_get_path(AudPath id);
 
-void aud_set_headless_mode (bool headless);
-bool aud_get_headless_mode ();
+void aud_set_headless_mode(bool headless);
+bool aud_get_headless_mode();
 
 // Note that the UserDir and PlaylistDir paths vary depending on the instance
 // number.  Therefore, calling aud_set_instance() after these paths have been
 // referenced, or after aud_init(), is an error.
-void aud_set_instance (int instance);
-int aud_get_instance ();
+void aud_set_instance(int instance);
+int aud_get_instance();
 
-void aud_set_mainloop_type (MainloopType type);
-MainloopType aud_get_mainloop_type ();
+void aud_set_mainloop_type(MainloopType type);
+MainloopType aud_get_mainloop_type();
 
-void aud_init_i18n ();
+void aud_init_i18n();
 
-void aud_config_set_defaults (const char * section, const char * const * entries);
+void aud_config_set_defaults(const char * section,
+                             const char * const * entries);
 
-void aud_set_str (const char * section, const char * name, const char * value);
-String aud_get_str (const char * section, const char * name);
-void aud_set_bool (const char * section, const char * name, bool value);
-bool aud_get_bool (const char * section, const char * name);
-void aud_toggle_bool (const char * section, const char * name);
-void aud_set_int (const char * section, const char * name, int value);
-int aud_get_int (const char * section, const char * name);
-void aud_set_double (const char * section, const char * name, double value);
-double aud_get_double (const char * section, const char * name);
+void aud_set_str(const char * section, const char * name, const char * value);
+String aud_get_str(const char * section, const char * name);
+void aud_set_bool(const char * section, const char * name, bool value);
+bool aud_get_bool(const char * section, const char * name);
+void aud_toggle_bool(const char * section, const char * name);
+void aud_set_int(const char * section, const char * name, int value);
+int aud_get_int(const char * section, const char * name);
+void aud_set_double(const char * section, const char * name, double value);
+double aud_get_double(const char * section, const char * name);
 
 /* overloads for main ("audacious") config section */
-static inline void aud_set_str (const char * name, const char * value)
-    { aud_set_str (nullptr, name, value); }
-static inline String aud_get_str (const char * name)
-    { return aud_get_str (nullptr, name); }
-static inline void aud_set_bool (const char * name, bool value)
-    { aud_set_bool (nullptr, name, value); }
-static inline bool aud_get_bool (const char * name)
-    { return aud_get_bool (nullptr, name); }
-static inline void aud_toggle_bool (const char * name)
-    { aud_toggle_bool (nullptr, name); }
-static inline void aud_set_int (const char * name, int value)
-    { aud_set_int (nullptr, name, value); }
-static inline int aud_get_int (const char * name)
-    { return aud_get_int (nullptr, name); }
-static inline void aud_set_double (const char * name, double value)
-    { aud_set_double (nullptr, name, value); }
-static inline double aud_get_double (const char * name)
-    { return aud_get_double (nullptr, name); }
+static inline void aud_set_str(const char * name, const char * value)
+{
+    aud_set_str(nullptr, name, value);
+}
+static inline String aud_get_str(const char * name)
+{
+    return aud_get_str(nullptr, name);
+}
+static inline void aud_set_bool(const char * name, bool value)
+{
+    aud_set_bool(nullptr, name, value);
+}
+static inline bool aud_get_bool(const char * name)
+{
+    return aud_get_bool(nullptr, name);
+}
+static inline void aud_toggle_bool(const char * name)
+{
+    aud_toggle_bool(nullptr, name);
+}
+static inline void aud_set_int(const char * name, int value)
+{
+    aud_set_int(nullptr, name, value);
+}
+static inline int aud_get_int(const char * name)
+{
+    return aud_get_int(nullptr, name);
+}
+static inline void aud_set_double(const char * name, double value)
+{
+    aud_set_double(nullptr, name, value);
+}
+static inline double aud_get_double(const char * name)
+{
+    return aud_get_double(nullptr, name);
+}
 
-void aud_init ();
-void aud_resume ();
-void aud_run ();
-void aud_quit ();
-void aud_cleanup ();
+void aud_init();
+void aud_resume();
+void aud_run();
+void aud_quit();
+void aud_cleanup();
 
-void aud_leak_check ();
+void aud_leak_check();
 
-String aud_history_get (int entry);
-void aud_history_add (const char * path);
-void aud_history_clear ();
+String aud_history_get(int entry);
+void aud_history_add(const char * path);
+void aud_history_clear();
 
-void aud_output_reset (OutputReset type);
+void aud_output_reset(OutputReset type);
 
 #endif

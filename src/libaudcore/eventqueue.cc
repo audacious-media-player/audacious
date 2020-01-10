@@ -31,17 +31,17 @@ struct Event : public ListNode
 {
     String name;
     void * data;
-    void (* destroy) (void *);
+    void (*destroy)(void *);
 
-    Event (const char * name, void * data, EventDestroyFunc destroy) :
-        name (name),
-        data (data),
-        destroy (destroy) {}
+    Event(const char * name, void * data, EventDestroyFunc destroy)
+        : name(name), data(data), destroy(destroy)
+    {
+    }
 
-    ~Event ()
+    ~Event()
     {
         if (destroy)
-            destroy (data);
+            destroy(data);
     }
 };
 
@@ -49,46 +49,47 @@ static aud::mutex mutex;
 static List<Event> events;
 static QueuedFunc queued_events;
 
-static void events_execute (void *)
+static void events_execute(void *)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
     Event * event;
-    while ((event = events.head ()))
+    while ((event = events.head()))
     {
-        events.remove (event);
+        events.remove(event);
 
-        mh.unlock ();
+        mh.unlock();
 
-        hook_call (event->name, event->data);
+        hook_call(event->name, event->data);
         delete event;
 
-        mh.lock ();
+        mh.lock();
     }
 }
 
-EXPORT void event_queue (const char * name, void * data, EventDestroyFunc destroy)
+EXPORT void event_queue(const char * name, void * data,
+                        EventDestroyFunc destroy)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    if (! events.head ())
-        queued_events.queue (events_execute, nullptr);
+    if (!events.head())
+        queued_events.queue(events_execute, nullptr);
 
-    events.append (new Event (name, data, destroy));
+    events.append(new Event(name, data, destroy));
 }
 
-EXPORT void event_queue_cancel (const char * name, void * data)
+EXPORT void event_queue_cancel(const char * name, void * data)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    Event * event = events.head ();
+    Event * event = events.head();
     while (event)
     {
-        Event * next = events.next (event);
+        Event * next = events.next(event);
 
-        if (! strcmp (event->name, name) && (! data || event->data == data))
+        if (!strcmp(event->name, name) && (!data || event->data == data))
         {
-            events.remove (event);
+            events.remove(event);
             delete event;
         }
 
@@ -96,8 +97,8 @@ EXPORT void event_queue_cancel (const char * name, void * data)
     }
 }
 
-void event_queue_cancel_all ()
+void event_queue_cancel_all()
 {
-    auto mh = mutex.take ();
-    events.clear ();
+    auto mh = mutex.take();
+    events.clear();
 }

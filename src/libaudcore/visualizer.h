@@ -25,32 +25,32 @@
 class LIBAUDCORE_PUBLIC Visualizer
 {
 public:
-    enum {
+    enum
+    {
         MonoPCM = (1 << 0),
         MultiPCM = (1 << 1),
         Freq = (1 << 2)
     };
 
     const int type_mask;
-    constexpr Visualizer (int type_mask) :
-        type_mask (type_mask) {}
+    constexpr Visualizer(int type_mask) : type_mask(type_mask) {}
 
     /* reset internal state and clear display */
-    virtual void clear () = 0;
+    virtual void clear() = 0;
 
     /* 512 frames of a single-channel PCM signal */
-    virtual void render_mono_pcm (const float * pcm) {}
+    virtual void render_mono_pcm(const float * pcm) {}
 
     /* 512 frames of an interleaved multi-channel PCM signal */
-    virtual void render_multi_pcm (const float * pcm, int channels) {}
+    virtual void render_multi_pcm(const float * pcm, int channels) {}
 
     /* intensity of frequencies 1/512, 2/512, ..., 256/512 of sample rate */
-    virtual void render_freq (const float * freq) {}
+    virtual void render_freq(const float * freq) {}
 
     /* common math for rendering a frequency graph (see util.cc) */
-    static void compute_log_xscale (float * xscale, int bands);
-    static float compute_freq_band (const float * freq, const float * xscale,
-                                    int band, int bands);
+    static void compute_log_xscale(float * xscale, int bands);
+    static float compute_freq_band(const float * freq, const float * xscale,
+                                   int band, int bands);
 };
 
 #endif /* LIBAUDCORE_VISUALIZER_H */

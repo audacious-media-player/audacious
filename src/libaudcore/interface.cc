@@ -30,10 +30,11 @@
 #include "plugins.h"
 #include "runtime.h"
 
-struct MenuItem {
+struct MenuItem
+{
     const char * name;
     const char * icon;
-    void (* func) ();
+    void (*func)();
 };
 
 static PluginHandle * current_plugin;
@@ -41,205 +42,203 @@ static IfacePlugin * current_interface;
 
 static aud::array<AudMenuID, Index<MenuItem>> menu_items;
 
-static void add_menu_items ()
+static void add_menu_items()
 {
-    for (AudMenuID id : aud::range<AudMenuID> ())
+    for (AudMenuID id : aud::range<AudMenuID>())
     {
         for (MenuItem & item : menu_items[id])
-            current_interface->plugin_menu_add (id, item.func, item.name, item.icon);
+            current_interface->plugin_menu_add(id, item.func, item.name,
+                                               item.icon);
     }
 }
 
-static void remove_menu_items ()
+static void remove_menu_items()
 {
-    for (AudMenuID id : aud::range<AudMenuID> ())
+    for (AudMenuID id : aud::range<AudMenuID>())
     {
         for (MenuItem & item : menu_items[id])
-            current_interface->plugin_menu_remove (id, item.func);
+            current_interface->plugin_menu_remove(id, item.func);
     }
 }
 
-static bool interface_load (PluginHandle * plugin)
+static bool interface_load(PluginHandle * plugin)
 {
-    auto i = (IfacePlugin *) aud_plugin_get_header (plugin);
-    if (! i)
+    auto i = (IfacePlugin *)aud_plugin_get_header(plugin);
+    if (!i)
         return false;
 
-    AUDINFO ("Loading %s.\n", aud_plugin_get_name (plugin));
+    AUDINFO("Loading %s.\n", aud_plugin_get_name(plugin));
 
-    if (! i->init ())
+    if (!i->init())
         return false;
 
     current_interface = i;
 
-    add_menu_items ();
+    add_menu_items();
 
-    if (aud_get_bool ("show_interface"))
-        current_interface->show (true);
+    if (aud_get_bool("show_interface"))
+        current_interface->show(true);
 
     return true;
 }
 
-static void interface_unload ()
+static void interface_unload()
 {
-    AUDINFO ("Unloading %s.\n", aud_plugin_get_name (current_plugin));
+    AUDINFO("Unloading %s.\n", aud_plugin_get_name(current_plugin));
 
     // call before unloading interface
-    hook_call ("config save", nullptr);
+    hook_call("config save", nullptr);
 
-    if (aud_get_bool ("show_interface"))
-        current_interface->show (false);
+    if (aud_get_bool("show_interface"))
+        current_interface->show(false);
 
-    remove_menu_items ();
+    remove_menu_items();
 
-    current_interface->cleanup ();
+    current_interface->cleanup();
     current_interface = nullptr;
 }
 
-EXPORT void aud_ui_show (bool show)
+EXPORT void aud_ui_show(bool show)
 {
-    if (! current_interface)
+    if (!current_interface)
         return;
 
-    aud_set_bool ("show_interface", show);
+    aud_set_bool("show_interface", show);
 
-    current_interface->show (show);
+    current_interface->show(show);
 
-    vis_activate (show);
+    vis_activate(show);
 }
 
-EXPORT bool aud_ui_is_shown ()
+EXPORT bool aud_ui_is_shown()
 {
-    if (! current_interface)
+    if (!current_interface)
         return false;
 
-    return aud_get_bool ("show_interface");
+    return aud_get_bool("show_interface");
 }
 
-EXPORT void aud_ui_startup_notify (const char * id)
+EXPORT void aud_ui_startup_notify(const char * id)
 {
     if (current_interface)
-        current_interface->startup_notify (id);
+        current_interface->startup_notify(id);
 }
 
-EXPORT void aud_ui_show_error (const char * message)
+EXPORT void aud_ui_show_error(const char * message)
 {
-    if (aud_get_headless_mode ())
-        AUDERR ("%s\n", message);
+    if (aud_get_headless_mode())
+        AUDERR("%s\n", message);
     else
-        event_queue ("ui show error", g_strdup (message), g_free);
+        event_queue("ui show error", g_strdup(message), g_free);
 }
 
-PluginHandle * iface_plugin_get_current ()
-{
-    return current_plugin;
-}
+PluginHandle * iface_plugin_get_current() { return current_plugin; }
 
-bool iface_plugin_set_current (PluginHandle * plugin)
+bool iface_plugin_set_current(PluginHandle * plugin)
 {
     if (current_interface)
-        interface_unload ();
+        interface_unload();
 
-    if (! interface_load (plugin))
+    if (!interface_load(plugin))
         return false;
 
     current_plugin = plugin;
     return true;
 }
 
-void interface_run ()
+void interface_run()
 {
-    if (aud_get_headless_mode ())
+    if (aud_get_headless_mode())
     {
-        mainloop_run ();
+        mainloop_run();
 
         // call before shutting down
-        hook_call ("config save", nullptr);
+        hook_call("config save", nullptr);
     }
     else if (current_interface)
     {
-        vis_activate (aud_get_bool ("show_interface"));
+        vis_activate(aud_get_bool("show_interface"));
 
-        current_interface->run ();
-        interface_unload ();
+        current_interface->run();
+        interface_unload();
     }
 }
 
-EXPORT void aud_quit ()
+EXPORT void aud_quit()
 {
     // Qt is very sensitive to things being deleted in the correct order
     // to avoid upsetting it, we'll stop all queued callbacks right now
-    QueuedFunc::inhibit_all ();
+    QueuedFunc::inhibit_all();
 
     if (current_interface)
-        current_interface->quit ();
+        current_interface->quit();
     else
-        mainloop_quit ();
+        mainloop_quit();
 }
 
-EXPORT void aud_plugin_menu_add (AudMenuID id, void (* func) (), const char * name, const char * icon)
+EXPORT void aud_plugin_menu_add(AudMenuID id, void (*func)(), const char * name,
+                                const char * icon)
 {
-    menu_items[id].append (name, icon, func);
+    menu_items[id].append(name, icon, func);
 
     if (current_interface)
-        current_interface->plugin_menu_add (id, func, name, icon);
+        current_interface->plugin_menu_add(id, func, name, icon);
 }
 
-EXPORT void aud_plugin_menu_remove (AudMenuID id, void (* func) ())
+EXPORT void aud_plugin_menu_remove(AudMenuID id, void (*func)())
 {
     if (current_interface)
-        current_interface->plugin_menu_remove (id, func);
+        current_interface->plugin_menu_remove(id, func);
 
-    auto is_match = [=] (const MenuItem & item)
-        { return item.func == func; };
+    auto is_match = [=](const MenuItem & item) { return item.func == func; };
 
-    menu_items[id].remove_if (is_match, true);
+    menu_items[id].remove_if(is_match, true);
 }
 
-EXPORT void aud_ui_show_about_window ()
+EXPORT void aud_ui_show_about_window()
 {
     if (current_interface)
-        current_interface->show_about_window ();
+        current_interface->show_about_window();
 }
 
-EXPORT void aud_ui_hide_about_window ()
+EXPORT void aud_ui_hide_about_window()
 {
     if (current_interface)
-        current_interface->hide_about_window ();
+        current_interface->hide_about_window();
 }
 
-EXPORT void aud_ui_show_filebrowser (bool open)
+EXPORT void aud_ui_show_filebrowser(bool open)
 {
     if (current_interface)
-        current_interface->show_filebrowser (open);
+        current_interface->show_filebrowser(open);
 }
 
-EXPORT void aud_ui_hide_filebrowser ()
+EXPORT void aud_ui_hide_filebrowser()
 {
     if (current_interface)
-        current_interface->hide_filebrowser ();
+        current_interface->hide_filebrowser();
 }
 
-EXPORT void aud_ui_show_jump_to_song ()
+EXPORT void aud_ui_show_jump_to_song()
 {
     if (current_interface)
-        current_interface->show_jump_to_song ();
+        current_interface->show_jump_to_song();
 }
 
-EXPORT void aud_ui_hide_jump_to_song ()
+EXPORT void aud_ui_hide_jump_to_song()
 {
     if (current_interface)
-        current_interface->hide_jump_to_song ();
+        current_interface->hide_jump_to_song();
 }
 
-EXPORT void aud_ui_show_prefs_window ()
+EXPORT void aud_ui_show_prefs_window()
 {
     if (current_interface)
-        current_interface->show_prefs_window ();
+        current_interface->show_prefs_window();
 }
 
-EXPORT void aud_ui_hide_prefs_window ()
+EXPORT void aud_ui_hide_prefs_window()
 {
     if (current_interface)
-        current_interface->hide_prefs_window ();
+        current_interface->hide_prefs_window();
 }

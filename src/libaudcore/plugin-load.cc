@@ -32,145 +32,146 @@
 #include "plugin.h"
 #include "runtime.h"
 
-static const char * plugin_dir_list[] = {
-    "Transport",
-    "Container",
-    "Input",
-    "Output",
-    "Effect",
-    "General",
-    "Visualization"
-};
+static const char * plugin_dir_list[] = {"Transport",    "Container", "Input",
+                                         "Output",       "Effect",    "General",
+                                         "Visualization"};
 
-struct LoadedModule {
+struct LoadedModule
+{
     Plugin * header;
     GModule * module;
 };
 
 static Index<LoadedModule> loaded_modules;
 
-bool plugin_check_flags (int flags)
+bool plugin_check_flags(int flags)
 {
-    switch (aud_get_mainloop_type ())
+    switch (aud_get_mainloop_type())
     {
-        case MainloopType::GLib: flags &= ~PluginGLibOnly; break;
-        case MainloopType::Qt: flags &= ~PluginQtOnly; break;
+    case MainloopType::GLib:
+        flags &= ~PluginGLibOnly;
+        break;
+    case MainloopType::Qt:
+        flags &= ~PluginQtOnly;
+        break;
     }
 
-    return ! flags;
+    return !flags;
 }
 
-Plugin * plugin_load (const char * filename)
+Plugin * plugin_load(const char * filename)
 {
-    AUDINFO ("Loading plugin: %s.\n", filename);
+    AUDINFO("Loading plugin: %s.\n", filename);
 
-    GModule * module = g_module_open (filename, G_MODULE_BIND_LOCAL);
+    GModule * module = g_module_open(filename, G_MODULE_BIND_LOCAL);
 
-    if (! module)
+    if (!module)
     {
-        AUDERR ("%s could not be loaded: %s\n", filename, g_module_error ());
+        AUDERR("%s could not be loaded: %s\n", filename, g_module_error());
         return nullptr;
     }
 
     Plugin * header;
-    if (! g_module_symbol (module, "aud_plugin_instance", (void * *) & header))
+    if (!g_module_symbol(module, "aud_plugin_instance", (void **)&header))
         header = nullptr;
 
-    if (! header || header->magic != _AUD_PLUGIN_MAGIC)
+    if (!header || header->magic != _AUD_PLUGIN_MAGIC)
     {
-        AUDERR ("%s is not a valid Audacious plugin.\n", filename);
-        g_module_close (module);
+        AUDERR("%s is not a valid Audacious plugin.\n", filename);
+        g_module_close(module);
         return nullptr;
     }
 
     if (header->version < _AUD_PLUGIN_VERSION_MIN ||
         header->version > _AUD_PLUGIN_VERSION)
     {
-        AUDERR ("%s is not compatible with this version of Audacious.\n", filename);
-        g_module_close (module);
+        AUDERR("%s is not compatible with this version of Audacious.\n",
+               filename);
+        g_module_close(module);
         return nullptr;
     }
 
-    if (plugin_check_flags (header->info.flags) &&
+    if (plugin_check_flags(header->info.flags) &&
         (header->type == PluginType::Transport ||
          header->type == PluginType::Playlist ||
          header->type == PluginType::Input ||
          header->type == PluginType::Effect))
     {
-        if (! header->init ())
+        if (!header->init())
         {
-            AUDERR ("%s failed to initialize.\n", filename);
-            g_module_close (module);
+            AUDERR("%s failed to initialize.\n", filename);
+            g_module_close(module);
             return nullptr;
         }
     }
 
-    loaded_modules.append (header, module);
+    loaded_modules.append(header, module);
 
     return header;
 }
 
-static void plugin_unload (LoadedModule & loaded)
+static void plugin_unload(LoadedModule & loaded)
 {
-    if (plugin_check_flags (loaded.header->info.flags) &&
+    if (plugin_check_flags(loaded.header->info.flags) &&
         (loaded.header->type == PluginType::Transport ||
          loaded.header->type == PluginType::Playlist ||
          loaded.header->type == PluginType::Input ||
          loaded.header->type == PluginType::Effect))
     {
-        loaded.header->cleanup ();
+        loaded.header->cleanup();
     }
 
 #ifndef VALGRIND_FRIENDLY
-    g_module_close (loaded.module);
+    g_module_close(loaded.module);
 #endif
 }
 
 /******************************************************************/
 
-static bool scan_plugin_func (const char * path, const char * basename, void * data)
+static bool scan_plugin_func(const char * path, const char * basename,
+                             void * data)
 {
-    if (! str_has_suffix_nocase (basename, PLUGIN_SUFFIX))
+    if (!str_has_suffix_nocase(basename, PLUGIN_SUFFIX))
         return false;
 
     GStatBuf st;
-    if (g_stat (path, & st) < 0)
+    if (g_stat(path, &st) < 0)
     {
-        AUDERR ("Unable to stat %s: %s\n", path, strerror (errno));
+        AUDERR("Unable to stat %s: %s\n", path, strerror(errno));
         return false;
     }
 
-    if (S_ISREG (st.st_mode))
-        plugin_register (path, st.st_mtime);
+    if (S_ISREG(st.st_mode))
+        plugin_register(path, st.st_mtime);
 
     return false;
 }
 
-static void scan_plugins (const char * path)
+static void scan_plugins(const char * path)
 {
-    dir_foreach (path, scan_plugin_func, nullptr);
+    dir_foreach(path, scan_plugin_func, nullptr);
 }
 
-void plugin_system_init ()
+void plugin_system_init()
 {
-    assert (g_module_supported ());
+    assert(g_module_supported());
 
-    plugin_registry_load ();
+    plugin_registry_load();
 
-    const char * path = aud_get_path (AudPath::PluginDir);
+    const char * path = aud_get_path(AudPath::PluginDir);
     for (const char * dir : plugin_dir_list)
-        scan_plugins (filename_build ({path, dir}));
+        scan_plugins(filename_build({path, dir}));
 
-    plugin_registry_prune ();
+    plugin_registry_prune();
 }
 
-void plugin_system_cleanup ()
+void plugin_system_cleanup()
 {
-    plugin_registry_save ();
-    plugin_registry_cleanup ();
+    plugin_registry_save();
+    plugin_registry_cleanup();
 
     for (LoadedModule & loaded : loaded_modules)
-        plugin_unload (loaded);
+        plugin_unload(loaded);
 
-    loaded_modules.clear ();
+    loaded_modules.clear();
 }

@@ -22,9 +22,15 @@
 #include "playlist-internal.h"
 #include "threads.h"
 
-enum NodeState {NotLoaded, Loading, Loaded};
+enum NodeState
+{
+    NotLoaded,
+    Loading,
+    Loaded
+};
 
-struct CueCacheNode {
+struct CueCacheNode
+{
     Index<PlaylistAddItem> items;
     NodeState state = NotLoaded;
     int refcount = 0;
@@ -34,30 +40,29 @@ static SimpleHash<String, CueCacheNode> cache;
 static aud::mutex mutex;
 static aud::condvar cond;
 
-CueCacheRef::CueCacheRef (const char * filename) :
-    m_filename (filename)
+CueCacheRef::CueCacheRef(const char * filename) : m_filename(filename)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    m_node = cache.lookup (m_filename);
-    if (! m_node)
-        m_node = cache.add (m_filename, CueCacheNode ());
+    m_node = cache.lookup(m_filename);
+    if (!m_node)
+        m_node = cache.add(m_filename, CueCacheNode());
 
-    m_node->refcount ++;
+    m_node->refcount++;
 }
 
-CueCacheRef::~CueCacheRef ()
+CueCacheRef::~CueCacheRef()
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    m_node->refcount --;
-    if (! m_node->refcount)
-        cache.remove (m_filename);
+    m_node->refcount--;
+    if (!m_node->refcount)
+        cache.remove(m_filename);
 }
 
-const Index<PlaylistAddItem> & CueCacheRef::load ()
+const Index<PlaylistAddItem> & CueCacheRef::load()
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
     String title; // not used
 
     switch (m_node->state)
@@ -65,18 +70,18 @@ const Index<PlaylistAddItem> & CueCacheRef::load ()
     case NotLoaded:
         // load the cuesheet in this thread
         m_node->state = Loading;
-        mh.unlock ();
-        playlist_load (m_filename, title, m_node->items);
-        mh.lock ();
+        mh.unlock();
+        playlist_load(m_filename, title, m_node->items);
+        mh.lock();
 
         m_node->state = Loaded;
-        cond.notify_all ();
+        cond.notify_all();
         break;
 
     case Loading:
         // wait for cuesheet to load in another thread
         while (m_node->state != Loaded)
-            cond.wait (mh);
+            cond.wait(mh);
 
         break;
 

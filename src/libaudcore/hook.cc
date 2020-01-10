@@ -26,7 +26,8 @@
 #include "runtime.h"
 #include "threads.h"
 
-struct HookItem {
+struct HookItem
+{
     HookFunction func;
     void * user;
 };
@@ -36,95 +37,95 @@ struct HookList
     Index<HookItem> items;
     int use_count;
 
-    void compact ()
+    void compact()
     {
-        auto is_empty = [] (const HookItem & item)
-            { return ! item.func; };
+        auto is_empty = [](const HookItem & item) { return !item.func; };
 
-        items.remove_if (is_empty);
+        items.remove_if(is_empty);
     }
 };
 
 static aud::mutex mutex;
 static SimpleHash<String, HookList> hooks;
 
-EXPORT void hook_associate (const char * name, HookFunction func, void * user)
+EXPORT void hook_associate(const char * name, HookFunction func, void * user)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    String key (name);
-    HookList * list = hooks.lookup (key);
-    if (! list)
-        list = hooks.add (key, HookList ());
+    String key(name);
+    HookList * list = hooks.lookup(key);
+    if (!list)
+        list = hooks.add(key, HookList());
 
-    list->items.append (func, user);
+    list->items.append(func, user);
 }
 
-EXPORT void hook_dissociate (const char * name, HookFunction func, void * user)
+EXPORT void hook_dissociate(const char * name, HookFunction func, void * user)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    String key (name);
-    HookList * list = hooks.lookup (key);
-    if (! list)
+    String key(name);
+    HookList * list = hooks.lookup(key);
+    if (!list)
         return;
 
     for (HookItem & item : list->items)
     {
-        if (item.func == func && (! user || item.user == user))
+        if (item.func == func && (!user || item.user == user))
             item.func = nullptr;
     }
 
-    if (! list->use_count)
+    if (!list->use_count)
     {
-        list->compact ();
-        if (! list->items.len ())
-            hooks.remove (key);
+        list->compact();
+        if (!list->items.len())
+            hooks.remove(key);
     }
 }
 
-EXPORT void hook_call (const char * name, void * data)
+EXPORT void hook_call(const char * name, void * data)
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    String key (name);
-    HookList * list = hooks.lookup (key);
-    if (! list)
+    String key(name);
+    HookList * list = hooks.lookup(key);
+    if (!list)
         return;
 
-    list->use_count ++;
+    list->use_count++;
 
     /* note: the list may grow (but not shrink) during the hook call */
-    for (int i = 0; i < list->items.len (); i ++)
+    for (int i = 0; i < list->items.len(); i++)
     {
         /* copy locally to prevent race condition */
         HookItem item = list->items[i];
 
         if (item.func)
         {
-            mh.unlock ();
-            item.func (data, item.user);
-            mh.lock ();
+            mh.unlock();
+            item.func(data, item.user);
+            mh.lock();
         }
     }
 
-    list->use_count --;
+    list->use_count--;
 
-    if (! list->use_count)
+    if (!list->use_count)
     {
-        list->compact ();
-        if (! list->items.len ())
-            hooks.remove (key);
+        list->compact();
+        if (!list->items.len())
+            hooks.remove(key);
     }
 }
 
-void hook_cleanup ()
+void hook_cleanup()
 {
-    auto mh = mutex.take ();
+    auto mh = mutex.take();
 
-    hooks.iterate ([] (const String & name, HookList & list) {
-        AUDWARN ("Hook not disconnected: %s (%d)\n", (const char *) name, list.items.len ());
+    hooks.iterate([](const String & name, HookList & list) {
+        AUDWARN("Hook not disconnected: %s (%d)\n", (const char *)name,
+                list.items.len());
     });
 
-    hooks.clear ();
+    hooks.clear();
 }
