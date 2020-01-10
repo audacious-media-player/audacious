@@ -818,6 +818,14 @@ int PlaylistData::shuffle_pos_before (int ref_pos) const
     return found ? found->number : -1;
 }
 
+int PlaylistData::pos_before (int ref_pos, bool shuffle) const
+{
+    if (shuffle)
+        return shuffle_pos_before (ref_pos);
+
+    return (ref_pos > 0) ? ref_pos - 1 : -1;
+}
+
 bool PlaylistData::shuffle_next ()
 {
     bool by_album = aud_get_bool ("album_shuffle");

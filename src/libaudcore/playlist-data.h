@@ -141,9 +141,7 @@ private:
     void set_position (PlaylistEntry * entry, bool update_shuffle);
 
     int shuffle_pos_before (int ref_pos) const;
-
-    int pos_before (int ref_pos, bool shuffle) const
-        { return shuffle ? shuffle_pos_before (ref_pos) : aud::max (ref_pos - 1, -1); }
+    int pos_before (int ref_pos, bool shuffle) const;
 
     bool shuffle_next ();
     void shuffle_reset ();
