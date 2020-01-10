@@ -810,32 +810,31 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
     if (! ref_entry)
         return NO_POS;
 
-    // look for the next entry in the existing shuffle order
-    const PlaylistEntry * next = nullptr;
-    for (auto & entry : m_entries)
+    // the reference entry can be beyond the end of the shuffle list
+    // if we are looking ahead multiple entries, as in next_album()
+    if (ref_entry->shuffle_num)
     {
-        if (entry->shuffle_num > ref_entry->shuffle_num &&
-            (! next || entry->shuffle_num < next->shuffle_num))
+        // look for the next entry in the existing shuffle order
+        const PlaylistEntry * next = nullptr;
+        for (auto & entry : m_entries)
         {
-            next = entry.get ();
+            if (entry->shuffle_num > ref_entry->shuffle_num &&
+                (! next || entry->shuffle_num < next->shuffle_num))
+            {
+                next = entry.get ();
+            }
         }
+
+        if (next)
+            return {next->number, false};
     }
 
-    if (next)
-        return {next->number, false};
-    if (! by_album)
-        return NO_POS;
-
-    // look for the next unplayed entry in the album
-    int n_entries = m_entries.len ();
-    for (int pos = ref_pos + 1; pos < n_entries; pos ++)
+    if (by_album)
     {
-        next = m_entries[pos].get ();
-
-        if (! same_album (next->tuple, ref_entry->tuple))
-            return NO_POS;
-        if (! next->shuffle_num)
-            return {pos, true};
+        // look for the next entry in the album
+        auto next = entry_at (ref_pos + 1);
+        if (next && same_album (next->tuple, ref_entry->tuple))
+            return {ref_pos + 1, true};
     }
 
     return NO_POS;
@@ -844,21 +843,19 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
 PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool repeat, bool by_album) const
 {
     Index<const PlaylistEntry *> choices;
-    const PlaylistEntry * album_leader = nullptr;
+    const PlaylistEntry * prev_entry = nullptr;
 
     for (auto & entry : m_entries)
     {
-        if (album_leader && ! same_album (entry->tuple, album_leader->tuple))
-            album_leader = nullptr;
-
         // skip already played entries (unless repeating)
         // optionally skip all but first entry in album
-        if ((entry->shuffle_num == 0 || repeat) && ! album_leader)
+        if ((entry->shuffle_num == 0 || repeat) &&
+            ! (by_album && prev_entry && same_album (entry->tuple, prev_entry->tuple)))
         {
             choices.append (entry.get ());
-            if (by_album)
-                album_leader = entry.get ();
         }
+
+        prev_entry = entry.get ();
     }
 
     if (choices.len ())
@@ -903,7 +900,8 @@ PlaylistData::PosChange PlaylistData::pos_new (bool repeat, bool shuffle, bool b
     return NO_POS;
 }
 
-PlaylistData::PosChange PlaylistData::pos_new_full (bool repeat, bool shuffle, bool by_album, int hint_pos, bool & repeated)
+PlaylistData::PosChange PlaylistData::pos_new_full (bool repeat, bool shuffle, bool by_album,
+                                                    int hint_pos, bool & repeated) const
 {
     // first try to pick a new position *without* repeating
     auto change = pos_new (false, shuffle, by_album, hint_pos);
@@ -1061,27 +1059,46 @@ bool PlaylistData::prev_album ()
 
 bool PlaylistData::next_album (bool repeat)
 {
-    int start_position = position ();
+    bool shuffle = aud_get_bool ("shuffle");
+    PosChange change = {position (), false};
+    Index<PosChange> skipped;
+    bool repeated = false;
 
-    if (start_position == -1)
+    auto entry = entry_at (change.new_pos);
+    if (! entry)
         return false;
 
-    if (! entry_at (start_position))
-        return false;
+    // find the end of the album
+    while (1)
+    {
+        // album shuffle is always on for this function
+        change = pos_after (change.new_pos, shuffle, true);
 
-    Tuple start_tuple = entry_tuple (start_position, nullptr);
-
-    for (;;) {
-        if (! change_position_to_next (repeat, -1))
-            return false;
-
-        if ( position() == start_position)
-            return false;
-
-        if (! same_album (m_position->tuple, start_tuple))
+        auto next_entry = entry_at (change.new_pos);
+        if (! next_entry || ! same_album (entry->tuple, next_entry->tuple))
             break;
+
+        skipped.append (change);
     }
 
+    // get one new position if there was nothing after the album
+    if (change.new_pos < 0)
+    {
+        change = pos_new_full (repeat, shuffle, true, -1, repeated);
+        if (change.new_pos < 0)
+            return false;
+    }
+
+    if (repeated)
+        shuffle_reset ();
+    else
+    {
+        // add skipped songs to shuffle list
+        for (auto & skip : skipped)
+            change_position (skip);
+    }
+
+    change_position (change);
     queue_position_change ();
     return true;
 }

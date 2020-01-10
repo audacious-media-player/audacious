@@ -150,7 +150,8 @@ private:
     int pos_before (int ref_pos, bool shuffle) const;
     PosChange pos_after (int ref_pos, bool shuffle, bool by_album) const;
     PosChange pos_new (bool repeat, bool shuffle, bool by_album, int hint_pos) const;
-    PosChange pos_new_full (bool repeat, bool shuffle, bool by_album, int hint_pos, bool & repeated);
+    PosChange pos_new_full (bool repeat, bool shuffle, bool by_album,
+                            int hint_pos, bool & repeated) const;
 
     void change_position (PosChange change);
     bool change_position_to_next (bool repeat, int hint_pos);
