@@ -1042,7 +1042,7 @@ bool PlaylistData::next_song_with_hint (bool repeat, int hint)
 
 bool PlaylistData::next_song (bool repeat)
 {
-    if (! next_song_with_hint (repeat, position () + 1)) // -1 becomes 0
+    if (! next_song_with_hint (repeat, -1))
         return false;
 
     queue_position_change ();
@@ -1062,7 +1062,7 @@ bool PlaylistData::next_album (bool repeat)
     Tuple start_tuple = entry_tuple (start_position, nullptr);
 
     for (;;) {
-        if (! next_song_with_hint (repeat, position () + 1)) // -1 becomes 0
+        if (! next_song_with_hint (repeat, -1))
             return false;
 
         if ( position() == start_position)
