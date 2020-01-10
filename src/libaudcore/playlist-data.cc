@@ -829,29 +829,33 @@ int PlaylistData::pos_before (int ref_pos, bool shuffle) const
 PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_album) const
 {
     auto ref_entry = entry_at (ref_pos);
-    if (ref_entry)
+    if (! ref_entry)
+        return NoPos;
+
+    // look for the next entry in the existing shuffle order
+    const PlaylistEntry * next = nullptr;
+    for (auto & entry : m_entries)
     {
-        // step #1: check to see if the shuffle order is already established
-        const PlaylistEntry * next = nullptr;
+        if (entry->shuffle_num > ref_entry->shuffle_num &&
+         (! next || entry->shuffle_num < next->shuffle_num))
+            next = entry.get ();
+    }
 
-        for (auto & entry : m_entries)
-        {
-            if (entry->shuffle_num > ref_entry->shuffle_num &&
-             (! next || entry->shuffle_num < next->shuffle_num))
-                next = entry.get ();
-        }
+    if (next)
+        return {next->number, false};
+    if (! by_album)
+        return NoPos;
 
-        if (next)
-            return {next->number, false};
+    // look for the next unplayed entry in the album
+    int n_entries = m_entries.len ();
+    for (int pos = ref_pos + 1; pos < n_entries; pos ++)
+    {
+        next = m_entries[pos].get ();
 
-        // step #2: check to see if we should advance to the next entry
-        if (by_album && ref_pos + 1 < m_entries.len ())
-        {
-            next = m_entries[ref_pos + 1].get ();
-
-            if (! next->shuffle_num && same_album (ref_entry->tuple, next->tuple))
-                return {next->number, true};
-        }
+        if (! same_album (next->tuple, ref_entry->tuple))
+            return NoPos;
+        if (! next->shuffle_num)
+            return {pos, true};
     }
 
     return NoPos;
@@ -859,46 +863,28 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
 
 PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool by_album) const
 {
-    // helper: determine whether an entry is among the shuffle choices
-    auto is_choice = [&] (const PlaylistEntry * prev, const PlaylistEntry * entry)
-    {
-        return (! entry->shuffle_num) && (! by_album || ! prev ||
-         prev->shuffle_num || ! same_album (prev->tuple, entry->tuple));
-    };
-
-    // step #3: count the number of possible shuffle choices
-    int choices = 0;
-    const PlaylistEntry * prev = nullptr;
+    Index<const PlaylistEntry *> choices;
+    const PlaylistEntry * album_leader = nullptr;
 
     for (auto & entry : m_entries)
     {
-        if (is_choice (prev, entry.get ()))
-            choices ++;
+        if (album_leader && ! same_album (entry->tuple, album_leader->tuple))
+            album_leader = nullptr;
 
-        prev = entry.get ();
-    }
-
-    if (! choices)
-        return NoPos;
-
-    // step #4: pick one of those choices by random and find it again
-    choices = rand () % choices;
-    prev = nullptr;
-
-    for (auto & entry : m_entries)
-    {
-        if (is_choice (prev, entry.get ()))
+        // skip already played entries
+        // optionally skip all but first entry in album
+        if (entry->shuffle_num == 0 && ! album_leader)
         {
-            if (! choices)
-                return {entry->number, true};
-
-            choices --;
+            choices.append (entry.get ());
+            if (by_album)
+                album_leader = entry.get ();
         }
-
-        prev = entry.get ();
     }
 
-    return NoPos;  // never reached
+    if (choices.len ())
+        return {choices[rand () % choices.len ()]->number, true};
+
+    return NoPos;
 }
 
 void PlaylistData::shuffle_reset ()
@@ -1024,6 +1010,7 @@ bool PlaylistData::next_song_with_hint (bool repeat, int hint)
         }
 
         change_position (change);
+        return true;
     }
 
     if (hint < 0 || hint >= n_entries)
