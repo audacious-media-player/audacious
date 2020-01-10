@@ -133,8 +133,6 @@ private:
         bool update_shuffle;
     };
 
-    static constexpr PosChange NoPos = {-1, false};
-
     static void delete_entry (PlaylistEntry * entry);
     typedef SmartPtr<PlaylistEntry, delete_entry> EntryPtr;
 
@@ -153,12 +151,9 @@ private:
     PosChange shuffle_pos_random (bool by_album) const;
 
     void shuffle_reset ();
-
     bool next_song_with_hint (bool repeat, int hint);
 
     PlaylistEntry * find_unselected_focus ();
-    PlaylistEntry * queue_pop ();
-
 public:
     bool modified;
     ScanStatus scan_status;

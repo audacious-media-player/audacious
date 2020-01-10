@@ -26,6 +26,8 @@
 #include "scanner.h"
 #include "tuple-compiler.h"
 
+#define NO_POS {-1, false}
+
 static TupleCompiler s_tuple_formatter;
 static bool s_use_tuple_fallbacks = false;
 
@@ -264,7 +266,7 @@ void PlaylistData::remove_entries (int at, int number)
 
     if (m_position && m_position->number >= at && m_position->number < at + number)
     {
-        change_position (NoPos);
+        change_position (NO_POS);
         position_changed = true;
     }
 
@@ -510,7 +512,7 @@ void PlaylistData::remove_selected ()
 
     if (m_position && m_position->selected)
     {
-        change_position (NoPos);
+        change_position (NO_POS);
         position_changed = true;
     }
 
@@ -792,6 +794,14 @@ void PlaylistData::change_position (PosChange change)
     /* move entry to top of shuffle list */
     if (m_position && change.update_shuffle)
         m_position->shuffle_num = ++ m_last_shuffle_num;
+
+    /* remove from queue if it's the first entry */
+    if (m_queued.len () && m_position == m_queued[0])
+    {
+        m_queued.remove (0, 1);
+        m_position->queued = false;
+        queue_update (Playlist::Selection, m_position->number, 1, QueueChanged);
+    }
 }
 
 void PlaylistData::set_position (int entry_num)
@@ -830,7 +840,7 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
 {
     auto ref_entry = entry_at (ref_pos);
     if (! ref_entry)
-        return NoPos;
+        return NO_POS;
 
     // look for the next entry in the existing shuffle order
     const PlaylistEntry * next = nullptr;
@@ -844,7 +854,7 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
     if (next)
         return {next->number, false};
     if (! by_album)
-        return NoPos;
+        return NO_POS;
 
     // look for the next unplayed entry in the album
     int n_entries = m_entries.len ();
@@ -853,12 +863,12 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
         next = m_entries[pos].get ();
 
         if (! same_album (next->tuple, ref_entry->tuple))
-            return NoPos;
+            return NO_POS;
         if (! next->shuffle_num)
             return {pos, true};
     }
 
-    return NoPos;
+    return NO_POS;
 }
 
 PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool by_album) const
@@ -884,7 +894,7 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool by_album) const
     if (choices.len ())
         return {choices[rand () % choices.len ()]->number, true};
 
-    return NoPos;
+    return NO_POS;
 }
 
 void PlaylistData::shuffle_reset ()
@@ -982,10 +992,9 @@ bool PlaylistData::next_song_with_hint (bool repeat, int hint)
     if (! n_entries)
         return false;
 
-    PlaylistEntry * entry;
-    if ((entry = queue_pop ()))
+    if (m_queued.len ())
     {
-        change_position ({entry->number, true});
+        change_position ({m_queued[0]->number, true});
         return true;
     }
 
@@ -1190,18 +1199,4 @@ PlaylistEntry * PlaylistData::find_unselected_focus ()
     }
 
     return nullptr;
-}
-
-PlaylistEntry * PlaylistData::queue_pop ()
-{
-    if (! m_queued.len ())
-        return nullptr;
-
-    auto entry = m_queued[0];
-    m_queued.remove (0, 1);
-    entry->queued = false;
-
-    queue_update (Playlist::Selection, entry->number, 1, QueueChanged);
-
-    return entry;
 }
