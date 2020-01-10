@@ -789,12 +789,13 @@ void PlaylistData::queue_remove_selected ()
 int PlaylistData::shuffle_pos_before (int ref_pos) const
 {
     const PlaylistEntry * ref_entry = entry_at (ref_pos);
-    const PlaylistEntry * found = nullptr;
+    if (! ref_entry)
+        return -1;
 
+    const PlaylistEntry * found = nullptr;
     for (auto & entry : m_entries)
     {
-        if (entry->shuffle_num &&
-            (! ref_entry || entry->shuffle_num < ref_entry->shuffle_num) &&
+        if (entry->shuffle_num && entry->shuffle_num < ref_entry->shuffle_num &&
             (! found || entry->shuffle_num > found->shuffle_num))
         {
             found = entry.get ();
