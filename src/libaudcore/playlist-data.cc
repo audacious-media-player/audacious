@@ -841,7 +841,7 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
     return NO_POS;
 }
 
-PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool by_album) const
+PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool repeat, bool by_album) const
 {
     Index<const PlaylistEntry *> choices;
     const PlaylistEntry * album_leader = nullptr;
@@ -851,9 +851,9 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_random (bool by_album) const
         if (album_leader && ! same_album (entry->tuple, album_leader->tuple))
             album_leader = nullptr;
 
-        // skip already played entries
+        // skip already played entries (unless repeating)
         // optionally skip all but first entry in album
-        if (entry->shuffle_num == 0 && ! album_leader)
+        if ((entry->shuffle_num == 0 || repeat) && ! album_leader)
         {
             choices.append (entry.get ());
             if (by_album)
@@ -889,18 +889,33 @@ PlaylistData::PosChange PlaylistData::pos_after (int ref_pos, bool shuffle, bool
     return NO_POS;
 }
 
-PlaylistData::PosChange PlaylistData::pos_new (bool shuffle, bool by_album, int hint_pos) const
+PlaylistData::PosChange PlaylistData::pos_new (bool repeat, bool shuffle, bool by_album, int hint_pos) const
 {
     if (m_queued.len ())
         return {m_queued[0]->number, true};
 
     if (shuffle)
-        return shuffle_pos_random (by_album);
+        return shuffle_pos_random (repeat, by_album);
 
     if (hint_pos >= 0 && hint_pos < m_entries.len ())
         return {hint_pos, true};
 
     return NO_POS;
+}
+
+PlaylistData::PosChange PlaylistData::pos_new_full (bool repeat, bool shuffle, bool by_album, int hint_pos, bool & repeated)
+{
+    // first try to pick a new position *without* repeating
+    auto change = pos_new (false, shuffle, by_album, hint_pos);
+    repeated = false;
+
+    if (change.new_pos < 0 && repeat)
+    {
+        change = pos_new (true, shuffle, by_album, 0);
+        repeated = (change.new_pos >= 0);
+    }
+
+    return change;
 }
 
 void PlaylistData::change_position (PosChange change)
@@ -925,23 +940,16 @@ bool PlaylistData::change_position_to_next (bool repeat, int hint_pos)
 {
     bool shuffle = aud_get_bool ("shuffle");
     bool by_album = aud_get_bool ("album_shuffle");
+    bool repeated = false;
 
     auto change = pos_after (position (), shuffle, by_album);
-
     if (change.new_pos < 0)
-        change = pos_new (shuffle, by_album, hint_pos);
-
+        change = pos_new_full (repeat, shuffle, by_album, hint_pos, repeated);
     if (change.new_pos < 0)
-    {
-        if (! repeat)
-            return false;
+        return false;
 
+    if (repeated)
         shuffle_reset ();
-        change = pos_new (shuffle, by_album, 0);
-
-        if (change.new_pos < 0)
-            return false;
-    }
 
     change_position (change);
     return true;
