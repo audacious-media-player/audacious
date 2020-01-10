@@ -143,8 +143,6 @@ private:
 
     static void sort_entries (Index<EntryPtr> & entries, const CompareData & data);
 
-    void change_position (PosChange change);
-
     int shuffle_pos_before (int ref_pos) const;
     int pos_before (int ref_pos, bool shuffle) const;
     PosChange shuffle_pos_after (int ref_pos, bool by_album) const;
@@ -153,7 +151,8 @@ private:
     PosChange pos_new (bool shuffle, bool by_album, int hint_pos) const;
 
     void shuffle_reset ();
-    bool next_song_with_hint (bool repeat, int hint);
+    void change_position (PosChange change);
+    bool change_position_to_next (bool repeat, int hint_pos);
 
     PlaylistEntry * find_unselected_focus ();
 public:

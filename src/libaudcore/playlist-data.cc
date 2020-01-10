@@ -307,7 +307,7 @@ void PlaylistData::remove_entries (int at, int number)
     if (position_changed)
     {
         if (aud_get_bool ("advance_on_delete"))
-            next_song_with_hint (aud_get_bool ("repeat"), at);
+            change_position_to_next (aud_get_bool ("repeat"), at);
 
         queue_position_change ();
     }
@@ -560,7 +560,7 @@ void PlaylistData::remove_selected ()
     if (position_changed)
     {
         if (aud_get_bool ("advance_on_delete"))
-            next_song_with_hint (aud_get_bool ("repeat"), n_entries - after);
+            change_position_to_next (aud_get_bool ("repeat"), n_entries - after);
 
         queue_position_change ();
     }
@@ -1014,7 +1014,7 @@ bool PlaylistData::prev_album ()
     return true;
 }
 
-bool PlaylistData::next_song_with_hint (bool repeat, int hint)
+bool PlaylistData::change_position_to_next (bool repeat, int hint_pos)
 {
     bool shuffle = aud_get_bool ("shuffle");
     bool by_album = aud_get_bool ("album_shuffle");
@@ -1022,7 +1022,7 @@ bool PlaylistData::next_song_with_hint (bool repeat, int hint)
     auto change = pos_after (position (), shuffle, by_album);
 
     if (change.new_pos < 0)
-        change = pos_new (shuffle, by_album, hint);
+        change = pos_new (shuffle, by_album, hint_pos);
 
     if (change.new_pos < 0)
     {
@@ -1042,7 +1042,7 @@ bool PlaylistData::next_song_with_hint (bool repeat, int hint)
 
 bool PlaylistData::next_song (bool repeat)
 {
-    if (! next_song_with_hint (repeat, -1))
+    if (! change_position_to_next (repeat, -1))
         return false;
 
     queue_position_change ();
@@ -1062,7 +1062,7 @@ bool PlaylistData::next_album (bool repeat)
     Tuple start_tuple = entry_tuple (start_position, nullptr);
 
     for (;;) {
-        if (! next_song_with_hint (repeat, -1))
+        if (! change_position_to_next (repeat, -1))
             return false;
 
         if ( position() == start_position)
