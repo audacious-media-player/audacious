@@ -788,14 +788,14 @@ void PlaylistData::queue_remove_selected ()
 
 int PlaylistData::shuffle_pos_before (int ref_pos) const
 {
-    const PlaylistEntry * ref_entry = entry_at (ref_pos);
+    auto ref_entry = entry_at (ref_pos);
     if (! ref_entry)
         return -1;
 
     const PlaylistEntry * found = nullptr;
     for (auto & entry : m_entries)
     {
-        if (entry->shuffle_num && entry->shuffle_num < ref_entry->shuffle_num &&
+        if (entry->shuffle_num > 0 && entry->shuffle_num < ref_entry->shuffle_num &&
             (! found || entry->shuffle_num > found->shuffle_num))
         {
             found = entry.get ();
@@ -813,7 +813,7 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after (int ref_pos, bool by_al
 
     // the reference entry can be beyond the end of the shuffle list
     // if we are looking ahead multiple entries, as in next_album()
-    if (ref_entry->shuffle_num)
+    if (ref_entry->shuffle_num > 0)
     {
         // look for the next entry in the existing shuffle order
         const PlaylistEntry * next = nullptr;
