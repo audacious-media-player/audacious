@@ -33,40 +33,64 @@
 #define DEFAULT_SECTION "audacious"
 
 static const char * const core_defaults[] = {
-
+    /* clang-format off */
     /* general */
-    "advance_on_delete", "FALSE", "always_resume_paused", "TRUE",
-    "clear_playlist", "TRUE", "open_to_temporary", "TRUE", "recurse_folders",
-    "TRUE", "resume_playback_on_startup", "TRUE", "show_interface", "TRUE",
+    "advance_on_delete", "FALSE",
+    "always_resume_paused", "TRUE",
+    "clear_playlist", "TRUE",
+    "open_to_temporary", "TRUE",
+    "recurse_folders", "TRUE",
+    "resume_playback_on_startup", "TRUE",
+    "show_interface", "TRUE",
 
     /* equalizer */
-    "eqpreset_default_file", "", "eqpreset_extension", "", "equalizer_active",
-    "FALSE", "equalizer_bands", "0,0,0,0,0,0,0,0,0,0", "equalizer_preamp", "0",
+    "eqpreset_default_file", "",
+    "eqpreset_extension", "",
+    "equalizer_active", "FALSE",
+    "equalizer_bands", "0,0,0,0,0,0,0,0,0,0",
+    "equalizer_preamp", "0",
 
     /* info popup / info window */
-    "cover_name_exclude", "back", "cover_name_include",
-    "album,cover,front,folder", "filepopup_delay", "5",
-    "filepopup_showprogressbar", "FALSE", "recurse_for_cover", "FALSE",
-    "recurse_for_cover_depth", "0", "show_filepopup_for_tuple", "TRUE",
+    "cover_name_exclude", "back",
+    "cover_name_include", "album,cover,front,folder",
+    "filepopup_delay", "5",
+    "filepopup_showprogressbar", "FALSE",
+    "recurse_for_cover", "FALSE",
+    "recurse_for_cover_depth", "0",
+    "show_filepopup_for_tuple", "TRUE",
     "use_file_cover", "FALSE",
 
     /* network */
-    "net_buffer_kb", "128", "save_url_history", "TRUE", "socks_proxy", "FALSE",
-    "socks_type", "0", "use_proxy", "FALSE", "use_proxy_auth", "FALSE",
+    "net_buffer_kb", "128",
+    "save_url_history", "TRUE",
+    "socks_proxy", "FALSE",
+    "socks_type", "0",
+    "use_proxy", "FALSE",
+    "use_proxy_auth", "FALSE",
 
     /* output */
-    "default_gain", "0", "enable_replay_gain", "TRUE",
-    "enable_clipping_prevention", "TRUE", "output_bit_depth", "-1",
-    "output_buffer_size", "500", "record", "FALSE", "record_stream",
-    aud::numeric_string<(int)OutputStream::AfterReplayGain>::str,
-    "replay_gain_mode", aud::numeric_string<(int)ReplayGainMode::Track>::str,
-    "replay_gain_preamp", "0", "soft_clipping", "FALSE",
-    "software_volume_control", "FALSE", "sw_volume_left", "100",
-    "sw_volume_right", "100", "volume_delta", "5",
+    "default_gain", "0",
+    "enable_replay_gain", "TRUE",
+    "enable_clipping_prevention", "TRUE",
+    "output_bit_depth", "-1",
+    "output_buffer_size", "500",
+    "record", "FALSE",
+    "record_stream", aud::numeric_string<(int) OutputStream::AfterReplayGain>::str,
+    "replay_gain_mode", aud::numeric_string<(int) ReplayGainMode::Track>::str,
+    "replay_gain_preamp", "0",
+    "soft_clipping", "FALSE",
+    "software_volume_control", "FALSE",
+    "sw_volume_left", "100",
+    "sw_volume_right", "100",
+    "volume_delta", "5",
 
     /* playback */
-    "album_shuffle", "FALSE", "no_playlist_advance", "FALSE", "repeat", "FALSE",
-    "shuffle", "FALSE", "step_size", "5", "stop_after_current_song", "FALSE",
+    "album_shuffle", "FALSE",
+    "no_playlist_advance", "FALSE",
+    "repeat", "FALSE",
+    "shuffle", "FALSE",
+    "step_size", "5",
+    "stop_after_current_song", "FALSE",
 
     /* playlist */
     "chardet_fallback", "ISO-8859-1",
@@ -75,13 +99,16 @@ static const char * const core_defaults[] = {
 #else
     "convert_backslash", "FALSE",
 #endif
-    "export_relative_paths", "TRUE", "folders_in_playlist", "FALSE",
-    "generic_title_format",
-    "${?artist:${artist} - }${?album:${album} - }${title}", "leading_zero",
-    "FALSE", "show_hours", "TRUE", "metadata_fallbacks", "TRUE",
-    "metadata_on_play", "FALSE", "show_numbers_in_pl", "FALSE", "slow_probe",
-    "FALSE",
-
+    "export_relative_paths", "TRUE",
+    "folders_in_playlist", "FALSE",
+    "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
+    "leading_zero", "FALSE",
+    "show_hours", "TRUE",
+    "metadata_fallbacks", "TRUE",
+    "metadata_on_play", "FALSE",
+    "show_numbers_in_pl", "FALSE",
+    "slow_probe", "FALSE",
+    /* clang-format on */
     nullptr};
 
 enum OpType
