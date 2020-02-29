@@ -75,9 +75,9 @@ static String fileinfo_recursive_get_image(const char * path,
         {
             StringBuf newpath = filename_build({path, name});
 
-            if (!g_file_test(newpath, G_FILE_TEST_IS_DIR) &&
-                has_front_cover_extension(name) &&
-                same_basename(name, params->filename))
+            if (has_front_cover_extension(name) &&
+                same_basename(name, params->filename) &&
+                !g_file_test(newpath, G_FILE_TEST_IS_DIR))
             {
                 g_dir_close(d);
                 return String(newpath);
@@ -92,10 +92,10 @@ static String fileinfo_recursive_get_image(const char * path,
     {
         StringBuf newpath = filename_build({path, name});
 
-        if (!g_file_test(newpath, G_FILE_TEST_IS_DIR) &&
-            has_front_cover_extension(name) &&
+        if (has_front_cover_extension(name) &&
             cover_name_filter(name, params->include, true) &&
-            !cover_name_filter(name, params->exclude, false))
+            !cover_name_filter(name, params->exclude, false) &&
+            !g_file_test(newpath, G_FILE_TEST_IS_DIR))
         {
             g_dir_close(d);
             return String(newpath);
