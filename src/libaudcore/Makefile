@@ -96,6 +96,7 @@ CPPFLAGS := -I.. -I../.. \
             ${GLIB_CFLAGS} \
             ${GMODULE_CFLAGS} \
             ${QTCORE_CFLAGS} \
+            ${LIBARCHIVE_CFLAGS} \
             -DINSTALL_BINDIR=\"${bindir}\" \
             -DINSTALL_DATADIR=\"${datadir}/audacious\" \
             -DINSTALL_PLUGINDIR=\"${plugindir}\" \
@@ -110,4 +111,5 @@ LIBS := ../libguess/libguess.a \
         ${LIBS} -lm \
         ${GLIB_LIBS} \
         ${GMODULE_LIBS} \
-        ${QTCORE_LIBS}
+        ${QTCORE_LIBS} \
+        ${LIBARCHIVE_LIBS}
