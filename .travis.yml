@@ -5,7 +5,7 @@ compiler:
   - clang
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install libgtk2.0-dev qtbase5-dev
+  - sudo apt-get install libgtk2.0-dev qtbase5-dev libarchive-dev
 script:
   - ./autogen.sh
   - ./configure --prefix=/opt/aud --enable-gtk
