@@ -21,6 +21,11 @@ if get_option('qt')
 endif
 
 
+if get_option('libarchive')
+  libarchive_dep = dependency('libarchive', required: true)
+endif
+
+
 cc = meson.get_compiler('c')
 cxx = meson.get_compiler('cpp')
 
@@ -118,6 +123,11 @@ endif
 
 if get_option('qt')
   conf.set10('USE_QT', true)
+endif
+
+
+if get_option('libarchive')
+  conf.set10('USE_LIBARCHIVE', true)
 endif
 
 

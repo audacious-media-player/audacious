@@ -102,6 +102,11 @@ if get_option('qt')
 endif
 
 
+if get_option('libarchive')
+  libaudcore_deps += [libarchive_dep]
+endif
+
+
 if cc.has_function('iconv')
   iconv_dep = []
 else

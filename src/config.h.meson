@@ -17,5 +17,6 @@
 
 #mesondefine USE_DBUS
 #mesondefine USE_QT
+#mesondefine USE_LIBARCHIVE
 
 #define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_32
