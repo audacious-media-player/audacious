@@ -159,6 +159,9 @@ int64_t VFSArchiveReaderImpl::fread (void * ptr, int64_t size, int64_t nmemb)
     if (ret < ARCHIVE_OK)
         return -1;
 
+    if (! ret)
+        m_eof = true;
+
     m_pos += ret;
 
     return ret;
