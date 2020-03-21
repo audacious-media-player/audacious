@@ -3,6 +3,7 @@ libaudcore_inc = include_directories('.')
 
 libaudcore_sources = [
   'adder.cc',
+  'archive_reader.cc',
   'art.cc',
   'art-search.cc',
   'audio.cc',
@@ -58,6 +59,7 @@ libaudcore_sources = [
 
 
 libaudcore_headers = [
+  'archive_reader.h',
   'audstrings.h',
   'drct.h',
   'equalizer.h',

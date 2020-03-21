@@ -3,6 +3,7 @@ LIB_MAJOR = 5
 LIB_MINOR = 2
 
 SRCS = adder.cc \
+       archive_reader.cc \
        art.cc \
        art-search.cc \
        audio.cc \
@@ -55,7 +56,8 @@ SRCS = adder.cc \
        vis-runner.cc \
        visualization.cc
 
-INCLUDES = audio.h \
+INCLUDES = archive_reader.h \
+           audio.h \
            audstrings.h \
            drct.h \
            equalizer.h \
