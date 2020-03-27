@@ -1,7 +1,7 @@
 # Latvian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 # hairy_latvian <einars8@gmail.com>, 2014-2016
 # hairy_latvian <einars8@gmail.com>, 2009, 2011, 2012
@@ -10,17 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2018-08-04 20:34+0200\n"
-"PO-Revision-Date: 2018-07-02 04:50+0000\n"
+"POT-Creation-Date: 2020-01-26 13:17+0100\n"
+"PO-Revision-Date: 2020-01-26 12:21+0000\n"
 "Last-Translator: John Lindgren <john@jlindgren.net>\n"
-"Language-Team: Latvian (http://www.transifex.com/audacious/audacious/"
-"language/lv/)\n"
-"Language: lv\n"
+"Language-Team: Latvian (http://www.transifex.com/audacious/audacious/language/lv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
-"2);\n"
+"Language: lv\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
 #: src/audacious/main.cc:65
 msgid "Show command-line help"
@@ -83,8 +81,8 @@ msgid "Print debugging messages (may be used twice)"
 msgstr "Drukāt atkļūdošanas ziņojumus (var tikt izmantots divas reizes)"
 
 #: src/audacious/main.cc:81
-msgid "Run in Qt mode"
-msgstr "Palaist Qt režīmā"
+msgid "Run in GTK mode"
+msgstr ""
 
 #: src/audacious/main.cc:138
 #, c-format
@@ -106,11 +104,11 @@ msgstr "Lietošana: audacious [OPCIJA] ... [FAILS] ...\n"
 msgid "Select instance to run/control"
 msgstr "Izvēlēties palaižamo/vadāmo instanci"
 
-#: src/audacious/main.cc:367 src/libaudqt/audqt.cc:63
+#: src/audacious/main.cc:365 src/libaudqt/audqt.cc:64
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/libaudcore/adder.cc:91
+#: src/libaudcore/adder.cc:96
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -118,33 +116,31 @@ msgstr[0] "Atrasts %d fails"
 msgstr[1] "Atrasti %d faili"
 msgstr[2] "Atrasti %d faili"
 
-#: src/libaudcore/adder.cc:313 src/libaudcore/adder.cc:387
+#: src/libaudcore/adder.cc:320 src/libaudcore/adder.cc:402
 #, c-format
 msgid ""
 "Error reading %s:\n"
 "%s"
-msgstr ""
-"Kļūda lasot %s:\n"
-"%s"
+msgstr "Kļūda lasot %s:\n%s"
 
-#: src/libaudcore/adder.cc:445
+#: src/libaudcore/adder.cc:454
 msgid "No files found."
 msgstr "Faili netika atrasti."
 
-#: src/libaudcore/adder.cc:467 src/libaudcore/playlist.cc:88
+#: src/libaudcore/adder.cc:476 src/libaudcore/playlist.cc:81
 msgid "New Playlist"
 msgstr "Jauns repertuārs"
 
-#: src/libaudcore/audstrings.cc:659 src/libaudcore/tuple.cc:520
+#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:524
 msgid "Standard input"
 msgstr "Standarta ievade"
 
-#: src/libaudcore/audstrings.cc:661
+#: src/libaudcore/audstrings.cc:666
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Audio CD, %s. celiņš"
 
-#: src/libaudcore/audstrings.cc:665 src/libaudcore/tuple.cc:496
+#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:500
 msgid "(character encoding error)"
 msgstr "(rakstzīmju kodēšanas kļūda)"
 
@@ -153,52 +149,53 @@ msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
 msgstr ""
 
-#: src/libaudcore/output.cc:195
+#: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
 msgstr "Kļūda atverot izvades straumi"
 
-#: src/libaudcore/output.cc:248
+#: src/libaudcore/output.cc:341
 msgid "Error recording output stream"
 msgstr ""
 
-#: src/libaudcore/playback.cc:373
+#: src/libaudcore/playback.cc:379
 #, c-format
 msgid ""
 "Error playing %s:\n"
 "%s"
-msgstr ""
-"Kļūda atskaņojot %s:\n"
-"%s"
+msgstr "Kļūda atskaņojot %s:\n%s"
 
-#: src/libaudcore/playback.cc:505
+#: src/libaudcore/playback.cc:510
 msgid "Invalid audio format"
 msgstr "Nederīgs audio formāts"
 
-#: src/libaudcore/playlist.cc:89
+#: src/libaudcore/playlist.cc:82
 msgid "Now Playing"
 msgstr "Pašreiz atskaņo"
 
-#: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:489
-#: src/libaudqt/infowin-qt.cc:218
+#: src/libaudcore/playlist-files.cc:73 src/libaudcore/playlist-files.cc:153
+#: src/libaudgui/infowin.cc:509 src/libaudqt/infowin-qt.cc:248
 #, c-format
 msgid ""
 "Error opening %s:\n"
 "%s"
-msgstr ""
-"Kļūda atverot %s:\n"
-"%s"
+msgstr "Kļūda atverot %s:\n%s"
 
-#: src/libaudcore/playlist-files.cc:83
+#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:276
 #, c-format
 msgid "Error loading %s."
 msgstr "Kļūda ielādējot %s."
 
-#: src/libaudcore/playlist-files.cc:85
+#: src/libaudcore/playlist-files.cc:89
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "Neizdevās ielādēt %s: neatbalstīts faila paplašinājums."
 
-#: src/libaudcore/playlist-files.cc:151
+#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:309
+#, c-format
+msgid "Error saving %s."
+msgstr ""
+
+#: src/libaudcore/playlist-files.cc:167
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "Neizdevās saglabāt %s: neatbalstīts faila paplašinājums."
@@ -207,27 +204,27 @@ msgstr "Neizdevās saglabāt %s: neatbalstīts faila paplašinājums."
 msgid "Error loading plugin"
 msgstr "Kļūda ielādējot spraudni"
 
-#: src/libaudcore/probe.cc:171
+#: src/libaudcore/probe.cc:173
 msgid "Seek error"
 msgstr "Meklēšanas kļūda"
 
-#: src/libaudcore/probe.cc:179
+#: src/libaudcore/probe.cc:181
 msgid "File format not recognized"
 msgstr "Faila formāts nav atpazīts"
 
-#: src/libaudcore/probe.cc:207
+#: src/libaudcore/probe.cc:210
 msgid "Error reading metadata"
 msgstr "Kļūda lasot metadatus"
 
-#: src/libaudcore/tuple.cc:550
+#: src/libaudcore/tuple.cc:558
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.cc:552
+#: src/libaudcore/tuple.cc:560
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.cc:554
+#: src/libaudcore/tuple.cc:563
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -235,16 +232,16 @@ msgstr[0] "%d kanāls"
 msgstr[1] "%d kanāli"
 msgstr[2] "%d kanālu"
 
-#: src/libaudcore/tuple.cc:768
+#: src/libaudcore/tuple.cc:777
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: src/libaudcore/tuple.cc:850
+#: src/libaudcore/tuple.cc:861
 #, c-format
 msgid "Track %d"
 msgstr "Celiņš %d"
 
-#: src/libaudcore/tuple.cc:855
+#: src/libaudcore/tuple.cc:867
 msgid "(unknown title)"
 msgstr "(nezināms nosaukums)"
 
@@ -252,12 +249,12 @@ msgstr "(nezināms nosaukums)"
 msgid "Unknown URI scheme"
 msgstr "Nezināma URI shēma"
 
-#: src/libaudcore/vfs_local.cc:85 src/libaudcore/vfs_local.cc:330
-#: src/libaudcore/vfs_local.cc:385
+#: src/libaudcore/vfs_local.cc:86 src/libaudcore/vfs_local.cc:330
+#: src/libaudcore/vfs_local.cc:386
 msgid "Invalid file name"
 msgstr "Nederīgs faila nosaukums"
 
-#: src/libaudcore/vfs_local.cc:132
+#: src/libaudcore/vfs_local.cc:134
 msgid "Invalid access mode"
 msgstr "Nederīgs piekļūšanas režīms"
 
@@ -269,150 +266,152 @@ msgstr "Izstrādātāji"
 msgid "License"
 msgstr "Licence"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about-qt.cc:61
+#: src/libaudgui/about.cc:72 src/libaudqt/about-qt.cc:63
 msgid "About Audacious"
 msgstr "Par Audacious"
 
 #: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
 #: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
 #: src/libaudgui/plugin-prefs.cc:160 src/libaudgui/url-opener.cc:101
-#: src/libaudqt/playlist-management.cc:43
-#: src/libaudqt/playlist-management.cc:75 src/libaudqt/prefs-plugin.cc:131
+#: src/libaudqt/playlist-management.cc:41
+#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:136
 #: src/libaudqt/url-opener-qt.cc:79
 msgid "_Cancel"
 msgstr "At_celt"
 
-#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:73
+#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:57
 msgid "_Don’t ask again"
 msgstr "_Nejautāt vēlreiz"
 
-#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:79
+#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:64
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
 msgstr "Vai vēlaties uz visiem laikiem izņemt \"%s\"?"
 
-#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:74
+#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:58
 msgid "_Remove"
 msgstr "_Izņemt"
 
-#: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:78
+#: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:62
 msgid "Remove Playlist"
 msgstr "Izņemt repertuāru"
 
-#: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:40
+#: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:39
 msgid "What would you like to call this playlist?"
 msgstr "Kā jūs vēlētos nosaukt šo repertuāru?"
 
-#: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:42
+#: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:40
 msgid "_Rename"
 msgstr "Pā_rdēvēt"
 
-#: src/libaudgui/confirm.cc:97 src/libaudqt/playlist-management.cc:62
+#: src/libaudgui/confirm.cc:97 src/libaudqt/playlist-management.cc:38
 msgid "Rename Playlist"
 msgstr "Pārdēvēt repertuāru"
 
-#: src/libaudgui/eq-preset.cc:208 src/libaudgui/eq-preset.cc:215
+#: src/libaudgui/eq-preset.cc:153
+msgid "Please select one preset to export."
+msgstr ""
+
+#: src/libaudgui/eq-preset.cc:256 src/libaudgui/eq-preset.cc:261
 msgid "Preset File ..."
 msgstr "Sākumuzstādījumu fails ..."
 
-#: src/libaudgui/eq-preset.cc:209 src/libaudgui/eq-preset.cc:216
+#: src/libaudgui/eq-preset.cc:257 src/libaudgui/eq-preset.cc:262
 msgid "EQF File ..."
 msgstr "EQF fails ..."
 
-#: src/libaudgui/eq-preset.cc:211
-msgid "Winamp Presets ..."
-msgstr "Winamp sākumuzstādījumi ..."
-
-#: src/libaudgui/eq-preset.cc:220 src/libaudqt/fileopener.cc:70
+#: src/libaudgui/eq-preset.cc:266 src/libaudqt/eq-preset-qt.cc:331
+#: src/libaudqt/fileopener.cc:63
 msgid "Import"
 msgstr "Importēt"
 
-#: src/libaudgui/eq-preset.cc:221 src/libaudqt/fileopener.cc:71
+#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:334
+#: src/libaudqt/fileopener.cc:63
 msgid "Export"
 msgstr "Eksportēt"
 
-#: src/libaudgui/eq-preset.cc:236
+#: src/libaudgui/eq-preset.cc:282 src/libaudqt/eq-preset-qt.cc:319
 msgid "Equalizer Presets"
 msgstr "Balansiera sākumuzstādījumi"
 
-#: src/libaudgui/eq-preset.cc:258
+#: src/libaudgui/eq-preset.cc:304 src/libaudqt/eq-preset-qt.cc:323
 msgid "Save Preset"
 msgstr "Saglabāt sākumuzstādījumu"
 
-#: src/libaudgui/eq-preset.cc:280
+#: src/libaudgui/eq-preset.cc:326
 msgid "Delete Selected"
 msgstr "Dzēst izvēlētos"
 
-#: src/libaudgui/eq-preset.cc:284
+#: src/libaudgui/eq-preset.cc:330 src/libaudqt/eq-preset-qt.cc:344
 msgid "Revert Changes"
 msgstr "Atcelt izmaiņas"
 
-#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer-qt.cc:114
+#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer-qt.cc:116
 msgid "_Enable"
 msgstr "_Ieslēgts"
 
-#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:116
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:119
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:116
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:119
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:119
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:119
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:119
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:120
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:117
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:120
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:118
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:120
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:118
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:120
 msgid "8 kHz"
 msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:118
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:120
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:142
+#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:153
 msgid "Equalizer"
 msgstr "Equalizer"
 
-#: src/libaudgui/equalizer.cc:143
+#: src/libaudgui/equalizer.cc:143 src/libaudqt/equalizer-qt.cc:140
 msgid "Presets ..."
 msgstr "Sākumuzstādījumi ..."
 
-#: src/libaudgui/equalizer.cc:147
+#: src/libaudgui/equalizer.cc:147 src/libaudqt/equalizer-qt.cc:139
 msgid "Reset to Zero"
 msgstr "Atstatīt uz nulli"
 
-#: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer-qt.cc:123
+#: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer-qt.cc:125
 msgid "Preamp"
 msgstr "Priekšpastiprinājums"
 
-#: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:57
+#: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:58
 msgid "Open Files"
 msgstr "Atvērt failus"
 
 #: src/libaudgui/file-opener.cc:79 src/libaudgui/url-opener.cc:64
-#: src/libaudqt/url-opener-qt.cc:48
+#: src/libaudqt/url-opener-qt.cc:47
 msgid "_Open"
 msgstr "_Atvērt"
 
@@ -420,12 +419,12 @@ msgstr "_Atvērt"
 msgid "Close _dialog on open"
 msgstr "Atverot aizvērt _dialoglogu"
 
-#: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:59
+#: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:58
 msgid "Add Files"
 msgstr "Pievienot failus"
 
 #: src/libaudgui/file-opener.cc:87 src/libaudgui/url-opener.cc:70
-#: src/libaudqt/url-opener-qt.cc:54
+#: src/libaudqt/url-opener-qt.cc:53
 msgid "_Add"
 msgstr "Pi_evienot"
 
@@ -433,54 +432,54 @@ msgstr "Pi_evienot"
 msgid "Close _dialog on add"
 msgstr "Pievienojot aizvērt _dialoglogu"
 
-#: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:397
+#: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:876 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:191
-#: src/libaudqt/infowin-qt.cc:149 src/libaudqt/log-inspector.cc:227
-#: src/libaudqt/prefs-plugin.cc:141 src/libaudqt/prefs-window-qt.cc:634
-#: src/libaudqt/queue-manager-qt.cc:161
+#: src/libaudgui/prefs-window.cc:894 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:229
+#: src/libaudqt/infowin-qt.cc:155 src/libaudqt/log-inspector.cc:242
+#: src/libaudqt/prefs-plugin.cc:147 src/libaudqt/prefs-window-qt.cc:625
+#: src/libaudqt/queue-manager-qt.cc:162
 msgid "_Close"
 msgstr "_Aizvērt"
 
-#: src/libaudgui/infopopup.cc:205 src/libaudgui/infowin.cc:351
-#: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:116
-#: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window-qt.cc:149
+#: src/libaudgui/infopopup.cc:187 src/libaudgui/infowin.cc:369
+#: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:93
+#: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:167
 msgid "Title"
 msgstr "Nosaukums"
 
-#: src/libaudgui/infopopup.cc:206 src/libaudgui/infowin.cc:354
-#: src/libaudgui/prefs-window.cc:101 src/libaudqt/infopopup-qt.cc:118
-#: src/libaudqt/info-widget.cc:41 src/libaudqt/prefs-window-qt.cc:146
+#: src/libaudgui/infopopup.cc:188 src/libaudgui/infowin.cc:372
+#: src/libaudgui/prefs-window.cc:101 src/libaudqt/infopopup-qt.cc:95
+#: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:164
 msgid "Artist"
 msgstr "Izpildītājs"
 
-#: src/libaudgui/infopopup.cc:207 src/libaudgui/infowin.cc:357
-#: src/libaudgui/prefs-window.cc:102 src/libaudgui/prefs-window.cc:148
-#: src/libaudqt/infopopup-qt.cc:120 src/libaudqt/info-widget.cc:42
-#: src/libaudqt/prefs-window-qt.cc:147 src/libaudqt/prefs-window-qt.cc:193
+#: src/libaudgui/infopopup.cc:189 src/libaudgui/infowin.cc:375
+#: src/libaudgui/prefs-window.cc:102 src/libaudgui/prefs-window.cc:149
+#: src/libaudqt/infopopup-qt.cc:97 src/libaudqt/info-widget.cc:50
+#: src/libaudqt/prefs-window-qt.cc:165 src/libaudqt/prefs-window-qt.cc:207
 msgid "Album"
 msgstr "Albums"
 
-#: src/libaudgui/infopopup.cc:208 src/libaudgui/infowin.cc:367
-#: src/libaudgui/prefs-window.cc:106 src/libaudqt/infopopup-qt.cc:122
-#: src/libaudqt/info-widget.cc:45 src/libaudqt/prefs-window-qt.cc:151
+#: src/libaudgui/infopopup.cc:190 src/libaudgui/infowin.cc:385
+#: src/libaudgui/prefs-window.cc:106 src/libaudqt/infopopup-qt.cc:99
+#: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:169
 msgid "Genre"
 msgstr "Žanrs"
 
-#: src/libaudgui/infopopup.cc:209 src/libaudgui/infowin.cc:370
-#: src/libaudgui/prefs-window.cc:110 src/libaudqt/infopopup-qt.cc:124
-#: src/libaudqt/prefs-window-qt.cc:155
+#: src/libaudgui/infopopup.cc:191 src/libaudgui/infowin.cc:388
+#: src/libaudgui/prefs-window.cc:111 src/libaudqt/infopopup-qt.cc:101
+#: src/libaudqt/prefs-window-qt.cc:174
 msgid "Year"
 msgstr "Gads"
 
-#: src/libaudgui/infopopup.cc:210 src/libaudgui/prefs-window.cc:147
-#: src/libaudqt/infopopup-qt.cc:126 src/libaudqt/prefs-window-qt.cc:192
+#: src/libaudgui/infopopup.cc:192 src/libaudgui/prefs-window.cc:148
+#: src/libaudqt/infopopup-qt.cc:103 src/libaudqt/prefs-window-qt.cc:206
 msgid "Track"
 msgstr "Celiņš"
 
-#: src/libaudgui/infopopup.cc:211 src/libaudqt/infopopup-qt.cc:128
-#: src/libaudqt/info-widget.cc:55
+#: src/libaudgui/infopopup.cc:193 src/libaudqt/infopopup-qt.cc:105
+#: src/libaudqt/info-widget.cc:63
 msgid "Length"
 msgstr "Ilgums"
 
@@ -652,50 +651,54 @@ msgstr "Tehno"
 msgid "Trip-hop"
 msgstr "Trip-hop"
 
-#: src/libaudgui/infowin.cc:217
+#: src/libaudgui/infowin.cc:227
 msgid "Save successful"
 msgstr "Saglabāšana veiksmīga"
 
-#: src/libaudgui/infowin.cc:221
+#: src/libaudgui/infowin.cc:231
 msgid "Save error"
 msgstr "Saglabāšanas kļūda"
 
-#: src/libaudgui/infowin.cc:306 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin-qt.cc:123 src/libaudqt/prefs-window-qt.cc:140
+#: src/libaudgui/infowin.cc:324 src/libaudgui/prefs-window.cc:86
+#: src/libaudqt/infowin-qt.cc:120 src/libaudqt/prefs-window-qt.cc:159
 msgid "Song Info"
 msgstr "Dziesmas info"
 
-#: src/libaudgui/infowin.cc:360 src/libaudqt/info-widget.cc:47
+#: src/libaudgui/infowin.cc:378 src/libaudqt/info-widget.cc:51
 msgid "Album Artist"
 msgstr "Albuma izpildītājs"
 
-#: src/libaudgui/infowin.cc:363 src/libaudgui/prefs-window.cc:111
-#: src/libaudqt/info-widget.cc:46 src/libaudqt/prefs-window-qt.cc:156
+#: src/libaudgui/infowin.cc:381 src/libaudgui/prefs-window.cc:112
+#: src/libaudqt/info-widget.cc:54 src/libaudqt/prefs-window-qt.cc:175
 msgid "Comment"
 msgstr "Komentārs"
 
-#: src/libaudgui/infowin.cc:373 src/libaudqt/info-widget.cc:44
+#: src/libaudgui/infowin.cc:391 src/libaudqt/info-widget.cc:52
 msgid "Track Number"
 msgstr "Celiņa numurs"
 
-#: src/libaudgui/infowin.cc:380
-msgid "Clea_r fields when moving to next song"
-msgstr "Notī_rīt laikus, pārvietojoties uz nākamo dziesmu"
+#: src/libaudgui/infowin.cc:397
+msgid "_Auto-fill empty fields"
+msgstr ""
 
-#: src/libaudgui/infowin.cc:394 src/libaudqt/infowin-qt.cc:148
+#: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:183
 msgid "_Save"
 msgstr "_Saglabāt"
 
-#: src/libaudgui/infowin.cc:400
+#: src/libaudgui/infowin.cc:417
+msgid "_Previous"
+msgstr ""
+
+#: src/libaudgui/infowin.cc:420
 msgid "_Next"
 msgstr "_Nākamā"
 
-#: src/libaudgui/infowin.cc:447
+#: src/libaudgui/infowin.cc:469
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.cc:452
+#: src/libaudgui/infowin.cc:474
 msgid "N/A"
 msgstr "N/P"
 
@@ -752,15 +755,13 @@ msgstr "Pārrakstīt %s?"
 #: src/libaudgui/playlists.cc:121
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
-msgstr ""
-"Lūdzu, ievadiet faila paplašinājumu vai izvēlieties formātu no izkrītošā "
-"saraksta"
+msgstr "Lūdzu, ievadiet faila paplašinājumu vai izvēlieties formātu no izkrītošā saraksta"
 
 #: src/libaudgui/playlists.cc:140
 msgid "Select Format by Extension"
 msgstr "Izvēlieties formātu pēc paplašinājuma"
 
-#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:62
+#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:59
 msgid "Export Playlist"
 msgstr "Eksportēt repertuāru"
 
@@ -768,7 +769,7 @@ msgstr "Eksportēt repertuāru"
 msgid "_Export"
 msgstr "_Eksportēt"
 
-#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:61
+#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:59
 msgid "Import Playlist"
 msgstr "Importēt repertuāru"
 
@@ -776,540 +777,565 @@ msgstr "Importēt repertuāru"
 msgid "_Import"
 msgstr "_Importēt"
 
-#: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:45
+#: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:44
 msgid "_Plugins ..."
 msgstr "S_praudņi ..."
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:57
 #, c-format
 msgid "About %s"
 msgstr "Par %s"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:119
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:122
 #, c-format
 msgid "%s Settings"
 msgstr "%s iestatījumi"
 
-#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:130
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:134
 msgid "_Set"
 msgstr "Ie_statīt"
 
-#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:690
-#: src/libaudgui/prefs-window.cc:730 src/libaudqt/prefs-window-qt.cc:595
-#: src/libaudqt/prefs-window-qt.cc:598
+#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:708
+#: src/libaudgui/prefs-window.cc:748 src/libaudqt/prefs-window-qt.cc:580
+#: src/libaudqt/prefs-window-qt.cc:583
 msgid "_Settings"
 msgstr "I_estatījumi"
 
-#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:704
-#: src/libaudgui/prefs-window.cc:742 src/libaudqt/prefs-window-qt.cc:596
-#: src/libaudqt/prefs-window-qt.cc:599
+#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:722
+#: src/libaudgui/prefs-window.cc:760 src/libaudqt/prefs-window-qt.cc:581
+#: src/libaudqt/prefs-window-qt.cc:584
 msgid "_About"
 msgstr "_Par"
 
-#: src/libaudgui/prefs-widget.cc:277
+#: src/libaudgui/prefs-widget.cc:277 src/libaudqt/prefs-widget-qt.cc:235
 msgid "Choose File"
 msgstr "Izvēlieties failu"
 
-#: src/libaudgui/prefs-widget.cc:281
+#: src/libaudgui/prefs-widget.cc:281 src/libaudqt/prefs-widget-qt.cc:239
 msgid "Choose Folder"
 msgstr "Izvēlieties mapi"
 
-#: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window-qt.cc:136
+#: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window-qt.cc:155
 msgid "Appearance"
 msgstr "Izskats"
 
-#: src/libaudgui/prefs-window.cc:83 src/libaudqt/prefs-window-qt.cc:137
+#: src/libaudgui/prefs-window.cc:83 src/libaudqt/prefs-window-qt.cc:156
 msgid "Audio"
 msgstr "Skaņa"
 
-#: src/libaudgui/prefs-window.cc:84 src/libaudqt/prefs-window-qt.cc:138
+#: src/libaudgui/prefs-window.cc:84 src/libaudqt/prefs-window-qt.cc:157
 msgid "Network"
 msgstr "Tīkls"
 
 #: src/libaudgui/prefs-window.cc:85 src/libaudgui/prefs-window.cc:96
-#: src/libaudqt/prefs-pluginlist-model.cc:41
-#: src/libaudqt/prefs-window-qt.cc:139
+#: src/libaudqt/prefs-pluginlist-model.cc:43
+#: src/libaudqt/prefs-window-qt.cc:158
 msgid "Playlist"
 msgstr "Repertuārs"
 
-#: src/libaudgui/prefs-window.cc:87 src/libaudqt/prefs-window-qt.cc:141
+#: src/libaudgui/prefs-window.cc:87 src/libaudqt/prefs-window-qt.cc:160
 msgid "Plugins"
 msgstr "Spraudņi"
 
-#: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:142
+#: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:161
 msgid "Advanced"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:37
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "General"
 msgstr "Vispārīgi"
 
-#: src/libaudgui/prefs-window.cc:93 src/libaudqt/prefs-pluginlist-model.cc:38
+#: src/libaudgui/prefs-window.cc:93 src/libaudqt/prefs-pluginlist-model.cc:40
 msgid "Effect"
 msgstr "Efekti"
 
-#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:39
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Visualization"
 msgstr "Vizualizēšana"
 
-#: src/libaudgui/prefs-window.cc:95 src/libaudqt/prefs-pluginlist-model.cc:40
+#: src/libaudgui/prefs-window.cc:95 src/libaudqt/prefs-pluginlist-model.cc:42
 msgid "Input"
 msgstr "Ievade"
 
-#: src/libaudgui/prefs-window.cc:97 src/libaudqt/prefs-pluginlist-model.cc:42
+#: src/libaudgui/prefs-window.cc:97 src/libaudqt/prefs-pluginlist-model.cc:44
 msgid "Transport"
 msgstr "Transports"
 
-#: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window-qt.cc:148
+#: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window-qt.cc:166
 msgid "Album artist"
 msgstr "Albuma izpildītājs"
 
-#: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window-qt.cc:150
+#: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window-qt.cc:168
 msgid "Track number"
 msgstr "Celiņa numurs"
 
-#: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window-qt.cc:152
+#: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window-qt.cc:170
 msgid "File name"
 msgstr "Faila nosaukums"
 
-#: src/libaudgui/prefs-window.cc:108 src/libaudqt/prefs-window-qt.cc:153
+#: src/libaudgui/prefs-window.cc:108 src/libaudqt/prefs-window-qt.cc:171
 msgid "File path"
 msgstr "Faila ceļš"
 
-#: src/libaudgui/prefs-window.cc:109 src/libaudqt/prefs-window-qt.cc:154
+#: src/libaudgui/prefs-window.cc:109 src/libaudqt/prefs-window-qt.cc:172
 msgid "Date"
 msgstr "Datums"
 
-#: src/libaudgui/prefs-window.cc:112 src/libaudqt/info-widget.cc:56
-#: src/libaudqt/prefs-window-qt.cc:157
+#: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:55
+#: src/libaudqt/prefs-window-qt.cc:173
+msgid "Description"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:64
+#: src/libaudqt/prefs-window-qt.cc:176
 msgid "Codec"
 msgstr "Kodeks"
 
-#: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:57
-#: src/libaudqt/prefs-window-qt.cc:158
+#: src/libaudgui/prefs-window.cc:114 src/libaudqt/info-widget.cc:65
+#: src/libaudqt/prefs-window-qt.cc:177
 msgid "Quality"
 msgstr "Kvalitāte"
 
-#: src/libaudgui/prefs-window.cc:117 src/libaudqt/prefs-window-qt.cc:162
+#: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window-qt.cc:180
 msgid "None"
 msgstr "Neviens"
 
-#: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window-qt.cc:163
+#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window-qt.cc:181
 msgid "Arabic"
 msgstr "Arābu"
 
-#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window-qt.cc:164
+#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:182
 msgid "Baltic"
 msgstr "Baltu"
 
-#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:165
+#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window-qt.cc:183
 msgid "Chinese"
 msgstr "Ķīniešu"
 
-#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window-qt.cc:166
+#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window-qt.cc:184
 msgid "Greek"
 msgstr "Grieķu"
 
-#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window-qt.cc:167
+#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window-qt.cc:185
 msgid "Hebrew"
 msgstr "Ebreju"
 
-#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window-qt.cc:168
+#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window-qt.cc:186
 msgid "Japanese"
 msgstr "Japāņu"
 
-#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window-qt.cc:169
+#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window-qt.cc:187
 msgid "Korean"
 msgstr "Korejiešu"
 
-#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window-qt.cc:170
+#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window-qt.cc:188
 msgid "Polish"
 msgstr "Poļu"
 
-#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window-qt.cc:171
+#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window-qt.cc:189
 msgid "Russian"
 msgstr "Krievu"
 
-#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window-qt.cc:172
+#: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window-qt.cc:190
 msgid "Taiwanese"
 msgstr "Taivānu"
 
-#: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window-qt.cc:173
+#: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window-qt.cc:191
 msgid "Turkish"
 msgstr "Turku"
 
-#: src/libaudgui/prefs-window.cc:132 src/libaudqt/prefs-window-qt.cc:177
+#: src/libaudgui/prefs-window.cc:133 src/libaudqt/prefs-window-qt.cc:194
 msgid "Automatic"
 msgstr "Automātiski"
 
-#: src/libaudgui/prefs-window.cc:136 src/libaudqt/prefs-window-qt.cc:181
+#: src/libaudgui/prefs-window.cc:137 src/libaudqt/prefs-window-qt.cc:195
 msgid "Floating point"
 msgstr "Peldošā punkta"
 
-#: src/libaudgui/prefs-window.cc:140 src/libaudqt/prefs-window-qt.cc:185
+#: src/libaudgui/prefs-window.cc:141 src/libaudqt/prefs-window-qt.cc:198
 msgid "As decoded"
 msgstr "Kā atkodēts"
 
-#: src/libaudgui/prefs-window.cc:141 src/libaudqt/prefs-window-qt.cc:186
+#: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:199
 msgid "After applying ReplayGain"
 msgstr "Pēc ReplayGain pielietošanas"
 
-#: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:187
+#: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:201
 msgid "After applying effects"
 msgstr "Pēc efektu pielietošanas"
 
-#: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:188
+#: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:202
 msgid "After applying equalization"
 msgstr "Pēc balansēšanas pielietošanas"
 
-#: src/libaudgui/prefs-window.cc:149 src/libaudqt/prefs-window-qt.cc:194
+#: src/libaudgui/prefs-window.cc:150 src/libaudqt/prefs-window-qt.cc:208
 msgid "Based on shuffle"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:161 src/libaudqt/prefs-window-qt.cc:206
+#: src/libaudgui/prefs-window.cc:162 src/libaudqt/prefs-window-qt.cc:219
 msgid "Interface:"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:216
+#: src/libaudgui/prefs-window.cc:181 src/libaudqt/prefs-window-qt.cc:227
 msgid "Output plugin:"
 msgstr "Izvades spraudnis:"
 
-#: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window-qt.cc:231
+#: src/libaudgui/prefs-window.cc:202 src/libaudqt/prefs-window-qt.cc:240
 msgid "Amplify all files:"
 msgstr "Pastiprināt visus failus:"
 
-#: src/libaudgui/prefs-window.cc:203 src/libaudgui/prefs-window.cc:206
-#: src/libaudqt/prefs-window-qt.cc:233 src/libaudqt/prefs-window-qt.cc:236
+#: src/libaudgui/prefs-window.cc:204 src/libaudgui/prefs-window.cc:207
+#: src/libaudqt/prefs-window-qt.cc:241 src/libaudqt/prefs-window-qt.cc:243
 msgid "dB"
 msgstr "dB"
 
-#: src/libaudgui/prefs-window.cc:204 src/libaudqt/prefs-window-qt.cc:234
+#: src/libaudgui/prefs-window.cc:205 src/libaudqt/prefs-window-qt.cc:242
 msgid "Amplify untagged files:"
 msgstr "Pastiprināt netagotos failus:"
 
-#: src/libaudgui/prefs-window.cc:210 src/libaudqt/prefs-window-qt.cc:240
+#: src/libaudgui/prefs-window.cc:211 src/libaudqt/prefs-window-qt.cc:246
 msgid "<b>Output Settings</b>"
 msgstr "<b>Izvades iestatījumi</b>"
 
-#: src/libaudgui/prefs-window.cc:212 src/libaudqt/prefs-window-qt.cc:242
+#: src/libaudgui/prefs-window.cc:213 src/libaudqt/prefs-window-qt.cc:248
 msgid "Bit depth:"
 msgstr "Bitu dziļums:"
 
-#: src/libaudgui/prefs-window.cc:215 src/libaudgui/prefs-window.cc:260
-#: src/libaudqt/prefs-window-qt.cc:245 src/libaudqt/prefs-window-qt.cc:290
+#: src/libaudgui/prefs-window.cc:216 src/libaudgui/prefs-window.cc:261
+#: src/libaudqt/prefs-window-qt.cc:251 src/libaudqt/prefs-window-qt.cc:279
 msgid "Buffer size:"
 msgstr "Bufera izmērs:"
 
-#: src/libaudgui/prefs-window.cc:217 src/libaudqt/prefs-window-qt.cc:247
+#: src/libaudgui/prefs-window.cc:218 src/libaudqt/prefs-window-qt.cc:252
 msgid "ms"
 msgstr "ms"
 
-#: src/libaudgui/prefs-window.cc:218 src/libaudqt/prefs-window-qt.cc:248
+#: src/libaudgui/prefs-window.cc:219 src/libaudqt/prefs-window-qt.cc:253
 msgid "Soft clipping"
 msgstr "'Mīkstā' apgriešana"
 
-#: src/libaudgui/prefs-window.cc:220 src/libaudqt/prefs-window-qt.cc:250
+#: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window-qt.cc:254
 msgid "Use software volume control (not recommended)"
 msgstr "Lietot programmatūras skaļuma kontroli (nav ieteicams)"
 
-#: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window-qt.cc:252
+#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window-qt.cc:256
 msgid "<b>Recording Settings</b>"
 msgstr "<b>Ieraksta iestatījumi</b>"
 
-#: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window-qt.cc:256
+#: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window-qt.cc:259
 msgid "Record stream:"
 msgstr "Ieraksta straume:"
 
-#: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window-qt.cc:259
+#: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:261
 msgid "<b>ReplayGain</b>"
 msgstr "<b>ReplayGain</b>"
 
-#: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:260
+#: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:262
 msgid "Enable ReplayGain"
 msgstr "Ieslēgt ReplayGain"
 
-#: src/libaudgui/prefs-window.cc:232 src/libaudqt/prefs-window-qt.cc:262
+#: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window-qt.cc:263
 msgid "Mode:"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:236 src/libaudqt/prefs-window-qt.cc:266
+#: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window-qt.cc:265
 msgid "Prevent clipping (recommended)"
 msgstr "Novērst apgriešanu (ieteicams)"
 
-#: src/libaudgui/prefs-window.cc:244 src/libaudqt/prefs-window-qt.cc:274
+#: src/libaudgui/prefs-window.cc:245 src/libaudqt/prefs-window-qt.cc:270
 msgid "Proxy hostname:"
 msgstr "Starpniekservera nosaukums:"
 
-#: src/libaudgui/prefs-window.cc:246 src/libaudqt/prefs-window-qt.cc:276
+#: src/libaudgui/prefs-window.cc:247 src/libaudqt/prefs-window-qt.cc:271
 msgid "Proxy port:"
 msgstr "Starpniekservera ports:"
 
-#: src/libaudgui/prefs-window.cc:251 src/libaudqt/prefs-window-qt.cc:281
+#: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window-qt.cc:274
 msgid "Proxy username:"
 msgstr "Starpniekservera lietotājvārds:"
 
-#: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window-qt.cc:283
+#: src/libaudgui/prefs-window.cc:254 src/libaudqt/prefs-window-qt.cc:275
 msgid "Proxy password:"
 msgstr "Starpniekservera parole:"
 
-#: src/libaudgui/prefs-window.cc:259 src/libaudqt/prefs-window-qt.cc:289
+#: src/libaudgui/prefs-window.cc:260 src/libaudqt/prefs-window-qt.cc:278
 msgid "<b>Network Settings</b>"
 msgstr "<b>Tīkla iestatījumi</b>"
 
-#: src/libaudgui/prefs-window.cc:262 src/libaudqt/prefs-window-qt.cc:292
+#: src/libaudgui/prefs-window.cc:263 src/libaudqt/prefs-window-qt.cc:280
 msgid "KiB"
 msgstr "KiB"
 
-#: src/libaudgui/prefs-window.cc:263 src/libaudqt/prefs-window-qt.cc:293
+#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window-qt.cc:281
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Starpniekservera konfigurācija</b>"
 
-#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window-qt.cc:294
+#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window-qt.cc:282
 msgid "Enable proxy usage"
 msgstr "Ieslēgt starpniekservera izmantošanu"
 
-#: src/libaudgui/prefs-window.cc:268 src/libaudqt/prefs-window-qt.cc:298
+#: src/libaudgui/prefs-window.cc:269 src/libaudqt/prefs-window-qt.cc:284
 msgid "Use authentication with proxy"
 msgstr "Savienojoties ar starpniekserveri, izmantot autentificēšanos"
 
-#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window-qt.cc:305
+#: src/libaudgui/prefs-window.cc:273 src/libaudqt/prefs-window-qt.cc:287
+msgid "Use SOCKS proxy"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window-qt.cc:288
+msgid "SOCKS v4a"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:279 src/libaudqt/prefs-window-qt.cc:289
+msgid "SOCKS v5"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:286 src/libaudqt/prefs-window-qt.cc:292
 msgid "Auto character encoding detector for:"
 msgstr "Automātiska rakstzīmju kodējuma noteikšana priekš:"
 
-#: src/libaudgui/prefs-window.cc:278 src/libaudqt/prefs-window-qt.cc:308
+#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window-qt.cc:295
 msgid "Fallback character encodings:"
 msgstr "Atkāpšanās rakstzīmju kodējumi:"
 
-#: src/libaudgui/prefs-window.cc:286 src/libaudqt/prefs-window-qt.cc:316
+#: src/libaudgui/prefs-window.cc:297 src/libaudqt/prefs-window-qt.cc:302
 msgid "<b>Behavior</b>"
 msgstr "<b>Izturēšanās</b>"
 
-#: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window-qt.cc:317
+#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window-qt.cc:303
 msgid "Resume playback on startup"
 msgstr "Palaižot turpināt atskaņošanu"
 
-#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window-qt.cc:319
+#: src/libaudgui/prefs-window.cc:300 src/libaudqt/prefs-window-qt.cc:305
 msgid "Pause instead of resuming immediately"
 msgstr "Pauzēt nevis uzreiz atsākt"
 
-#: src/libaudgui/prefs-window.cc:292 src/libaudqt/prefs-window-qt.cc:322
+#: src/libaudgui/prefs-window.cc:303 src/libaudqt/prefs-window-qt.cc:307
 msgid "Advance when the current song is deleted"
 msgstr "Iet uz priekšu, ja pašreizējā dziesma tiek dzēsta"
 
-#: src/libaudgui/prefs-window.cc:294 src/libaudqt/prefs-window-qt.cc:324
+#: src/libaudgui/prefs-window.cc:305 src/libaudqt/prefs-window-qt.cc:309
 msgid "Clear the playlist when opening files"
 msgstr "Atverot failus, notīrīt repertuāru"
 
-#: src/libaudgui/prefs-window.cc:296 src/libaudqt/prefs-window-qt.cc:326
+#: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:311
 msgid "Open files in a temporary playlist"
 msgstr "Atvērt failus pagaidu repertuārā"
 
-#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window-qt.cc:328
+#: src/libaudgui/prefs-window.cc:309 src/libaudqt/prefs-window-qt.cc:313
 msgid "<b>Song Display</b>"
 msgstr "<b>Dziesmu attēlojums</b>"
 
-#: src/libaudgui/prefs-window.cc:299 src/libaudqt/prefs-window-qt.cc:329
+#: src/libaudgui/prefs-window.cc:310 src/libaudqt/prefs-window-qt.cc:314
 msgid "Show song numbers"
 msgstr "Rādīt dziesmu numurus"
 
-#: src/libaudgui/prefs-window.cc:301 src/libaudqt/prefs-window-qt.cc:331
+#: src/libaudgui/prefs-window.cc:312 src/libaudqt/prefs-window-qt.cc:316
 msgid "Show leading zeroes (02:00 vs. 2:00)"
 msgstr "Rādīt ievadošās nulles (02:00 nevis 2:00)"
 
-#: src/libaudgui/prefs-window.cc:303 src/libaudqt/prefs-window-qt.cc:333
+#: src/libaudgui/prefs-window.cc:314 src/libaudqt/prefs-window-qt.cc:318
 msgid "Show hours separately (1:30:00 vs. 90:00)"
 msgstr "Stundas rādīt atsevišķi (1:30:00 nevis 90:00)"
 
-#: src/libaudgui/prefs-window.cc:306 src/libaudqt/prefs-window-qt.cc:336
+#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:321
 msgid "<b>Export</b>"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:337
+#: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:322
 msgid "Use relative paths when possible"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:312 src/libaudqt/prefs-window-qt.cc:342
+#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:326
 msgid "<b>Album Art</b>"
 msgstr "<b>Albuma vāks</b>"
 
-#: src/libaudgui/prefs-window.cc:313 src/libaudqt/prefs-window-qt.cc:343
+#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window-qt.cc:328
 msgid "Search for images matching these words (comma-separated):"
 msgstr "Meklēt attēlus, kuri atbilst šiem vārdiem (atdalītiem ar komatu):"
 
-#: src/libaudgui/prefs-window.cc:315 src/libaudqt/prefs-window-qt.cc:345
+#: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window-qt.cc:330
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "Neiekļaut attēlus, kuri atbilst šiem vārdiem (atdalītiem ar komatu):"
 
-#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:347
+#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:332
 msgid "Search for images matching song file name"
 msgstr "Meklēt attēlus, kas atbilst dziesmas faila nosaukumam"
 
-#: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window-qt.cc:349
+#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:334
 msgid "Search recursively"
 msgstr "Meklēt rekursīvi"
 
-#: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window-qt.cc:351
+#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:335
 msgid "Search depth:"
 msgstr "Meklēšanas dziļums:"
 
-#: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:355
+#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:337
 msgid "<b>Popup Information</b>"
 msgstr "<b>Izlecošā informācija</b>"
 
-#: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window-qt.cc:356
+#: src/libaudgui/prefs-window.cc:337 src/libaudqt/prefs-window-qt.cc:338
 msgid "Show popup information"
 msgstr "Rādīt izlecošo informāciju"
 
-#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:358
+#: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window-qt.cc:340
 msgid "Popup delay (tenths of a second):"
 msgstr "Izlecošā loga aizture (sekundes desmitdaļas):"
 
-#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:362
+#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:342
 msgid "Show time scale for current song"
 msgstr "Rādīt laika mērogu pašreizējai dziesmai"
 
-#: src/libaudgui/prefs-window.cc:338 src/libaudqt/prefs-window-qt.cc:368
+#: src/libaudgui/prefs-window.cc:349 src/libaudqt/prefs-window-qt.cc:346
 msgid "<b>Compatibility</b>"
 msgstr "<b>Savietojamība</b>"
 
-#: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window-qt.cc:369
+#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:347
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr "Interpretēt \\ (otrādo slīpsvītru) kā mapju atdalītāju"
 
-#: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:372
+#: src/libaudgui/prefs-window.cc:353 src/libaudqt/prefs-window-qt.cc:350
 msgid "<b>Playlist</b>"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:373
+#: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window-qt.cc:351
 msgid "Add folders recursively"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:375
+#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window-qt.cc:353
 msgid "Add folders nested within playlist files"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:347 src/libaudqt/prefs-window-qt.cc:377
+#: src/libaudgui/prefs-window.cc:358 src/libaudqt/prefs-window-qt.cc:355
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadati</b>"
 
-#: src/libaudgui/prefs-window.cc:348 src/libaudqt/prefs-window-qt.cc:378
+#: src/libaudgui/prefs-window.cc:359 src/libaudqt/prefs-window-qt.cc:356
 msgid "Guess missing metadata from file path"
 msgstr "Minēt trūkstošos metadatus no faila ceļa"
 
-#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:380
+#: src/libaudgui/prefs-window.cc:361 src/libaudqt/prefs-window-qt.cc:358
 msgid "Do not load metadata for songs until played"
 msgstr "Neielādēt metadatus, līdz dziesma tiek atskaņota"
 
-#: src/libaudgui/prefs-window.cc:352 src/libaudqt/prefs-window-qt.cc:382
+#: src/libaudgui/prefs-window.cc:363 src/libaudqt/prefs-window-qt.cc:361
 msgid "Probe content of files with no recognized file name extension"
 msgstr "Testēt failus ar neatpazītiem failu paplašinājumiem"
 
-#: src/libaudgui/prefs-window.cc:370 src/libaudqt/prefs-window-qt.cc:400
+#: src/libaudgui/prefs-window.cc:365 src/libaudqt/prefs-window-qt.cc:363
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>Dažādi</b>"
+
+#: src/libaudgui/prefs-window.cc:366 src/libaudqt/prefs-window-qt.cc:364
+msgid "Step forward/backward by:"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:365
+msgid "seconds"
+msgstr "sekundes"
+
+#: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:366
+msgid "Adjust volume by:"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:367
+msgid "percent"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:384
 msgid "TITLE"
 msgstr "NOSAUKUMS"
 
-#: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:401
+#: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:385
 msgid "TITLE - ARTIST"
 msgstr "NOSAUKUMS - IZPILDĪTĀJS"
 
-#: src/libaudgui/prefs-window.cc:372 src/libaudqt/prefs-window-qt.cc:402
+#: src/libaudgui/prefs-window.cc:390 src/libaudqt/prefs-window-qt.cc:386
 msgid "TITLE - ARTIST - ALBUM"
 msgstr "NOSAUKUMS - IZPILDĪTĀJS - ALBUMS"
 
-#: src/libaudgui/prefs-window.cc:373 src/libaudqt/prefs-window-qt.cc:403
+#: src/libaudgui/prefs-window.cc:391 src/libaudqt/prefs-window-qt.cc:387
 msgid "ARTIST - TITLE"
 msgstr "IZPILDĪTĀJS - NOSAUKUMS"
 
-#: src/libaudgui/prefs-window.cc:374 src/libaudqt/prefs-window-qt.cc:404
+#: src/libaudgui/prefs-window.cc:392 src/libaudqt/prefs-window-qt.cc:388
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "IZPILDĪTĀJS - ALBUMS - NOSAUKUMS"
 
-#: src/libaudgui/prefs-window.cc:375 src/libaudqt/prefs-window-qt.cc:405
+#: src/libaudgui/prefs-window.cc:393 src/libaudqt/prefs-window-qt.cc:389
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "IZPILDĪTĀJS - ALBUMS - CELIŅŠ. NOSAUKUMS"
 
-#: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:406
+#: src/libaudgui/prefs-window.cc:394 src/libaudqt/prefs-window-qt.cc:390
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "IZPILDĪTĀJS [ ALBUMS ] - CELIŅŠ. NOSAUKUMS"
 
-#: src/libaudgui/prefs-window.cc:377 src/libaudqt/prefs-window-qt.cc:407
+#: src/libaudgui/prefs-window.cc:395 src/libaudqt/prefs-window-qt.cc:391
 msgid "ALBUM - TITLE"
 msgstr "ALBUMS - NOSAUKUMS"
 
-#: src/libaudgui/prefs-window.cc:471
+#: src/libaudgui/prefs-window.cc:489
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/libaudgui/prefs-window.cc:535 src/libaudqt/prefs-window-qt.cc:425
+#: src/libaudgui/prefs-window.cc:553 src/libaudqt/prefs-window-qt.cc:408
 msgid "Custom"
 msgstr "Pielāgots"
 
-#: src/libaudgui/prefs-window.cc:553 src/libaudqt/prefs-window-qt.cc:417
+#: src/libaudgui/prefs-window.cc:571 src/libaudqt/prefs-window-qt.cc:400
 msgid "Title format:"
 msgstr "Nosaukuma formāts:"
 
-#: src/libaudgui/prefs-window.cc:557 src/libaudqt/prefs-window-qt.cc:428
+#: src/libaudgui/prefs-window.cc:575 src/libaudqt/prefs-window-qt.cc:411
 msgid "Custom string:"
 msgstr "Pielāgota virkne:"
 
-#: src/libaudgui/prefs-window.cc:756 src/libaudqt/prefs-window-qt.cc:719
+#: src/libaudgui/prefs-window.cc:774 src/libaudqt/prefs-window-qt.cc:705
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:765 src/libaudqt/prefs-window-qt.cc:730
+#: src/libaudgui/prefs-window.cc:783 src/libaudqt/prefs-window-qt.cc:718
 msgid "No audio recording plugin available"
 msgstr "Audio ierakstīšanas spraudnis nav pieejams"
 
-#: src/libaudgui/prefs-window.cc:825 src/libaudqt/prefs-window-qt.cc:607
+#: src/libaudgui/prefs-window.cc:843 src/libaudqt/prefs-window-qt.cc:593
 msgid "Audacious Settings"
 msgstr "Audacious iestatījumi"
 
-#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:172
+#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:172
 msgid "Cancel"
 msgstr "Atcelt"
 
-#: src/libaudgui/preset-browser.cc:51
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:290
 msgid "Save"
 msgstr "Saglabāt"
 
-#: src/libaudgui/preset-browser.cc:51
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:257
 msgid "Load"
 msgstr "Ielādēt"
 
-#: src/libaudgui/preset-browser.cc:77
+#: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:253
 msgid "Load Preset File"
 msgstr "Ielādēt sākumuzstādījumu failu"
 
-#: src/libaudgui/preset-browser.cc:94
+#: src/libaudgui/preset-browser.cc:99
 msgid "Load EQF File"
 msgstr "Ielādēt EQF failu"
 
-#: src/libaudgui/preset-browser.cc:109
+#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:285
 msgid "Save Preset File"
 msgstr "Saglabāt sākumuzstādījumu failu"
 
-#: src/libaudgui/preset-browser.cc:109
-msgid "<name>.preset"
-msgstr "<nosaukums>.preset"
-
-#: src/libaudgui/preset-browser.cc:127
+#: src/libaudgui/preset-browser.cc:131
 msgid "Save EQF File"
 msgstr "Saglabāt EQF failu"
 
-#: src/libaudgui/preset-browser.cc:127
-msgid "<name>.eqf"
-msgstr "<nosaukums>.eqf"
-
-#: src/libaudgui/preset-browser.cc:141
-msgid "Import Winamp Presets"
-msgstr "Importēt Winamp sākumuzstādījumus"
-
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:157
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:158
 msgid "Queue Manager"
 msgstr "Rindas pārvaldnieks"
 
-#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:160
+#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:161
 msgid "_Unqueue"
 msgstr "_Izņemt no rindas"
 
@@ -1317,7 +1343,7 @@ msgstr "_Izņemt no rindas"
 msgid "Working ..."
 msgstr "Darbojas ..."
 
-#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:209
+#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:223
 msgid "Error"
 msgstr "Kļūda"
 
@@ -1325,15 +1351,15 @@ msgstr "Kļūda"
 msgid "Information"
 msgstr "Informācija"
 
-#: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:39
+#: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:40
 msgid "_Save to history"
 msgstr ""
 
-#: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
+#: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:46
 msgid "Open URL"
 msgstr "Atvērt URL"
 
-#: src/libaudgui/url-opener.cc:69 src/libaudqt/url-opener-qt.cc:53
+#: src/libaudgui/url-opener.cc:69 src/libaudqt/url-opener-qt.cc:52
 msgid "Add URL"
 msgstr "Pievienot URL"
 
@@ -1341,12 +1367,11 @@ msgstr "Pievienot URL"
 msgid "C_lear history"
 msgstr ""
 
-#: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
+#: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:61
 msgid "Enter URL:"
 msgstr "Ievadiet URL:"
 
-#: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:66
-#: src/libaudqt/fileopener.cc:67
+#: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:62
 msgid "Open"
 msgstr "Atvērt"
 
@@ -1354,93 +1379,128 @@ msgstr "Atvērt"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
+msgstr "\n(Turpmākie ziņojumi tika paslēpti.)"
+
+#: src/libaudqt/eq-preset-qt.cc:249
+msgid "Preset files (*.preset *.eqf *.q1)"
 msgstr ""
-"\n"
-"(Turpmākie ziņojumi tika paslēpti.)"
+
+#: src/libaudqt/eq-preset-qt.cc:348
+msgid "Close"
+msgstr "Aizvērt"
+
+#: src/libaudqt/file-entry.cc:40
+msgid "Browse"
+msgstr "Pārlūkot"
 
 #: src/libaudqt/fileopener.cc:58
 msgid "Open Folder"
 msgstr "Atvērt mapi"
 
-#: src/libaudqt/fileopener.cc:60
+#: src/libaudqt/fileopener.cc:59
 msgid "Add Folder"
 msgstr "Pievienot mapi"
 
-#: src/libaudqt/fileopener.cc:68 src/libaudqt/fileopener.cc:69
+#: src/libaudqt/fileopener.cc:62 src/libaudqt/fileopener.cc:63
 msgid "Add"
 msgstr "Pievienot"
 
-#: src/libaudqt/info-widget.cc:40
+#: src/libaudqt/font-entry.cc:39
+msgid "Set Font"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:44
+msgid "<various>"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:47
 msgid "Metadata"
 msgstr "Metadati"
 
-#: src/libaudqt/info-widget.cc:48
+#: src/libaudqt/info-widget.cc:56
 msgid "Composer"
 msgstr "Komponists"
 
-#: src/libaudqt/info-widget.cc:49
+#: src/libaudqt/info-widget.cc:57
 msgid "Performer"
 msgstr "Izpildītājs"
 
-#: src/libaudqt/info-widget.cc:50
+#: src/libaudqt/info-widget.cc:58
 msgid "Recording Year"
 msgstr "Ierakstīšanas gads"
 
-#: src/libaudqt/info-widget.cc:51
+#: src/libaudqt/info-widget.cc:59
 msgid "Recording Date"
 msgstr "Ierakstīšanas datums"
 
-#: src/libaudqt/info-widget.cc:54
+#: src/libaudqt/info-widget.cc:62
 msgid "Technical"
 msgstr "Tehniskie"
 
-#: src/libaudqt/info-widget.cc:58
+#: src/libaudqt/info-widget.cc:66
 msgid "Bitrate"
 msgstr "Bitātrums"
 
-#: src/libaudqt/log-inspector.cc:137
+#: src/libaudqt/info-widget.cc:67
+msgid "MusicBrainz ID"
+msgstr ""
+
+#: src/libaudqt/infowin-qt.cc:156
+msgid "_Revert"
+msgstr ""
+
+#: src/libaudqt/infowin-qt.cc:167
+msgid "Error writing tag(s)."
+msgstr ""
+
+#: src/libaudqt/infowin-qt.cc:189
+msgid "%1 files selected"
+msgstr ""
+
+#: src/libaudqt/infowin-qt.cc:193
+msgid "_Save %1 files"
+msgstr ""
+
+#: src/libaudqt/log-inspector.cc:150
 msgid "Level"
 msgstr "Līmenis"
 
-#: src/libaudqt/log-inspector.cc:138
+#: src/libaudqt/log-inspector.cc:152
 msgid "Function"
 msgstr "Funkcija"
 
-#: src/libaudqt/log-inspector.cc:139
+#: src/libaudqt/log-inspector.cc:154
 msgid "Message"
 msgstr "Ziņojums"
 
-#: src/libaudqt/log-inspector.cc:195
+#: src/libaudqt/log-inspector.cc:209
 msgid "Log Inspector"
 msgstr "Žurnāla inspektors"
 
-#: src/libaudqt/log-inspector.cc:206
+#: src/libaudqt/log-inspector.cc:220
 msgid "Debug"
 msgstr "Atkļūdot"
 
-#: src/libaudqt/log-inspector.cc:207
+#: src/libaudqt/log-inspector.cc:221
 msgid "Info"
 msgstr "Informācija"
 
-#: src/libaudqt/log-inspector.cc:208
+#: src/libaudqt/log-inspector.cc:222
 msgid "Warning"
 msgstr "Brīdinājums"
 
-#: src/libaudqt/log-inspector.cc:219
+#: src/libaudqt/log-inspector.cc:234
 msgid "Cl_ear"
 msgstr ""
 
-#: src/libaudqt/log-inspector.cc:232
+#: src/libaudqt/log-inspector.cc:247
 msgid "Log Level:"
 msgstr "Žurnāla līmenis:"
 
-#: src/libaudqt/plugin-menu-qt.cc:53
+#: src/libaudqt/plugin-menu-qt.cc:52
 msgid "Services"
 msgstr "Servisi"
 
-#: src/libaudqt/util-qt.cc:80
+#: src/libaudqt/util-qt.cc:112
 msgid "Copy"
 msgstr "Kopēt"
-
-#~ msgid "Plugins ..."
-#~ msgstr "Spraudņi ..."
