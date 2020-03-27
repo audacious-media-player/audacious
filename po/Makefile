@@ -21,8 +21,6 @@ LOCALES = ar.po \
 	  es_MX.po \
 	  es.po \
 	  et.po \
-	  eu.po \
-	  fa_IR.po \
 	  fi.po \
 	  fr.po \
 	  gl.po \
@@ -31,7 +29,6 @@ LOCALES = ar.po \
 	  it.po \
 	  ja.po \
 	  ko.po \
-	  ky.po \
 	  lt.po \
 	  lv.po \
 	  ml_IN.po \
@@ -40,7 +37,6 @@ LOCALES = ar.po \
 	  pl.po \
 	  pt_BR.po \
 	  pt_PT.po \
-	  ro.po \
 	  ru.po \
 	  si.po \
 	  sk.po \
