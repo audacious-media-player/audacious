@@ -24,41 +24,37 @@
 
 static constexpr int MAXBUF = 256 * 1024;
 
-ProbeBuffer::ProbeBuffer (const char * filename, VFSImpl * file) :
-    m_filename (filename),
-    m_file (file)
+ProbeBuffer::ProbeBuffer(const char * filename, VFSImpl * file)
+    : m_filename(filename), m_file(file)
 {
-    AUDINFO ("<%p> buffering enabled for %s\n", this, (const char *) m_filename);
+    AUDINFO("<%p> buffering enabled for %s\n", this, (const char *)m_filename);
 }
 
-ProbeBuffer::~ProbeBuffer ()
-{
-    delete[] m_buffer;
-}
+ProbeBuffer::~ProbeBuffer() { delete[] m_buffer; }
 
-void ProbeBuffer::increase_buffer (int64_t size)
+void ProbeBuffer::increase_buffer(int64_t size)
 {
-    size = aud::min ((size + 0xFF) & ~0xFF, (int64_t) MAXBUF);
+    size = aud::min((size + 0xFF) & ~0xFF, (int64_t)MAXBUF);
 
     if (m_filled < size)
     {
-        if (! m_buffer)
+        if (!m_buffer)
             m_buffer = new char[MAXBUF];
 
-        m_filled += m_file->fread (m_buffer + m_filled, 1, size - m_filled);
+        m_filled += m_file->fread(m_buffer + m_filled, 1, size - m_filled);
     }
 }
 
-void ProbeBuffer::release_buffer ()
+void ProbeBuffer::release_buffer()
 {
-    AUDINFO ("<%p> buffering disabled for %s\n", this, (const char *) m_filename);
+    AUDINFO("<%p> buffering disabled for %s\n", this, (const char *)m_filename);
     delete[] m_buffer;
     m_buffer = nullptr;
     m_filled = 0;
     m_at = -1;
 }
 
-int64_t ProbeBuffer::fread (void * buffer, int64_t size, int64_t count)
+int64_t ProbeBuffer::fread(void * buffer, int64_t size, int64_t count)
 {
     int64_t total = 0;
     int64_t remain = size * count;
@@ -66,37 +62,37 @@ int64_t ProbeBuffer::fread (void * buffer, int64_t size, int64_t count)
     /* read from buffer if possible */
     if (remain && m_at >= 0 && m_at < MAXBUF)
     {
-        increase_buffer (m_at + remain);
+        increase_buffer(m_at + remain);
 
-        int copy = aud::min (remain, (int64_t) (m_filled - m_at));
-        memcpy (buffer, m_buffer + m_at, copy);
+        int copy = aud::min(remain, (int64_t)(m_filled - m_at));
+        memcpy(buffer, m_buffer + m_at, copy);
 
         m_at += copy;
-        buffer = (char *) buffer + copy;
+        buffer = (char *)buffer + copy;
         total += copy;
         remain -= copy;
     }
 
     /* then read from real file if allowed */
-    if (remain && ! m_limited)
+    if (remain && !m_limited)
     {
         /* release buffer if leaving bufferable area */
         if (m_at == MAXBUF)
-            release_buffer ();
+            release_buffer();
 
         if (m_at < 0)
-            total += m_file->fread (buffer, 1, remain);
+            total += m_file->fread(buffer, 1, remain);
     }
 
     return (size > 0) ? total / size : 0;
 }
 
-int64_t ProbeBuffer::fwrite (const void * data, int64_t size, int64_t count)
+int64_t ProbeBuffer::fwrite(const void * data, int64_t size, int64_t count)
 {
     return 0; /* not allowed */
 }
 
-int ProbeBuffer::fseek (int64_t offset, VFSSeekType whence)
+int ProbeBuffer::fseek(int64_t offset, VFSSeekType whence)
 {
     /* seek within the buffer if possible */
     if (m_at >= 0 && whence != VFS_SEEK_END)
@@ -113,7 +109,7 @@ int ProbeBuffer::fseek (int64_t offset, VFSSeekType whence)
 
         if (offset <= MAXBUF)
         {
-            increase_buffer (offset);
+            increase_buffer(offset);
 
             if (offset > m_filled)
                 return -1; /* seek past end of file */
@@ -124,56 +120,48 @@ int ProbeBuffer::fseek (int64_t offset, VFSSeekType whence)
     }
 
     /* seek within real file if allowed */
-    if (m_limited || m_file->fseek (offset, whence) < 0)
+    if (m_limited || m_file->fseek(offset, whence) < 0)
         return -1;
 
     /* release buffer only if real seek succeeded
      * (prevents change of file position if seek failed) */
     if (m_at >= 0)
-        release_buffer ();
+        release_buffer();
 
     /* activate buffering again when seeking to beginning of file */
     if (whence == VFS_SEEK_SET && offset == 0)
     {
-        AUDINFO ("<%p> buffering enabled for %s\n", this, (const char *) m_filename);
+        AUDINFO("<%p> buffering enabled for %s\n", this,
+                (const char *)m_filename);
         m_at = 0;
     }
 
     return 0;
 }
 
-int64_t ProbeBuffer::ftell ()
+int64_t ProbeBuffer::ftell()
 {
     if (m_at >= 0)
         return m_at;
 
-    return m_file->ftell ();
+    return m_file->ftell();
 }
 
-bool ProbeBuffer::feof ()
+bool ProbeBuffer::feof()
 {
     if (m_at >= 0 && m_at < m_filled)
         return false;
 
-    return m_file->feof ();
+    return m_file->feof();
 }
 
-int ProbeBuffer::ftruncate (int64_t size)
-{
-    return -1; /* not allowed */
-}
+int ProbeBuffer::ftruncate(int64_t size) { return -1; /* not allowed */ }
 
-int ProbeBuffer::fflush ()
-{
-    return 0; /* no-op */
-}
+int ProbeBuffer::fflush() { return 0; /* no-op */ }
 
-int64_t ProbeBuffer::fsize ()
-{
-    return m_file->fsize ();
-}
+int64_t ProbeBuffer::fsize() { return m_file->fsize(); }
 
-String ProbeBuffer::get_metadata (const char * field)
+String ProbeBuffer::get_metadata(const char * field)
 {
-    return m_file->get_metadata (field);
+    return m_file->get_metadata(field);
 }

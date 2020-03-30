@@ -50,6 +50,7 @@
     <file alias="media-skip-backward.svg">../../images/media-skip-backward.svg</file>
     <file alias="media-skip-forward.svg">../../images/media-skip-forward.svg</file>
     <file alias="multimedia-volume-control.svg">../../images/multimedia-volume-control.svg</file>
+    <file alias="preferences-desktop-font.svg">../../images/preferences-desktop-font.svg</file>
     <file alias="preferences-system.svg">../../images/preferences-system.svg</file>
     <file alias="process-stop.svg">../../images/process-stop.svg</file>
     <file alias="system-run.svg">../../images/system-run.svg</file>

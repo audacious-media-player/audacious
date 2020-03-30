@@ -370,13 +370,14 @@ them at \fIhttps://redmine.audacious-media-player.org/projects/audacious\fR.
 .SH AUTHORS
 
 .B audtool
-was written by George Averill <nhjm@nhjm.net> and William
-Pitcock <nenolod@atheme.org>.
+was written by George Averill <nhjm@nhjm.net> and Ariadne
+Conill <ariadne@dereferenced.org>.
 .PP
 This manual page was written by Adam Cecile <gandalf@le-vert.net> and Kiyoshi
-Aman <kiyoshi@atheme.org>.  Some additional tweaks were done by William Pitcock
-<nenolod@atheme.org> and Tony Vroon <chainsaw@gentoo.org>.  The manual page was
-updated for Audacious 3.7 and later by John Lindgren <john@jlindgren.net>.
+Aman <kiyoshi@atheme.org>.  Some additional tweaks were done by Ariadne Conill
+<ariadne@dereferenced.org> and Tony Vroon <chainsaw@gentoo.org>.  The manual
+page was updated for Audacious 3.7 and later by John Lindgren
+<john@jlindgren.net>.
 .PP
 This work is licensed under a Creative Commons Attribution 3.0 Unported License
 <https://creativecommons.org/licenses/by/3.0/>.

@@ -177,16 +177,18 @@ dnl =======================
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.32)
 PKG_CHECK_MODULES(GMODULE, gmodule-2.0 >= 2.32)
 
+AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_32], [target GLib 2.32])
+
 dnl GTK+ support
 dnl =============
 
 AC_ARG_ENABLE(gtk,
- AS_HELP_STRING(--disable-gtk, [Disable GTK+ support (default=enabled)]),
- USE_GTK=$enableval, USE_GTK=yes)
+ AS_HELP_STRING(--enable-gtk, [Enable GTK+ support (default=disabled)]),
+ USE_GTK=$enableval, USE_GTK=no)
 
 if test $USE_GTK = yes ; then
     PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.4)
-    AC_DEFINE(USE_GTK, 1, [Define if GTK+ support enabled])
+    AC_DEFINE([USE_GTK], [1], [Define if GTK+ support enabled])
 fi
 
 AC_SUBST(USE_GTK)
@@ -212,14 +214,14 @@ dnl Qt support
 dnl ==========
 
 AC_ARG_ENABLE(qt,
- AS_HELP_STRING(--enable-qt, [Enable Qt support (default=disabled)]),
- USE_QT=$enableval, USE_QT=no)
+ AS_HELP_STRING(--disable-qt, [Disable Qt support (default=enabled)]),
+ USE_QT=$enableval, USE_QT=yes)
 
 if test $USE_QT = yes ; then
     PKG_CHECK_MODULES([QTCORE], [Qt5Core >= 5.2])
     PKG_CHECK_VAR([QTBINPATH], [Qt5Core >= 5.2], [host_bins])
     PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets >= 5.2])
-    AC_DEFINE(USE_QT, 1, [Define if Qt support enabled])
+    AC_DEFINE([USE_QT], [1], [Define if Qt support enabled])
 
     # needed if Qt was built with -reduce-relocations
     QTCORE_CFLAGS="$QTCORE_CFLAGS -fPIC"
@@ -230,5 +232,21 @@ AC_SUBST(USE_QT)
 AC_SUBST(QT_CFLAGS)
 AC_SUBST(QT_LIBS)
 AC_SUBST(QTBINPATH)
+
+dnl libarchive support
+dnl ==================
+
+AC_ARG_ENABLE(libarchive,
+ AS_HELP_STRING(--disable-libarchive, [Disable libarchive support (default=enabled)]),
+ USE_LIBARCHIVE=$enableval, USE_LIBARCHIVE=yes)
+
+if test $USE_LIBARCHIVE = yes ; then
+    PKG_CHECK_MODULES([LIBARCHIVE], [libarchive])
+    AC_DEFINE([USE_LIBARCHIVE], [1], [Define if libarchive support enabled])
+fi
+
+AC_SUBST(USE_LIBARCHIVE)
+AC_SUBST(LIBARCHIVE_CFLAGS)
+AC_SUBST(LIBARCHIVE_LIBS)
 
 ])

@@ -30,122 +30,147 @@ class PlaylistData
 {
 public:
     /* update flags */
-    enum {
-        QueueChanged  = (1 << 0),
+    enum
+    {
+        QueueChanged = (1 << 0),
         DelayedUpdate = (1 << 1)
     };
 
     /* scan status */
-    enum ScanStatus {
+    enum ScanStatus
+    {
         NotScanning,
         ScanActive,
         ScanEnding
     };
 
-    struct CompareData {
+    struct CompareData
+    {
         Playlist::StringCompareFunc filename_compare;
         Playlist::TupleCompareFunc tuple_compare;
     };
 
-    PlaylistData (Playlist::ID * m_id, const char * title);
-    ~PlaylistData ();
+    PlaylistData(Playlist::ID * m_id, const char * title);
+    ~PlaylistData();
 
-    PlaylistEntry * entry_at (int i);
-    const PlaylistEntry * entry_at (int i) const;
+    PlaylistEntry * entry_at(int i);
+    const PlaylistEntry * entry_at(int i) const;
 
-    String entry_filename (int i) const;
-    PluginHandle * entry_decoder (int i, String * error = nullptr) const;
-    Tuple entry_tuple (int i, String * error = nullptr) const;
+    String entry_filename(int i) const;
+    PluginHandle * entry_decoder(int i, String * error = nullptr) const;
+    Tuple entry_tuple(int i, String * error = nullptr) const;
 
-    void cancel_updates ();
-    void swap_updates (bool & position_changed);
+    void cancel_updates();
+    void swap_updates(bool & position_changed);
 
-    void insert_items (int at, Index<PlaylistAddItem> && items);
-    void remove_entries (int at, int number);
+    void insert_items(int at, Index<PlaylistAddItem> && items);
+    void remove_entries(int at, int number);
 
-    int position () const;
-    int focus () const;
+    int position() const;
+    int focus() const;
 
-    bool entry_selected (int entry_num) const;
-    int n_selected (int at, int number) const;
+    bool entry_selected(int entry_num) const;
+    int n_selected(int at, int number) const;
 
-    void set_focus (int entry_num);
+    void set_focus(int entry_num);
 
-    void select_entry (int entry_num, bool selected);
-    void select_all (bool selected);
-    int shift_entries (int entry_num, int distance);
-    void remove_selected ();
+    void select_entry(int entry_num, bool selected);
+    void select_all(bool selected);
+    int shift_entries(int entry_num, int distance);
+    void remove_selected();
 
-    void sort (const CompareData & data);
-    void sort_selected (const CompareData & data);
+    void sort(const CompareData & data);
+    void sort_selected(const CompareData & data);
 
-    void reverse_order ();
-    void randomize_order ();
-    void reverse_selected ();
-    void randomize_selected ();
+    void reverse_order();
+    void randomize_order();
+    void reverse_selected();
+    void randomize_selected();
 
-    int queue_get_entry (int at) const;
-    int queue_find_entry (int entry_num) const;
+    int queue_get_entry(int at) const;
+    int queue_find_entry(int entry_num) const;
 
-    void queue_insert (int at, int entry_num);
-    void queue_insert_selected (int pos);
-    void queue_remove (int at, int number);
-    void queue_remove_selected ();
+    void queue_insert(int at, int entry_num);
+    void queue_insert_selected(int pos);
+    void queue_remove(int at, int number);
+    void queue_remove_selected();
 
-    void set_position (int entry_num);
+    Index<int> shuffle_history() const;
+    void shuffle_replay(const Index<int> & history);
 
-    Index<int> shuffle_history () const;
-    void shuffle_replay (const Index<int> & history);
+    void set_position(int entry_num);
 
-    bool prev_song ();
-    bool next_song (bool repeat);
+    bool prev_song();
+    bool next_song(bool repeat);
+    bool prev_album();
+    bool next_album(bool repeat);
 
-    int next_unscanned_entry (int entry_num) const;
-    bool entry_needs_rescan (PlaylistEntry * entry, bool need_decoder, bool need_tuple);
-    ScanRequest * create_scan_request (PlaylistEntry * entry,
-     ScanRequest::Callback callback, int extra_flags);
-    void update_entry_from_scan (PlaylistEntry * entry, ScanRequest * request, int update_flags);
-    void update_playback_entry (Tuple && tuple);
+    int next_unscanned_entry(int entry_num) const;
+    bool entry_needs_rescan(PlaylistEntry * entry, bool need_decoder,
+                            bool need_tuple);
+    ScanRequest * create_scan_request(PlaylistEntry * entry,
+                                      ScanRequest::Callback callback,
+                                      int extra_flags);
+    void update_entry_from_scan(PlaylistEntry * entry, ScanRequest * request,
+                                int update_flags);
+    void update_playback_entry(Tuple && tuple);
 
-    void reformat_titles ();
-    void reset_tuples (bool selected_only);
-    void reset_tuple_of_file (const char * filename);
+    void reformat_titles();
+    void reset_tuples(bool selected_only);
+    void reset_tuple_of_file(const char * filename);
 
-    Playlist::ID * id () const { return m_id; }
+    Playlist::ID * id() const { return m_id; }
 
-    int n_entries () const { return m_entries.len (); }
-    int n_queued () const { return m_queued.len (); }
+    int n_entries() const { return m_entries.len(); }
+    int n_queued() const { return m_queued.len(); }
 
-    int64_t total_length () const { return m_total_length; }
-    int64_t selected_length () const { return m_selected_length; }
+    int64_t total_length() const { return m_total_length; }
+    int64_t selected_length() const { return m_selected_length; }
 
-    const Playlist::Update & last_update () const { return m_last_update; }
-    bool update_pending () const { return m_next_update.level != Playlist::NoUpdate; }
+    const Playlist::Update & last_update() const { return m_last_update; }
+    bool update_pending() const
+    {
+        return m_next_update.level != Playlist::NoUpdate;
+    }
 
-    static void update_formatter ();
-    static void cleanup_formatter ();
+    static void update_formatter();
+    static void cleanup_formatter();
 
 private:
-    static void delete_entry (PlaylistEntry * entry);
+    struct PosChange
+    {
+        int new_pos;
+        bool update_shuffle;
+    };
+
+    static void delete_entry(PlaylistEntry * entry);
     typedef SmartPtr<PlaylistEntry, delete_entry> EntryPtr;
 
-    void number_entries (int at, int length);
-    void set_entry_tuple (PlaylistEntry * entry, Tuple && tuple);
-    void queue_update (Playlist::UpdateLevel level, int at, int count, int flags = 0);
-    void queue_position_change ();
+    void number_entries(int at, int length);
+    void set_entry_tuple(PlaylistEntry * entry, Tuple && tuple);
+    void queue_update(Playlist::UpdateLevel level, int at, int count,
+                      int flags = 0);
+    void queue_position_change();
 
-    static void sort_entries (Index<EntryPtr> & entries, const CompareData & data);
+    static void sort_entries(Index<EntryPtr> & entries,
+                             const CompareData & data);
 
-    void set_position (PlaylistEntry * entry, bool update_shuffle);
+    int shuffle_pos_before(int ref_pos) const;
+    PosChange shuffle_pos_after(int ref_pos, bool by_album) const;
+    PosChange shuffle_pos_random(bool repeat, bool by_album) const;
 
-    bool shuffle_prev ();
-    bool shuffle_next ();
-    void shuffle_reset ();
+    int pos_before(int ref_pos, bool shuffle) const;
+    PosChange pos_after(int ref_pos, bool shuffle, bool by_album) const;
+    PosChange pos_new(bool repeat, bool shuffle, bool by_album,
+                      int hint_pos) const;
+    PosChange pos_new_full(bool repeat, bool shuffle, bool by_album,
+                           int hint_pos, bool & repeated) const;
 
-    bool next_song_with_hint (bool repeat, int hint);
+    void change_position(PosChange change);
+    bool change_position_to_next(bool repeat, int hint_pos);
+    void shuffle_reset();
 
-    PlaylistEntry * find_unselected_focus ();
-    PlaylistEntry * queue_pop ();
+    PlaylistEntry * find_unselected_focus();
 
 public:
     bool modified;
@@ -156,7 +181,7 @@ public:
 private:
     Playlist::ID * m_id;
     Index<EntryPtr> m_entries;
-    PlaylistEntry * m_position, * m_focus;
+    PlaylistEntry *m_position, *m_focus;
     int m_selected_count;
     int m_last_shuffle_num;
     Index<PlaylistEntry *> m_queued;
@@ -166,10 +191,11 @@ private:
 };
 
 /* callbacks or "signals" (in the QObject sense) */
-void pl_signal_entry_deleted (PlaylistEntry * entry);
-void pl_signal_position_changed (Playlist::ID * id);
-void pl_signal_update_queued (Playlist::ID * id, Playlist::UpdateLevel level, int flags);
-void pl_signal_rescan_needed (Playlist::ID * id);
-void pl_signal_playlist_deleted (Playlist::ID * id);
+void pl_signal_entry_deleted(PlaylistEntry * entry);
+void pl_signal_position_changed(Playlist::ID * id);
+void pl_signal_update_queued(Playlist::ID * id, Playlist::UpdateLevel level,
+                             int flags);
+void pl_signal_rescan_needed(Playlist::ID * id);
+void pl_signal_playlist_deleted(Playlist::ID * id);
 
 #endif // PLAYLIST_DATA_H

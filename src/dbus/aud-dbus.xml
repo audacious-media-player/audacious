@@ -249,8 +249,14 @@
         <!-- Skip ahead one song in the current playlist -->
         <method name="Advance" />
 
+        <!-- Skip ahead one album in the current playlist -->
+        <method name="AdvanceAlbum" />
+
         <!-- Skip backwards one song in the current playlist -->
         <method name="Reverse" />
+
+        <!-- Skip backwards one album in the current playlist -->
+        <method name="ReverseAlbum" />
 
         <!-- Playlist length -->
         <method name="Length">

@@ -4,8 +4,8 @@ Audacious was originally based on the X Multimedia System (“XMMS”) via its
 GTK+ 2.x port Beep Media Player (“BMP”).  Audacious has changed quite a bit
 since its first release, however, and little XMMS/BMP code remains.
 
-The Audacious project began in 2005 under the leadership of William Pitcock
-(“nenolod”).  Many people have made contributions, both large and small, since
+The Audacious project began in 2005 under the leadership of Ariadne Conill
+(“kaniini”).  Many people have made contributions, both large and small, since
 that time.  At present, the project is led by John Lindgren and Michał Lipski
 (“tallica”), with help from a few others.  Special thanks go to Michał Lipski
 for setting up and maintaining the current website, and to Thomas Lange for
@@ -29,6 +29,7 @@ Audacious was written by:
   Daniel Barkalow
   René Bertin
   Christian Birchinger
+  Ariadne Conill
   Ralf Ertzinger
   Michael Färber
   Matti Hämäläinen
@@ -41,7 +42,6 @@ Audacious was written by:
   Giacomo Lozito
   Mikael Magnusson
   Tomasz Moń
-  William Pitcock
   Paula Stanciu
   Ben Tucker
   Tony Vroon

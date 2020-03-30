@@ -19,9 +19,9 @@
 
 #include "mainloop.h"
 #include "runtime.h"
+#include "threads.h"
 
 #include <assert.h>
-#include <pthread.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -36,7 +36,7 @@ static QueuedFunc counters[70];
 static QueuedFunc timer, delayed;
 
 static int count;
-static pthread_t main_thread;
+static std::thread::id main_thread;
 
 static void never_called (void * data)
 {
@@ -46,7 +46,7 @@ static void never_called (void * data)
 
 static void count_up (void * data)
 {
-    assert (pthread_self () == main_thread);
+    assert (std::this_thread::get_id () == main_thread);
 
     // check that idle calls are run in the same order they were queued
     assert (count == (int) (size_t) data);
@@ -61,7 +61,7 @@ static void count_up (void * data)
 
 static void count_down (void * data)
 {
-    assert (pthread_self () == main_thread);
+    assert (std::this_thread::get_id () == main_thread);
     assert (data == & count);
 
     // check that the timer reports being started
@@ -84,7 +84,7 @@ static void count_down (void * data)
 
 static void check_count (void * data)
 {
-    assert (pthread_self () == main_thread);
+    assert (std::this_thread::get_id () == main_thread);
 
     // check relative timing of 10 Hz timer and 250 ms delayed call
     assert (count == (int) (size_t) data);
@@ -92,7 +92,7 @@ static void check_count (void * data)
     printf ("CHECK: %d\n", count);
 }
 
-static void * worker (void * data)
+static void worker ()
 {
     // queue some more idle calls from a secondary thread
     for (int i = 50; i < 70; i ++)
@@ -100,8 +100,6 @@ static void * worker (void * data)
 
     // queue up a delayed call that should only be called once
     delayed.queue (250, check_count, (void *) (size_t) 40);
-
-    return nullptr;
 }
 
 int main (int argc, const char * * argv)
@@ -109,7 +107,7 @@ int main (int argc, const char * * argv)
     if (argc >= 2 && ! strcmp (argv[1], "--qt"))
         use_qt = true;
 
-    main_thread = pthread_self ();
+    main_thread = std::this_thread::get_id ();
 
     // queue up a bunch of idle calls
     for (int i = 0; i < 50; i ++)
@@ -129,12 +127,11 @@ int main (int argc, const char * * argv)
     // queue up a call and then immediately delete the QueuedFunc
     QueuedFunc ().queue (never_called, nullptr);
 
-    pthread_t thread;
-    pthread_create (& thread, nullptr, worker, nullptr);
+    auto thread = std::thread (worker);
 
     mainloop_run ();
 
-    pthread_join (thread, nullptr);
+    thread.join ();
 
     // check that the timer reports being stopped
     assert (! timer.running ());

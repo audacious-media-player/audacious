@@ -17,12 +17,11 @@
  * the use of this software.
  */
 
-#include "probe.h"
 #include "internal.h"
+#include "probe.h"
 
 #include <assert.h>
 #include <errno.h>
-#include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -35,12 +34,14 @@
 #include "multihash.h"
 #include "runtime.h"
 #include "scanner.h"
+#include "threads.h"
 #include "vfs.h"
 
 #define FLAG_DONE 1
 #define FLAG_SENT 2
 
-struct AudArtItem {
+struct AudArtItem
+{
     String filename;
     int refcount;
     int flag;
@@ -53,228 +54,222 @@ struct AudArtItem {
     bool is_temp;
 };
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
+static aud::mutex mutex;
 static SimpleHash<String, AudArtItem> art_items;
 static AudArtItem * current_item;
 static QueuedFunc queued_requests;
 
-static Index<AudArtItem *> get_queued ()
+static Index<AudArtItem *> get_queued()
 {
+    auto mh = mutex.take();
     Index<AudArtItem *> queued;
-    pthread_mutex_lock (& mutex);
 
-    art_items.iterate ([&] (const String &, AudArtItem & item)
-    {
+    art_items.iterate([&](const String &, AudArtItem & item) {
         if (item.flag == FLAG_DONE)
         {
-            queued.append (& item);
+            queued.append(&item);
             item.flag = FLAG_SENT;
         }
     });
 
-    queued_requests.stop ();
+    queued_requests.stop();
 
-    pthread_mutex_unlock (& mutex);
     return queued;
 }
 
-static void send_requests (void *)
+static void send_requests(void *)
 {
-    auto queued = get_queued ();
+    auto queued = get_queued();
     for (AudArtItem * item : queued)
     {
-        hook_call ("art ready", (void *) (const char *) item->filename);
-        aud_art_unref (item); /* release temporary reference */
+        hook_call("art ready", (void *)(const char *)item->filename);
+        aud_art_unref(item); /* release temporary reference */
     }
 }
 
-static void finish_item_locked (AudArtItem * item, Index<char> && data, String && art_file)
+static void finish_item(aud::mutex::holder &, AudArtItem * item,
+                        Index<char> && data, String && art_file)
 {
     /* already finished? */
     if (item->flag)
         return;
 
-    item->data = std::move (data);
-    item->art_file = std::move (art_file);
+    item->data = std::move(data);
+    item->art_file = std::move(art_file);
     item->flag = FLAG_DONE;
 
-    queued_requests.queue (send_requests, nullptr);
+    queued_requests.queue(send_requests, nullptr);
 }
 
-static void request_callback (ScanRequest * request)
+static void request_callback(ScanRequest * request)
 {
-    pthread_mutex_lock (& mutex);
-
-    AudArtItem * item = art_items.lookup (request->filename);
+    auto mh = mutex.take();
+    AudArtItem * item = art_items.lookup(request->filename);
 
     if (item)
-        finish_item_locked (item, std::move (request->image_data), std::move (request->image_file));
-
-    pthread_mutex_unlock (& mutex);
+        finish_item(mh, item, std::move(request->image_data),
+                    std::move(request->image_file));
 }
 
-static AudArtItem * art_item_get_locked (const String & filename, bool * queued)
+static AudArtItem * art_item_get(aud::mutex::holder &, const String & filename,
+                                 bool * queued)
 {
     if (queued)
-        * queued = false;
+        *queued = false;
 
     // blacklist stdin
-    if (! strncmp (filename, "stdin://", 8))
+    if (!strncmp(filename, "stdin://", 8))
         return nullptr;
 
-    AudArtItem * item = art_items.lookup (filename);
+    AudArtItem * item = art_items.lookup(filename);
 
     if (item && item->flag)
     {
-        item->refcount ++;
+        item->refcount++;
         return item;
     }
 
-    if (! item)
+    if (!item)
     {
-        item = art_items.add (filename, AudArtItem ());
+        item = art_items.add(filename, AudArtItem());
         item->filename = filename;
         item->refcount = 1; /* temporary reference */
 
-        scanner_request (new ScanRequest (filename, SCAN_IMAGE, request_callback));
+        scanner_request(
+            new ScanRequest(filename, SCAN_IMAGE, request_callback));
     }
 
     if (queued)
-        * queued = true;
+        *queued = true;
 
     return nullptr;
 }
 
-static void art_item_unref_locked (AudArtItem * item)
+static void art_item_unref(aud::mutex::holder &, AudArtItem * item)
 {
-    if (! -- item->refcount)
+    if (!--item->refcount)
     {
         /* delete temporary file */
         if (item->art_file && item->is_temp)
         {
-            StringBuf local = uri_to_filename (item->art_file);
+            StringBuf local = uri_to_filename(item->art_file);
             if (local)
-                g_unlink (local);
+                g_unlink(local);
         }
 
-        art_items.remove (item->filename);
+        art_items.remove(item->filename);
     }
 }
 
-static void clear_current_locked ()
+static void clear_current(aud::mutex::holder & mh)
 {
     if (current_item)
     {
-        art_item_unref_locked (current_item);
+        art_item_unref(mh, current_item);
         current_item = nullptr;
     }
 }
 
-void art_cache_current (const String & filename, Index<char> && data, String && art_file)
+void art_cache_current(const String & filename, Index<char> && data,
+                       String && art_file)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take();
+    clear_current(mh);
 
-    clear_current_locked ();
+    AudArtItem * item = art_items.lookup(filename);
 
-    AudArtItem * item = art_items.lookup (filename);
-
-    if (! item)
+    if (!item)
     {
-        item = art_items.add (filename, AudArtItem ());
+        item = art_items.add(filename, AudArtItem());
         item->filename = filename;
         item->refcount = 1; /* temporary reference */
     }
 
-    finish_item_locked (item, std::move (data), std::move (art_file));
+    finish_item(mh, item, std::move(data), std::move(art_file));
 
-    item->refcount ++;
+    item->refcount++;
     current_item = item;
-
-    pthread_mutex_unlock (& mutex);
 }
 
-void art_clear_current ()
+void art_clear_current()
 {
-    pthread_mutex_lock (& mutex);
-    clear_current_locked ();
-    pthread_mutex_unlock (& mutex);
+    auto mh = mutex.take();
+    clear_current(mh);
 }
 
-void art_cleanup ()
+void art_cleanup()
 {
-    auto queued = get_queued ();
+    auto queued = get_queued();
     for (AudArtItem * item : queued)
-        aud_art_unref (item); /* release temporary reference */
+        aud_art_unref(item); /* release temporary reference */
 
     /* playback should already be stopped */
-    assert (! current_item);
+    assert(!current_item);
 
-    if (art_items.n_items ())
-        AUDWARN ("Album art reference count not zero at exit!\n");
+    if (art_items.n_items())
+        AUDWARN("Album art reference count not zero at exit!\n");
 }
 
-EXPORT AudArtPtr aud_art_request (const char * file, int format, bool * queued)
+EXPORT AudArtPtr aud_art_request(const char * file, int format, bool * queued)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take();
+    AudArtItem * item = art_item_get(mh, String(file), queued);
 
-    String key (file);
-    AudArtItem * item = art_item_get_locked (key, queued);
-    bool good = true;
-
-    if (! item)
-        goto UNLOCK;
+    if (!item)
+        return AudArtPtr();
 
     if (format & AUD_ART_DATA)
     {
         /* load data from external image file */
-        if (! item->data.len () && item->art_file)
+        if (!item->data.len() && item->art_file)
         {
-            VFSFile file (item->art_file, "r");
+            VFSFile file(item->art_file, "r");
             if (file)
-                item->data = file.read_all ();
+                item->data = file.read_all();
         }
 
-        if (! item->data.len ())
-            good = false;
+        if (!item->data.len())
+        {
+            art_item_unref(mh, item);
+            return AudArtPtr();
+        }
     }
 
     if (format & AUD_ART_FILE)
     {
         /* save data to temporary file */
-        if (item->data.len () && ! item->art_file)
+        if (item->data.len() && !item->art_file)
         {
-            String local = write_temp_file (item->data.begin (), item->data.len ());
+            String local =
+                write_temp_file(item->data.begin(), item->data.len());
             if (local)
             {
-                item->art_file = String (filename_to_uri (local));
+                item->art_file = String(filename_to_uri(local));
                 item->is_temp = true;
             }
         }
 
-        if (! item->art_file)
-            good = false;
+        if (!item->art_file)
+        {
+            art_item_unref(mh, item);
+            return AudArtPtr();
+        }
     }
 
-    if (! good)
-    {
-        art_item_unref_locked (item);
-        item = nullptr;
-    }
-
-UNLOCK:
-    pthread_mutex_unlock (& mutex);
-    return AudArtPtr (item);
+    return AudArtPtr(item);
 }
 
-EXPORT const Index<char> * aud_art_data (const AudArtItem * item)
-    { return & item->data; }
-EXPORT const char * aud_art_file (const AudArtItem * item)
-    { return item->art_file; }
-
-EXPORT void aud_art_unref (AudArtItem * item)
+EXPORT const Index<char> * aud_art_data(const AudArtItem * item)
 {
-    pthread_mutex_lock (& mutex);
-    art_item_unref_locked (item);
-    pthread_mutex_unlock (& mutex);
+    return &item->data;
+}
+EXPORT const char * aud_art_file(const AudArtItem * item)
+{
+    return item->art_file;
+}
+
+EXPORT void aud_art_unref(AudArtItem * item)
+{
+    auto mh = mutex.take();
+    art_item_unref(mh, item);
 }

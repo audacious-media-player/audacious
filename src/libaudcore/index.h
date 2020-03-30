@@ -34,49 +34,43 @@
 class IndexBase
 {
 public:
-    typedef int (* CompareFunc) (const void * a, const void * b, void * userdata);
+    typedef int (*CompareFunc)(const void * a, const void * b, void * userdata);
 
-    constexpr IndexBase () :
-        m_data (nullptr),
-        m_len (0),
-        m_size (0) {}
+    constexpr IndexBase() : m_data(nullptr), m_len(0), m_size(0) {}
 
-    void clear (aud::EraseFunc erase_func);  // use as destructor
+    void clear(aud::EraseFunc erase_func); // use as destructor
 
-    IndexBase (IndexBase && b) :
-        m_data (b.m_data),
-        m_len (b.m_len),
-        m_size (b.m_size)
+    IndexBase(IndexBase && b)
+        : m_data(b.m_data), m_len(b.m_len), m_size(b.m_size)
     {
         b.m_data = nullptr;
         b.m_len = 0;
         b.m_size = 0;
     }
 
-    void * begin ()
-        { return m_data; }
-    const void * begin () const
-        { return m_data; }
-    void * end ()
-        { return (char *) m_data + m_len; }
-    const void * end () const
-        { return (char *) m_data + m_len; }
+    void * begin() { return m_data; }
+    const void * begin() const { return m_data; }
+    void * end() { return (char *)m_data + m_len; }
+    const void * end() const { return (char *)m_data + m_len; }
 
-    int len () const
-        { return m_len; }
+    int len() const { return m_len; }
 
-    void * insert (int pos, int len);  // no fill
-    void insert (int pos, int len, aud::FillFunc fill_func);
-    void insert (const void * from, int pos, int len, aud::CopyFunc copy_func);
-    void remove (int pos, int len, aud::EraseFunc erase_func);
-    void erase (int pos, int len, aud::FillFunc fill_func, aud::EraseFunc erase_func);
-    void shift (int from, int to, int len, aud::FillFunc fill_func, aud::EraseFunc erase_func);
+    void * insert(int pos, int len); // no fill
+    void insert(int pos, int len, aud::FillFunc fill_func);
+    void insert(const void * from, int pos, int len, aud::CopyFunc copy_func);
+    void remove(int pos, int len, aud::EraseFunc erase_func);
+    void erase(int pos, int len, aud::FillFunc fill_func,
+               aud::EraseFunc erase_func);
+    void shift(int from, int to, int len, aud::FillFunc fill_func,
+               aud::EraseFunc erase_func);
 
-    void move_from (IndexBase & b, int from, int to, int len, bool expand,
-     bool collapse, aud::FillFunc fill_func, aud::EraseFunc erase_func);
+    void move_from(IndexBase & b, int from, int to, int len, bool expand,
+                   bool collapse, aud::FillFunc fill_func,
+                   aud::EraseFunc erase_func);
 
-    void sort (CompareFunc compare, int elemsize, void * userdata);
-    int bsearch (const void * key, CompareFunc search, int elemsize, void * userdata) const;
+    void sort(CompareFunc compare, int elemsize, void * userdata);
+    int bsearch(const void * key, CompareFunc search, int elemsize,
+                void * userdata) const;
 
 private:
     void * m_data;
@@ -89,74 +83,82 @@ class Index : private IndexBase
 private:
     // provides C-style callback to generic comparison functor
     template<class Key, class F>
-    struct WrapCompare {
-        static int run (const void * key, const void * val, void * func)
-            { return (* (F *) func) (* (const Key *) key, * (const T *) val); }
+    struct WrapCompare
+    {
+        static int run(const void * key, const void * val, void * func)
+        {
+            return (*(F *)func)(*(const Key *)key, *(const T *)val);
+        }
     };
 
 public:
-    constexpr Index () :
-        IndexBase () {}
+    constexpr Index() : IndexBase() {}
 
     // use with care!
-    IndexBase & base ()
-        { return * this; }
+    IndexBase & base() { return *this; }
 
-    void clear ()
-        { IndexBase::clear (aud::erase_func<T> ()); }
-    ~Index ()
-        { clear (); }
+    void clear() { IndexBase::clear(aud::erase_func<T>()); }
+    ~Index() { clear(); }
 
-    Index (Index && b) :
-        IndexBase (std::move (b)) {}
-    Index & operator= (Index && b)
-        { return aud::move_assign (* this, std::move (b)); }
-
-    T * begin ()
-        { return (T *) IndexBase::begin (); }
-    const T * begin () const
-        { return (const T *) IndexBase::begin (); }
-    T * end ()
-        { return (T *) IndexBase::end (); }
-    const T * end () const
-        { return (const T *) IndexBase::end (); }
-
-    int len () const
-        { return cooked (IndexBase::len ()); }
-
-    T & operator[] (int i)
-        { return begin ()[i]; }
-    const T & operator[] (int i) const
-        { return begin ()[i]; }
-
-    void insert (int pos, int len)
-        { IndexBase::insert (raw (pos), raw (len), aud::fill_func<T> ()); }
-    void insert (const T * from, int pos, int len)
-        { IndexBase::insert (from, raw (pos), raw (len), aud::copy_func<T> ()); }
-    void remove (int pos, int len)
-        { IndexBase::remove (raw (pos), raw (len), aud::erase_func<T> ()); }
-    void erase (int pos, int len)
-        { IndexBase::erase (raw (pos), raw (len), aud::fill_func<T> (), aud::erase_func<T> ()); }
-    void shift (int from, int to, int len)
-        { IndexBase::shift (raw (from), raw (to), raw (len), aud::fill_func<T> (), aud::erase_func<T> ()); }
-
-    void move_from (Index<T> & b, int from, int to, int len, bool expand, bool collapse)
-        { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand,
-           collapse, aud::fill_func<T> (), aud::erase_func<T> ()); }
-
-    template<class ... Args>
-    T & append (Args && ... args)
+    Index(Index && b) : IndexBase(std::move(b)) {}
+    Index & operator=(Index && b)
     {
-        return * aud::construct<T>::make (IndexBase::insert (-1, sizeof (T)),
-         std::forward<Args> (args) ...);
+        return aud::move_assign(*this, std::move(b));
     }
 
-    int find (const T & val) const
+    T * begin() { return (T *)IndexBase::begin(); }
+    const T * begin() const { return (const T *)IndexBase::begin(); }
+    T * end() { return (T *)IndexBase::end(); }
+    const T * end() const { return (const T *)IndexBase::end(); }
+
+    int len() const { return cooked(IndexBase::len()); }
+
+    T & operator[](int i) { return begin()[i]; }
+    const T & operator[](int i) const { return begin()[i]; }
+
+    void insert(int pos, int len)
     {
-        for (const T * iter = begin (); iter != end (); iter ++)
+        IndexBase::insert(raw(pos), raw(len), aud::fill_func<T>());
+    }
+    void insert(const T * from, int pos, int len)
+    {
+        IndexBase::insert(from, raw(pos), raw(len), aud::copy_func<T>());
+    }
+    void remove(int pos, int len)
+    {
+        IndexBase::remove(raw(pos), raw(len), aud::erase_func<T>());
+    }
+    void erase(int pos, int len)
+    {
+        IndexBase::erase(raw(pos), raw(len), aud::fill_func<T>(),
+                         aud::erase_func<T>());
+    }
+    void shift(int from, int to, int len)
+    {
+        IndexBase::shift(raw(from), raw(to), raw(len), aud::fill_func<T>(),
+                         aud::erase_func<T>());
+    }
+
+    void move_from(Index<T> & b, int from, int to, int len, bool expand,
+                   bool collapse)
+    {
+        IndexBase::move_from(b, raw(from), raw(to), raw(len), expand, collapse,
+                             aud::fill_func<T>(), aud::erase_func<T>());
+    }
+
+    template<class... Args>
+    T & append(Args &&... args)
+    {
+        return *aud::construct<T>::make(IndexBase::insert(-1, sizeof(T)),
+                                        std::forward<Args>(args)...);
+    }
+
+    int find(const T & val) const
+    {
+        for (const T * iter = begin(); iter != end(); iter++)
         {
-            if (* iter == val)
-                return iter - begin ();
+            if (*iter == val)
+                return iter - begin();
         }
 
         return -1;
@@ -164,54 +166,57 @@ public:
 
     // func(val) returns true to remove val, false to keep it
     template<class F>
-    bool remove_if (F func, bool clear_if_empty = false)
+    bool remove_if(F func, bool clear_if_empty = false)
     {
-        T * iter = begin ();
+        T * iter = begin();
         bool changed = false;
-        while (iter != end ())
+        while (iter != end())
         {
-            if (func (* iter))
+            if (func(*iter))
             {
-                remove (iter - begin (), 1);
+                remove(iter - begin(), 1);
                 changed = true;
             }
             else
-                iter ++;
+                iter++;
         }
 
-        if (clear_if_empty && ! len ())
-            clear ();
+        if (clear_if_empty && !len())
+            clear();
 
         return changed;
     }
 
     // compare(a, b) returns <0 if a<b, 0 if a=b, >0 if a>b
     template<class F>
-    void sort (F compare)
-        { IndexBase::sort (WrapCompare<T, F>::run, sizeof (T), & compare); }
+    void sort(F compare)
+    {
+        IndexBase::sort(WrapCompare<T, F>::run, sizeof(T), &compare);
+    }
 
     // compare(key, val) returns <0 if key<val, 0 if key=val, >0 if key>val
     template<class Key, class F>
-    int bsearch (const Key & key, F compare)
-        { return IndexBase::bsearch (& key, WrapCompare<Key, F>::run, sizeof (T), & compare); }
+    int bsearch(const Key & key, F compare)
+    {
+        return IndexBase::bsearch(&key, WrapCompare<Key, F>::run, sizeof(T),
+                                  &compare);
+    }
 
     // for use of Index as a raw data buffer
     // unlike insert(), does not zero-fill any added space
-    void resize (int size)
+    void resize(int size)
     {
-        static_assert (std::is_trivial<T>::value, "for basic types only");
-        int diff = size - len ();
+        static_assert(std::is_trivial<T>::value, "for basic types only");
+        int diff = size - len();
         if (diff > 0)
-            IndexBase::insert (-1, raw (diff));
+            IndexBase::insert(-1, raw(diff));
         else if (diff < 0)
-            IndexBase::remove (raw (size), -1, nullptr);
+            IndexBase::remove(raw(size), -1, nullptr);
     }
 
 private:
-    static constexpr int raw (int len)
-        { return len * sizeof (T); }
-    static constexpr int cooked (int len)
-        { return len / sizeof (T); }
+    static constexpr int raw(int len) { return len * sizeof(T); }
+    static constexpr int cooked(int len) { return len / sizeof(T); }
 };
 
 #endif // LIBAUDCORE_INDEX_H

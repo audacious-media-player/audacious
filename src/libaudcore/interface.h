@@ -22,7 +22,8 @@
 
 #include <libaudcore/visualizer.h>
 
-enum class AudMenuID {
+enum class AudMenuID
+{
     Main,
     Playlist,
     PlaylistAdd,
@@ -30,25 +31,26 @@ enum class AudMenuID {
     count
 };
 
-void aud_ui_show (bool show);
-bool aud_ui_is_shown ();
+void aud_ui_show(bool show);
+bool aud_ui_is_shown();
 
-void aud_ui_startup_notify (const char * id);
-void aud_ui_show_error (const char * message);  /* thread-safe */
+void aud_ui_startup_notify(const char * id);
+void aud_ui_show_error(const char * message); /* thread-safe */
 
-void aud_ui_show_about_window ();
-void aud_ui_hide_about_window ();
-void aud_ui_show_filebrowser (bool open);
-void aud_ui_hide_filebrowser ();
-void aud_ui_show_jump_to_song ();
-void aud_ui_hide_jump_to_song ();
-void aud_ui_show_prefs_window ();
-void aud_ui_hide_prefs_window ();
+void aud_ui_show_about_window();
+void aud_ui_hide_about_window();
+void aud_ui_show_filebrowser(bool open);
+void aud_ui_hide_filebrowser();
+void aud_ui_show_jump_to_song();
+void aud_ui_hide_jump_to_song();
+void aud_ui_show_prefs_window();
+void aud_ui_hide_prefs_window();
 
-void aud_plugin_menu_add (AudMenuID id, void (* func) (), const char * name, const char * icon);
-void aud_plugin_menu_remove (AudMenuID id, void (* func) ());
+void aud_plugin_menu_add(AudMenuID id, void (*func)(), const char * name,
+                         const char * icon);
+void aud_plugin_menu_remove(AudMenuID id, void (*func)());
 
-void aud_visualizer_add (Visualizer * vis);
-void aud_visualizer_remove (Visualizer * vis);
+void aud_visualizer_add(Visualizer * vis);
+void aud_visualizer_remove(Visualizer * vis);
 
 #endif

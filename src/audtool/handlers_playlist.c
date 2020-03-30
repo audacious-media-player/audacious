@@ -1,6 +1,6 @@
 /*
  * handlers_playlist.c
- * Copyright 2005-2013 George Averill, William Pitcock, Yoshiki Yazawa,
+ * Copyright 2005-2013 George Averill, Ariadne Conill, Yoshiki Yazawa,
  *                     Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,9 +39,19 @@ void playlist_reverse (int argc, char * * argv)
     obj_audacious_call_reverse_sync (dbus_proxy, NULL, NULL);
 }
 
+void playlist_reverse_album (int argc, char * * argv)
+{
+    obj_audacious_call_reverse_album_sync (dbus_proxy, NULL, NULL);
+}
+
 void playlist_advance (int argc, char * * argv)
 {
     obj_audacious_call_advance_sync (dbus_proxy, NULL, NULL);
+}
+
+void playlist_advance_album (int argc, char * * argv)
+{
+    obj_audacious_call_advance_album_sync (dbus_proxy, NULL, NULL);
 }
 
 void playlist_auto_advance_status (int argc, char * * argv)

@@ -24,35 +24,35 @@
 
 #define MAX_ENTRIES 30
 
-EXPORT String aud_history_get (int entry)
+EXPORT String aud_history_get(int entry)
 {
-    StringBuf name = str_printf ("entry%d", entry);
-    String path = aud_get_str ("history", name);
-    return (path[0] ? path : String ());
+    StringBuf name = str_printf("entry%d", entry);
+    String path = aud_get_str("history", name);
+    return (path[0] ? path : String());
 }
 
-EXPORT void aud_history_add (const char * path)
+EXPORT void aud_history_add(const char * path)
 {
-    String add = String (path);
+    String add = String(path);
 
-    for (int i = 0; i < MAX_ENTRIES; i ++)
+    for (int i = 0; i < MAX_ENTRIES; i++)
     {
-        StringBuf name = str_printf ("entry%d", i);
-        String old = aud_get_str ("history", name);
-        aud_set_str ("history", name, add);
+        StringBuf name = str_printf("entry%d", i);
+        String old = aud_get_str("history", name);
+        aud_set_str("history", name, add);
 
-        if (! strcmp (old, path))
+        if (!strcmp(old, path))
             break;
 
         add = old;
     }
 }
 
-EXPORT void aud_history_clear ()
+EXPORT void aud_history_clear()
 {
-    for (int i = 0; i < MAX_ENTRIES; i ++)
+    for (int i = 0; i < MAX_ENTRIES; i++)
     {
-        StringBuf name = str_printf ("entry%d", i);
-        aud_set_str ("history", name, "");
+        StringBuf name = str_printf("entry%d", i);
+        aud_set_str("history", name, "");
     }
 }

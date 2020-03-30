@@ -1,6 +1,6 @@
 /*
  * audtool.h
- * Copyright 2005-2011 William Pitcock, George Averill, Giacomo Lozito,
+ * Copyright 2005-2011 Ariadne Conill, George Averill, Giacomo Lozito,
  *                     Yoshiki Yazawa, Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -63,9 +63,11 @@ void select_displayed (int, char * *);
 void select_playing (int, char * *);
 void playlist_position (int, char * *);
 void playlist_advance (int, char * *);
+void playlist_advance_album (int, char * *);
 void playlist_auto_advance_status (int, char * *);
 void playlist_auto_advance_toggle (int, char * *);
 void playlist_reverse (int, char * *);
+void playlist_reverse_album (int, char * *);
 void playlist_length (int, char * *);
 void playlist_song (int, char * *);
 void playlist_song_filename (int, char * *);

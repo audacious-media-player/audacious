@@ -31,13 +31,13 @@ class PluginHandle;
 
 #define SCAN_TUPLE (1 << 0)
 #define SCAN_IMAGE (1 << 1)
-#define SCAN_FILE  (1 << 2)
+#define SCAN_FILE (1 << 2)
 
 #define SCAN_THREADS 2
 
 struct ScanRequest
 {
-    typedef void (* Callback) (ScanRequest * request);
+    typedef void (*Callback)(ScanRequest * request);
 
     const String filename;
     const int flags;
@@ -53,19 +53,19 @@ struct ScanRequest
     String image_file;
     String error;
 
-    ScanRequest (const String & filename, int flags, Callback callback,
-     PluginHandle * decoder = nullptr, Tuple && tuple = Tuple ());
+    ScanRequest(const String & filename, int flags, Callback callback,
+                PluginHandle * decoder = nullptr, Tuple && tuple = Tuple());
 
-    void run ();
+    void run();
 
 private:
     SmartPtr<CueCacheRef> cue_cache;
 
-    void read_cuesheet_entry ();
+    void read_cuesheet_entry();
 };
 
-void scanner_init ();
-void scanner_request (ScanRequest * request);
-void scanner_cleanup ();
+void scanner_init();
+void scanner_request(ScanRequest * request);
+void scanner_cleanup();
 
 #endif

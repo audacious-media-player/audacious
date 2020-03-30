@@ -642,6 +642,8 @@ bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
 
     if (read_header (f, & version, & syncsafe, & offset, & header_size, & data_size, & footer_size))
         read_all_frames (read_tag_data (f, data_size, syncsafe), version, dict);
+    else
+        offset = header_size = data_size = footer_size = 0;
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
     add_frameFromTupleStr (tuple, Tuple::Title, ID3_TITLE, dict);

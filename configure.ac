@@ -6,13 +6,13 @@ dnl Initialize
 dnl ==========
 
 AC_PREREQ([2.59])
-AC_INIT([audacious], [3.10])
-AC_COPYRIGHT([Copyright (C) 2001-2018 Audacious developers and others])
+AC_INIT([audacious], [4.1-devel])
+AC_COPYRIGHT([Copyright (C) 2001-2020 Audacious developers and others])
 
 AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE_NAME", [Name of package])
 AC_DEFINE_UNQUOTED(VERSION, "$PACKAGE_VERSION", [Version number of package])
 
-COPYRIGHT="Copyright (C) 2001-2018 Audacious developers and others"
+COPYRIGHT="Copyright (C) 2001-2020 Audacious developers and others"
 AC_DEFINE_UNQUOTED(COPYRIGHT, "$COPYRIGHT", [Copyright])
 AC_SUBST(COPYRIGHT)
 
@@ -114,7 +114,6 @@ define(GENERATED_FILES,
        man/audtool.1
        man/audacious.1
        src/libaudcore/audio.h
-       src/libaudcore/tinylock.h
        win32/audacious.nsi
        win32/override/README.txt)
 

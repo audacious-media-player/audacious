@@ -29,7 +29,8 @@
 #include "multihash.h"
 #include "runtime.h"
 
-struct QueuedFuncParams {
+struct QueuedFuncParams
+{
     QueuedFunc::Func func;
     void * data;
     int interval_ms;
@@ -47,22 +48,24 @@ struct QueuedFuncHelper
 
     // Creates an appropriate helper subclass for the given parameters and
     // schedules it to run the QueuedFunc
-    static QueuedFuncHelper * create (QueuedFunc * queued, const QueuedFuncParams & params);
+    static QueuedFuncHelper * create(QueuedFunc * queued,
+                                     const QueuedFuncParams & params);
 
     // Callback which runs the QueuedFunc, if still active
-    void run ();
+    void run();
 
     // Cancels any scheduled run of the QueuedFunc and marks the helper for
     // deletion (it may not deleted immediately, but should not be accessed
     // again after calling this function)
-    virtual void cancel () = 0;
+    virtual void cancel() = 0;
 
-    virtual ~QueuedFuncHelper () {}
+    virtual ~QueuedFuncHelper() {}
 
 protected:
-    QueuedFuncHelper (QueuedFunc * queued, const QueuedFuncParams & params) :
-        queued (queued), params (params) {}
-
+    QueuedFuncHelper(QueuedFunc * queued, const QueuedFuncParams & params)
+        : queued(queued), params(params)
+    {
+    }
 };
 
 // The following hash table implements a thread-safe "registry" of active
@@ -73,27 +76,32 @@ protected:
 struct QueuedFuncNode : public MultiHash::Node
 {
     // Creates a helper to be registered in the hash
-    QueuedFuncNode (QueuedFunc * queued, const QueuedFuncParams & params) :
-        helper (QueuedFuncHelper::create (queued, params)) {}
+    QueuedFuncNode(QueuedFunc * queued, const QueuedFuncParams & params)
+        : helper(QueuedFuncHelper::create(queued, params))
+    {
+    }
 
     // Cancels a helper when it is unregistered from the hash
-    ~QueuedFuncNode ()
-        { helper->cancel (); }
+    ~QueuedFuncNode() { helper->cancel(); }
 
     // Replaces the registration of one helper with another
-    void reset (QueuedFunc * queued, const QueuedFuncParams & params)
+    void reset(QueuedFunc * queued, const QueuedFuncParams & params)
     {
-        helper->cancel ();
-        helper = QueuedFuncHelper::create (queued, params);
+        helper->cancel();
+        helper = QueuedFuncHelper::create(queued, params);
     }
 
     // Checks whether a helper is still registered
-    bool is_current (QueuedFuncHelper * test_helper) const
-        { return test_helper == helper; }
+    bool is_current(QueuedFuncHelper * test_helper) const
+    {
+        return test_helper == helper;
+    }
 
     // Hash comparison function
-    bool match (const QueuedFunc * queued) const
-        { return queued == helper->queued; }
+    bool match(const QueuedFunc * queued) const
+    {
+        return queued == helper->queued;
+    }
 
 private:
     QueuedFuncHelper * helper;
@@ -112,14 +120,13 @@ struct RunCheck
 
     // Called if the QueuedFunc is not registered in the hash
     // This indicates a "stale" event that should not be processed
-    QueuedFuncNode * add (const QueuedFunc *)
-        { return nullptr; }
+    QueuedFuncNode * add(const QueuedFunc *) { return nullptr; }
 
-    bool found (const QueuedFuncNode * node)
+    bool found(const QueuedFuncNode * node)
     {
         // Check whether a different helper has been registered
         // This also indicates a "stale" event that should not be processed
-        if (! node->is_current (helper))
+        if (!node->is_current(helper))
             return false;
 
         // We are still registered and good to go
@@ -135,15 +142,15 @@ struct RunCheck
     }
 };
 
-void QueuedFuncHelper::run ()
+void QueuedFuncHelper::run()
 {
     // Check whether it's okay to run.  The actual check is performed within
     // the MultiHash lock to eliminate race conditions.
     RunCheck r = {this, false};
-    func_table.lookup (queued, ptr_hash (queued), r);
+    func_table.lookup(queued, ptr_hash(queued), r);
 
     if (r.okay_to_run)
-        params.func (params.data);
+        params.func(params.data);
 }
 
 // GLib implementation -- simple wrapper around g_timeout_add_full()
@@ -151,29 +158,29 @@ void QueuedFuncHelper::run ()
 class HelperGLib : public QueuedFuncHelper
 {
 public:
-    HelperGLib (QueuedFunc * queued, const QueuedFuncParams & params) :
-        QueuedFuncHelper (queued, params)
+    HelperGLib(QueuedFunc * queued, const QueuedFuncParams & params)
+        : QueuedFuncHelper(queued, params)
     {
-        glib_source = g_timeout_add_full (G_PRIORITY_HIGH, params.interval_ms,
-         run_cb, this, aud::delete_obj<HelperGLib>);
+        glib_source =
+            g_timeout_add_full(G_PRIORITY_HIGH, params.interval_ms, run_cb,
+                               this, aud::delete_obj<HelperGLib>);
     }
 
-    void cancel ()
+    void cancel()
     {
         // GLib will delete the helper after we return to the main loop
-        g_source_remove (glib_source);
+        g_source_remove(glib_source);
     }
 
 private:
-    static gboolean run_cb (void * me)
+    static gboolean run_cb(void * me)
     {
-        (static_cast<HelperGLib *> (me))->run ();
+        (static_cast<HelperGLib *>(me))->run();
         return G_SOURCE_CONTINUE;
     }
 
     int glib_source = 0;
 };
-
 
 #ifdef USE_QT
 
@@ -190,7 +197,7 @@ private:
 class EventRouter : public QObject
 {
 protected:
-    void customEvent (QEvent * event);
+    void customEvent(QEvent * event);
 };
 
 static EventRouter router;
@@ -198,18 +205,19 @@ static EventRouter router;
 class HelperQEvent : public QueuedFuncHelper, public QEvent
 {
 public:
-    HelperQEvent (QueuedFunc * queued, const QueuedFuncParams & params) :
-        QueuedFuncHelper (queued, params),
-        QEvent (User)
+    HelperQEvent(QueuedFunc * queued, const QueuedFuncParams & params)
+        : QueuedFuncHelper(queued, params), QEvent(User)
     {
-        QCoreApplication::postEvent (& router, this, Qt::HighEventPriority);
+        QCoreApplication::postEvent(&router, this, Qt::HighEventPriority);
     }
 
-    void cancel () {} // Qt will delete the event after it fires
+    void cancel() {} // Qt will delete the event after it fires
 };
 
-void EventRouter::customEvent (QEvent * event)
-    { dynamic_cast<HelperQEvent *> (event)->run (); }
+void EventRouter::customEvent(QEvent * event)
+{
+    dynamic_cast<HelperQEvent *>(event)->run();
+}
 
 // Periodic callbacks are implemented through QObject's timer capability.  In
 // this case, the QueuedFuncHelper is a QObject that is re-associated with the
@@ -223,39 +231,38 @@ void EventRouter::customEvent (QEvent * event)
 class HelperQTimer : public QueuedFuncHelper, public QObject
 {
 public:
-    HelperQTimer (QueuedFunc * queued, const QueuedFuncParams & params) :
-        QueuedFuncHelper (queued, params)
+    HelperQTimer(QueuedFunc * queued, const QueuedFuncParams & params)
+        : QueuedFuncHelper(queued, params)
     {
-        moveToThread (router.thread ());  // main thread
-        QCoreApplication::postEvent (this, new QEvent (QEvent::User), Qt::HighEventPriority);
+        moveToThread(router.thread()); // main thread
+        QCoreApplication::postEvent(this, new QEvent(QEvent::User),
+                                    Qt::HighEventPriority);
     }
 
-    void cancel ()
-        { deleteLater (); }
+    void cancel() { deleteLater(); }
 
 protected:
-    void customEvent (QEvent *)
-        { startTimer (params.interval_ms); }
-    void timerEvent (QTimerEvent *)
-        { run (); }
+    void customEvent(QEvent *) { startTimer(params.interval_ms); }
+    void timerEvent(QTimerEvent *) { run(); }
 };
 
 #endif // USE_QT
 
 // creates the appropriate helper subclass
-QueuedFuncHelper * QueuedFuncHelper::create (QueuedFunc * queued, const QueuedFuncParams & params)
+QueuedFuncHelper * QueuedFuncHelper::create(QueuedFunc * queued,
+                                            const QueuedFuncParams & params)
 {
 #ifdef USE_QT
-    if (aud_get_mainloop_type () == MainloopType::Qt)
+    if (aud_get_mainloop_type() == MainloopType::Qt)
     {
         if (params.interval_ms > 0)
-            return new HelperQTimer (queued, params);
+            return new HelperQTimer(queued, params);
         else
-            return new HelperQEvent (queued, params);
+            return new HelperQEvent(queued, params);
     }
 #endif
 
-    return new HelperGLib (queued, params);
+    return new HelperGLib(queued, params);
 }
 
 // "start" logic executed within the hash table lock
@@ -265,38 +272,43 @@ struct Starter
     const QueuedFuncParams & params;
 
     // register a new helper for this QueuedFunc
-    QueuedFuncNode * add (const QueuedFunc *)
-        { return in_lockdown ? nullptr : new QueuedFuncNode (queued, params); }
+    QueuedFuncNode * add(const QueuedFunc *)
+    {
+        return in_lockdown ? nullptr : new QueuedFuncNode(queued, params);
+    }
 
     // cancel the old helper and register a replacement
-    bool found (QueuedFuncNode * node)
-        { node->reset (queued, params); return false; }
+    bool found(QueuedFuncNode * node)
+    {
+        node->reset(queued, params);
+        return false;
+    }
 };
 
 // common entry point used by all queue() and start() variants
-static void start_func (QueuedFunc * queued, const QueuedFuncParams & params)
+static void start_func(QueuedFunc * queued, const QueuedFuncParams & params)
 {
     Starter s = {queued, params};
-    func_table.lookup (queued, ptr_hash (queued), s);
+    func_table.lookup(queued, ptr_hash(queued), s);
 }
 
-EXPORT void QueuedFunc::queue (Func func, void * data)
+EXPORT void QueuedFunc::queue(Func func, void * data)
 {
-    start_func (this, {func, data, 0, false});
+    start_func(this, {func, data, 0, false});
     _running = false;
 }
 
-EXPORT void QueuedFunc::queue (int delay_ms, Func func, void * data)
+EXPORT void QueuedFunc::queue(int delay_ms, Func func, void * data)
 {
-    g_return_if_fail (delay_ms >= 0);
-    start_func (this, {func, data, delay_ms, false});
+    g_return_if_fail(delay_ms >= 0);
+    start_func(this, {func, data, delay_ms, false});
     _running = false;
 }
 
-EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
+EXPORT void QueuedFunc::start(int interval_ms, Func func, void * data)
 {
-    g_return_if_fail (interval_ms > 0);
-    start_func (this, {func, data, interval_ms, true});
+    g_return_if_fail(interval_ms > 0);
+    start_func(this, {func, data, interval_ms, true});
     _running = true;
 }
 
@@ -304,68 +316,72 @@ EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
 struct Stopper
 {
     // not registered, do nothing
-    QueuedFuncNode * add (const QueuedFunc *)
-        { return nullptr; }
+    QueuedFuncNode * add(const QueuedFunc *) { return nullptr; }
 
     // unregister and cancel helper
-    bool found (QueuedFuncNode * node)
-        { delete node; return true; }
+    bool found(QueuedFuncNode * node)
+    {
+        delete node;
+        return true;
+    }
 };
 
-EXPORT void QueuedFunc::stop ()
+EXPORT void QueuedFunc::stop()
 {
     Stopper s;
-    func_table.lookup (this, ptr_hash (this), s);
+    func_table.lookup(this, ptr_hash(this), s);
     _running = false;
 }
 
 // unregister a pending callback at shutdown
-static bool cleanup_node (QueuedFuncNode * node)
-    { delete node; return true; }
-// inhibit all future callbacks at shutdown
-static void enter_lockdown ()
-    { in_lockdown = true; }
-
-EXPORT void QueuedFunc::inhibit_all ()
+static bool cleanup_node(QueuedFuncNode * node)
 {
-    func_table.iterate (cleanup_node, enter_lockdown);
+    delete node;
+    return true;
+}
+// inhibit all future callbacks at shutdown
+static void enter_lockdown() { in_lockdown = true; }
+
+EXPORT void QueuedFunc::inhibit_all()
+{
+    func_table.iterate(cleanup_node, enter_lockdown);
 }
 
 // main loop implementation follows
 
 static GMainLoop * glib_mainloop;
 
-EXPORT void mainloop_run ()
+EXPORT void mainloop_run()
 {
 #ifdef USE_QT
-    if (aud_get_mainloop_type () == MainloopType::Qt)
+    if (aud_get_mainloop_type() == MainloopType::Qt)
     {
         static char app_name[] = "audacious";
         static int dummy_argc = 1;
         static char * dummy_argv[] = {app_name, nullptr};
 
-        QCoreApplication (dummy_argc, dummy_argv).exec ();
+        QCoreApplication(dummy_argc, dummy_argv).exec();
     }
     else
 #endif
     {
-        glib_mainloop = g_main_loop_new (nullptr, true);
-        g_main_loop_run (glib_mainloop);
-        g_main_loop_unref (glib_mainloop);
+        glib_mainloop = g_main_loop_new(nullptr, true);
+        g_main_loop_run(glib_mainloop);
+        g_main_loop_unref(glib_mainloop);
         glib_mainloop = nullptr;
     }
 }
 
-EXPORT void mainloop_quit ()
+EXPORT void mainloop_quit()
 {
 #ifdef USE_QT
-    if (aud_get_mainloop_type () == MainloopType::Qt)
+    if (aud_get_mainloop_type() == MainloopType::Qt)
     {
-        qApp->quit ();
+        qApp->quit();
     }
     else
 #endif
     {
-        g_main_loop_quit (glib_mainloop);
+        g_main_loop_quit(glib_mainloop);
     }
 }

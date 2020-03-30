@@ -21,13 +21,13 @@
 #define LIBAUDQT_EXPORT_H
 
 #ifdef _WIN32
-  #ifdef LIBAUDQT_BUILD
-    #define LIBAUDQT_PUBLIC __declspec(dllexport)
-  #else
-    #define LIBAUDQT_PUBLIC __declspec(dllimport)
-  #endif
+#ifdef LIBAUDQT_BUILD
+#define LIBAUDQT_PUBLIC __declspec(dllexport)
 #else
-  #define LIBAUDQT_PUBLIC __attribute__ ((visibility ("default")))
+#define LIBAUDQT_PUBLIC __declspec(dllimport)
+#endif
+#else
+#define LIBAUDQT_PUBLIC __attribute__((visibility("default")))
 #endif
 
 #endif // LIBAUDQT_EXPORT_H

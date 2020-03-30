@@ -1,6 +1,6 @@
 /*
  * prefs-widget.cc
- * Copyright 2007-2014 Tomasz Moń, William Pitcock, and John Lindgren
+ * Copyright 2007-2014 Tomasz Moń, Ariadne Conill, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,8 +20,8 @@
 #ifndef LIBAUDQT_PREFS_WIDGET_H
 #define LIBAUDQT_PREFS_WIDGET_H
 
-#include <libaudcore/preferences.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/preferences.h>
 
 #include <QCheckBox>
 #include <QLabel>
@@ -35,30 +35,20 @@ class QDoubleSpinBox;
 class QLineEdit;
 class QSpinBox;
 
-namespace audqt {
-
-/*
- * basic idea is this.  create classes which wrap the PreferencesWidgets.
- * Each should have it's own get(), set() and widget() methods.  those are the
- * functions that we really care about.
- * get() and set() allow for introspection and manipulation of the underlying
- * objects.  they also handle pinging the plugin which owns the PreferencesWidget,
- * i.e. calling PreferencesWidget::callback().
- * widget() builds the actual Qt side of the widget, hooks up the relevant signals
- * to slots, etc.  the result of widget() is not const as it is linked into a
- * layout manager or shown or whatever.
- */
+namespace audqt
+{
 
 /* base class which provides plumbing for hooks. */
-class HookableWidget {
+class HookableWidget
+{
 public:
-    void update_from_cfg ();
+    void update_from_cfg();
 
 protected:
-    HookableWidget (const PreferencesWidget * parent, const char * domain);
+    HookableWidget(const PreferencesWidget * parent, const char * domain);
 
-    virtual ~HookableWidget () {}
-    virtual void update () {}
+    virtual ~HookableWidget() {}
+    virtual void update() {}
 
     const PreferencesWidget * const m_parent;
     const char * const m_domain;
@@ -69,93 +59,134 @@ private:
 };
 
 /* shared class which allows disabling child widgets */
-class ParentWidget : public HookableWidget {
+class ParentWidget : public HookableWidget
+{
 public:
-    void set_child_layout (QLayout * layout)
-        { m_child_layout = layout; }
+    void set_child_layout(QLayout * layout) { m_child_layout = layout; }
 
 protected:
-    ParentWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
+    ParentWidget(const PreferencesWidget * parent, const char * domain)
+        : HookableWidget(parent, domain)
+    {
+    }
 
     QLayout * m_child_layout = nullptr;
 };
 
 /* button widget */
-class ButtonWidget : public QPushButton {
+class ButtonWidget : public QPushButton
+{
 public:
-    ButtonWidget (const PreferencesWidget * parent, const char * domain);
+    ButtonWidget(const PreferencesWidget * parent, const char * domain);
 };
 
 /* boolean widget (checkbox) */
-class BooleanWidget : public QCheckBox, public ParentWidget {
+class BooleanWidget : public QCheckBox, public ParentWidget
+{
 public:
-    BooleanWidget (const PreferencesWidget * parent, const char * domain);
+    BooleanWidget(const PreferencesWidget * parent, const char * domain);
+
 private:
-    void update ();
+    void update();
 };
 
 /* integer widget (spinner) */
-class IntegerWidget : public QWidget, HookableWidget {
+class IntegerWidget : public QWidget, HookableWidget
+{
 public:
-    IntegerWidget (const PreferencesWidget * parent, const char * domain);
+    IntegerWidget(const PreferencesWidget * parent, const char * domain);
+
 private:
-    void update ();
+    void update();
     QSpinBox * m_spinner;
 };
 
 /* integer widget (radio button) */
-class RadioButtonWidget : public QRadioButton, public ParentWidget {
+class RadioButtonWidget : public QRadioButton, public ParentWidget
+{
 public:
-    RadioButtonWidget (const PreferencesWidget * parent, const char * domain,
-     QButtonGroup * btn_group);
+    RadioButtonWidget(const PreferencesWidget * parent, const char * domain,
+                      QButtonGroup * btn_group);
+
 private:
-    void update ();
+    void update();
 };
 
 /* double widget (spinner) */
-class DoubleWidget : public QWidget, HookableWidget {
+class DoubleWidget : public QWidget, HookableWidget
+{
 public:
-    DoubleWidget (const PreferencesWidget * parent, const char * domain);
+    DoubleWidget(const PreferencesWidget * parent, const char * domain);
+
 private:
-    void update ();
+    void update();
     QDoubleSpinBox * m_spinner;
 };
 
 /* string widget (lineedit) */
-class StringWidget : public QWidget, HookableWidget {
+class StringWidget : public QWidget, HookableWidget
+{
 public:
-    StringWidget (const PreferencesWidget * parent, const char * domain);
+    StringWidget(const PreferencesWidget * parent, const char * domain);
+
 private:
-    void update ();
+    void update();
+    QLineEdit * m_lineedit;
+};
+
+/* file widget (audqt::FileEntry) */
+class FileWidget : public QWidget, HookableWidget
+{
+public:
+    FileWidget(const PreferencesWidget * parent, const char * domain);
+
+private:
+    void update();
+    QLineEdit * m_lineedit;
+};
+
+/* font widget (audqt::FontEntry) */
+class FontWidget : public QWidget, HookableWidget
+{
+public:
+    FontWidget(const PreferencesWidget * parent, const char * domain);
+
+private:
+    void update();
     QLineEdit * m_lineedit;
 };
 
 /* combo box (string or int) */
-class ComboBoxWidget : public QWidget, HookableWidget {
+class ComboBoxWidget : public QWidget, HookableWidget
+{
 public:
-    ComboBoxWidget (const PreferencesWidget * parent, const char * domain);
+    ComboBoxWidget(const PreferencesWidget * parent, const char * domain);
+
 private:
-    void update ();
+    void update();
     QComboBox * m_combobox;
 };
 
 /* box container widget */
-class BoxWidget : public QWidget {
+class BoxWidget : public QWidget
+{
 public:
-    BoxWidget (const PreferencesWidget * parent, const char * domain, bool horizontal_layout);
+    BoxWidget(const PreferencesWidget * parent, const char * domain,
+              bool horizontal_layout);
 };
 
 /* table container widget */
-class TableWidget : public QWidget {
+class TableWidget : public QWidget
+{
 public:
-    TableWidget (const PreferencesWidget * parent, const char * domain);
+    TableWidget(const PreferencesWidget * parent, const char * domain);
 };
 
 /* notebook widget */
-class NotebookWidget : public QTabWidget {
+class NotebookWidget : public QTabWidget
+{
 public:
-    NotebookWidget (const PreferencesWidget * parent, const char * domain);
+    NotebookWidget(const PreferencesWidget * parent, const char * domain);
 };
 
 } // namespace audqt

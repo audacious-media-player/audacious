@@ -20,24 +20,21 @@
 #ifndef LIBAUDCORE_PARSE_H
 #define LIBAUDCORE_PARSE_H
 
-#include <stdio.h>
 #include "objects.h"
+#include <stdio.h>
 
 // simplistic key-value file parser
 // used for playlist-state and plugin-registry files
 class TextParser
 {
 public:
-    TextParser (FILE * file) :
-        m_file (file)
-        { next (); }
+    TextParser(FILE * file) : m_file(file) { next(); }
 
-    void next ();
-    bool eof () const
-        { return ! m_val; }
+    void next();
+    bool eof() const { return !m_val; }
 
-    bool get_int (const char * key, int & val) const;
-    String get_str (const char * key) const;
+    bool get_int(const char * key, int & val) const;
+    String get_str(const char * key) const;
 
 private:
     FILE * m_file;

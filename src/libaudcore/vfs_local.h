@@ -25,21 +25,22 @@
 class LocalTransport : public TransportPlugin
 {
 public:
-    constexpr LocalTransport () : TransportPlugin (PluginInfo (), nullptr) {}
+    constexpr LocalTransport() : TransportPlugin(PluginInfo(), nullptr) {}
 
-    VFSImpl * fopen (const char * filename, const char * mode, String & error);
-    VFSFileTest test_file (const char * filename, VFSFileTest test, String & error);
-    Index<String> read_folder (const char * filename, String & error);
+    VFSImpl * fopen(const char * filename, const char * mode, String & error);
+    VFSFileTest test_file(const char * filename, VFSFileTest test,
+                          String & error);
+    Index<String> read_folder(const char * filename, String & error);
 };
 
 class StdinTransport : public TransportPlugin
 {
 public:
-    constexpr StdinTransport () : TransportPlugin (PluginInfo (), nullptr) {}
+    constexpr StdinTransport() : TransportPlugin(PluginInfo(), nullptr) {}
 
-    VFSImpl * fopen (const char * filename, const char * mode, String & error);
+    VFSImpl * fopen(const char * filename, const char * mode, String & error);
 };
 
-VFSImpl * vfs_tmpfile (String & error);
+VFSImpl * vfs_tmpfile(String & error);
 
 #endif /* LIBAUDCORE_VFS_LOCAL_H */

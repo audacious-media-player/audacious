@@ -19,7 +19,7 @@
 
 #include "list.h"
 
-EXPORT void ListBase::insert_after (ListNode * prev, ListNode * node)
+EXPORT void ListBase::insert_after(ListNode * prev, ListNode * node)
 {
     ListNode * next;
 
@@ -43,7 +43,7 @@ EXPORT void ListBase::insert_after (ListNode * prev, ListNode * node)
         tail = node;
 }
 
-EXPORT void ListBase::remove (ListNode * node)
+EXPORT void ListBase::remove(ListNode * node)
 {
     ListNode * prev = node->prev;
     ListNode * next = node->next;
@@ -62,13 +62,13 @@ EXPORT void ListBase::remove (ListNode * node)
         tail = prev;
 }
 
-EXPORT void ListBase::clear (DestroyFunc destroy)
+EXPORT void ListBase::clear(DestroyFunc destroy)
 {
     ListNode * node = head;
     while (node)
     {
         ListNode * next = node->next;
-        destroy (node);
+        destroy(node);
         node = next;
     }
 

@@ -37,43 +37,42 @@ struct DecodeInfo
 class PlaylistEx : public Playlist
 {
 public:
-    PlaylistEx (Playlist::ID * id = nullptr) :
-        Playlist (id) {}
-    PlaylistEx (Playlist playlist) :
-        Playlist (playlist) {}
+    PlaylistEx(Playlist::ID * id = nullptr) : Playlist(id) {}
+    PlaylistEx(Playlist playlist) : Playlist(playlist) {}
 
-    int stamp () const;
+    int stamp() const;
 
-    static Playlist insert_with_stamp (int at, int stamp);
+    static Playlist insert_with_stamp(int at, int stamp);
 
-    bool get_modified () const;
-    void set_modified (bool modified) const;
+    bool get_modified() const;
+    void set_modified(bool modified) const;
 
-    bool insert_flat_playlist (const char * filename) const;
-    void insert_flat_items (int at, Index<PlaylistAddItem> && items) const;
+    bool insert_flat_playlist(const char * filename) const;
+    void insert_flat_items(int at, Index<PlaylistAddItem> && items) const;
 };
 
 /* playlist.cc */
-void playlist_init ();
-void playlist_enable_scan (bool enable);
-void playlist_clear_updates ();
-void playlist_end ();
+void playlist_init();
+void playlist_enable_scan(bool enable);
+void playlist_clear_updates();
+void playlist_end();
 
-void playlist_load_state ();
-void playlist_save_state ();
+void playlist_load_state();
+void playlist_save_state();
 
-DecodeInfo playback_entry_read (int serial);
-void playback_entry_set_tuple (int serial, Tuple && tuple);
+DecodeInfo playback_entry_read(int serial);
+void playback_entry_set_tuple(int serial, Tuple && tuple);
 
 /* playlist-cache.cc */
-void playlist_cache_load (Index<PlaylistAddItem> & items);
-void playlist_cache_clear (void * = nullptr);
+void playlist_cache_load(Index<PlaylistAddItem> & items);
+void playlist_cache_clear(void * = nullptr);
 
 /* playlist-files.cc */
-bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items);
+bool playlist_load(const char * filename, String & title,
+                   Index<PlaylistAddItem> & items);
 
 /* playlist-utils.cc */
-void load_playlists ();
-void save_playlists (bool exiting);
+void load_playlists();
+void save_playlists(bool exiting);
 
 #endif
