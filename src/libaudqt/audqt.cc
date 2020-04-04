@@ -54,9 +54,6 @@ EXPORT void init()
     auto qapp = new QApplication(dummy_argc, dummy_argv);
 
     qapp->setAttribute(Qt::AA_UseHighDpiPixmaps);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
-    qapp->setAttribute(Qt::AA_ForceRasterWidgets);
-#endif
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     qapp->setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles);
 #endif
