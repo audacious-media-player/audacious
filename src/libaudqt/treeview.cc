@@ -29,7 +29,7 @@ namespace audqt
 EXPORT TreeView::TreeView(QWidget * parent) : QTreeView(parent)
 {
     // activate() is perhaps a bit redundant with activated()
-    connect(this, &QTreeView::activated, this, &TreeView::activate);
+    connect(this, &QTreeView::doubleClicked, this, &TreeView::activate);
 }
 
 EXPORT TreeView::~TreeView() {}
