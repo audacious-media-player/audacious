@@ -21,15 +21,44 @@
 
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QProxyStyle>
+
 #include <libaudcore/index.h>
 
 namespace audqt
 {
 
+/*
+ * On some platforms (mainly KDE), there is a feature where
+ * clicking on icons makes them work like hyperlinks.  Unfortunately,
+ * the way this is implemented is by making all QAbstractItemView
+ * widgets behave in this way.
+ *
+ * In all situations, it makes no sense for audqt::TreeView
+ * widgets to behave in this way.  So we override that feature
+ * with a QProxyStyle.
+ */
+class TreeViewStyleOverrides : public QProxyStyle
+{
+public:
+    int styleHint(StyleHint hint,
+                  const QStyleOption * option = nullptr,
+                  const QWidget * widget = nullptr,
+                  QStyleHintReturn * returnData = nullptr) const override
+    {
+        if (hint == QStyle::SH_ItemView_ActivateItemOnSingleClick)
+            return 0;
+
+        return QProxyStyle::styleHint(hint, option, widget, returnData);
+    }
+};
+
 EXPORT TreeView::TreeView(QWidget * parent) : QTreeView(parent)
 {
+    setStyle(new TreeViewStyleOverrides);
+
     // activate() is perhaps a bit redundant with activated()
-    connect(this, &QTreeView::doubleClicked, this, &TreeView::activate);
+    connect(this, &QTreeView::activated, this, &TreeView::activate);
 }
 
 EXPORT TreeView::~TreeView() {}
