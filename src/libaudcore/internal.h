@@ -77,6 +77,8 @@ void eq_set_format(int new_channels, int new_rate);
 void eq_filter(float * data, int samples);
 
 /* eventqueue.cc */
+void event_queue_pause();
+void event_queue_unpause();
 void event_queue_cancel_all();
 
 /* fft.cc */

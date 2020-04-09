@@ -46,6 +46,7 @@ struct Event : public ListNode
 };
 
 static aud::mutex mutex;
+static bool paused;
 static List<Event> events;
 static QueuedFunc queued_events;
 
@@ -54,7 +55,7 @@ static void events_execute(void *)
     auto mh = mutex.take();
 
     Event * event;
-    while ((event = events.head()))
+    while (!paused && (event = events.head()))
     {
         events.remove(event);
 
@@ -72,7 +73,7 @@ EXPORT void event_queue(const char * name, void * data,
 {
     auto mh = mutex.take();
 
-    if (!events.head())
+    if (!paused && !events.head())
         queued_events.queue(events_execute, nullptr);
 
     events.append(new Event(name, data, destroy));
@@ -95,6 +96,26 @@ EXPORT void event_queue_cancel(const char * name, void * data)
 
         event = next;
     }
+}
+
+// this is only for use by the playlist, to ensure that queued playlist
+// updates are processed before generic events
+void event_queue_pause()
+{
+    auto mh = mutex.take();
+    if (!paused)
+        queued_events.stop();
+
+    paused = true;
+}
+
+void event_queue_unpause()
+{
+    auto mh = mutex.take();
+    if (paused && events.head())
+        queued_events.queue(events_execute, nullptr);
+
+    paused = false;
 }
 
 void event_queue_cancel_all()
