@@ -189,6 +189,7 @@ static void update(void *)
     update_hooks = 0;
     update_level = Playlist::NoUpdate;
     update_state = UpdateState::None;
+    event_queue_unpause();
 
     mh.unlock();
 
@@ -208,6 +209,16 @@ static void update(void *)
         hook_call("playback stop", nullptr);
 }
 
+static void queue_update()
+{
+    if (update_state < UpdateState::Queued)
+    {
+        event_queue_pause(); // give playlist updates priority
+        queued_update.queue(update, nullptr);
+        update_state = UpdateState::Queued;
+    }
+}
+
 static void queue_update_hooks(int hooks)
 {
     if ((hooks & PlaybackBegin))
@@ -216,12 +227,7 @@ static void queue_update_hooks(int hooks)
         update_hooks &= ~PlaybackBegin;
 
     update_hooks |= hooks;
-
-    if (update_state < UpdateState::Queued)
-    {
-        queued_update.queue(update, nullptr);
-        update_state = UpdateState::Queued;
-    }
+    queue_update();
 }
 
 static void queue_global_update(Playlist::UpdateLevel level, int flags = 0)
@@ -239,11 +245,7 @@ static void queue_global_update(Playlist::UpdateLevel level, int flags = 0)
     }
     else
     {
-        if (update_state < UpdateState::Queued)
-        {
-            queued_update.queue(update, nullptr);
-            update_state = UpdateState::Queued;
-        }
+        queue_update();
     }
 
     update_level = aud::max(update_level, level);
@@ -325,10 +327,7 @@ static void scan_check_complete(PlaylistData * playlist)
     playlist->scan_status = PlaylistData::NotScanning;
 
     if (update_state == UpdateState::Delayed)
-    {
-        queued_update.queue(update, nullptr);
-        update_state = UpdateState::Queued;
-    }
+        queue_update();
 
     event_queue_cancel("playlist scan complete");
     event_queue("playlist scan complete", nullptr);
@@ -497,11 +496,7 @@ void pl_signal_entry_deleted(PlaylistEntry * entry) { scan_cancel(entry); }
 
 void pl_signal_position_changed(Playlist::ID * id)
 {
-    if (update_state < UpdateState::Queued)
-    {
-        queued_update.queue(update, nullptr);
-        update_state = UpdateState::Queued;
-    }
+    queue_update();
 
     if (id == playing_id)
     {
@@ -615,6 +610,7 @@ void playlist_clear_updates()
     update_level = Playlist::NoUpdate;
     update_hooks = 0;
     update_state = UpdateState::None;
+    event_queue_unpause();
 }
 
 void playlist_end()
