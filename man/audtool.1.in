@@ -230,7 +230,7 @@ Print the number of open playlists.
 .TP
 .B --current-playlist
 Print the number of the current playlist, where "current" is interpreted
-according to \fB--select-displayed\fR or fB--select-playing\fR.
+according to \fB--select-displayed\fR or \fB--select-playing\fR.
 .TP
 .B --play-current-playlist
 Start playback in the current playlist, resuming from the last point played if
