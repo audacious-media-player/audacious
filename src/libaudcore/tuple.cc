@@ -746,6 +746,7 @@ EXPORT void Tuple::generate_fallbacks()
 
     auto artist = get_str(Artist);
     auto album = get_str(Album);
+    auto genre = get_str(Genre);
 
     if (artist && album)
         return;
@@ -814,7 +815,7 @@ EXPORT void Tuple::generate_fallbacks()
 
         // skip common strings and avoid duplicates
         for (auto skip :
-             (const char *[]){"~", "music", artist, album, get_str(Genre)})
+             (const char *[]){"~", "music", artist, album, genre})
         {
             if (first && skip && !strcmp_nocase(first, skip))
             {

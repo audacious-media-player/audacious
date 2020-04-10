@@ -754,7 +754,7 @@ EXPORT Index<const char *> aud_plugin_get_supported_mime_types()
         if (!aud_plugin_get_enabled(p))
             continue;
 
-        for (auto k : p->keys[InputKey::MIME])
+        for (auto & k : p->keys[InputKey::MIME])
             mimes.append((const char *)k);
     }
 
