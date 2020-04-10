@@ -55,7 +55,9 @@ public:
 
 EXPORT TreeView::TreeView(QWidget * parent) : QTreeView(parent)
 {
-    setStyle(new TreeViewStyleOverrides);
+    auto style = new TreeViewStyleOverrides;
+    connect(this, &QObject::destroyed, [style]() { delete style; });
+    setStyle(style);
 
     // activate() is perhaps a bit redundant with activated()
     connect(this, &QTreeView::activated, this, &TreeView::activate);
