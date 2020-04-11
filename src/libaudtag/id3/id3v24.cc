@@ -650,6 +650,8 @@ bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
     add_frameFromTupleStr (tuple, Tuple::Artist, ID3_ARTIST, dict);
     add_frameFromTupleStr (tuple, Tuple::Album, ID3_ALBUM, dict);
     add_frameFromTupleStr (tuple, Tuple::AlbumArtist, ID3_ALBUM_ARTIST, dict);
+    add_frameFromTupleStr (tuple, Tuple::Composer, ID3_COMPOSER, dict);
+    add_frameFromTupleStr (tuple, Tuple::Copyright, ID3_COPYRIGHT, dict);
     add_frameFromTupleInt (tuple, Tuple::Year, ID3_YEAR, dict);
     add_frameFromTupleInt (tuple, Tuple::Track, ID3_TRACKNR, dict);
     add_frameFromTupleStr (tuple, Tuple::Genre, ID3_GENRE, dict);
