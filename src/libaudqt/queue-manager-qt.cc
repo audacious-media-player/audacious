@@ -172,6 +172,7 @@ QueueManagerDialog::QueueManagerDialog(QWidget * parent) : QDialog(parent)
     layout->addWidget(&m_treeview);
     layout->addWidget(&m_buttonbox);
 
+    m_treeview.setAllColumnsShowFocus(true);
     m_treeview.setIndentation(0);
     m_treeview.setModel(&m_model);
     m_treeview.setSelectionMode(QAbstractItemView::ExtendedSelection);
