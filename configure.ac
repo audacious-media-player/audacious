@@ -6,7 +6,7 @@ dnl Initialize
 dnl ==========
 
 AC_PREREQ([2.59])
-AC_INIT([audacious], [4.0.1])
+AC_INIT([audacious], [4.0.2])
 AC_COPYRIGHT([Copyright (C) 2001-2020 Audacious developers and others])
 
 AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE_NAME", [Name of package])
