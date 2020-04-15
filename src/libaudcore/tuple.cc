@@ -368,7 +368,7 @@ bool TupleData::is_same(const TupleData & other)
             if (field_info[f].type == Tuple::String)
                 same = (a->str == b->str);
             else
-                same = (a->x = b->x);
+                same = (a->x == b->x);
 
             if (!same)
                 return false;
