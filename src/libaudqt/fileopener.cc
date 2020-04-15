@@ -18,6 +18,7 @@
  */
 
 #include <QFileDialog>
+#include <QPointer>
 
 #include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
@@ -29,7 +30,7 @@
 namespace audqt
 {
 
-static aud::array<FileMode, QFileDialog *> s_dialogs;
+static aud::array<FileMode, QPointer<QFileDialog>> s_dialogs;
 
 static void import_playlist(Playlist playlist, const String & filename)
 {
@@ -50,7 +51,7 @@ static void export_playlist(Playlist playlist, const String & filename)
 
 EXPORT void fileopener_show(FileMode mode)
 {
-    QFileDialog *& dialog = s_dialogs[mode];
+    QPointer<QFileDialog> & dialog = s_dialogs[mode];
 
     if (!dialog)
     {
@@ -114,9 +115,6 @@ EXPORT void fileopener_show(FileMode mode)
                     break;
                 }
             });
-
-        QObject::connect(dialog, &QObject::destroyed,
-                         [&dialog]() { dialog = nullptr; });
     }
 
     window_bring_to_front(dialog);
