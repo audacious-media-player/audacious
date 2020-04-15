@@ -80,7 +80,7 @@ struct TupleData
 
     bool is_set(int field) const { return (setmask & bitmask(field)); }
 
-    bool is_same(const TupleData & other);
+    bool is_same(const TupleData & other) const;
 
     TupleVal * lookup(int field, bool add, bool remove);
     void set_int(int field, int x);
@@ -350,7 +350,7 @@ TupleData::~TupleData()
     delete[] subtunes;
 }
 
-bool TupleData::is_same(const TupleData & other)
+bool TupleData::is_same(const TupleData & other) const
 {
     if (state != other.state || setmask != other.setmask ||
         nsubtunes != other.nsubtunes || (!subtunes) != (!other.subtunes))
