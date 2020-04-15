@@ -28,6 +28,7 @@
 #include <QLabel>
 #include <QPainter>
 #include <QPixmap>
+#include <QPointer>
 #include <QPushButton>
 #include <QTextDocument>
 #include <QVBoxLayout>
@@ -203,7 +204,7 @@ void InfoWindow::displayImage(const char * filename)
             art_request(filename, 2 * sizes.OneInch, 2 * sizes.OneInch));
 }
 
-static InfoWindow * s_infowin = nullptr;
+static QPointer<InfoWindow> s_infowin;
 
 static void show_infowin(Index<PlaylistAddItem> && items, bool can_write)
 {
@@ -211,9 +212,6 @@ static void show_infowin(Index<PlaylistAddItem> && items, bool can_write)
     {
         s_infowin = new InfoWindow;
         s_infowin->setAttribute(Qt::WA_DeleteOnClose);
-
-        QObject::connect(s_infowin, &QObject::destroyed,
-                         []() { s_infowin = nullptr; });
     }
 
     s_infowin->fillInfo(std::move(items), can_write);

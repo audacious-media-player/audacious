@@ -23,6 +23,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPainter>
+#include <QPointer>
 #include <QPushButton>
 #include <QSlider>
 #include <QStyle>
@@ -198,7 +199,7 @@ void EqualizerWindow::updateBands()
         m_sliders[i]->slider.setValue(values[i]);
 }
 
-static EqualizerWindow * s_equalizer = nullptr;
+static QPointer<EqualizerWindow> s_equalizer;
 
 namespace audqt
 {
@@ -209,9 +210,6 @@ EXPORT void equalizer_show()
     {
         s_equalizer = new EqualizerWindow;
         s_equalizer->setAttribute(Qt::WA_DeleteOnClose);
-
-        QObject::connect(s_equalizer, &QObject::destroyed,
-                         []() { s_equalizer = nullptr; });
     }
 
     window_bring_to_front(s_equalizer);

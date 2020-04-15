@@ -24,6 +24,7 @@
 #include <QDialogButtonBox>
 #include <QHeaderView>
 #include <QItemSelectionModel>
+#include <QPointer>
 #include <QPushButton>
 #include <QTreeView>
 #include <QVBoxLayout>
@@ -206,7 +207,7 @@ void QueueManagerDialog::removeSelected()
     }
 }
 
-static QueueManagerDialog * s_queuemgr = nullptr;
+static QPointer<QueueManagerDialog> s_queuemgr;
 
 EXPORT void queue_manager_show()
 {
@@ -214,9 +215,6 @@ EXPORT void queue_manager_show()
     {
         s_queuemgr = new QueueManagerDialog;
         s_queuemgr->setAttribute(Qt::WA_DeleteOnClose);
-
-        QObject::connect(s_queuemgr, &QObject::destroyed,
-                         []() { s_queuemgr = nullptr; });
     }
 
     window_bring_to_front(s_queuemgr);

@@ -21,6 +21,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QLabel>
+#include <QPointer>
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -126,7 +127,7 @@ static QDialog * buildUrlDialog(bool open)
     return dialog;
 }
 
-static QDialog * s_dialog = nullptr;
+static QPointer<QDialog> s_dialog;
 
 EXPORT void urlopener_show(bool open)
 {
@@ -134,9 +135,6 @@ EXPORT void urlopener_show(bool open)
     {
         s_dialog = buildUrlDialog(open);
         s_dialog->setAttribute(Qt::WA_DeleteOnClose);
-
-        QObject::connect(s_dialog, &QObject::destroyed,
-                         []() { s_dialog = nullptr; });
     }
 
     window_bring_to_front(s_dialog);

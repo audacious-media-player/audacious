@@ -30,6 +30,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPainter>
+#include <QPointer>
 
 namespace audqt
 {
@@ -150,7 +151,7 @@ void InfoPopup::paintEvent(QPaintEvent *)
     p.fillRect(rect(), grad);
 }
 
-static InfoPopup * s_infopopup;
+static QPointer<InfoPopup> s_infopopup;
 
 static void infopopup_show(const String & filename, const Tuple & tuple)
 {
@@ -158,9 +159,6 @@ static void infopopup_show(const String & filename, const Tuple & tuple)
         s_infopopup->deleteLater();
 
     s_infopopup = new InfoPopup(filename, tuple);
-
-    QObject::connect(s_infopopup, &QObject::destroyed,
-                     []() { s_infopopup = nullptr; });
 }
 
 EXPORT void infopopup_show(Playlist playlist, int entry)

@@ -20,6 +20,7 @@
 #include <QDialog>
 #include <QLabel>
 #include <QPlainTextEdit>
+#include <QPointer>
 #include <QTabWidget>
 #include <QVBoxLayout>
 
@@ -85,7 +86,7 @@ static QDialog * buildAboutWindow()
     return window;
 }
 
-static QDialog * s_aboutwin = nullptr;
+static QPointer<QDialog> s_aboutwin;
 
 namespace audqt
 {
@@ -96,18 +97,11 @@ EXPORT void aboutwindow_show()
     {
         s_aboutwin = buildAboutWindow();
         s_aboutwin->setAttribute(Qt::WA_DeleteOnClose);
-
-        QObject::connect(s_aboutwin, &QObject::destroyed,
-                         []() { s_aboutwin = nullptr; });
     }
 
     window_bring_to_front(s_aboutwin);
 }
 
-EXPORT void aboutwindow_hide()
-{
-    if (s_aboutwin)
-        delete s_aboutwin;
-}
+EXPORT void aboutwindow_hide() { delete s_aboutwin; }
 
 } // namespace audqt
