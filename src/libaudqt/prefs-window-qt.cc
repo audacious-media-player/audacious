@@ -338,9 +338,7 @@ static const PreferencesWidget song_info_page_widgets[] = {
     WidgetCheck(N_("Show popup information"),
                 WidgetBool(0, "show_filepopup_for_tuple")),
     WidgetSpin(N_("Popup delay (tenths of a second):"),
-               WidgetInt(0, "filepopup_delay"), {0, 100, 1}, WIDGET_CHILD),
-    WidgetCheck(N_("Show time scale for current song"),
-                WidgetBool(0, "filepopup_showprogressbar"), WIDGET_CHILD)};
+               WidgetInt(0, "filepopup_delay"), {0, 100, 1}, WIDGET_CHILD)};
 
 static const PreferencesWidget advanced_page_widgets[] = {
     WidgetLabel(N_("<b>Compatibility</b>")),
