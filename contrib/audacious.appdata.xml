@@ -39,6 +39,5 @@
     <screenshot>https://audacious-media-player.org/images/winamp-interface.png</screenshot>
     <screenshot>https://audacious-media-player.org/images/settings-window.png</screenshot>
   </screenshots>
-  <content_rating type="oars-1.1">
-  </content_rating>
+  <content_rating type="oars-1.1" />
 </component>
