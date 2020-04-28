@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2020-01-26 13:17+0100\n"
-"PO-Revision-Date: 2020-03-25 09:08+0000\n"
+"PO-Revision-Date: 2020-04-19 07:34+0000\n"
 "Last-Translator: Ioannis LM\n"
 "Language-Team: Greek (http://www.transifex.com/audacious/audacious/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgstr "Προσθήκη αρχείων στη λίστα αναπαραγωγή
 
 #: src/audacious/main.cc:74
 msgid "Add files to a temporary playlist"
-msgstr "Προσθήκη αρχείων σε μια προσωρινή λίστα αναπαραγωγής"
+msgstr "Προσθήκη αρχείων σε προσωρινή λίστα αναπαραγωγής"
 
 #: src/audacious/main.cc:75
 msgid "Display the main window"
@@ -157,7 +157,7 @@ msgstr "(χαρακτήρας σφάλμα κωδικοποίησης)"
 #: src/libaudcore/drct.cc:96
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
-msgstr "Πρέπει να ενεργοποιήσετε τη καταγραφή ηχητικής ροής στις ρυθμίσεις Ήχου, πριν τη χρησιμοποιήσετε."
+msgstr "Πρέπει να ενεργοποιήσετε τη εγγραφή ηχητικής ροής στις ρυθμίσεις του ήχου, πριν τη χρησιμοποιήσετε."
 
 #: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
@@ -165,7 +165,7 @@ msgstr "Σφάλμα στο άνοιγμα της ηχητικής ροής"
 
 #: src/libaudcore/output.cc:341
 msgid "Error recording output stream"
-msgstr "Σφάλμα στην καταγραφή της ηχητικής ροής"
+msgstr "Σφάλμα στην εγγραφή της ηχητικής ροής"
 
 #: src/libaudcore/playback.cc:379
 #, c-format
@@ -295,7 +295,7 @@ msgstr "_Να μην ερωτηθώ ξανά"
 #: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:64
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr "Θέλετε να αφαιρέσετε οριστικά τη «%s;"
+msgstr "Θέλετε να αφαιρέσετε οριστικά την “%s”;"
 
 #: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:58
 msgid "_Remove"
@@ -967,15 +967,15 @@ msgstr "Όπως αποκωδικοποιείται"
 
 #: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:199
 msgid "After applying ReplayGain"
-msgstr "Μετά την εφαρμογή ReplayGain"
+msgstr "Μετά από την εφαρμογή ReplayGain"
 
 #: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:201
 msgid "After applying effects"
-msgstr "Μετά την εφαρμογή δράσεων"
+msgstr "Μετά από την εφαρμογή ενεργειών"
 
 #: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:202
 msgid "After applying equalization"
-msgstr "Μετά την εφαρμογή εξισορρόπησης"
+msgstr "Μετά από την εφαρμογή εξισορρόπησης"
 
 #: src/libaudgui/prefs-window.cc:150 src/libaudqt/prefs-window-qt.cc:208
 msgid "Based on shuffle"
@@ -1000,7 +1000,7 @@ msgstr "dB"
 
 #: src/libaudgui/prefs-window.cc:205 src/libaudqt/prefs-window-qt.cc:242
 msgid "Amplify untagged files:"
-msgstr "Ενίσχυση αρχείων χωρίς ετικέτες:"
+msgstr "Ενίσχυση αρχείων χωρίς tags:"
 
 #: src/libaudgui/prefs-window.cc:211 src/libaudqt/prefs-window-qt.cc:246
 msgid "<b>Output Settings</b>"
@@ -1021,7 +1021,7 @@ msgstr "ms"
 
 #: src/libaudgui/prefs-window.cc:219 src/libaudqt/prefs-window-qt.cc:253
 msgid "Soft clipping"
-msgstr "Μαλακή αποκοπή"
+msgstr "Soft clipping"
 
 #: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window-qt.cc:254
 msgid "Use software volume control (not recommended)"
@@ -1029,11 +1029,11 @@ msgstr "Χρήση λογισμικού ελέγχου έντασης (δεν σ
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window-qt.cc:256
 msgid "<b>Recording Settings</b>"
-msgstr "<b>Ρυθμίσεις καταγραφής</b>"
+msgstr "<b>Ρυθμίσεις εγγραφής</b>"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window-qt.cc:259
 msgid "Record stream:"
-msgstr "Καταγραφή ροής:"
+msgstr "Εγγραφή ροής:"
 
 #: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:261
 msgid "<b>ReplayGain</b>"
@@ -1133,7 +1133,7 @@ msgstr "Άνοιγμα αρχείων σε μια προσωρινή λίστα 
 
 #: src/libaudgui/prefs-window.cc:309 src/libaudqt/prefs-window-qt.cc:313
 msgid "<b>Song Display</b>"
-msgstr "<b>Προβολή τραγουδιού</b>"
+msgstr "<b>Εμφάνιση</b>"
 
 #: src/libaudgui/prefs-window.cc:310 src/libaudqt/prefs-window-qt.cc:314
 msgid "Show song numbers"
@@ -1153,7 +1153,7 @@ msgstr "<b>Εξαγωγή</b>"
 
 #: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:322
 msgid "Use relative paths when possible"
-msgstr "Χρήση των σχετικών διαδρομών, όταν αυτό είναι δυνατόν"
+msgstr "Χρήση των αντίστοιχων διαδρομών, όταν είναι δυνατόν"
 
 #: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:326
 msgid "<b>Album Art</b>"
@@ -1185,11 +1185,11 @@ msgstr "<b>Αναδυόμενες πληροφορίες</b>"
 
 #: src/libaudgui/prefs-window.cc:337 src/libaudqt/prefs-window-qt.cc:338
 msgid "Show popup information"
-msgstr "Εμφάνιση πληροφοριών σε αναδυόμενο παράθυρο"
+msgstr "Εμφάνιση πληροφοριών στο αναδυόμενο παράθυρο"
 
 #: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window-qt.cc:340
 msgid "Popup delay (tenths of a second):"
-msgstr "Αναδυόμενη καθυστέρηση (σε δέκατα του δευτερολέπτου):"
+msgstr "Καθυστέρηση (σε δέκατα του δευτερολέπτου):"
 
 #: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:342
 msgid "Show time scale for current song"
@@ -1213,7 +1213,7 @@ msgstr "Αναδρομική προσθήκη φακέλων"
 
 #: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window-qt.cc:353
 msgid "Add folders nested within playlist files"
-msgstr "Προσθήκη των ενσωματωμένων φακέλων στα αρχεία της λίστας αναπαραγωγής"
+msgstr "Προσθήκη φακέλων που περιέχουν τα αρχεία της λίστας αναπαραγωγής"
 
 #: src/libaudgui/prefs-window.cc:358 src/libaudqt/prefs-window-qt.cc:355
 msgid "<b>Metadata</b>"
@@ -1302,11 +1302,11 @@ msgstr "Προσαρμοσμένο αλφαριθμητικό:"
 #: src/libaudgui/prefs-window.cc:774 src/libaudqt/prefs-window-qt.cc:705
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr "Ενεργοποίηση ηχητικής ροής με το %s"
+msgstr "Ενεργοποίηση εγγραφής ηχητικής ροής με το %s"
 
 #: src/libaudgui/prefs-window.cc:783 src/libaudqt/prefs-window-qt.cc:718
 msgid "No audio recording plugin available"
-msgstr "Δεν είναι διαθέσιμο κανένα πρόσθετο ηχητικής καταγραφής"
+msgstr "Δεν είναι διαθέσιμο κανένα πρόσθετο εγγραφής ήχου"
 
 #: src/libaudgui/prefs-window.cc:843 src/libaudqt/prefs-window-qt.cc:593
 msgid "Audacious Settings"
@@ -1460,7 +1460,7 @@ msgstr "_Επαναφορά"
 
 #: src/libaudqt/infowin-qt.cc:167
 msgid "Error writing tag(s)."
-msgstr "Σφάλμα εγγραφής ετικέτας(ών)."
+msgstr "Σφάλμα εγγραφής tag(s)."
 
 #: src/libaudqt/infowin-qt.cc:189
 msgid "%1 files selected"
@@ -1484,7 +1484,7 @@ msgstr "Μήνυμα"
 
 #: src/libaudqt/log-inspector.cc:209
 msgid "Log Inspector"
-msgstr "Επιθεώριση καταγραφής"
+msgstr "Καταγραφές"
 
 #: src/libaudqt/log-inspector.cc:220
 msgid "Debug"

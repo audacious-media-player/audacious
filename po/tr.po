@@ -6,6 +6,7 @@
 # Önder Yıldırım <onder.y@msn.com>, 2013
 # aamet <aaydin159@gmail.com>, 2012
 # aamet <aaydin159@gmail.com>, 2012
+# abc Def <hdogan1974@gmail.com>, 2020
 # Imnune <alikoc@hush.ai>, 2012
 # Ali Orhun Akkirman <the.alorak@gmail.com>, 2013
 # hsngrms <dead-bodies-everywhere@hotmail.com>, 2012
@@ -29,14 +30,15 @@
 # tarkan255 <t.oguzman@hotmail.com>, 2012
 # Volkan Gezer <volkangezer@gmail.com>, 2014-2015
 # Yaşar Çiv <yasarciv@protonmail.com>, 2018
+# Yaşar Çiv <yasarciv@protonmail.com>, 2020
 # Zekeriya Cihan <zekeriya.cihan@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2020-01-26 13:17+0100\n"
-"PO-Revision-Date: 2020-01-26 12:21+0000\n"
-"Last-Translator: John Lindgren <john@jlindgren.net>\n"
+"PO-Revision-Date: 2020-04-28 08:51+0000\n"
+"Last-Translator: Yaşar Çiv <yasarciv@protonmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/audacious/audacious/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -106,7 +108,7 @@ msgstr "Hata ayıklama iletilerini yazdır (iki kez kullanılabilir)"
 
 #: src/audacious/main.cc:81
 msgid "Run in GTK mode"
-msgstr ""
+msgstr "GTK modunda çalıştır"
 
 #: src/audacious/main.cc:138
 #, c-format
@@ -216,7 +218,7 @@ msgstr "%s yüklenemiyor: bilinmeyen dosya uzantısı."
 #: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:309
 #, c-format
 msgid "Error saving %s."
-msgstr ""
+msgstr "%s kaydedilirken hata oluştu."
 
 #: src/libaudcore/playlist-files.cc:167
 #, c-format
@@ -332,7 +334,7 @@ msgstr "Listeyi Yeniden Adlandır"
 
 #: src/libaudgui/eq-preset.cc:153
 msgid "Please select one preset to export."
-msgstr ""
+msgstr "Lütfen dışa aktarmak için bir ön ayar seçin."
 
 #: src/libaudgui/eq-preset.cc:256 src/libaudgui/eq-preset.cc:261
 msgid "Preset File ..."
@@ -701,7 +703,7 @@ msgstr "Parça Numarası"
 
 #: src/libaudgui/infowin.cc:397
 msgid "_Auto-fill empty fields"
-msgstr ""
+msgstr "_Boş alanları otomatik doldur"
 
 #: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:183
 msgid "_Save"
@@ -709,7 +711,7 @@ msgstr "_Kaydet"
 
 #: src/libaudgui/infowin.cc:417
 msgid "_Previous"
-msgstr ""
+msgstr "_Önceki"
 
 #: src/libaudgui/infowin.cc:420
 msgid "_Next"
@@ -906,7 +908,7 @@ msgstr "Tarih"
 #: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:55
 #: src/libaudqt/prefs-window-qt.cc:173
 msgid "Description"
-msgstr ""
+msgstr "Açıklama"
 
 #: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:64
 #: src/libaudqt/prefs-window-qt.cc:176
@@ -1102,15 +1104,15 @@ msgstr "Vekil sunucu doğrulaması kullan"
 
 #: src/libaudgui/prefs-window.cc:273 src/libaudqt/prefs-window-qt.cc:287
 msgid "Use SOCKS proxy"
-msgstr ""
+msgstr "SOCKS vekil kullan"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window-qt.cc:288
 msgid "SOCKS v4a"
-msgstr ""
+msgstr "SOCKS v4a"
 
 #: src/libaudgui/prefs-window.cc:279 src/libaudqt/prefs-window-qt.cc:289
 msgid "SOCKS v5"
-msgstr ""
+msgstr "SOCKS v5"
 
 #: src/libaudgui/prefs-window.cc:286 src/libaudqt/prefs-window-qt.cc:292
 msgid "Auto character encoding detector for:"
@@ -1250,7 +1252,7 @@ msgstr "<b>Karışık</b>"
 
 #: src/libaudgui/prefs-window.cc:366 src/libaudqt/prefs-window-qt.cc:364
 msgid "Step forward/backward by:"
-msgstr ""
+msgstr "İleri/geri adım:"
 
 #: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:365
 msgid "seconds"
@@ -1258,11 +1260,11 @@ msgstr "saniye"
 
 #: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:366
 msgid "Adjust volume by:"
-msgstr ""
+msgstr "Ses düzeyini şuna göre ayarlayın:"
 
 #: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:367
 msgid "percent"
-msgstr ""
+msgstr "yüzde"
 
 #: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:384
 msgid "TITLE"
@@ -1405,7 +1407,7 @@ msgstr "\n(Devam eden iletiler gizlendi.)"
 
 #: src/libaudqt/eq-preset-qt.cc:249
 msgid "Preset files (*.preset *.eqf *.q1)"
-msgstr ""
+msgstr "Ön ayarlı dosyalar (* .preset * .eqf * .q1)"
 
 #: src/libaudqt/eq-preset-qt.cc:348
 msgid "Close"
@@ -1429,11 +1431,11 @@ msgstr "Ekle"
 
 #: src/libaudqt/font-entry.cc:39
 msgid "Set Font"
-msgstr ""
+msgstr "Yazı Tipini Ayarla"
 
 #: src/libaudqt/info-widget.cc:44
 msgid "<various>"
-msgstr ""
+msgstr "<various>"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Metadata"
@@ -1465,23 +1467,23 @@ msgstr "Bit oranı"
 
 #: src/libaudqt/info-widget.cc:67
 msgid "MusicBrainz ID"
-msgstr ""
+msgstr "MusicBrainz Kimliği"
 
 #: src/libaudqt/infowin-qt.cc:156
 msgid "_Revert"
-msgstr ""
+msgstr "_Geri Al"
 
 #: src/libaudqt/infowin-qt.cc:167
 msgid "Error writing tag(s)."
-msgstr ""
+msgstr "Etiket(leri) yazma hatası."
 
 #: src/libaudqt/infowin-qt.cc:189
 msgid "%1 files selected"
-msgstr ""
+msgstr "%1 dosya seçildi"
 
 #: src/libaudqt/infowin-qt.cc:193
 msgid "_Save %1 files"
-msgstr ""
+msgstr "%1 dosyayı _kaydet"
 
 #: src/libaudqt/log-inspector.cc:150
 msgid "Level"
