@@ -72,7 +72,7 @@ static const char * id3_frames[ID3_TAGS_NO] = {
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
-struct ID3v2Header {
+struct ID3v22Header {
     char magic[3];
     unsigned char version;
     unsigned char revision;
@@ -80,7 +80,7 @@ struct ID3v2Header {
     uint32_t size;
 };
 
-struct ID3v2FrameHeader {
+struct ID3v22FrameHeader {
     char key[3];
     unsigned char size[3];
 };
@@ -95,7 +95,7 @@ struct GenericFrame : public Index<char> {
 
 namespace audtag {
 
-static bool validate_header (ID3v2Header * header)
+static bool validate_header (ID3v22Header * header)
 {
     if (memcmp (header->magic, "ID3", 3))
         return false;
@@ -117,20 +117,20 @@ static bool validate_header (ID3v2Header * header)
 static bool read_header (VFSFile & handle, int * version, bool *
  syncsafe, int64_t * offset, int * header_size, int * data_size)
 {
-    ID3v2Header header;
+    ID3v22Header header;
 
     if (handle.fseek (0, VFS_SEEK_SET))
         return false;
 
-    if (handle.fread (& header, 1, sizeof (ID3v2Header)) != sizeof
-     (ID3v2Header))
+    if (handle.fread (& header, 1, sizeof (ID3v22Header)) != sizeof
+     (ID3v22Header))
         return false;
 
     if (validate_header (& header))
     {
         * offset = 0;
         * version = header.version;
-        * header_size = sizeof (ID3v2Header);
+        * header_size = sizeof (ID3v22Header);
         * data_size = header.size;
     }
     else
@@ -147,14 +147,14 @@ static bool read_header (VFSFile & handle, int * version, bool *
 static bool read_frame (VFSFile & handle, int max_size, int version,
  bool syncsafe, int * frame_size, GenericFrame & frame)
 {
-    ID3v2FrameHeader header;
+    ID3v22FrameHeader header;
     uint32_t hdrsz = 0;
 
-    if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
+    if ((max_size -= sizeof (ID3v22FrameHeader)) < 0)
         return false;
 
-    if (handle.fread (& header, 1, sizeof (ID3v2FrameHeader)) != sizeof
-     (ID3v2FrameHeader))
+    if (handle.fread (& header, 1, sizeof (ID3v22FrameHeader)) != sizeof
+     (ID3v22FrameHeader))
         return false;
 
     if (! header.key[0]) /* padding */
@@ -173,7 +173,7 @@ static bool read_frame (VFSFile & handle, int max_size, int version,
     AUDDBG (" key = %.3s\n", header.key);
     AUDDBG (" size = %d\n", (int) hdrsz);
 
-    * frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
+    * frame_size = sizeof (ID3v22FrameHeader) + hdrsz;
 
     frame.key = String (str_copy (header.key, 3));
     frame.clear ();
