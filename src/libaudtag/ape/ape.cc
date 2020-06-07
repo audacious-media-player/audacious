@@ -44,7 +44,8 @@ struct APEHeader {
 #pragma pack(pop)
 
 struct ValuePair {
-    String key, value;
+    String key;
+    Index<char> value;
 };
 
 #define APE_FLAG_HAS_HEADER (1 << 31)
@@ -193,17 +194,19 @@ static const char * ape_read_item (const char * data, int length, ValuePair & pa
 
     value ++;
 
-    if (header[0] > (unsigned) (data + length - value))
+    uint32_t value_len = FROM_LE32 (header[0]);
+    if (value_len > (unsigned) (data + length - value))
     {
         AUDWARN ("Item value of length %d, but only %d bytes remain in tag.\n",
-         (int) header[0], (int) (data + length - value));
+         (int) value_len, (int) (data + length - value));
         return nullptr;
     }
 
     pair.key = String (data + 8);
-    pair.value = String (str_copy (value, header[0]));
+    pair.value.insert (value, -1, value_len);
+    pair.value.append (0);
 
-    return value + header[0];
+    return value + value_len;
 }
 
 static Index<ValuePair> ape_read_items (VFSFile & handle)
@@ -233,7 +236,7 @@ static Index<ValuePair> ape_read_items (VFSFile & handle)
         if (! (item = ape_read_item (item, data.end () - item, pair)))
             break;
 
-        AUDDBG ("Read: %s = %s.\n", (const char *) pair.key, (const char *) pair.value);
+        AUDDBG ("Read: %s = %s.\n", (const char *) pair.key, pair.value.begin ());
         list.append (std::move (pair));
     }
 
@@ -247,27 +250,27 @@ bool APETagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * imag
     for (const ValuePair & pair : list)
     {
         if (! strcmp_nocase (pair.key, "Artist"))
-            tuple.set_str (Tuple::Artist, pair.value);
+            tuple.set_str (Tuple::Artist, pair.value.begin ());
         else if (! strcmp_nocase (pair.key, "Title"))
-            tuple.set_str (Tuple::Title, pair.value);
+            tuple.set_str (Tuple::Title, pair.value.begin ());
         else if (! strcmp_nocase (pair.key, "Album"))
-            tuple.set_str (Tuple::Album, pair.value);
+            tuple.set_str (Tuple::Album, pair.value.begin ());
         else if (! strcmp_nocase (pair.key, "Comment"))
-            tuple.set_str (Tuple::Comment, pair.value);
+            tuple.set_str (Tuple::Comment, pair.value.begin ());
         else if (! strcmp_nocase (pair.key, "Genre"))
-            tuple.set_str (Tuple::Genre, pair.value);
+            tuple.set_str (Tuple::Genre, pair.value.begin ());
         else if (! strcmp_nocase (pair.key, "Track"))
-            tuple.set_int (Tuple::Track, atoi (pair.value));
+            tuple.set_int (Tuple::Track, atoi (pair.value.begin ()));
         else if (! strcmp_nocase (pair.key, "Year"))
-            tuple.set_int (Tuple::Year, atoi (pair.value));
+            tuple.set_int (Tuple::Year, atoi (pair.value.begin ()));
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_TRACK_GAIN"))
-            tuple.set_gain (Tuple::TrackGain, Tuple::GainDivisor, pair.value);
+            tuple.set_gain (Tuple::TrackGain, Tuple::GainDivisor, pair.value.begin ());
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_TRACK_PEAK"))
-            tuple.set_gain (Tuple::TrackPeak, Tuple::PeakDivisor, pair.value);
+            tuple.set_gain (Tuple::TrackPeak, Tuple::PeakDivisor, pair.value.begin ());
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_ALBUM_GAIN"))
-            tuple.set_gain (Tuple::AlbumGain, Tuple::GainDivisor, pair.value);
+            tuple.set_gain (Tuple::AlbumGain, Tuple::GainDivisor, pair.value.begin ());
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_ALBUM_PEAK"))
-            tuple.set_gain (Tuple::AlbumPeak, Tuple::PeakDivisor, pair.value);
+            tuple.set_gain (Tuple::AlbumPeak, Tuple::PeakDivisor, pair.value.begin ());
     }
 
     return true;
@@ -393,7 +396,7 @@ bool APETagModule::write_tag (VFSFile & handle, const Tuple & tuple)
          ! strcmp_nocase (pair.key, "Year"))
             continue;
 
-        if (! ape_write_item (handle, pair.key, pair.value, & length))
+        if (! ape_write_item (handle, pair.key, pair.value.begin (), & length))
             return false;
 
         items ++;
