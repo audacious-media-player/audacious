@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if ! test -d .git
+if ! test -e .git
 then
 	echo This script must be run in a Git repository
 	exit 1
