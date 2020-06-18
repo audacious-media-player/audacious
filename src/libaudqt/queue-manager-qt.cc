@@ -50,7 +50,11 @@ public:
                           const QItemSelection & deselected);
 
 protected:
-    int rowCount(const QModelIndex & parent) const { return m_rows; }
+    int rowCount(const QModelIndex & parent) const
+    {
+        return parent.isValid() ? 0 : m_rows;
+    }
+
     int columnCount(const QModelIndex & parent) const { return 2; }
     QVariant data(const QModelIndex & index, int role) const;
 
