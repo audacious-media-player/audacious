@@ -228,6 +228,7 @@ EXPORT void simple_message(const char * title, const char * text,
     auto msgbox = new QMessageBox(icon, title, text, QMessageBox::Close);
     msgbox->button(QMessageBox::Close)->setText(translate_str(N_("_Close")));
     msgbox->setAttribute(Qt::WA_DeleteOnClose);
+    msgbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
     msgbox->show();
 }
 
