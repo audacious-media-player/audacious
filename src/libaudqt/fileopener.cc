@@ -78,7 +78,7 @@ EXPORT void fileopener_show(FileMode mode)
         if (mode == FileMode::ExportPlaylist)
             dialog->setAcceptMode(QFileDialog::AcceptSave);
 
-        QObject::connect(dialog, &QFileDialog::directoryEntered,
+        QObject::connect(dialog.data(), &QFileDialog::directoryEntered,
                          [](const QString & path) {
                              aud_set_str("audgui", "filesel_path",
                                          path.toUtf8().constData());
@@ -87,7 +87,7 @@ EXPORT void fileopener_show(FileMode mode)
         auto playlist = Playlist::active_playlist();
 
         QObject::connect(
-            dialog, &QFileDialog::accepted, [dialog, mode, playlist]() {
+            dialog.data(), &QFileDialog::accepted, [dialog, mode, playlist]() {
                 Index<PlaylistAddItem> files;
                 for (const QUrl & url : dialog->selectedUrls())
                     files.append(String(url.toEncoded().constData()));
