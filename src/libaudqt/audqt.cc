@@ -105,6 +105,7 @@ EXPORT void cleanup()
     infopopup_hide_now();
     infowin_hide();
     log_inspector_hide();
+    plugin_prefs_hide();
     prefswin_hide();
     queue_manager_hide();
 
