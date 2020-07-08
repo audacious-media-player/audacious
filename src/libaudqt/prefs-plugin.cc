@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include <memory>
+
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QPointer>
@@ -112,7 +114,7 @@ EXPORT void plugin_prefs(PluginHandle * ph)
     if (p->init)
         p->init();
 
-    QObject::connect(cw->root, &QObject::destroyed, [p]() {
+    QObject::connect(cw->root.data(), &QObject::destroyed, [p]() {
         if (p->cleanup)
             p->cleanup();
     });
@@ -149,7 +151,7 @@ EXPORT void plugin_prefs(PluginHandle * ph)
             ->setText(translate_str(N_("_Close")));
     }
 
-    QObject::connect(bbox, &QDialogButtonBox::rejected, cw->root,
+    QObject::connect(bbox, &QDialogButtonBox::rejected, cw->root.data(),
                      &QObject::deleteLater);
 
     vbox->addWidget(bbox);
