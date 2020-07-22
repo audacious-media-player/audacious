@@ -1,0 +1,19 @@
+These SVG files have been un-optimized to work around the following librsvg bug:
+    https://bugzilla.gnome.org/show_bug.cgi?id=620923
+
+Basically, older versions of librsvg can't parse an optimized path like
+".123.456", they need it spelled out as "0.123 0.456".
+
+An SVG file can be un-optimized by the following regex replacements:
+
+Replace once:
+    ([^0-9])\.
+    \10\.
+
+Replace until no longer found:
+    ([0-9]+)\.([0-9]+)\.([0-9|\.|-]+)
+    \1\.\2 0\.\3
+
+Replace once:
+    www0
+    www

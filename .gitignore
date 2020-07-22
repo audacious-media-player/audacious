@@ -16,9 +16,11 @@ src/audtool/audtool
 src/dbus/aud-dbus.c
 src/dbus/aud-dbus.h
 src/libaudcore/audio.h
-src/libaudcore/tinylock.h
 src/libaudcore/tests/test
 src/libaudcore/tests/test-mainloop
+src/libaudgui/images.c
+src/libaudgui/images.h
+src/libaudqt/images.cc
 win32/audacious.nsi
 win32/override/README.txt
 .deps

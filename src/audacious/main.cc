@@ -1,6 +1,6 @@
 /*
  * main.c
- * Copyright 2007-2013 William Pitcock and John Lindgren
+ * Copyright 2007-2013 Ariadne Conill and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -50,7 +50,7 @@ static struct {
     int mainwin, show_jump_box;
     int headless, quit_after_play;
     int verbose;
-    int qt;
+    int gtk;
 } options;
 
 static bool initted = false;
@@ -78,7 +78,7 @@ static const struct {
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
     {"verbose", 'V', & options.verbose, N_("Print debugging messages (may be used twice)")},
 #if defined(USE_QT) && defined(USE_GTK)
-    {"qt", 'Q', & options.qt, N_("Run in Qt mode")},
+    {"gtk", 'G', & options.gtk, N_("Run in GTK mode")},
 #endif
 };
 
@@ -171,8 +171,8 @@ static bool parse_options (int argc, char * * argv)
     else if (options.verbose)
         audlog::set_stderr_level (audlog::Info);
 
-    if (options.qt)
-        aud_set_mainloop_type (MainloopType::Qt);
+    if (options.gtk)
+        aud_set_mainloop_type (MainloopType::GLib);
 
     return true;
 }
@@ -199,9 +199,7 @@ static void do_remote ()
     ObjAudacious * obj = nullptr;
     GError * error = nullptr;
 
-#if ! GLIB_CHECK_VERSION (2, 36, 0)
     g_type_init ();
-#endif
 
     /* check whether the selected instance is running */
     if (dbus_server_init () != StartupType::Client)
@@ -270,7 +268,7 @@ static void do_remote ()
 
 static void do_commands ()
 {
-    bool resume = aud_get_bool (nullptr, "resume_playback_on_startup");
+    bool resume = aud_get_bool ("resume_playback_on_startup");
 
     if (filenames.len ())
     {
@@ -368,7 +366,7 @@ int main (int argc, char * * argv)
         return EXIT_SUCCESS;
     }
 
-#if USE_DBUS
+#ifdef USE_DBUS
     do_remote (); /* may exit */
 #endif
 

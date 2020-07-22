@@ -20,10 +20,11 @@
 #ifndef AUDGUI_PRESET_BROWSER_H
 #define AUDGUI_PRESET_BROWSER_H
 
+#include <libaudcore/equalizer.h>
+
 void eq_preset_load_file ();
 void eq_preset_load_eqf ();
-void eq_preset_save_file ();
-void eq_preset_save_eqf ();
-void eq_preset_import_winamp ();
+void eq_preset_save_file (const EqualizerPreset & preset);
+void eq_preset_save_eqf (const EqualizerPreset & preset);
 
 #endif // AUDGUI_PRESET_BROWSER_H

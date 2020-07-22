@@ -163,4 +163,4 @@ Command for decompressing zip files (skins).  Default is \fIunzip\fP.
 .BR audtool (1)
 
 .SH WEBSITE
-.I http://audacious-media-player.org
+.I https://audacious-media-player.org

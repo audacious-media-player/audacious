@@ -20,68 +20,68 @@
 #include "cue-cache.h"
 #include "multihash.h"
 #include "playlist-internal.h"
+#include "threads.h"
 
-#include <pthread.h>
+enum NodeState
+{
+    NotLoaded,
+    Loading,
+    Loaded
+};
 
-enum NodeState {NotLoaded, Loading, Loaded};
-
-struct CueCacheNode {
+struct CueCacheNode
+{
     Index<PlaylistAddItem> items;
     NodeState state = NotLoaded;
     int refcount = 0;
 };
 
 static SimpleHash<String, CueCacheNode> cache;
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+static aud::mutex mutex;
+static aud::condvar cond;
 
-CueCacheRef::CueCacheRef (const char * filename) :
-    m_filename (filename)
+CueCacheRef::CueCacheRef(const char * filename) : m_filename(filename)
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take();
 
-    m_node = cache.lookup (m_filename);
-    if (! m_node)
-        m_node = cache.add (m_filename, CueCacheNode ());
+    m_node = cache.lookup(m_filename);
+    if (!m_node)
+        m_node = cache.add(m_filename, CueCacheNode());
 
-    m_node->refcount ++;
-
-    pthread_mutex_unlock (& mutex);
+    m_node->refcount++;
 }
 
-CueCacheRef::~CueCacheRef ()
+CueCacheRef::~CueCacheRef()
 {
-    pthread_mutex_lock (& mutex);
+    auto mh = mutex.take();
 
-    m_node->refcount --;
-    if (! m_node->refcount)
-        cache.remove (m_filename);
-
-    pthread_mutex_unlock (& mutex);
+    m_node->refcount--;
+    if (!m_node->refcount)
+        cache.remove(m_filename);
 }
 
-const Index<PlaylistAddItem> & CueCacheRef::load ()
+const Index<PlaylistAddItem> & CueCacheRef::load()
 {
+    auto mh = mutex.take();
     String title; // not used
-    pthread_mutex_lock (& mutex);
 
     switch (m_node->state)
     {
     case NotLoaded:
         // load the cuesheet in this thread
         m_node->state = Loading;
-        pthread_mutex_unlock (& mutex);
-        playlist_load (m_filename, title, m_node->items);
-        pthread_mutex_lock (& mutex);
+        mh.unlock();
+        playlist_load(m_filename, title, m_node->items);
+        mh.lock();
 
         m_node->state = Loaded;
-        pthread_cond_broadcast (& cond);
+        cond.notify_all();
         break;
 
     case Loading:
         // wait for cuesheet to load in another thread
         while (m_node->state != Loaded)
-            pthread_cond_wait (& cond, & mutex);
+            cond.wait(mh);
 
         break;
 
@@ -90,6 +90,5 @@ const Index<PlaylistAddItem> & CueCacheRef::load ()
         break;
     }
 
-    pthread_mutex_unlock (& mutex);
     return m_node->items;
 }

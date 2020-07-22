@@ -20,32 +20,31 @@
 #include "parse.h"
 #include <string.h>
 
-void TextParser::next ()
+void TextParser::next()
 {
     m_val = nullptr;
 
-    if (! fgets (m_key, sizeof m_key, m_file))
+    if (!fgets(m_key, sizeof m_key, m_file))
         return;
 
-    char * space = strchr (m_key, ' ');
-    if (! space)
+    char * space = strchr(m_key, ' ');
+    if (!space)
         return;
 
-    * space = 0;
+    *space = 0;
     m_val = space + 1;
 
-    char * newline = strchr (m_val, '\n');
+    char * newline = strchr(m_val, '\n');
     if (newline)
-        * newline = 0;
+        *newline = 0;
 }
 
-bool TextParser::get_int (const char * key, int & val) const
+bool TextParser::get_int(const char * key, int & val) const
 {
-    return (m_val && ! strcmp (m_key, key) && sscanf (m_val, "%d", & val) == 1);
+    return (m_val && !strcmp(m_key, key) && sscanf(m_val, "%d", &val) == 1);
 }
 
-String TextParser::get_str (const char * key) const
+String TextParser::get_str(const char * key) const
 {
-    return (m_val && ! strcmp (m_key, key)) ? String (m_val) : String ();
+    return (m_val && !strcmp(m_key, key)) ? String(m_val) : String();
 }
-

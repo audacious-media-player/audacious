@@ -1,0 +1,13 @@
+--- libfaad/decoder.c.0	2017-12-17 11:17:36.000000000 -0500
++++ libfaad/decoder.c	2019-10-28 15:29:26.058465600 -0400
+@@ -53,10 +53,6 @@
+ uint16_t dbg_count;
+ #endif
+ 
+-#if defined WIN32 || defined _WIN32 || defined WIN64 || defined _WIN64
+-#include "win32_ver.h"
+-#endif
+-
+ /* static function declarations */
+ static void* aac_frame_decode(NeAACDecStruct *hDecoder,
+                               NeAACDecFrameInfo *hInfo,

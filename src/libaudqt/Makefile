@@ -1,12 +1,18 @@
 SHARED_LIB = ${LIB_PREFIX}audqt${LIB_SUFFIX}
 LIB_MAJOR = 2
-LIB_MINOR = 0
+LIB_MINOR = 2
 
 SRCS = about-qt.cc \
        art-qt.cc \
        audqt.cc \
+       colorbutton.cc \
+       eq-preset-qt.cc \
        equalizer-qt.cc \
+       file-entry.cc \
        fileopener.cc \
+       font-entry.cc \
+       images.cc \
+       infopopup-qt.cc \
        infowin-qt.cc \
        info-widget.cc \
        log-inspector.cc \
@@ -20,13 +26,19 @@ SRCS = about-qt.cc \
        prefs-pluginlist-model.cc \
        queue-manager-qt.cc \
        url-opener-qt.cc \
+       util-qt.cc \
+       treeview.cc \
        volumebutton.cc
 
-INCLUDES = export.h \
+INCLUDES = colorbutton.h \
+           export.h \
            iface.h \
            info-widget.h \
            libaudqt.h \
-           menu.h
+           menu.h \
+           treeview.h
+
+CLEAN = images.cc
 
 include ../../buildsys.mk
 include ../../extra.mk
@@ -42,9 +54,11 @@ CPPFLAGS := -I.. -I../.. \
 
 CFLAGS += ${LIB_CFLAGS}
 
-LIBS := -L../libaudcore -laudcore \
+LIB_LDFLAGS := -L../libaudcore $(LIB_LDFLAGS)
+
+LIBS := -laudcore \
         ${LIBS} -lm \
         ${QT_LIBS}
 
-%.moc: %.h
-	moc $< -o $@
+images.cc: images.qrc
+	${QT_BINPATH}/rcc images.qrc -o images.cc

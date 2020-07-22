@@ -28,10 +28,10 @@ struct CueCacheNode;
 class CueCacheRef
 {
 public:
-    CueCacheRef (const char * filename);
-    ~CueCacheRef ();
+    CueCacheRef(const char * filename);
+    ~CueCacheRef();
 
-    const Index<PlaylistAddItem> & load ();
+    const Index<PlaylistAddItem> & load();
 
 private:
     String m_filename;

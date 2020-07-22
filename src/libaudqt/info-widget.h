@@ -1,6 +1,6 @@
 /*
  * info-widget.h
- * Copyright 2006-2014 William Pitcock, Tomasz Moń, Eugene Zagidullin,
+ * Copyright 2006-2014 Ariadne Conill, Tomasz Moń, Eugene Zagidullin,
  *                     John Lindgren, and Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,24 +22,33 @@
 #define LIBAUDQT_INFO_WIDGET_H
 
 #include <QTreeView>
+#include <libaudcore/index.h>
 #include <libaudqt/export.h>
 
+struct PlaylistAddItem;
 class PluginHandle;
 class Tuple;
 
-namespace audqt {
+namespace audqt
+{
 
 class InfoModel;
 
 class LIBAUDQT_PUBLIC InfoWidget : public QTreeView
 {
 public:
-    InfoWidget (QWidget * parent = nullptr);
-    ~InfoWidget ();
+    InfoWidget(QWidget * parent = nullptr);
+    ~InfoWidget();
 
-    void fillInfo (const char * filename, const Tuple & tuple,
-     PluginHandle * decoder, bool updating_enabled);
-    bool updateFile ();
+    void fillInfo(const char * filename, const Tuple & tuple,
+                  PluginHandle * decoder, bool updating_enabled);
+    void fillInfo(Index<PlaylistAddItem> && items, bool updating_enabled);
+    void linkEnabled(QWidget * widget);
+    void revertInfo();
+    bool updateFile();
+
+protected:
+    void keyPressEvent(QKeyEvent * event) override;
 
 private:
     InfoModel * m_model;

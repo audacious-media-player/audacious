@@ -1,0 +1,22 @@
+#mesondefine PACKAGE
+#mesondefine BUILDSTAMP
+#mesondefine VERSION
+#mesondefine COPYRIGHT
+#mesondefine EXPORT
+#mesondefine PLUGIN_SUFFIX
+
+#define PACKAGE_VERSION VERSION
+#define ICONV_CONST
+
+#mesondefine INSTALL_BINDIR
+#mesondefine INSTALL_DATADIR
+#mesondefine INSTALL_PLUGINDIR
+#mesondefine INSTALL_LOCALEDIR
+#mesondefine INSTALL_DESKTOPFILE
+#mesondefine INSTALL_ICONFILE
+
+#mesondefine USE_DBUS
+#mesondefine USE_QT
+#mesondefine USE_LIBARCHIVE
+
+#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_32

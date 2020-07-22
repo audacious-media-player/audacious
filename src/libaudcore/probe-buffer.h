@@ -39,28 +39,27 @@
 class ProbeBuffer : public VFSImpl
 {
 public:
-    ProbeBuffer (const char * filename, VFSImpl * file);
-    ~ProbeBuffer ();
+    ProbeBuffer(const char * filename, VFSImpl * file);
+    ~ProbeBuffer();
 
-    int64_t fread (void * ptr, int64_t size, int64_t nmemb);
-    int fseek (int64_t offset, VFSSeekType whence);
+    int64_t fread(void * ptr, int64_t size, int64_t nmemb);
+    int fseek(int64_t offset, VFSSeekType whence);
 
-    int64_t ftell ();
-    int64_t fsize ();
-    bool feof ();
+    int64_t ftell();
+    int64_t fsize();
+    bool feof();
 
-    int64_t fwrite (const void * ptr, int64_t size, int64_t nmemb);
-    int ftruncate (int64_t length);
-    int fflush ();
+    int64_t fwrite(const void * ptr, int64_t size, int64_t nmemb);
+    int ftruncate(int64_t length);
+    int fflush();
 
-    String get_metadata (const char * field);
+    String get_metadata(const char * field);
 
-    void set_limit_to_buffer (bool limit)
-        { m_limited = limit; }
+    void set_limit_to_buffer(bool limit) { m_limited = limit; }
 
 private:
-    void increase_buffer (int64_t size);
-    void release_buffer ();
+    void increase_buffer(int64_t size);
+    void release_buffer();
 
     String m_filename;
     SmartPtr<VFSImpl> m_file;

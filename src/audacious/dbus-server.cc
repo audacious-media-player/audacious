@@ -86,14 +86,21 @@ static gboolean do_add_url (Obj * obj, Invoc * invoc, const char * url)
 
 static gboolean do_advance (Obj * obj, Invoc * invoc)
 {
-    CURRENT.next_song (aud_get_bool (nullptr, "repeat"));
+    CURRENT.next_song (aud_get_bool ("repeat"));
     FINISH (advance);
+    return true;
+}
+
+static gboolean do_advance_album (Obj * obj, Invoc * invoc)
+{
+    CURRENT.next_album (aud_get_bool ("repeat"));
+    FINISH (advance_album);
     return true;
 }
 
 static gboolean do_auto_advance (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (auto_advance, ! aud_get_bool (nullptr, "no_playlist_advance"));
+    FINISH2 (auto_advance, ! aud_get_bool ("no_playlist_advance"));
     return true;
 }
 
@@ -150,7 +157,7 @@ static gboolean do_eject (Obj * obj, Invoc * invoc)
 
 static gboolean do_equalizer_activate (Obj * obj, Invoc * invoc, gboolean active)
 {
-    aud_set_bool (nullptr, "equalizer_active", active);
+    aud_set_bool ("equalizer_active", active);
     FINISH (equalizer_activate);
     return true;
 }
@@ -170,7 +177,7 @@ static gboolean do_get_active_playlist_name (Obj * obj, Invoc * invoc)
 
 static gboolean do_get_eq (Obj * obj, Invoc * invoc)
 {
-    double preamp = aud_get_double (nullptr, "equalizer_preamp");
+    double preamp = aud_get_double ("equalizer_preamp");
     double bands[AUD_EQ_NBANDS];
     aud_eq_get_bands (bands);
 
@@ -188,7 +195,7 @@ static gboolean do_get_eq_band (Obj * obj, Invoc * invoc, int band)
 
 static gboolean do_get_eq_preamp (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (get_eq_preamp, aud_get_double (nullptr, "equalizer_preamp"));
+    FINISH2 (get_eq_preamp, aud_get_double ("equalizer_preamp"));
     return true;
 }
 
@@ -423,7 +430,7 @@ static gboolean do_quit (Obj * obj, Invoc * invoc)
 static gboolean do_record (Obj * obj, Invoc * invoc)
 {
     if (aud_drct_get_record_enabled ())
-        aud_set_bool (nullptr, "record", ! aud_get_bool (nullptr, "record"));
+        aud_set_bool ("record", ! aud_get_bool ("record"));
 
     FINISH (record);
     return true;
@@ -433,7 +440,7 @@ static gboolean do_recording (Obj * obj, Invoc * invoc)
 {
     bool recording = false;
     if (aud_drct_get_record_enabled ())
-        recording = aud_get_bool (nullptr, "record");
+        recording = aud_get_bool ("record");
 
     FINISH2 (recording, recording);
     return true;
@@ -441,7 +448,7 @@ static gboolean do_recording (Obj * obj, Invoc * invoc)
 
 static gboolean do_repeat (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (repeat, aud_get_bool (nullptr, "repeat"));
+    FINISH2 (repeat, aud_get_bool ("repeat"));
     return true;
 }
 
@@ -449,6 +456,13 @@ static gboolean do_reverse (Obj * obj, Invoc * invoc)
 {
     CURRENT.prev_song ();
     FINISH (reverse);
+    return true;
+}
+
+static gboolean do_reverse_album (Obj * obj, Invoc * invoc)
+{
+    CURRENT.prev_album ();
+    FINISH (reverse_album);
     return true;
 }
 
@@ -504,7 +518,7 @@ static gboolean do_set_eq (Obj * obj, Invoc * invoc, double preamp, GVariant * v
     if (nbands != AUD_EQ_NBANDS)
         return false;
 
-    aud_set_double (nullptr, "equalizer_preamp", preamp);
+    aud_set_double ("equalizer_preamp", preamp);
     aud_eq_set_bands (bands);
     FINISH (set_eq);
     return true;
@@ -519,7 +533,7 @@ static gboolean do_set_eq_band (Obj * obj, Invoc * invoc, int band, double value
 
 static gboolean do_set_eq_preamp (Obj * obj, Invoc * invoc, double preamp)
 {
-    aud_set_double (nullptr, "equalizer_preamp", preamp);
+    aud_set_double ("equalizer_preamp", preamp);
     FINISH (set_eq_preamp);
     return true;
 }
@@ -598,7 +612,7 @@ static gboolean do_show_prefs_box (Obj * obj, Invoc * invoc, gboolean show)
 
 static gboolean do_shuffle (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (shuffle, aud_get_bool (nullptr, "shuffle"));
+    FINISH2 (shuffle, aud_get_bool ("shuffle"));
     return true;
 }
 
@@ -635,26 +649,29 @@ static gboolean do_song_title (Obj * obj, Invoc * invoc, unsigned pos)
 static gboolean do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const char * key)
 {
     Tuple::Field field = Tuple::field_by_name (key);
-    Tuple tuple;
-    GVariant * var;
+    GVariant * var = nullptr;
 
     if (field >= 0)
-        tuple = CURRENT.entry_tuple (pos);
-
-    switch (tuple.get_value_type (field))
     {
-    case Tuple::String:
-        var = g_variant_new_string (tuple.get_str (field));
-        break;
+        Tuple tuple = CURRENT.entry_tuple (pos);
 
-    case Tuple::Int:
-        var = g_variant_new_int32 (tuple.get_int (field));
-        break;
+        switch (tuple.get_value_type (field))
+        {
+        case Tuple::String:
+            var = g_variant_new_string (tuple.get_str (field));
+            break;
 
-    default:
-        var = g_variant_new_string ("");
-        break;
+        case Tuple::Int:
+            var = g_variant_new_int32 (tuple.get_int (field));
+            break;
+
+        default:
+            break;
+        }
     }
+
+    if (! var)
+        var = g_variant_new_string ("");
 
     FINISH2 (song_tuple, g_variant_new_variant (var));
     return true;
@@ -686,7 +703,7 @@ static gboolean do_stop (Obj * obj, Invoc * invoc)
 
 static gboolean do_stop_after (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (stop_after, aud_get_bool (nullptr, "stop_after_current_song"));
+    FINISH2 (stop_after, aud_get_bool ("stop_after_current_song"));
     return true;
 }
 
@@ -704,28 +721,28 @@ static gboolean do_time (Obj * obj, Invoc * invoc)
 
 static gboolean do_toggle_auto_advance (Obj * obj, Invoc * invoc)
 {
-    aud_toggle_bool (nullptr, "no_playlist_advance");
+    aud_toggle_bool ("no_playlist_advance");
     FINISH (toggle_auto_advance);
     return true;
 }
 
 static gboolean do_toggle_repeat (Obj * obj, Invoc * invoc)
 {
-    aud_toggle_bool (nullptr, "repeat");
+    aud_toggle_bool ("repeat");
     FINISH (toggle_repeat);
     return true;
 }
 
 static gboolean do_toggle_shuffle (Obj * obj, Invoc * invoc)
 {
-    aud_toggle_bool (nullptr, "shuffle");
+    aud_toggle_bool ("shuffle");
     FINISH (toggle_shuffle);
     return true;
 }
 
 static gboolean do_toggle_stop_after (Obj * obj, Invoc * invoc)
 {
-    aud_toggle_bool (nullptr, "stop_after_current_song");
+    aud_toggle_bool ("stop_after_current_song");
     FINISH (toggle_stop_after);
     return true;
 }
@@ -754,6 +771,7 @@ handlers[] =
     {"handle-add-list", (GCallback) do_add_list},
     {"handle-add-url", (GCallback) do_add_url},
     {"handle-advance", (GCallback) do_advance},
+    {"handle-advance-album", (GCallback) do_advance_album},
     {"handle-auto-advance", (GCallback) do_auto_advance},
     {"handle-balance", (GCallback) do_balance},
     {"handle-clear", (GCallback) do_clear},
@@ -802,6 +820,7 @@ handlers[] =
     {"handle-record", (GCallback) do_record},
     {"handle-repeat", (GCallback) do_repeat},
     {"handle-reverse", (GCallback) do_reverse},
+    {"handle-reverse-album", (GCallback) do_reverse_album},
     {"handle-seek", (GCallback) do_seek},
     {"handle-select-displayed-playlist", (GCallback) do_select_displayed_playlist},
     {"handle-select-playing-playlist", (GCallback) do_select_playing_playlist},

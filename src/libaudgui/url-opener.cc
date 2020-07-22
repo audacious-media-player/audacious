@@ -38,7 +38,7 @@ static void open_cb (void * entry)
     else
         aud_drct_pl_add (text, -1);
 
-    if (aud_get_bool (nullptr, "save_url_history"))
+    if (aud_get_bool ("save_url_history"))
         aud_history_add (text);
 }
 

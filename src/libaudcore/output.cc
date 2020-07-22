@@ -19,8 +19,8 @@
 
 #include "output.h"
 
+#include <assert.h>
 #include <math.h>
-#include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -32,6 +32,7 @@
 #include "plugin.h"
 #include "plugins.h"
 #include "runtime.h"
+#include "threads.h"
 
 /* With Audacious 3.7, there is some support for secondary output plugins.
  * Notes and limitations:
@@ -45,39 +46,101 @@
  *  - The secondary's write_audio() is called in a tight loop until it has
  *    caught up to the primary, and should never return a zero byte count. */
 
-static pthread_mutex_t mutex_major = PTHREAD_MUTEX_INITIALIZER;
-static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
+/* Locking in this module is complicated by the fact that some of the
+ * output plugin functions (specifically period_wait() and drain()) are
+ * blocking calls.  Various other functions are designed to be called
+ * in parallel with period_wait() and drain().
+ *
+ * A two-mutex scheme is used to ensure that safe operations are allowed
+ * while a blocking call is in progress, and unsafe operations are
+ * prevented.  The "major" mutex is locked before an unsafe operations;
+ * only the "minor" mutex is locked before a safe one.  The "minor" mutex
+ * protects all changes to state data.
+ *
+ * The thread performing a blocking call (i.e. the input thread) must
+ * perform the following sequence:
+ *
+ *   1. Lock the major mutex
+ *   2. Lock the minor mutex
+ *   3. Check whether state data is correct for the call
+ *   4. Unlock the minor mutex
+ *   5. Call the blocking function
+ *   6. Unlock the major mutex
+ *
+ * The following classes attempt to enforce some of the rules regarding
+ * locking and state data. */
 
-#define LOCK_MAJOR pthread_mutex_lock (& mutex_major)
-#define UNLOCK_MAJOR pthread_mutex_unlock (& mutex_major)
-#define LOCK_MINOR pthread_mutex_lock (& mutex_minor)
-#define UNLOCK_MINOR pthread_mutex_unlock (& mutex_minor)
-#define LOCK_ALL do { LOCK_MAJOR; LOCK_MINOR; } while (0)
-#define UNLOCK_ALL do { UNLOCK_MINOR; UNLOCK_MAJOR; } while (0)
+/* locks held for a "safe" operation */
+struct SafeLock
+{
+    aud::mutex::holder minor;
+};
 
-/* State variables.  State changes that are allowed between LOCK_MINOR and
- * UNLOCK_MINOR (all others must take place between LOCK_ALL and UNLOCK_ALL):
- * s_paused -> true or false, s_flushed -> true, s_resetting -> true,
- * s_secondary -> true or false */
+/* locks held for an "unsafe" operation */
+struct UnsafeLock : SafeLock
+{
+    aud::mutex::holder major;
+};
 
-static bool s_input; /* input plugin connected */
-static bool s_output; /* primary output plugin connected */
-static bool s_secondary; /* secondary output plugin connected */
-static bool s_gain; /* replay gain info set */
-static bool s_paused; /* paused */
-static bool s_flushed; /* flushed, writes ignored until resume */
-static bool s_resetting; /* resetting output system */
+class OutputState
+{
+public:
+    bool input() const { return (m_flags & INPUT); }
+    bool output() const { return (m_flags & OUTPUT); }
+    bool secondary() const { return (m_flags & SECONDARY); }
+    bool paused() const { return (m_flags & PAUSED); }
+    bool flushed() const { return (m_flags & FLUSHED); }
+    bool resetting() const { return (m_flags & RESETTING); }
 
-/* Condition variable linked to LOCK_MINOR.
- * The input thread will wait if the following is true:
- *   ((! s_output || s_paused || s_resetting) && ! s_flushed)
- * Hence you must signal if you cause the inverse to be true:
- *   ((s_output && ! s_paused && ! s_resetting) || s_flushed) */
+    SafeLock lock_safe() { return {mutex_minor.take()}; }
 
-static pthread_cond_t cond_minor = PTHREAD_COND_INITIALIZER;
+    UnsafeLock lock_unsafe()
+    {
+        UnsafeLock lock;
+        lock.major = mutex_major.take();
+        lock.minor = mutex_minor.take();
+        return lock;
+    }
 
-#define SIGNAL_MINOR pthread_cond_broadcast (& cond_minor)
-#define WAIT_MINOR pthread_cond_wait (& cond_minor, & mutex_minor)
+    /* safe state changes */
+    void set_secondary(SafeLock &, bool on) { set_flag(SECONDARY, on); }
+    void set_paused(SafeLock &, bool on) { set_flag(PAUSED, on); }
+    void set_flushed(SafeLock &, bool on) { set_flag(FLUSHED, on); }
+    void set_resetting(SafeLock &, bool on) { set_flag(RESETTING, on); }
+
+    /* unsafe state changes */
+    void set_input(UnsafeLock &, bool on) { set_flag(INPUT, on); }
+    void set_output(UnsafeLock &, bool on) { set_flag(OUTPUT, on); }
+
+    void await_change(SafeLock & lock) { cond.wait(lock.minor); }
+
+private:
+    static constexpr int INPUT = (1 << 0); /* input plugin connected */
+    static constexpr int OUTPUT =
+        (1 << 1); /* primary output plugin connected */
+    static constexpr int SECONDARY =
+        (1 << 2); /* secondary output plugin connected */
+    static constexpr int PAUSED = (1 << 3); /* paused */
+    static constexpr int FLUSHED =
+        (1 << 4); /* flushed, writes ignored until resume */
+    static constexpr int RESETTING = (1 << 5); /* resetting output system */
+
+    int m_flags = 0;
+
+    aud::mutex mutex_major;
+    aud::mutex mutex_minor;
+
+    aud::condvar cond;
+
+    void set_flag(int flag, bool on)
+    {
+        m_flags = on ? (m_flags | flag) : (m_flags & ~flag);
+        /* wake any thread waiting for a state change */
+        cond.notify_all();
+    }
+};
+
+static OutputState state;
 
 static OutputPlugin * cop; /* current (primary) output plugin */
 static OutputPlugin * sop; /* secondary output plugin */
@@ -94,135 +157,164 @@ static int out_format, out_channels, out_rate;
 static int out_bytes_per_sec, out_bytes_held;
 static int64_t in_frames, out_bytes_written;
 static ReplayGainInfo gain_info;
+static bool gain_info_valid;
 
 static Index<float> buffer1;
 static Index<char> buffer2;
 
-static inline int get_format (bool & automatic)
+static inline int get_format(bool & automatic)
 {
     automatic = false;
 
-    switch (aud_get_int (0, "output_bit_depth"))
+    switch (aud_get_int("output_bit_depth"))
     {
-        case 16: return FMT_S16_NE;
-        case 24: return FMT_S24_3NE;
-        case 32: return FMT_S32_NE;
+    case 16:
+        return FMT_S16_NE;
+    case 24:
+        return FMT_S24_3NE;
+    case 32:
+        return FMT_S32_NE;
 
-        // return FMT_FLOAT for "auto" as well
-        case -1: automatic = true;
-        default: return FMT_FLOAT;
+    // return FMT_FLOAT for "auto" as well
+    case -1:
+        automatic = true;
+    default:
+        return FMT_FLOAT;
     }
 }
 
-/* assumes LOCK_ALL, s_input */
-static void setup_effects ()
+static void setup_effects(SafeLock &)
 {
+    assert(state.input());
+
     effect_channels = in_channels;
     effect_rate = in_rate;
 
-    effect_start (effect_channels, effect_rate);
-    eq_set_format (effect_channels, effect_rate);
+    effect_start(effect_channels, effect_rate);
+    eq_set_format(effect_channels, effect_rate);
 }
 
-/* assumes LOCK_ALL */
-static void cleanup_output ()
+static void cleanup_output(UnsafeLock & lock)
 {
-    if (! s_output)
+    if (!state.output())
         return;
 
-    if (! s_paused && ! s_flushed && ! s_resetting)
+    // avoid locking up if the input thread reaches close_audio() while
+    // paused (unlikely but possible with perfect timing)
+    if (out_bytes_written && !state.paused())
     {
-        UNLOCK_MINOR;
-        cop->drain ();
-        LOCK_MINOR;
+        lock.minor.unlock();
+        cop->drain();
+        lock.minor.lock();
     }
 
-    s_output = false;
+    state.set_output(lock, false);
 
-    buffer1.clear ();
-    buffer2.clear ();
+    buffer1.clear();
+    buffer2.clear();
 
-    cop->close_audio ();
-    vis_runner_start_stop (false, false);
+    cop->close_audio();
+    vis_runner_start_stop(false, false);
 }
 
-/* assumes LOCK_MINOR */
-static void cleanup_secondary ()
+static void cleanup_secondary(SafeLock & lock)
 {
-    if (! s_secondary)
+    if (!state.secondary())
         return;
 
-    s_secondary = false;
-    sop->close_audio ();
+    state.set_secondary(lock, false);
+    sop->close_audio();
 }
 
-/* assumes LOCK_MINOR, s_output */
-static void apply_pause ()
+static void apply_pause(SafeLock & lock, bool pause, bool new_output = false)
 {
-    cop->pause (s_paused);
-    vis_runner_start_stop (true, s_paused);
+    if (state.output())
+    {
+        // assume output plugin is unpaused after open_audio()
+        if (pause != (new_output ? false : state.paused()))
+            cop->pause(pause);
+
+        vis_runner_start_stop(true, pause);
+    }
+
+    state.set_paused(lock, pause);
 }
 
-/* assumes LOCK_ALL, s_input */
-static void setup_output (bool new_input)
+static bool open_audio_with_info(OutputPlugin * op, const char * filename,
+                                 const Tuple & tuple, int format, int rate,
+                                 int chans, String & error)
 {
-    if (! cop)
+    op->set_info(filename, tuple);
+    return op->open_audio(format, rate, chans, error);
+}
+
+static void setup_output(UnsafeLock & lock, bool new_input, bool pause)
+{
+    assert(state.input());
+
+    if (!cop)
         return;
 
     bool automatic;
-    int format = get_format (automatic);
+    int format = get_format(automatic);
 
-    AUDINFO ("Setup output, format %d, %d channels, %d Hz.\n", format, effect_channels, effect_rate);
-
-    if (s_output && format == out_format && effect_channels == out_channels &&
-     effect_rate == out_rate && ! (new_input && cop->force_reopen))
+    if (state.output() && effect_channels == out_channels &&
+        effect_rate == out_rate && !(new_input && cop->force_reopen))
+    {
+        AUDINFO("Reuse output, %d channels, %d Hz.\n", effect_channels,
+                effect_rate);
+        apply_pause(lock, pause);
         return;
+    }
 
-    cleanup_output ();
-    cop->set_info (in_filename, in_tuple);
+    AUDINFO("Setup output, format %d, %d channels, %d Hz.\n", format,
+            effect_channels, effect_rate);
+
+    cleanup_output(lock);
 
     String error;
-    while (! cop->open_audio (format, effect_rate, effect_channels, error))
+    while (!open_audio_with_info(cop, in_filename, in_tuple, format,
+                                 effect_rate, effect_channels, error))
     {
         if (automatic && format == FMT_FLOAT)
             format = FMT_S32_NE;
         else if (automatic && format == FMT_S32_NE)
             format = FMT_S16_NE;
         else if (format == FMT_S24_3NE)
-            format = FMT_S24_NE; /* some output plugins support only padded 24-bit */
+            format =
+                FMT_S24_NE; /* some output plugins support only padded 24-bit */
         else
         {
-            aud_ui_show_error (error ? (const char *) error : _("Error opening output stream"));
+            aud_ui_show_error(error ? (const char *)error
+                                    : _("Error opening output stream"));
             return;
         }
 
-        AUDINFO ("Falling back to format %d.\n", format);
+        AUDINFO("Falling back to format %d.\n", format);
     }
 
-    s_output = true;
+    state.set_output(lock, true);
 
     out_format = format;
     out_channels = effect_channels;
     out_rate = effect_rate;
 
-    out_bytes_per_sec = FMT_SIZEOF (format) * out_channels * out_rate;
+    out_bytes_per_sec = FMT_SIZEOF(format) * out_channels * out_rate;
     out_bytes_held = 0;
     out_bytes_written = 0;
 
-    apply_pause ();
-
-    if (! s_paused && ! s_flushed && ! s_resetting)
-        SIGNAL_MINOR;
+    apply_pause(lock, pause, true);
 }
 
-/* assumes LOCK_MINOR, s_input */
-static void setup_secondary (bool new_input)
+static void setup_secondary(SafeLock & lock, bool new_input)
 {
-    if (! sop)
+    assert(state.input());
+
+    if (!sop)
         return;
 
     int rate, channels;
-    record_stream = (OutputStream) aud_get_int (0, "record_stream");
+    record_stream = (OutputStream)aud_get_int("record_stream");
 
     if (record_stream < OutputStream::AfterEffects)
     {
@@ -235,145 +327,166 @@ static void setup_secondary (bool new_input)
         channels = effect_channels;
     }
 
-    if (s_secondary && channels == sec_channels && rate == sec_rate &&
-     ! (new_input && sop->force_reopen))
+    if (state.secondary() && channels == sec_channels && rate == sec_rate &&
+        !(new_input && sop->force_reopen))
         return;
 
-    cleanup_secondary ();
-    sop->set_info (in_filename, in_tuple);
+    cleanup_secondary(lock);
 
     String error;
-    if (! sop->open_audio (FMT_FLOAT, rate, channels, error))
+    if (!open_audio_with_info(sop, in_filename, in_tuple, FMT_FLOAT, rate,
+                              channels, error))
     {
-        aud_ui_show_error (error ? (const char *) error : _("Error recording output stream"));
+        aud_ui_show_error(error ? (const char *)error
+                                : _("Error recording output stream"));
         return;
     }
 
-    s_secondary = true;
+    state.set_secondary(lock, true);
 
     sec_channels = channels;
     sec_rate = rate;
 }
 
-/* assumes LOCK_MINOR, s_output */
-static void flush_output ()
+static void flush_output(SafeLock &)
 {
+    assert(state.output());
+
     out_bytes_held = 0;
     out_bytes_written = 0;
 
-    cop->flush ();
-    vis_runner_flush ();
+    cop->flush();
+    vis_runner_flush();
 }
 
-static void apply_replay_gain (Index<float> & data)
+static void apply_replay_gain(SafeLock &, Index<float> & data)
 {
-    if (! aud_get_bool (0, "enable_replay_gain"))
+    if (!aud_get_bool("enable_replay_gain"))
         return;
 
-    float factor = powf (10, aud_get_double (0, "replay_gain_preamp") / 20);
+    float factor = powf(10, aud_get_double("replay_gain_preamp") / 20);
 
-    if (s_gain)
+    if (gain_info_valid)
     {
         float peak;
 
-        auto mode = (ReplayGainMode) aud_get_int (0, "replay_gain_mode");
+        auto mode = (ReplayGainMode)aud_get_int("replay_gain_mode");
         if ((mode == ReplayGainMode::Album) ||
             (mode == ReplayGainMode::Automatic &&
-             (! aud_get_bool (0, "shuffle") || aud_get_bool (0, "album_shuffle"))))
+             (!aud_get_bool("shuffle") || aud_get_bool("album_shuffle"))))
         {
-            factor *= powf (10, gain_info.album_gain / 20);
+            factor *= powf(10, gain_info.album_gain / 20);
             peak = gain_info.album_peak;
         }
         else
         {
-            factor *= powf (10, gain_info.track_gain / 20);
+            factor *= powf(10, gain_info.track_gain / 20);
             peak = gain_info.track_peak;
         }
 
-        if (aud_get_bool (0, "enable_clipping_prevention") && peak * factor > 1)
+        if (aud_get_bool("enable_clipping_prevention") && peak * factor > 1)
             factor = 1 / peak;
     }
     else
-        factor *= powf (10, aud_get_double (0, "default_gain") / 20);
+        factor *= powf(10, aud_get_double("default_gain") / 20);
 
     if (factor < 0.99 || factor > 1.01)
-        audio_amplify (data.begin (), 1, data.len (), & factor);
+        audio_amplify(data.begin(), 1, data.len(), &factor);
 }
 
-/* assumes LOCK_MINOR, s_secondary */
-static void write_secondary (const Index<float> & data)
+static void write_secondary(SafeLock &, const Index<float> & data)
 {
-    auto begin = (const char *) data.begin ();
-    auto end = (const char *) data.end ();
+    assert(state.secondary());
+
+    auto begin = (const char *)data.begin();
+    auto end = (const char *)data.end();
 
     while (begin < end)
-        begin += sop->write_audio (begin, end - begin);
+        begin += sop->write_audio(begin, end - begin);
 }
 
-/* assumes LOCK_ALL, s_output */
-static void write_output (Index<float> & data)
+static void write_output(UnsafeLock & lock, Index<float> & data)
 {
-    if (! data.len ())
+    assert(state.output());
+
+    if (!data.len())
         return;
 
-    if (s_secondary && record_stream == OutputStream::AfterEffects)
-        write_secondary (data);
+    if (state.secondary() && record_stream == OutputStream::AfterEffects)
+        write_secondary(lock, data);
 
-    int out_time = aud::rescale<int64_t> (out_bytes_written, out_bytes_per_sec, 1000);
-    vis_runner_pass_audio (out_time, data, out_channels, out_rate);
+    int out_time =
+        aud::rescale<int64_t>(out_bytes_written, out_bytes_per_sec, 1000);
+    vis_runner_pass_audio(out_time, data, out_channels, out_rate);
 
-    eq_filter (data.begin (), data.len ());
+    eq_filter(data.begin(), data.len());
 
-    if (s_secondary && record_stream == OutputStream::AfterEqualizer)
-        write_secondary (data);
+    if (state.secondary() && record_stream == OutputStream::AfterEqualizer)
+        write_secondary(lock, data);
 
-    if (aud_get_bool (0, "software_volume_control"))
+    if (aud_get_bool("software_volume_control"))
     {
-        StereoVolume v = {aud_get_int (0, "sw_volume_left"), aud_get_int (0, "sw_volume_right")};
-        audio_amplify (data.begin (), out_channels, data.len () / out_channels, v);
+        StereoVolume v = {aud_get_int("sw_volume_left"),
+                          aud_get_int("sw_volume_right")};
+        audio_amplify(data.begin(), out_channels, data.len() / out_channels, v);
     }
 
-    if (aud_get_bool (0, "soft_clipping"))
-        audio_soft_clip (data.begin (), data.len ());
+    if (aud_get_bool("soft_clipping"))
+        audio_soft_clip(data.begin(), data.len());
 
-    const void * out_data = data.begin ();
+    const void * out_data = data.begin();
 
     if (out_format != FMT_FLOAT)
     {
-        buffer2.resize (FMT_SIZEOF (out_format) * data.len ());
-        audio_to_int (data.begin (), buffer2.begin (), out_format, data.len ());
-        out_data = buffer2.begin ();
+        buffer2.resize(FMT_SIZEOF(out_format) * data.len());
+        audio_to_int(data.begin(), buffer2.begin(), out_format, data.len());
+        out_data = buffer2.begin();
     }
 
-    out_bytes_held = FMT_SIZEOF (out_format) * data.len ();
+    out_bytes_held = FMT_SIZEOF(out_format) * data.len();
 
-    while (! s_paused && ! s_flushed && ! s_resetting)
+    while (out_bytes_held && !state.resetting())
     {
-        int written = cop->write_audio (out_data, out_bytes_held);
+        if (state.paused())
+        {
+            // avoid locking up if the input thread reaches close_audio() while
+            // paused (unlikely but possible with perfect timing)
+            if (!state.input())
+                break;
 
-        out_data = (const char *) out_data + written;
+            state.await_change(lock);
+            continue;
+        }
+
+        int written = cop->write_audio(out_data, out_bytes_held);
+
+        out_data = (const char *)out_data + written;
         out_bytes_held -= written;
         out_bytes_written += written;
 
-        if (! out_bytes_held)
+        if (!out_bytes_held)
             break;
 
-        UNLOCK_MINOR;
-        cop->period_wait ();
-        LOCK_MINOR;
+        lock.minor.unlock();
+        cop->period_wait();
+        lock.minor.lock();
     }
 }
 
-/* assumes LOCK_ALL, s_input, s_output */
-static bool process_audio (const void * data, int size, int stop_time)
+static bool process_audio(UnsafeLock & lock, const void * data, int size,
+                          int stop_time)
 {
-    int samples = size / FMT_SIZEOF (in_format);
+    assert(state.input() && state.output());
+
+    int samples = size / FMT_SIZEOF(in_format);
     bool stopped = false;
 
     if (stop_time != -1)
     {
-        int64_t frames_left = aud::rescale<int64_t> (stop_time - seek_time, 1000, in_rate) - in_frames;
-        int64_t samples_left = in_channels * aud::max ((int64_t) 0, frames_left);
+        int64_t frames_left =
+            aud::rescale<int64_t>(stop_time - seek_time, 1000, in_rate) -
+            in_frames;
+        int64_t samples_left = in_channels * aud::max((int64_t)0, frames_left);
 
         if (samples >= samples_left)
         {
@@ -384,403 +497,346 @@ static bool process_audio (const void * data, int size, int stop_time)
 
     in_frames += samples / in_channels;
 
-    buffer1.resize (samples);
+    buffer1.resize(samples);
 
     if (in_format == FMT_FLOAT)
-        memcpy (buffer1.begin (), data, sizeof (float) * samples);
+        memcpy(buffer1.begin(), data, sizeof(float) * samples);
     else
-        audio_from_int (data, in_format, buffer1.begin (), samples);
+        audio_from_int(data, in_format, buffer1.begin(), samples);
 
-    if (s_secondary && record_stream == OutputStream::AsDecoded)
-        write_secondary (buffer1);
+    if (state.secondary() && record_stream == OutputStream::AsDecoded)
+        write_secondary(lock, buffer1);
 
-    apply_replay_gain (buffer1);
+    apply_replay_gain(lock, buffer1);
 
-    if (s_secondary && record_stream == OutputStream::AfterReplayGain)
-        write_secondary (buffer1);
+    if (state.secondary() && record_stream == OutputStream::AfterReplayGain)
+        write_secondary(lock, buffer1);
 
-    write_output (effect_process (buffer1));
+    write_output(lock, effect_process(buffer1));
 
-    return ! stopped;
+    return !stopped;
 }
 
-/* assumes LOCK_ALL, s_output */
-static void finish_effects (bool end_of_playlist)
+static void finish_effects(UnsafeLock & lock, bool end_of_playlist)
 {
-    buffer1.resize (0);
-    write_output (effect_finish (buffer1, end_of_playlist));
+    assert(state.output());
+
+    buffer1.resize(0);
+    write_output(lock, effect_finish(buffer1, end_of_playlist));
 }
 
-bool output_open_audio (const String & filename, const Tuple & tuple,
- int format, int rate, int channels, int start_time)
+bool output_open_audio(const String & filename, const Tuple & tuple, int format,
+                       int rate, int channels, int start_time, bool pause)
 {
     /* prevent division by zero */
     if (rate < 1 || channels < 1 || channels > AUD_MAX_CHANNELS)
         return false;
 
-    LOCK_ALL;
+    auto lock = state.lock_unsafe();
 
-    if (s_output && s_paused)
-    {
-        effect_flush (true);
-        cleanup_output ();
-    }
+    state.set_input(lock, true);
+    state.set_flushed(lock, false);
 
-    s_input = true;
-    s_gain = s_paused = s_flushed = false;
     seek_time = start_time;
+    gain_info_valid = false;
 
     in_filename = filename;
-    in_tuple = tuple.ref ();
+    in_tuple = tuple.ref();
     in_format = format;
     in_channels = channels;
     in_rate = rate;
     in_frames = 0;
 
-    setup_effects ();
-    setup_output (true);
+    setup_effects(lock);
+    setup_output(lock, true, pause);
 
-    if (aud_get_bool (0, "record"))
-        setup_secondary (true);
+    if (aud_get_bool("record"))
+        setup_secondary(lock, true);
 
-    UNLOCK_ALL;
     return true;
 }
 
-void output_set_tuple (const Tuple & tuple)
+void output_set_tuple(const Tuple & tuple)
 {
-    LOCK_ALL;
+    auto lock = state.lock_safe();
 
-    if (s_input)
-        in_tuple = tuple.ref ();
-
-    UNLOCK_ALL;
+    if (state.input())
+        in_tuple = tuple.ref();
 }
 
-void output_set_replay_gain (const ReplayGainInfo & info)
+void output_set_replay_gain(const ReplayGainInfo & info)
 {
-    LOCK_ALL;
+    auto lock = state.lock_safe();
 
-    if (s_input)
+    if (state.input())
     {
         gain_info = info;
-        s_gain = true;
+        gain_info_valid = true;
 
-        AUDINFO ("Replay Gain info:\n");
-        AUDINFO (" album gain: %f dB\n", info.album_gain);
-        AUDINFO (" album peak: %f\n", info.album_peak);
-        AUDINFO (" track gain: %f dB\n", info.track_gain);
-        AUDINFO (" track peak: %f\n", info.track_peak);
+        AUDINFO("Replay Gain info:\n");
+        AUDINFO(" album gain: %f dB\n", info.album_gain);
+        AUDINFO(" album peak: %f\n", info.album_peak);
+        AUDINFO(" track gain: %f dB\n", info.track_gain);
+        AUDINFO(" track peak: %f\n", info.track_peak);
     }
-
-    UNLOCK_ALL;
 }
 
 /* returns false if stop_time is reached */
-bool output_write_audio (const void * data, int size, int stop_time)
+bool output_write_audio(const void * data, int size, int stop_time)
 {
-RETRY:
-    LOCK_ALL;
-    bool good = false;
-
-    if (s_input && ! s_flushed)
+    while (1)
     {
-        if (! s_output || s_paused || s_resetting)
-        {
-            UNLOCK_MAJOR;
-            WAIT_MINOR;
-            UNLOCK_MINOR;
-            goto RETRY;
-        }
+        auto lock = state.lock_unsafe();
+        if (!state.input() || state.flushed())
+            return false;
 
-        good = process_audio (data, size, stop_time);
+        if (state.output() && !state.resetting())
+            return process_audio(lock, data, size, stop_time);
+
+        lock.major.unlock();
+        state.await_change(lock);
     }
-
-    UNLOCK_ALL;
-    return good;
 }
 
-void output_flush (int time, bool force)
+void output_flush(int time, bool force)
 {
-    LOCK_MINOR;
+    auto lock = state.lock_safe();
 
-    if (s_input && ! s_flushed)
+    if (state.input() || state.output())
     {
-        if (s_output && ! s_resetting)
-        {
-            // allow effect plugins to prevent the flush, but
-            // always flush if paused to prevent locking up
-            if (effect_flush (s_paused || force))
-            {
-                flush_output ();
-                s_flushed = true;
-                if (s_paused)
-                    SIGNAL_MINOR;
-            }
-        }
-        else
-        {
-            s_flushed = true;
-            SIGNAL_MINOR;
-        }
+        // allow effect plugins to prevent the flush, but
+        // always flush if paused to prevent locking up
+        bool flush = effect_flush(state.paused() || force);
+        if (flush && state.output())
+            flush_output(lock);
     }
 
-    if (s_input)
+    if (state.input())
     {
+        state.set_flushed(lock, true);
         seek_time = time;
         in_frames = 0;
     }
-
-    UNLOCK_MINOR;
 }
 
-void output_resume ()
+void output_resume()
 {
-    LOCK_ALL;
+    auto lock = state.lock_safe();
 
-    if (s_input)
-        s_flushed = false;
-
-    UNLOCK_ALL;
+    if (state.input())
+        state.set_flushed(lock, false);
 }
 
-void output_pause (bool pause)
+void output_pause(bool pause)
 {
-    LOCK_MINOR;
+    auto lock = state.lock_safe();
 
-    if (s_input && s_paused != pause)
-    {
-        s_paused = pause;
-
-        if (s_output)
-        {
-            apply_pause ();
-            if (! s_paused && ! s_flushed && ! s_resetting)
-                SIGNAL_MINOR;
-        }
-    }
-
-    UNLOCK_MINOR;
+    if (state.input())
+        apply_pause(lock, pause);
 }
 
-int output_get_time ()
+int output_get_time()
 {
-    LOCK_MINOR;
+    auto lock = state.lock_safe();
     int time = 0, delay = 0;
 
-    if (s_input)
+    if (state.input())
     {
-        if (s_output)
+        if (state.output())
         {
-            delay = cop->get_delay ();
-            delay += aud::rescale<int64_t> (out_bytes_held, out_bytes_per_sec, 1000);
+            delay = cop->get_delay();
+            delay +=
+                aud::rescale<int64_t>(out_bytes_held, out_bytes_per_sec, 1000);
         }
 
-        delay = effect_adjust_delay (delay);
-        time = aud::rescale<int64_t> (in_frames, in_rate, 1000);
-        time = seek_time + aud::max (time - delay, 0);
+        delay = effect_adjust_delay(delay);
+        time = aud::rescale<int64_t>(in_frames, in_rate, 1000);
+        time = seek_time + aud::max(time - delay, 0);
     }
 
-    UNLOCK_MINOR;
     return time;
 }
 
-int output_get_raw_time ()
+int output_get_raw_time()
 {
-    LOCK_MINOR;
+    auto lock = state.lock_safe();
     int time = 0;
 
-    if (s_output)
+    if (state.output())
     {
-        time = aud::rescale<int64_t> (out_bytes_written, out_bytes_per_sec, 1000);
-        time = aud::max (time - cop->get_delay (), 0);
+        time =
+            aud::rescale<int64_t>(out_bytes_written, out_bytes_per_sec, 1000);
+        time = aud::max(time - cop->get_delay(), 0);
     }
 
-    UNLOCK_MINOR;
     return time;
 }
 
-void output_close_audio ()
+void output_close_audio()
 {
-    LOCK_ALL;
+    auto lock = state.lock_unsafe();
 
-    if (s_input)
+    if (state.input())
     {
-        s_input = false;
-        in_filename = String ();
-        in_tuple = Tuple ();
+        state.set_input(lock, false);
+        in_filename = String();
+        in_tuple = Tuple();
 
-        if (s_output && ! (s_paused || s_flushed || s_resetting))
-            finish_effects (false); /* first time for end of song */
+        if (state.output())
+            finish_effects(lock, false); /* first time for end of song */
     }
-
-    UNLOCK_ALL;
 }
 
-void output_drain ()
+void output_drain()
 {
-    LOCK_ALL;
+    auto lock = state.lock_unsafe();
 
-    if (! s_input)
+    if (!state.input())
     {
-        if (s_output)
-            finish_effects (true); /* second time for end of playlist */
+        if (state.output())
+            finish_effects(lock, true); /* second time for end of playlist */
 
-        cleanup_output ();
-        cleanup_secondary ();
+        cleanup_output(lock);
+        cleanup_secondary(lock);
     }
-
-    UNLOCK_ALL;
 }
 
-static void output_reset (OutputReset type, OutputPlugin * op)
+static void output_reset(OutputReset type, OutputPlugin * op)
 {
-    LOCK_MINOR;
+    auto lock1 = state.lock_safe();
 
-    s_resetting = true;
+    state.set_resetting(lock1, true);
 
-    if (s_output && ! s_flushed)
-        flush_output ();
+    if (state.output())
+        flush_output(lock1);
 
-    UNLOCK_MINOR;
-    LOCK_ALL;
+    lock1.minor.unlock();
+    auto lock2 = state.lock_unsafe();
 
     if (type != OutputReset::EffectsOnly)
-        cleanup_output ();
+        cleanup_output(lock2);
 
     /* this does not reset the secondary plugin */
     if (type == OutputReset::ResetPlugin)
     {
         if (cop)
-            cop->cleanup ();
+            cop->cleanup();
 
         if (op)
         {
             /* secondary plugin may become primary */
             if (op == sop)
             {
-                cleanup_secondary ();
+                cleanup_secondary(lock2);
                 sop = nullptr;
             }
-            else if (! op->init ())
+            else if (!op->init())
                 op = nullptr;
         }
 
         cop = op;
     }
 
-    if (s_input)
+    if (state.input())
     {
         if (type == OutputReset::EffectsOnly)
-            setup_effects ();
+            setup_effects(lock2);
 
-        setup_output (false);
+        setup_output(lock2, false, state.paused());
 
-        if (aud_get_bool (0, "record"))
-            setup_secondary (false);
+        if (aud_get_bool("record"))
+            setup_secondary(lock2, false);
     }
 
-    s_resetting = false;
-
-    if (s_output && ! s_paused && ! s_flushed)
-        SIGNAL_MINOR;
-
-    UNLOCK_ALL;
+    state.set_resetting(lock2, false);
 }
 
-EXPORT void aud_output_reset (OutputReset type)
-{
-    output_reset (type, cop);
-}
+EXPORT void aud_output_reset(OutputReset type) { output_reset(type, cop); }
 
-EXPORT StereoVolume aud_drct_get_volume ()
+EXPORT StereoVolume aud_drct_get_volume()
 {
+    auto lock = state.lock_safe();
     StereoVolume volume = {0, 0};
-    LOCK_MINOR;
 
-    if (aud_get_bool (0, "software_volume_control"))
-        volume = {aud_get_int (0, "sw_volume_left"), aud_get_int (0, "sw_volume_right")};
+    if (aud_get_bool("software_volume_control"))
+        volume = {aud_get_int("sw_volume_left"),
+                  aud_get_int("sw_volume_right")};
     else if (cop)
-        volume = cop->get_volume ();
+        volume = cop->get_volume();
 
-    UNLOCK_MINOR;
     return volume;
 }
 
-EXPORT void aud_drct_set_volume (StereoVolume volume)
+EXPORT void aud_drct_set_volume(StereoVolume volume)
 {
-    LOCK_MINOR;
+    auto lock = state.lock_safe();
 
-    volume.left = aud::clamp (volume.left, 0, 100);
-    volume.right = aud::clamp (volume.right, 0, 100);
+    volume.left = aud::clamp(volume.left, 0, 100);
+    volume.right = aud::clamp(volume.right, 0, 100);
 
-    if (aud_get_bool (0, "software_volume_control"))
+    if (aud_get_bool("software_volume_control"))
     {
-        aud_set_int (0, "sw_volume_left", volume.left);
-        aud_set_int (0, "sw_volume_right", volume.right);
+        aud_set_int("sw_volume_left", volume.left);
+        aud_set_int("sw_volume_right", volume.right);
     }
     else if (cop)
-        cop->set_volume (volume);
-
-    UNLOCK_MINOR;
+        cop->set_volume(volume);
 }
 
-PluginHandle * output_plugin_get_current ()
+PluginHandle * output_plugin_get_current()
 {
-    return cop ? aud_plugin_by_header (cop) : nullptr;
+    return cop ? aud_plugin_by_header(cop) : nullptr;
 }
 
-PluginHandle * output_plugin_get_secondary ()
+PluginHandle * output_plugin_get_secondary()
 {
-    return sop ? aud_plugin_by_header (sop) : nullptr;
+    return sop ? aud_plugin_by_header(sop) : nullptr;
 }
 
-bool output_plugin_set_current (PluginHandle * plugin)
+bool output_plugin_set_current(PluginHandle * plugin)
 {
-    output_reset (OutputReset::ResetPlugin, plugin ?
-     (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr);
-    return (! plugin || cop);
+    output_reset(OutputReset::ResetPlugin,
+                 plugin ? (OutputPlugin *)aud_plugin_get_header(plugin)
+                        : nullptr);
+    return (!plugin || cop);
 }
 
-bool output_plugin_set_secondary (PluginHandle * plugin)
+bool output_plugin_set_secondary(PluginHandle * plugin)
 {
-    LOCK_MINOR;
+    auto lock = state.lock_safe();
 
-    cleanup_secondary ();
+    cleanup_secondary(lock);
     if (sop)
-        sop->cleanup ();
+        sop->cleanup();
 
-    sop = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr;
-    if (sop && ! sop->init ())
+    sop = plugin ? (OutputPlugin *)aud_plugin_get_header(plugin) : nullptr;
+    if (sop && !sop->init())
         sop = nullptr;
 
-    if (s_input && aud_get_bool (0, "record"))
-        setup_secondary (false);
+    if (state.input() && aud_get_bool("record"))
+        setup_secondary(lock, false);
 
-    UNLOCK_MINOR;
-    return (! plugin || sop);
+    return (!plugin || sop);
 }
 
-static void record_settings_changed (void *, void *)
+static void record_settings_changed(void *, void *)
 {
-    LOCK_MINOR;
+    auto lock = state.lock_safe();
 
-    if (s_input && aud_get_bool (0, "record"))
-        setup_secondary (false);
+    if (state.input() && aud_get_bool("record"))
+        setup_secondary(lock, false);
     else
-        cleanup_secondary ();
-
-    UNLOCK_MINOR;
+        cleanup_secondary(lock);
 }
 
-void output_init ()
+void output_init()
 {
-    hook_associate ("set record", record_settings_changed, nullptr);
-    hook_associate ("set record_stream", record_settings_changed, nullptr);
+    hook_associate("set record", record_settings_changed, nullptr);
+    hook_associate("set record_stream", record_settings_changed, nullptr);
 }
 
-void output_cleanup ()
+void output_cleanup()
 {
-    hook_dissociate ("set record", record_settings_changed);
-    hook_dissociate ("set record_stream", record_settings_changed);
+    hook_dissociate("set record", record_settings_changed);
+    hook_dissociate("set record_stream", record_settings_changed);
 }

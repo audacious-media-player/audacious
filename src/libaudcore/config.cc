@@ -17,8 +17,8 @@
  * the use of this software.
  */
 
-#include "runtime.h"
 #include "internal.h"
+#include "runtime.h"
 
 #include <assert.h>
 #include <string.h>
@@ -33,80 +33,86 @@
 #define DEFAULT_SECTION "audacious"
 
 static const char * const core_defaults[] = {
+    /* clang-format off */
+    /* general */
+    "advance_on_delete", "FALSE",
+    "always_resume_paused", "TRUE",
+    "clear_playlist", "TRUE",
+    "open_to_temporary", "TRUE",
+    "recurse_folders", "TRUE",
+    "resume_playback_on_startup", "TRUE",
+    "show_interface", "TRUE",
 
- /* general */
- "advance_on_delete", "FALSE",
- "always_resume_paused", "TRUE",
- "clear_playlist", "TRUE",
- "open_to_temporary", "TRUE",
- "recurse_folders", "TRUE",
- "resume_playback_on_startup", "TRUE",
- "show_interface", "TRUE",
+    /* equalizer */
+    "eqpreset_default_file", "",
+    "eqpreset_extension", "",
+    "equalizer_active", "FALSE",
+    "equalizer_bands", "0,0,0,0,0,0,0,0,0,0",
+    "equalizer_preamp", "0",
 
- /* equalizer */
- "eqpreset_default_file", "",
- "eqpreset_extension", "",
- "equalizer_active", "FALSE",
- "equalizer_autoload", "FALSE",
- "equalizer_bands", "0,0,0,0,0,0,0,0,0,0",
- "equalizer_preamp", "0",
+    /* info popup / info window */
+    "cover_name_exclude", "back",
+    "cover_name_include", "album,cover,front,folder",
+    "filepopup_delay", "5",
+    "filepopup_showprogressbar", "FALSE",
+    "recurse_for_cover", "FALSE",
+    "recurse_for_cover_depth", "0",
+    "show_filepopup_for_tuple", "TRUE",
+    "use_file_cover", "FALSE",
 
- /* info popup / info window */
- "cover_name_exclude", "back",
- "cover_name_include", "album,cover,front,folder",
- "filepopup_delay", "5",
- "filepopup_showprogressbar", "FALSE",
- "recurse_for_cover", "FALSE",
- "recurse_for_cover_depth", "0",
- "show_filepopup_for_tuple", "TRUE",
- "use_file_cover", "FALSE",
+    /* network */
+    "net_buffer_kb", "128",
+    "save_url_history", "TRUE",
+    "socks_proxy", "FALSE",
+    "socks_type", "0",
+    "use_proxy", "FALSE",
+    "use_proxy_auth", "FALSE",
 
- /* network */
- "net_buffer_kb", "128",
- "save_url_history", "TRUE",
- "use_proxy", "FALSE",
- "use_proxy_auth", "FALSE",
+    /* output */
+    "default_gain", "0",
+    "enable_replay_gain", "TRUE",
+    "enable_clipping_prevention", "TRUE",
+    "output_bit_depth", "-1",
+    "output_buffer_size", "500",
+    "record", "FALSE",
+    "record_stream", aud::numeric_string<(int) OutputStream::AfterReplayGain>::str,
+    "replay_gain_mode", aud::numeric_string<(int) ReplayGainMode::Track>::str,
+    "replay_gain_preamp", "0",
+    "soft_clipping", "FALSE",
+    "software_volume_control", "FALSE",
+    "sw_volume_left", "100",
+    "sw_volume_right", "100",
+    "volume_delta", "5",
 
- /* output */
- "default_gain", "0",
- "enable_replay_gain", "TRUE",
- "enable_clipping_prevention", "TRUE",
- "output_bit_depth", "-1",
- "output_buffer_size", "500",
- "record_stream", aud::numeric_string<(int) OutputStream::AfterReplayGain>::str,
- "replay_gain_mode", aud::numeric_string<(int) ReplayGainMode::Track>::str,
- "replay_gain_preamp", "0",
- "soft_clipping", "FALSE",
- "software_volume_control", "FALSE",
- "sw_volume_left", "100",
- "sw_volume_right", "100",
+    /* playback */
+    "album_shuffle", "FALSE",
+    "no_playlist_advance", "FALSE",
+    "repeat", "FALSE",
+    "shuffle", "FALSE",
+    "step_size", "5",
+    "stop_after_current_song", "FALSE",
 
- /* playback */
- "album_shuffle", "FALSE",
- "no_playlist_advance", "FALSE",
- "repeat", "FALSE",
- "shuffle", "FALSE",
- "stop_after_current_song", "FALSE",
-
- /* playlist */
- "chardet_fallback", "ISO-8859-1",
+    /* playlist */
+    "chardet_fallback", "ISO-8859-1",
 #ifdef _WIN32
- "convert_backslash", "TRUE",
+    "convert_backslash", "TRUE",
 #else
- "convert_backslash", "FALSE",
+    "convert_backslash", "FALSE",
 #endif
- "export_relative_paths", "TRUE",
- "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
- "leading_zero", "FALSE",
- "show_hours", "TRUE",
- "metadata_fallbacks", "TRUE",
- "metadata_on_play", "FALSE",
- "show_numbers_in_pl", "FALSE",
- "slow_probe", "FALSE",
+    "export_relative_paths", "TRUE",
+    "folders_in_playlist", "FALSE",
+    "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
+    "leading_zero", "FALSE",
+    "show_hours", "TRUE",
+    "metadata_fallbacks", "TRUE",
+    "metadata_on_play", "FALSE",
+    "show_numbers_in_pl", "FALSE",
+    "slow_probe", "FALSE",
+    /* clang-format on */
+    nullptr};
 
- nullptr};
-
-enum OpType {
+enum OpType
+{
     OP_IS_DEFAULT,
     OP_GET,
     OP_SET,
@@ -115,7 +121,8 @@ enum OpType {
     OP_CLEAR_NO_FLAG
 };
 
-struct ConfigItem {
+struct ConfigItem
+{
     String section;
     String key;
     String value;
@@ -133,14 +140,16 @@ struct ConfigOp
     unsigned hash;
     bool result;
 
-    ConfigNode * add (const ConfigOp *);
-    bool found (ConfigNode * node);
+    ConfigNode * add(const ConfigOp *);
+    bool found(ConfigNode * node);
 };
 
 struct ConfigNode : public MultiHash::Node, public ConfigItem
 {
-    bool match (const ConfigOp * op) const
-        { return ! strcmp (section, op->section) && ! strcmp (key, op->key); }
+    bool match(const ConfigOp * op) const
+    {
+        return !strcmp(section, op->section) && !strcmp(key, op->key);
+    }
 };
 
 typedef MultiHash_T<ConfigNode, ConfigOp> ConfigTable;
@@ -148,12 +157,12 @@ typedef MultiHash_T<ConfigNode, ConfigOp> ConfigTable;
 static ConfigTable s_defaults, s_config;
 static volatile bool s_modified;
 
-ConfigNode * ConfigOp::add (const ConfigOp *)
+ConfigNode * ConfigOp::add(const ConfigOp *)
 {
     switch (type)
     {
     case OP_IS_DEFAULT:
-        result = ! value[0]; /* empty string is default */
+        result = !value[0]; /* empty string is default */
         return nullptr;
 
     case OP_SET:
@@ -164,8 +173,8 @@ ConfigNode * ConfigOp::add (const ConfigOp *)
     case OP_SET_NO_FLAG:
     {
         ConfigNode * node = new ConfigNode;
-        node->section = String (section);
-        node->key = String (key);
+        node->section = String(section);
+        node->key = String(key);
         node->value = value;
         return node;
     }
@@ -175,12 +184,12 @@ ConfigNode * ConfigOp::add (const ConfigOp *)
     }
 }
 
-bool ConfigOp::found (ConfigNode * node)
+bool ConfigOp::found(ConfigNode * node)
 {
     switch (type)
     {
     case OP_IS_DEFAULT:
-        result = ! strcmp (node->value, value);
+        result = !strcmp(node->value, value);
         return false;
 
     case OP_GET:
@@ -188,7 +197,7 @@ bool ConfigOp::found (ConfigNode * node)
         return false;
 
     case OP_SET:
-        result = !! strcmp (node->value, value);
+        result = !!strcmp(node->value, value);
         if (result)
             s_modified = true;
         // fall-through
@@ -211,13 +220,13 @@ bool ConfigOp::found (ConfigNode * node)
     }
 }
 
-static bool config_op_run (ConfigOp & op, ConfigTable & table)
+static bool config_op_run(ConfigOp & op, ConfigTable & table)
 {
-    if (! op.hash)
-        op.hash = str_calc_hash (op.section) + str_calc_hash (op.key);
+    if (!op.hash)
+        op.hash = str_calc_hash(op.section) + str_calc_hash(op.key);
 
     op.result = false;
-    table.lookup (& op, op.hash, op);
+    table.lookup(&op, op.hash, op);
     return op.result;
 }
 
@@ -226,170 +235,191 @@ class ConfigParser : public IniParser
 private:
     String section;
 
-    void handle_heading (const char * heading)
-        { section = String (heading); }
+    void handle_heading(const char * heading) { section = String(heading); }
 
-    void handle_entry (const char * key, const char * value)
+    void handle_entry(const char * key, const char * value)
     {
-        if (! section)
+        if (!section)
             return;
 
-        ConfigOp op = {OP_SET_NO_FLAG, section, key, String (value)};
-        config_op_run (op, s_config);
+        ConfigOp op = {OP_SET_NO_FLAG, section, key, String(value)};
+        config_op_run(op, s_config);
     }
 };
 
-void config_load ()
+void config_load()
 {
-    StringBuf path = filename_build ({aud_get_path (AudPath::UserDir), "config"});
-    if (VFSFile::test_file (path, VFS_EXISTS))
+    StringBuf path = filename_build({aud_get_path(AudPath::UserDir), "config"});
+    if (VFSFile::test_file(path, VFS_EXISTS))
     {
-        VFSFile file (path, "r");
+        VFSFile file(path, "r");
         if (file)
-            ConfigParser ().parse (file);
+            ConfigParser().parse(file);
     }
 
-    aud_config_set_defaults (nullptr, core_defaults);
+    aud_config_set_defaults(nullptr, core_defaults);
 
     /* migrate from previous versions */
-    if (aud_get_bool (0, "replay_gain_album"))
+    if (aud_get_bool("replay_gain_album"))
     {
-        aud_set_str (0, "replay_gain_album", "");
-        aud_set_int (0, "replay_gain_mode", (int) ReplayGainMode::Album);
+        aud_set_str("replay_gain_album", "");
+        aud_set_int("replay_gain_mode", (int)ReplayGainMode::Album);
+    }
+
+    double step_size = aud_get_double("gtkui", "step_size");
+    if (step_size > 0)
+    {
+        aud_set_int("step_size", (int)step_size);
+        aud_set_str("gtkui", "step_size", "");
+    }
+
+    int volume_delta = aud_get_int("statusicon", "volume_delta");
+    if (volume_delta > 0)
+    {
+        aud_set_int("volume_delta", volume_delta);
+        aud_set_str("statusicon", "volume_delta", "");
     }
 }
 
-void config_save ()
+void config_save()
 {
-    if (! s_modified)
+    if (!s_modified)
         return;
 
     Index<ConfigItem> list;
 
-    s_config.iterate ([&] (ConfigNode * node) {
-        list.append (* node);
-
-        s_modified = false;  // must be inside MultiHash lock
+    auto add_to_list = [&](ConfigNode * node) {
+        list.append(*node);
         return false;
-    });
+    };
+    auto finish = []() {
+        s_modified = false; // must be inside MultiHash lock
+    };
 
-    list.sort ([] (const ConfigItem & a, const ConfigItem & b) {
+    s_config.iterate(add_to_list, finish);
+
+    list.sort([](const ConfigItem & a, const ConfigItem & b) {
         if (a.section == b.section)
-            return strcmp (a.key, b.key);
+            return strcmp(a.key, b.key);
         else
-            return strcmp (a.section, b.section);
+            return strcmp(a.section, b.section);
     });
 
     String current_heading;
 
-    VFSFile file (filename_build ({aud_get_path (AudPath::UserDir), "config"}), "w");
-    if (! file)
+    VFSFile file(filename_build({aud_get_path(AudPath::UserDir), "config"}),
+                 "w");
+    if (!file)
         goto FAILED;
 
     for (const ConfigItem & item : list)
     {
         if (item.section != current_heading)
         {
-            if (! inifile_write_heading (file, item.section))
+            if (!inifile_write_heading(file, item.section))
                 goto FAILED;
 
             current_heading = item.section;
         }
 
-        if (! inifile_write_entry (file, item.key, item.value))
+        if (!inifile_write_entry(file, item.key, item.value))
             goto FAILED;
     }
 
-    if (file.fflush () < 0)
+    if (file.fflush() < 0)
         goto FAILED;
 
     return;
 
 FAILED:
-    AUDWARN ("Error saving configuration.\n");
+    AUDWARN("Error saving configuration.\n");
 }
 
-EXPORT void aud_config_set_defaults (const char * section, const char * const * entries)
+EXPORT void aud_config_set_defaults(const char * section,
+                                    const char * const * entries)
 {
-    if (! section)
+    if (!section)
         section = DEFAULT_SECTION;
 
     while (1)
     {
-        const char * name = * entries ++;
-        const char * value = * entries ++;
-        if (! name || ! value)
+        const char * name = *entries++;
+        const char * value = *entries++;
+        if (!name || !value)
             break;
 
-        ConfigOp op = {OP_SET_NO_FLAG, section, name, String (value)};
-        config_op_run (op, s_defaults);
+        ConfigOp op = {OP_SET_NO_FLAG, section, name, String(value)};
+        config_op_run(op, s_defaults);
     }
 }
 
-void config_cleanup ()
+void config_cleanup()
 {
-    s_config.clear ();
-    s_defaults.clear ();
+    s_config.clear();
+    s_defaults.clear();
 }
 
-EXPORT void aud_set_str (const char * section, const char * name, const char * value)
+EXPORT void aud_set_str(const char * section, const char * name,
+                        const char * value)
 {
-    assert (name && value);
+    assert(name && value);
 
-    ConfigOp op = {OP_IS_DEFAULT, section ? section : DEFAULT_SECTION, name, String (value)};
-    bool is_default = config_op_run (op, s_defaults);
+    ConfigOp op = {OP_IS_DEFAULT, section ? section : DEFAULT_SECTION, name,
+                   String(value)};
+    bool is_default = config_op_run(op, s_defaults);
 
     op.type = is_default ? OP_CLEAR : OP_SET;
-    bool changed = config_op_run (op, s_config);
+    bool changed = config_op_run(op, s_config);
 
-    if (changed && ! section)
-        event_queue (str_concat ({"set ", name}), nullptr);
+    if (changed && !section)
+        event_queue(str_concat({"set ", name}), nullptr);
 }
 
-EXPORT String aud_get_str (const char * section, const char * name)
+EXPORT String aud_get_str(const char * section, const char * name)
 {
-    assert (name);
+    assert(name);
 
     ConfigOp op = {OP_GET, section ? section : DEFAULT_SECTION, name};
-    config_op_run (op, s_config);
+    config_op_run(op, s_config);
 
-    if (! op.value)
-        config_op_run (op, s_defaults);
+    if (!op.value)
+        config_op_run(op, s_defaults);
 
-    return op.value ? op.value : String ("");
+    return op.value ? op.value : String("");
 }
 
-EXPORT void aud_set_bool (const char * section, const char * name, bool value)
+EXPORT void aud_set_bool(const char * section, const char * name, bool value)
 {
-    aud_set_str (section, name, value ? "TRUE" : "FALSE");
+    aud_set_str(section, name, value ? "TRUE" : "FALSE");
 }
 
-EXPORT bool aud_get_bool (const char * section, const char * name)
+EXPORT bool aud_get_bool(const char * section, const char * name)
 {
-    return ! strcmp (aud_get_str (section, name), "TRUE");
+    return !strcmp(aud_get_str(section, name), "TRUE");
 }
 
-EXPORT void aud_toggle_bool (const char * section, const char * name)
+EXPORT void aud_toggle_bool(const char * section, const char * name)
 {
-    aud_set_bool (section, name, ! aud_get_bool (section, name));
+    aud_set_bool(section, name, !aud_get_bool(section, name));
 }
 
-EXPORT void aud_set_int (const char * section, const char * name, int value)
+EXPORT void aud_set_int(const char * section, const char * name, int value)
 {
-    aud_set_str (section, name, int_to_str (value));
+    aud_set_str(section, name, int_to_str(value));
 }
 
-EXPORT int aud_get_int (const char * section, const char * name)
+EXPORT int aud_get_int(const char * section, const char * name)
 {
-    return str_to_int (aud_get_str (section, name));
+    return str_to_int(aud_get_str(section, name));
 }
 
-EXPORT void aud_set_double (const char * section, const char * name, double value)
+EXPORT void aud_set_double(const char * section, const char * name,
+                           double value)
 {
-    aud_set_str (section, name, double_to_str (value));
+    aud_set_str(section, name, double_to_str(value));
 }
 
-EXPORT double aud_get_double (const char * section, const char * name)
+EXPORT double aud_get_double(const char * section, const char * name)
 {
-    return str_to_double (aud_get_str (section, name));
+    return str_to_double(aud_get_str(section, name));
 }

@@ -1,5 +1,6 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
+datarootdir=@datarootdir@
 data_dir=@datadir@/audacious
 
 version=@PACKAGE_VERSION@

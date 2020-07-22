@@ -38,17 +38,13 @@
 class RingBufBase
 {
 public:
-    constexpr RingBufBase () :
-        m_data (nullptr),
-        m_size (0),
-        m_offset (0),
-        m_len (0) {}
+    constexpr RingBufBase() : m_data(nullptr), m_size(0), m_offset(0), m_len(0)
+    {
+    }
 
-    RingBufBase (RingBufBase && b) :
-        m_data (b.m_data),
-        m_size (b.m_size),
-        m_offset (b.m_offset),
-        m_len (b.m_len)
+    RingBufBase(RingBufBase && b)
+        : m_data(b.m_data), m_size(b.m_size), m_offset(b.m_offset),
+          m_len(b.m_len)
     {
         b.m_data = nullptr;
         b.m_size = 0;
@@ -57,42 +53,42 @@ public:
     }
 
     // allocated size of the buffer
-    int size () const
-        { return m_size; }
+    int size() const { return m_size; }
 
     // number of bytes currently used
-    int len () const
-        { return m_len; }
+    int len() const { return m_len; }
 
     // number of bytes that can be read linearly
-    int linear () const
-        { return aud::min (m_len, m_size - m_offset); }
+    int linear() const { return aud::min(m_len, m_size - m_offset); }
 
-    void * at (int pos) const
-        { return (char *) m_data + (m_offset + pos) % m_size; }
+    void * at(int pos) const
+    {
+        return (char *)m_data + (m_offset + pos) % m_size;
+    }
 
-    void alloc (int size);
-    void destroy (aud::EraseFunc erase_func);
+    void alloc(int size);
+    void destroy(aud::EraseFunc erase_func);
 
-    void add (int len);  // no fill
-    void remove (int len);  // no erase
+    void add(int len);    // no fill
+    void remove(int len); // no erase
 
-    void copy_in (const void * from, int len, aud::CopyFunc copy_func);
-    void move_in (void * from, int len, aud::FillFunc fill_func);
-    void move_out (void * to, int len, aud::EraseFunc erase_func);
-    void discard (int len, aud::EraseFunc erase_func);
+    void copy_in(const void * from, int len, aud::CopyFunc copy_func);
+    void move_in(void * from, int len, aud::FillFunc fill_func);
+    void move_out(void * to, int len, aud::EraseFunc erase_func);
+    void discard(int len, aud::EraseFunc erase_func);
 
-    void move_in (IndexBase & index, int from, int len);
-    void move_out (IndexBase & index, int to, int len);
+    void move_in(IndexBase & index, int from, int len);
+    void move_out(IndexBase & index, int to, int len);
 
 private:
-    struct Areas {
-        void * area1, * area2;
+    struct Areas
+    {
+        void *area1, *area2;
         int len1, len2;
     };
 
-    void get_areas (int pos, int len, Areas & areas);
-    void do_realloc (int size);
+    void get_areas(int pos, int len, Areas & areas);
+    void do_realloc(int size);
 
     void * m_data;
     int m_size, m_offset, m_len;
@@ -102,71 +98,75 @@ template<class T>
 class RingBuf : private RingBufBase
 {
 public:
-    constexpr RingBuf () :
-        RingBufBase () {}
+    constexpr RingBuf() : RingBufBase() {}
 
-    ~RingBuf ()
-        { destroy (); }
+    ~RingBuf() { destroy(); }
 
-    RingBuf (RingBuf && b) :
-        RingBufBase (std::move (b)) {}
-    RingBuf & operator= (RingBuf && b)
-        { return aud::move_assign (* this, std::move (b)); }
-
-    int size () const
-        { return cooked (RingBufBase::size ()); }
-    int len () const
-        { return cooked (RingBufBase::len ()); }
-    int linear () const
-        { return cooked (RingBufBase::linear ()); }
-    int space () const
-        { return size () - len (); }
-
-    T & operator[] (int i)
-        { return * (T *) RingBufBase::at (raw (i)); }
-    const T & operator[] (int i) const
-        { return * (const T *) RingBufBase::at (raw (i)); }
-
-    void alloc (int size)
-        { RingBufBase::alloc (raw (size)); }
-    void destroy ()
-        { RingBufBase::destroy (aud::erase_func<T> ()); }
-
-    void copy_in (const T * from, int len)
-        { RingBufBase::copy_in (from, raw (len), aud::copy_func<T> ()); }
-    void move_in (T * from, int len)
-        { RingBufBase::move_in (from, raw (len), aud::fill_func<T> ()); }
-    void move_out (T * to, int len)
-        { RingBufBase::move_out (to, raw (len), aud::erase_func<T> ()); }
-    void discard (int len = -1)
-        { RingBufBase::discard (raw (len), aud::erase_func<T> ()); }
-
-    void move_in (Index<T> & index, int from, int len)
-        { RingBufBase::move_in (index.base (), raw (from), raw (len)); }
-    void move_out (Index<T> & index, int to, int len)
-        { RingBufBase::move_out (index.base (), raw (to), raw (len)); }
-
-    template<class ... Args>
-    T & push (Args && ... args)
+    RingBuf(RingBuf && b) : RingBufBase(std::move(b)) {}
+    RingBuf & operator=(RingBuf && b)
     {
-        add (raw (1));
-        return * aud::construct<T>::make (at (raw (len () - 1)), std::forward<Args> (args) ...);
+        return aud::move_assign(*this, std::move(b));
     }
 
-    T & head ()
-        { return * (T *) at (raw (0)); }
+    int size() const { return cooked(RingBufBase::size()); }
+    int len() const { return cooked(RingBufBase::len()); }
+    int linear() const { return cooked(RingBufBase::linear()); }
+    int space() const { return size() - len(); }
 
-    void pop ()
+    T & operator[](int i) { return *(T *)RingBufBase::at(raw(i)); }
+    const T & operator[](int i) const
     {
-        head ().~T ();
-        remove (raw (1));
+        return *(const T *)RingBufBase::at(raw(i));
+    }
+
+    void alloc(int size) { RingBufBase::alloc(raw(size)); }
+    void destroy() { RingBufBase::destroy(aud::erase_func<T>()); }
+
+    void copy_in(const T * from, int len)
+    {
+        RingBufBase::copy_in(from, raw(len), aud::copy_func<T>());
+    }
+    void move_in(T * from, int len)
+    {
+        RingBufBase::move_in(from, raw(len), aud::fill_func<T>());
+    }
+    void move_out(T * to, int len)
+    {
+        RingBufBase::move_out(to, raw(len), aud::erase_func<T>());
+    }
+    void discard(int len = -1)
+    {
+        RingBufBase::discard(raw(len), aud::erase_func<T>());
+    }
+
+    void move_in(Index<T> & index, int from, int len)
+    {
+        RingBufBase::move_in(index.base(), raw(from), raw(len));
+    }
+    void move_out(Index<T> & index, int to, int len)
+    {
+        RingBufBase::move_out(index.base(), raw(to), raw(len));
+    }
+
+    template<class... Args>
+    T & push(Args &&... args)
+    {
+        add(raw(1));
+        return *aud::construct<T>::make(at(raw(len() - 1)),
+                                        std::forward<Args>(args)...);
+    }
+
+    T & head() { return *(T *)at(raw(0)); }
+
+    void pop()
+    {
+        head().~T();
+        remove(raw(1));
     }
 
 private:
-    static constexpr int raw (int len)
-        { return len * sizeof (T); }
-    static constexpr int cooked (int len)
-        { return len / sizeof (T); }
+    static constexpr int raw(int len) { return len * sizeof(T); }
+    static constexpr int cooked(int len) { return len / sizeof(T); }
 };
 
 #endif // LIBAUDCORE_RINGBUF_H

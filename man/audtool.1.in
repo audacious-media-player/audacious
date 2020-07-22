@@ -66,7 +66,7 @@ Print the sampling rate in kilohertz.
 Print the number of audio channels.
 .TP
 .B --current-song-tuple-data \fIfield\fR
-Print the value of a named field (\fBartist\FR, \fByear\fR, \fBgenre\fR, etc.)
+Print the value of a named field (\fBartist\fR, \fByear\fR, \fBgenre\fR, etc.)
 for the current song.  If the field name is omitted, a list of allowed fields
 will be printed.
 .TP
@@ -230,7 +230,7 @@ Print the number of open playlists.
 .TP
 .B --current-playlist
 Print the number of the current playlist, where "current" is interpreted
-according to \fB--select-displayed\fR or fB--select-playing\fR.
+according to \fB--select-displayed\fR or \fB--select-playing\fR.
 .TP
 .B --play-current-playlist
 Start playback in the current playlist, resuming from the last point played if
@@ -365,24 +365,25 @@ Commands may be prefixed with `--' (GNU-style long options) or not, your choice.
 .SH BUGS
 
 There are no known bugs in audtool at this time; if you find any please report
-them at \fIhttp://redmine.audacious-media-player.org/projects/audacious\fR.
+them at \fIhttps://redmine.audacious-media-player.org/projects/audacious\fR.
 
 .SH AUTHORS
 
 .B audtool
-was written by George Averill <nhjm@nhjm.net> and William
-Pitcock <nenolod@atheme.org>.
+was written by George Averill <nhjm@nhjm.net> and Ariadne
+Conill <ariadne@dereferenced.org>.
 .PP
 This manual page was written by Adam Cecile <gandalf@le-vert.net> and Kiyoshi
-Aman <kiyoshi@atheme.org>.  Some additional tweaks were done by William Pitcock
-<nenolod@atheme.org> and Tony Vroon <chainsaw@gentoo.org>.  The manual page was
-updated for Audacious 3.7 and later by John Lindgren <john@jlindgren.net>.
+Aman <kiyoshi@atheme.org>.  Some additional tweaks were done by Ariadne Conill
+<ariadne@dereferenced.org> and Tony Vroon <chainsaw@gentoo.org>.  The manual
+page was updated for Audacious 3.7 and later by John Lindgren
+<john@jlindgren.net>.
 .PP
 This work is licensed under a Creative Commons Attribution 3.0 Unported License
-<http://creativecommons.org/licenses/by/3.0/>.
+<https://creativecommons.org/licenses/by/3.0/>.
 
 .SH "SEE ALSO"
 .BR audacious (1)
 
 .SH WEBSITE
-.I http://audacious-media-player.org
+.I https://audacious-media-player.org

@@ -26,25 +26,28 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
-#include <libaudcore/equalizer.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/vfs.h>
 
-typedef void (* FilebrowserCallback) (const char * filename);
+typedef void (* PresetAction) (const char * filename, const EqualizerPreset * preset);
 
 static void browser_response (GtkWidget * dialog, int response, void * data)
 {
     if (response == GTK_RESPONSE_ACCEPT)
     {
         CharPtr filename (gtk_file_chooser_get_uri ((GtkFileChooser *) dialog));
-        ((FilebrowserCallback) data) (filename);
+        auto preset = (const EqualizerPreset *)
+         g_object_get_data ((GObject *) dialog, "eq-preset");
+
+        ((PresetAction) data) (filename, preset);
     }
 
     gtk_widget_destroy (dialog);
 }
 
 static void show_preset_browser (const char * title, gboolean save,
- const char * default_filename, FilebrowserCallback callback)
+ const char * default_filename, PresetAction callback,
+ const EqualizerPreset * preset)
 {
     GtkWidget * browser = gtk_file_chooser_dialog_new (title, nullptr, save ?
      GTK_FILE_CHOOSER_ACTION_SAVE : GTK_FILE_CHOOSER_ACTION_OPEN, _("Cancel"),
@@ -56,78 +59,33 @@ static void show_preset_browser (const char * title, gboolean save,
     if (default_filename)
         gtk_file_chooser_set_current_name ((GtkFileChooser *) browser, default_filename);
 
+    if (preset)
+        g_object_set_data_full ((GObject *) browser, "eq-preset",
+         new EqualizerPreset (* preset), aud::delete_obj<EqualizerPreset>);
+
     g_signal_connect (browser, "response", (GCallback) browser_response, (void *) callback);
 
     audgui_show_unique_window (AUDGUI_PRESET_BROWSER_WINDOW, browser);
 }
 
-static void do_load_file (const char * filename)
+static void do_load_file (const char * filename, const EqualizerPreset *)
 {
-    EqualizerPreset preset;
+    Index<EqualizerPreset> presets;
+    presets.append ();
 
     VFSFile file (filename, "r");
-    if (! file || ! aud_load_preset_file (preset, file))
+    if (! file || ! aud_load_preset_file (presets[0], file))
         return;
 
-    aud_eq_apply_preset (preset);
+    audgui_import_eq_presets (presets);
 }
 
 void eq_preset_load_file ()
 {
-    show_preset_browser (_("Load Preset File"), false, nullptr, do_load_file);
+    show_preset_browser (_("Load Preset File"), false, nullptr, do_load_file, nullptr);
 }
 
-static void do_load_eqf (const char * filename)
-{
-    VFSFile file (filename, "r");
-    if (! file)
-        return;
-
-    Index<EqualizerPreset> presets = aud_import_winamp_presets (file);
-
-    if (presets.len ())
-        aud_eq_apply_preset (presets[0]);
-}
-
-void eq_preset_load_eqf ()
-{
-    show_preset_browser (_("Load EQF File"), false, nullptr, do_load_eqf);
-}
-
-static void do_save_file (const char * filename)
-{
-    EqualizerPreset preset;
-    aud_eq_update_preset (preset);
-
-    VFSFile file (filename, "w");
-    if (file)
-        aud_save_preset_file (preset, file);
-}
-
-void eq_preset_save_file ()
-{
-    show_preset_browser (_("Save Preset File"), true, _("<name>.preset"), do_save_file);
-}
-
-static void do_save_eqf (const char * filename)
-{
-    VFSFile file (filename, "w");
-    if (! file)
-        return;
-
-    EqualizerPreset preset = EqualizerPreset ();
-    preset.name = String ("Preset1");
-
-    aud_eq_update_preset (preset);
-    aud_export_winamp_preset (preset, file);
-}
-
-void eq_preset_save_eqf ()
-{
-    show_preset_browser (_("Save EQF File"), true, _("<name>.eqf"), do_save_eqf);
-}
-
-static void do_import_winamp (const char * filename)
+static void do_load_eqf (const char * filename, const EqualizerPreset *)
 {
     VFSFile file (filename, "r");
     if (! file)
@@ -136,7 +94,39 @@ static void do_import_winamp (const char * filename)
     audgui_import_eq_presets (aud_import_winamp_presets (file));
 }
 
-void eq_preset_import_winamp ()
+void eq_preset_load_eqf ()
 {
-    show_preset_browser (_("Import Winamp Presets"), false, nullptr, do_import_winamp);
+    show_preset_browser (_("Load EQF File"), false, nullptr, do_load_eqf, nullptr);
+}
+
+static void do_save_file (const char * filename, const EqualizerPreset * preset)
+{
+    g_return_if_fail (preset);
+
+    VFSFile file (filename, "w");
+    if (file)
+        aud_save_preset_file (* preset, file);
+}
+
+void eq_preset_save_file (const EqualizerPreset & preset)
+{
+    StringBuf name = str_concat ({preset.name, ".preset"});
+    show_preset_browser (_("Save Preset File"), true, name, do_save_file, & preset);
+}
+
+static void do_save_eqf (const char * filename, const EqualizerPreset * preset)
+{
+    g_return_if_fail (preset);
+
+    VFSFile file (filename, "w");
+    if (! file)
+        return;
+
+    aud_export_winamp_preset (* preset, file);
+}
+
+void eq_preset_save_eqf (const EqualizerPreset & preset)
+{
+    StringBuf name = str_concat ({preset.name, ".eqf"});
+    show_preset_browser (_("Save EQF File"), true, name, do_save_eqf, & preset);
 }

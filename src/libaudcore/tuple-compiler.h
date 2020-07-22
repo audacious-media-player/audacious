@@ -48,13 +48,13 @@ class TupleCompiler
 public:
     struct Node;
 
-    TupleCompiler ();
-    ~TupleCompiler ();
+    TupleCompiler();
+    ~TupleCompiler();
 
-    bool compile (const char * expr);
-    void reset ();
+    bool compile(const char * expr);
+    void reset();
 
-    void format (Tuple & tuple) const;
+    void format(Tuple & tuple) const;
 
 private:
     Index<Node> root_nodes;

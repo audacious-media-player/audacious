@@ -24,7 +24,7 @@ April 13, 2017</em></p>
 
 <p>Edit <tt>C:\msys32\home\&lt;user&gt;\.bashrc</tt> and add the following lines:</p>
 <blockquote><p><tt>export PATH="$PATH:/C/cmake/bin:/C/GTK/bin:/C/libs/bin:/C/aud/bin"<br>
-export PKG_CONFIG_PATH=/C/GTK/lib/pkgconfig:/C/libs/lib/pkgconfig:/C/aud/lib/pkgconfig<br>
+export PKG_CONFIG_PATH=/C/Qt/5.12.5/mingw73_32/lib/pkgconfig:/C/GTK/lib/pkgconfig:/C/libs/lib/pkgconfig:/C/aud/lib/pkgconfig<br>
 export C_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
 export CPLUS_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
 export LIBRARY_PATH=/C/GTK/lib:/C/libs/lib</tt></p></blockquote>
@@ -32,7 +32,7 @@ export LIBRARY_PATH=/C/GTK/lib:/C/libs/lib</tt></p></blockquote>
 <p>In the MinGW shell (MSYS2 MinGW 32-bit, <b>not</b> MSYS2 MSYS):</p>
 
 <blockquote><p><tt>pacman -Syu<br>
-pacman -S autoconf automake bison libtool mingw-w64-i686-gcc mingw-w64-i686-gettext make perl-XML-Parser pkg-config python2</tt></p></blockquote>
+pacman -S autoconf automake bison gperf libtool mingw-w64-i686-gcc mingw-w64-i686-gettext make perl-XML-Parser pkg-config python2</tt></p></blockquote>
 
 <h3>Install CMake</h3>
 
@@ -41,6 +41,17 @@ pacman -S autoconf automake bison libtool mingw-w64-i686-gcc mingw-w64-i686-gett
 <tt>https://cmake.org/files/v3.8/cmake-3.8.2-win32-x86.msi</tt></a></p>
 
 <p>Install to <tt>C:\cmake</tt>.</p>
+
+<h3>Install Qt (for Qt builds)</h3>
+
+<p>Download and run (choose another mirror if desired):<br>
+<a href="http://qt.mirror.constant.com/archive/online_installers/3.1/qt-unified-windows-x86-3.1.1-online.exe">
+<tt>http://qt.mirror.constant.com/archive/online_installers/3.1/qt-unified-windows-x86-3.1.1-online.exe</tt></a></p>
+
+<p>Choose the following install options:<br>
+<ul><li>Skip the Qt account login page</li>
+<li>Use the default installation path (<tt>C:\Qt</tt>)</li>
+<li>Install Qt 5.12.5 for MinGW 7.3.0 32-bit</li></ul></p>
 
 <h3>Install libpng</h3>
 
@@ -81,11 +92,10 @@ make install</tt></p></blockquote>
 <h3>Install GLib</h3>
 
 <p>Download and unzip to <tt>C:\glib</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.52/glib-2.52.1.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.52/glib-2.52.1.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.52/glib-2.52.3.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.52/glib-2.52.3.tar.xz</tt></a></p>
 
-<p>Apply the patch <tt>ggettext.c.diff</tt> to <tt>C:\glib\glib\ggettext.c</tt>.<br>
-Apply the recursive patch <tt>glib-2-52.diff</tt>.</p>
+<p>Apply the recursive patches <tt>glib-2-52.diff</tt> and <tt>glib-gettext-fix.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/glib<br>
@@ -117,6 +127,42 @@ make install</tt></p></blockquote>
 make<br>
 make install</tt></p></blockquote>
 
+<h3>Install FreeType</h3>
+
+<p>Download and unzip to <tt>C:\freetype</tt>:<br>
+<a href="https://sourceforge.net/projects/freetype/files/freetype2/2.9/freetype-2.9.tar.bz2/download">
+<tt>https://sourceforge.net/projects/freetype/files/freetype2/2.9/freetype-2.9.tar.bz2/download</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/freetype<br>
+./configure --prefix=/C/GTK<br>
+make<br>
+make install</tt></p></blockquote>
+
+<h3>Install HarfBuzz</h3>
+
+<p>Download and unzip to <tt>C:\harfbuzz</tt>:<br>
+<a href="https://www.freedesktop.org/software/harfbuzz/release/harfbuzz-1.7.4.tar.bz2">
+<tt>https://www.freedesktop.org/software/harfbuzz/release/harfbuzz-1.7.4.tar.bz2</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/harfbuzz<br>
+./configure --prefix=/C/GTK<br>
+make<br>
+make install</tt></p></blockquote>
+
+<h3>Install Fontconfig</h3>
+
+<p>Download and unzip to <tt>C:\fontconfig</tt>:<br>
+<a href="https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.6.tar.bz2">
+<tt>https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.6.tar.bz2</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/fontconfig<br>
+./configure --prefix=/C/GTK<br>
+make<br>
+make install</tt></p></blockquote>
+
 <h3>Install Pango</h3>
 
 <p>Download and unzip to <tt>C:\pango</tt>:<br>
@@ -135,9 +181,35 @@ make install</tt></p></blockquote>
 <a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz">
 <tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz</tt></a></p>
 
+<p>Apply the patch <tt>gdk-pixbuf-util.c.diff</tt> to <tt>C:\gdk-pixbuf\gdk-pixbuf\gdk-pixbuf-util.c</tt>.</p>
+
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gdk-pixbuf<br>
-./configure --prefix=/C/GTK --without-gdiplus --without-libtiff --with-included-loaders=jpeg,png<br>
+./configure --prefix=/C/GTK --enable-relocations --without-gdiplus --without-libtiff --with-included-loaders=bmp,jpeg,png<br>
+make<br>
+make install</tt></p></blockquote>
+
+<h3>Install libcroco</h3>
+
+<p>Download and unzip to <tt>C:\libcroco</tt>:<br>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/libcroco/0.6/libcroco-0.6.12.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/libcroco/0.6/libcroco-0.6.12.tar.xz</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/libcroco<br>
+./configure --prefix=/C/GTK<br>
+make<br>
+make install</tt></p></blockquote>
+
+<h3>Install librsvg</h3>
+
+<p>Download and unzip to <tt>C:\librsvg</tt>:<br>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/librsvg/2.40/librsvg-2.40.20.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/librsvg/2.40/librsvg-2.40.20.tar.xz</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/librsvg<br>
+./configure --prefix=/C/GTK --disable-introspection<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -146,6 +218,8 @@ make install</tt></p></blockquote>
 <p>Download and unzip to <tt>C:\atk</tt>:<br>
 <a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.24/atk-2.24.0.tar.xz">
 <tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.24/atk-2.24.0.tar.xz</tt></a></p>
+
+<p>Apply the patch <tt>atkprivate.c.diff</tt> to <tt>C:\atk\atk\atkprivate.c</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/atk<br>
@@ -159,7 +233,10 @@ make install</tt></p></blockquote>
 <a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.31.tar.xz">
 <tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.31.tar.xz</tt></a></p>
 
-<p>Apply the patch <tt>gdkwindow-win32.c.diff</tt> to <tt>C:\gtksrc\gdk\win32\gdkwindow-win32.c</tt>.</p>
+<p>Apply the patch <tt>gdkwindow-win32.c.diff</tt> to <tt>C:\gtksrc\gdk\win32\gdkwindow-win32.c</tt>.<br>
+Apply the patch <tt>gtkicontheme.c.diff</tt> to <tt>C:\gtksrc\gtk\gtkicontheme.c</tt>.<br>
+Apply the patch <tt>gtkmain.c.diff</tt> to <tt>C:\gtksrc\gtk\gtkmain.c</tt>.<br>
+Apply the recursive patch <tt>gtk-parentheses.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gtksrc<br>
@@ -208,8 +285,8 @@ for GNOME Icon Theme to install successfully.</i></p>
 <h3>Install libxml</h3>
 
 <p>Download and unzip to <tt>C:\libxml</tt>:<br>
-<a href="ftp://xmlsoft.org/libxml2/libxml2-2.9.4.tar.gz">
-<tt>ftp://xmlsoft.org/libxml2/libxml2-2.9.4.tar.gz</tt></a></p>
+<a href="ftp://xmlsoft.org/libxml2/libxml2-2.9.9.tar.gz">
+<tt>ftp://xmlsoft.org/libxml2/libxml2-2.9.9.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libxml<br>
@@ -220,8 +297,8 @@ make install</tt></p></blockquote>
 <h3>Install mpg123</h3>
 
 <p>Download and unzip to <tt>C:\mpg123</tt>:<br>
-<a href="http://mpg123.de/download/mpg123-1.25.0.tar.bz2">
-<tt>http://mpg123.de/download/mpg123-1.25.0.tar.bz2</tt></a></p>
+<a href="http://mpg123.de/download/mpg123-1.25.13.tar.bz2">
+<tt>http://mpg123.de/download/mpg123-1.25.13.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/mpg123<br>
@@ -232,16 +309,13 @@ make install</tt></p></blockquote>
 <h3>Install libfaad</h3>
 
 <p>Download and unzip to <tt>C:\libfaad</tt>:<br>
-<a href="http://sourceforge.net/projects/faac/files/faad2-src/faad2-2.7/faad2-2.7.tar.bz2/download">
-<tt>http://sourceforge.net/projects/faac/files/faad2-src/faad2-2.7/faad2-2.7.tar.bz2/download</tt></a></p>
+<a href="https://sourceforge.net/projects/faac/files/faad2-src/faad2-2.8.0/faad2-2.8.8.tar.gz/download">
+<tt>https://sourceforge.net/projects/faac/files/faad2-src/faad2-2.8.0/faad2-2.8.8.tar.gz/download</tt></a></p>
 
-<p>Apply the patch <tt>libfaad-makefile.am.diff</tt> to <tt>C:\libfaad\libfaad\Makefile.am</tt>.<br>
-Apply the patch <tt>libfaad-main.c.diff</tt> to <tt>C:\libfaad\frontend\main.c</tt>.</p>
+<p>Apply the patch <tt>libfaad-decoder.c.diff</tt> to <tt>C:\libfaad\decoder.c</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libfaad<br>
-cp /C/msys32/usr/share/libtool/build-aux/ltmain.sh .<br>
-autoreconf<br>
 ./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
@@ -264,12 +338,8 @@ make install</tt></p></blockquote>
 <a href="http://sourceforge.net/projects/bs2b/files/libbs2b/3.1.0/libbs2b-3.1.0.tar.bz2/download">
 <tt>http://sourceforge.net/projects/bs2b/files/libbs2b/3.1.0/libbs2b-3.1.0.tar.bz2/download</tt></a></p>
 
-<p>Apply the patch <tt>libbs2b-makefile.am.diff</tt> to <tt>C:\libs2b\src\Makefile.am</tt>.</p>
-
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libbs2b<br>
-cp /C/msys32/usr/share/libtool/build-aux/ltmain.sh build-aux<br>
-autoreconf<br>
 ./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
@@ -277,14 +347,20 @@ make install</tt></p></blockquote>
 <h3>Install libcdio</h3>
 
 <p>Download and unzip to <tt>C:\libcdio</tt>:<br>
-<a href="http://ftp.gnu.org/gnu/libcdio/libcdio-0.83.tar.gz">
-<tt>http://ftp.gnu.org/gnu/libcdio/libcdio-0.83.tar.gz</tt></a></p>
+<a href="http://ftp.gnu.org/gnu/libcdio/libcdio-2.1.0.tar.bz2">
+<tt>http://ftp.gnu.org/gnu/libcdio/libcdio-2.1.0.tar.bz2</tt></a></p>
 
-<p>Apply the recursive patch <tt>libcdio-0.83.diff</tt>.</p>
+<p>Download and unzip to <tt>C:\libcdio-paranoia</tt>:<br>
+<a href="http://ftp.gnu.org/gnu/libcdio/libcdio-paranoia-10.2+2.0.0.tar.bz2">
+<tt>http://ftp.gnu.org/gnu/libcdio/libcdio-paranoia-10.2+2.0.0.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libcdio<br>
-./configure --prefix=/C/libs --disable-rock<br>
+./configure --prefix=/C/libs<br>
+make<br>
+make install<br>
+cd /C/libcdio-paranoia<br>
+./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -305,38 +381,34 @@ make install</tt></p></blockquote>
 <h3>Install libcue</h3>
 
 <p>Download and unzip to <tt>C:\libcue</tt>:<br>
-<a href="https://github.com/lipnitsk/libcue/archive/v2.1.0.tar.gz">
-<tt>https://github.com/lipnitsk/libcue/archive/v2.1.0.tar.gz</tt></a></p>
-
-<p>Apply the recursive patch <tt>libcue-install-dll.diff</tt>.</p>
+<a href="https://github.com/lipnitsk/libcue/archive/v2.2.1.tar.gz">
+<tt>https://github.com/lipnitsk/libcue/archive/v2.2.1.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libcue<br>
-cmake -DCMAKE_INSTALL_PREFIX=/C/libs -G"MSYS Makefiles"<br>
+cmake -DCMAKE_INSTALL_PREFIX=/C/libs -DBUILD_SHARED_LIBS=1 -G"MSYS Makefiles"<br>
 make<br>
 make install</tt></p></blockquote>
 
 <h3>Install LAME</h3>
 
 <p>Download and unzip to <tt>C:\lame</tt>:<br>
-<a href="http://sourceforge.net/projects/lame/files/lame/3.99/lame-3.99.5.tar.gz/download">
-<tt>http://sourceforge.net/projects/lame/files/lame/3.99/lame-3.99.5.tar.gz/download</tt></a></p>
+<a href="https://sourceforge.net/projects/lame/files/lame/3.100/lame-3.100.tar.gz/download">
+<tt>https://sourceforge.net/projects/lame/files/lame/3.100/lame-3.100.tar.gz/download</tt></a></p>
 
-<p>Apply the recursive patch <tt>lame-3.99.diff</tt>.</p>
+<p>Apply the patch <tt>libmp3lame.sym.diff</tt> to <tt>C:\lame\include\libmp3lame.sym</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/lame<br>
-cp /C/msys32/usr/share/libtool/build-aux/ltmain.sh .<br>
-autoreconf<br>
-./configure --prefix=/C/libs<br>
+./configure --prefix=/C/libs --disable-frontend<br>
 make<br>
 make install</tt></p></blockquote>
 
 <h3>Install libflac</h3>
 
 <p>Download and unzip to <tt>C:\libflac</tt>:<br>
-<a href="http://downloads.xiph.org/releases/flac/flac-1.3.2.tar.xz">
-<tt>http://downloads.xiph.org/releases/flac/flac-1.3.2.tar.xzz</tt></a></p>
+<a href="https://ftp.osuosl.org/pub/xiph/releases/flac/flac-1.3.3.tar.xz">
+<tt>https://ftp.osuosl.org/pub/xiph/releases/flac/flac-1.3.3.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libflac<br>
@@ -347,8 +419,8 @@ make install</tt></p></blockquote>
 <h3>Install libogg</h3>
 
 <p>Download and unzip to <tt>C:\libogg</tt>:<br>
-<a href="http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.xz">
-<tt>http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.xz</tt></a></p>
+<a href="https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.4.tar.xz">
+<tt>https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-1.3.4.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libogg<br>
@@ -359,8 +431,8 @@ make install</tt></p></blockquote>
 <h3>Install libvorbis</h3>
 
 <p>Download and unzip to <tt>C:\libvorbis</tt>:<br>
-<a href="http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.xz">
-<tt>http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.xz</tt></a></p>
+<a href="https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-1.3.6.tar.xz">
+<tt>https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-1.3.6.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libvorbis<br>
@@ -378,7 +450,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libneon<br>
-./autogen.sh
+./autogen.sh<br>
 ./configure --prefix=/C/libs --enable-shared<br>
 make<br>
 make install</tt></p></blockquote>
@@ -414,8 +486,8 @@ make install</tt></p></blockquote>
 <h3>Install FFmpeg</h3>
 
 <p>Download and unzip to <tt>C:\ffmpeg</tt>:<br>
-<a href="http://ffmpeg.org/releases/ffmpeg-3.3.tar.xz">
-<tt>http://ffmpeg.org/releases/ffmpeg-3.3.tar.xz</tt></a></p>
+<a href="http://ffmpeg.org/releases/ffmpeg-4.2.1.tar.xz">
+<tt>http://ffmpeg.org/releases/ffmpeg-4.2.1.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/ffmpeg<br>
@@ -439,6 +511,30 @@ autoreconf<br>
 make<br>
 make install</tt></p></blockquote>
 
+<h3>Install libbinio</h3>
+
+<p>Download and unzip to <tt>C:\libbinio</tt>:<br>
+<a href="https://github.com/adplug/libbinio/releases/download/libbinio-1.5/libbinio-1.5.tar.bz2">
+<tt>https://github.com/adplug/libbinio/releases/download/libbinio-1.5/libbinio-1.5.tar.bz2</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/libbinio<br>
+./configure --prefix=/C/libs<br>
+make<br>
+make install</tt></p></blockquote>
+
+<h3>Install adplug</h3>
+
+<p>Download and unzip to <tt>C:\adplug</tt>:<br>
+<a href="https://github.com/adplug/adplug/releases/download/adplug-2.3.1/adplug-2.3.1.tar.bz2">
+<tt>https://github.com/adplug/adplug/releases/download/adplug-2.3.1/adplug-2.3.1.tar.bz2</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/adplug<br>
+./configure --prefix=/C/libs<br>
+make<br>
+make install</tt></p></blockquote>
+
 <h3>Install libmodplug</h3>
 
 <p>Download and unzip to <tt>C:\libmodplug</tt>:<br>
@@ -454,8 +550,8 @@ make install</tt></p></blockquote>
 <h3>Install libsidplayfp</h3>
 
 <p>Download and unzip to <tt>C:\libsidplayfp</tt>:<br>
-<a href="https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.8/libsidplayfp-1.8.7.tar.gz/download">
-<tt>https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.8/libsidplayfp-1.8.7.tar.gz/download</tt></a></p>
+<a href="https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/2.0/libsidplayfp-2.0.1.tar.gz/download">
+<tt>https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/2.0/libsidplayfp-2.0.1.tar.gz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libsidplayfp<br>
@@ -481,8 +577,8 @@ make install</tt></p></blockquote>
 <h3>Install Audacious</h3>
 
 <p>Download and unzip to <tt>C:\audacious</tt>:<br>
-<a href="http://distfiles.audacious-media-player.org/audacious-3.8.tar.bz2">
-<tt>http://distfiles.audacious-media-player.org/audacious-3.8.tar.bz2</tt></a></p>
+<a href="https://distfiles.audacious-media-player.org/audacious-3.8.tar.bz2">
+<tt>https://distfiles.audacious-media-player.org/audacious-3.8.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/audacious<br>
@@ -493,8 +589,8 @@ make install</tt></p></blockquote>
 <h3>Install Audacious Plugins</h3>
 
 <p>Download and unzip to <tt>C:\audacious-plugins</tt>:<br>
-<a href="http://distfiles.audacious-media-player.org/audacious-plugins-3.8.tar.bz2">
-<tt>http://distfiles.audacious-media-player.org/audacious-plugins-3.8.tar.bz2</tt></a></p>
+<a href="https://distfiles.audacious-media-player.org/audacious-plugins-3.8.tar.bz2">
+<tt>https://distfiles.audacious-media-player.org/audacious-plugins-3.8.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/audacious-plugins<br>

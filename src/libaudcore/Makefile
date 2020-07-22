@@ -1,8 +1,9 @@
 SHARED_LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
 LIB_MAJOR = 5
-LIB_MINOR = 1
+LIB_MINOR = 2
 
 SRCS = adder.cc \
+       archive_reader.cc \
        art.cc \
        art-search.cc \
        audio.cc \
@@ -55,7 +56,8 @@ SRCS = adder.cc \
        vis-runner.cc \
        visualization.cc
 
-INCLUDES = audio.h \
+INCLUDES = archive_reader.h \
+           audio.h \
            audstrings.h \
            drct.h \
            equalizer.h \
@@ -78,6 +80,7 @@ INCLUDES = audio.h \
            runtime.h \
            templates.h \
            tinylock.h \
+           threads.h \
            tuple.h \
            visualizer.h \
            vfs.h \
@@ -95,12 +98,13 @@ CPPFLAGS := -I.. -I../.. \
             ${GLIB_CFLAGS} \
             ${GMODULE_CFLAGS} \
             ${QTCORE_CFLAGS} \
-            -DHARDCODE_BINDIR=\"${bindir}\" \
-            -DHARDCODE_DATADIR=\"${datadir}/audacious\" \
-            -DHARDCODE_PLUGINDIR=\"${plugindir}\" \
-            -DHARDCODE_LOCALEDIR=\"${localedir}\" \
-            -DHARDCODE_DESKTOPFILE=\"${datarootdir}/applications/audacious.desktop\" \
-            -DHARDCODE_ICONFILE=\"${datarootdir}/icons/hicolor/48x48/apps/audacious.png\" \
+            ${LIBARCHIVE_CFLAGS} \
+            -DINSTALL_BINDIR=\"${bindir}\" \
+            -DINSTALL_DATADIR=\"${datadir}/audacious\" \
+            -DINSTALL_PLUGINDIR=\"${plugindir}\" \
+            -DINSTALL_LOCALEDIR=\"${localedir}\" \
+            -DINSTALL_DESKTOPFILE=\"${datarootdir}/applications/audacious.desktop\" \
+            -DINSTALL_ICONFILE=\"${datarootdir}/icons/hicolor/48x48/apps/audacious.png\" \
             -DLIBAUDCORE_BUILD
 
 CFLAGS += ${LIB_CFLAGS}
@@ -109,4 +113,5 @@ LIBS := ../libguess/libguess.a \
         ${LIBS} -lm \
         ${GLIB_LIBS} \
         ${GMODULE_LIBS} \
-        ${QTCORE_LIBS}
+        ${QTCORE_LIBS} \
+        ${LIBARCHIVE_LIBS}

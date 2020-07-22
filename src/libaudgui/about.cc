@@ -29,7 +29,7 @@
 #include "libaudgui-gtk.h"
 
 static const char about_text[] = "<big><b>Audacious " VERSION "</b></big>\n" COPYRIGHT;
-static const char website[] = "http://audacious-media-player.org";
+static const char website[] = "https://audacious-media-player.org";
 
 static GtkWidget * create_credits_notebook (const char * credits, const char * license)
 {
@@ -78,8 +78,9 @@ static GtkWidget * create_about_window ()
     GtkWidget * vbox = gtk_vbox_new (false, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
-    StringBuf logo_path = filename_build ({data_dir, "images", "about-logo.png"});
-    GtkWidget * image = gtk_image_new_from_file (logo_path);
+    AudguiPixbuf logo (gdk_pixbuf_new_from_resource_at_scale
+     ("/org/audacious/about-logo.svg", 4 * dpi, 2 * dpi, true, nullptr));
+    GtkWidget * image = gtk_image_new_from_pixbuf (logo.get ());
     gtk_box_pack_start ((GtkBox *) vbox, image, false, false, 0);
 
     GtkWidget * label = gtk_label_new (nullptr);

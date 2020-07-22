@@ -1,21 +1,11 @@
 SUBDIRS = src man images po
 
-DISTCLEAN = audacious.pc buildsys.mk config.h config.log config.status extra.mk
+DISTCLEAN = ${GENERATED_FILES} config.h config.log config.status
 
-DATA = AUTHORS \
-       COPYING \
-       images/about-logo.png \
-       images/about-logo.svg \
-       images/advanced.png \
-       images/album.png \
-       images/appearance.png \
-       images/audio.png \
-       images/connectivity.png \
-       images/info.png \
-       images/playlist.png \
-       images/plugins.png
+DATA = AUTHORS COPYING
 
 include buildsys.mk
+include extra.mk
 
 install-extra:
 	for i in audacious.pc; do \

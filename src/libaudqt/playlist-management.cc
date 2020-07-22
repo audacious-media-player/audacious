@@ -1,6 +1,6 @@
 /*
  * playlist-management.cc
- * Copyright 2014 William Pitcock
+ * Copyright 2014 Ariadne Conill
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,101 +20,87 @@
 #include "libaudqt.h"
 
 #include <QCheckBox>
-#include <QDialog>
-#include <QDialogButtonBox>
-#include <QLabel>
-#include <QLineEdit>
+#include <QInputDialog>
 #include <QPushButton>
-#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
-#include <libaudcore/runtime.h>
 #include <libaudcore/playlist.h>
+#include <libaudcore/runtime.h>
 
-namespace audqt {
-
-static QDialog * buildRenameDialog (Playlist playlist)
+namespace audqt
 {
-    auto dialog = new QDialog;
-    auto prompt = new QLabel (_("What would you like to call this playlist?"), dialog);
-    auto entry = new QLineEdit ((const char *) playlist.get_title (), dialog);
-    auto rename = new QPushButton (translate_str (N_("_Rename")), dialog);
-    auto cancel = new QPushButton (translate_str (N_("_Cancel")), dialog);
 
-    auto buttonbox = new QDialogButtonBox (dialog);
-    buttonbox->addButton (rename, QDialogButtonBox::AcceptRole);
-    buttonbox->addButton (cancel, QDialogButtonBox::RejectRole);
+static QDialog * buildRenameDialog(Playlist playlist)
+{
+    auto dialog = new QInputDialog;
+    dialog->setInputMode(QInputDialog::TextInput);
+    dialog->setWindowTitle(_("Rename Playlist"));
+    dialog->setLabelText(_("What would you like to call this playlist?"));
+    dialog->setOkButtonText(translate_str(N_("_Rename")));
+    dialog->setCancelButtonText(translate_str(N_("_Cancel")));
+    dialog->setTextValue((const char *)playlist.get_title());
 
-    QObject::connect (buttonbox, & QDialogButtonBox::accepted, [dialog, entry, playlist] () {
-        playlist.set_title (entry->text ().toUtf8 ());
-        dialog->close ();
-    });
-
-    QObject::connect (buttonbox, & QDialogButtonBox::rejected, dialog, & QDialog::close);
-
-    auto layout = make_vbox (dialog);
-    layout->addWidget (prompt);
-    layout->addWidget (entry);
-    layout->addStretch (1);
-    layout->addWidget (buttonbox);
-
-    dialog->setWindowTitle (_("Rename Playlist"));
-    dialog->setContentsMargins (margins.EightPt);
-
-    entry->selectAll ();
+    QObject::connect(dialog, &QInputDialog::textValueSelected,
+                     [dialog, playlist](const QString & text) {
+                         playlist.set_title(text.toUtf8());
+                         dialog->close();
+                     });
 
     return dialog;
 }
 
-static QDialog * buildDeleteDialog (Playlist playlist)
+static QDialog * buildDeleteDialog(Playlist playlist)
 {
     auto dialog = new QMessageBox;
-    auto skip_prompt = new QCheckBox (translate_str (N_("_Don’t ask again")), dialog);
-    auto remove = new QPushButton (translate_str (N_("_Remove")), dialog);
-    auto cancel = new QPushButton (translate_str (N_("_Cancel")), dialog);
+    auto skip_prompt =
+        new QCheckBox(translate_str(N_("_Don’t ask again")), dialog);
+    auto remove = new QPushButton(translate_str(N_("_Remove")), dialog);
+    auto cancel = new QPushButton(translate_str(N_("_Cancel")), dialog);
 
-    dialog->setIcon (QMessageBox::Question);
-    dialog->setWindowTitle (_("Remove Playlist"));
-    dialog->setText ((const char *) str_printf (_("Do you want to permanently remove “%s”?"),
-     (const char *) playlist.get_title ()));
-    dialog->setCheckBox (skip_prompt);
-    dialog->addButton (remove, QMessageBox::AcceptRole);
-    dialog->addButton (cancel, QMessageBox::RejectRole);
+    dialog->setIcon(QMessageBox::Question);
+    dialog->setWindowTitle(_("Remove Playlist"));
+    dialog->setText(
+        (const char *)str_printf(_("Do you want to permanently remove “%s”?"),
+                                 (const char *)playlist.get_title()));
+    dialog->setCheckBox(skip_prompt);
+    dialog->addButton(remove, QMessageBox::AcceptRole);
+    dialog->addButton(cancel, QMessageBox::RejectRole);
 
-    remove->setIcon (QIcon::fromTheme ("edit-delete"));
-    cancel->setIcon (QIcon::fromTheme ("process-stop"));
+    remove->setIcon(audqt::get_icon("edit-delete"));
+    cancel->setIcon(audqt::get_icon("process-stop"));
 
-    QObject::connect (skip_prompt, & QCheckBox::stateChanged, [] (int state) {
-        aud_set_bool ("audgui", "no_confirm_playlist_delete", (state == Qt::Checked));
+    QObject::connect(skip_prompt, &QCheckBox::stateChanged, [](int state) {
+        aud_set_bool("audgui", "no_confirm_playlist_delete",
+                     (state == Qt::Checked));
     });
 
-    QObject::connect (remove, & QPushButton::clicked, [dialog, playlist] () {
-        playlist.remove_playlist ();
-        dialog->close ();
+    QObject::connect(remove, &QPushButton::clicked, [dialog, playlist]() {
+        playlist.remove_playlist();
+        dialog->close();
     });
 
     return dialog;
 }
 
-EXPORT void playlist_show_rename (Playlist playlist)
+EXPORT void playlist_show_rename(Playlist playlist)
 {
-    auto dialog = buildRenameDialog (playlist);
-    dialog->setAttribute (Qt::WA_DeleteOnClose);
-    dialog->show ();
+    auto dialog = buildRenameDialog(playlist);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
 }
 
-EXPORT void playlist_confirm_delete (Playlist playlist)
+EXPORT void playlist_confirm_delete(Playlist playlist)
 {
-    if (aud_get_bool ("audgui", "no_confirm_playlist_delete"))
+    if (aud_get_bool("audgui", "no_confirm_playlist_delete"))
     {
-        playlist.remove_playlist ();
+        playlist.remove_playlist();
         return;
     }
 
-    auto dialog = buildDeleteDialog (playlist);
-    dialog->setAttribute (Qt::WA_DeleteOnClose);
-    dialog->show ();
+    auto dialog = buildDeleteDialog(playlist);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
 }
 
 } // namespace audqt

@@ -1,3 +1,22 @@
+dnl Backward compatibility with older pkg-config <= 0.28
+dnl Retrieves the value of the pkg-config variable
+dnl for the given module.
+dnl PKG_CHECK_VAR(VARIABLE, MODULE, CONFIG-VARIABLE,
+dnl [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+dnl ====================================================
+m4_ifndef([PKG_CHECK_VAR], [
+AC_DEFUN([PKG_CHECK_VAR],
+[AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+AC_ARG_VAR([$1], [value of $3 for $2, overriding pkg-config])dnl
+
+_PKG_CONFIG([$1], [variable="][$3]["], [$2])
+AS_VAR_COPY([$1], [pkg_cv_][$1])
+
+AS_VAR_IF([$1], [""], [$5], [$4])dnl
+])
+])
+
+
 dnl Add $1 to CFLAGS and CXXFLAGS if supported
 dnl ==========================================
 
@@ -83,12 +102,13 @@ AC_REQUIRE([AC_SYS_LARGEFILE])
 if test "x$GCC" = "xyes"; then
     CFLAGS="$CFLAGS -std=gnu99 -ffast-math -Wall -pipe"
     if test "x$HAVE_DARWIN" = "xyes"; then
-        CXXFLAGS="$CXXFLAGS -stdlib=libc++ -std=gnu++11 -ffast-math -Wall -pipe"
-        LDFLAGS="$LDFLAGS -lc++ -stdlib=libc++"
+        CXXFLAGS="$CXXFLAGS -std=gnu++11 -ffast-math -Wall -pipe"
+        LDFLAGS="$LDFLAGS"
     else
         CXXFLAGS="$CXXFLAGS -std=gnu++11 -ffast-math -Wall -pipe"
     fi
     AUD_CHECK_CFLAGS(-Wtype-limits)
+    AUD_CHECK_CFLAGS(-Wno-stringop-truncation)
     AUD_CHECK_CXXFLAGS(-Woverloaded-virtual)
 fi
 
@@ -101,7 +121,7 @@ if test "x$HAVE_DARWIN" = "xyes"; then
     AC_PROG_OBJCXX
     AC_PROG_OBJCXXCPP
 
-    OBJCXXFLAGS="$OBJCXXFLAGS -stdlib=libc++ -std=c++11"
+    OBJCXXFLAGS="$OBJCXXFLAGS -std=c++11"
 fi
 
 dnl Enable "-Wl,-z,defs" only on Linux
@@ -157,16 +177,18 @@ dnl =======================
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.32)
 PKG_CHECK_MODULES(GMODULE, gmodule-2.0 >= 2.32)
 
+AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_32], [target GLib 2.32])
+
 dnl GTK+ support
 dnl =============
 
 AC_ARG_ENABLE(gtk,
- AS_HELP_STRING(--disable-gtk, [Disable GTK+ support (default=enabled)]),
- USE_GTK=$enableval, USE_GTK=yes)
+ AS_HELP_STRING(--enable-gtk, [Enable GTK+ support (default=disabled)]),
+ USE_GTK=$enableval, USE_GTK=no)
 
 if test $USE_GTK = yes ; then
     PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.24)
-    AC_DEFINE(USE_GTK, 1, [Define if GTK+ support enabled])
+    AC_DEFINE([USE_GTK], [1], [Define if GTK+ support enabled])
 fi
 
 AC_SUBST(USE_GTK)
@@ -190,13 +212,14 @@ dnl Qt support
 dnl ==========
 
 AC_ARG_ENABLE(qt,
- AS_HELP_STRING(--enable-qt, [Enable Qt support (default=disabled)]),
- USE_QT=$enableval, USE_QT=no)
+ AS_HELP_STRING(--disable-qt, [Disable Qt support (default=enabled)]),
+ USE_QT=$enableval, USE_QT=yes)
 
 if test $USE_QT = yes ; then
     PKG_CHECK_MODULES([QTCORE], [Qt5Core >= 5.2])
+    PKG_CHECK_VAR([QTBINPATH], [Qt5Core >= 5.2], [host_bins])
     PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets >= 5.2])
-    AC_DEFINE(USE_QT, 1, [Define if Qt support enabled])
+    AC_DEFINE([USE_QT], [1], [Define if Qt support enabled])
 
     # needed if Qt was built with -reduce-relocations
     QTCORE_CFLAGS="$QTCORE_CFLAGS -fPIC"
@@ -206,5 +229,22 @@ fi
 AC_SUBST(USE_QT)
 AC_SUBST(QT_CFLAGS)
 AC_SUBST(QT_LIBS)
+AC_SUBST(QTBINPATH)
+
+dnl libarchive support
+dnl ==================
+
+AC_ARG_ENABLE(libarchive,
+ AS_HELP_STRING(--disable-libarchive, [Disable libarchive support (default=enabled)]),
+ USE_LIBARCHIVE=$enableval, USE_LIBARCHIVE=yes)
+
+if test $USE_LIBARCHIVE = yes ; then
+    PKG_CHECK_MODULES([LIBARCHIVE], [libarchive])
+    AC_DEFINE([USE_LIBARCHIVE], [1], [Define if libarchive support enabled])
+fi
+
+AC_SUBST(USE_LIBARCHIVE)
+AC_SUBST(LIBARCHIVE_CFLAGS)
+AC_SUBST(LIBARCHIVE_LIBS)
 
 ])

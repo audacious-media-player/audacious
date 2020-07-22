@@ -19,23 +19,21 @@
 
 #ifdef HAVE_SIGWAIT
 
-#include <pthread.h>
 #include <signal.h>
 
 #include <libaudcore/hook.h>
+#include <libaudcore/threads.h>
 
 #include "main.h"
 
 static sigset_t signal_set;
 
-static void * signal_thread (void * data)
+static void signal_thread ()
 {
     int signal;
 
     while (! sigwait (& signal_set, & signal))
         event_queue ("quit", nullptr);
-
-    return nullptr;
 }
 
 /* Must be called before any threads are created. */
@@ -52,8 +50,7 @@ void signals_init_one ()
 
 void signals_init_two ()
 {
-    pthread_t thread;
-    pthread_create (& thread, nullptr, signal_thread, nullptr);
+    std::thread (signal_thread).detach ();
 }
 
 #endif /* HAVE_SIGWAIT */

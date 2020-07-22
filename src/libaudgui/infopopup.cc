@@ -1,6 +1,6 @@
 /*
  * infopopup.c
- * Copyright 2006-2012 William Pitcock, Giacomo Lozito, John Lindgren, and
+ * Copyright 2006-2012 Ariadne Conill, Giacomo Lozito, John Lindgren, and
  *                     Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without
@@ -91,7 +91,7 @@ static void infopopup_progress_cb (void *)
         time = aud_drct_get_time ();
     }
 
-    if (aud_get_bool (nullptr, "filepopup_showprogressbar") && filename &&
+    if (aud_get_bool ("filepopup_showprogressbar") && filename &&
      current_file && ! strcmp (filename, current_file) && length > 0)
     {
         gtk_progress_bar_set_fraction ((GtkProgressBar *) widgets.progress, time / (float) length);
@@ -109,19 +109,14 @@ static void infopopup_realized (GtkWidget * widget)
     infopopup_move_to_mouse (widget);
 }
 
-/* borrowed from the gtkui infoarea */
 static gboolean infopopup_draw_bg (GtkWidget * widget)
 {
     GtkAllocation alloc;
     gtk_widget_get_allocation (widget, & alloc);
 
     cairo_t * cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-    cairo_pattern_t * gradient = cairo_pattern_create_linear (0, 0, 0, alloc.height);
-    cairo_pattern_add_color_stop_rgb (gradient, 0, 0.25, 0.25, 0.25);
-    cairo_pattern_add_color_stop_rgb (gradient, 0.5, 0.15, 0.15, 0.15);
-    cairo_pattern_add_color_stop_rgb (gradient, 0.5, 0.1, 0.1, 0.1);
-    cairo_pattern_add_color_stop_rgb (gradient, 1, 0, 0, 0);
+    auto & c = (gtk_widget_get_style (widget))->base[GTK_STATE_NORMAL];
+    cairo_pattern_t * gradient = audgui_dark_bg_gradient (c, alloc.height);
 
     cairo_set_source (cr, gradient);
     cairo_rectangle (cr, 0, 0, alloc.width, alloc.height);
@@ -209,10 +204,6 @@ static GtkWidget * infopopup_create ()
 
     /* override background drawing */
     gtk_widget_set_app_paintable (infopopup, true);
-
-    GtkStyle * style = gtk_style_new ();
-    gtk_widget_set_style (infopopup, style);
-    g_object_unref (style);
 
     g_signal_connect (infopopup, "realize", (GCallback) infopopup_realized, nullptr);
     g_signal_connect (infopopup, "expose-event", (GCallback) infopopup_draw_bg, nullptr);

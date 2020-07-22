@@ -1,6 +1,6 @@
 /*
  * handlers_general.c
- * Copyright 2005-2013 George Averill, William Pitcock, Giacomo Lozito,
+ * Copyright 2005-2013 George Averill, Ariadne Conill, Giacomo Lozito,
  *                     Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -104,7 +104,7 @@ void get_handlers_list (int argc, char * * argv)
     audtool_report ("");
     audtool_report ("Commands may be prefixed with '--' (GNU-style long options) or not, your choice.");
     audtool_report ("Show/hide and enable/disable commands take an optional 'on' or 'off' argument.");
-    audtool_report ("Report bugs to http://redmine.audacious-media-player.org/projects/audacious");
+    audtool_report ("Report bugs to https://redmine.audacious-media-player.org/projects/audacious");
 }
 
 void get_version (int argc, char * * argv)

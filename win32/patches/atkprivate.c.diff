@@ -1,0 +1,17 @@
+--- atk/atkprivate.c.0	2017-01-09 09:37:24.000000000 -0500
++++ atk/atkprivate.c	2018-05-30 23:18:27.572970500 -0400
+@@ -77,9 +77,13 @@
+       g_free (root);
+ 
+       /* atk_localedir is passed to bindtextdomain() which isn't
+-       * UTF-8-aware.
++       * UTF-8-aware.  Try to convert the path back to the legacy
++       * 8-bit locale.  If that's impossible, there's not much we
++       * can do so just return the original build-time path.
+        */
+       atk_localedir = g_win32_locale_filename_from_utf8 (temp);
++      if (atk_localedir == NULL)
++	atk_localedir = g_strdup (ATK_LOCALEDIR);
+       g_free (temp);
+     }
+   return atk_localedir;
