@@ -30,6 +30,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPainter>
+#include <QPointer>
 
 namespace audqt
 {
@@ -103,6 +104,9 @@ void InfoPopup::add_fields(const Tuple & tuple)
         add_field(row++, _("Track"), int_to_str(track));
     if (length > 0)
         add_field(row++, _("Length"), str_format_time(length));
+
+    if (row > 0)
+        m_grid.setRowStretch(row - 1, 1);
 }
 
 void InfoPopup::add_field(int row, const char * field, const char * value)
@@ -111,13 +115,13 @@ void InfoPopup::add_field(int row, const char * field, const char * value)
     header->setTextFormat(Qt::RichText);
     header->setText(
         QString("<i><font color=\"#a0a0a0\">%1</font></i>").arg(field));
-    m_grid.addWidget(header, row, 0, Qt::AlignRight);
+    m_grid.addWidget(header, row, 0, Qt::AlignRight | Qt::AlignTop);
 
     auto label = new QLabel(this);
     header->setTextFormat(Qt::RichText);
     auto html = QString(value).toHtmlEscaped();
     label->setText(QString("<font color=\"#ffffff\">%1</font>").arg(html));
-    m_grid.addWidget(label, row, 1, Qt::AlignLeft);
+    m_grid.addWidget(label, row, 1, Qt::AlignLeft | Qt::AlignTop);
 }
 
 void InfoPopup::art_ready(const char * filename)
@@ -150,7 +154,7 @@ void InfoPopup::paintEvent(QPaintEvent *)
     p.fillRect(rect(), grad);
 }
 
-static InfoPopup * s_infopopup;
+static QPointer<InfoPopup> s_infopopup;
 
 static void infopopup_show(const String & filename, const Tuple & tuple)
 {
@@ -158,9 +162,6 @@ static void infopopup_show(const String & filename, const Tuple & tuple)
         s_infopopup->deleteLater();
 
     s_infopopup = new InfoPopup(filename, tuple);
-
-    QObject::connect(s_infopopup, &QObject::destroyed,
-                     []() { s_infopopup = nullptr; });
 }
 
 EXPORT void infopopup_show(Playlist playlist, int entry)

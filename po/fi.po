@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2020-01-26 13:17+0100\n"
-"PO-Revision-Date: 2020-03-24 10:46+0000\n"
+"PO-Revision-Date: 2020-05-07 17:08+0000\n"
 "Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/audacious/audacious/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -1284,7 +1284,7 @@ msgstr "Luokka"
 
 #: src/libaudgui/prefs-window.cc:553 src/libaudqt/prefs-window-qt.cc:408
 msgid "Custom"
-msgstr "Mukautettu..."
+msgstr "Mukautettu"
 
 #: src/libaudgui/prefs-window.cc:571 src/libaudqt/prefs-window-qt.cc:400
 msgid "Title format:"

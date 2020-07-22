@@ -24,6 +24,7 @@
 #include <QDialogButtonBox>
 #include <QHeaderView>
 #include <QItemSelectionModel>
+#include <QPointer>
 #include <QPushButton>
 #include <QTreeView>
 #include <QVBoxLayout>
@@ -49,7 +50,11 @@ public:
                           const QItemSelection & deselected);
 
 protected:
-    int rowCount(const QModelIndex & parent) const { return m_rows; }
+    int rowCount(const QModelIndex & parent) const
+    {
+        return parent.isValid() ? 0 : m_rows;
+    }
+
     int columnCount(const QModelIndex & parent) const { return 2; }
     QVariant data(const QModelIndex & index, int role) const;
 
@@ -172,6 +177,7 @@ QueueManagerDialog::QueueManagerDialog(QWidget * parent) : QDialog(parent)
     layout->addWidget(&m_treeview);
     layout->addWidget(&m_buttonbox);
 
+    m_treeview.setAllColumnsShowFocus(true);
     m_treeview.setIndentation(0);
     m_treeview.setModel(&m_model);
     m_treeview.setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -205,7 +211,7 @@ void QueueManagerDialog::removeSelected()
     }
 }
 
-static QueueManagerDialog * s_queuemgr = nullptr;
+static QPointer<QueueManagerDialog> s_queuemgr;
 
 EXPORT void queue_manager_show()
 {
@@ -213,9 +219,6 @@ EXPORT void queue_manager_show()
     {
         s_queuemgr = new QueueManagerDialog;
         s_queuemgr->setAttribute(Qt::WA_DeleteOnClose);
-
-        QObject::connect(s_queuemgr, &QObject::destroyed,
-                         []() { s_queuemgr = nullptr; });
     }
 
     window_bring_to_front(s_queuemgr);

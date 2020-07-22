@@ -105,6 +105,7 @@ public:
         /* TODO: reorder these at next ABI break! */
         Description,   /* Track description */
         MusicBrainzID, /* MusicBrainz identifier */
+        Channels, /* Track channels count */
 
         n_fields
     };

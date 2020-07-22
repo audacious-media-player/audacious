@@ -18,6 +18,7 @@
  */
 
 #include <QFileDialog>
+#include <QPointer>
 
 #include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
@@ -29,7 +30,7 @@
 namespace audqt
 {
 
-static aud::array<FileMode, QFileDialog *> s_dialogs;
+static aud::array<FileMode, QPointer<QFileDialog>> s_dialogs;
 
 static void import_playlist(Playlist playlist, const String & filename)
 {
@@ -50,7 +51,7 @@ static void export_playlist(Playlist playlist, const String & filename)
 
 EXPORT void fileopener_show(FileMode mode)
 {
-    QFileDialog *& dialog = s_dialogs[mode];
+    QPointer<QFileDialog> & dialog = s_dialogs[mode];
 
     if (!dialog)
     {
@@ -77,7 +78,7 @@ EXPORT void fileopener_show(FileMode mode)
         if (mode == FileMode::ExportPlaylist)
             dialog->setAcceptMode(QFileDialog::AcceptSave);
 
-        QObject::connect(dialog, &QFileDialog::directoryEntered,
+        QObject::connect(dialog.data(), &QFileDialog::directoryEntered,
                          [](const QString & path) {
                              aud_set_str("audgui", "filesel_path",
                                          path.toUtf8().constData());
@@ -86,7 +87,7 @@ EXPORT void fileopener_show(FileMode mode)
         auto playlist = Playlist::active_playlist();
 
         QObject::connect(
-            dialog, &QFileDialog::accepted, [dialog, mode, playlist]() {
+            dialog.data(), &QFileDialog::accepted, [dialog, mode, playlist]() {
                 Index<PlaylistAddItem> files;
                 for (const QUrl & url : dialog->selectedUrls())
                     files.append(String(url.toEncoded().constData()));
@@ -114,9 +115,6 @@ EXPORT void fileopener_show(FileMode mode)
                     break;
                 }
             });
-
-        QObject::connect(dialog, &QObject::destroyed,
-                         [&dialog]() { dialog = nullptr; });
     }
 
     window_bring_to_front(dialog);

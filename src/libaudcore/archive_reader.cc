@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#ifdef USE_LIBARCHIVE
+
 #include "archive_reader.h"
 #include "audstrings.h"
 #include "runtime.h"
@@ -166,3 +168,5 @@ int64_t VFSArchiveReaderImpl::fread (void * ptr, int64_t size, int64_t nmemb)
 
     return ret;
 }
+
+#endif // USE_LIBARCHIVE

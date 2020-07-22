@@ -11,6 +11,7 @@
 # Cleiton Lima <cleitoncfl@yahoo.com.br>, 2011
 # edu engler <eduengler@gmail.com>, 2012
 # F Marcelo O Amarante <marcelo.amarante@hotmail.com>, 2015
+# Fúlvio Alves <fga.fulvio@gmail.com>, 2020
 # Habner Costa <habnertc@msn.com>, 2013
 # Habner Costa <habnertc@msn.com>, 2013
 # Iuri Suzano <isuzano@netkings.cc>, 2017
@@ -34,8 +35,8 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2020-01-26 13:17+0100\n"
-"PO-Revision-Date: 2020-01-26 12:21+0000\n"
-"Last-Translator: Alexandro Casanova <shorterfire@gmail.com>\n"
+"PO-Revision-Date: 2020-05-01 16:16+0000\n"
+"Last-Translator: Fúlvio Alves <fga.fulvio@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/audacious/audacious/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,7 +106,7 @@ msgstr "Imprimir mensagens de depuração (pode ser usado duas vezes)"
 
 #: src/audacious/main.cc:81
 msgid "Run in GTK mode"
-msgstr ""
+msgstr "Executar no modo GTK"
 
 #: src/audacious/main.cc:138
 #, c-format
@@ -215,7 +216,7 @@ msgstr "Não foi possível carregar  %s: extensão do nome do arquivo não supor
 #: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:309
 #, c-format
 msgid "Error saving %s."
-msgstr ""
+msgstr "Erro ao salvar %s."
 
 #: src/libaudcore/playlist-files.cc:167
 #, c-format
@@ -331,7 +332,7 @@ msgstr "Renomear Lista de Reprodução"
 
 #: src/libaudgui/eq-preset.cc:153
 msgid "Please select one preset to export."
-msgstr ""
+msgstr "Selecione uma predefinição para exportar."
 
 #: src/libaudgui/eq-preset.cc:256 src/libaudgui/eq-preset.cc:261
 msgid "Preset File ..."
@@ -700,7 +701,7 @@ msgstr "Número da faixa"
 
 #: src/libaudgui/infowin.cc:397
 msgid "_Auto-fill empty fields"
-msgstr ""
+msgstr "_Auto-preencher espaços vazios"
 
 #: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:183
 msgid "_Save"
@@ -708,7 +709,7 @@ msgstr "_Salvar"
 
 #: src/libaudgui/infowin.cc:417
 msgid "_Previous"
-msgstr ""
+msgstr "_Anterior"
 
 #: src/libaudgui/infowin.cc:420
 msgid "_Next"
@@ -905,7 +906,7 @@ msgstr "Data"
 #: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:55
 #: src/libaudqt/prefs-window-qt.cc:173
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:64
 #: src/libaudqt/prefs-window-qt.cc:176
@@ -1101,15 +1102,15 @@ msgstr "Usar autenticação do proxy"
 
 #: src/libaudgui/prefs-window.cc:273 src/libaudqt/prefs-window-qt.cc:287
 msgid "Use SOCKS proxy"
-msgstr ""
+msgstr "Usar proxy SOCKS"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window-qt.cc:288
 msgid "SOCKS v4a"
-msgstr ""
+msgstr "SOCKS v4a"
 
 #: src/libaudgui/prefs-window.cc:279 src/libaudqt/prefs-window-qt.cc:289
 msgid "SOCKS v5"
-msgstr ""
+msgstr "SOCKS v5"
 
 #: src/libaudgui/prefs-window.cc:286 src/libaudqt/prefs-window-qt.cc:292
 msgid "Auto character encoding detector for:"
@@ -1249,7 +1250,7 @@ msgstr "<b>Diversos</b>"
 
 #: src/libaudgui/prefs-window.cc:366 src/libaudqt/prefs-window-qt.cc:364
 msgid "Step forward/backward by:"
-msgstr ""
+msgstr "Avançar/retroceder por:"
 
 #: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:365
 msgid "seconds"
@@ -1257,11 +1258,11 @@ msgstr "segundos"
 
 #: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:366
 msgid "Adjust volume by:"
-msgstr ""
+msgstr "Ajustar volume em:"
 
 #: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:367
 msgid "percent"
-msgstr ""
+msgstr "por cento"
 
 #: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:384
 msgid "TITLE"
@@ -1404,11 +1405,11 @@ msgstr "\n(Demais mensagens foram escondidas.)"
 
 #: src/libaudqt/eq-preset-qt.cc:249
 msgid "Preset files (*.preset *.eqf *.q1)"
-msgstr ""
+msgstr "Arquivos de predefinição (*.preset *.eqf *.q1)"
 
 #: src/libaudqt/eq-preset-qt.cc:348
 msgid "Close"
-msgstr ""
+msgstr "Fechar"
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
@@ -1428,11 +1429,11 @@ msgstr "Adicionar"
 
 #: src/libaudqt/font-entry.cc:39
 msgid "Set Font"
-msgstr ""
+msgstr "Definir fonte"
 
 #: src/libaudqt/info-widget.cc:44
 msgid "<various>"
-msgstr ""
+msgstr "<various>"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Metadata"
@@ -1464,23 +1465,23 @@ msgstr "Bitrate"
 
 #: src/libaudqt/info-widget.cc:67
 msgid "MusicBrainz ID"
-msgstr ""
+msgstr "ID do MusicBrainz"
 
 #: src/libaudqt/infowin-qt.cc:156
 msgid "_Revert"
-msgstr ""
+msgstr "_Reverter"
 
 #: src/libaudqt/infowin-qt.cc:167
 msgid "Error writing tag(s)."
-msgstr ""
+msgstr "Erro ao gravar marcador(es)."
 
 #: src/libaudqt/infowin-qt.cc:189
 msgid "%1 files selected"
-msgstr ""
+msgstr "%1 arquivos selecionados"
 
 #: src/libaudqt/infowin-qt.cc:193
 msgid "_Save %1 files"
-msgstr ""
+msgstr "_Salvar %1 arquivos"
 
 #: src/libaudqt/log-inspector.cc:150
 msgid "Level"

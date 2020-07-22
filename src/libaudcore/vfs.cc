@@ -438,7 +438,7 @@ EXPORT Index<const char *> VFSFile::supported_uri_schemes()
         if (!aud_plugin_get_enabled(plugin))
             continue;
 
-        for (auto s : transport_plugin_get_schemes(plugin))
+        for (auto & s : transport_plugin_get_schemes(plugin))
             schemes.append((const char *)s);
     }
 

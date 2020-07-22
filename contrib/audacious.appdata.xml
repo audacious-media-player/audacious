@@ -23,9 +23,23 @@
     </p>
   </description>
   <url type="homepage">https://audacious-media-player.org</url>
+  <releases>
+    <release date="2020-06-01" version="4.0.4"></release>
+    <release date="2020-04-29" version="4.0.3"></release>
+    <release date="2020-04-14" version="4.0.2"></release>
+    <release date="2020-04-05" version="4.0.1"></release>
+    <release date="2020-03-21" version="4.0"></release>
+    <release date="2018-12-26" version="3.10.1"></release>
+    <release date="2018-08-09" version="3.10"></release>
+    <release date="2017-09-20" version="3.9"></release>
+    <release date="2017-01-20" version="3.8.2"></release>
+    <release date="2016-12-06" version="3.8.1"></release>
+    <release date="2016-09-22" version="3.8"></release>
+  </releases>
   <screenshots>
     <screenshot type="default">https://audacious-media-player.org/images/gtk-interface.png</screenshot>
     <screenshot>https://audacious-media-player.org/images/winamp-interface.png</screenshot>
     <screenshot>https://audacious-media-player.org/images/settings-window.png</screenshot>
   </screenshots>
+  <content_rating type="oars-1.1" />
 </component>

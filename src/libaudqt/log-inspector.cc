@@ -25,6 +25,7 @@
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QPointer>
 #include <QPushButton>
 #include <QTreeView>
 #include <QVBoxLayout>
@@ -66,8 +67,9 @@ public:
 protected:
     int rowCount(const QModelIndex & parent = QModelIndex()) const
     {
-        return m_entries.len();
+        return parent.isValid() ? 0 : m_entries.len();
     }
+
     int columnCount(const QModelIndex & parent = QModelIndex()) const
     {
         return LogEntryColumn::Count;
@@ -255,7 +257,7 @@ LogEntryInspector::LogEntryInspector(QWidget * parent) : QDialog(parent)
     resize(6 * sizes.OneInch, 3 * sizes.OneInch);
 }
 
-static LogEntryInspector * s_inspector = nullptr;
+static QPointer<LogEntryInspector> s_inspector;
 
 void LogEntryInspector::setLogLevel(audlog::Level level)
 {
@@ -273,9 +275,6 @@ EXPORT void log_inspector_show()
     {
         s_inspector = new LogEntryInspector;
         s_inspector->setAttribute(Qt::WA_DeleteOnClose);
-
-        QObject::connect(s_inspector, &QObject::destroyed,
-                         []() { s_inspector = nullptr; });
     }
 
     window_bring_to_front(s_inspector);

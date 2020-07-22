@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2020-01-26 13:17+0100\n"
-"PO-Revision-Date: 2020-02-18 17:05+0000\n"
+"PO-Revision-Date: 2020-04-30 18:49+0000\n"
 "Last-Translator: AO <ao@localizationlab.org>\n"
 "Language-Team: French (http://www.transifex.com/audacious/audacious/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -154,7 +154,7 @@ msgstr "(erreur d’encodage de caractère)"
 #: src/libaudcore/drct.cc:96
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
-msgstr "L’enregistrement des flux doit être configuré dans les paramètres audio avant de pouvoir être utilisé."
+msgstr "L’enregistrement des flux doit être configuré dans les paramètres du son avant de pouvoir être utilisé."
 
 #: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
@@ -173,7 +173,7 @@ msgstr "Erreur en lisant %s :\n%s"
 
 #: src/libaudcore/playback.cc:510
 msgid "Invalid audio format"
-msgstr "Format audio invalide"
+msgstr "Le format son est invalide"
 
 #: src/libaudcore/playlist.cc:82
 msgid "Now Playing"
@@ -827,7 +827,7 @@ msgstr "Apparence"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudqt/prefs-window-qt.cc:156
 msgid "Audio"
-msgstr "Audio"
+msgstr "Son"
 
 #: src/libaudgui/prefs-window.cc:84 src/libaudqt/prefs-window-qt.cc:157
 msgid "Network"
@@ -1303,7 +1303,7 @@ msgstr "Activer l’enregistrement des flux audio avec le %s"
 
 #: src/libaudgui/prefs-window.cc:783 src/libaudqt/prefs-window-qt.cc:718
 msgid "No audio recording plugin available"
-msgstr "Aucun greffon d’enregistrement audio n’est proposé"
+msgstr "Aucun greffon d’enregistrement de son n’est proposé"
 
 #: src/libaudgui/prefs-window.cc:843 src/libaudqt/prefs-window-qt.cc:593
 msgid "Audacious Settings"

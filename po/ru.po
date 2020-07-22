@@ -38,6 +38,7 @@
 # Someonefree <drag-sasha@mail.ru>, 2014
 # Oleg <kvantarium@gmail.com>, 2012
 # Vitaly Lipatov <lav@etersoft.ru>, 2007
+# Виктор Голованенко <drygdryg2014@yandex.ru>, 2020
 # Денис <alpi_bel@mail.ru>, 2014-2015
 # Денис Локтев <den32ds@gmail.com>, 2017
 msgid ""
@@ -45,8 +46,8 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2020-01-26 13:17+0100\n"
-"PO-Revision-Date: 2020-01-26 12:21+0000\n"
-"Last-Translator: chingis\n"
+"PO-Revision-Date: 2020-04-18 06:48+0000\n"
+"Last-Translator: Виктор Голованенко <drygdryg2014@yandex.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/audacious/audacious/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -116,7 +117,7 @@ msgstr "Выводить отладочные сообщения (может и�
 
 #: src/audacious/main.cc:81
 msgid "Run in GTK mode"
-msgstr ""
+msgstr "Запустить в режиме GTK"
 
 #: src/audacious/main.cc:138
 #, c-format
@@ -228,7 +229,7 @@ msgstr "Невозможно загрузить %s: расширение фай�
 #: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:309
 #, c-format
 msgid "Error saving %s."
-msgstr ""
+msgstr "Ошибка сохранения %s."
 
 #: src/libaudcore/playlist-files.cc:167
 #, c-format
@@ -875,7 +876,7 @@ msgstr "Модули"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:161
 msgid "Advanced"
-msgstr "Продвинутый"
+msgstr "Продвинутые"
 
 #: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "General"
@@ -920,7 +921,7 @@ msgstr "Дата"
 #: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:55
 #: src/libaudqt/prefs-window-qt.cc:173
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:64
 #: src/libaudqt/prefs-window-qt.cc:176
@@ -1116,7 +1117,7 @@ msgstr "Использовать авторизацию с прокси"
 
 #: src/libaudgui/prefs-window.cc:273 src/libaudqt/prefs-window-qt.cc:287
 msgid "Use SOCKS proxy"
-msgstr ""
+msgstr "Использовать SOCKS-прокси"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window-qt.cc:288
 msgid "SOCKS v4a"
@@ -1487,7 +1488,7 @@ msgstr ""
 
 #: src/libaudqt/infowin-qt.cc:167
 msgid "Error writing tag(s)."
-msgstr ""
+msgstr "Ошибка записи тэга(ов)."
 
 #: src/libaudqt/infowin-qt.cc:189
 msgid "%1 files selected"

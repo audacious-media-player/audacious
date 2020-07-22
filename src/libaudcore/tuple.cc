@@ -80,7 +80,7 @@ struct TupleData
 
     bool is_set(int field) const { return (setmask & bitmask(field)); }
 
-    bool is_same(const TupleData & other);
+    bool is_same(const TupleData & other) const;
 
     TupleVal * lookup(int field, bool add, bool remove);
     void set_int(int field, int x);
@@ -147,6 +147,7 @@ static const struct
 
     {"description", Tuple::String, -1},
     {"musicbrainz-id", Tuple::String, -1},
+    {"channels", Tuple::Int, -1},
 
     /* fallbacks */
     {nullptr, Tuple::String, -1},
@@ -170,6 +171,7 @@ static const FieldDictEntry field_dict[] = {
     {"artist", Tuple::Artist},
     {"audio-file", Tuple::AudioFile},
     {"bitrate", Tuple::Bitrate},
+    {"channels", Tuple::Channels},
     {"codec", Tuple::Codec},
     {"comment", Tuple::Comment},
     {"composer", Tuple::Composer},
@@ -350,7 +352,7 @@ TupleData::~TupleData()
     delete[] subtunes;
 }
 
-bool TupleData::is_same(const TupleData & other)
+bool TupleData::is_same(const TupleData & other) const
 {
     if (state != other.state || setmask != other.setmask ||
         nsubtunes != other.nsubtunes || (!subtunes) != (!other.subtunes))
@@ -368,7 +370,7 @@ bool TupleData::is_same(const TupleData & other)
             if (field_info[f].type == Tuple::String)
                 same = (a->str == b->str);
             else
-                same = (a->x = b->x);
+                same = (a->x == b->x);
 
             if (!same)
                 return false;
@@ -574,6 +576,9 @@ EXPORT void Tuple::set_format(const char * format, int chans, int rate,
 
     if (brate > 0)
         set_int(Bitrate, brate);
+
+    if (chans > 0)
+        set_int(Channels, chans);
 }
 
 EXPORT void Tuple::set_subtunes(short n_subtunes, const short * subtunes)
@@ -746,6 +751,7 @@ EXPORT void Tuple::generate_fallbacks()
 
     auto artist = get_str(Artist);
     auto album = get_str(Album);
+    auto genre = get_str(Genre);
 
     if (artist && album)
         return;
@@ -814,7 +820,7 @@ EXPORT void Tuple::generate_fallbacks()
 
         // skip common strings and avoid duplicates
         for (auto skip :
-             (const char *[]){"~", "music", artist, album, get_str(Genre)})
+             (const char *[]){"~", "music", artist, album, genre})
         {
             if (first && skip && !strcmp_nocase(first, skip))
             {

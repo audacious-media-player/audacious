@@ -38,6 +38,8 @@ INCLUDES = colorbutton.h \
            menu.h \
            treeview.h
 
+CLEAN = images.cc
+
 include ../../buildsys.mk
 include ../../extra.mk
 

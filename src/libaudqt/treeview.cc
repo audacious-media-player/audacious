@@ -19,15 +19,61 @@
 
 #include "treeview.h"
 
+#include <QApplication>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QProxyStyle>
+
 #include <libaudcore/index.h>
 
 namespace audqt
 {
 
+/*
+ * On some platforms (mainly KDE), there is a feature where
+ * clicking on icons makes them work like hyperlinks.  Unfortunately,
+ * the way this is implemented is by making all QAbstractItemView
+ * widgets behave in this way.
+ *
+ * In all situations, it makes no sense for audqt::TreeView
+ * widgets to behave in this way.  So we override that feature
+ * with a QProxyStyle.
+ */
+class TreeViewStyleOverrides : public QProxyStyle
+{
+public:
+    TreeViewStyleOverrides()
+    {
+        // detect and respond to application-wide style change
+        connect(qApp->style(), &QObject::destroyed, this,
+                &TreeViewStyleOverrides::resetBaseStyle);
+    }
+
+    int styleHint(StyleHint hint, const QStyleOption * option = nullptr,
+                  const QWidget * widget = nullptr,
+                  QStyleHintReturn * returnData = nullptr) const override
+    {
+        if (hint == QStyle::SH_ItemView_ActivateItemOnSingleClick)
+            return 0;
+
+        return QProxyStyle::styleHint(hint, option, widget, returnData);
+    }
+
+private:
+    void resetBaseStyle()
+    {
+        setBaseStyle(nullptr);
+        connect(qApp->style(), &QObject::destroyed, this,
+                &TreeViewStyleOverrides::resetBaseStyle);
+    }
+};
+
 EXPORT TreeView::TreeView(QWidget * parent) : QTreeView(parent)
 {
+    auto style = new TreeViewStyleOverrides;
+    style->setParent(this);
+    setStyle(style);
+
     // activate() is perhaps a bit redundant with activated()
     connect(this, &QTreeView::activated, this, &TreeView::activate);
 }

@@ -54,9 +54,6 @@ EXPORT void init()
     auto qapp = new QApplication(dummy_argc, dummy_argv);
 
     qapp->setAttribute(Qt::AA_UseHighDpiPixmaps);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
-    qapp->setAttribute(Qt::AA_ForceRasterWidgets);
-#endif
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     qapp->setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles);
 #endif
@@ -105,6 +102,7 @@ EXPORT void cleanup()
     infopopup_hide_now();
     infowin_hide();
     log_inspector_hide();
+    plugin_prefs_hide();
     prefswin_hide();
     queue_manager_hide();
 
@@ -228,6 +226,7 @@ EXPORT void simple_message(const char * title, const char * text,
     auto msgbox = new QMessageBox(icon, title, text, QMessageBox::Close);
     msgbox->button(QMessageBox::Close)->setText(translate_str(N_("_Close")));
     msgbox->setAttribute(Qt::WA_DeleteOnClose);
+    msgbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
     msgbox->show();
 }
 
