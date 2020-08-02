@@ -21,6 +21,7 @@
 #include "audstrings.h"
 #include "internal.h"
 #include "ringbuf.h"
+#include "runtime.h"
 #include "tuple-compiler.h"
 #include "tuple.h"
 #include "vfs.h"
@@ -29,6 +30,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+static bool use_qt = false;
+
+MainloopType aud_get_mainloop_type()
+{
+    return use_qt ? MainloopType::Qt : MainloopType::GLib;
+}
+
+extern void test_mainloop();
 
 static void test_audio_conversion()
 {
@@ -506,8 +516,11 @@ static void test_str_printf()
     assert(!strcmp(problem, "6 * 7 = 42"));
 }
 
-int main()
+int main(int argc, const char ** argv)
 {
+    if (argc >= 2 && !strcmp(argv[1], "--qt"))
+        use_qt = true;
+
     test_audio_conversion();
     test_case_conversion();
     test_numeric_conversion();
@@ -516,6 +529,8 @@ int main()
     test_ringbuf();
     test_stringbuf();
     test_str_printf();
+
+    test_mainloop();
 
     return 0;
 }

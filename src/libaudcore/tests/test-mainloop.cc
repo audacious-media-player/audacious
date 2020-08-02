@@ -25,13 +25,6 @@
 #include <stdio.h>
 #include <string.h>
 
-static bool use_qt = false;
-
-MainloopType aud_get_mainloop_type()
-{
-    return use_qt ? MainloopType::Qt : MainloopType::GLib;
-}
-
 static QueuedFunc counters[70];
 static QueuedFunc timer, delayed;
 
@@ -102,11 +95,8 @@ static void worker()
     delayed.queue(250, check_count, (void *)(size_t)40);
 }
 
-int main(int argc, const char ** argv)
+void test_mainloop()
 {
-    if (argc >= 2 && !strcmp(argv[1], "--qt"))
-        use_qt = true;
-
     main_thread = std::this_thread::get_id();
 
     // queue up a bunch of idle calls
@@ -135,6 +125,4 @@ int main(int argc, const char ** argv)
 
     // check that the timer reports being stopped
     assert(!timer.running());
-
-    return 0;
 }
