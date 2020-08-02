@@ -516,6 +516,20 @@ static void test_str_printf()
     assert(!strcmp(problem, "6 * 7 = 42"));
 }
 
+static void test_uri_construct()
+{
+    StringBuf result;
+
+    result = uri_construct("subfolder/test.mp3", "file:///folder/test.m3u");
+    assert(!strcmp(result, "file:///folder/subfolder/test.mp3"));
+
+    result = uri_construct("/folder two/test2.mp3", "file:///folder/test.m3u");
+    assert(!strcmp(result, "file:///folder%20two/test2.mp3"));
+
+    result = uri_construct("http://folder%20two/test2.mp3", "file:///folder/test.m3u");
+    assert(!strcmp(result, "http://folder%20two/test2.mp3"));
+}
+
 int main(int argc, const char ** argv)
 {
     if (argc >= 2 && !strcmp(argv[1], "--qt"))
@@ -529,6 +543,7 @@ int main(int argc, const char ** argv)
     test_ringbuf();
     test_stringbuf();
     test_str_printf();
+    test_uri_construct();
 
     test_mainloop();
 
