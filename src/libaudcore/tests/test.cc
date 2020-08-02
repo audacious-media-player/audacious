@@ -528,6 +528,24 @@ static void test_uri_construct()
 
     result = uri_construct("http://folder%20two/test2.mp3", "file:///folder/test.m3u");
     assert(!strcmp(result, "http://folder%20two/test2.mp3"));
+
+    /* valid subtunes */
+    result = uri_construct("subfolder/test.mp3?2", "file:///folder/test.m3u");
+    assert(!strcmp(result, "file:///folder/subfolder/test.mp3?2"));
+
+    result = uri_construct("/folder two/test2.mp3?7", "file:///folder/test.m3u");
+    assert(!strcmp(result, "file:///folder%20two/test2.mp3?7"));
+
+    /* invalid subtunes */
+    result = uri_construct("subfolder/test.mp3?", "file:///folder/test.m3u");
+    assert(!strcmp(result, "file:///folder/subfolder/test.mp3%3F"));
+
+    result = uri_construct("/folder two/test2.mp3?1a", "file:///folder/test.m3u");
+    assert(!strcmp(result, "file:///folder%20two/test2.mp3%3F1a"));
+
+    /* HTTP query */
+    result = uri_construct("http://folder%20two/test2.mp3?auth=1", "file:///folder/test.m3u");
+    assert(!strcmp(result, "http://folder%20two/test2.mp3?auth=1"));
 }
 
 int main(int argc, const char ** argv)
