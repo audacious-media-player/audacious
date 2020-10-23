@@ -610,7 +610,7 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
             break;
           case ID3_APIC:
             if (image)
-                * image = id3_decode_picture (& frame[0], frame.len ());
+                * image = id3_decode_apic (& frame[0], frame.len ());
             break;
           default:
             AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);
