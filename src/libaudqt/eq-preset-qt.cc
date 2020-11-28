@@ -51,9 +51,14 @@ public:
 class PresetModel : public QStandardItemModel
 {
 public:
-    explicit PresetModel(QObject * parent) : QStandardItemModel(0, 1, parent) {}
+    explicit PresetModel(QObject * parent)
+        : QStandardItemModel(0, 1, parent),
+          m_orig_presets(aud_eq_read_presets("eq.preset"))
+    {
+        revert_all();
+    }
 
-    void load_all();
+    void revert_all();
     void save_all();
 
     QModelIndex add_preset(const EqualizerPreset & preset);
@@ -75,15 +80,15 @@ public:
     }
 
 private:
+    Index<EqualizerPreset> const m_orig_presets;
     bool m_changed = false;
 };
 
-void PresetModel::load_all()
+void PresetModel::revert_all()
 {
     clear();
 
-    auto presets = aud_eq_read_presets("eq.preset");
-    for (const EqualizerPreset & preset : presets)
+    for (const EqualizerPreset & preset : m_orig_presets)
         appendRow(new PresetItem(preset));
 
     m_changed = false;
@@ -151,10 +156,7 @@ public:
         setIndentation(0);
         setSelectionMode(QTreeView::ExtendedSelection);
         setUniformRowHeights(true);
-
-        auto pmodel = new PresetModel(this);
-        pmodel->load_all();
-        setModel(pmodel);
+        setModel(new PresetModel(this));
     }
 
     PresetModel * pmodel() const { return static_cast<PresetModel *>(model()); }
@@ -269,6 +271,7 @@ static void show_import_dialog(QDialog * parent, PresetView * view,
         if (presets.len())
         {
             view->add_imported(presets);
+            view->pmodel()->save_all();
             revert_btn->setEnabled(true);
             dialog->deleteLater();
         }
@@ -374,6 +377,7 @@ static QDialog * create_preset_win()
                      [view, pmodel, edit, revert_btn]() {
                          auto added = pmodel->add_preset(edit->text().toUtf8());
                          view->setCurrentIndex(added);
+                         pmodel->save_all();
                          revert_btn->setDisabled(false);
                      });
 
@@ -388,19 +392,19 @@ static QDialog * create_preset_win()
             show_export_dialog(win, *preset);
     });
 
-    QObject::connect(pmodel, &PresetModel::rowsRemoved,
-                     [revert_btn]() { revert_btn->setDisabled(false); });
+    QObject::connect(pmodel, &PresetModel::rowsRemoved, [pmodel, revert_btn]() {
+        pmodel->save_all();
+        revert_btn->setDisabled(false);
+    });
 
     QObject::connect(revert_btn, &QPushButton::clicked, [pmodel, revert_btn]() {
-        pmodel->load_all();
+        pmodel->revert_all();
+        pmodel->save_all();
         revert_btn->setDisabled(true);
     });
 
     QObject::connect(close_btn, &QPushButton::clicked, win,
                      &QObject::deleteLater);
-
-    QObject::connect(win, &QObject::destroyed,
-                     [pmodel]() { pmodel->save_all(); });
 
     return win;
 }
