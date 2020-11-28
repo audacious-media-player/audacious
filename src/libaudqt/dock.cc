@@ -119,10 +119,10 @@ void dock_show_simple(const char * id, const char * name, QWidget * create())
     aud_set_bool("audqt", cfg_key, true);
 
     auto item = SimpleDockItem::lookup(id);
-    if (item)
-        item->grab_focus();
-    else
-        new SimpleDockItem(id, name, create());
+    if (!item)
+        item = new SimpleDockItem(id, name, create());
+
+    item->grab_focus();
 }
 
 void dock_hide_simple(const char * id)
@@ -164,6 +164,8 @@ EXPORT void register_dock_host(DockHost * host)
     assert(!s_host);
     s_host = host;
 
+    if (aud_get_bool("audqt", "equalizer_visible"))
+        equalizer_show();
     if (aud_get_bool("audqt", "queue_manager_visible"))
         queue_manager_show();
 
