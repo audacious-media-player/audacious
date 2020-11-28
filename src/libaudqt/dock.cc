@@ -166,6 +166,8 @@ EXPORT void register_dock_host(DockHost * host)
     assert(!s_host);
     s_host = host;
 
+    if (aud_get_bool("audqt", "eq_presets_visible"))
+        eq_presets_show();
     if (aud_get_bool("audqt", "equalizer_visible"))
         equalizer_show();
     if (aud_get_bool("audqt", "queue_manager_visible"))

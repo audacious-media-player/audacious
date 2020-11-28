@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
 #include "treeview.h"
 
@@ -250,7 +251,7 @@ static bool export_file(const char * filename, const EqualizerPreset & preset)
 
 static const char * name_filter = N_("Preset files (*.preset *.eqf *.q1)");
 
-static void show_import_dialog(QDialog * parent, PresetView * view,
+static void show_import_dialog(QWidget * parent, PresetView * view,
                                QPushButton * revert_btn)
 {
     auto dialog = new QFileDialog(parent, _("Load Preset File"));
@@ -287,7 +288,7 @@ static void show_import_dialog(QDialog * parent, PresetView * view,
     window_bring_to_front(dialog);
 }
 
-static void show_export_dialog(QDialog * parent, const EqualizerPreset & preset)
+static void show_export_dialog(QWidget * parent, const EqualizerPreset & preset)
 {
     auto dialog = new QFileDialog(parent, _("Save Preset File"));
 
@@ -319,11 +320,9 @@ static void show_export_dialog(QDialog * parent, const EqualizerPreset & preset)
     window_bring_to_front(dialog);
 }
 
-static QDialog * create_preset_win()
+static QWidget * create_preset_win()
 {
-    auto win = new QDialog;
-    win->setAttribute(Qt::WA_DeleteOnClose);
-    win->setWindowTitle(_("Equalizer Presets"));
+    auto win = new QWidget;
     win->setContentsMargins(margins.TwoPt);
 
     auto edit = new QLineEdit;
@@ -343,28 +342,20 @@ static QDialog * create_preset_win()
 
     auto view = new PresetView(export_btn);
 
-    auto hbox2 = make_hbox(nullptr);
-    hbox2->addWidget(import_btn);
-    hbox2->addWidget(export_btn);
-    hbox2->addStretch(1);
-
-    auto revert_btn = new QPushButton(_("Revert Changes"));
+    auto revert_btn = new QPushButton(_("Revert"));
     revert_btn->setIcon(get_icon("edit-undo"));
     revert_btn->setDisabled(true);
 
-    auto close_btn = new QPushButton(_("Close"));
-    close_btn->setIcon(get_icon("window-close"));
-
-    auto hbox3 = make_hbox(nullptr);
-    hbox3->addWidget(revert_btn);
-    hbox3->addStretch(1);
-    hbox3->addWidget(close_btn);
+    auto hbox2 = make_hbox(nullptr);
+    hbox2->addWidget(revert_btn);
+    hbox2->addStretch(1);
+    hbox2->addWidget(import_btn);
+    hbox2->addWidget(export_btn);
 
     auto vbox = make_vbox(win);
     vbox->addLayout(hbox);
     vbox->addWidget(view);
     vbox->addLayout(hbox2);
-    vbox->addLayout(hbox3);
 
     auto pmodel = view->pmodel();
 
@@ -403,22 +394,14 @@ static QDialog * create_preset_win()
         revert_btn->setDisabled(true);
     });
 
-    QObject::connect(close_btn, &QPushButton::clicked, win,
-                     &QObject::deleteLater);
-
     return win;
 }
 
-static QPointer<QDialog> s_preset_win;
-
 EXPORT void eq_presets_show()
 {
-    if (!s_preset_win)
-        s_preset_win = create_preset_win();
-
-    window_bring_to_front(s_preset_win);
+    dock_show_simple("eq_presets", _("Equalizer Presets"), create_preset_win);
 }
 
-EXPORT void eq_presets_hide() { delete s_preset_win; }
+EXPORT void eq_presets_hide() { dock_hide_simple("eq_presets"); }
 
 } // namespace audqt

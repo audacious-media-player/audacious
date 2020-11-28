@@ -97,7 +97,6 @@ EXPORT void cleanup()
         return;
 
     aboutwindow_hide();
-    eq_presets_hide();
     infopopup_hide_now();
     infowin_hide();
     log_inspector_hide();
