@@ -19,6 +19,7 @@
 
 #include "dock.h"
 #include "libaudqt-internal.h"
+#include "libaudqt.h"
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -141,6 +142,9 @@ EXPORT void register_dock_host(DockHost * host)
 {
     assert(!s_host);
     s_host = host;
+
+    if (aud_get_bool("audqt", "queue_manager_visible"))
+        queue_manager_show();
 
     for (PluginHandle * plugin : aud_plugin_list(PluginType::General))
     {

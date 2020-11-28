@@ -104,7 +104,6 @@ EXPORT void cleanup()
     log_inspector_hide();
     plugin_prefs_hide();
     prefswin_hide();
-    queue_manager_hide();
 
     log_cleanup();
 
