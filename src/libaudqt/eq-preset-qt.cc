@@ -153,6 +153,7 @@ public:
     PresetView(QPushButton * export_btn) : m_export_btn(export_btn)
     {
         setEditTriggers(QTreeView::NoEditTriggers);
+        setFrameStyle(QFrame::NoFrame);
         setHeaderHidden(true);
         setIndentation(0);
         setSelectionMode(QTreeView::ExtendedSelection);
@@ -323,7 +324,6 @@ static void show_export_dialog(QWidget * parent, const EqualizerPreset & preset)
 static QWidget * create_preset_win()
 {
     auto win = new QWidget;
-    win->setContentsMargins(margins.TwoPt);
 
     auto edit = new QLineEdit;
     auto save_btn = new QPushButton(_("Save Preset"));
@@ -331,6 +331,7 @@ static QWidget * create_preset_win()
     save_btn->setDisabled(true);
 
     auto hbox = make_hbox(nullptr);
+    hbox->setContentsMargins(margins.TwoPt);
     hbox->addWidget(edit);
     hbox->addWidget(save_btn);
 
@@ -347,12 +348,13 @@ static QWidget * create_preset_win()
     revert_btn->setDisabled(true);
 
     auto hbox2 = make_hbox(nullptr);
+    hbox2->setContentsMargins(margins.TwoPt);
     hbox2->addWidget(revert_btn);
     hbox2->addStretch(1);
     hbox2->addWidget(import_btn);
     hbox2->addWidget(export_btn);
 
-    auto vbox = make_vbox(win);
+    auto vbox = make_vbox(win, 0);
     vbox->addLayout(hbox);
     vbox->addWidget(view);
     vbox->addLayout(hbox2);
