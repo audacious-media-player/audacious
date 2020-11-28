@@ -21,6 +21,8 @@
 #include "libaudqt-internal.h"
 #include "libaudqt.h"
 
+#include <assert.h>
+
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/plugins.h>
