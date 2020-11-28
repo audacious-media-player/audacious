@@ -49,6 +49,13 @@ public:
     {
     }
 
+    void grab_focus() override
+    {
+        DockItem::grab_focus();
+        // invoke plugin-specific focus handling
+        aud_plugin_send_message(m_plugin, "grab focus", nullptr, 0);
+    }
+
     // explicitly closing the widget disables the plugin
     void user_close() override { aud_plugin_enable(m_plugin, false); }
 
@@ -77,6 +84,17 @@ EXPORT DockItem::~DockItem()
     delete m_widget;
 }
 
+EXPORT void DockItem::grab_focus()
+{
+    assert(s_host);
+    s_host->focus_dock_item(this);
+}
+
+EXPORT DockItem * DockItem::find_by_plugin(PluginHandle * plugin)
+{
+    return PluginItem::lookup(plugin);
+}
+
 SimpleDockItem * SimpleDockItem::lookup(const char * id)
 {
     for (auto item_ : s_items)
@@ -100,7 +118,10 @@ void dock_show_simple(const char * id, const char * name, QWidget * create())
     auto cfg_key = str_concat({id, "_visible"});
     aud_set_bool("audqt", cfg_key, true);
 
-    if (!SimpleDockItem::lookup(id))
+    auto item = SimpleDockItem::lookup(id);
+    if (item)
+        item->grab_focus();
+    else
         new SimpleDockItem(id, name, create());
 }
 

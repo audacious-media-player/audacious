@@ -25,6 +25,8 @@
 
 #include <libaudqt/export.h>
 
+class PluginHandle;
+
 namespace audqt
 {
 
@@ -41,7 +43,10 @@ public:
     void set_host_data(void * data) { m_host_data = data; }
     void * host_data() const { return m_host_data; }
 
+    virtual void grab_focus();
     virtual void user_close() = 0;
+
+    static DockItem * find_by_plugin(PluginHandle * plugin);
 
 private:
     const char *m_id, *m_name;
@@ -53,6 +58,7 @@ class DockHost
 {
 public:
     virtual void add_dock_item(DockItem * item) = 0;
+    virtual void focus_dock_item(DockItem * item) = 0;
     virtual void remove_dock_item(DockItem * item) = 0;
 };
 
