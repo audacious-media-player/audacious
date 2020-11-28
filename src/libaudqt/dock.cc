@@ -18,12 +18,25 @@
  */
 
 #include "dock.h"
+#include "libaudqt-internal.h"
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/plugins.h>
+#include <libaudcore/runtime.h>
 
 namespace audqt
 {
+
+class SimpleDockItem : public DockItem
+{
+public:
+    using DockItem::DockItem;
+
+    void user_close() override { dock_hide_simple(id()); }
+
+    static SimpleDockItem * lookup(const char * id);
+};
 
 class PluginItem : public DockItem
 {
@@ -63,11 +76,46 @@ EXPORT DockItem::~DockItem()
     delete m_widget;
 }
 
+SimpleDockItem * SimpleDockItem::lookup(const char * id)
+{
+    for (auto item_ : s_items)
+    {
+        auto item = dynamic_cast<SimpleDockItem *>(item_);
+        if (item && !strcmp(item->id(), id))
+            return item;
+    }
+
+    return nullptr;
+}
+
+void dock_show_simple(const char * id, const char * name, QWidget * create())
+{
+    if (!s_host)
+    {
+        AUDWARN("No UI can dock the widget %s\n", id);
+        return;
+    }
+
+    auto cfg_key = str_concat({id, "_visible"});
+    aud_set_bool("audqt", cfg_key, true);
+
+    if (!SimpleDockItem::lookup(id))
+        new SimpleDockItem(id, name, create());
+}
+
+void dock_hide_simple(const char * id)
+{
+    auto cfg_key = str_concat({id, "_visible"});
+    aud_set_bool("audqt", cfg_key, false);
+
+    delete SimpleDockItem::lookup(id);
+}
+
 PluginItem * PluginItem::lookup(PluginHandle * plugin)
 {
-    for (int i = 0; i < s_items.len(); i++)
+    for (auto item_ : s_items)
     {
-        PluginItem * item = dynamic_cast<PluginItem *>(s_items[i]);
+        auto item = dynamic_cast<PluginItem *>(item_);
         if (item && item->m_plugin == plugin)
             return item;
     }

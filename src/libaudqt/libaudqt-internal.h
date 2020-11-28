@@ -29,6 +29,10 @@ class QString;
 namespace audqt
 {
 
+/* dock.cc */
+void dock_show_simple(const char * id, const char * name, QWidget * create());
+void dock_hide_simple(const char * id);
+
 /* infopopup.cc */
 void infopopup_hide_now();
 
