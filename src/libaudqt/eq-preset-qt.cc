@@ -248,7 +248,8 @@ static bool export_file(const char * filename, const EqualizerPreset & preset)
 
 static const char * name_filter = N_("Preset files (*.preset *.eqf *.q1)");
 
-static void show_import_dialog(QDialog * parent, PresetView * view)
+static void show_import_dialog(QDialog * parent, PresetView * view,
+                               QPushButton * revert_btn)
 {
     auto dialog = new QFileDialog(parent, _("Load Preset File"));
 
@@ -257,7 +258,7 @@ static void show_import_dialog(QDialog * parent, PresetView * view)
     dialog->setLabelText(QFileDialog::Accept, _("Load"));
     dialog->setNameFilter(_(name_filter));
 
-    QObject::connect(dialog, &QFileDialog::accepted, [dialog, view]() {
+    auto do_import = [dialog, view, revert_btn]() {
         auto urls = dialog->selectedUrls();
         if (urls.size() != 1)
             return;
@@ -268,6 +269,7 @@ static void show_import_dialog(QDialog * parent, PresetView * view)
         if (presets.len())
         {
             view->add_imported(presets);
+            revert_btn->setEnabled(true);
             dialog->deleteLater();
         }
         else
@@ -275,7 +277,9 @@ static void show_import_dialog(QDialog * parent, PresetView * view)
             aud_ui_show_error(
                 str_printf(_("Error loading %s."), filename.constData()));
         }
-    });
+    };
+
+    QObject::connect(dialog, &QFileDialog::accepted, do_import);
 
     window_bring_to_front(dialog);
 }
@@ -374,7 +378,9 @@ static QDialog * create_preset_win()
                      });
 
     QObject::connect(import_btn, &QPushButton::clicked,
-                     [win, view]() { show_import_dialog(win, view); });
+                     [win, view, revert_btn]() {
+                         show_import_dialog(win, view, revert_btn);
+                     });
 
     QObject::connect(export_btn, &QPushButton::clicked, [win, view]() {
         auto preset = view->preset_for_export();
