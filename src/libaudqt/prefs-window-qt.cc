@@ -231,7 +231,7 @@ static void * iface_create_prefs_box();
 static const PreferencesWidget appearance_page_widgets[] = {
     WidgetLabel(N_("Audacious is running in Qt mode.")),
 #ifdef USE_GTK
-    WidgetBox({iface_restart_widgets, true}, WIDGET_CHILD),
+    WidgetBox({{iface_restart_widgets}, true}, WIDGET_CHILD),
 #else
     WidgetLabel(N_("GTK (legacy) mode is unavailable in this build."),
                 WIDGET_CHILD),
