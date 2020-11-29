@@ -34,7 +34,10 @@ namespace audqt
 class SimpleDockItem : public DockItem
 {
 public:
-    using DockItem::DockItem;
+    SimpleDockItem(const char * id, const char * name, QWidget * widget)
+        : DockItem(id, name, widget)
+    {
+    }
 
     void user_close() override { dock_hide_simple(id()); }
 
