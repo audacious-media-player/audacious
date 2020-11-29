@@ -44,18 +44,28 @@ namespace audqt
 class QueueManagerModel : public QAbstractListModel
 {
 public:
+    enum
+    {
+        ColumnEntry,
+        ColumnTitle,
+        NColumns
+    };
+
     void update(QItemSelectionModel * sel);
     void selectionChanged(const QItemSelection & selected,
                           const QItemSelection & deselected);
 
 protected:
-    int rowCount(const QModelIndex & parent) const
+    int rowCount(const QModelIndex & parent) const override
     {
         return parent.isValid() ? 0 : m_rows;
     }
 
-    int columnCount(const QModelIndex & parent) const { return 2; }
-    QVariant data(const QModelIndex & index, int role) const;
+    int columnCount(const QModelIndex &) const override { return NColumns; }
+
+    QVariant data(const QModelIndex & index, int role) const override;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role) const override;
 
 private:
     int m_rows = 0;
@@ -69,15 +79,37 @@ QVariant QueueManagerModel::data(const QModelIndex & index, int role) const
         auto list = Playlist::active_playlist();
         int entry = list.queue_get_entry(index.row());
 
-        if (index.column() == 0)
+        if (index.column() == ColumnEntry)
             return entry + 1;
-        else
+        else if (index.column() == ColumnTitle)
         {
             Tuple tuple = list.entry_tuple(entry, Playlist::NoWait);
             return QString((const char *)tuple.get_str(Tuple::FormattedTitle));
         }
     }
-    else if (role == Qt::TextAlignmentRole && index.column() == 0)
+    else if (role == Qt::TextAlignmentRole && index.column() == ColumnEntry)
+        return Qt::AlignRight;
+
+    return QVariant();
+}
+
+QVariant QueueManagerModel::headerData(int section, Qt::Orientation orientation,
+                                       int role) const
+{
+    if (orientation != Qt::Horizontal)
+        return QVariant();
+
+    if (role == Qt::DisplayRole)
+    {
+        switch (section)
+        {
+        case ColumnEntry:
+            return QString("#");
+        case ColumnTitle:
+            return QString(_("Title"));
+        }
+    }
+    else if (role == Qt::TextAlignmentRole && section == ColumnEntry)
         return Qt::AlignRight;
 
     return QVariant();
@@ -144,7 +176,7 @@ public:
 
     QSize sizeHint() const override
     {
-        return {4 * sizes.OneInch, 3 * sizes.OneInch};
+        return {3 * sizes.OneInch, 2 * sizes.OneInch};
     }
 
 private:
@@ -181,7 +213,12 @@ QueueManager::QueueManager(QWidget * parent) : QWidget(parent)
     m_treeview.setIndentation(0);
     m_treeview.setModel(&m_model);
     m_treeview.setSelectionMode(QAbstractItemView::ExtendedSelection);
-    m_treeview.setHeaderHidden(true);
+
+    auto header = m_treeview.header();
+    header->setSectionResizeMode(QueueManagerModel::ColumnEntry,
+                                 QHeaderView::Interactive);
+    header->resizeSection(QueueManagerModel::ColumnEntry,
+                          audqt::to_native_dpi(25));
 
     update();
 
