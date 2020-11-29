@@ -429,5 +429,15 @@ int main(int argc, char ** argv)
     aud_cleanup();
     initted = false;
 
+    if (aud_restart_requested())
+    {
+        fprintf(stderr, "Restarting %s ...\n", argv[0]);
+        if (execlp(argv[0], argv[0], (char *)NULL) < 0)
+        {
+            fprintf(stderr, "execp failed: %s\n", strerror(errno));
+            return EXIT_FAILURE;
+        }
+    }
+
     return EXIT_SUCCESS;
 }

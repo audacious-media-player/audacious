@@ -70,6 +70,7 @@ static int instance_number = 1;
 
 static MainloopType mainloop_type = MainloopType::GLib;
 static bool mainloop_type_set = false;
+static bool restart_requested = false;
 
 static aud::array<AudPath, String> aud_paths;
 
@@ -91,6 +92,14 @@ EXPORT MainloopType aud_get_mainloop_type()
     assert(mainloop_type_set);
     return mainloop_type;
 }
+
+EXPORT void aud_request_restart()
+{
+    restart_requested = true;
+    aud_quit();
+}
+
+EXPORT bool aud_restart_requested() { return restart_requested; }
 
 static StringBuf get_path_to_self()
 {

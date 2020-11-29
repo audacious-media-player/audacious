@@ -132,6 +132,9 @@ int aud_get_instance();
 void aud_set_mainloop_type(MainloopType type);
 MainloopType aud_get_mainloop_type();
 
+void aud_request_restart();
+bool aud_restart_requested();
+
 void aud_init_i18n();
 
 void aud_config_set_defaults(const char * section,
