@@ -183,8 +183,8 @@ dnl GTK+ support
 dnl =============
 
 AC_ARG_ENABLE(gtk,
- AS_HELP_STRING(--enable-gtk, [Enable GTK+ support (default=disabled)]),
- USE_GTK=$enableval, USE_GTK=no)
+ AS_HELP_STRING(--enable-gtk, [Enable GTK+ support (default=enabled)]),
+ USE_GTK=$enableval, USE_GTK=yes)
 
 if test $USE_GTK = yes ; then
     PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.24)
