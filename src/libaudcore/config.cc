@@ -42,6 +42,7 @@ static const char * const core_defaults[] = {
     "recurse_folders", "TRUE",
     "resume_playback_on_startup", "TRUE",
     "show_interface", "TRUE",
+    "use_qt", "TRUE",
 
     /* equalizer */
     "eqpreset_default_file", "",

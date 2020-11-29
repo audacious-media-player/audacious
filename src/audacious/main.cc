@@ -51,7 +51,10 @@ static struct
     int mainwin, show_jump_box;
     int headless, quit_after_play;
     int verbose;
+#if defined(USE_QT) && defined(USE_GTK)
     int gtk;
+    int qt;
+#endif
 } options;
 
 static bool initted = false;
@@ -87,6 +90,7 @@ static const struct
      N_("Print debugging messages (may be used twice)")},
 #if defined(USE_QT) && defined(USE_GTK)
     {"gtk", 'G', &options.gtk, N_("Run in GTK mode")},
+    {"qt", 'Q', &options.qt, N_("Run in Qt mode")},
 #endif
 };
 
@@ -179,8 +183,14 @@ static bool parse_options(int argc, char ** argv)
     else if (options.verbose)
         audlog::set_stderr_level(audlog::Info);
 
-    if (options.gtk)
+#if defined(USE_QT) && defined(USE_GTK)
+    if (options.qt && options.gtk)
+        fprintf(stderr, "--gtk and --qt are mutually exclusive, ignoring\n");
+    else if (options.gtk)
         aud_set_mainloop_type(MainloopType::GLib);
+    else if (options.qt)
+        aud_set_mainloop_type(MainloopType::Qt);
+#endif
 
     return true;
 }
