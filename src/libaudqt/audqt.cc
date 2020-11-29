@@ -42,10 +42,19 @@ static PixelMargins margins_local;
 EXPORT const PixelSizes & sizes = sizes_local;
 EXPORT const PixelMargins & margins = margins_local;
 
+static const char * const audqt_defaults[] = {
+    "eq_presets_visible", "FALSE",
+    "equalizer_visible", "FALSE",
+    "queue_manager_visible", "FALSE",
+    nullptr
+};
+
 EXPORT void init()
 {
     if (init_count++)
         return;
+
+    aud_config_set_defaults ("audqt", audqt_defaults);
 
     static char app_name[] = "audacious";
     static int dummy_argc = 1;
