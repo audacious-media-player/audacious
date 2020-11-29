@@ -28,20 +28,21 @@
 #define UTF16_NATIVE "UTF-16LE"
 #endif
 
-Index<String> get_argv_utf8 ()
+Index<String> get_argv_utf8()
 {
     int argc;
-    wchar_t * combined = GetCommandLineW ();
-    wchar_t * * split = CommandLineToArgvW (combined, & argc);
+    wchar_t * combined = GetCommandLineW();
+    wchar_t ** split = CommandLineToArgvW(combined, &argc);
 
     Index<String> argv;
-    argv.insert (0, argc);
+    argv.insert(0, argc);
 
-    for (int i = 0; i < argc; i ++)
-        argv[i] = String (str_convert ((char *) split[i],
-         wcslen (split[i]) * sizeof (wchar_t), UTF16_NATIVE, "UTF-8"));
+    for (int i = 0; i < argc; i++)
+        argv[i] = String(str_convert((char *)split[i],
+                                     wcslen(split[i]) * sizeof(wchar_t),
+                                     UTF16_NATIVE, "UTF-8"));
 
-    LocalFree (split);
+    LocalFree(split);
     return argv;
 }
 
