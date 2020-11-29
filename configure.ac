@@ -90,6 +90,22 @@ fi
 
 AC_SUBST([VALGRIND_FRIENDLY])
 
+dnl libarchive support
+dnl ==================
+
+AC_ARG_ENABLE(libarchive,
+ AS_HELP_STRING(--disable-libarchive, [Disable libarchive support (default=enabled)]),
+ USE_LIBARCHIVE=$enableval, USE_LIBARCHIVE=yes)
+
+if test $USE_LIBARCHIVE = yes ; then
+    PKG_CHECK_MODULES([LIBARCHIVE], [libarchive])
+    AC_DEFINE([USE_LIBARCHIVE], [1], [Define if libarchive support enabled])
+fi
+
+AC_SUBST(USE_LIBARCHIVE)
+AC_SUBST(LIBARCHIVE_CFLAGS)
+AC_SUBST(LIBARCHIVE_LIBS)
+
 dnl Paths
 dnl =====
 
