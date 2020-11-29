@@ -177,6 +177,7 @@ QueueManager::QueueManager(QWidget * parent) : QWidget(parent)
     layout->addLayout(hbox);
 
     m_treeview.setAllColumnsShowFocus(true);
+    m_treeview.setFrameShape(QFrame::NoFrame);
     m_treeview.setIndentation(0);
     m_treeview.setModel(&m_model);
     m_treeview.setSelectionMode(QAbstractItemView::ExtendedSelection);
