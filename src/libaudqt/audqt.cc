@@ -87,6 +87,13 @@ EXPORT void init()
     margins_local.EightPt =
         QMargins(sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
 
+#ifdef _WIN32
+    // On Windows, Qt uses 9 pt in specific places (such as QMenu) but
+    // 8 pt as the application font, resulting in an inconsistent look.
+    // First-party Windows applications (and GTK applications too) seem
+    // to use 9 pt in most places so let's try to do the same.
+    QApplication::setFont(QApplication::font("QMenu"));
+#endif
 #ifdef Q_OS_MAC // Mac-specific font tweaks
     QApplication::setFont(QApplication::font("QSmallFont"), "QDialog");
     QApplication::setFont(QApplication::font("QSmallFont"), "QTreeView");
