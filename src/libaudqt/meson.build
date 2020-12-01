@@ -3,6 +3,7 @@ libaudqt_sources = [
   'art-qt.cc',
   'audqt.cc',
   'colorbutton.cc',
+  'dock.cc',
   'eq-preset-qt.cc',
   'equalizer-qt.cc',
   'file-entry.cc',
@@ -30,6 +31,7 @@ libaudqt_sources = [
 
 libaudqt_headers = [
   'colorbutton.h',
+  'dock.h',
   'export.h',
   'iface.h',
   'info-widget.h',
