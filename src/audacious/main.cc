@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -435,7 +436,7 @@ int main(int argc, char ** argv)
         fprintf(stderr, "Restarting %s ...\n", argv[0]);
         if (execlp(argv[0], argv[0], (char *)NULL) < 0)
         {
-            fprintf(stderr, "execp failed: %s\n", strerror(errno));
+            fprintf(stderr, "execlp failed: %s\n", strerror(errno));
             return EXIT_FAILURE;
         }
     }
