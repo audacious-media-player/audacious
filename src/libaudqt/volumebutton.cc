@@ -83,6 +83,7 @@ VolumeButton::VolumeButton(QWidget * parent)
     setFocusPolicy(Qt::NoFocus);
     setMenu(&m_menu);
     setPopupMode(InstantPopup);
+    setStyleSheet("QToolButton::menu-indicator { image: none; }");
 
     int val = aud_drct_get_volume_main();
     m_slider.setValue(val);
