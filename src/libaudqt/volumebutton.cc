@@ -66,12 +66,14 @@ VolumeButton::VolumeButton(QWidget * parent)
     : QToolButton(parent), m_action(this), m_slider(Qt::Vertical)
 {
     m_slider.setMinimumHeight(audqt::sizes.OneInch);
+    m_slider.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_slider.setRange(0, 100);
 
     setUpButton(&m_buttons[0], 1);
     setUpButton(&m_buttons[1], -1);
 
     auto layout = make_vbox(&m_container, sizes.TwoPt);
+    layout->setContentsMargins(margins.TwoPt);
     layout->addWidget(&m_buttons[0]);
     layout->addWidget(&m_slider);
     layout->addWidget(&m_buttons[1]);
@@ -143,7 +145,7 @@ void VolumeButton::setUpButton(QToolButton * button, int dir)
 {
     button->setText(dir < 0 ? "-" : "+");
     button->setAutoRaise(true);
-    button->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+    button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     connect(button, &QAbstractButton::clicked, [this, dir]() {
         m_slider.setValue(m_slider.value() + dir * aud_get_int("volume_delta"));
