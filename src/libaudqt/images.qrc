@@ -22,12 +22,14 @@
     <file alias="document-open.svg">../../images/document-open.svg</file>
     <file alias="document-save.svg">../../images/document-save.svg</file>
     <file alias="edit-clear.svg">../../images/edit-clear.svg</file>
+    <file alias="edit-clear-all.svg">../../images/edit-clear-all.svg</file>
     <file alias="edit-copy.svg">../../images/edit-copy.svg</file>
     <file alias="edit-cut.svg">../../images/edit-cut.svg</file>
     <file alias="edit-delete.svg">../../images/edit-delete.svg</file>
     <file alias="edit-find.svg">../../images/edit-find.svg</file>
     <file alias="edit-paste.svg">../../images/edit-paste.svg</file>
     <file alias="edit-select-all.svg">../../images/edit-select-all.svg</file>
+    <file alias="edit-undo.svg">../../images/edit-undo.svg</file>
     <file alias="face-smile.svg">../../images/face-smile.svg</file>
     <file alias="folder-remote.svg">../../images/folder-remote.svg</file>
     <file alias="folder.svg">../../images/folder.svg</file>
