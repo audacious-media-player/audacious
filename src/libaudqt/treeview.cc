@@ -59,6 +59,25 @@ public:
         return QProxyStyle::styleHint(hint, option, widget, returnData);
     }
 
+    void drawPrimitive(PrimitiveElement element, const QStyleOption * option,
+                       QPainter * painter,
+                       const QWidget * widget) const override
+    {
+        // extend the drag-and-drop indicator line across all columns
+        if (element == QStyle::PE_IndicatorItemViewItemDrop &&
+            !option->rect.isNull() && widget)
+        {
+            QStyleOption opt(*option);
+            opt.rect.setLeft(0);
+            opt.rect.setWidth(widget->width());
+
+            QProxyStyle::drawPrimitive(element, &opt, painter, widget);
+            return;
+        }
+
+        QProxyStyle::drawPrimitive(element, option, painter, widget);
+    }
+
 private:
     void resetBaseStyle()
     {
