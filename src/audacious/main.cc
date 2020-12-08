@@ -223,7 +223,7 @@ static void do_remote()
     g_type_init();
 
     /* check whether the selected instance is running */
-    if (dbus_server_init() != StartupType::Client)
+    if (dbus_server_init())
         return;
 
     if (!(bus = g_bus_get_sync(G_BUS_TYPE_SESSION, nullptr, &error)) ||

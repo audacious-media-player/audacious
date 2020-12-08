@@ -25,15 +25,8 @@
 /* dbus-server.c */
 #ifdef USE_DBUS
 
-enum class StartupType
-{
-    Server,
-    Client,
-    Unknown
-};
-
 StringBuf dbus_server_name();
-StartupType dbus_server_init();
+bool dbus_server_init();
 void dbus_server_cleanup();
 
 #endif

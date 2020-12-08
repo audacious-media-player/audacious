@@ -401,6 +401,7 @@ EXPORT bool aud_get_bool(const char * section, const char * name)
 
 EXPORT void aud_toggle_bool(const char * section, const char * name)
 {
+    // FIXME: not thread-safe
     aud_set_bool(section, name, !aud_get_bool(section, name));
 }
 
