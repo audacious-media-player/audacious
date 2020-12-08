@@ -24,18 +24,24 @@
 #ifndef LIBAUDCORE_MAINLOOP_H
 #define LIBAUDCORE_MAINLOOP_H
 
+#include <functional>
+
 class QueuedFunc
 {
 public:
+    typedef std::function<void()> Func2;
     typedef void (*Func)(void * data);
 
     // one-time idle callback
+    void queue(Func2 func); // preferred form
     void queue(Func func, void * data);
 
     // one-time delayed callback
+    void queue(int delay_ms, Func2 func); // preferred form
     void queue(int delay_ms, Func func, void * data);
 
     // periodic timer callback
+    void start(int interval_ms, Func2 func); // preferred form
     void start(int interval_ms, Func func, void * data);
 
     // stops any type of callback
