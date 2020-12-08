@@ -1,6 +1,6 @@
 /*
  * dbus-server.c
- * Copyright 2013 John Lindgren
+ * Copyright 2013-2020 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -99,7 +99,7 @@ static MainThreadRunner main_runner;
 
 #define ENTER_MAIN_THREAD(...)                                                 \
     if (!main_runner.run([__VA_ARGS__]() {
-#define LEAVE_MAIN_THREAD()                                                      \
+#define LEAVE_MAIN_THREAD()                                                    \
     })) return false;
 
 static bool prefer_playing = true;
