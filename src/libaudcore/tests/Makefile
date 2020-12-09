@@ -12,6 +12,7 @@ SRCS = ../audio.cc \
        ../stringbuf.cc \
        ../strpool.cc \
        ../tinylock.cc \
+       ../threads.cc \
        ../tuple.cc \
        ../tuple-compiler.cc \
        ../util.cc \
