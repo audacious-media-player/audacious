@@ -94,8 +94,8 @@ dnl libarchive support
 dnl ==================
 
 AC_ARG_ENABLE(libarchive,
- AS_HELP_STRING(--disable-libarchive, [Disable libarchive support (default=enabled)]),
- USE_LIBARCHIVE=$enableval, USE_LIBARCHIVE=yes)
+ AS_HELP_STRING(--enable-libarchive, [Enable libarchive support (default=disabled)]),
+ USE_LIBARCHIVE=$enableval, USE_LIBARCHIVE=no)
 
 if test $USE_LIBARCHIVE = yes ; then
     PKG_CHECK_MODULES([LIBARCHIVE], [libarchive])
@@ -150,5 +150,6 @@ echo ""
 echo "  D-Bus support:                          $USE_DBUS"
 echo "  GTK+ support:                           $USE_GTK"
 echo "  Qt support:                             $USE_QT"
+echo "  libarchive support:                     $USE_LIBARCHIVE"
 echo "  Valgrind analysis support:              $enable_valgrind"
 echo ""
