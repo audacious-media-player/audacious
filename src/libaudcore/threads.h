@@ -21,7 +21,6 @@
 #define LIBAUDCORE_THREADS_H
 
 #include <libaudcore/templates.h>
-#include <libaudcore/tinylock.h>
 
 #include <condition_variable>
 #include <mutex>
@@ -41,16 +40,17 @@ public:
     spinlock & operator=(const spinlock &) = delete;
 
     /* Explicit lock/unlock */
-    void lock() { tiny_lock(&m_lock); }
-    void unlock() { tiny_unlock(&m_lock); }
+    void lock();
+    void unlock();
 
     /* Scope-based lock ownership */
     typedef owner<spinlock, &spinlock::lock, &spinlock::unlock> holder;
+
     /* Convenience method for taking ownership of the lock */
     holder take() __attribute__((warn_unused_result)) { return holder(this); }
 
 private:
-    TinyLock m_lock = 0;
+    char m_lock = 0;
 };
 
 /* A wrapper class around TinyRWLock, encouraging correct usage */
@@ -64,22 +64,23 @@ public:
     spinlock_rw & operator=(const spinlock_rw &) = delete;
 
     /* Explicit lock/unlock */
-    void lock_r() { tiny_lock_read(&m_lock); }
-    void unlock_r() { tiny_unlock_read(&m_lock); }
-    void lock_w() { tiny_lock_write(&m_lock); }
-    void unlock_w() { tiny_unlock_write(&m_lock); }
+    void lock_r();
+    void unlock_r();
+    void lock_w();
+    void unlock_w();
 
     /* Scope-based lock ownership */
     typedef owner<spinlock_rw, &spinlock_rw::lock_r, &spinlock_rw::unlock_r>
         reader;
     typedef owner<spinlock_rw, &spinlock_rw::lock_w, &spinlock_rw::unlock_w>
         writer;
+
     /* Convenience methods for taking ownership of the lock */
     reader read() __attribute__((warn_unused_result)) { return reader(this); }
     writer write() __attribute__((warn_unused_result)) { return writer(this); }
 
 private:
-    TinyRWLock m_lock = 0;
+    unsigned short m_lock = 0;
 };
 
 /* An alias for std::mutex */
@@ -88,6 +89,7 @@ class mutex : public std::mutex
 public:
     /* Scope-based lock ownership */
     typedef std::unique_lock<std::mutex> holder;
+
     /* Convenience method for taking ownership of the lock */
     holder take() __attribute__((warn_unused_result)) { return holder(*this); }
 };

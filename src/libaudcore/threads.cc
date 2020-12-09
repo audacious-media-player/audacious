@@ -1,6 +1,6 @@
 /*
- * tinylock.h
- * Copyright 2013 John Lindgren
+ * threads.cc
+ * Copyright 2020 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,28 +17,18 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDCORE_TINYLOCK_H
-#define LIBAUDCORE_TINYLOCK_H
+#include "threads.h"
+#include "tinylock.h"
 
-#ifndef LIBAUDCORE_BUILD
-#warning tinylock.h is deprecated (use threads.h instead)
-#endif
+namespace aud
+{
 
-/*
- * TinyLock is an extremely low-overhead lock object (in terms of speed and
- * memory usage).  It makes no guarantees of fair scheduling, however.
- */
+EXPORT void spinlock::lock() { tiny_lock(&m_lock); }
+EXPORT void spinlock::unlock() { tiny_unlock(&m_lock); }
 
-typedef char TinyLock;
+EXPORT void spinlock_rw::lock_r() { tiny_lock_read(&m_lock); }
+EXPORT void spinlock_rw::unlock_r() { tiny_unlock_read(&m_lock); }
+EXPORT void spinlock_rw::lock_w() { tiny_lock_write(&m_lock); }
+EXPORT void spinlock_rw::unlock_w() { tiny_unlock_write(&m_lock); }
 
-void tiny_lock(TinyLock * lock);
-void tiny_unlock(TinyLock * lock);
-
-typedef unsigned short TinyRWLock;
-
-void tiny_lock_read(TinyRWLock * lock);
-void tiny_unlock_read(TinyRWLock * lock);
-void tiny_lock_write(TinyRWLock * lock);
-void tiny_unlock_write(TinyRWLock * lock);
-
-#endif /* LIBAUDCORE_TINYLOCK_H */
+} // namespace aud
