@@ -1,8 +1,9 @@
 dnl
-dnl Copyright (c) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2016, 2017
-dnl Jonathan Schleifer <js@heap.zone>
+dnl Copyright (c) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2016, 2017,
+dnl               2018, 2020
+dnl   Jonathan Schleifer <js@nil.im>
 dnl
-dnl https://heap.zone/git/?p=buildsys.git
+dnl https://fossil.nil.im/buildsys
 dnl
 dnl Permission to use, copy, modify, and/or distribute this software for any
 dnl purpose with or without fee is hereby granted, provided that the above
@@ -22,13 +23,44 @@ dnl POSSIBILITY OF SUCH DAMAGE.
 dnl
 
 AC_DEFUN([BUILDSYS_INIT], [
-	AC_CONFIG_COMMANDS_PRE([
-		AC_SUBST(CC_DEPENDS, $GCC)
-		AC_SUBST(CXX_DEPENDS, $GXX)
-		AC_SUBST(OBJC_DEPENDS, $GOBJC)
-		AC_SUBST(OBJCXX_DEPENDS, $GOBJCXX)
+	AC_REQUIRE([AC_CANONICAL_BUILD])
+	AC_REQUIRE([AC_CANONICAL_HOST])
 
-		AC_PATH_PROG(TPUT, tput)
+	case "$build_os" in
+		darwin*)
+			case "$host_os" in
+				darwin*)
+					AC_SUBST(BUILD_AND_HOST_ARE_DARWIN, yes)
+					;;
+			esac
+			;;
+	esac
+
+	AC_CONFIG_COMMANDS_PRE([
+		AS_IF([test x"$GCC" = x"yes"],
+			[AC_SUBST(DEP_CFLAGS, '-MD -MF $${out%.o}.dep')])
+		AS_IF([test x"$GXX" = x"yes"],
+			[AC_SUBST(DEP_CXXFLAGS, '-MD -MF $${out%.o}.dep')])
+		AS_IF([test x"$GOBJC" = x"yes"],
+			[AC_SUBST(DEP_OBJCFLAGS, '-MD -MF $${out%.o}.dep')])
+		AS_IF([test x"$GOBJCXX" = x"yes"],
+			[AC_SUBST(DEP_OBJCXXFLAGS, '-MD -MF $${out%.o}.dep')])
+
+		AC_SUBST(AMIGA_LIB_CFLAGS)
+		AC_SUBST(AMIGA_LIB_LDFLAGS)
+
+		case "$build_os" in
+			morphos*)
+				dnl Don't use tput on MorphOS: The colored
+				dnl output is quite unreadable and in some
+				dnl MorphOS versions, the output from tput is
+				dnl not 8-bit safe, with awk (for AC_SUBST)
+				dnl failing as a result.
+				;;
+			*)
+				AC_PATH_PROG(TPUT, tput)
+				;;
+		esac
 
 		AS_IF([test x"$TPUT" != x""], [
 			if x=$($TPUT el 2>/dev/null); then
@@ -85,17 +117,31 @@ AC_DEFUN([BUILDSYS_INIT], [
 				AC_SUBST(TERM_SETAF6,
 					"$($TPUT AF 6 2>/dev/null)")
 			fi
-		], [
-			AC_SUBST(TERM_EL, '\033\133K')
-			AC_SUBST(TERM_SGR0, '\033\133m')
-			AC_SUBST(TERM_BOLD, '\033\1331m')
-			AC_SUBST(TERM_SETAF1, '\033\13331m')
-			AC_SUBST(TERM_SETAF2, '\033\13332m')
-			AC_SUBST(TERM_SETAF3, '\033\13333m')
-			AC_SUBST(TERM_SETAF4, '\033\13334m')
-			AC_SUBST(TERM_SETAF6, '\033\13336m')
 		])
 	])
+])
+
+AC_DEFUN([BUILDSYS_CHECK_IOS], [
+	case "$host_os" in
+		darwin*)
+			AC_MSG_CHECKING(whether host is iOS)
+			AC_EGREP_CPP(yes, [
+				#include <TargetConditionals.h>
+
+				#if (defined(TARGET_OS_IPHONE) && \
+				    TARGET_OS_IPHONE) || \
+				    (defined(TARGET_OS_SIMULATOR) && \
+				    TARGET_OS_SIMULATOR)
+				yes
+				#endif
+			], [
+				host_is_ios="yes"
+			], [
+				host_is_ios="no"
+			])
+			AC_MSG_RESULT($host_is_ios)
+			;;
+	esac
 ])
 
 AC_DEFUN([BUILDSYS_PROG_IMPLIB], [
@@ -120,7 +166,9 @@ AC_DEFUN([BUILDSYS_PROG_IMPLIB], [
 
 AC_DEFUN([BUILDSYS_SHARED_LIB], [
 	AC_REQUIRE([AC_CANONICAL_HOST])
+	AC_REQUIRE([BUILDSYS_CHECK_IOS])
 	AC_MSG_CHECKING(for shared library system)
+
 	case "$host_os" in
 		darwin*)
 			AC_MSG_RESULT(Darwin)
@@ -131,25 +179,35 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			LIB_SUFFIX='.dylib'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
 			PLUGIN_CFLAGS='-fPIC -DPIC'
-			PLUGIN_LDFLAGS='-bundle -undefined dynamic_lookup'
+			PLUGIN_LDFLAGS='-bundle ${PLUGIN_LDFLAGS_BUNDLE_LOADER}'
 			PLUGIN_SUFFIX='.bundle'
+			AS_IF([test x"$host_is_ios" = x"yes"], [
+				LINK_PLUGIN='rm -fr $$out && ${MKDIR_P} $$out && if test -f Info.plist; then ${INSTALL} -m 644 Info.plist $$out/Info.plist; fi && ${LD} -o $$out/$${out%${PLUGIN_SUFFIX}} ${PLUGIN_OBJS} ${PLUGIN_OBJS_EXTRA} ${PLUGIN_LDFLAGS} ${LDFLAGS} ${LIBS} && ${CODESIGN} -fs ${CODESIGN_IDENTITY} --timestamp=none $$out'
+			], [
+				LINK_PLUGIN='rm -fr $$out && ${MKDIR_P} $$out/Contents/MacOS && if test -f Info.plist; then ${INSTALL} -m 644 Info.plist $$out/Contents/Info.plist; fi && ${LD} -o $$out/Contents/MacOS/$${out%${PLUGIN_SUFFIX}} ${PLUGIN_OBJS} ${PLUGIN_OBJS_EXTRA} ${PLUGIN_LDFLAGS} ${LDFLAGS} ${LIBS} && ${CODESIGN} -fs ${CODESIGN_IDENTITY} --timestamp=none $$out'
+			])
 			INSTALL_LIB='&& ${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='&& rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib'
+			INSTALL_PLUGIN='&& rm -fr ${DESTDIR}${plugindir}/$$i && cp -R $$i ${DESTDIR}${plugindir}/'
+			UNINSTALL_PLUGIN='&& rm -fr ${DESTDIR}${plugindir}/$$i'
 			CLEAN_LIB=''
 			;;
 		mingw* | cygwin*)
 			AC_MSG_RESULT(MinGW / Cygwin)
 			LIB_CFLAGS=''
-			LIB_LDFLAGS='-shared -Wl,--export-all-symbols,--out-implib,${SHARED_LIB}.a'
+			LIB_LDFLAGS='-shared -Wl,--export-all-symbols,--out-implib,lib${SHARED_LIB}.a'
 			LIB_LDFLAGS_INSTALL_NAME=''
-			LIB_PREFIX='lib'
+			LIB_PREFIX=''
 			LIB_SUFFIX='.dll'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
 			PLUGIN_CFLAGS=''
 			PLUGIN_LDFLAGS='-shared'
 			PLUGIN_SUFFIX='.dll'
-			INSTALL_LIB='&& ${MKDIR_P} ${DESTDIR}${bindir} && ${INSTALL} -m 755 $$i ${DESTDIR}${bindir}/$$i && ${INSTALL} -m 755 $$i.a ${DESTDIR}${libdir}/$$i.a'
-			UNINSTALL_LIB='&& rm -f ${DESTDIR}${bindir}/$$i ${DESTDIR}${libdir}/$$i.a'
+			LINK_PLUGIN='${LD} -o $$out ${PLUGIN_OBJS} ${PLUGIN_OBJS_EXTRA} ${PLUGIN_LDFLAGS} ${LDFLAGS} ${LIBS}'
+			INSTALL_LIB='&& ${MKDIR_P} ${DESTDIR}${bindir} && ${INSTALL} -m 755 $$i ${DESTDIR}${bindir}/$$i && ${INSTALL} -m 755 lib$$i.a ${DESTDIR}${libdir}/lib$$i.a'
+			UNINSTALL_LIB='&& rm -f ${DESTDIR}${bindir}/$$i ${DESTDIR}${libdir}/lib$$i.a'
+			INSTALL_PLUGIN='&& ${INSTALL} -m 755 $$i ${DESTDIR}${plugindir}/$$i'
+			UNINSTALL_PLUGIN='&& rm -f ${DESTDIR}${plugindir}/$$i'
 			CLEAN_LIB='${SHARED_LIB}.a'
 			;;
 		openbsd* | mirbsd*)
@@ -163,8 +221,11 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			PLUGIN_CFLAGS='-fPIC -DPIC'
 			PLUGIN_LDFLAGS='-shared'
 			PLUGIN_SUFFIX='.so'
+			LINK_PLUGIN='${LD} -o $$out ${PLUGIN_OBJS} ${PLUGIN_OBJS_EXTRA} ${PLUGIN_LDFLAGS} ${LDFLAGS} ${LIBS}'
 			INSTALL_LIB='&& ${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='&& rm -f ${DESTDIR}${libdir}/$$i'
+			INSTALL_PLUGIN='&& ${INSTALL} -m 755 $$i ${DESTDIR}${plugindir}/$$i'
+			UNINSTALL_PLUGIN='&& rm -f ${DESTDIR}${plugindir}/$$i'
 			CLEAN_LIB=''
 			;;
 		solaris*)
@@ -178,8 +239,11 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			PLUGIN_CFLAGS='-fPIC -DPIC'
 			PLUGIN_LDFLAGS='-shared'
 			PLUGIN_SUFFIX='.so'
+			LINK_PLUGIN='${LD} -o $$out ${PLUGIN_OBJS} ${PLUGIN_OBJS_EXTRA} ${PLUGIN_LDFLAGS} ${LDFLAGS} ${LIBS}'
 			INSTALL_LIB='&& ${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR} && rm -f ${DESTDIR}${libdir}/$$i && ${LN_S} $$i.${LIB_MAJOR}.${LIB_MINOR} ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='&& rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}'
+			INSTALL_PLUGIN='&& ${INSTALL} -m 755 $$i ${DESTDIR}${plugindir}/$$i'
+			UNINSTALL_PLUGIN='&& rm -f ${DESTDIR}${plugindir}/$$i'
 			CLEAN_LIB=''
 			;;
 		*-android*)
@@ -193,8 +257,11 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			PLUGIN_CFLAGS='-fPIC -DPIC'
 			PLUGIN_LDFLAGS='-shared'
 			PLUGIN_SUFFIX='.so'
+			LINK_PLUGIN='${LD} -o $$out ${PLUGIN_OBJS} ${PLUGIN_OBJS_EXTRA} ${PLUGIN_LDFLAGS} ${LDFLAGS} ${LIBS}'
 			INSTALL_LIB='&& ${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0 && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='&& rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0'
+			INSTALL_PLUGIN='&& ${INSTALL} -m 755 $$i ${DESTDIR}${plugindir}/$$i'
+			UNINSTALL_PLUGIN='&& rm -f ${DESTDIR}${plugindir}/$$i'
 			CLEAN_LIB=''
 			;;
 		*)
@@ -208,8 +275,11 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 			PLUGIN_CFLAGS='-fPIC -DPIC'
 			PLUGIN_LDFLAGS='-shared'
 			PLUGIN_SUFFIX='.so'
+			LINK_PLUGIN='${LD} -o $$out ${PLUGIN_OBJS} ${PLUGIN_OBJS_EXTRA} ${PLUGIN_LDFLAGS} ${LDFLAGS} ${LIBS}'
 			INSTALL_LIB='&& ${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0 && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} && ${LN_S} -f $$i.${LIB_MAJOR}.${LIB_MINOR}.0 ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='&& rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$$i.${LIB_MAJOR} ${DESTDIR}${libdir}/$$i.${LIB_MAJOR}.${LIB_MINOR}.0'
+			INSTALL_PLUGIN='&& ${INSTALL} -m 755 $$i ${DESTDIR}${plugindir}/$$i'
+			UNINSTALL_PLUGIN='&& rm -f ${DESTDIR}${plugindir}/$$i'
 			CLEAN_LIB=''
 			;;
 	esac
@@ -223,41 +293,36 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 	AC_SUBST(PLUGIN_CFLAGS)
 	AC_SUBST(PLUGIN_LDFLAGS)
 	AC_SUBST(PLUGIN_SUFFIX)
+	AC_SUBST(LINK_PLUGIN)
 	AC_SUBST(INSTALL_LIB)
 	AC_SUBST(UNINSTALL_LIB)
+	AC_SUBST(INSTALL_PLUGIN)
+	AC_SUBST(UNINSTALL_PLUGIN)
 	AC_SUBST(CLEAN_LIB)
 ])
 
 AC_DEFUN([BUILDSYS_FRAMEWORK], [
 	AC_REQUIRE([AC_CANONICAL_HOST])
+	AC_REQUIRE([BUILDSYS_CHECK_IOS])
 	AC_REQUIRE([BUILDSYS_SHARED_LIB])
 
 	AC_CHECK_TOOL(CODESIGN, codesign)
 
 	case "$host_os" in
 		darwin*)
-			AC_MSG_CHECKING(whether host is iOS)
-			AC_EGREP_CPP(yes, [
-				#include <TargetConditionals.h>
-
-				#if (defined(TARGET_OS_IPHONE) && \
-				    TARGET_OS_IPHONE) || \
-				    (defined(TARGET_OS_SIMULATOR) && \
-				    TARGET_OS_SIMULATOR)
-				yes
-				#endif
-			], [
-				AC_MSG_RESULT(yes)
+			AS_IF([test x"$host_is_ios" = x"yes"], [
 				FRAMEWORK_LDFLAGS='-dynamiclib -current_version ${LIB_MAJOR}.${LIB_MINOR} -compatibility_version ${LIB_MAJOR}'
 				FRAMEWORK_LDFLAGS_INSTALL_NAME='-Wl,-install_name,@executable_path/Frameworks/$$out/$${out%.framework}'
 			], [
-				AC_MSG_RESULT(no)
 				FRAMEWORK_LDFLAGS='-dynamiclib -current_version ${LIB_MAJOR}.${LIB_MINOR} -compatibility_version ${LIB_MAJOR}'
 				FRAMEWORK_LDFLAGS_INSTALL_NAME='-Wl,-install_name,@executable_path/../Frameworks/$$out/$${out%.framework}'
 			])
 
 			AC_SUBST(FRAMEWORK_LDFLAGS)
 			AC_SUBST(FRAMEWORK_LDFLAGS_INSTALL_NAME)
+			AC_SUBST(FRAMEWORK_LIBS)
+
+			$1
 			;;
 	esac
 ])
