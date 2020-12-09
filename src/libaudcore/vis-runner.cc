@@ -95,8 +95,6 @@ static void send_audio(void *)
     vis_pool.prepend(node);
 }
 
-static void send_clear(void *) { vis_send_clear(); }
-
 static void flush(aud::mutex::holder &)
 {
     delete current_node;
@@ -106,7 +104,7 @@ static void flush(aud::mutex::holder &)
     vis_pool.clear();
 
     if (enabled)
-        queued_clear.queue(send_clear, nullptr);
+        queued_clear.queue(vis_send_clear);
 }
 
 void vis_runner_flush()

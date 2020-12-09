@@ -61,23 +61,24 @@ struct TimerList
                 source.stop();
         }
     }
+
+    void run();
 };
 
 static aud::mutex mutex;
 static aud::array<TimerRate, TimerList> lists;
 
-static void timer_run(void * list_)
+void TimerList::run()
 {
-    auto & list = *(TimerList *)list_;
     auto mh = mutex.take();
 
-    list.use_count++;
+    use_count++;
 
     /* note: the list may grow (but not shrink) during the call */
-    for (int i = 0; i < list.items.len(); i++)
+    for (int i = 0; i < items.len(); i++)
     {
         /* copy locally to prevent race condition */
-        TimerItem item = list.items[i];
+        TimerItem item = items[i];
 
         if (item.func)
         {
@@ -87,8 +88,8 @@ static void timer_run(void * list_)
         }
     }
 
-    list.use_count--;
-    list.check_stop();
+    use_count--;
+    check_stop();
 }
 
 EXPORT void timer_add(TimerRate rate, TimerFunc func, void * data)
@@ -101,7 +102,7 @@ EXPORT void timer_add(TimerRate rate, TimerFunc func, void * data)
         list.items.append(func, data);
 
         if (!list.source.running())
-            list.source.start(rate_to_ms[rate], timer_run, &list);
+            list.source.start(rate_to_ms[rate], [&list]() { list.run(); });
     }
 }
 

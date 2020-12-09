@@ -324,7 +324,7 @@ static void do_commands()
     }
 }
 
-static void do_commands_at_idle(void *)
+static void do_commands_at_idle()
 {
     if (options.show_jump_box && !options.headless)
         aud_ui_show_jump_to_song();
@@ -410,7 +410,7 @@ int main(int argc, char ** argv)
     if (!check_should_quit())
     {
         QueuedFunc at_idle_func;
-        at_idle_func.queue(do_commands_at_idle, nullptr);
+        at_idle_func.queue(do_commands_at_idle);
 
         hook_associate("playback stop", (HookFunction)maybe_quit, nullptr);
         hook_associate("playlist add complete", (HookFunction)maybe_quit,

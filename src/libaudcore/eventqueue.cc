@@ -50,7 +50,7 @@ static bool paused;
 static List<Event> events;
 static QueuedFunc queued_events;
 
-static void events_execute(void *)
+static void events_execute()
 {
     auto mh = mutex.take();
 
@@ -74,7 +74,7 @@ EXPORT void event_queue(const char * name, void * data,
     auto mh = mutex.take();
 
     if (!paused && !events.head())
-        queued_events.queue(events_execute, nullptr);
+        queued_events.queue(events_execute);
 
     events.append(new Event(name, data, destroy));
 }
@@ -113,7 +113,7 @@ void event_queue_unpause()
 {
     auto mh = mutex.take();
     if (paused && events.head())
-        queued_events.queue(events_execute, nullptr);
+        queued_events.queue(events_execute);
 
     paused = false;
 }

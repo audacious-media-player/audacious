@@ -204,10 +204,10 @@ static void ministatus_display_message (const char * text)
     gtk_widget_hide (widgets.autofill);
     gtk_widget_show (widgets.ministatus);
 
-    ministatus_timer.queue (AUDGUI_STATUS_TIMEOUT, [] (void *) {
+    ministatus_timer.queue (AUDGUI_STATUS_TIMEOUT, [] () {
         gtk_widget_hide (widgets.ministatus);
         gtk_widget_show (widgets.autofill);
-    }, nullptr);
+    });
 }
 
 static void infowin_update_tuple ()

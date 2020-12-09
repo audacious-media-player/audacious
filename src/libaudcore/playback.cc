@@ -213,7 +213,7 @@ void playback_stop(bool exiting)
 }
 
 // called from top-level event loop after playback finishes
-static void end_cb(void *)
+static void end_cb()
 {
     song_finished = true;
     hook_call("playback end", nullptr);
@@ -386,7 +386,7 @@ static void finish_playback(aud::mutex::holder &)
         failed_entries = 0;
 
     // queue up function to start next song (or perform cleanup)
-    end_queue.queue(end_cb, nullptr);
+    end_queue.queue(end_cb);
 }
 
 // playback thread

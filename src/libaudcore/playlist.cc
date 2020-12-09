@@ -168,7 +168,7 @@ static void number_playlists(int at, int length)
         playlists[i]->id()->index = i;
 }
 
-static void update(void *)
+EXPORT void Playlist::process_pending_update()
 {
     auto mh = mutex.take();
 
@@ -214,7 +214,7 @@ static void queue_update()
     if (update_state < UpdateState::Queued)
     {
         event_queue_pause(); // give playlist updates priority
-        queued_update.queue(update, nullptr);
+        queued_update.queue(Playlist::process_pending_update);
         update_state = UpdateState::Queued;
     }
 }
@@ -239,7 +239,7 @@ static void queue_global_update(Playlist::UpdateLevel level, int flags = 0)
     {
         if (update_state < UpdateState::Delayed)
         {
-            queued_update.queue(250, update, nullptr);
+            queued_update.queue(250, Playlist::process_pending_update);
             update_state = UpdateState::Delayed;
         }
     }
@@ -256,8 +256,6 @@ EXPORT bool Playlist::update_pending_any()
     auto mh = mutex.take();
     return (update_level != Playlist::NoUpdate);
 }
-
-EXPORT void Playlist::process_pending_update() { update(nullptr); }
 
 EXPORT bool Playlist::scan_in_progress() const
 {

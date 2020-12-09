@@ -41,7 +41,7 @@ static QueuedFunc queued_func;
 static List<QueuedData> queue;
 static aud::mutex mutex;
 
-static void send_data(void *)
+static void send_data()
 {
     auto mh = mutex.take();
 
@@ -69,7 +69,7 @@ static void read_worker(QueuedData * data)
     auto mh = mutex.take();
 
     if (!queue.head())
-        queued_func.queue(send_data, nullptr);
+        queued_func.queue(send_data);
 
     queue.append(data);
 }

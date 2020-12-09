@@ -324,7 +324,7 @@ EXPORT void aud_init()
     load_playlists();
 }
 
-static void do_autosave(void *)
+static void do_autosave()
 {
     hook_call("config save", nullptr);
     save_playlists(false);
@@ -342,7 +342,7 @@ EXPORT void aud_run()
     start_plugins_two();
 
     static QueuedFunc autosave;
-    autosave.start(AUTOSAVE_INTERVAL, do_autosave, nullptr);
+    autosave.start(AUTOSAVE_INTERVAL, do_autosave);
 
     /* calls "config save" before returning */
     interface_run();
