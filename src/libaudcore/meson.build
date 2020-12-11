@@ -45,6 +45,7 @@ libaudcore_sources = [
   'scanner.cc',
   'stringbuf.cc',
   'strpool.cc',
+  'threads.cc',
   'tinylock.cc',
   'timer.cc',
   'tuple.cc',
