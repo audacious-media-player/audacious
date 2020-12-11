@@ -55,6 +55,6 @@ libaudqt_lib = library('audqt',
   dependencies: [qt_dep],
   link_with: [libaudcore_lib],
   soversion: '2',
-  version: '2.2.0',
+  version: '2.3.0',
   install: true
 )
