@@ -89,6 +89,8 @@ VolumeButton::VolumeButton(QWidget * parent)
 
     int val = aud_drct_get_volume_main();
     m_slider.setValue(val);
+    m_slider.setFocus();
+
     updateIcon(val);
     updateDelta();
 
