@@ -62,7 +62,7 @@ endif
 
 
 conf = configuration_data()
-conf.set_quoted('BUILDSTAMP', '???')
+conf.set_quoted('BUILDSTAMP', get_option('buildstamp'))
 conf.set_quoted('COPYRIGHT', copyright)
 conf.set_quoted('PACKAGE', meson.project_name())
 conf.set_quoted('VERSION', meson.project_version())

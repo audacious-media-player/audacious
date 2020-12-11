@@ -4,3 +4,5 @@ option('qt', type: 'boolean', value: true,
        description: 'Whether Qt support is enabled')
 option('libarchive', type: 'boolean', value: false,
        description: 'Whether libarchive support is enabled')
+option('buildstamp', type: 'string', value: 'unknown build',
+       description: 'Allows to set a custom build stamp')
