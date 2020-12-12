@@ -65,11 +65,11 @@ InfoPopup::InfoPopup(const String & filename, const Tuple & tuple)
 {
     setWindowFlags(Qt::ToolTip);
 
-    m_hbox.setMargin(sizes.TwoPt);
+    m_hbox.setContentsMargins(margins.TwoPt);
     m_hbox.setSpacing(sizes.FourPt);
     setLayout(&m_hbox);
 
-    m_grid.setMargin(0);
+    m_grid.setContentsMargins(0, 0, 0, 0);
     m_grid.setHorizontalSpacing(sizes.FourPt);
     m_grid.setVerticalSpacing(0);
     m_hbox.addLayout(&m_grid);

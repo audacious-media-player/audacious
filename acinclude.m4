@@ -101,12 +101,14 @@ AC_REQUIRE([AC_SYS_LARGEFILE])
 
 if test "x$GCC" = "xyes"; then
     CFLAGS="$CFLAGS -std=gnu99 -ffast-math -Wall -pipe"
-    if test "x$HAVE_DARWIN" = "xyes"; then
-        CXXFLAGS="$CXXFLAGS -std=gnu++11 -ffast-math -Wall -pipe"
-        LDFLAGS="$LDFLAGS"
-    else
-        CXXFLAGS="$CXXFLAGS -std=gnu++11 -ffast-math -Wall -pipe"
+    CXXFLAGS="$CXXFLAGS -ffast-math -Wall -pipe"
+
+    # use C++17 if possible (Qt 6 requires it)
+    AUD_CHECK_CXXFLAGS(-std=gnu++17)
+    if [ "${CFLAGS#gnu++17}" = "$CFLAGS" ] ; then
+        CFLAGS="$CFLAGS -std=gnu++11"
     fi
+
     AUD_CHECK_CFLAGS(-Wtype-limits)
     AUD_CHECK_CFLAGS(-Wno-stringop-truncation)
     AUD_CHECK_CXXFLAGS(-Woverloaded-virtual)
