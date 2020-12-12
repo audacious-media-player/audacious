@@ -105,8 +105,8 @@ if test "x$GCC" = "xyes"; then
 
     # use C++17 if possible (Qt 6 requires it)
     AUD_CHECK_CXXFLAGS(-std=gnu++17)
-    if [ "${CFLAGS#gnu++17}" = "$CFLAGS" ] ; then
-        CFLAGS="$CFLAGS -std=gnu++11"
+    if test "${CXXFLAGS%gnu++17}" = "$CXXFLAGS" ; then
+        CXXFLAGS="$CXXFLAGS -std=gnu++11"
     fi
 
     AUD_CHECK_CFLAGS(-Wtype-limits)
