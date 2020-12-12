@@ -140,26 +140,46 @@ public:
     using Target = HookTarget<T, D>;
     using Func = typename Target::Func;
 
-    HookReceiver(const char * hook, T * target, Func func)
-        : hook(hook), target(target), func(func)
+    constexpr HookReceiver(T * target, Func func)
+        : m_hook(nullptr), m_target(target), m_func(func)
     {
-        hook_associate(hook, run, this);
     }
 
-    ~HookReceiver() { hook_dissociate(hook, run, this); }
+    HookReceiver(const char * hook, T * target, Func func)
+        : HookReceiver(target, func)
+    {
+        connect(hook);
+    }
+
+    ~HookReceiver() { disconnect(); }
 
     HookReceiver(const HookReceiver &) = delete;
     void operator=(const HookReceiver &) = delete;
 
+    void connect(const char * hook)
+    {
+        disconnect();
+        hook_associate(hook, run, this);
+        m_hook = hook;
+    }
+
+    void disconnect()
+    {
+        if (!m_hook)
+            return;
+        hook_dissociate(m_hook, run, this);
+        m_hook = nullptr;
+    }
+
 private:
-    const char * const hook;
-    T * const target;
-    const Func func;
+    const char * m_hook;
+    T * const m_target;
+    const Func m_func;
 
     static void run(void * d, void * recv_)
     {
         auto recv = (const HookReceiver *)recv_;
-        Target::run(recv->target, recv->func, d);
+        Target::run(recv->m_target, recv->m_func, d);
     }
 };
 
