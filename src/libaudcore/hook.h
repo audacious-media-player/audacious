@@ -112,6 +112,23 @@ void event_queue(const char * name, void * data,
  * all hook calls matching <name> are canceled. */
 void event_queue_cancel(const char * name, void * data = nullptr);
 
+template<class T, class D = void>
+struct HookTarget
+{
+    using Func = void (T::*const)(D);
+    static void run(T * const target, Func func, void * d)
+    {
+        (target->*func)(aud::from_ptr<D>(d));
+    }
+};
+
+template<class T>
+struct HookTarget<T, void>
+{
+    using Func = void (T::*const)();
+    static void run(T * const target, Func func, void *) { (target->*func)(); }
+};
+
 /* Convenience wrapper for C++ classes.  Allows non-static member functions to
  * be used as hook callbacks.  The HookReceiver should be made a member of the
  * class in question so that hook_dissociate() is called automatically from the
@@ -120,7 +137,10 @@ template<class T, class D = void>
 class HookReceiver
 {
 public:
-    HookReceiver(const char * hook, T * target, void (T::*func)(D))
+    using Target = HookTarget<T, D>;
+    using Func = typename Target::Func;
+
+    HookReceiver(const char * hook, T * target, Func func)
         : hook(hook), target(target), func(func)
     {
         hook_associate(hook, run, this);
@@ -134,40 +154,12 @@ public:
 private:
     const char * const hook;
     T * const target;
-    void (T::*const func)(D);
+    const Func func;
 
     static void run(void * d, void * recv_)
     {
         auto recv = (const HookReceiver *)recv_;
-        (recv->target->*recv->func)(aud::from_ptr<D>(d));
-    }
-};
-
-/* Partial specialization for data-less hooks. */
-template<class T>
-class HookReceiver<T, void>
-{
-public:
-    HookReceiver(const char * hook, T * target, void (T::*func)())
-        : hook(hook), target(target), func(func)
-    {
-        hook_associate(hook, run, this);
-    }
-
-    ~HookReceiver() { hook_dissociate(hook, run, this); }
-
-    HookReceiver(const HookReceiver &) = delete;
-    void operator=(const HookReceiver &) = delete;
-
-private:
-    const char * const hook;
-    T * const target;
-    void (T::*const func)();
-
-    static void run(void *, void * recv_)
-    {
-        auto recv = (const HookReceiver *)recv_;
-        (recv->target->*recv->func)();
+        Target::run(recv->target, recv->func, d);
     }
 };
 
