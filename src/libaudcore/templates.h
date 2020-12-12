@@ -355,41 +355,38 @@ typedef void (*EraseFunc)(void * data, int len);
 template<class T>
 static constexpr FillFunc fill_func()
 {
-    auto func = [](void * data, int len) {
-        T * iter = (T *)data;
-        T * end = (T *)((char *)data + len);
-        while (iter < end)
-            new (iter++) T();
-    };
-
-    return std::is_trivial<T>::value ? (FillFunc) nullptr : func;
+    return std::is_trivial<T>::value ? (FillFunc) nullptr : //
+               [](void * data, int len) {
+                   T * iter = (T *)data;
+                   T * end = (T *)((char *)data + len);
+                   while (iter < end)
+                       new (iter++) T();
+               };
 }
 
 template<class T>
 static constexpr CopyFunc copy_func()
 {
-    auto func = [](const void * from, void * to, int len) {
-        const T * src = (const T *)from;
-        T * dest = (T *)to;
-        T * end = (T *)((char *)to + len);
-        while (dest < end)
-            new (dest++) T(*src++);
-    };
-
-    return std::is_trivial<T>::value ? (CopyFunc) nullptr : func;
+    return std::is_trivial<T>::value ? (CopyFunc) nullptr : //
+               [](const void * from, void * to, int len) {
+                   const T * src = (const T *)from;
+                   T * dest = (T *)to;
+                   T * end = (T *)((char *)to + len);
+                   while (dest < end)
+                       new (dest++) T(*src++);
+               };
 }
 
 template<class T>
 static constexpr EraseFunc erase_func()
 {
-    auto func = [](void * data, int len) {
-        T * iter = (T *)data;
-        T * end = (T *)((char *)data + len);
-        while (iter < end)
-            (*iter++).~T();
-    };
-
-    return std::is_trivial<T>::value ? (EraseFunc) nullptr : func;
+    return std::is_trivial<T>::value ? (EraseFunc) nullptr : //
+               [](void * data, int len) {
+                   T * iter = (T *)data;
+                   T * end = (T *)((char *)data + len);
+                   while (iter < end)
+                       (*iter++).~T();
+               };
 }
 
 } // namespace aud
