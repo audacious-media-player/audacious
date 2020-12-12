@@ -93,7 +93,6 @@ EXPORT TreeView::TreeView(QWidget * parent) : QTreeView(parent)
     style->setParent(this);
     setStyle(style);
 
-    // activate() is perhaps a bit redundant with activated()
     connect(this, &QTreeView::activated, this, &TreeView::activate);
 }
 
@@ -128,7 +127,6 @@ EXPORT void TreeView::removeSelectedRows()
         m->removeRow(row);
 }
 
-// TODO: unnecessary, remove at next API break
 EXPORT void TreeView::mouseDoubleClickEvent(QMouseEvent * event)
 {
     QTreeView::mouseDoubleClickEvent(event);

@@ -159,6 +159,10 @@ public:
         setSelectionMode(QTreeView::ExtendedSelection);
         setUniformRowHeights(true);
         setModel(new PresetModel(this));
+
+        connect(this, &QTreeView::activated, [this](const QModelIndex & index) {
+            pmodel()->apply_preset(index.row());
+        });
     }
 
     PresetModel * pmodel() const { return static_cast<PresetModel *>(model()); }
@@ -175,11 +179,6 @@ public:
     }
 
 protected:
-    void activate(const QModelIndex & index) override
-    {
-        pmodel()->apply_preset(index.row());
-    }
-
     void selectionChanged(const QItemSelection & selected,
                           const QItemSelection & deselected) override
     {
