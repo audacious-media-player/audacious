@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
 LIB_MAJOR = 5
-LIB_MINOR = 2
+LIB_MINOR = 3
 
 SRCS = adder.cc \
        archive_reader.cc \
@@ -46,6 +46,7 @@ SRCS = adder.cc \
        stringbuf.cc \
        strpool.cc \
        tinylock.cc \
+       threads.cc \
        timer.cc \
        tuple.cc \
        tuple-compiler.cc \

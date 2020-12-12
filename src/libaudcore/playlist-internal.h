@@ -65,7 +65,7 @@ void playback_entry_set_tuple(int serial, Tuple && tuple);
 
 /* playlist-cache.cc */
 void playlist_cache_load(Index<PlaylistAddItem> & items);
-void playlist_cache_clear(void * = nullptr);
+void playlist_cache_clear();
 
 /* playlist-files.cc */
 bool playlist_load(const char * filename, String & title,

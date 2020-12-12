@@ -303,32 +303,63 @@ void id3_decode_txxx (Tuple & tuple, const char * data, int size)
     }
 }
 
-Index<char> id3_decode_picture (const char * data, int size)
+/* Decodes the common part of a PIC (v2.2) or APIC (v2.3/2.4) frame following
+ * the "Image format" (PIC) or "MIME type" (APIC) field */
+static Index<char> id3_decode_pic_common (const char * data, int size, int encoding)
 {
     Index<char> buf;
 
-    const char * nul;
-    if (size < 2 || ! (nul = (char *) memchr (data + 1, 0, size - 2)))
+    if (size < 1)
         return buf;
 
-    int type = (unsigned char) nul[1];
+    /* byte 0: picture type */
+    int type = (unsigned char) data[0];
 
-    const char * body = nul + 2;
-    int body_size = data + size - body;
+    /* ... followed by null-terminated description */
+    int desc_size, offset;
+    id3_strnlen (data + 1, size - 1, encoding, & desc_size, & offset);
+    StringBuf desc = id3_convert (data + 1, desc_size, encoding);
 
-    int before_nul2, after_nul2;
-    id3_strnlen (body, body_size, data[0], & before_nul2, & after_nul2);
+    /* ... followed by image data */
+    const char * image_data = data + 1 + offset;
+    int image_size = size - 1 - offset;
 
-    const char * mime = data + 1;
-    StringBuf desc = id3_convert (body, before_nul2, data[0]);
-
-    int image_size = body_size - after_nul2;
-
-    AUDDBG ("Picture: mime = %s, type = %d, desc = %s, size = %d.\n", mime,
-     type, (const char *) desc, image_size);
+    AUDDBG ("Picture: type = %d, desc = %s, size = %d.\n", type,
+            (const char *) desc, image_size);
 
     if (type == 3 || type == 0)  /* album cover or iTunes */
-        buf.insert (body + after_nul2, 0, image_size);
+        buf.insert (image_data, 0, image_size);
 
     return buf;
+}
+
+/* Decodes a PIC frame (v2.2) */
+Index<char> id3_decode_pic (const char * data, int size)
+{
+    Index<char> buf;
+
+    /* bytes 1..3: 3-character format e.g. "PNG" or "JPG" */
+    if (size < 4)
+        return buf;
+
+    AUDDBG ("PIC: format = %.3s\n", data + 1);
+
+    /* byte 0: text encoding */
+    return id3_decode_pic_common (data + 4, size - 4, data[0]);
+}
+
+/* Decodes an APIC frame (v2.3 or v2.4) */
+Index<char> id3_decode_apic (const char * data, int size)
+{
+    Index<char> buf;
+
+    /* bytes 1..n: null-terminated MIME type */
+    const char * nul;
+    if (size < 1 || ! (nul = (char *) memchr (data + 1, 0, size - 1)))
+        return buf;
+
+    AUDDBG ("APIC: MIME type = %s\n", data + 1);
+
+    /* byte 0: text encoding */
+    return id3_decode_pic_common (nul + 1, data + size - (nul + 1), data[0]);
 }

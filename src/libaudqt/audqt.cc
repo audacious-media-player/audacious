@@ -20,8 +20,8 @@
 #include <stdlib.h>
 
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QPushButton>
+#include <QScreen>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
@@ -42,10 +42,21 @@ static PixelMargins margins_local;
 EXPORT const PixelSizes & sizes = sizes_local;
 EXPORT const PixelMargins & margins = margins_local;
 
+/* clang-format off */
+static const char * const audqt_defaults[] = {
+    "eq_presets_visible", "FALSE",
+    "equalizer_visible", "FALSE",
+    "queue_manager_visible", "FALSE",
+    nullptr
+};
+/* clang-format on */
+
 EXPORT void init()
 {
     if (init_count++)
         return;
+
+    aud_config_set_defaults("audqt", audqt_defaults);
 
     static char app_name[] = "audacious";
     static int dummy_argc = 1;
@@ -53,7 +64,9 @@ EXPORT void init()
 
     auto qapp = new QApplication(dummy_argc, dummy_argv);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     qapp->setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     qapp->setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles);
 #endif
@@ -64,9 +77,8 @@ EXPORT void init()
 
     qapp->setQuitOnLastWindowClosed(false);
 
-    auto desktop = qapp->desktop();
     sizes_local.OneInch =
-        aud::max(96, (desktop->logicalDpiX() + desktop->logicalDpiY()) / 2);
+        aud::max(96, (int)qapp->primaryScreen()->logicalDotsPerInch());
     sizes_local.TwoPt = aud::rescale(2, 72, sizes_local.OneInch);
     sizes_local.FourPt = aud::rescale(4, 72, sizes_local.OneInch);
     sizes_local.EightPt = aud::rescale(8, 72, sizes_local.OneInch);
@@ -78,6 +90,13 @@ EXPORT void init()
     margins_local.EightPt =
         QMargins(sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
 
+#ifdef _WIN32
+    // On Windows, Qt uses 9 pt in specific places (such as QMenu) but
+    // 8 pt as the application font, resulting in an inconsistent look.
+    // First-party Windows applications (and GTK applications too) seem
+    // to use 9 pt in most places so let's try to do the same.
+    QApplication::setFont(QApplication::font("QMenu"));
+#endif
 #ifdef Q_OS_MAC // Mac-specific font tweaks
     QApplication::setFont(QApplication::font("QSmallFont"), "QDialog");
     QApplication::setFont(QApplication::font("QSmallFont"), "QTreeView");
@@ -97,14 +116,11 @@ EXPORT void cleanup()
         return;
 
     aboutwindow_hide();
-    eq_presets_hide();
-    equalizer_hide();
     infopopup_hide_now();
     infowin_hide();
     log_inspector_hide();
     plugin_prefs_hide();
     prefswin_hide();
-    queue_manager_hide();
 
     log_cleanup();
 
@@ -146,7 +162,7 @@ EXPORT QGradientStops dark_bg_gradient(const QColor & base)
 
 EXPORT QColor vis_bar_color(const QColor & hue, int bar, int n_bars)
 {
-    qreal h, s, v;
+    decltype(hue.hueF()) h, s, v;
     hue.getHsvF(&h, &s, &v);
 
     if (s < 0.1) /* monochrome? use blue instead */

@@ -23,7 +23,8 @@
 #include <libaudcore/audstrings.h>
 
 #ifdef _WIN32
-Index<String> get_argv_utf8 ();
+Index<String> get_argv_utf8();
+int exec_argv0();
 #endif
 
 #endif /* AUDACIOUS_UTIL_H */

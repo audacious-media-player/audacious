@@ -24,19 +24,27 @@
 #ifndef LIBAUDCORE_MAINLOOP_H
 #define LIBAUDCORE_MAINLOOP_H
 
+#include <functional>
+
 class QueuedFunc
 {
 public:
+    typedef std::function<void()> Func2;
     typedef void (*Func)(void * data);
 
     // one-time idle callback
-    void queue(Func func, void * data);
+    void queue(Func2 func);
+    void queue(Func func, void * data) __attribute__((deprecated));
 
     // one-time delayed callback
-    void queue(int delay_ms, Func func, void * data);
+    void queue(int delay_ms, Func2 func);
+    void queue(int delay_ms, Func func, void * data)
+        __attribute__((deprecated));
 
     // periodic timer callback
-    void start(int interval_ms, Func func, void * data);
+    void start(int interval_ms, Func2 func);
+    void start(int interval_ms, Func func, void * data)
+        __attribute__((deprecated));
 
     // stops any type of callback
     // note that queue() and start() also stop any previous callback

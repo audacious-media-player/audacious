@@ -19,6 +19,7 @@
 
 #include "runtime.h"
 
+#include <assert.h>
 #include <errno.h>
 #include <locale.h>
 #include <stdlib.h>
@@ -67,11 +68,9 @@ size_t misc_bytes_allocated;
 static bool headless_mode;
 static int instance_number = 1;
 
-#if defined(USE_GTK) && !defined(USE_QT)
 static MainloopType mainloop_type = MainloopType::GLib;
-#else
-static MainloopType mainloop_type = MainloopType::Qt;
-#endif
+static bool mainloop_type_set = false;
+static bool restart_requested = false;
 
 static aud::array<AudPath, String> aud_paths;
 
@@ -81,8 +80,26 @@ EXPORT bool aud_get_headless_mode() { return headless_mode; }
 EXPORT void aud_set_instance(int instance) { instance_number = instance; }
 EXPORT int aud_get_instance() { return instance_number; }
 
-EXPORT void aud_set_mainloop_type(MainloopType type) { mainloop_type = type; }
-EXPORT MainloopType aud_get_mainloop_type() { return mainloop_type; }
+EXPORT void aud_set_mainloop_type(MainloopType type)
+{
+    assert(!mainloop_type_set);
+    mainloop_type = type;
+    mainloop_type_set = true;
+}
+
+EXPORT MainloopType aud_get_mainloop_type()
+{
+    assert(mainloop_type_set);
+    return mainloop_type;
+}
+
+EXPORT void aud_request_restart()
+{
+    restart_requested = true;
+    aud_quit();
+}
+
+EXPORT bool aud_restart_requested() { return restart_requested; }
 
 static StringBuf get_path_to_self()
 {
@@ -285,6 +302,16 @@ EXPORT void aud_init()
 
     config_load();
 
+    if (!mainloop_type_set)
+    {
+#ifdef USE_QT
+        if (aud_get_bool("use_qt"))
+            aud_set_mainloop_type(MainloopType::Qt);
+        else
+#endif
+            aud_set_mainloop_type(MainloopType::GLib);
+    }
+
     chardet_init();
     eq_init();
     output_init();
@@ -297,7 +324,7 @@ EXPORT void aud_init()
     load_playlists();
 }
 
-static void do_autosave(void *)
+static void do_autosave()
 {
     hook_call("config save", nullptr);
     save_playlists(false);
@@ -315,7 +342,7 @@ EXPORT void aud_run()
     start_plugins_two();
 
     static QueuedFunc autosave;
-    autosave.start(AUTOSAVE_INTERVAL, do_autosave, nullptr);
+    autosave.start(AUTOSAVE_INTERVAL, do_autosave);
 
     /* calls "config save" before returning */
     interface_run();

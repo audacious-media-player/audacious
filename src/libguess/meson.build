@@ -4,6 +4,9 @@ libguess_sources = [
   'guess_impl.c'
 ]
 
+if cc.has_argument('-Wno-unused-variable')
+  add_project_arguments('-Wno-unused-variable', language: 'c')
+endif
 
 libguess_lib = static_library('guess',
   libguess_sources,

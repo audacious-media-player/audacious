@@ -75,7 +75,7 @@ MenuAction::MenuAction(const MenuItem & item, const char * domain,
         setMenu(item.submenu());
 
 #ifndef Q_OS_MAC
-    if (item.text.icon && QIcon::hasThemeIcon(item.text.icon))
+    if (item.text.icon)
         setIcon(audqt::get_icon(item.text.icon));
 #endif
 

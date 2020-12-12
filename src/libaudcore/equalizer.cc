@@ -187,6 +187,11 @@ EXPORT void aud_eq_set_band(int band, double value)
 {
     assert(band >= 0 && band < AUD_EQ_NBANDS);
 
+    /* This read-modify-write sequence is technically not thread-safe,
+     * since it could clobber concurrent changes to other EQ bands. In
+     * practice, this should not be an issue, since no one updating EQ
+     * settings from multiple threads should be expecting consistent
+     * results anyway). */
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands(values);
     values[band] = value;

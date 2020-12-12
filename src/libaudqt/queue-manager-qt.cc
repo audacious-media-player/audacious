@@ -17,13 +17,13 @@
  * the use of this software.
  */
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
 
 #include <QAbstractListModel>
-#include <QDialog>
-#include <QDialogButtonBox>
 #include <QHeaderView>
 #include <QItemSelectionModel>
+#include <QKeyEvent>
 #include <QPointer>
 #include <QPushButton>
 #include <QTreeView>
@@ -45,18 +45,28 @@ namespace audqt
 class QueueManagerModel : public QAbstractListModel
 {
 public:
+    enum
+    {
+        ColumnEntry,
+        ColumnTitle,
+        NColumns
+    };
+
     void update(QItemSelectionModel * sel);
     void selectionChanged(const QItemSelection & selected,
                           const QItemSelection & deselected);
 
 protected:
-    int rowCount(const QModelIndex & parent) const
+    int rowCount(const QModelIndex & parent) const override
     {
         return parent.isValid() ? 0 : m_rows;
     }
 
-    int columnCount(const QModelIndex & parent) const { return 2; }
-    QVariant data(const QModelIndex & index, int role) const;
+    int columnCount(const QModelIndex &) const override { return NColumns; }
+
+    QVariant data(const QModelIndex & index, int role) const override;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role) const override;
 
 private:
     int m_rows = 0;
@@ -70,15 +80,37 @@ QVariant QueueManagerModel::data(const QModelIndex & index, int role) const
         auto list = Playlist::active_playlist();
         int entry = list.queue_get_entry(index.row());
 
-        if (index.column() == 0)
+        if (index.column() == ColumnEntry)
             return entry + 1;
-        else
+        else if (index.column() == ColumnTitle)
         {
             Tuple tuple = list.entry_tuple(entry, Playlist::NoWait);
             return QString((const char *)tuple.get_str(Tuple::FormattedTitle));
         }
     }
-    else if (role == Qt::TextAlignmentRole && index.column() == 0)
+    else if (role == Qt::TextAlignmentRole && index.column() == ColumnEntry)
+        return Qt::AlignRight;
+
+    return QVariant();
+}
+
+QVariant QueueManagerModel::headerData(int section, Qt::Orientation orientation,
+                                       int role) const
+{
+    if (orientation != Qt::Horizontal)
+        return QVariant();
+
+    if (role == Qt::DisplayRole)
+    {
+        switch (section)
+        {
+        case ColumnEntry:
+            return QString("#");
+        case ColumnTitle:
+            return QString(_("Title"));
+        }
+    }
+    else if (role == Qt::TextAlignmentRole && section == ColumnEntry)
         return Qt::AlignRight;
 
     return QVariant();
@@ -138,60 +170,75 @@ void QueueManagerModel::selectionChanged(const QItemSelection & selected,
         list.select_entry(list.queue_get_entry(index.row()), false);
 }
 
-class QueueManagerDialog : public QDialog
+class QueueManager : public QWidget
 {
 public:
-    QueueManagerDialog(QWidget * parent = nullptr);
+    QueueManager(QWidget * parent = nullptr);
+
+    QSize sizeHint() const override
+    {
+        return {3 * sizes.OneInch, 2 * sizes.OneInch};
+    }
+
+protected:
+    void keyPressEvent(QKeyEvent * event) override;
 
 private:
     QTreeView m_treeview;
-    QDialogButtonBox m_buttonbox;
     QPushButton m_btn_unqueue;
-    QPushButton m_btn_close;
     QueueManagerModel m_model;
 
     void removeSelected();
     void update() { m_model.update(m_treeview.selectionModel()); }
 
-    const HookReceiver<QueueManagerDialog> update_hook{
-        "playlist update", this, &QueueManagerDialog::update},
-        activate_hook{"playlist activate", this, &QueueManagerDialog::update};
+    const HookReceiver<QueueManager> //
+        update_hook{"playlist update", this, &QueueManager::update},
+        activate_hook{"playlist activate", this, &QueueManager::update};
 };
 
-QueueManagerDialog::QueueManagerDialog(QWidget * parent) : QDialog(parent)
+void QueueManager::keyPressEvent(QKeyEvent * event)
 {
-    setWindowTitle(_("Queue Manager"));
-    setContentsMargins(margins.TwoPt);
+    if (event->key() == Qt::Key_Delete)
+        removeSelected();
 
+    QWidget::keyPressEvent(event);
+}
+
+QueueManager::QueueManager(QWidget * parent) : QWidget(parent)
+{
     m_btn_unqueue.setText(translate_str(N_("_Unqueue")));
-    m_btn_close.setText(translate_str(N_("_Close")));
 
-    connect(&m_btn_close, &QAbstractButton::clicked, this, &QWidget::hide);
     connect(&m_btn_unqueue, &QAbstractButton::clicked, this,
-            &QueueManagerDialog::removeSelected);
+            &QueueManager::removeSelected);
 
-    m_buttonbox.addButton(&m_btn_close, QDialogButtonBox::AcceptRole);
-    m_buttonbox.addButton(&m_btn_unqueue, QDialogButtonBox::AcceptRole);
+    auto hbox = audqt::make_hbox(nullptr);
+    hbox->setContentsMargins(audqt::margins.TwoPt);
+    hbox->addStretch(1);
+    hbox->addWidget(&m_btn_unqueue);
 
-    auto layout = make_vbox(this);
+    auto layout = make_vbox(this, 0);
     layout->addWidget(&m_treeview);
-    layout->addWidget(&m_buttonbox);
+    layout->addLayout(hbox);
 
     m_treeview.setAllColumnsShowFocus(true);
+    m_treeview.setFrameShape(QFrame::NoFrame);
     m_treeview.setIndentation(0);
     m_treeview.setModel(&m_model);
     m_treeview.setSelectionMode(QAbstractItemView::ExtendedSelection);
-    m_treeview.setHeaderHidden(true);
+
+    auto header = m_treeview.header();
+    header->setSectionResizeMode(QueueManagerModel::ColumnEntry,
+                                 QHeaderView::Interactive);
+    header->resizeSection(QueueManagerModel::ColumnEntry,
+                          audqt::to_native_dpi(25));
 
     update();
 
     connect(m_treeview.selectionModel(), &QItemSelectionModel::selectionChanged,
             &m_model, &QueueManagerModel::selectionChanged);
-
-    resize(4 * sizes.OneInch, 3 * sizes.OneInch);
 }
 
-void QueueManagerDialog::removeSelected()
+void QueueManager::removeSelected()
 {
     auto list = Playlist::active_playlist();
     int count = list.n_queued();
@@ -211,19 +258,12 @@ void QueueManagerDialog::removeSelected()
     }
 }
 
-static QPointer<QueueManagerDialog> s_queuemgr;
-
 EXPORT void queue_manager_show()
 {
-    if (!s_queuemgr)
-    {
-        s_queuemgr = new QueueManagerDialog;
-        s_queuemgr->setAttribute(Qt::WA_DeleteOnClose);
-    }
-
-    window_bring_to_front(s_queuemgr);
+    dock_show_simple("queue_manager", _("Queue Manager"),
+                     []() -> QWidget * { return new QueueManager; });
 }
 
-EXPORT void queue_manager_hide() { delete s_queuemgr; }
+EXPORT void queue_manager_hide() { dock_hide_simple("queue_manager"); }
 
 } // namespace audqt

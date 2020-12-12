@@ -211,11 +211,31 @@ static Index<ComboItem> iface_combo_elements;
 static int iface_combo_selected;
 static QWidget * iface_prefs_box;
 
+#ifdef USE_GTK
+static void iface_restart_in_gtk_mode()
+{
+    aud_set_bool("use_qt", false);
+    aud_request_restart();
+}
+
+static const PreferencesWidget iface_restart_widgets[] = {
+    WidgetButton(N_("Restart in GTK (legacy) mode"),
+                 {iface_restart_in_gtk_mode}),
+};
+#endif
+
 static ArrayRef<ComboItem> iface_combo_fill();
 static void iface_combo_changed();
 static void * iface_create_prefs_box();
 
 static const PreferencesWidget appearance_page_widgets[] = {
+    WidgetLabel(N_("Audacious is running in Qt mode.")),
+#ifdef USE_GTK
+    WidgetBox({{iface_restart_widgets}, true}, WIDGET_CHILD),
+#else
+    WidgetLabel(N_("GTK (legacy) mode is unavailable in this build."),
+                WIDGET_CHILD),
+#endif
     WidgetCombo(N_("Interface:"),
                 WidgetInt(iface_combo_selected, iface_combo_changed),
                 {0, iface_combo_fill}),

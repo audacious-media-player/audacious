@@ -90,6 +90,22 @@ fi
 
 AC_SUBST([VALGRIND_FRIENDLY])
 
+dnl libarchive support
+dnl ==================
+
+AC_ARG_ENABLE(libarchive,
+ AS_HELP_STRING(--enable-libarchive, [Enable libarchive support (default=disabled)]),
+ USE_LIBARCHIVE=$enableval, USE_LIBARCHIVE=no)
+
+if test $USE_LIBARCHIVE = yes ; then
+    PKG_CHECK_MODULES([LIBARCHIVE], [libarchive])
+    AC_DEFINE([USE_LIBARCHIVE], [1], [Define if libarchive support enabled])
+fi
+
+AC_SUBST(USE_LIBARCHIVE)
+AC_SUBST(LIBARCHIVE_CFLAGS)
+AC_SUBST(LIBARCHIVE_LIBS)
+
 dnl Paths
 dnl =====
 
@@ -134,5 +150,6 @@ echo ""
 echo "  D-Bus support:                          $USE_DBUS"
 echo "  GTK+ support:                           $USE_GTK"
 echo "  Qt support:                             $USE_QT"
+echo "  libarchive support:                     $USE_LIBARCHIVE"
 echo "  Valgrind analysis support:              $enable_valgrind"
 echo ""

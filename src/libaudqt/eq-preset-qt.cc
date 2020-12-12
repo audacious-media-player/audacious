@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
 #include "treeview.h"
 
@@ -51,9 +52,14 @@ public:
 class PresetModel : public QStandardItemModel
 {
 public:
-    explicit PresetModel(QObject * parent) : QStandardItemModel(0, 1, parent) {}
+    explicit PresetModel(QObject * parent)
+        : QStandardItemModel(0, 1, parent),
+          m_orig_presets(aud_eq_read_presets("eq.preset"))
+    {
+        revert_all();
+    }
 
-    void load_all();
+    void revert_all();
     void save_all();
 
     QModelIndex add_preset(const EqualizerPreset & preset);
@@ -75,15 +81,15 @@ public:
     }
 
 private:
+    Index<EqualizerPreset> const m_orig_presets;
     bool m_changed = false;
 };
 
-void PresetModel::load_all()
+void PresetModel::revert_all()
 {
     clear();
 
-    auto presets = aud_eq_read_presets("eq.preset");
-    for (const EqualizerPreset & preset : presets)
+    for (const EqualizerPreset & preset : m_orig_presets)
         appendRow(new PresetItem(preset));
 
     m_changed = false;
@@ -147,14 +153,16 @@ public:
     PresetView(QPushButton * export_btn) : m_export_btn(export_btn)
     {
         setEditTriggers(QTreeView::NoEditTriggers);
+        setFrameStyle(QFrame::NoFrame);
         setHeaderHidden(true);
         setIndentation(0);
         setSelectionMode(QTreeView::ExtendedSelection);
         setUniformRowHeights(true);
+        setModel(new PresetModel(this));
 
-        auto pmodel = new PresetModel(this);
-        pmodel->load_all();
-        setModel(pmodel);
+        connect(this, &QTreeView::activated, [this](const QModelIndex & index) {
+            pmodel()->apply_preset(index.row());
+        });
     }
 
     PresetModel * pmodel() const { return static_cast<PresetModel *>(model()); }
@@ -171,11 +179,6 @@ public:
     }
 
 protected:
-    void activate(const QModelIndex & index) override
-    {
-        pmodel()->apply_preset(index.row());
-    }
-
     void selectionChanged(const QItemSelection & selected,
                           const QItemSelection & deselected) override
     {
@@ -248,7 +251,8 @@ static bool export_file(const char * filename, const EqualizerPreset & preset)
 
 static const char * name_filter = N_("Preset files (*.preset *.eqf *.q1)");
 
-static void show_import_dialog(QDialog * parent, PresetView * view)
+static void show_import_dialog(QWidget * parent, PresetView * view,
+                               QPushButton * revert_btn)
 {
     auto dialog = new QFileDialog(parent, _("Load Preset File"));
 
@@ -257,7 +261,7 @@ static void show_import_dialog(QDialog * parent, PresetView * view)
     dialog->setLabelText(QFileDialog::Accept, _("Load"));
     dialog->setNameFilter(_(name_filter));
 
-    QObject::connect(dialog, &QFileDialog::accepted, [dialog, view]() {
+    auto do_import = [dialog, view, revert_btn]() {
         auto urls = dialog->selectedUrls();
         if (urls.size() != 1)
             return;
@@ -268,6 +272,8 @@ static void show_import_dialog(QDialog * parent, PresetView * view)
         if (presets.len())
         {
             view->add_imported(presets);
+            view->pmodel()->save_all();
+            revert_btn->setEnabled(true);
             dialog->deleteLater();
         }
         else
@@ -275,12 +281,14 @@ static void show_import_dialog(QDialog * parent, PresetView * view)
             aud_ui_show_error(
                 str_printf(_("Error loading %s."), filename.constData()));
         }
-    });
+    };
+
+    QObject::connect(dialog, &QFileDialog::accepted, do_import);
 
     window_bring_to_front(dialog);
 }
 
-static void show_export_dialog(QDialog * parent, const EqualizerPreset & preset)
+static void show_export_dialog(QWidget * parent, const EqualizerPreset & preset)
 {
     auto dialog = new QFileDialog(parent, _("Save Preset File"));
 
@@ -312,12 +320,9 @@ static void show_export_dialog(QDialog * parent, const EqualizerPreset & preset)
     window_bring_to_front(dialog);
 }
 
-static QDialog * create_preset_win()
+static QWidget * create_preset_win()
 {
-    auto win = new QDialog;
-    win->setAttribute(Qt::WA_DeleteOnClose);
-    win->setWindowTitle(_("Equalizer Presets"));
-    win->setContentsMargins(margins.TwoPt);
+    auto win = new QWidget;
 
     auto edit = new QLineEdit;
     auto save_btn = new QPushButton(_("Save Preset"));
@@ -325,6 +330,7 @@ static QDialog * create_preset_win()
     save_btn->setDisabled(true);
 
     auto hbox = make_hbox(nullptr);
+    hbox->setContentsMargins(margins.TwoPt);
     hbox->addWidget(edit);
     hbox->addWidget(save_btn);
 
@@ -336,28 +342,21 @@ static QDialog * create_preset_win()
 
     auto view = new PresetView(export_btn);
 
-    auto hbox2 = make_hbox(nullptr);
-    hbox2->addWidget(import_btn);
-    hbox2->addWidget(export_btn);
-    hbox2->addStretch(1);
-
-    auto revert_btn = new QPushButton(_("Revert Changes"));
+    auto revert_btn = new QPushButton(_("Revert"));
     revert_btn->setIcon(get_icon("edit-undo"));
     revert_btn->setDisabled(true);
 
-    auto close_btn = new QPushButton(_("Close"));
-    close_btn->setIcon(get_icon("window-close"));
+    auto hbox2 = make_hbox(nullptr);
+    hbox2->setContentsMargins(margins.TwoPt);
+    hbox2->addWidget(revert_btn);
+    hbox2->addStretch(1);
+    hbox2->addWidget(import_btn);
+    hbox2->addWidget(export_btn);
 
-    auto hbox3 = make_hbox(nullptr);
-    hbox3->addWidget(revert_btn);
-    hbox3->addStretch(1);
-    hbox3->addWidget(close_btn);
-
-    auto vbox = make_vbox(win);
+    auto vbox = make_vbox(win, 0);
     vbox->addLayout(hbox);
     vbox->addWidget(view);
     vbox->addLayout(hbox2);
-    vbox->addLayout(hbox3);
 
     auto pmodel = view->pmodel();
 
@@ -370,11 +369,14 @@ static QDialog * create_preset_win()
                      [view, pmodel, edit, revert_btn]() {
                          auto added = pmodel->add_preset(edit->text().toUtf8());
                          view->setCurrentIndex(added);
+                         pmodel->save_all();
                          revert_btn->setDisabled(false);
                      });
 
     QObject::connect(import_btn, &QPushButton::clicked,
-                     [win, view]() { show_import_dialog(win, view); });
+                     [win, view, revert_btn]() {
+                         show_import_dialog(win, view, revert_btn);
+                     });
 
     QObject::connect(export_btn, &QPushButton::clicked, [win, view]() {
         auto preset = view->preset_for_export();
@@ -382,33 +384,25 @@ static QDialog * create_preset_win()
             show_export_dialog(win, *preset);
     });
 
-    QObject::connect(pmodel, &PresetModel::rowsRemoved,
-                     [revert_btn]() { revert_btn->setDisabled(false); });
-
-    QObject::connect(revert_btn, &QPushButton::clicked, [pmodel, revert_btn]() {
-        pmodel->load_all();
-        revert_btn->setDisabled(true);
+    QObject::connect(pmodel, &PresetModel::rowsRemoved, [pmodel, revert_btn]() {
+        pmodel->save_all();
+        revert_btn->setDisabled(false);
     });
 
-    QObject::connect(close_btn, &QPushButton::clicked, win,
-                     &QObject::deleteLater);
-
-    QObject::connect(win, &QObject::destroyed,
-                     [pmodel]() { pmodel->save_all(); });
+    QObject::connect(revert_btn, &QPushButton::clicked, [pmodel, revert_btn]() {
+        pmodel->revert_all();
+        pmodel->save_all();
+        revert_btn->setDisabled(true);
+    });
 
     return win;
 }
 
-static QPointer<QDialog> s_preset_win;
-
 EXPORT void eq_presets_show()
 {
-    if (!s_preset_win)
-        s_preset_win = create_preset_win();
-
-    window_bring_to_front(s_preset_win);
+    dock_show_simple("eq_presets", _("Equalizer Presets"), create_preset_win);
 }
 
-EXPORT void eq_presets_hide() { delete s_preset_win; }
+EXPORT void eq_presets_hide() { dock_hide_simple("eq_presets"); }
 
 } // namespace audqt

@@ -20,12 +20,13 @@
 #ifndef LIBAUDCORE_TINYLOCK_H
 #define LIBAUDCORE_TINYLOCK_H
 
+#ifndef LIBAUDCORE_BUILD
+#warning tinylock.h is deprecated (use threads.h instead)
+#endif
+
 /*
  * TinyLock is an extremely low-overhead lock object (in terms of speed and
  * memory usage).  It makes no guarantees of fair scheduling, however.
- *
- * Consider using the aud::spinlock wrapper class from threads.h rather than
- * using this API directly.
  */
 
 typedef char TinyLock;

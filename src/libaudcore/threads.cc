@@ -1,6 +1,6 @@
 /*
- * main.h
- * Copyright 2011-2013 John Lindgren
+ * threads.cc
+ * Copyright 2020 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,24 +17,18 @@
  * the use of this software.
  */
 
-#ifndef _AUDACIOUS_MAIN_H
-#define _AUDACIOUS_MAIN_H
+#include "threads.h"
+#include "tinylock.h"
 
-#include <libaudcore/objects.h>
+namespace aud
+{
 
-/* dbus-server.c */
-#ifdef USE_DBUS
+EXPORT void spinlock::lock() { tiny_lock(&m_lock); }
+EXPORT void spinlock::unlock() { tiny_unlock(&m_lock); }
 
-StringBuf dbus_server_name();
-bool dbus_server_init();
-void dbus_server_cleanup();
+EXPORT void spinlock_rw::lock_r() { tiny_lock_read(&m_lock); }
+EXPORT void spinlock_rw::unlock_r() { tiny_unlock_read(&m_lock); }
+EXPORT void spinlock_rw::lock_w() { tiny_lock_write(&m_lock); }
+EXPORT void spinlock_rw::unlock_w() { tiny_unlock_write(&m_lock); }
 
-#endif
-
-/* signals.c */
-#ifdef HAVE_SIGWAIT
-void signals_init_one();
-void signals_init_two();
-#endif
-
-#endif
+} // namespace aud

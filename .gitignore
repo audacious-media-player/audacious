@@ -27,10 +27,12 @@ win32/override/README.txt
 *.a
 *.diff
 *.dll
+*.dep
 *.dylib
 *.exe
 *.gcda
 *.gcno
+*.gcov
 *.mo
 *.moc
 *.o

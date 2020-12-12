@@ -42,6 +42,7 @@ static const char * const core_defaults[] = {
     "recurse_folders", "TRUE",
     "resume_playback_on_startup", "TRUE",
     "show_interface", "TRUE",
+    "use_qt", "TRUE",
 
     /* equalizer */
     "eqpreset_default_file", "",
@@ -400,6 +401,7 @@ EXPORT bool aud_get_bool(const char * section, const char * name)
 
 EXPORT void aud_toggle_bool(const char * section, const char * name)
 {
+    // FIXME: not thread-safe
     aud_set_bool(section, name, !aud_get_bool(section, name));
 }
 

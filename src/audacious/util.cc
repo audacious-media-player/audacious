@@ -22,27 +22,56 @@
 #ifdef _WIN32
 #include <windows.h>
 
+#include <new>
+#include <string>
+
 #ifdef WORDS_BIGENDIAN
 #define UTF16_NATIVE "UTF-16BE"
 #else
 #define UTF16_NATIVE "UTF-16LE"
 #endif
 
-Index<String> get_argv_utf8 ()
+static wchar_t ** get_argvw(int * argc)
 {
-    int argc;
-    wchar_t * combined = GetCommandLineW ();
-    wchar_t * * split = CommandLineToArgvW (combined, & argc);
+    wchar_t * cmdline = GetCommandLineW();
+    wchar_t ** argvw = CommandLineToArgvW(cmdline, argc);
+    if (!argvw)
+        throw std::bad_alloc();
+
+    return argvw;
+}
+
+Index<String> get_argv_utf8()
+{
+    int argc = 0;
+    auto argvw = get_argvw(&argc);
 
     Index<String> argv;
-    argv.insert (0, argc);
+    argv.insert(0, argc);
 
-    for (int i = 0; i < argc; i ++)
-        argv[i] = String (str_convert ((char *) split[i],
-         wcslen (split[i]) * sizeof (wchar_t), UTF16_NATIVE, "UTF-8"));
+    for (int i = 0; i < argc; i++)
+        argv[i] = String(str_convert((char *)argvw[i],
+                                     wcslen(argvw[i]) * sizeof(wchar_t),
+                                     UTF16_NATIVE, "UTF-8"));
 
-    LocalFree (split);
+    LocalFree(argvw);
     return argv;
+}
+
+int exec_argv0()
+{
+    int argc = 0;
+    auto argvw = get_argvw(&argc);
+
+    std::wstring quoted = L"\"";
+    quoted.append(argvw[0]);
+    quoted.append(L"\"");
+
+    _wexeclp(argvw[0], quoted.c_str(), (wchar_t*)NULL);
+
+    /* should not get here */
+    LocalFree(argvw);
+    return -1;
 }
 
 #endif

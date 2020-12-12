@@ -25,116 +25,104 @@
 #include <stdio.h>
 #include <string.h>
 
-static bool use_qt = false;
-
-MainloopType aud_get_mainloop_type ()
-{
-    return use_qt ? MainloopType::Qt : MainloopType::GLib;
-}
-
 static QueuedFunc counters[70];
 static QueuedFunc timer, delayed;
 
 static int count;
 static std::thread::id main_thread;
 
-static void never_called (void * data)
+static void never_called(void * data)
 {
     bool called = true;
-    assert (! called);
+    assert(!called);
 }
 
-static void count_up (void * data)
+static void count_up(void * data)
 {
-    assert (std::this_thread::get_id () == main_thread);
+    assert(std::this_thread::get_id() == main_thread);
 
     // check that idle calls are run in the same order they were queued
-    assert (count == (int) (size_t) data);
+    assert(count == (int)(size_t)data);
 
-    if (! (count % 10))
-        printf ("UP: ");
+    if (!(count % 10))
+        printf("UP: ");
 
-    count ++;
+    count++;
 
-    printf ("%d%c", count, (count % 10) ? ' ' : '\n');
+    printf("%d%c", count, (count % 10) ? ' ' : '\n');
 }
 
-static void count_down (void * data)
+static void count_down(void * data)
 {
-    assert (std::this_thread::get_id () == main_thread);
-    assert (data == & count);
+    assert(std::this_thread::get_id() == main_thread);
+    assert(data == &count);
 
     // check that the timer reports being started
-    assert (timer.running ());
+    assert(timer.running());
 
     count -= 10;
 
-    printf ("DOWN: %d\n", count);
+    printf("DOWN: %d\n", count);
 
-    if (! count)
+    if (!count)
     {
         // stop the timer
         // queue up an idle call so it's pending at shutdown
         // initiate the shutdown sequence
-        timer.queue (never_called, nullptr);
-        QueuedFunc::inhibit_all ();
-        mainloop_quit ();
+        timer.queue(never_called, nullptr);
+        QueuedFunc::inhibit_all();
+        mainloop_quit();
     }
 }
 
-static void check_count (void * data)
+static void check_count(void * data)
 {
-    assert (std::this_thread::get_id () == main_thread);
+    assert(std::this_thread::get_id() == main_thread);
 
     // check relative timing of 10 Hz timer and 250 ms delayed call
-    assert (count == (int) (size_t) data);
+    assert(count == (int)(size_t)data);
 
-    printf ("CHECK: %d\n", count);
+    printf("CHECK: %d\n", count);
 }
 
-static void worker ()
+static void worker()
 {
     // queue some more idle calls from a secondary thread
-    for (int i = 50; i < 70; i ++)
-        counters[i].queue (count_up, (void *) (size_t) (i - 10));
+    for (int i = 50; i < 70; i++)
+        counters[i].queue(count_up, (void *)(size_t)(i - 10));
 
     // queue up a delayed call that should only be called once
-    delayed.queue (250, check_count, (void *) (size_t) 40);
+    delayed.queue(250, check_count, (void *)(size_t)40);
 }
 
-int main (int argc, const char * * argv)
+void test_mainloop()
 {
-    if (argc >= 2 && ! strcmp (argv[1], "--qt"))
-        use_qt = true;
-
-    main_thread = std::this_thread::get_id ();
+    main_thread = std::this_thread::get_id();
 
     // queue up a bunch of idle calls
-    for (int i = 0; i < 50; i ++)
-        counters[i].queue (count_up, (void *) (size_t) (i - 30));
+    for (int i = 0; i < 50; i++)
+        counters[i].queue(count_up, (void *)(size_t)(i - 30));
 
     // stop some of them
-    for (int i = 10; i < 30; i ++)
-        counters[i].stop ();
+    for (int i = 10; i < 30; i++)
+        counters[i].stop();
 
     // restart some that were stopped and some that weren't
-    for (int i = 0; i < 20; i ++)
-        counters[i].queue (count_up, (void *) (size_t) (20 + i));
+    for (int i = 0; i < 20; i++)
+        counters[i].queue(count_up, (void *)(size_t)(20 + i));
 
     // start a countdown timer at 10 Hz
-    timer.start (100, count_down, & count);
+    timer.start(100, count_down, &count);
 
     // queue up a call and then immediately delete the QueuedFunc
-    QueuedFunc ().queue (never_called, nullptr);
+    QueuedFunc().queue(never_called, nullptr);
 
-    auto thread = std::thread (worker);
+    auto thread = std::thread(worker);
 
-    mainloop_run ();
+    mainloop_run();
 
-    thread.join ();
+    thread.join();
 
     // check that the timer reports being stopped
-    assert (! timer.running ());
-
-    return 0;
+    assert(!timer.running());
 }

@@ -45,6 +45,7 @@ libaudcore_sources = [
   'scanner.cc',
   'stringbuf.cc',
   'strpool.cc',
+  'threads.cc',
   'tinylock.cc',
   'timer.cc',
   'tuple.cc',
@@ -124,7 +125,7 @@ libaudcore_lib = library('audcore',
   include_directories: src_inc,
   dependencies: libaudcore_deps,
   link_with: libguess_lib,
-  version: '5.1.0',
+  version: '5.3.0',
   soversion: '5',
   install: true
 )

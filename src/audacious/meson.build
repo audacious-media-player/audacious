@@ -1,4 +1,4 @@
-audacious_deps = [glib_dep]
+audacious_deps = [glib_dep, thread_dep]
 audacious_libs = [libaudcore_lib]
 
 audacious_sources = [

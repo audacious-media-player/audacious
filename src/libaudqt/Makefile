@@ -1,11 +1,12 @@
 SHARED_LIB = ${LIB_PREFIX}audqt${LIB_SUFFIX}
 LIB_MAJOR = 2
-LIB_MINOR = 2
+LIB_MINOR = 3
 
 SRCS = about-qt.cc \
        art-qt.cc \
        audqt.cc \
        colorbutton.cc \
+       dock.cc \
        eq-preset-qt.cc \
        equalizer-qt.cc \
        file-entry.cc \
@@ -31,6 +32,7 @@ SRCS = about-qt.cc \
        volumebutton.cc
 
 INCLUDES = colorbutton.h \
+           dock.h \
            export.h \
            iface.h \
            info-widget.h \

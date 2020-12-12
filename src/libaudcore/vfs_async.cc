@@ -41,7 +41,7 @@ static QueuedFunc queued_func;
 static List<QueuedData> queue;
 static aud::mutex mutex;
 
-static void send_data(void *)
+static void send_data()
 {
     auto mh = mutex.take();
 
@@ -69,7 +69,7 @@ static void read_worker(QueuedData * data)
     auto mh = mutex.take();
 
     if (!queue.head())
-        queued_func.queue(send_data, nullptr);
+        queued_func.queue(send_data);
 
     queue.append(data);
 }
@@ -84,10 +84,6 @@ EXPORT void vfs_async_file_get_contents(const char * filename,
 EXPORT void vfs_async_file_get_contents(const char * filename,
                                         VFSConsumer cons_f, void * user)
 {
-    auto functor = [cons_f, user](const char * filename,
-                                  const Index<char> & buf) {
-        cons_f(filename, buf, user);
-    };
-
-    vfs_async_file_get_contents(filename, functor);
+    using namespace std::placeholders;
+    vfs_async_file_get_contents(filename, std::bind(cons_f, _1, _2, user));
 }

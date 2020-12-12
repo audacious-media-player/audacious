@@ -1,6 +1,7 @@
 project('audacious', 'c', 'cpp',
         version: '4.1-devel',
-        meson_version: '>= 0.50')
+        meson_version: '>= 0.50',
+        default_options: ['c_std=gnu99', 'cpp_std=gnu++11'])
 
 
 copyright = 'Copyright (C) 2001-2020 Audacious developers and others'
@@ -13,6 +14,7 @@ gnome = import('gnome')
 glib_req = '>= 2.32'
 glib_dep = dependency('glib-2.0', version: glib_req, required: true)
 gmodule_dep = dependency('gmodule-2.0', version: glib_req, required: true)
+thread_dep = dependency('threads', required: true)
 
 
 if get_option('qt')
@@ -32,9 +34,7 @@ cxx = meson.get_compiler('cpp')
 
 if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
   common_flags = [
-    '-pipe',
     '-ffast-math',
-    '-Wall',
     '-Wtype-limits',
     '-Wno-stringop-truncation'
   ]
@@ -44,8 +44,8 @@ if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
     '-Woverloaded-virtual'
   ]
 
-  check_cflags = ['-std=gnu99'] + common_flags
-  check_cxxflags = ['-std=gnu++11'] + common_flags + cxx_flags
+  check_cflags = common_flags
+  check_cxxflags = common_flags + cxx_flags
 
   foreach arg : check_cflags
     if cc.has_argument(arg)
@@ -62,7 +62,7 @@ endif
 
 
 conf = configuration_data()
-conf.set_quoted('BUILDSTAMP', '???')
+conf.set_quoted('BUILDSTAMP', get_option('buildstamp'))
 conf.set_quoted('COPYRIGHT', copyright)
 conf.set_quoted('PACKAGE', meson.project_name())
 conf.set_quoted('VERSION', meson.project_version())

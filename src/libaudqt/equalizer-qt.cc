@@ -18,7 +18,6 @@
  */
 
 #include <QCheckBox>
-#include <QDialog>
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -34,7 +33,11 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
+
+namespace audqt
+{
 
 class VLabel : public QLabel
 {
@@ -63,7 +66,7 @@ public:
 
         QRect box(-height(), 0, height(), width());
         style()->drawItemText(&p, box, (int)alignment(), palette(), isEnabled(),
-                              text(), QPalette::Foreground);
+                              text(), QPalette::WindowText);
     }
 };
 
@@ -93,7 +96,7 @@ public:
     }
 };
 
-class EqualizerWindow : public QDialog
+class EqualizerWindow : public QWidget
 {
 public:
     EqualizerWindow();
@@ -107,8 +110,8 @@ private:
     void updatePreamp();
     void updateBands();
 
-    const HookReceiver<EqualizerWindow> hook1{"set equalizer_active", this,
-                                              &EqualizerWindow::updateActive},
+    const HookReceiver<EqualizerWindow> //
+        hook1{"set equalizer_active", this, &EqualizerWindow::updateActive},
         hook2{"set equalizer_preamp", this, &EqualizerWindow::updatePreamp},
         hook3{"set equalizer_bands", this, &EqualizerWindow::updateBands};
 };
@@ -151,8 +154,7 @@ EqualizerWindow::EqualizerWindow()
     layout->addLayout(hbox);
     layout->addWidget(slider_container);
 
-    setWindowTitle(_("Equalizer"));
-    setContentsMargins(audqt::margins.EightPt);
+    setContentsMargins(audqt::margins.TwoPt);
 
     m_onoff_checkbox.setFocus();
 
@@ -199,22 +201,12 @@ void EqualizerWindow::updateBands()
         m_sliders[i]->slider.setValue(values[i]);
 }
 
-static QPointer<EqualizerWindow> s_equalizer;
-
-namespace audqt
-{
-
 EXPORT void equalizer_show()
 {
-    if (!s_equalizer)
-    {
-        s_equalizer = new EqualizerWindow;
-        s_equalizer->setAttribute(Qt::WA_DeleteOnClose);
-    }
-
-    window_bring_to_front(s_equalizer);
+    dock_show_simple("equalizer", _("Equalizer"),
+                     []() -> QWidget * { return new EqualizerWindow; });
 }
 
-EXPORT void equalizer_hide() { delete s_equalizer; }
+EXPORT void equalizer_hide() { dock_hide_simple("equalizer"); }
 
 } // namespace audqt

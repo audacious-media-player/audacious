@@ -44,7 +44,7 @@ EXPORT void Playlist::cache_selected() const
             cache.add(filename, {filename, std::move(tuple), decoder});
     }
 
-    clear_timer.queue(30000, playlist_cache_clear, nullptr);
+    clear_timer.queue(30000, playlist_cache_clear);
 }
 
 void playlist_cache_load(Index<PlaylistAddItem> & items)
@@ -70,7 +70,7 @@ void playlist_cache_load(Index<PlaylistAddItem> & items)
     }
 }
 
-void playlist_cache_clear(void *)
+void playlist_cache_clear()
 {
     auto mh = mutex.take();
 

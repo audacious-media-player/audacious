@@ -23,14 +23,15 @@
 #include <functional>
 #include <libaudcore/index.h>
 
-using VFSConsumer2 =
-    std::function<void(const char * filename, const Index<char> & buf)>;
-void vfs_async_file_get_contents(const char * filename, VFSConsumer2 cons_f);
+typedef std::function<void(const char * filename, const Index<char> & buf)>
+    VFSConsumer2;
 
-/* old version -- remove this at next hard API break */
 typedef void (*VFSConsumer)(const char * filename, const Index<char> & buf,
                             void * user);
+
+void vfs_async_file_get_contents(const char * filename, VFSConsumer2 cons_f);
+
 void vfs_async_file_get_contents(const char * filename, VFSConsumer cons_f,
-                                 void * user);
+                                 void * user) __attribute__((deprecated));
 
 #endif
