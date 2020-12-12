@@ -194,8 +194,7 @@ EXPORT void register_dock_host(DockHost * host)
 
 EXPORT void unregister_dock_host()
 {
-    if(!s_host)
-        return;
+    assert(s_host);
 
     hook_dissociate("dock plugin enabled", add_dock_plugin);
     hook_dissociate("dock plugin disabled", remove_dock_plugin);
