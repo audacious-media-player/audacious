@@ -110,8 +110,8 @@ private:
     void updatePreamp();
     void updateBands();
 
-    const HookReceiver<EqualizerWindow> hook1{"set equalizer_active", this,
-                                              &EqualizerWindow::updateActive},
+    const HookReceiver<EqualizerWindow> //
+        hook1{"set equalizer_active", this, &EqualizerWindow::updateActive},
         hook2{"set equalizer_preamp", this, &EqualizerWindow::updatePreamp},
         hook3{"set equalizer_bands", this, &EqualizerWindow::updateBands};
 };

@@ -191,8 +191,8 @@ private:
     void removeSelected();
     void update() { m_model.update(m_treeview.selectionModel()); }
 
-    const HookReceiver<QueueManager> update_hook{"playlist update", this,
-                                                 &QueueManager::update},
+    const HookReceiver<QueueManager> //
+        update_hook{"playlist update", this, &QueueManager::update},
         activate_hook{"playlist activate", this, &QueueManager::update};
 };
 
