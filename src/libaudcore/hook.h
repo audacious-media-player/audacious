@@ -112,11 +112,11 @@ void event_queue(const char * name, void * data,
  * all hook calls matching <name> are canceled. */
 void event_queue_cancel(const char * name, void * data = nullptr);
 
-template<class T, class D = void>
+template<class T, class D>
 struct HookTarget
 {
-    using Func = void (T::*const)(D);
-    static void run(T * const target, Func func, void * d)
+    using Func = void (T::*)(D);
+    static void run(T * target, Func func, void * d)
     {
         (target->*func)(aud::from_ptr<D>(d));
     }
@@ -125,8 +125,8 @@ struct HookTarget
 template<class T>
 struct HookTarget<T, void>
 {
-    using Func = void (T::*const)();
-    static void run(T * const target, Func func, void *) { (target->*func)(); }
+    using Func = void (T::*)();
+    static void run(T * target, Func func, void *) { (target->*func)(); }
 };
 
 /* Convenience wrapper for C++ classes.  Allows non-static member functions to
