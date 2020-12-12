@@ -153,3 +153,20 @@ pkg.generate(
   name: 'audacious',
   url: 'https://audacious-media-player.org'
 )
+
+
+if (meson.version().version_compare('>= 0.53'))
+  summary({
+    'Prefix': get_option('prefix'),
+    'Bin dir': get_option('bindir'),
+    'Lib dir': get_option('libdir'),
+    'Data dir': get_option('datadir'),
+  }, section: 'Directories')
+
+  summary({
+    'Qt': get_option('qt'),
+    'D-Bus': get_option('dbus'),
+    'Libarchive': get_option('libarchive'),
+    'Build stamp': get_option('buildstamp'),
+  }, section: 'Configuration')
+endif
