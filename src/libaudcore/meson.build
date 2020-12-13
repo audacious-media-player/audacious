@@ -105,6 +105,11 @@ if get_option('qt')
 endif
 
 
+if get_option('gtk')
+  libaudcore_deps += [gtk_dep]
+endif
+
+
 if get_option('libarchive')
   libaudcore_deps += [libarchive_dep]
 endif

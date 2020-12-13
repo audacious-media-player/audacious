@@ -27,6 +27,11 @@ if get_option('qt')
 endif
 
 
+if get_option('gtk')
+  subdir('libaudgui')
+endif
+
+
 if get_option('dbus')
   subdir('dbus')
   subdir('audtool')

@@ -23,6 +23,12 @@ if get_option('qt')
 endif
 
 
+if get_option('gtk')
+  gtk_req = '>= 2.24'
+  gtk_dep = dependency('gtk+-2.0', version: gtk_req, required: true)
+endif
+
+
 if get_option('libarchive')
   libarchive_dep = dependency('libarchive', required: true)
 endif
@@ -85,6 +91,13 @@ elif cc.get_id() == 'gcc' or cc.get_id() == 'clang'
 endif
 
 
+# XXX - why do we have to define this manually?
+if (cxx.has_header('libintl.h'))
+  add_project_arguments('-DHAVE_GETTEXT', language: 'c')
+  add_project_arguments('-DHAVE_GETTEXT', language: 'cpp')
+endif
+
+
 install_bindir = get_option('bindir')
 install_datadir = join_paths(get_option('datadir'), 'audacious')
 install_plugindir = join_paths(get_option('libdir'), 'audacious')
@@ -114,6 +127,11 @@ endif
 
 if get_option('qt')
   conf.set10('USE_QT', true)
+endif
+
+
+if get_option('gtk')
+  conf.set10('USE_GTK', true)
 endif
 
 
@@ -165,6 +183,7 @@ if (meson.version().version_compare('>= 0.53'))
 
   summary({
     'Qt': get_option('qt'),
+    'GTK': get_option('gtk'),
     'D-Bus': get_option('dbus'),
     'Libarchive': get_option('libarchive'),
     'Build stamp': get_option('buildstamp'),
