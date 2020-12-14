@@ -1,7 +1,11 @@
 project('audacious', 'c', 'cpp',
         version: '4.1-devel',
         meson_version: '>= 0.50',
-        default_options: ['c_std=gnu99', 'cpp_std=gnu++11'])
+        default_options: [
+          'c_std=gnu99',
+          'cpp_std=gnu++11',
+          'warning_level=1'
+        ])
 
 
 copyright = 'Copyright (C) 2001-2020 Audacious developers and others'
