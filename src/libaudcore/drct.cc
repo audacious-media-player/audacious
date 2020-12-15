@@ -100,11 +100,7 @@ static void validate_record_setting(void *, void *)
 
 void record_init()
 {
-    // when building under Meson, the plugin may be libfilewriter.so.
     auto plugin = aud_plugin_lookup_basename("filewriter");
-    if (!plugin)
-        plugin = aud_plugin_lookup_basename("libfilewriter");
-
     if (plugin && aud_plugin_get_type(plugin) == PluginType::Output)
     {
         record_plugin = plugin;
