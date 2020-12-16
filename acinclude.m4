@@ -185,7 +185,7 @@ dnl GTK+ support
 dnl =============
 
 AC_ARG_ENABLE(gtk,
- AS_HELP_STRING(--enable-gtk, [Enable GTK+ support (default=enabled)]),
+ AS_HELP_STRING(--disable-gtk, [Disable GTK+ support (default=enabled)]),
  USE_GTK=$enableval, USE_GTK=yes)
 
 if test $USE_GTK = yes ; then
