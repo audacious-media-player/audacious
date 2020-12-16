@@ -4,6 +4,7 @@
 #mesondefine COPYRIGHT
 #mesondefine EXPORT
 #mesondefine PLUGIN_SUFFIX
+#mesondefine VALGRIND_FRIENDLY
 
 #define PACKAGE_VERSION VERSION
 #define ICONV_CONST

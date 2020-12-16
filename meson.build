@@ -145,6 +145,11 @@ if get_option('libarchive')
 endif
 
 
+if get_option('valgrind')
+  conf.set10('VALGRIND_FRIENDLY', true)
+endif
+
+
 subdir('src')
 subdir('po')
 subdir('man')
@@ -152,8 +157,6 @@ subdir('images')
 
 
 install_data('AUTHORS', 'COPYING')
-
-
 install_data('audacious.desktop', install_dir: install_desktoppath)
 
 
@@ -192,5 +195,6 @@ if (meson.version().version_compare('>= 0.53'))
     'D-Bus': get_option('dbus'),
     'Libarchive': get_option('libarchive'),
     'Build stamp': get_option('buildstamp'),
+    'Valgrind support': get_option('valgrind')
   }, section: 'Configuration')
 endif

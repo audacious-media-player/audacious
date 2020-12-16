@@ -8,3 +8,5 @@ option('libarchive', type: 'boolean', value: false,
        description: 'Whether libarchive support is enabled')
 option('buildstamp', type: 'string', value: 'unknown build',
        description: 'Allows to set a custom build stamp')
+option('valgrind', type: 'boolean', value: false,
+       description: 'Whether Valgrind analysis support is enabled')
