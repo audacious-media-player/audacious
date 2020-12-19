@@ -54,3 +54,11 @@ libsidplayfp: libsidplayfp-2.0.5.tar.gz
 	tar xf libsidplayfp-2.0.5.tar.gz
 	cd libsidplayfp-2.0.5 && ./configure --prefix=$(LIB_PREFIX)
 	cd libsidplayfp-2.0.5 && $(MAKE) && $(MAKE) install
+
+libopenmpt-0.5.4+release.autotools.tar.gz:
+	wget https://lib.openmpt.org/files/libopenmpt/src/libopenmpt-0.5.4+release.autotools.tar.gz
+
+libopenmpt: libopenmpt-0.5.4+release.autotools.tar.gz
+	tar xf libopenmpt-0.5.4+release.autotools.tar.gz
+	cd libopenmpt-0.5.4+release.autotools && ./configure --prefix=$(LIB_PREFIX) --without-portaudiocpp --disable-openmpt123
+	cd libopenmpt-0.5.4+release.autotools && $(MAKE) && $(MAKE) install
