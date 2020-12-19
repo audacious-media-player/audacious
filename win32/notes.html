@@ -50,7 +50,7 @@ pacman -S mingw-w64-i686-libcue mingw-w64-i686-lame</tt></p></blockquote>
 
 <p>Install to <tt>C:\cmake</tt>.</p>
 
-<h3>Install Qt (for Qt builds)</h3>
+<h3>Install Qt</h3>
 
 <p>Download and run (choose another mirror if desired):<br>
 <a href="http://qt.mirror.constant.com/archive/online_installers/4.0/qt-unified-windows-x86-4.0.0-online.exe">
@@ -76,69 +76,15 @@ make -j4 gtk</tt></p></blockquote>
 <p><i>It may be necessary to run the MinGW shell with administrative privileges
 for GTK+ to build successfully.</i></p>
 
-<h3>Install FFmpeg</h3>
-
-<p>Download and unzip to <tt>C:\ffmpeg</tt>:<br>
-<a href="http://ffmpeg.org/releases/ffmpeg-4.2.1.tar.xz">
-<tt>http://ffmpeg.org/releases/ffmpeg-4.2.1.tar.xz</tt></a></p>
+<h3>Install additional libraries</h3>
 
 <p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/ffmpeg<br>
-./configure --prefix=/C/libs --enable-shared --disable-yasm --cpu=i686<br>
-make<br>
-make install</tt></p></blockquote>
-
-<h3>Install libmms</h3>
-
-<p>Download and unzip to <tt>C:\libmms</tt>:<br>
-<a href="http://sourceforge.net/projects/libmms/files/libmms/0.6.4/libmms-0.6.4.tar.gz/download">
-<tt>http://sourceforge.net/projects/libmms/files/libmms/0.6.4/libmms-0.6.4.tar.gz/download</tt></a></p>
-
-<p>Apply the recursive patch <tt>libmms-strndup.diff</tt>.</p>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/libmms<br>
-cp /C/msys32/usr/share/libtool/build-aux/ltmain.sh .<br>
-autoreconf<br>
-./configure --prefix=/C/libs<br>
-make<br>
-make install</tt></p></blockquote>
-
-<h3>Install libbinio</h3>
-
-<p>Download and unzip to <tt>C:\libbinio</tt>:<br>
-<a href="https://github.com/adplug/libbinio/releases/download/libbinio-1.5/libbinio-1.5.tar.bz2">
-<tt>https://github.com/adplug/libbinio/releases/download/libbinio-1.5/libbinio-1.5.tar.bz2</tt></a></p>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/libbinio<br>
-./configure --prefix=/C/libs<br>
-make<br>
-make install</tt></p></blockquote>
-
-<h3>Install adplug</h3>
-
-<p>Download and unzip to <tt>C:\adplug</tt>:<br>
-<a href="https://github.com/adplug/adplug/releases/download/adplug-2.3.1/adplug-2.3.1.tar.bz2">
-<tt>https://github.com/adplug/adplug/releases/download/adplug-2.3.1/adplug-2.3.1.tar.bz2</tt></a></p>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/adplug<br>
-./configure --prefix=/C/libs<br>
-make<br>
-make install</tt></p></blockquote>
-
-<h3>Install libsidplayfp</h3>
-
-<p>Download and unzip to <tt>C:\libsidplayfp</tt>:<br>
-<a href="https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/2.0/libsidplayfp-2.0.1.tar.gz/download">
-<tt>https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/2.0/libsidplayfp-2.0.1.tar.gz/download</tt></a></p>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/libsidplayfp<br>
-./configure --prefix=/C/libs<br>
-make<br>
-make install</tt></p></blockquote>
+<blockquote><p><tt>cd &lt;PATH TO THIS DOCUMENT&gt;<br>
+make -j4 ffmpeg<br>
+make -j4 libmms<br>
+make -j4 libbinio<br>
+make -j4 adplug<br>
+make -j4 libsidplayfp</tt></p></blockquote>
 
 <h3>Install Audacious</h3>
 
