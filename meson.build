@@ -38,6 +38,10 @@ if get_option('libarchive')
 endif
 
 
+have_darwin = host_machine.system() == 'darwin'
+have_windows = host_machine.system() == 'windows'
+
+
 cc = meson.get_compiler('c')
 cxx = meson.get_compiler('cpp')
 
@@ -78,16 +82,16 @@ endif
 
 
 # XXX - investigate to see if we can do better
-if host_machine.system() == 'windows'
+if have_windows
   conf.set_quoted('PLUGIN_SUFFIX', '.dll')
-elif host_machine.system() == 'darwin'
+elif have_darwin
   conf.set_quoted('PLUGIN_SUFFIX', '.dylib')
 else
   conf.set_quoted('PLUGIN_SUFFIX', '.so')
 endif
 
 
-if host_machine.system() == 'windows'
+if have_windows
   conf.set('EXPORT', '__declspec(dllexport)')
 elif cxx.has_argument('-fvisibility=default')
   conf.set('EXPORT', '__attribute__((visibility("default")))')
