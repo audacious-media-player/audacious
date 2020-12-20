@@ -185,7 +185,7 @@ pkg.generate(
 )
 
 
-if (meson.version().version_compare('>= 0.53'))
+if meson.version().version_compare('>= 0.53')
   summary({
     'Prefix': get_option('prefix'),
     'Bin dir': get_option('bindir'),
@@ -194,11 +194,11 @@ if (meson.version().version_compare('>= 0.53'))
   }, section: 'Directories')
 
   summary({
-    'Qt': get_option('qt'),
-    'GTK': get_option('gtk'),
-    'D-Bus': get_option('dbus'),
-    'Libarchive': get_option('libarchive'),
+    'D-Bus support': get_option('dbus'),
+    'Qt support': get_option('qt'),
+    'GTK support': get_option('gtk'),
+    'Libarchive support': get_option('libarchive'),
+    'Valgrind analysis support': get_option('valgrind'),
     'Build stamp': get_option('buildstamp'),
-    'Valgrind support': get_option('valgrind')
   }, section: 'Configuration')
 endif
