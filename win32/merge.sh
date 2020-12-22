@@ -2,20 +2,18 @@
 
 # Quick-and-dirty script for updating a Windows release folder
 
+srcdir=$(pwd)
+
 rm -rf /C/aud-win32/share/locale
 
 cd /C/aud-win32
 for i in `find -type f` ; do
-    if test -f /C/audacious/win32/override/$i ; then
-        cp /C/audacious/win32/override/$i $i
-    elif test -f /C/msys32/mingw32/$i ; then
-        cp /C/msys32/mingw32/$i $i
-    elif test -f /C/Qt/5.15.2/mingw81_32/$i ; then
-        cp /C/Qt/5.15.2/mingw81_32/$i $i
-    elif test -f /C/Qt/5.15.2/mingw81_32/plugins/${i#"./bin/"} ; then
-        cp /C/Qt/5.15.2/mingw81_32/plugins/${i#"./bin/"} $i
-    elif test -f /C/GTK/$i ; then
-        cp /C/GTK/$i $i
+    if test -f ${srcdir}/override/$i ; then
+        cp ${srcdir}/override/$i $i
+    elif test -f /C/msys64/mingw32/$i ; then
+        cp /C/msys64/mingw32/$i $i
+    elif test -f /C/msys64/mingw32/share/qt5/plugins/${i#"./bin/"} ; then
+        cp /C/msys64/mingw32/share/qt5/plugins/${i#"./bin/"} $i
     elif test -f /C/libs/$i ; then
         cp /C/libs/$i $i
     elif test -f /C/aud/$i ; then
@@ -28,7 +26,7 @@ done
 for i in `find -name *.dll` ; do strip -s $i ; done
 for i in `find -name *.exe` ; do strip -s $i ; done
 
-cd /C/GTK
+cd /C/libs
 for i in `find ./share/locale -name gtk20.mo` ; do
     mkdir -p /C/aud-win32/${i%%/gtk20.mo}
     cp $i /C/aud-win32/$i

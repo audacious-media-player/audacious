@@ -70,9 +70,8 @@ Section "Audacious" InstallSection
   SetOutPath "$INSTDIR\bin"
   File /r "${BUILDDIR}\bin\*.*"
 
+  ; etc was used in previous versions
   RMDir /r "$INSTDIR\etc"
-  SetOutPath "$INSTDIR\etc"
-  File /r "${BUILDDIR}\etc\*.*"
 
   RMDir /r "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
