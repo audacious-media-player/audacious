@@ -374,7 +374,10 @@ EXPORT void mainloop_run()
         static int dummy_argc = 1;
         static char * dummy_argv[] = {app_name, nullptr};
 
-        QCoreApplication(dummy_argc, dummy_argv).exec();
+        if (qApp) // did audqt create a QApplication already?
+            qApp->exec();
+        else
+            QCoreApplication(dummy_argc, dummy_argv).exec();
     }
     else
 #endif

@@ -631,7 +631,10 @@ PrefsWindow::PrefsWindow()
     s_category_notebook = new QStackedWidget;
     child_vbox->addWidget(s_category_notebook);
 
-    create_category(s_category_notebook, appearance_page_widgets);
+    bool headless = aud_get_headless_mode();
+    if(!headless)
+        create_category(s_category_notebook, appearance_page_widgets);
+
     create_category(s_category_notebook, audio_page_widgets);
     create_category(s_category_notebook, connectivity_page_widgets);
     create_category(s_category_notebook, playlist_page_widgets);
@@ -648,13 +651,17 @@ PrefsWindow::PrefsWindow()
 
     for (int i = 0; i < CATEGORY_COUNT; i++)
     {
+        if (headless && i == CATEGORY_APPEARANCE)
+            continue;
+
         auto a = new QAction(get_icon(categories[i].icon),
                              translate_str(categories[i].name), toolbar);
 
         toolbar->addAction(a);
 
+        int j = (headless ? i - 1 : i);
         connect(a, &QAction::triggered,
-                [i]() { s_category_notebook->setCurrentIndex(i); });
+                [j]() { s_category_notebook->setCurrentIndex(j); });
     }
 
     output_setup();
