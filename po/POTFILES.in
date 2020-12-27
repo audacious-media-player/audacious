@@ -33,8 +33,11 @@ src/libaudgui/url-opener.cc
 src/libaudgui/util.cc
 src/libaudqt/about-qt.cc
 src/libaudqt/audqt.cc
+src/libaudqt/eq-preset-qt.cc
 src/libaudqt/equalizer-qt.cc
+src/libaudqt/file-entry.cc
 src/libaudqt/fileopener.cc
+src/libaudqt/font-entry.cc
 src/libaudqt/infopopup-qt.cc
 src/libaudqt/info-widget.cc
 src/libaudqt/infowin-qt.cc
@@ -43,6 +46,7 @@ src/libaudqt/playlist-management.cc
 src/libaudqt/plugin-menu-qt.cc
 src/libaudqt/prefs-plugin.cc
 src/libaudqt/prefs-pluginlist-model.cc
+src/libaudqt/prefs-widget-qt.cc
 src/libaudqt/prefs-window-qt.cc
 src/libaudqt/queue-manager-qt.cc
 src/libaudqt/url-opener-qt.cc
