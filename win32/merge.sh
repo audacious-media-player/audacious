@@ -2,7 +2,7 @@
 
 # Quick-and-dirty script for updating a Windows release folder
 
-srcdir=$(pwd)
+srcdir=$(dirname "$(readlink -f "$0")")
 
 rm -rf /C/aud-win32/share/locale
 
