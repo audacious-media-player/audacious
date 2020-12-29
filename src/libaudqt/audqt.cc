@@ -70,6 +70,9 @@ EXPORT void init()
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     qapp->setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles);
 #endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    qapp->setAttribute(Qt::AA_DisableWindowContextHelpButton);
+#endif
 
     qapp->setApplicationName(_("Audacious"));
     if (qapp->windowIcon().isNull())
