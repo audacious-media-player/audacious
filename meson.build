@@ -8,7 +8,7 @@ project('audacious', 'c', 'cpp',
         ])
 
 
-copyright = 'Copyright (C) 2001-2020 Audacious developers and others'
+copyright = 'Copyright (C) 2001-2021 Audacious developers and others'
 
 
 qt5 = import('qt5')
