@@ -28,8 +28,8 @@ endif
 
 
 if get_option('gtk')
-  gtk_req = '>= 2.24'
-  gtk_dep = dependency('gtk+-2.0', version: gtk_req, required: true)
+  gtk_req = '>= 3.4'
+  gtk_dep = dependency('gtk+-3.0', version: gtk_req, required: true)
 endif
 
 
