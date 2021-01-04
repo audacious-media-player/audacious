@@ -40,6 +40,7 @@ LOCALES = ar.po \
 	  ru.po \
 	  si.po \
 	  sk.po \
+	  sl.po \
 	  sr.po \
 	  sr_RS.po \
 	  sv.po \

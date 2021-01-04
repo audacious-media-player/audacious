@@ -1,108 +1,115 @@
 # English (United Kingdom) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
-# Andi Chandler <andi@gowling.com>, 2013,2015-2018
+# Andi Chandler <andi@gowling.com>, 2013,2015-2018,2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2020-01-26 13:17+0100\n"
-"PO-Revision-Date: 2020-01-26 12:21+0000\n"
+"POT-Creation-Date: 2020-12-27 18:05+0100\n"
+"PO-Revision-Date: 2020-12-07 15:13+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
-"Language-Team: English (United Kingdom) (http://www.transifex.com/audacious/audacious/language/en_GB/)\n"
+"Language-Team: English (United Kingdom) (http://www.transifex.com/audacious/"
+"audacious/language/en_GB/)\n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:72
 msgid "Show command-line help"
 msgstr "Show command-line help"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:73
 msgid "Show version"
 msgstr "Show version"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:74
 msgid "Start playback"
 msgstr "Start playback"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:75
 msgid "Pause playback"
 msgstr "Pause playback"
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:77
 msgid "Pause if playing, play otherwise"
 msgstr "Pause if playing, play otherwise"
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:78
 msgid "Stop playback"
 msgstr "Stop playback"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:79
 msgid "Skip to previous song"
 msgstr "Skip to previous song"
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:80
 msgid "Skip to next song"
 msgstr "Skip to next song"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:81
 msgid "Add files to the playlist"
 msgstr "Add files to the playlist"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:83
 msgid "Add files to a temporary playlist"
 msgstr "Add files to a temporary playlist"
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:84
 msgid "Display the main window"
 msgstr "Display the main window"
 
-#: src/audacious/main.cc:76
+#: src/audacious/main.cc:86
 msgid "Display the jump-to-song window"
 msgstr "Display the jump-to-song window"
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:88
 msgid "Start without a graphical interface"
 msgstr "Start without a graphical interface"
 
-#: src/audacious/main.cc:78
+#: src/audacious/main.cc:90
 msgid "Quit on playback stop"
 msgstr "Quit on playback stop"
 
-#: src/audacious/main.cc:79
+#: src/audacious/main.cc:92
 msgid "Print debugging messages (may be used twice)"
 msgstr "Print debugging messages (may be used twice)"
 
-#: src/audacious/main.cc:81
+#: src/audacious/main.cc:94
 msgid "Run in GTK mode"
-msgstr ""
+msgstr "Run in GTK mode"
 
-#: src/audacious/main.cc:138
+#: src/audacious/main.cc:95
+msgid "Run in Qt mode"
+msgstr "Run in Qt mode"
+
+#: src/audacious/main.cc:152
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Unknown option: %s\n"
 
-#: src/audacious/main.cc:160
+#: src/audacious/main.cc:174
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Unknown option: -%c\n"
 
-#: src/audacious/main.cc:184
+#: src/audacious/main.cc:204
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
-msgstr "Usage: audacious [OPTION] ... [FILE] ...\n\n"
+msgstr ""
+"Usage: audacious [OPTION] ... [FILE] ...\n"
+"\n"
 
-#: src/audacious/main.cc:185
+#: src/audacious/main.cc:206
 msgid "Select instance to run/control"
 msgstr "Select instance to run/control"
 
-#: src/audacious/main.cc:365 src/libaudqt/audqt.cc:64
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:74
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -113,22 +120,24 @@ msgid_plural "%d files found"
 msgstr[0] "%d file found"
 msgstr[1] "%d files found"
 
-#: src/libaudcore/adder.cc:320 src/libaudcore/adder.cc:402
+#: src/libaudcore/adder.cc:320 src/libaudcore/adder.cc:404
 #, c-format
 msgid ""
 "Error reading %s:\n"
 "%s"
-msgstr "Error reading %s:\n%s"
+msgstr ""
+"Error reading %s:\n"
+"%s"
 
-#: src/libaudcore/adder.cc:454
+#: src/libaudcore/adder.cc:456
 msgid "No files found."
 msgstr "No files found."
 
-#: src/libaudcore/adder.cc:476 src/libaudcore/playlist.cc:81
+#: src/libaudcore/adder.cc:478 src/libaudcore/playlist.cc:81
 msgid "New Playlist"
 msgstr "New Playlist"
 
-#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:524
+#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:526
 msgid "Standard input"
 msgstr "Standard input"
 
@@ -137,14 +146,15 @@ msgstr "Standard input"
 msgid "Audio CD, track %s"
 msgstr "Audio CD, track %s"
 
-#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:500
+#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:502
 msgid "(character encoding error)"
 msgstr "(character encoding error)"
 
 #: src/libaudcore/drct.cc:96
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
-msgstr "Stream recording must be configured in Audio Settings before it can be used."
+msgstr ""
+"Stream recording must be configured in Audio Settings before it can be used."
 
 #: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
@@ -159,7 +169,9 @@ msgstr "Error recording output stream"
 msgid ""
 "Error playing %s:\n"
 "%s"
-msgstr "Error playing %s:\n%s"
+msgstr ""
+"Error playing %s:\n"
+"%s"
 
 #: src/libaudcore/playback.cc:510
 msgid "Invalid audio format"
@@ -170,14 +182,16 @@ msgid "Now Playing"
 msgstr "Now Playing"
 
 #: src/libaudcore/playlist-files.cc:73 src/libaudcore/playlist-files.cc:153
-#: src/libaudgui/infowin.cc:509 src/libaudqt/infowin-qt.cc:248
+#: src/libaudgui/infowin.cc:509 src/libaudqt/infowin-qt.cc:246
 #, c-format
 msgid ""
 "Error opening %s:\n"
 "%s"
-msgstr "Error opening %s:\n%s"
+msgstr ""
+"Error opening %s:\n"
+"%s"
 
-#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:276
+#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:282
 #, c-format
 msgid "Error loading %s."
 msgstr "Error loading %s."
@@ -187,10 +201,10 @@ msgstr "Error loading %s."
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "Cannot load %s: unsupported file name extension."
 
-#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:309
+#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:317
 #, c-format
 msgid "Error saving %s."
-msgstr ""
+msgstr "Error saving %s."
 
 #: src/libaudcore/playlist-files.cc:167
 #, c-format
@@ -213,31 +227,31 @@ msgstr "File format not recognised"
 msgid "Error reading metadata"
 msgstr "Error reading metadata"
 
-#: src/libaudcore/tuple.cc:558
+#: src/libaudcore/tuple.cc:560
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.cc:560
+#: src/libaudcore/tuple.cc:562
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.cc:563
+#: src/libaudcore/tuple.cc:565
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d channel"
 msgstr[1] "%d channels"
 
-#: src/libaudcore/tuple.cc:777
+#: src/libaudcore/tuple.cc:783
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: src/libaudcore/tuple.cc:861
+#: src/libaudcore/tuple.cc:867
 #, c-format
 msgid "Track %d"
 msgstr "Track %d"
 
-#: src/libaudcore/tuple.cc:867
+#: src/libaudcore/tuple.cc:873
 msgid "(unknown title)"
 msgstr "(unknown title)"
 
@@ -254,15 +268,15 @@ msgstr "Invalid file name"
 msgid "Invalid access mode"
 msgstr "Invalid access mode"
 
-#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:36
+#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:37
 msgid "Credits"
 msgstr "Credits"
 
-#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:36
+#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:37
 msgid "License"
 msgstr "Licence"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about-qt.cc:63
+#: src/libaudgui/about.cc:72 src/libaudqt/about-qt.cc:64
 msgid "About Audacious"
 msgstr "About Audacious"
 
@@ -270,8 +284,8 @@ msgstr "About Audacious"
 #: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
 #: src/libaudgui/plugin-prefs.cc:160 src/libaudgui/url-opener.cc:101
 #: src/libaudqt/playlist-management.cc:41
-#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:136
-#: src/libaudqt/url-opener-qt.cc:79
+#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:140
+#: src/libaudqt/url-opener-qt.cc:80
 msgid "_Cancel"
 msgstr "_Cancel"
 
@@ -306,7 +320,7 @@ msgstr "Rename Playlist"
 
 #: src/libaudgui/eq-preset.cc:153
 msgid "Please select one preset to export."
-msgstr ""
+msgstr "Please select one preset to export."
 
 #: src/libaudgui/eq-preset.cc:256 src/libaudgui/eq-preset.cc:261
 msgid "Preset File ..."
@@ -316,21 +330,21 @@ msgstr "Preset File ..."
 msgid "EQF File ..."
 msgstr "EQF File ..."
 
-#: src/libaudgui/eq-preset.cc:266 src/libaudqt/eq-preset-qt.cc:331
-#: src/libaudqt/fileopener.cc:63
+#: src/libaudgui/eq-preset.cc:266 src/libaudqt/eq-preset-qt.cc:337
+#: src/libaudqt/fileopener.cc:64
 msgid "Import"
 msgstr "Import"
 
-#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:334
-#: src/libaudqt/fileopener.cc:63
+#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:340
+#: src/libaudqt/fileopener.cc:64
 msgid "Export"
 msgstr "Export"
 
-#: src/libaudgui/eq-preset.cc:282 src/libaudqt/eq-preset-qt.cc:319
+#: src/libaudgui/eq-preset.cc:282 src/libaudqt/eq-preset-qt.cc:403
 msgid "Equalizer Presets"
 msgstr "Equaliser Presets"
 
-#: src/libaudgui/eq-preset.cc:304 src/libaudqt/eq-preset-qt.cc:323
+#: src/libaudgui/eq-preset.cc:304 src/libaudqt/eq-preset-qt.cc:328
 msgid "Save Preset"
 msgstr "Save Preset"
 
@@ -338,76 +352,76 @@ msgstr "Save Preset"
 msgid "Delete Selected"
 msgstr "Delete Selected"
 
-#: src/libaudgui/eq-preset.cc:330 src/libaudqt/eq-preset-qt.cc:344
+#: src/libaudgui/eq-preset.cc:330
 msgid "Revert Changes"
 msgstr "Revert Changes"
 
-#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer-qt.cc:116
+#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer-qt.cc:120
 msgid "_Enable"
 msgstr "_Enable"
 
-#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:123
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:123
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:123
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:123
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:123
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:124
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:124
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:124
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:124
 msgid "8 kHz"
 msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:124
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:153
+#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:206
 msgid "Equalizer"
 msgstr "Equaliser"
 
-#: src/libaudgui/equalizer.cc:143 src/libaudqt/equalizer-qt.cc:140
+#: src/libaudgui/equalizer.cc:143 src/libaudqt/equalizer-qt.cc:144
 msgid "Presets ..."
 msgstr "Presets ..."
 
-#: src/libaudgui/equalizer.cc:147 src/libaudqt/equalizer-qt.cc:139
+#: src/libaudgui/equalizer.cc:147 src/libaudqt/equalizer-qt.cc:143
 msgid "Reset to Zero"
 msgstr "Reset to Zero"
 
-#: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer-qt.cc:125
+#: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer-qt.cc:129
 msgid "Preamp"
 msgstr "Preamp"
 
-#: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:58
+#: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:59
 msgid "Open Files"
 msgstr "Open Files"
 
 #: src/libaudgui/file-opener.cc:79 src/libaudgui/url-opener.cc:64
-#: src/libaudqt/url-opener-qt.cc:47
+#: src/libaudqt/url-opener-qt.cc:48
 msgid "_Open"
 msgstr "_Open"
 
@@ -415,12 +429,12 @@ msgstr "_Open"
 msgid "Close _dialog on open"
 msgstr "Close _dialogue on open"
 
-#: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:58
+#: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:59
 msgid "Add Files"
 msgstr "Add Files"
 
 #: src/libaudgui/file-opener.cc:87 src/libaudgui/url-opener.cc:70
-#: src/libaudqt/url-opener-qt.cc:53
+#: src/libaudqt/url-opener-qt.cc:54
 msgid "_Add"
 msgstr "_Add"
 
@@ -430,51 +444,51 @@ msgstr "Close _dialogue on add"
 
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:894 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:229
-#: src/libaudqt/infowin-qt.cc:155 src/libaudqt/log-inspector.cc:242
-#: src/libaudqt/prefs-plugin.cc:147 src/libaudqt/prefs-window-qt.cc:625
-#: src/libaudqt/queue-manager-qt.cc:162
+#: src/libaudgui/prefs-window.cc:912 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:243
+#: src/libaudqt/infowin-qt.cc:156 src/libaudqt/log-inspector.cc:244
+#: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:646
 msgid "_Close"
 msgstr "_Close"
 
 #: src/libaudgui/infopopup.cc:187 src/libaudgui/infowin.cc:369
-#: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:93
+#: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:94
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:167
+#: src/libaudqt/queue-manager-qt.cc:110
 msgid "Title"
 msgstr "Title"
 
 #: src/libaudgui/infopopup.cc:188 src/libaudgui/infowin.cc:372
-#: src/libaudgui/prefs-window.cc:101 src/libaudqt/infopopup-qt.cc:95
+#: src/libaudgui/prefs-window.cc:101 src/libaudqt/infopopup-qt.cc:96
 #: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:164
 msgid "Artist"
 msgstr "Artist"
 
 #: src/libaudgui/infopopup.cc:189 src/libaudgui/infowin.cc:375
 #: src/libaudgui/prefs-window.cc:102 src/libaudgui/prefs-window.cc:149
-#: src/libaudqt/infopopup-qt.cc:97 src/libaudqt/info-widget.cc:50
+#: src/libaudqt/infopopup-qt.cc:98 src/libaudqt/info-widget.cc:50
 #: src/libaudqt/prefs-window-qt.cc:165 src/libaudqt/prefs-window-qt.cc:207
 msgid "Album"
 msgstr "Album"
 
 #: src/libaudgui/infopopup.cc:190 src/libaudgui/infowin.cc:385
-#: src/libaudgui/prefs-window.cc:106 src/libaudqt/infopopup-qt.cc:99
+#: src/libaudgui/prefs-window.cc:106 src/libaudqt/infopopup-qt.cc:100
 #: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:169
 msgid "Genre"
 msgstr "Genre"
 
 #: src/libaudgui/infopopup.cc:191 src/libaudgui/infowin.cc:388
-#: src/libaudgui/prefs-window.cc:111 src/libaudqt/infopopup-qt.cc:101
+#: src/libaudgui/prefs-window.cc:111 src/libaudqt/infopopup-qt.cc:102
 #: src/libaudqt/prefs-window-qt.cc:174
 msgid "Year"
 msgstr "Year"
 
 #: src/libaudgui/infopopup.cc:192 src/libaudgui/prefs-window.cc:148
-#: src/libaudqt/infopopup-qt.cc:103 src/libaudqt/prefs-window-qt.cc:206
+#: src/libaudqt/infopopup-qt.cc:104 src/libaudqt/prefs-window-qt.cc:206
 msgid "Track"
 msgstr "Track"
 
-#: src/libaudgui/infopopup.cc:193 src/libaudqt/infopopup-qt.cc:105
+#: src/libaudgui/infopopup.cc:193 src/libaudqt/infopopup-qt.cc:106
 #: src/libaudqt/info-widget.cc:63
 msgid "Length"
 msgstr "Length"
@@ -656,7 +670,7 @@ msgid "Save error"
 msgstr "Save error"
 
 #: src/libaudgui/infowin.cc:324 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin-qt.cc:120 src/libaudqt/prefs-window-qt.cc:159
+#: src/libaudqt/infowin-qt.cc:121 src/libaudqt/prefs-window-qt.cc:159
 msgid "Song Info"
 msgstr "Song Info"
 
@@ -675,15 +689,15 @@ msgstr "Track Number"
 
 #: src/libaudgui/infowin.cc:397
 msgid "_Auto-fill empty fields"
-msgstr ""
+msgstr "_Auto-fill empty fields"
 
-#: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:183
+#: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:184
 msgid "_Save"
 msgstr "_Save"
 
 #: src/libaudgui/infowin.cc:417
 msgid "_Previous"
-msgstr ""
+msgstr "_Previous"
 
 #: src/libaudgui/infowin.cc:420
 msgid "_Next"
@@ -751,13 +765,14 @@ msgstr "Overwrite %s?"
 #: src/libaudgui/playlists.cc:121
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
-msgstr "Please type a filename extension or select a format from the drop-down list."
+msgstr ""
+"Please type a filename extension or select a format from the drop-down list."
 
 #: src/libaudgui/playlists.cc:140
 msgid "Select Format by Extension"
 msgstr "Select Format by Extension"
 
-#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:59
+#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:60
 msgid "Export Playlist"
 msgstr "Export Playlist"
 
@@ -765,7 +780,7 @@ msgstr "Export Playlist"
 msgid "_Export"
 msgstr "_Export"
 
-#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:59
+#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:60
 msgid "Import Playlist"
 msgstr "Import Playlist"
 
@@ -777,37 +792,37 @@ msgstr "_Import"
 msgid "_Plugins ..."
 msgstr "_Plugins ..."
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:57
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:61
 #, c-format
 msgid "About %s"
 msgstr "About %s"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:122
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:126
 #, c-format
 msgid "%s Settings"
 msgstr "%s Settings"
 
-#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:134
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:138
 msgid "_Set"
 msgstr "_Set"
 
-#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:708
-#: src/libaudgui/prefs-window.cc:748 src/libaudqt/prefs-window-qt.cc:580
-#: src/libaudqt/prefs-window-qt.cc:583
+#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:726
+#: src/libaudgui/prefs-window.cc:766 src/libaudqt/prefs-window-qt.cc:598
+#: src/libaudqt/prefs-window-qt.cc:601
 msgid "_Settings"
 msgstr "_Settings"
 
-#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:722
-#: src/libaudgui/prefs-window.cc:760 src/libaudqt/prefs-window-qt.cc:581
-#: src/libaudqt/prefs-window-qt.cc:584
+#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:740
+#: src/libaudgui/prefs-window.cc:778 src/libaudqt/prefs-window-qt.cc:599
+#: src/libaudqt/prefs-window-qt.cc:602
 msgid "_About"
 msgstr "_About"
 
-#: src/libaudgui/prefs-widget.cc:277 src/libaudqt/prefs-widget-qt.cc:235
+#: src/libaudgui/prefs-widget.cc:277 src/libaudqt/prefs-widget-qt.cc:234
 msgid "Choose File"
 msgstr "Choose File"
 
-#: src/libaudgui/prefs-widget.cc:281 src/libaudqt/prefs-widget-qt.cc:239
+#: src/libaudgui/prefs-widget.cc:281 src/libaudqt/prefs-widget-qt.cc:238
 msgid "Choose Folder"
 msgstr "Choose Folder"
 
@@ -880,7 +895,7 @@ msgstr "Date"
 #: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:55
 #: src/libaudqt/prefs-window-qt.cc:173
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:64
 #: src/libaudqt/prefs-window-qt.cc:176
@@ -968,334 +983,346 @@ msgstr "After applying equalisation"
 msgid "Based on shuffle"
 msgstr "Based on shuffle"
 
-#: src/libaudgui/prefs-window.cc:162 src/libaudqt/prefs-window-qt.cc:219
+#: src/libaudgui/prefs-window.cc:165
+msgid "Restart in Qt mode"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:174
+msgid "Audacious is running in GTK (legacy) mode."
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:178
+msgid "Qt mode is unavailable in this build."
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:239
 msgid "Interface:"
 msgstr "Interface:"
 
-#: src/libaudgui/prefs-window.cc:181 src/libaudqt/prefs-window-qt.cc:227
+#: src/libaudgui/prefs-window.cc:199 src/libaudqt/prefs-window-qt.cc:247
 msgid "Output plugin:"
 msgstr "Output plug-in:"
 
-#: src/libaudgui/prefs-window.cc:202 src/libaudqt/prefs-window-qt.cc:240
+#: src/libaudgui/prefs-window.cc:220 src/libaudqt/prefs-window-qt.cc:260
 msgid "Amplify all files:"
 msgstr "Amplify all files:"
 
-#: src/libaudgui/prefs-window.cc:204 src/libaudgui/prefs-window.cc:207
-#: src/libaudqt/prefs-window-qt.cc:241 src/libaudqt/prefs-window-qt.cc:243
+#: src/libaudgui/prefs-window.cc:222 src/libaudgui/prefs-window.cc:225
+#: src/libaudqt/prefs-window-qt.cc:261 src/libaudqt/prefs-window-qt.cc:263
 msgid "dB"
 msgstr "dB"
 
-#: src/libaudgui/prefs-window.cc:205 src/libaudqt/prefs-window-qt.cc:242
+#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window-qt.cc:262
 msgid "Amplify untagged files:"
 msgstr "Amplify untagged files:"
 
-#: src/libaudgui/prefs-window.cc:211 src/libaudqt/prefs-window-qt.cc:246
+#: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window-qt.cc:266
 msgid "<b>Output Settings</b>"
 msgstr "<b>Output Settings</b>"
 
-#: src/libaudgui/prefs-window.cc:213 src/libaudqt/prefs-window-qt.cc:248
+#: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:268
 msgid "Bit depth:"
 msgstr "Bit depth:"
 
-#: src/libaudgui/prefs-window.cc:216 src/libaudgui/prefs-window.cc:261
-#: src/libaudqt/prefs-window-qt.cc:251 src/libaudqt/prefs-window-qt.cc:279
+#: src/libaudgui/prefs-window.cc:234 src/libaudgui/prefs-window.cc:279
+#: src/libaudqt/prefs-window-qt.cc:271 src/libaudqt/prefs-window-qt.cc:299
 msgid "Buffer size:"
 msgstr "Buffer size:"
 
-#: src/libaudgui/prefs-window.cc:218 src/libaudqt/prefs-window-qt.cc:252
+#: src/libaudgui/prefs-window.cc:236 src/libaudqt/prefs-window-qt.cc:272
 msgid "ms"
 msgstr "ms"
 
-#: src/libaudgui/prefs-window.cc:219 src/libaudqt/prefs-window-qt.cc:253
+#: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window-qt.cc:273
 msgid "Soft clipping"
 msgstr "Soft clipping"
 
-#: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window-qt.cc:254
+#: src/libaudgui/prefs-window.cc:239 src/libaudqt/prefs-window-qt.cc:274
 msgid "Use software volume control (not recommended)"
 msgstr "Use software volume control (not recommended)"
 
-#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window-qt.cc:256
+#: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window-qt.cc:276
 msgid "<b>Recording Settings</b>"
 msgstr "<b>Recording Settings</b>"
 
-#: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window-qt.cc:259
+#: src/libaudgui/prefs-window.cc:245 src/libaudqt/prefs-window-qt.cc:279
 msgid "Record stream:"
 msgstr "Record stream:"
 
-#: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:261
+#: src/libaudgui/prefs-window.cc:248 src/libaudqt/prefs-window-qt.cc:281
 msgid "<b>ReplayGain</b>"
 msgstr "<b>ReplayGain</b>"
 
-#: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:262
+#: src/libaudgui/prefs-window.cc:249 src/libaudqt/prefs-window-qt.cc:282
 msgid "Enable ReplayGain"
 msgstr "Enable ReplayGain"
 
-#: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window-qt.cc:263
+#: src/libaudgui/prefs-window.cc:251 src/libaudqt/prefs-window-qt.cc:283
 msgid "Mode:"
 msgstr "Mode:"
 
-#: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window-qt.cc:265
+#: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window-qt.cc:285
 msgid "Prevent clipping (recommended)"
 msgstr "Prevent clipping (recommended)"
 
-#: src/libaudgui/prefs-window.cc:245 src/libaudqt/prefs-window-qt.cc:270
+#: src/libaudgui/prefs-window.cc:263 src/libaudqt/prefs-window-qt.cc:290
 msgid "Proxy hostname:"
 msgstr "Proxy hostname:"
 
-#: src/libaudgui/prefs-window.cc:247 src/libaudqt/prefs-window-qt.cc:271
+#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window-qt.cc:291
 msgid "Proxy port:"
 msgstr "Proxy port:"
 
-#: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window-qt.cc:274
+#: src/libaudgui/prefs-window.cc:270 src/libaudqt/prefs-window-qt.cc:294
 msgid "Proxy username:"
 msgstr "Proxy username:"
 
-#: src/libaudgui/prefs-window.cc:254 src/libaudqt/prefs-window-qt.cc:275
+#: src/libaudgui/prefs-window.cc:272 src/libaudqt/prefs-window-qt.cc:295
 msgid "Proxy password:"
 msgstr "Proxy password:"
 
-#: src/libaudgui/prefs-window.cc:260 src/libaudqt/prefs-window-qt.cc:278
+#: src/libaudgui/prefs-window.cc:278 src/libaudqt/prefs-window-qt.cc:298
 msgid "<b>Network Settings</b>"
 msgstr "<b>Network Settings</b>"
 
-#: src/libaudgui/prefs-window.cc:263 src/libaudqt/prefs-window-qt.cc:280
+#: src/libaudgui/prefs-window.cc:281 src/libaudqt/prefs-window-qt.cc:300
 msgid "KiB"
 msgstr "KiB"
 
-#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window-qt.cc:281
+#: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window-qt.cc:301
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Proxy Configuration</b>"
 
-#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window-qt.cc:282
+#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window-qt.cc:302
 msgid "Enable proxy usage"
 msgstr "Enable proxy usage"
 
-#: src/libaudgui/prefs-window.cc:269 src/libaudqt/prefs-window-qt.cc:284
+#: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window-qt.cc:304
 msgid "Use authentication with proxy"
 msgstr "Use authentication with proxy"
 
-#: src/libaudgui/prefs-window.cc:273 src/libaudqt/prefs-window-qt.cc:287
+#: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window-qt.cc:307
 msgid "Use SOCKS proxy"
-msgstr ""
+msgstr "Use SOCKS proxy"
 
-#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window-qt.cc:288
+#: src/libaudgui/prefs-window.cc:293 src/libaudqt/prefs-window-qt.cc:308
 msgid "SOCKS v4a"
-msgstr ""
+msgstr "SOCKS v4a"
 
-#: src/libaudgui/prefs-window.cc:279 src/libaudqt/prefs-window-qt.cc:289
+#: src/libaudgui/prefs-window.cc:297 src/libaudqt/prefs-window-qt.cc:309
 msgid "SOCKS v5"
-msgstr ""
+msgstr "SOCKS v5"
 
-#: src/libaudgui/prefs-window.cc:286 src/libaudqt/prefs-window-qt.cc:292
+#: src/libaudgui/prefs-window.cc:304 src/libaudqt/prefs-window-qt.cc:312
 msgid "Auto character encoding detector for:"
 msgstr "Auto character encoding detector for:"
 
-#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window-qt.cc:295
+#: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:315
 msgid "Fallback character encodings:"
 msgstr "Fallback character encodings:"
 
-#: src/libaudgui/prefs-window.cc:297 src/libaudqt/prefs-window-qt.cc:302
+#: src/libaudgui/prefs-window.cc:315 src/libaudqt/prefs-window-qt.cc:322
 msgid "<b>Behavior</b>"
 msgstr "<b>Behaviour</b>"
 
-#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window-qt.cc:303
+#: src/libaudgui/prefs-window.cc:316 src/libaudqt/prefs-window-qt.cc:323
 msgid "Resume playback on startup"
 msgstr "Resume playback on startup"
 
-#: src/libaudgui/prefs-window.cc:300 src/libaudqt/prefs-window-qt.cc:305
+#: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:325
 msgid "Pause instead of resuming immediately"
 msgstr "Pause instead of resuming immediately"
 
-#: src/libaudgui/prefs-window.cc:303 src/libaudqt/prefs-window-qt.cc:307
+#: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window-qt.cc:327
 msgid "Advance when the current song is deleted"
 msgstr "Advance when the current song is deleted"
 
-#: src/libaudgui/prefs-window.cc:305 src/libaudqt/prefs-window-qt.cc:309
+#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:329
 msgid "Clear the playlist when opening files"
 msgstr "Clear the playlist when opening files"
 
-#: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:311
+#: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:331
 msgid "Open files in a temporary playlist"
 msgstr "Open files in a temporary playlist"
 
-#: src/libaudgui/prefs-window.cc:309 src/libaudqt/prefs-window-qt.cc:313
+#: src/libaudgui/prefs-window.cc:327 src/libaudqt/prefs-window-qt.cc:333
 msgid "<b>Song Display</b>"
 msgstr "<b>Song Display</b>"
 
-#: src/libaudgui/prefs-window.cc:310 src/libaudqt/prefs-window-qt.cc:314
+#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:334
 msgid "Show song numbers"
 msgstr "Show song numbers"
 
-#: src/libaudgui/prefs-window.cc:312 src/libaudqt/prefs-window-qt.cc:316
+#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:336
 msgid "Show leading zeroes (02:00 vs. 2:00)"
 msgstr "Show leading zeroes (02:00 vs. 2:00)"
 
-#: src/libaudgui/prefs-window.cc:314 src/libaudqt/prefs-window-qt.cc:318
+#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:338
 msgid "Show hours separately (1:30:00 vs. 90:00)"
 msgstr "Show hours separately (1:30:00 vs. 90:00)"
 
-#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:321
+#: src/libaudgui/prefs-window.cc:335 src/libaudqt/prefs-window-qt.cc:341
 msgid "<b>Export</b>"
 msgstr "<b>Export</b>"
 
-#: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:322
+#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:342
 msgid "Use relative paths when possible"
 msgstr "Use relative paths when possible"
 
-#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:326
+#: src/libaudgui/prefs-window.cc:341 src/libaudqt/prefs-window-qt.cc:346
 msgid "<b>Album Art</b>"
 msgstr "<b>Album Art</b>"
 
-#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window-qt.cc:328
+#: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:348
 msgid "Search for images matching these words (comma-separated):"
 msgstr "Search for images matching these words (comma-separated):"
 
-#: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window-qt.cc:330
+#: src/libaudgui/prefs-window.cc:344 src/libaudqt/prefs-window-qt.cc:350
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "Exclude images matching these words (comma-separated):"
 
-#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:332
+#: src/libaudgui/prefs-window.cc:346 src/libaudqt/prefs-window-qt.cc:352
 msgid "Search for images matching song file name"
 msgstr "Search for images matching song file name"
 
-#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:334
+#: src/libaudgui/prefs-window.cc:348 src/libaudqt/prefs-window-qt.cc:354
 msgid "Search recursively"
 msgstr "Search recursively"
 
-#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:335
+#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:355
 msgid "Search depth:"
 msgstr "Search depth:"
 
-#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:337
+#: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window-qt.cc:357
 msgid "<b>Popup Information</b>"
 msgstr "<b>Popup Information</b>"
 
-#: src/libaudgui/prefs-window.cc:337 src/libaudqt/prefs-window-qt.cc:338
+#: src/libaudgui/prefs-window.cc:355 src/libaudqt/prefs-window-qt.cc:358
 msgid "Show popup information"
 msgstr "Show pop-up information"
 
-#: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window-qt.cc:340
+#: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window-qt.cc:360
 msgid "Popup delay (tenths of a second):"
 msgstr "Pop-up delay (tenths of a second):"
 
-#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:342
+#: src/libaudgui/prefs-window.cc:361
 msgid "Show time scale for current song"
 msgstr "Show time scale for current song"
 
-#: src/libaudgui/prefs-window.cc:349 src/libaudqt/prefs-window-qt.cc:346
+#: src/libaudgui/prefs-window.cc:367 src/libaudqt/prefs-window-qt.cc:364
 msgid "<b>Compatibility</b>"
 msgstr "<b>Compatibility</b>"
 
-#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:347
+#: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:365
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr "Interpret \\ (backward slash) as a folder delimiter"
 
-#: src/libaudgui/prefs-window.cc:353 src/libaudqt/prefs-window-qt.cc:350
+#: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:368
 msgid "<b>Playlist</b>"
 msgstr "<b>Playlist</b>"
 
-#: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window-qt.cc:351
+#: src/libaudgui/prefs-window.cc:372 src/libaudqt/prefs-window-qt.cc:369
 msgid "Add folders recursively"
 msgstr "Add folders recursively"
 
-#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window-qt.cc:353
+#: src/libaudgui/prefs-window.cc:374 src/libaudqt/prefs-window-qt.cc:371
 msgid "Add folders nested within playlist files"
 msgstr "Add folders nested within playlist files"
 
-#: src/libaudgui/prefs-window.cc:358 src/libaudqt/prefs-window-qt.cc:355
+#: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:373
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadata</b>"
 
-#: src/libaudgui/prefs-window.cc:359 src/libaudqt/prefs-window-qt.cc:356
+#: src/libaudgui/prefs-window.cc:377 src/libaudqt/prefs-window-qt.cc:374
 msgid "Guess missing metadata from file path"
 msgstr "Guess missing metadata from file path"
 
-#: src/libaudgui/prefs-window.cc:361 src/libaudqt/prefs-window-qt.cc:358
+#: src/libaudgui/prefs-window.cc:379 src/libaudqt/prefs-window-qt.cc:376
 msgid "Do not load metadata for songs until played"
 msgstr "Do not load metadata for songs until played"
 
-#: src/libaudgui/prefs-window.cc:363 src/libaudqt/prefs-window-qt.cc:361
+#: src/libaudgui/prefs-window.cc:381 src/libaudqt/prefs-window-qt.cc:379
 msgid "Probe content of files with no recognized file name extension"
 msgstr "Probe content of files with no recognized file name extension"
 
-#: src/libaudgui/prefs-window.cc:365 src/libaudqt/prefs-window-qt.cc:363
+#: src/libaudgui/prefs-window.cc:383 src/libaudqt/prefs-window-qt.cc:381
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Miscellaneous</b>"
 
-#: src/libaudgui/prefs-window.cc:366 src/libaudqt/prefs-window-qt.cc:364
+#: src/libaudgui/prefs-window.cc:384 src/libaudqt/prefs-window-qt.cc:382
 msgid "Step forward/backward by:"
-msgstr ""
+msgstr "Step forward/backward by:"
 
-#: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:365
+#: src/libaudgui/prefs-window.cc:386 src/libaudqt/prefs-window-qt.cc:383
 msgid "seconds"
 msgstr "seconds"
 
-#: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:366
+#: src/libaudgui/prefs-window.cc:387 src/libaudqt/prefs-window-qt.cc:384
 msgid "Adjust volume by:"
-msgstr ""
+msgstr "Adjust volume by:"
 
-#: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:367
+#: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:385
 msgid "percent"
-msgstr ""
+msgstr "percent"
 
-#: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:384
+#: src/libaudgui/prefs-window.cc:406 src/libaudqt/prefs-window-qt.cc:402
 msgid "TITLE"
 msgstr "TITLE"
 
-#: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:385
+#: src/libaudgui/prefs-window.cc:407 src/libaudqt/prefs-window-qt.cc:403
 msgid "TITLE - ARTIST"
 msgstr "TITLE - ARTIST"
 
-#: src/libaudgui/prefs-window.cc:390 src/libaudqt/prefs-window-qt.cc:386
+#: src/libaudgui/prefs-window.cc:408 src/libaudqt/prefs-window-qt.cc:404
 msgid "TITLE - ARTIST - ALBUM"
 msgstr "TITLE - ARTIST - ALBUM"
 
-#: src/libaudgui/prefs-window.cc:391 src/libaudqt/prefs-window-qt.cc:387
+#: src/libaudgui/prefs-window.cc:409 src/libaudqt/prefs-window-qt.cc:405
 msgid "ARTIST - TITLE"
 msgstr "ARTIST - TITLE"
 
-#: src/libaudgui/prefs-window.cc:392 src/libaudqt/prefs-window-qt.cc:388
+#: src/libaudgui/prefs-window.cc:410 src/libaudqt/prefs-window-qt.cc:406
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTIST - ALBUM - TITLE"
 
-#: src/libaudgui/prefs-window.cc:393 src/libaudqt/prefs-window-qt.cc:389
+#: src/libaudgui/prefs-window.cc:411 src/libaudqt/prefs-window-qt.cc:407
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTIST - ALBUM - TRACK. TITLE"
 
-#: src/libaudgui/prefs-window.cc:394 src/libaudqt/prefs-window-qt.cc:390
+#: src/libaudgui/prefs-window.cc:412 src/libaudqt/prefs-window-qt.cc:408
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARTIST [ ALBUM ] - TRACK. TITLE"
 
-#: src/libaudgui/prefs-window.cc:395 src/libaudqt/prefs-window-qt.cc:391
+#: src/libaudgui/prefs-window.cc:413 src/libaudqt/prefs-window-qt.cc:409
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - TITLE"
 
-#: src/libaudgui/prefs-window.cc:489
+#: src/libaudgui/prefs-window.cc:507
 msgid "Category"
 msgstr "Category"
 
-#: src/libaudgui/prefs-window.cc:553 src/libaudqt/prefs-window-qt.cc:408
+#: src/libaudgui/prefs-window.cc:571 src/libaudqt/prefs-window-qt.cc:426
 msgid "Custom"
 msgstr "Custom"
 
-#: src/libaudgui/prefs-window.cc:571 src/libaudqt/prefs-window-qt.cc:400
+#: src/libaudgui/prefs-window.cc:589 src/libaudqt/prefs-window-qt.cc:418
 msgid "Title format:"
 msgstr "Title format:"
 
-#: src/libaudgui/prefs-window.cc:575 src/libaudqt/prefs-window-qt.cc:411
+#: src/libaudgui/prefs-window.cc:593 src/libaudqt/prefs-window-qt.cc:429
 msgid "Custom string:"
 msgstr "Custom string:"
 
-#: src/libaudgui/prefs-window.cc:774 src/libaudqt/prefs-window-qt.cc:705
+#: src/libaudgui/prefs-window.cc:792 src/libaudqt/prefs-window-qt.cc:730
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Enable audio stream recording with %s"
 
-#: src/libaudgui/prefs-window.cc:783 src/libaudqt/prefs-window-qt.cc:718
+#: src/libaudgui/prefs-window.cc:801 src/libaudqt/prefs-window-qt.cc:743
 msgid "No audio recording plugin available"
 msgstr "No audio recording plugin available"
 
-#: src/libaudgui/prefs-window.cc:843 src/libaudqt/prefs-window-qt.cc:593
+#: src/libaudgui/prefs-window.cc:861 src/libaudqt/prefs-window-qt.cc:611
 msgid "Audacious Settings"
 msgstr "Audacious Settings"
 
@@ -1303,15 +1330,15 @@ msgstr "Audacious Settings"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:290
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:298
 msgid "Save"
 msgstr "Save"
 
-#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:257
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:261
 msgid "Load"
 msgstr "Load"
 
-#: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:253
+#: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:257
 msgid "Load Preset File"
 msgstr "Load Preset File"
 
@@ -1319,7 +1346,7 @@ msgstr "Load Preset File"
 msgid "Load EQF File"
 msgstr "Load EQF File"
 
-#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:285
+#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:293
 msgid "Save Preset File"
 msgstr "Save Preset File"
 
@@ -1327,11 +1354,11 @@ msgstr "Save Preset File"
 msgid "Save EQF File"
 msgstr "Save EQF File"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:158
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:263
 msgid "Queue Manager"
 msgstr "Queue Manager"
 
-#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:161
+#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:209
 msgid "_Unqueue"
 msgstr "_Unqueue"
 
@@ -1339,7 +1366,7 @@ msgstr "_Unqueue"
 msgid "Working ..."
 msgstr "Working ..."
 
-#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:223
+#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:225
 msgid "Error"
 msgstr "Error"
 
@@ -1347,27 +1374,27 @@ msgstr "Error"
 msgid "Information"
 msgstr "Information"
 
-#: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:40
+#: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:41
 msgid "_Save to history"
 msgstr "_Save to history"
 
-#: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:46
+#: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
 msgstr "Open URL"
 
-#: src/libaudgui/url-opener.cc:69 src/libaudqt/url-opener-qt.cc:52
+#: src/libaudgui/url-opener.cc:69 src/libaudqt/url-opener-qt.cc:53
 msgid "Add URL"
 msgstr "Add URL"
 
-#: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:68
+#: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:69
 msgid "C_lear history"
 msgstr "C_lear history"
 
-#: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:61
+#: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"
 msgstr "Enter URL:"
 
-#: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:62
+#: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:63
 msgid "Open"
 msgstr "Open"
 
@@ -1375,39 +1402,41 @@ msgstr "Open"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n(Further messages have been hidden.)"
-
-#: src/libaudqt/eq-preset-qt.cc:249
-msgid "Preset files (*.preset *.eqf *.q1)"
 msgstr ""
+"\n"
+"(Further messages have been hidden.)"
 
-#: src/libaudqt/eq-preset-qt.cc:348
-msgid "Close"
+#: src/libaudqt/eq-preset-qt.cc:252
+msgid "Preset files (*.preset *.eqf *.q1)"
+msgstr "Preset files (*.preset *.eqf *.q1)"
+
+#: src/libaudqt/eq-preset-qt.cc:345
+msgid "Revert"
 msgstr ""
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
 msgstr "Browse"
 
-#: src/libaudqt/fileopener.cc:58
+#: src/libaudqt/fileopener.cc:59
 msgid "Open Folder"
 msgstr "Open Folder"
 
-#: src/libaudqt/fileopener.cc:59
+#: src/libaudqt/fileopener.cc:60
 msgid "Add Folder"
 msgstr "Add Folder"
 
-#: src/libaudqt/fileopener.cc:62 src/libaudqt/fileopener.cc:63
+#: src/libaudqt/fileopener.cc:63 src/libaudqt/fileopener.cc:64
 msgid "Add"
 msgstr "Add"
 
 #: src/libaudqt/font-entry.cc:39
 msgid "Set Font"
-msgstr ""
+msgstr "Set Font"
 
 #: src/libaudqt/info-widget.cc:44
 msgid "<various>"
-msgstr ""
+msgstr "<various>"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Metadata"
@@ -1438,64 +1467,80 @@ msgid "Bitrate"
 msgstr "Bitrate"
 
 #: src/libaudqt/info-widget.cc:67
+msgid "Channels"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:68
 msgid "MusicBrainz ID"
-msgstr ""
+msgstr "MusicBrainz ID"
 
-#: src/libaudqt/infowin-qt.cc:156
+#: src/libaudqt/infowin-qt.cc:157
 msgid "_Revert"
-msgstr ""
+msgstr "_Revert"
 
-#: src/libaudqt/infowin-qt.cc:167
+#: src/libaudqt/infowin-qt.cc:168
 msgid "Error writing tag(s)."
-msgstr ""
+msgstr "Error writing tag(s)."
 
-#: src/libaudqt/infowin-qt.cc:189
+#: src/libaudqt/infowin-qt.cc:190
 msgid "%1 files selected"
-msgstr ""
+msgstr "%1 files selected"
 
-#: src/libaudqt/infowin-qt.cc:193
+#: src/libaudqt/infowin-qt.cc:194
 msgid "_Save %1 files"
-msgstr ""
+msgstr "_Save %1 files"
 
-#: src/libaudqt/log-inspector.cc:150
+#: src/libaudqt/log-inspector.cc:152
 msgid "Level"
 msgstr "Level"
 
-#: src/libaudqt/log-inspector.cc:152
+#: src/libaudqt/log-inspector.cc:154
 msgid "Function"
 msgstr "Function"
 
-#: src/libaudqt/log-inspector.cc:154
+#: src/libaudqt/log-inspector.cc:156
 msgid "Message"
 msgstr "Message"
 
-#: src/libaudqt/log-inspector.cc:209
+#: src/libaudqt/log-inspector.cc:211
 msgid "Log Inspector"
 msgstr "Log Inspector"
 
-#: src/libaudqt/log-inspector.cc:220
+#: src/libaudqt/log-inspector.cc:222
 msgid "Debug"
 msgstr "Debug"
 
-#: src/libaudqt/log-inspector.cc:221
+#: src/libaudqt/log-inspector.cc:223
 msgid "Info"
 msgstr "Info"
 
-#: src/libaudqt/log-inspector.cc:222
+#: src/libaudqt/log-inspector.cc:224
 msgid "Warning"
 msgstr "Warning"
 
-#: src/libaudqt/log-inspector.cc:234
+#: src/libaudqt/log-inspector.cc:236
 msgid "Cl_ear"
 msgstr "Cl_ear"
 
-#: src/libaudqt/log-inspector.cc:247
+#: src/libaudqt/log-inspector.cc:249
 msgid "Log Level:"
 msgstr "Log Level:"
 
 #: src/libaudqt/plugin-menu-qt.cc:52
 msgid "Services"
 msgstr "Services"
+
+#: src/libaudqt/prefs-window-qt.cc:222
+msgid "Restart in GTK (legacy) mode"
+msgstr ""
+
+#: src/libaudqt/prefs-window-qt.cc:232
+msgid "Audacious is running in Qt mode."
+msgstr ""
+
+#: src/libaudqt/prefs-window-qt.cc:236
+msgid "GTK (legacy) mode is unavailable in this build."
+msgstr ""
 
 #: src/libaudqt/util-qt.cc:112
 msgid "Copy"

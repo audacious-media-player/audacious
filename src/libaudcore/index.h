@@ -120,19 +120,23 @@ public:
     {
         IndexBase::insert(raw(pos), raw(len), aud::fill_func<T>());
     }
+
     void insert(const T * from, int pos, int len)
     {
         IndexBase::insert(from, raw(pos), raw(len), aud::copy_func<T>());
     }
+
     void remove(int pos, int len)
     {
         IndexBase::remove(raw(pos), raw(len), aud::erase_func<T>());
     }
+
     void erase(int pos, int len)
     {
         IndexBase::erase(raw(pos), raw(len), aud::fill_func<T>(),
                          aud::erase_func<T>());
     }
+
     void shift(int from, int to, int len)
     {
         IndexBase::shift(raw(from), raw(to), raw(len), aud::fill_func<T>(),

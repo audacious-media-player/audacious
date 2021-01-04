@@ -6,13 +6,13 @@ dnl Initialize
 dnl ==========
 
 AC_PREREQ([2.59])
-AC_INIT([audacious], [4.1-devel])
-AC_COPYRIGHT([Copyright (C) 2001-2020 Audacious developers and others])
+AC_INIT([audacious], [4.1-beta1])
+AC_COPYRIGHT([Copyright (C) 2001-2021 Audacious developers and others])
 
 AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE_NAME", [Name of package])
 AC_DEFINE_UNQUOTED(VERSION, "$PACKAGE_VERSION", [Version number of package])
 
-COPYRIGHT="Copyright (C) 2001-2020 Audacious developers and others"
+COPYRIGHT="Copyright (C) 2001-2021 Audacious developers and others"
 AC_DEFINE_UNQUOTED(COPYRIGHT, "$COPYRIGHT", [Copyright])
 AC_SUBST(COPYRIGHT)
 

@@ -1,110 +1,119 @@
 # Serbian (Serbia) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2014
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2013-2014,2020
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2020-01-26 13:17+0100\n"
-"PO-Revision-Date: 2020-01-26 12:21+0000\n"
-"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
-"Language-Team: Serbian (Serbia) (http://www.transifex.com/audacious/audacious/language/sr_RS/)\n"
+"POT-Creation-Date: 2020-12-27 18:05+0100\n"
+"PO-Revision-Date: 2020-12-07 15:13+0000\n"
+"Last-Translator: Thomas Lange\n"
+"Language-Team: Serbian (Serbia) (http://www.transifex.com/audacious/"
+"audacious/language/sr_RS/)\n"
+"Language: sr_RS\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sr_RS\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:72
 msgid "Show command-line help"
 msgstr "Приказује помоћ линије наредби"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:73
 msgid "Show version"
 msgstr "Приказује издање"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:74
 msgid "Start playback"
 msgstr "Започиње пуштање"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:75
 msgid "Pause playback"
 msgstr "Паузира пуштање"
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:77
 msgid "Pause if playing, play otherwise"
 msgstr "Паузира ако свира, иначе пушта"
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:78
 msgid "Stop playback"
 msgstr "Зауставља пуштање"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:79
 msgid "Skip to previous song"
 msgstr "Иде на претходну песму"
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:80
 msgid "Skip to next song"
 msgstr "Иде на следећу песму"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:81
 msgid "Add files to the playlist"
 msgstr "Додаје датотеке на списак нумера"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:83
 msgid "Add files to a temporary playlist"
 msgstr "Додаје датотеке на привремени списак нумера"
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:84
 msgid "Display the main window"
 msgstr "Приказује главни прозор"
 
-#: src/audacious/main.cc:76
+#: src/audacious/main.cc:86
 msgid "Display the jump-to-song window"
 msgstr "Приказује прозор за бирање песама"
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:88
 msgid "Start without a graphical interface"
 msgstr "Покреће се без графичког сучеља"
 
-#: src/audacious/main.cc:78
+#: src/audacious/main.cc:90
 msgid "Quit on playback stop"
 msgstr "Излази на заустављање пуштања"
 
-#: src/audacious/main.cc:79
+#: src/audacious/main.cc:92
 msgid "Print debugging messages (may be used twice)"
-msgstr ""
+msgstr "Исписује поруке прочишћавања (може бити коришћено два пута)"
 
-#: src/audacious/main.cc:81
+#: src/audacious/main.cc:94
 msgid "Run in GTK mode"
+msgstr "Покрени у режиму ГТК‑а"
+
+#: src/audacious/main.cc:95
+msgid "Run in Qt mode"
 msgstr ""
 
-#: src/audacious/main.cc:138
+#: src/audacious/main.cc:152
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Непозната опција: %s\n"
 
-#: src/audacious/main.cc:160
+#: src/audacious/main.cc:174
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Непозната опција: -%c\n"
 
-#: src/audacious/main.cc:184
+#: src/audacious/main.cc:204
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
-msgstr "Употреба: audacious [ОПЦИЈА] ... [ДАТОТЕКА] ...\n\n"
-
-#: src/audacious/main.cc:185
-msgid "Select instance to run/control"
 msgstr ""
+"Употреба: audacious [ОПЦИЈА] ... [ДАТОТЕКА] ...\n"
+"\n"
 
-#: src/audacious/main.cc:365 src/libaudqt/audqt.cc:64
+#: src/audacious/main.cc:206
+msgid "Select instance to run/control"
+msgstr "Изаберите примерак за покретање/управљање"
+
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:74
 msgid "Audacious"
-msgstr "Безочник"
+msgstr "Аудацијус"
 
 #: src/libaudcore/adder.cc:96
 #, c-format
@@ -114,46 +123,48 @@ msgstr[0] "Пронашао сам %d датотеку"
 msgstr[1] "Пронашао сам %d датотеке"
 msgstr[2] "Пронашао сам %d датотека"
 
-#: src/libaudcore/adder.cc:320 src/libaudcore/adder.cc:402
+#: src/libaudcore/adder.cc:320 src/libaudcore/adder.cc:404
 #, c-format
 msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
+"Грешка читања „%s“:\n"
+"%s"
 
-#: src/libaudcore/adder.cc:454
+#: src/libaudcore/adder.cc:456
 msgid "No files found."
-msgstr ""
+msgstr "Нисам нашао ниједну датотеку."
 
-#: src/libaudcore/adder.cc:476 src/libaudcore/playlist.cc:81
+#: src/libaudcore/adder.cc:478 src/libaudcore/playlist.cc:81
 msgid "New Playlist"
 msgstr "Нови списак нумера"
 
-#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:524
+#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:526
 msgid "Standard input"
-msgstr ""
+msgstr "Стандардни улаз"
 
 #: src/libaudcore/audstrings.cc:666
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Звучни ЦД, нумера %s"
 
-#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:500
+#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:502
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(грешка кодирања знакова)"
 
 #: src/libaudcore/drct.cc:96
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
-msgstr ""
+msgstr "Снимање тока морате подесити у подешавањима звука пре коришћења."
 
 #: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
-msgstr ""
+msgstr "Грешка отварања излазног тока"
 
 #: src/libaudcore/output.cc:341
 msgid "Error recording output stream"
-msgstr ""
+msgstr "Грешка снимања излазног тока"
 
 #: src/libaudcore/playback.cc:379
 #, c-format
@@ -161,68 +172,72 @@ msgid ""
 "Error playing %s:\n"
 "%s"
 msgstr ""
+"Грешка пуштања „%s“:\n"
+"%s"
 
 #: src/libaudcore/playback.cc:510
 msgid "Invalid audio format"
-msgstr ""
+msgstr "Неисправан запис звука"
 
 #: src/libaudcore/playlist.cc:82
 msgid "Now Playing"
 msgstr "Сад пуштам"
 
 #: src/libaudcore/playlist-files.cc:73 src/libaudcore/playlist-files.cc:153
-#: src/libaudgui/infowin.cc:509 src/libaudqt/infowin-qt.cc:248
+#: src/libaudgui/infowin.cc:509 src/libaudqt/infowin-qt.cc:246
 #, c-format
 msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
+"Грешка отварања „%s“:\n"
+"%s"
 
-#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:276
+#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:282
 #, c-format
 msgid "Error loading %s."
-msgstr ""
+msgstr "Грешка учитавања „%s“."
 
 #: src/libaudcore/playlist-files.cc:89
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr ""
+msgstr "Не могу да учитам „%s“: проширење назива датотеке није подржано."
 
-#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:309
+#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:317
 #, c-format
 msgid "Error saving %s."
-msgstr ""
+msgstr "Грешка чувања „%s“."
 
 #: src/libaudcore/playlist-files.cc:167
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "Не могу да сачувам „%s“: проширење назива датотеке није подржано."
 
 #: src/libaudcore/probe.cc:54
 msgid "Error loading plugin"
-msgstr ""
+msgstr "Грешка учитавања прикључка"
 
 #: src/libaudcore/probe.cc:173
 msgid "Seek error"
-msgstr ""
+msgstr "Грешка премотавања"
 
 #: src/libaudcore/probe.cc:181
 msgid "File format not recognized"
-msgstr ""
+msgstr "Запис датотеке није познат"
 
 #: src/libaudcore/probe.cc:210
 msgid "Error reading metadata"
-msgstr ""
+msgstr "Грешка читања метаподатака"
 
-#: src/libaudcore/tuple.cc:558
+#: src/libaudcore/tuple.cc:560
 msgid "Mono"
 msgstr "Моно"
 
-#: src/libaudcore/tuple.cc:560
+#: src/libaudcore/tuple.cc:562
 msgid "Stereo"
 msgstr "Стерео"
 
-#: src/libaudcore/tuple.cc:563
+#: src/libaudcore/tuple.cc:565
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -230,50 +245,50 @@ msgstr[0] "%d канал"
 msgstr[1] "%d канала"
 msgstr[2] "%d канала"
 
-#: src/libaudcore/tuple.cc:777
+#: src/libaudcore/tuple.cc:783
 msgid "Audio CD"
-msgstr "Аудио ЦД"
-
-#: src/libaudcore/tuple.cc:861
-#, c-format
-msgid "Track %d"
-msgstr ""
+msgstr "Звучни ЦД"
 
 #: src/libaudcore/tuple.cc:867
+#, c-format
+msgid "Track %d"
+msgstr "Нумера %d"
+
+#: src/libaudcore/tuple.cc:873
 msgid "(unknown title)"
-msgstr ""
+msgstr "(непознат наслов)"
 
 #: src/libaudcore/vfs.cc:79
 msgid "Unknown URI scheme"
-msgstr ""
+msgstr "Непозната шема путање"
 
 #: src/libaudcore/vfs_local.cc:86 src/libaudcore/vfs_local.cc:330
 #: src/libaudcore/vfs_local.cc:386
 msgid "Invalid file name"
-msgstr ""
+msgstr "Неисправан назив датотеке"
 
 #: src/libaudcore/vfs_local.cc:134
 msgid "Invalid access mode"
-msgstr ""
+msgstr "Неисправан режим приступа"
 
-#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:36
+#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:37
 msgid "Credits"
 msgstr "Заслуге"
 
-#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:36
+#: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:37
 msgid "License"
 msgstr "Дозвола"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about-qt.cc:63
+#: src/libaudgui/about.cc:72 src/libaudqt/about-qt.cc:64
 msgid "About Audacious"
-msgstr "O Безочнику"
+msgstr "O Аудацијусу"
 
 #: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
 #: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
 #: src/libaudgui/plugin-prefs.cc:160 src/libaudgui/url-opener.cc:101
 #: src/libaudqt/playlist-management.cc:41
-#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:136
-#: src/libaudqt/url-opener-qt.cc:79
+#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:140
+#: src/libaudqt/url-opener-qt.cc:80
 msgid "_Cancel"
 msgstr "_Откажи"
 
@@ -308,108 +323,108 @@ msgstr "Преименуј списак нумера"
 
 #: src/libaudgui/eq-preset.cc:153
 msgid "Please select one preset to export."
-msgstr ""
+msgstr "Изаберите једно претподешавање за извоз."
 
 #: src/libaudgui/eq-preset.cc:256 src/libaudgui/eq-preset.cc:261
 msgid "Preset File ..."
-msgstr ""
+msgstr "Датотека претподешавања ..."
 
 #: src/libaudgui/eq-preset.cc:257 src/libaudgui/eq-preset.cc:262
 msgid "EQF File ..."
-msgstr ""
+msgstr "ЕКуФ датотека ..."
 
-#: src/libaudgui/eq-preset.cc:266 src/libaudqt/eq-preset-qt.cc:331
-#: src/libaudqt/fileopener.cc:63
+#: src/libaudgui/eq-preset.cc:266 src/libaudqt/eq-preset-qt.cc:337
+#: src/libaudqt/fileopener.cc:64
 msgid "Import"
 msgstr "Увези"
 
-#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:334
-#: src/libaudqt/fileopener.cc:63
+#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:340
+#: src/libaudqt/fileopener.cc:64
 msgid "Export"
 msgstr "Извези"
 
-#: src/libaudgui/eq-preset.cc:282 src/libaudqt/eq-preset-qt.cc:319
+#: src/libaudgui/eq-preset.cc:282 src/libaudqt/eq-preset-qt.cc:403
 msgid "Equalizer Presets"
-msgstr ""
+msgstr "Претподешавања уједначавача"
 
-#: src/libaudgui/eq-preset.cc:304 src/libaudqt/eq-preset-qt.cc:323
+#: src/libaudgui/eq-preset.cc:304 src/libaudqt/eq-preset-qt.cc:328
 msgid "Save Preset"
-msgstr ""
+msgstr "Сачувај претподешавање"
 
 #: src/libaudgui/eq-preset.cc:326
 msgid "Delete Selected"
-msgstr ""
+msgstr "Обриши изабрано"
 
-#: src/libaudgui/eq-preset.cc:330 src/libaudqt/eq-preset-qt.cc:344
+#: src/libaudgui/eq-preset.cc:330
 msgid "Revert Changes"
-msgstr ""
+msgstr "Поврати измене"
 
-#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer-qt.cc:116
+#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer-qt.cc:120
 msgid "_Enable"
 msgstr "_Укључи"
 
-#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:123
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:123
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:123
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:123
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:119
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:123
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:124
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:125 src/libaudqt/equalizer-qt.cc:124
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:124
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:124
 msgid "8 kHz"
 msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:120
+#: src/libaudgui/equalizer.cc:126 src/libaudqt/equalizer-qt.cc:124
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:153
+#: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:206
 msgid "Equalizer"
 msgstr "Уједначавач"
 
-#: src/libaudgui/equalizer.cc:143 src/libaudqt/equalizer-qt.cc:140
+#: src/libaudgui/equalizer.cc:143 src/libaudqt/equalizer-qt.cc:144
 msgid "Presets ..."
-msgstr ""
+msgstr "Претподешавања ..."
 
-#: src/libaudgui/equalizer.cc:147 src/libaudqt/equalizer-qt.cc:139
+#: src/libaudgui/equalizer.cc:147 src/libaudqt/equalizer-qt.cc:143
 msgid "Reset to Zero"
-msgstr ""
+msgstr "Врати на нулу"
 
-#: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer-qt.cc:125
+#: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer-qt.cc:129
 msgid "Preamp"
 msgstr "Претпојачање"
 
-#: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:58
+#: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:59
 msgid "Open Files"
 msgstr "Отвори датотеке"
 
 #: src/libaudgui/file-opener.cc:79 src/libaudgui/url-opener.cc:64
-#: src/libaudqt/url-opener-qt.cc:47
+#: src/libaudqt/url-opener-qt.cc:48
 msgid "_Open"
 msgstr "_Отвори"
 
@@ -417,12 +432,12 @@ msgstr "_Отвори"
 msgid "Close _dialog on open"
 msgstr "Затвори _прозорче на „Отвори“"
 
-#: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:58
+#: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:59
 msgid "Add Files"
 msgstr "Додај датотеке"
 
 #: src/libaudgui/file-opener.cc:87 src/libaudgui/url-opener.cc:70
-#: src/libaudqt/url-opener-qt.cc:53
+#: src/libaudqt/url-opener-qt.cc:54
 msgid "_Add"
 msgstr "_Додај"
 
@@ -432,51 +447,51 @@ msgstr "Затвори _прозорче на „Додај“"
 
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:894 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:229
-#: src/libaudqt/infowin-qt.cc:155 src/libaudqt/log-inspector.cc:242
-#: src/libaudqt/prefs-plugin.cc:147 src/libaudqt/prefs-window-qt.cc:625
-#: src/libaudqt/queue-manager-qt.cc:162
+#: src/libaudgui/prefs-window.cc:912 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:243
+#: src/libaudqt/infowin-qt.cc:156 src/libaudqt/log-inspector.cc:244
+#: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:646
 msgid "_Close"
 msgstr "_Затвори"
 
 #: src/libaudgui/infopopup.cc:187 src/libaudgui/infowin.cc:369
-#: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:93
+#: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:94
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:167
+#: src/libaudqt/queue-manager-qt.cc:110
 msgid "Title"
 msgstr "Наслов"
 
 #: src/libaudgui/infopopup.cc:188 src/libaudgui/infowin.cc:372
-#: src/libaudgui/prefs-window.cc:101 src/libaudqt/infopopup-qt.cc:95
+#: src/libaudgui/prefs-window.cc:101 src/libaudqt/infopopup-qt.cc:96
 #: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:164
 msgid "Artist"
 msgstr "Извођач"
 
 #: src/libaudgui/infopopup.cc:189 src/libaudgui/infowin.cc:375
 #: src/libaudgui/prefs-window.cc:102 src/libaudgui/prefs-window.cc:149
-#: src/libaudqt/infopopup-qt.cc:97 src/libaudqt/info-widget.cc:50
+#: src/libaudqt/infopopup-qt.cc:98 src/libaudqt/info-widget.cc:50
 #: src/libaudqt/prefs-window-qt.cc:165 src/libaudqt/prefs-window-qt.cc:207
 msgid "Album"
 msgstr "Албум"
 
 #: src/libaudgui/infopopup.cc:190 src/libaudgui/infowin.cc:385
-#: src/libaudgui/prefs-window.cc:106 src/libaudqt/infopopup-qt.cc:99
+#: src/libaudgui/prefs-window.cc:106 src/libaudqt/infopopup-qt.cc:100
 #: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:169
 msgid "Genre"
 msgstr "Жанр"
 
 #: src/libaudgui/infopopup.cc:191 src/libaudgui/infowin.cc:388
-#: src/libaudgui/prefs-window.cc:111 src/libaudqt/infopopup-qt.cc:101
+#: src/libaudgui/prefs-window.cc:111 src/libaudqt/infopopup-qt.cc:102
 #: src/libaudqt/prefs-window-qt.cc:174
 msgid "Year"
 msgstr "Година"
 
 #: src/libaudgui/infopopup.cc:192 src/libaudgui/prefs-window.cc:148
-#: src/libaudqt/infopopup-qt.cc:103 src/libaudqt/prefs-window-qt.cc:206
+#: src/libaudqt/infopopup-qt.cc:104 src/libaudqt/prefs-window-qt.cc:206
 msgid "Track"
 msgstr "Нумера"
 
-#: src/libaudgui/infopopup.cc:193 src/libaudqt/infopopup-qt.cc:105
+#: src/libaudgui/infopopup.cc:193 src/libaudqt/infopopup-qt.cc:106
 #: src/libaudqt/info-widget.cc:63
 msgid "Length"
 msgstr "Дужина"
@@ -658,13 +673,13 @@ msgid "Save error"
 msgstr "Чување није успело"
 
 #: src/libaudgui/infowin.cc:324 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin-qt.cc:120 src/libaudqt/prefs-window-qt.cc:159
+#: src/libaudqt/infowin-qt.cc:121 src/libaudqt/prefs-window-qt.cc:159
 msgid "Song Info"
 msgstr "Подаци песме"
 
 #: src/libaudgui/infowin.cc:378 src/libaudqt/info-widget.cc:51
 msgid "Album Artist"
-msgstr ""
+msgstr "Извођач албума"
 
 #: src/libaudgui/infowin.cc:381 src/libaudgui/prefs-window.cc:112
 #: src/libaudqt/info-widget.cc:54 src/libaudqt/prefs-window-qt.cc:175
@@ -677,19 +692,19 @@ msgstr "Број нумере"
 
 #: src/libaudgui/infowin.cc:397
 msgid "_Auto-fill empty fields"
-msgstr ""
+msgstr "_Сам попуни празна поља"
 
-#: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:183
+#: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:184
 msgid "_Save"
 msgstr "_Сачувај"
 
 #: src/libaudgui/infowin.cc:417
 msgid "_Previous"
-msgstr ""
+msgstr "_Претходно"
 
 #: src/libaudgui/infowin.cc:420
 msgid "_Next"
-msgstr "С_ледеће"
+msgstr "_Следеће"
 
 #: src/libaudgui/infowin.cc:469
 #, c-format
@@ -715,11 +730,11 @@ msgstr "Унесите време (минути:секунде):"
 #: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
 #: src/libaudgui/jump-to-track.cc:305
 msgid "_Queue"
-msgstr "Стави у _ред"
+msgstr "_Стави у ред"
 
 #: src/libaudgui/jump-to-track.cc:101
 msgid "Un_queue"
-msgstr "Избаци из _реда"
+msgstr "_Избаци из реда"
 
 #: src/libaudgui/jump-to-track.cc:240
 msgid "Jump to Song"
@@ -727,11 +742,11 @@ msgstr "Пређи на песму"
 
 #: src/libaudgui/jump-to-track.cc:265
 msgid "Filter: "
-msgstr "Пропусник: "
+msgstr "Филтер: "
 
 #: src/libaudgui/jump-to-track.cc:266
 msgid "_Filter:"
-msgstr "_Пропусти:"
+msgstr "_Издвој:"
 
 #: src/libaudgui/jump-to-track.cc:298
 msgid "C_lose on jump"
@@ -739,7 +754,7 @@ msgstr "Затвори после _скока"
 
 #: src/libaudgui/playlists.cc:91
 msgid "_Overwrite"
-msgstr ""
+msgstr "_Препиши"
 
 #: src/libaudgui/playlists.cc:95
 msgid "Confirm Overwrite"
@@ -754,62 +769,63 @@ msgstr "Да препишем „%s“?"
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
 msgstr ""
+"Упишите проширење назива датотеке или изаберите запис са падајућег списка."
 
 #: src/libaudgui/playlists.cc:140
 msgid "Select Format by Extension"
-msgstr ""
+msgstr "Изаберите запис према проширењу"
 
-#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:59
+#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:60
 msgid "Export Playlist"
 msgstr "Извези списак нумера"
 
 #: src/libaudgui/playlists.cc:168
 msgid "_Export"
-msgstr ""
+msgstr "_Извези"
 
-#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:59
+#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:60
 msgid "Import Playlist"
 msgstr "Увези списак нумера"
 
 #: src/libaudgui/playlists.cc:175
 msgid "_Import"
-msgstr ""
+msgstr "_Увези"
 
 #: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:44
 msgid "_Plugins ..."
 msgstr "_Прикључци ..."
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:57
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:61
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "О програму „%s“"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:122
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:126
 #, c-format
 msgid "%s Settings"
-msgstr "Подешавања за %s"
+msgstr "Подешавања %sа"
 
-#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:134
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:138
 msgid "_Set"
 msgstr "_Подеси"
 
-#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:708
-#: src/libaudgui/prefs-window.cc:748 src/libaudqt/prefs-window-qt.cc:580
-#: src/libaudqt/prefs-window-qt.cc:583
+#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:726
+#: src/libaudgui/prefs-window.cc:766 src/libaudqt/prefs-window-qt.cc:598
+#: src/libaudqt/prefs-window-qt.cc:601
 msgid "_Settings"
 msgstr "_Подешавања"
 
-#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:722
-#: src/libaudgui/prefs-window.cc:760 src/libaudqt/prefs-window-qt.cc:581
-#: src/libaudqt/prefs-window-qt.cc:584
+#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:740
+#: src/libaudgui/prefs-window.cc:778 src/libaudqt/prefs-window-qt.cc:599
+#: src/libaudqt/prefs-window-qt.cc:602
 msgid "_About"
 msgstr "_О програму"
 
-#: src/libaudgui/prefs-widget.cc:277 src/libaudqt/prefs-widget-qt.cc:235
+#: src/libaudgui/prefs-widget.cc:277 src/libaudqt/prefs-widget-qt.cc:234
 msgid "Choose File"
-msgstr ""
+msgstr "Изаберите датотеку"
 
-#: src/libaudgui/prefs-widget.cc:281 src/libaudqt/prefs-widget-qt.cc:239
+#: src/libaudgui/prefs-widget.cc:281 src/libaudqt/prefs-widget-qt.cc:238
 msgid "Choose Folder"
 msgstr "Изаберите фасциклу"
 
@@ -837,7 +853,7 @@ msgstr "Прикључци"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:161
 msgid "Advanced"
-msgstr ""
+msgstr "Напредно"
 
 #: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "General"
@@ -861,11 +877,11 @@ msgstr "Пренос"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window-qt.cc:166
 msgid "Album artist"
-msgstr ""
+msgstr "Извођач албума"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window-qt.cc:168
 msgid "Track number"
-msgstr ""
+msgstr "Број нумере"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window-qt.cc:170
 msgid "File name"
@@ -882,7 +898,7 @@ msgstr "Датум"
 #: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:55
 #: src/libaudqt/prefs-window-qt.cc:173
 msgid "Description"
-msgstr ""
+msgstr "Опис"
 
 #: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:64
 #: src/libaudqt/prefs-window-qt.cc:176
@@ -944,7 +960,7 @@ msgstr "турски"
 
 #: src/libaudgui/prefs-window.cc:133 src/libaudqt/prefs-window-qt.cc:194
 msgid "Automatic"
-msgstr ""
+msgstr "Аутоматски"
 
 #: src/libaudgui/prefs-window.cc:137 src/libaudqt/prefs-window-qt.cc:195
 msgid "Floating point"
@@ -952,424 +968,436 @@ msgstr "Покретни зарез"
 
 #: src/libaudgui/prefs-window.cc:141 src/libaudqt/prefs-window-qt.cc:198
 msgid "As decoded"
-msgstr ""
+msgstr "Као декодер"
 
 #: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:199
 msgid "After applying ReplayGain"
-msgstr ""
+msgstr "Након примене појачања понављања"
 
 #: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:201
 msgid "After applying effects"
-msgstr ""
+msgstr "Након примене дејстава"
 
 #: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:202
 msgid "After applying equalization"
-msgstr ""
+msgstr "Након примене изједначавања"
 
 #: src/libaudgui/prefs-window.cc:150 src/libaudqt/prefs-window-qt.cc:208
 msgid "Based on shuffle"
+msgstr "Засновано на насумичности"
+
+#: src/libaudgui/prefs-window.cc:165
+msgid "Restart in Qt mode"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:162 src/libaudqt/prefs-window-qt.cc:219
+#: src/libaudgui/prefs-window.cc:174
+msgid "Audacious is running in GTK (legacy) mode."
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:178
+msgid "Qt mode is unavailable in this build."
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:239
 msgid "Interface:"
-msgstr ""
+msgstr "Уређај:"
 
-#: src/libaudgui/prefs-window.cc:181 src/libaudqt/prefs-window-qt.cc:227
+#: src/libaudgui/prefs-window.cc:199 src/libaudqt/prefs-window-qt.cc:247
 msgid "Output plugin:"
 msgstr "Прикључак излаза:"
 
-#: src/libaudgui/prefs-window.cc:202 src/libaudqt/prefs-window-qt.cc:240
+#: src/libaudgui/prefs-window.cc:220 src/libaudqt/prefs-window-qt.cc:260
 msgid "Amplify all files:"
 msgstr "Појачај све датотеке:"
 
-#: src/libaudgui/prefs-window.cc:204 src/libaudgui/prefs-window.cc:207
-#: src/libaudqt/prefs-window-qt.cc:241 src/libaudqt/prefs-window-qt.cc:243
+#: src/libaudgui/prefs-window.cc:222 src/libaudgui/prefs-window.cc:225
+#: src/libaudqt/prefs-window-qt.cc:261 src/libaudqt/prefs-window-qt.cc:263
 msgid "dB"
 msgstr "dB"
 
-#: src/libaudgui/prefs-window.cc:205 src/libaudqt/prefs-window-qt.cc:242
+#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window-qt.cc:262
 msgid "Amplify untagged files:"
 msgstr "Појачај датотеке без ознака:"
 
-#: src/libaudgui/prefs-window.cc:211 src/libaudqt/prefs-window-qt.cc:246
+#: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window-qt.cc:266
 msgid "<b>Output Settings</b>"
 msgstr "<b>Подешавања излаза</b>"
 
-#: src/libaudgui/prefs-window.cc:213 src/libaudqt/prefs-window-qt.cc:248
+#: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:268
 msgid "Bit depth:"
 msgstr "Дубина бита:"
 
-#: src/libaudgui/prefs-window.cc:216 src/libaudgui/prefs-window.cc:261
-#: src/libaudqt/prefs-window-qt.cc:251 src/libaudqt/prefs-window-qt.cc:279
+#: src/libaudgui/prefs-window.cc:234 src/libaudgui/prefs-window.cc:279
+#: src/libaudqt/prefs-window-qt.cc:271 src/libaudqt/prefs-window-qt.cc:299
 msgid "Buffer size:"
 msgstr "Величина међумеморије:"
 
-#: src/libaudgui/prefs-window.cc:218 src/libaudqt/prefs-window-qt.cc:252
+#: src/libaudgui/prefs-window.cc:236 src/libaudqt/prefs-window-qt.cc:272
 msgid "ms"
 msgstr "ms"
 
-#: src/libaudgui/prefs-window.cc:219 src/libaudqt/prefs-window-qt.cc:253
+#: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window-qt.cc:273
 msgid "Soft clipping"
 msgstr "Меко исецање"
 
-#: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window-qt.cc:254
+#: src/libaudgui/prefs-window.cc:239 src/libaudqt/prefs-window-qt.cc:274
 msgid "Use software volume control (not recommended)"
 msgstr "Користи софтверско управљање јачином звука (није препоручљиво)"
 
-#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window-qt.cc:256
+#: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window-qt.cc:276
 msgid "<b>Recording Settings</b>"
-msgstr ""
+msgstr "<b>Подешавања снимања</b>"
 
-#: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window-qt.cc:259
+#: src/libaudgui/prefs-window.cc:245 src/libaudqt/prefs-window-qt.cc:279
 msgid "Record stream:"
-msgstr ""
+msgstr "Сними ток:"
 
-#: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:261
+#: src/libaudgui/prefs-window.cc:248 src/libaudqt/prefs-window-qt.cc:281
 msgid "<b>ReplayGain</b>"
-msgstr ""
+msgstr "<b>Појачање понављања</b>"
 
-#: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:262
+#: src/libaudgui/prefs-window.cc:249 src/libaudqt/prefs-window-qt.cc:282
 msgid "Enable ReplayGain"
-msgstr ""
+msgstr "Укључује појачање понављања"
 
-#: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window-qt.cc:263
+#: src/libaudgui/prefs-window.cc:251 src/libaudqt/prefs-window-qt.cc:283
 msgid "Mode:"
-msgstr ""
+msgstr "Режим:"
 
-#: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window-qt.cc:265
+#: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window-qt.cc:285
 msgid "Prevent clipping (recommended)"
 msgstr "Спречи одсецање (препоручљиво)"
 
-#: src/libaudgui/prefs-window.cc:245 src/libaudqt/prefs-window-qt.cc:270
+#: src/libaudgui/prefs-window.cc:263 src/libaudqt/prefs-window-qt.cc:290
 msgid "Proxy hostname:"
 msgstr "Назив домаћина посредника:"
 
-#: src/libaudgui/prefs-window.cc:247 src/libaudqt/prefs-window-qt.cc:271
+#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window-qt.cc:291
 msgid "Proxy port:"
 msgstr "Прикључник посредника:"
 
-#: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window-qt.cc:274
+#: src/libaudgui/prefs-window.cc:270 src/libaudqt/prefs-window-qt.cc:294
 msgid "Proxy username:"
 msgstr "Корисничко име посредника:"
 
-#: src/libaudgui/prefs-window.cc:254 src/libaudqt/prefs-window-qt.cc:275
+#: src/libaudgui/prefs-window.cc:272 src/libaudqt/prefs-window-qt.cc:295
 msgid "Proxy password:"
 msgstr "Лозинка посредника:"
 
-#: src/libaudgui/prefs-window.cc:260 src/libaudqt/prefs-window-qt.cc:278
+#: src/libaudgui/prefs-window.cc:278 src/libaudqt/prefs-window-qt.cc:298
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Подешавања мреже</b>"
 
-#: src/libaudgui/prefs-window.cc:263 src/libaudqt/prefs-window-qt.cc:280
+#: src/libaudgui/prefs-window.cc:281 src/libaudqt/prefs-window-qt.cc:300
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
-#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window-qt.cc:281
+#: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window-qt.cc:301
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Подешавања посредника</b>"
 
-#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window-qt.cc:282
+#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window-qt.cc:302
 msgid "Enable proxy usage"
 msgstr "Укључи коришћење посредника"
 
-#: src/libaudgui/prefs-window.cc:269 src/libaudqt/prefs-window-qt.cc:284
+#: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window-qt.cc:304
 msgid "Use authentication with proxy"
 msgstr "Користи потврђивање идентитета са посредником"
 
-#: src/libaudgui/prefs-window.cc:273 src/libaudqt/prefs-window-qt.cc:287
+#: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window-qt.cc:307
 msgid "Use SOCKS proxy"
-msgstr ""
+msgstr "Користи посредника ПРИКЉУЧНИЦЕ"
 
-#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window-qt.cc:288
+#: src/libaudgui/prefs-window.cc:293 src/libaudqt/prefs-window-qt.cc:308
 msgid "SOCKS v4a"
-msgstr ""
+msgstr "ПРИКЉУЧНИЦА v4a"
 
-#: src/libaudgui/prefs-window.cc:279 src/libaudqt/prefs-window-qt.cc:289
+#: src/libaudgui/prefs-window.cc:297 src/libaudqt/prefs-window-qt.cc:309
 msgid "SOCKS v5"
-msgstr ""
+msgstr "ПРИКЉУЧНИЦА v5"
 
-#: src/libaudgui/prefs-window.cc:286 src/libaudqt/prefs-window-qt.cc:292
+#: src/libaudgui/prefs-window.cc:304 src/libaudqt/prefs-window-qt.cc:312
 msgid "Auto character encoding detector for:"
 msgstr "Самостални откривач кодирања знакова за:"
 
-#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window-qt.cc:295
+#: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:315
 msgid "Fallback character encodings:"
 msgstr "Резервна кодирања знакова:"
 
-#: src/libaudgui/prefs-window.cc:297 src/libaudqt/prefs-window-qt.cc:302
+#: src/libaudgui/prefs-window.cc:315 src/libaudqt/prefs-window-qt.cc:322
 msgid "<b>Behavior</b>"
 msgstr "<b>Понашање</b>"
 
-#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window-qt.cc:303
+#: src/libaudgui/prefs-window.cc:316 src/libaudqt/prefs-window-qt.cc:323
 msgid "Resume playback on startup"
-msgstr ""
+msgstr "Настави пуштање при покретању"
 
-#: src/libaudgui/prefs-window.cc:300 src/libaudqt/prefs-window-qt.cc:305
+#: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:325
 msgid "Pause instead of resuming immediately"
-msgstr ""
+msgstr "Застани уместо да наставиш одмах"
 
-#: src/libaudgui/prefs-window.cc:303 src/libaudqt/prefs-window-qt.cc:307
+#: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window-qt.cc:327
 msgid "Advance when the current song is deleted"
 msgstr "Напредуј када је обрисана текућа песма"
 
-#: src/libaudgui/prefs-window.cc:305 src/libaudqt/prefs-window-qt.cc:309
+#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:329
 msgid "Clear the playlist when opening files"
 msgstr "Очисти списак нумера приликом отварања датотека"
 
-#: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:311
+#: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:331
 msgid "Open files in a temporary playlist"
 msgstr "Отвори датотеке у привременом списку нумера"
 
-#: src/libaudgui/prefs-window.cc:309 src/libaudqt/prefs-window-qt.cc:313
+#: src/libaudgui/prefs-window.cc:327 src/libaudqt/prefs-window-qt.cc:333
 msgid "<b>Song Display</b>"
 msgstr "<b>Приказ песме</b>"
 
-#: src/libaudgui/prefs-window.cc:310 src/libaudqt/prefs-window-qt.cc:314
+#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:334
 msgid "Show song numbers"
 msgstr "Прикажи бројеве песама"
 
-#: src/libaudgui/prefs-window.cc:312 src/libaudqt/prefs-window-qt.cc:316
+#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:336
 msgid "Show leading zeroes (02:00 vs. 2:00)"
-msgstr ""
+msgstr "Прикажи почетне нуле (02:00 уместо 2:00)"
 
-#: src/libaudgui/prefs-window.cc:314 src/libaudqt/prefs-window-qt.cc:318
+#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:338
 msgid "Show hours separately (1:30:00 vs. 90:00)"
-msgstr ""
+msgstr "Прикажи часове издвојено (1:30:00 уместо 90:00)"
 
-#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:321
+#: src/libaudgui/prefs-window.cc:335 src/libaudqt/prefs-window-qt.cc:341
 msgid "<b>Export</b>"
-msgstr ""
+msgstr "<b>Извези</b>"
 
-#: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:322
+#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:342
 msgid "Use relative paths when possible"
-msgstr ""
+msgstr "Користи релативне путање када је могуће"
 
-#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:326
+#: src/libaudgui/prefs-window.cc:341 src/libaudqt/prefs-window-qt.cc:346
 msgid "<b>Album Art</b>"
 msgstr "<b>Омот албума</b>"
 
-#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window-qt.cc:328
+#: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:348
 msgid "Search for images matching these words (comma-separated):"
 msgstr "Потражи слике које одговарају овим речима (раздвојене зарезом):"
 
-#: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window-qt.cc:330
+#: src/libaudgui/prefs-window.cc:344 src/libaudqt/prefs-window-qt.cc:350
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "Искључи слике које одговарају овим речима (раздвојене зарезом):"
 
-#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:332
+#: src/libaudgui/prefs-window.cc:346 src/libaudqt/prefs-window-qt.cc:352
 msgid "Search for images matching song file name"
 msgstr "Потражи слике које одговарају називу песме"
 
-#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:334
+#: src/libaudgui/prefs-window.cc:348 src/libaudqt/prefs-window-qt.cc:354
 msgid "Search recursively"
 msgstr "Потражи дубински"
 
-#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:335
+#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:355
 msgid "Search depth:"
-msgstr "Дубина претраге: "
+msgstr "Дубина претраге:"
 
-#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:337
+#: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window-qt.cc:357
 msgid "<b>Popup Information</b>"
 msgstr "<b>Облачић података</b>"
 
-#: src/libaudgui/prefs-window.cc:337 src/libaudqt/prefs-window-qt.cc:338
+#: src/libaudgui/prefs-window.cc:355 src/libaudqt/prefs-window-qt.cc:358
 msgid "Show popup information"
 msgstr "Прикажи облачиће података"
 
-#: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window-qt.cc:340
+#: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window-qt.cc:360
 msgid "Popup delay (tenths of a second):"
 msgstr "Застој искакања (десетинке секунде):"
 
-#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:342
+#: src/libaudgui/prefs-window.cc:361
 msgid "Show time scale for current song"
 msgstr "Прикажи временску лествицу за текућу песму"
 
-#: src/libaudgui/prefs-window.cc:349 src/libaudqt/prefs-window-qt.cc:346
+#: src/libaudgui/prefs-window.cc:367 src/libaudqt/prefs-window-qt.cc:364
 msgid "<b>Compatibility</b>"
 msgstr "<b>Сагласност</b>"
 
-#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:347
+#: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:365
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr "Протумачи \\ (контра косу црту) као граничник фасцикле"
 
-#: src/libaudgui/prefs-window.cc:353 src/libaudqt/prefs-window-qt.cc:350
+#: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:368
 msgid "<b>Playlist</b>"
-msgstr ""
+msgstr "<b>Списак песама</b>"
 
-#: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window-qt.cc:351
+#: src/libaudgui/prefs-window.cc:372 src/libaudqt/prefs-window-qt.cc:369
 msgid "Add folders recursively"
-msgstr ""
+msgstr "Додај фасцикле дубински"
 
-#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window-qt.cc:353
+#: src/libaudgui/prefs-window.cc:374 src/libaudqt/prefs-window-qt.cc:371
 msgid "Add folders nested within playlist files"
-msgstr ""
+msgstr "Додај фасцикле угнеждене у датотекама списка песама"
 
-#: src/libaudgui/prefs-window.cc:358 src/libaudqt/prefs-window-qt.cc:355
+#: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:373
 msgid "<b>Metadata</b>"
 msgstr "<b>Метаподаци</b>"
 
-#: src/libaudgui/prefs-window.cc:359 src/libaudqt/prefs-window-qt.cc:356
+#: src/libaudgui/prefs-window.cc:377 src/libaudqt/prefs-window-qt.cc:374
 msgid "Guess missing metadata from file path"
-msgstr ""
+msgstr "Погоди недостајуће метаподатке из путање датотеке"
 
-#: src/libaudgui/prefs-window.cc:361 src/libaudqt/prefs-window-qt.cc:358
+#: src/libaudgui/prefs-window.cc:379 src/libaudqt/prefs-window-qt.cc:376
 msgid "Do not load metadata for songs until played"
 msgstr "Не учитавај метаподатке за песме док се не пусте"
 
-#: src/libaudgui/prefs-window.cc:363 src/libaudqt/prefs-window-qt.cc:361
+#: src/libaudgui/prefs-window.cc:381 src/libaudqt/prefs-window-qt.cc:379
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "Испробај садржај датотека са непознатим проширењем назива датотеке"
 
-#: src/libaudgui/prefs-window.cc:365 src/libaudqt/prefs-window-qt.cc:363
+#: src/libaudgui/prefs-window.cc:383 src/libaudqt/prefs-window-qt.cc:381
 msgid "<b>Miscellaneous</b>"
-msgstr ""
+msgstr "<b>Разно</b>"
 
-#: src/libaudgui/prefs-window.cc:366 src/libaudqt/prefs-window-qt.cc:364
+#: src/libaudgui/prefs-window.cc:384 src/libaudqt/prefs-window-qt.cc:382
 msgid "Step forward/backward by:"
-msgstr ""
+msgstr "Помери напред/назад за:"
 
-#: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:365
+#: src/libaudgui/prefs-window.cc:386 src/libaudqt/prefs-window-qt.cc:383
 msgid "seconds"
 msgstr "секунде"
 
-#: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:366
+#: src/libaudgui/prefs-window.cc:387 src/libaudqt/prefs-window-qt.cc:384
 msgid "Adjust volume by:"
-msgstr ""
+msgstr "Подеси јачину звука за:"
 
-#: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:367
+#: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:385
 msgid "percent"
-msgstr ""
+msgstr "проценат"
 
-#: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:384
+#: src/libaudgui/prefs-window.cc:406 src/libaudqt/prefs-window-qt.cc:402
 msgid "TITLE"
 msgstr "НАСЛОВ"
 
-#: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:385
+#: src/libaudgui/prefs-window.cc:407 src/libaudqt/prefs-window-qt.cc:403
 msgid "TITLE - ARTIST"
-msgstr ""
+msgstr "НАСЛОВ — ИЗВОЂАЧ"
 
-#: src/libaudgui/prefs-window.cc:390 src/libaudqt/prefs-window-qt.cc:386
+#: src/libaudgui/prefs-window.cc:408 src/libaudqt/prefs-window-qt.cc:404
 msgid "TITLE - ARTIST - ALBUM"
-msgstr ""
+msgstr "НАСЛОВ — ИЗВОЂАЧ — АЛБУМ"
 
-#: src/libaudgui/prefs-window.cc:391 src/libaudqt/prefs-window-qt.cc:387
+#: src/libaudgui/prefs-window.cc:409 src/libaudqt/prefs-window-qt.cc:405
 msgid "ARTIST - TITLE"
 msgstr "ИЗВОЂАЧ — НАСЛОВ"
 
-#: src/libaudgui/prefs-window.cc:392 src/libaudqt/prefs-window-qt.cc:388
+#: src/libaudgui/prefs-window.cc:410 src/libaudqt/prefs-window-qt.cc:406
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ИЗВОЂАЧ — АЛБУМ — НАСЛОВ"
 
-#: src/libaudgui/prefs-window.cc:393 src/libaudqt/prefs-window-qt.cc:389
+#: src/libaudgui/prefs-window.cc:411 src/libaudqt/prefs-window-qt.cc:407
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ИЗВОЂАЧ — АЛБУМ — БРОЈ. НАСЛОВ"
 
-#: src/libaudgui/prefs-window.cc:394 src/libaudqt/prefs-window-qt.cc:390
+#: src/libaudgui/prefs-window.cc:412 src/libaudqt/prefs-window-qt.cc:408
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ИЗВОЂАЧ [ АЛБУМ ] — БРОЈ. НАСЛОВ"
 
-#: src/libaudgui/prefs-window.cc:395 src/libaudqt/prefs-window-qt.cc:391
+#: src/libaudgui/prefs-window.cc:413 src/libaudqt/prefs-window-qt.cc:409
 msgid "ALBUM - TITLE"
 msgstr "АЛБУМ — НАСЛОВ"
 
-#: src/libaudgui/prefs-window.cc:489
+#: src/libaudgui/prefs-window.cc:507
 msgid "Category"
 msgstr "Категорија"
 
-#: src/libaudgui/prefs-window.cc:553 src/libaudqt/prefs-window-qt.cc:408
+#: src/libaudgui/prefs-window.cc:571 src/libaudqt/prefs-window-qt.cc:426
 msgid "Custom"
 msgstr "Произвољно"
 
-#: src/libaudgui/prefs-window.cc:571 src/libaudqt/prefs-window-qt.cc:400
+#: src/libaudgui/prefs-window.cc:589 src/libaudqt/prefs-window-qt.cc:418
 msgid "Title format:"
 msgstr "Запис наслова:"
 
-#: src/libaudgui/prefs-window.cc:575 src/libaudqt/prefs-window-qt.cc:411
+#: src/libaudgui/prefs-window.cc:593 src/libaudqt/prefs-window-qt.cc:429
 msgid "Custom string:"
 msgstr "Произвољна ниска:"
 
-#: src/libaudgui/prefs-window.cc:774 src/libaudqt/prefs-window-qt.cc:705
+#: src/libaudgui/prefs-window.cc:792 src/libaudqt/prefs-window-qt.cc:730
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr ""
+msgstr "Укључи снимање звучног тока са „%s“"
 
-#: src/libaudgui/prefs-window.cc:783 src/libaudqt/prefs-window-qt.cc:718
+#: src/libaudgui/prefs-window.cc:801 src/libaudqt/prefs-window-qt.cc:743
 msgid "No audio recording plugin available"
-msgstr ""
+msgstr "Није доступан прикључак за снимање звука"
 
-#: src/libaudgui/prefs-window.cc:843 src/libaudqt/prefs-window-qt.cc:593
+#: src/libaudgui/prefs-window.cc:861 src/libaudqt/prefs-window-qt.cc:611
 msgid "Audacious Settings"
-msgstr "Подешавања Безочника"
+msgstr "Подешавања Аудацијуса"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:172
 msgid "Cancel"
 msgstr "Откажи"
 
-#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:290
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:298
 msgid "Save"
 msgstr "Сачувај"
 
-#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:257
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:261
 msgid "Load"
 msgstr "Учитај"
 
-#: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:253
+#: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:257
 msgid "Load Preset File"
-msgstr ""
+msgstr "Учитај датотеку претподешавања"
 
 #: src/libaudgui/preset-browser.cc:99
 msgid "Load EQF File"
-msgstr ""
+msgstr "Учитај ЕКуФ датотеку"
 
-#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:285
+#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:293
 msgid "Save Preset File"
-msgstr ""
+msgstr "Сачувај датотеку претподешавања"
 
 #: src/libaudgui/preset-browser.cc:131
 msgid "Save EQF File"
-msgstr ""
+msgstr "Сачувај ЕКуФ датотеку"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:158
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:263
 msgid "Queue Manager"
 msgstr "Управник реда"
 
-#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:161
+#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:209
 msgid "_Unqueue"
-msgstr "Избаци из _реда"
+msgstr "_Избаци из реда"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr ""
+msgstr "Радим ..."
 
-#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:223
+#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:225
 msgid "Error"
 msgstr "Грeшкa"
 
 #: src/libaudgui/status.cc:90
 msgid "Information"
-msgstr ""
+msgstr "Информације"
 
-#: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:40
+#: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:41
 msgid "_Save to history"
-msgstr ""
+msgstr "_Сачувај у историјат"
 
-#: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:46
+#: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
 msgstr "Отворите адресу"
 
-#: src/libaudgui/url-opener.cc:69 src/libaudqt/url-opener-qt.cc:52
+#: src/libaudgui/url-opener.cc:69 src/libaudqt/url-opener-qt.cc:53
 msgid "Add URL"
 msgstr "Додајте адресу"
 
-#: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:68
+#: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:69
 msgid "C_lear history"
-msgstr ""
+msgstr "Очисти _историјат"
 
-#: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:61
+#: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"
 msgstr "Унеси адресу:"
 
-#: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:62
+#: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:63
 msgid "Open"
 msgstr "Отвори"
 
@@ -1377,126 +1405,144 @@ msgstr "Отвори"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n(Додатне поруке су скривене.)"
-
-#: src/libaudqt/eq-preset-qt.cc:249
-msgid "Preset files (*.preset *.eqf *.q1)"
 msgstr ""
+"\n"
+"(Додатне поруке су скривене.)"
 
-#: src/libaudqt/eq-preset-qt.cc:348
-msgid "Close"
-msgstr "Затвори"
+#: src/libaudqt/eq-preset-qt.cc:252
+msgid "Preset files (*.preset *.eqf *.q1)"
+msgstr "Датотеке претподешавања (*.preset *.eqf *.q1)"
+
+#: src/libaudqt/eq-preset-qt.cc:345
+msgid "Revert"
+msgstr ""
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
-msgstr "Претражи"
-
-#: src/libaudqt/fileopener.cc:58
-msgid "Open Folder"
-msgstr ""
+msgstr "Разгледај"
 
 #: src/libaudqt/fileopener.cc:59
-msgid "Add Folder"
-msgstr ""
+msgid "Open Folder"
+msgstr "Отворите фасциклу"
 
-#: src/libaudqt/fileopener.cc:62 src/libaudqt/fileopener.cc:63
+#: src/libaudqt/fileopener.cc:60
+msgid "Add Folder"
+msgstr "Додајте фасциклу"
+
+#: src/libaudqt/fileopener.cc:63 src/libaudqt/fileopener.cc:64
 msgid "Add"
-msgstr ""
+msgstr "Додај"
 
 #: src/libaudqt/font-entry.cc:39
 msgid "Set Font"
-msgstr ""
+msgstr "Постави фонт"
 
 #: src/libaudqt/info-widget.cc:44
 msgid "<various>"
-msgstr ""
+msgstr "<разно>"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Metadata"
-msgstr ""
+msgstr "Метаподаци"
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Composer"
-msgstr ""
+msgstr "Композитор"
 
 #: src/libaudqt/info-widget.cc:57
 msgid "Performer"
-msgstr ""
+msgstr "Извођач"
 
 #: src/libaudqt/info-widget.cc:58
 msgid "Recording Year"
-msgstr ""
+msgstr "Година снимања"
 
 #: src/libaudqt/info-widget.cc:59
 msgid "Recording Date"
-msgstr ""
+msgstr "Датум снимања"
 
 #: src/libaudqt/info-widget.cc:62
 msgid "Technical"
-msgstr ""
+msgstr "Технички"
 
 #: src/libaudqt/info-widget.cc:66
 msgid "Bitrate"
-msgstr "Битски проток"
+msgstr "Проток бита"
 
 #: src/libaudqt/info-widget.cc:67
+msgid "Channels"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:68
 msgid "MusicBrainz ID"
-msgstr ""
+msgstr "ИБ Мозгића музике"
 
-#: src/libaudqt/infowin-qt.cc:156
+#: src/libaudqt/infowin-qt.cc:157
 msgid "_Revert"
-msgstr ""
+msgstr "_Врати"
 
-#: src/libaudqt/infowin-qt.cc:167
+#: src/libaudqt/infowin-qt.cc:168
 msgid "Error writing tag(s)."
-msgstr ""
+msgstr "Грешка писања ознаке."
 
-#: src/libaudqt/infowin-qt.cc:189
+#: src/libaudqt/infowin-qt.cc:190
 msgid "%1 files selected"
-msgstr ""
+msgstr "Изабраних датотека – %1"
 
-#: src/libaudqt/infowin-qt.cc:193
+#: src/libaudqt/infowin-qt.cc:194
 msgid "_Save %1 files"
-msgstr ""
-
-#: src/libaudqt/log-inspector.cc:150
-msgid "Level"
-msgstr ""
+msgstr "_Сачувај %1 датотеке"
 
 #: src/libaudqt/log-inspector.cc:152
-msgid "Function"
-msgstr ""
+msgid "Level"
+msgstr "Ниво"
 
 #: src/libaudqt/log-inspector.cc:154
+msgid "Function"
+msgstr "Функција"
+
+#: src/libaudqt/log-inspector.cc:156
 msgid "Message"
-msgstr ""
+msgstr "Порука"
 
-#: src/libaudqt/log-inspector.cc:209
+#: src/libaudqt/log-inspector.cc:211
 msgid "Log Inspector"
-msgstr ""
-
-#: src/libaudqt/log-inspector.cc:220
-msgid "Debug"
-msgstr ""
-
-#: src/libaudqt/log-inspector.cc:221
-msgid "Info"
-msgstr ""
+msgstr "Надзорник дневника"
 
 #: src/libaudqt/log-inspector.cc:222
+msgid "Debug"
+msgstr "Прочишћавање"
+
+#: src/libaudqt/log-inspector.cc:223
+msgid "Info"
+msgstr "Подаци"
+
+#: src/libaudqt/log-inspector.cc:224
 msgid "Warning"
 msgstr "Упозорење"
 
-#: src/libaudqt/log-inspector.cc:234
+#: src/libaudqt/log-inspector.cc:236
 msgid "Cl_ear"
-msgstr ""
+msgstr "_Очисти"
 
-#: src/libaudqt/log-inspector.cc:247
+#: src/libaudqt/log-inspector.cc:249
 msgid "Log Level:"
-msgstr ""
+msgstr "Ниво дневника:"
 
 #: src/libaudqt/plugin-menu-qt.cc:52
 msgid "Services"
+msgstr "Услуге"
+
+#: src/libaudqt/prefs-window-qt.cc:222
+msgid "Restart in GTK (legacy) mode"
+msgstr ""
+
+#: src/libaudqt/prefs-window-qt.cc:232
+msgid "Audacious is running in Qt mode."
+msgstr ""
+
+#: src/libaudqt/prefs-window-qt.cc:236
+msgid "GTK (legacy) mode is unavailable in this build."
 msgstr ""
 
 #: src/libaudqt/util-qt.cc:112

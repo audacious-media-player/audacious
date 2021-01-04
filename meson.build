@@ -1,10 +1,14 @@
 project('audacious', 'c', 'cpp',
-        version: '4.1-devel',
+        version: '4.1-beta1',
         meson_version: '>= 0.50',
-        default_options: ['c_std=gnu99', 'cpp_std=gnu++11'])
+        default_options: [
+          'c_std=gnu99',
+          'cpp_std=gnu++11',
+          'warning_level=1'
+        ])
 
 
-copyright = 'Copyright (C) 2001-2020 Audacious developers and others'
+copyright = 'Copyright (C) 2001-2021 Audacious developers and others'
 
 
 qt5 = import('qt5')
@@ -23,20 +27,31 @@ if get_option('qt')
 endif
 
 
+if get_option('gtk')
+  gtk_req = '>= 2.24'
+  gtk_dep = dependency('gtk+-2.0', version: gtk_req, required: true)
+endif
+
+
 if get_option('libarchive')
   libarchive_dep = dependency('libarchive', required: true)
 endif
+
+
+have_darwin = host_machine.system() == 'darwin'
+have_windows = host_machine.system() == 'windows'
 
 
 cc = meson.get_compiler('c')
 cxx = meson.get_compiler('cpp')
 
 
-if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
+if cc.get_id() in ['gcc', 'clang']
   common_flags = [
     '-ffast-math',
     '-Wtype-limits',
-    '-Wno-stringop-truncation'
+    '-Wno-stringop-truncation',
+    '-fvisibility=hidden'
   ]
 
   cxx_flags = [
@@ -47,17 +62,8 @@ if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
   check_cflags = common_flags
   check_cxxflags = common_flags + cxx_flags
 
-  foreach arg : check_cflags
-    if cc.has_argument(arg)
-      add_project_arguments(arg, language: 'c')
-    endif
-  endforeach
-
-  foreach arg : check_cxxflags
-    if cxx.has_argument(arg)
-      add_project_arguments(arg, language: 'cpp')
-    endif
-  endforeach
+  add_project_arguments(cc.get_supported_arguments(check_cflags), language: 'c')
+  add_project_arguments(cxx.get_supported_arguments(check_cxxflags), language: 'cpp')
 endif
 
 
@@ -76,21 +82,28 @@ endif
 
 
 # XXX - investigate to see if we can do better
-conf.set_quoted('PLUGIN_SUFFIX', '.so')
-if host_machine.system() == 'windows'
+if have_windows
   conf.set_quoted('PLUGIN_SUFFIX', '.dll')
-elif host_machine.system() == 'darwin'
+elif have_darwin
   conf.set_quoted('PLUGIN_SUFFIX', '.dylib')
+else
+  conf.set_quoted('PLUGIN_SUFFIX', '.so')
 endif
 
 
-if host_machine.system() == 'windows'
+if have_windows
   conf.set('EXPORT', '__declspec(dllexport)')
-  conf.set_quoted('PLUGIN_SUFFIX', '.dll')
-elif cc.get_id() == 'gcc' or cc.get_id() == 'clang'
-  add_project_arguments('-fvisibility=hidden', language: 'c')
-  add_project_arguments('-fvisibility=hidden', language: 'cpp')
+elif cxx.has_argument('-fvisibility=default')
   conf.set('EXPORT', '__attribute__((visibility("default")))')
+else
+  error('Could not define EXPORT keyword for public symbols.')
+endif
+
+
+# XXX - why do we have to define this manually?
+if (cxx.has_header('libintl.h'))
+  add_project_arguments('-DHAVE_GETTEXT', language: 'c')
+  add_project_arguments('-DHAVE_GETTEXT', language: 'cpp')
 endif
 
 
@@ -126,8 +139,18 @@ if get_option('qt')
 endif
 
 
+if get_option('gtk')
+  conf.set10('USE_GTK', true)
+endif
+
+
 if get_option('libarchive')
   conf.set10('USE_LIBARCHIVE', true)
+endif
+
+
+if get_option('valgrind')
+  conf.set10('VALGRIND_FRIENDLY', true)
 endif
 
 
@@ -138,8 +161,6 @@ subdir('images')
 
 
 install_data('AUTHORS', 'COPYING')
-
-
 install_data('audacious.desktop', install_dir: install_desktoppath)
 
 
@@ -162,3 +183,22 @@ pkg.generate(
   name: 'audacious',
   url: 'https://audacious-media-player.org'
 )
+
+
+if meson.version().version_compare('>= 0.53')
+  summary({
+    'Prefix': get_option('prefix'),
+    'Bin dir': get_option('bindir'),
+    'Lib dir': get_option('libdir'),
+    'Data dir': get_option('datadir'),
+  }, section: 'Directories')
+
+  summary({
+    'D-Bus support': get_option('dbus'),
+    'Qt support': get_option('qt'),
+    'GTK support': get_option('gtk'),
+    'Libarchive support': get_option('libarchive'),
+    'Valgrind analysis support': get_option('valgrind'),
+    'Build stamp': get_option('buildstamp'),
+  }, section: 'Configuration')
+endif

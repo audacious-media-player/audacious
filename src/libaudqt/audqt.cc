@@ -66,7 +66,10 @@ EXPORT void init()
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     qapp->setAttribute(Qt::AA_UseHighDpiPixmaps);
-#endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    qapp->setAttribute(Qt::AA_DisableWindowContextHelpButton);
+#endif // >= 5.10
+#endif // < 6.0
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     qapp->setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles);
 #endif

@@ -4,6 +4,7 @@
 #mesondefine COPYRIGHT
 #mesondefine EXPORT
 #mesondefine PLUGIN_SUFFIX
+#mesondefine VALGRIND_FRIENDLY
 
 #define PACKAGE_VERSION VERSION
 #define ICONV_CONST
@@ -17,6 +18,7 @@
 
 #mesondefine USE_DBUS
 #mesondefine USE_QT
+#mesondefine USE_GTK
 #mesondefine USE_LIBARCHIVE
 
 #define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_32

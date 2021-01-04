@@ -55,7 +55,7 @@ protected:
     bool m_updating = false;
 
 private:
-    SmartPtr<HookReceiver<HookableWidget>> hook;
+    HookReceiver<HookableWidget> hook{this, &HookableWidget::update_from_cfg};
 };
 
 /* shared class which allows disabling child widgets */
