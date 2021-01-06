@@ -102,8 +102,11 @@ endif
 
 # XXX - why do we have to define this manually?
 if (cxx.has_header('libintl.h'))
-  add_project_arguments('-DHAVE_GETTEXT', language: 'c')
-  add_project_arguments('-DHAVE_GETTEXT', language: 'cpp')
+  add_project_arguments('-DHAVE_GETTEXT', language: ['c', 'cpp'])
+
+  if have_darwin
+    add_project_link_arguments('-lintl', language: ['c', 'cpp'])
+  endif
 endif
 
 
