@@ -10,8 +10,7 @@ config_h_full_path = join_paths(meson.current_build_dir(), 'config.h')
 
 
 if cc.get_id() in ['gcc', 'clang']
-  add_project_arguments('-include', config_h_full_path, language: 'c')
-  add_project_arguments('-include', config_h_full_path, language: 'cpp')
+  add_project_arguments('-include', config_h_full_path, language: ['c', 'cpp'])
 else
   error('Please implement -include handling for your chosen compiler.')
 endif
