@@ -94,7 +94,6 @@ libaudcore_headers = [
 audio_h = configure_file(input: 'audio.h.in',
   output: 'audio.h',
   configuration: conf,
-  install: true,
   install_dir: join_paths(get_option('includedir'), 'libaudcore'))
 
 

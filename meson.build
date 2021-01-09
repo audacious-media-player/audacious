@@ -1,6 +1,6 @@
 project('audacious', 'c', 'cpp',
         version: '4.1-beta1',
-        meson_version: '>= 0.50',
+        meson_version: '>= 0.46',
         default_options: [
           'c_std=gnu99',
           'cpp_std=gnu++11',
@@ -102,8 +102,11 @@ endif
 
 # XXX - why do we have to define this manually?
 if (cxx.has_header('libintl.h'))
-  add_project_arguments('-DHAVE_GETTEXT', language: 'c')
-  add_project_arguments('-DHAVE_GETTEXT', language: 'cpp')
+  add_project_arguments('-DHAVE_GETTEXT', language: ['c', 'cpp'])
+
+  if have_darwin or have_windows
+    add_project_link_arguments('-lintl', language: ['c', 'cpp'])
+  endif
 endif
 
 
