@@ -121,7 +121,7 @@ EXPORT VFSFile VFSFile::tmpfile()
  * @param size The size of each element to read.
  * @param nmemb The number of elements to read.
  * @param file #VFSFile object that represents the VFS stream.
- * @return The number of elements succesfully read.
+ * @return The number of elements successfully read.
  */
 EXPORT int64_t VFSFile::fread(void * ptr, int64_t size, int64_t nmemb)
 {
@@ -140,7 +140,7 @@ EXPORT int64_t VFSFile::fread(void * ptr, int64_t size, int64_t nmemb)
  * @param size The size of each element to write.
  * @param nmemb The number of elements to write.
  * @param file #VFSFile object that represents the VFS stream.
- * @return The number of elements succesfully written.
+ * @return The number of elements successfully written.
  */
 EXPORT int64_t VFSFile::fwrite(const void * ptr, int64_t size, int64_t nmemb)
 {

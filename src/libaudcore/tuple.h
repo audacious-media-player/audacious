@@ -86,7 +86,7 @@ public:
         EndTime,   /* Playback end point (used for cuesheets) */
 
         /* Preserving replay gain information accurately is a challenge since
-         * there are several differents formats around.  We use an integer
+         * there are several different formats around.  We use an integer
          * fraction, with the denominator stored in the *Divisor fields.  For
          * example, if AlbumGain is 512 and GainDivisor is 256, then the album
          * gain is +2 dB.  If TrackPeak is 787 and PeakDivisor is 1000, then the
