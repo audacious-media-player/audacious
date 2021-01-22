@@ -4,6 +4,7 @@
 
 srcdir=$(dirname "$(readlink -f "$0")")
 
+rm -rf /C/aud-win32/bin/share
 rm -rf /C/aud-win32/share/locale
 
 cd /C/aud-win32
@@ -25,6 +26,12 @@ done
 
 for i in `find -name *.dll` ; do strip -s $i ; done
 for i in `find -name *.exe` ; do strip -s $i ; done
+
+cd /C/msys64/mingw32/share/qt5/translations
+mkdir -p /C/aud-win32/bin/share/qt5/translations
+for i in `find . -name '*qt_*' ! -name '*qt_help_*' -o -name '*qtbase_*'` ; do
+    cp $i /C/aud-win32/bin/share/qt5/translations/$i
+done
 
 cd /C/libs
 for i in `find ./share/locale -name gtk20.mo` ; do
