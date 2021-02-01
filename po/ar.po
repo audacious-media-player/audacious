@@ -6,13 +6,13 @@
 # abouzakaria kov <zakariakov@gmail.com>, 2016
 # Ibrahim Saed <ibraheem5000@hotmail.com>, 2012
 # Rached Noureddine <rached.noureddine@gmail.com>, 2015,2019
-# Riyadh Talal <a.shamil77@yahoo.com>, 2020
+# Riyadh Talal <a.shamil77@yahoo.com>, 2020-2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2020-12-27 18:05+0100\n"
-"PO-Revision-Date: 2020-12-11 19:20+0000\n"
+"POT-Creation-Date: 2021-02-01 19:15+0100\n"
+"PO-Revision-Date: 2021-01-01 17:13+0000\n"
 "Last-Translator: Riyadh Talal <a.shamil77@yahoo.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/audacious/audacious/language/"
 "ar/)\n"
@@ -113,7 +113,7 @@ msgstr ""
 msgid "Select instance to run/control"
 msgstr "حدد حالة للتشغيل/التحكم"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:74
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:92
 msgid "Audacious"
 msgstr "أوداشْيَس"
 
@@ -311,7 +311,7 @@ msgstr "هل تريد إزالة ”%s“ بشكل دائم؟"
 
 #: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:58
 msgid "_Remove"
-msgstr "إزالة"
+msgstr "إ_زالة"
 
 #: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:62
 msgid "Remove Playlist"
@@ -434,11 +434,11 @@ msgstr "إفتح الملفات"
 #: src/libaudgui/file-opener.cc:79 src/libaudgui/url-opener.cc:64
 #: src/libaudqt/url-opener-qt.cc:48
 msgid "_Open"
-msgstr "افتح"
+msgstr "ا_فتح"
 
 #: src/libaudgui/file-opener.cc:81
 msgid "Close _dialog on open"
-msgstr "اغلق_الحوار عند الفتح"
+msgstr "اغلق _الحوار عند الفتح"
 
 #: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:59
 msgid "Add Files"
@@ -456,11 +456,11 @@ msgstr "اغلق _الحوار عند الاضافة"
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:912 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:243
+#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:263
 #: src/libaudqt/infowin-qt.cc:156 src/libaudqt/log-inspector.cc:244
 #: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:646
 msgid "_Close"
-msgstr "إغلاق"
+msgstr "إ_غلاق"
 
 #: src/libaudgui/infopopup.cc:187 src/libaudgui/infowin.cc:369
 #: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:94
@@ -700,19 +700,19 @@ msgstr "رقم المقطع"
 
 #: src/libaudgui/infowin.cc:397
 msgid "_Auto-fill empty fields"
-msgstr "ملئ تلقائي للحقول الفارغة"
+msgstr "ملئ _تلقائي للحقول الفارغة"
 
 #: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:184
 msgid "_Save"
-msgstr "إحفظْ"
+msgstr "إ_حفظ"
 
 #: src/libaudgui/infowin.cc:417
 msgid "_Previous"
-msgstr "السابق"
+msgstr "ال_سابق"
 
 #: src/libaudgui/infowin.cc:420
 msgid "_Next"
-msgstr "التالي"
+msgstr "ال_تالي"
 
 #: src/libaudgui/infowin.cc:469
 #, c-format
@@ -725,7 +725,7 @@ msgstr "غير/متعلق"
 
 #: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:314
 msgid "_Jump"
-msgstr "القفز"
+msgstr "ال_قفز"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
@@ -758,7 +758,7 @@ msgstr "تص‍_‍فية:"
 
 #: src/libaudgui/jump-to-track.cc:298
 msgid "C_lose on jump"
-msgstr "أغلق عند القفز"
+msgstr "أ_غلق عند القفز"
 
 #: src/libaudgui/playlists.cc:91
 msgid "_Overwrite"
@@ -788,7 +788,7 @@ msgstr "صدر قائمة التشغيل"
 
 #: src/libaudgui/playlists.cc:168
 msgid "_Export"
-msgstr "_صدر"
+msgstr "_تصدير"
 
 #: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:60
 msgid "Import Playlist"
@@ -1201,7 +1201,7 @@ msgstr "بحث متغلغل"
 
 #: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:355
 msgid "Search depth:"
-msgstr "عمق البحثك"
+msgstr "عمق البحث:"
 
 #: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window-qt.cc:357
 msgid "<b>Popup Information</b>"
@@ -1273,7 +1273,7 @@ msgstr "تضبيط العلوّ بحسب:"
 
 #: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:385
 msgid "percent"
-msgstr "مئوية"
+msgstr "بالمائة"
 
 #: src/libaudgui/prefs-window.cc:406 src/libaudqt/prefs-window-qt.cc:402
 msgid "TITLE"
@@ -1337,6 +1337,7 @@ msgid "Audacious Settings"
 msgstr "إعدادات أوداشْيَس"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:172
+#: src/libaudqt/fileopener.cc:77
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -1370,7 +1371,7 @@ msgstr "مدير قوائم الانتظار"
 
 #: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:209
 msgid "_Unqueue"
-msgstr "إزالة الإنتظار"
+msgstr "إ_زالة الإنتظار"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
@@ -1386,7 +1387,7 @@ msgstr "معلومات"
 
 #: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:41
 msgid "_Save to history"
-msgstr "حف‍&ظ إلى التاريخ"
+msgstr "حف‍_ظ إلى التاريخ"
 
 #: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
@@ -1398,7 +1399,7 @@ msgstr "أضف الرابط"
 
 #: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:69
 msgid "C_lear history"
-msgstr "تفري‍&‍غ التاريخ"
+msgstr "تفري‍_غ التاريخ"
 
 #: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"
@@ -1486,7 +1487,7 @@ msgstr "معرّف MusicBrainz"
 
 #: src/libaudqt/infowin-qt.cc:157
 msgid "_Revert"
-msgstr "التراجع"
+msgstr "الت_راجع"
 
 #: src/libaudqt/infowin-qt.cc:168
 msgid "Error writing tag(s)."
@@ -1498,7 +1499,7 @@ msgstr "حُدّد %1 ملف"
 
 #: src/libaudqt/infowin-qt.cc:194
 msgid "_Save %1 files"
-msgstr "احفظ ملفات %1"
+msgstr "احف_ظ %1 ملف"
 
 #: src/libaudqt/log-inspector.cc:152
 msgid "Level"

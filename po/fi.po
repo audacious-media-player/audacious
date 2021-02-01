@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2020-12-27 18:05+0100\n"
+"POT-Creation-Date: 2021-02-01 19:15+0100\n"
 "PO-Revision-Date: 2020-12-08 22:23+0000\n"
 "Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/audacious/audacious/"
@@ -117,7 +117,7 @@ msgstr ""
 msgid "Select instance to run/control"
 msgstr "Valitse suoritettava/hallittava esiintymä"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:74
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:92
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -454,7 +454,7 @@ msgstr "Sul_je ikkuna lisättäessä"
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:912 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:243
+#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:263
 #: src/libaudqt/infowin-qt.cc:156 src/libaudqt/log-inspector.cc:244
 #: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:646
 msgid "_Close"
@@ -1335,6 +1335,7 @@ msgid "Audacious Settings"
 msgstr "Audaciouksen asetukset"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:172
+#: src/libaudqt/fileopener.cc:77
 msgid "Cancel"
 msgstr "Peru"
 

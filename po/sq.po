@@ -1,125 +1,116 @@
-# Japanese translation for Audacious
+# Albanian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# ABE Tsunehiko, 2013
-# ABE Tsunehiko, 2015-2018
 # natird zoto <dritan86@gmail.com>, 2012
-# ABE Tsunehiko, 2013
-# Nastuko Toda <m2330880989@shibuya-center.com>, 2012
-# Mika Kobayashi, 2014
-# Mika Kobayashi, 2014-2015
-# Nastuko Toda <m2330880989@shibuya-center.com>, 2012
+# Milot Shala <milot.shala@gmail.com>, 2013
 # natird zoto <dritan86@gmail.com>, 2012
 # natird zoto <dritan86@gmail.com>, 2012
-# TAKAHASHI Shuuji <shuuji3@gmail.com>, 2012-2014
-# TAKAHASHI Shuuji <shuuji3@gmail.com>, 2016
-# ABE Tsunehiko, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2021-02-01 19:15+0100\n"
-"PO-Revision-Date: 2020-12-07 15:13+0000\n"
-"Last-Translator: Mika Kobayashi\n"
-"Language-Team: Japanese (http://www.transifex.com/audacious/audacious/"
-"language/ja/)\n"
-"Language: ja\n"
+"PO-Revision-Date: 2021-01-18 08:11+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"Language-Team: Albanian (http://www.transifex.com/audacious/audacious/"
+"language/sq/)\n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/audacious/main.cc:72
 msgid "Show command-line help"
-msgstr "コマンドラインのヘルプを表示"
+msgstr "Shfaq ndihmë rreshti urdhrash"
 
 #: src/audacious/main.cc:73
 msgid "Show version"
-msgstr "バージョンを表示"
+msgstr "Shfaq versionin"
 
 #: src/audacious/main.cc:74
 msgid "Start playback"
-msgstr "再生"
+msgstr "Fillo luajtjen"
 
 #: src/audacious/main.cc:75
 msgid "Pause playback"
-msgstr "一時停止"
+msgstr "Pushoje luajtjen"
 
 #: src/audacious/main.cc:77
 msgid "Pause if playing, play otherwise"
-msgstr "再生していたら一時停止し、再生していなければ再生する"
+msgstr "Pushoje, nëse po luhet, përndryshe, luaje"
 
 #: src/audacious/main.cc:78
 msgid "Stop playback"
-msgstr "停止"
+msgstr "Ndale luajtjen"
 
 #: src/audacious/main.cc:79
 msgid "Skip to previous song"
-msgstr "前の曲にスキップ"
+msgstr "Kalo te kënga e mëparshme"
 
 #: src/audacious/main.cc:80
 msgid "Skip to next song"
-msgstr "次の曲にスキップ"
+msgstr "Kalo te kënga pasuese"
 
 #: src/audacious/main.cc:81
 msgid "Add files to the playlist"
-msgstr "プレイリストにファイルを追加"
+msgstr "Shtoni kartela te luajlista"
 
 #: src/audacious/main.cc:83
 msgid "Add files to a temporary playlist"
-msgstr "一時プレイリストにファイルを追加"
+msgstr "Shtoji kartelat te një luajlistë e përkohshme"
 
 #: src/audacious/main.cc:84
 msgid "Display the main window"
-msgstr "メインウィンドウを表示する"
+msgstr "Shfaq dritaren kryesore"
 
 #: src/audacious/main.cc:86
 msgid "Display the jump-to-song window"
-msgstr "ジャンプトゥソングウィンドウを表示する"
+msgstr "Shfaq dritaren kalo-te-kënga"
 
 #: src/audacious/main.cc:88
 msgid "Start without a graphical interface"
-msgstr "グラフィカルインターフェイスなしで開始"
+msgstr "Nisu pa një ndërfaqe grafike"
 
 #: src/audacious/main.cc:90
 msgid "Quit on playback stop"
-msgstr "再生完了時に終了する"
+msgstr "Dil, kur ndalet luajtja"
 
 #: src/audacious/main.cc:92
 msgid "Print debugging messages (may be used twice)"
-msgstr "デバッグ用メッセージを表示 (-VV のように2個続ける用法あり)"
+msgstr "Shtyp mesazhe diagnostikimi (mund të përdoret dy herë)"
 
 #: src/audacious/main.cc:94
 msgid "Run in GTK mode"
-msgstr ""
+msgstr "Xhiro nën mënyrën GTK"
 
 #: src/audacious/main.cc:95
 msgid "Run in Qt mode"
-msgstr "Qt モードで実行"
+msgstr "Xhiro në mënyrën Qt"
 
 #: src/audacious/main.cc:152
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr "不明なオプションです: %s\n"
+msgstr "Mundësi e panjohur: %s\n"
 
 #: src/audacious/main.cc:174
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr "不明なオプションです: -%c\n"
+msgstr "Mundësi e panjohur: -%c\n"
 
 #: src/audacious/main.cc:204
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
-"使い方: audacious [オプション] ... [ファイル] ...\n"
+"Përdorimi: audacious [MUNDËSI] … [KARTELË] …\n"
 "\n"
 
 #: src/audacious/main.cc:206
 msgid "Select instance to run/control"
-msgstr "コントロールするインスタンスを選択してください"
+msgstr "Përzgjidhni instancë për t’u xhiruar/kontrolluar"
 
 #: src/audacious/main.cc:391 src/libaudqt/audqt.cc:92
 msgid "Audacious"
@@ -129,7 +120,8 @@ msgstr "Audacious"
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d 個のファイルが見つかりました"
+msgstr[0] "U gjet %d kartelë"
+msgstr[1] "U gjetën %d kartela"
 
 #: src/libaudcore/adder.cc:320 src/libaudcore/adder.cc:404
 #, c-format
@@ -137,42 +129,44 @@ msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
-"読み込みエラー %s\n"
+"Gabim në leximin e %s:\n"
 "%s"
 
 #: src/libaudcore/adder.cc:456
 msgid "No files found."
-msgstr "ファイルが見つかりません。"
+msgstr "S’u gjetën kartela."
 
 #: src/libaudcore/adder.cc:478 src/libaudcore/playlist.cc:81
 msgid "New Playlist"
-msgstr "新規プレイリスト"
+msgstr "Luajlistë e Re"
 
 #: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:526
 msgid "Standard input"
-msgstr "標準入力"
+msgstr "Dhënie standarde"
 
 #: src/libaudcore/audstrings.cc:666
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "オーディオ CD、トラック %s"
+msgstr "CD Audio, pjesa %s"
 
 #: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:502
 msgid "(character encoding error)"
-msgstr "(文字のエンコーディングエラー)"
+msgstr "(gabim kodimi shkronjash)"
 
 #: src/libaudcore/drct.cc:96
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
-msgstr "録音を始める前にあらかじめオーディオの設定を行う必要があります。"
+msgstr ""
+"Përpara se të mund të përdoret, incizimi i rrjedhave duhet të formësohet te "
+"Rregullime Audioje."
 
 #: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
-msgstr "出力ストリームを開けません"
+msgstr "Gabim në hapjen e rrjedhës output"
 
 #: src/libaudcore/output.cc:341
 msgid "Error recording output stream"
-msgstr "出力ストリームを録音できませんｑ"
+msgstr "Gabim në incizimin e rrjedhës output"
 
 #: src/libaudcore/playback.cc:379
 #, c-format
@@ -180,16 +174,16 @@ msgid ""
 "Error playing %s:\n"
 "%s"
 msgstr ""
-"%s の再生中に次のエラーが発生しました\n"
+"Gabim në luajtjen e %s:\n"
 "%s"
 
 #: src/libaudcore/playback.cc:510
 msgid "Invalid audio format"
-msgstr "無効なオーディオ形式"
+msgstr "Format audio i pavlefshëm"
 
 #: src/libaudcore/playlist.cc:82
 msgid "Now Playing"
-msgstr "再生中"
+msgstr "Po Luhet Tani"
 
 #: src/libaudcore/playlist-files.cc:73 src/libaudcore/playlist-files.cc:153
 #: src/libaudgui/infowin.cc:509 src/libaudqt/infowin-qt.cc:246
@@ -198,96 +192,97 @@ msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
-"%s を開く際にエラー:\n"
+"Gabim gjatë hapjes së %s:\n"
 "%s"
 
 #: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:282
 #, c-format
 msgid "Error loading %s."
-msgstr "%s の読込みエラー"
+msgstr "Gabim në ngarkimin e %s."
 
 #: src/libaudcore/playlist-files.cc:89
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr "%s を読込めません: 対応していないファイル拡張子です。"
+msgstr "S’ngarkohet dot %s: zgjatim emri kartele i pambuluar."
 
 #: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:317
 #, c-format
 msgid "Error saving %s."
-msgstr ""
+msgstr "Gabim në ruajtjen e %s."
 
 #: src/libaudcore/playlist-files.cc:167
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr "%s を保存することができません: 対応していないファイル拡張子です。"
+msgstr "S’ruhet dot %s: zgjatim emri kartele i pambuluar."
 
 #: src/libaudcore/probe.cc:54
 msgid "Error loading plugin"
-msgstr "プラグインのロードエラー"
+msgstr "Gabim në ngarkimin e shtojcës"
 
 #: src/libaudcore/probe.cc:173
 msgid "Seek error"
-msgstr "シークエラー"
+msgstr ""
 
 #: src/libaudcore/probe.cc:181
 msgid "File format not recognized"
-msgstr "ファイル形式を認識することができません"
+msgstr "Format kartele jo i njohur"
 
 #: src/libaudcore/probe.cc:210
 msgid "Error reading metadata"
-msgstr "メタデータを読込む際にエラー"
+msgstr "Gabim në lexim tejtëdhënash"
 
 #: src/libaudcore/tuple.cc:560
 msgid "Mono"
-msgstr "モノラル"
+msgstr "Mono"
 
 #: src/libaudcore/tuple.cc:562
 msgid "Stereo"
-msgstr "ステレオ"
+msgstr "Stereo"
 
 #: src/libaudcore/tuple.cc:565
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "%d チャンネル"
+msgstr[0] "%d kanal"
+msgstr[1] "%d kanale"
 
 #: src/libaudcore/tuple.cc:783
 msgid "Audio CD"
-msgstr "オーディオ CD"
+msgstr "CD Audio"
 
 #: src/libaudcore/tuple.cc:867
 #, c-format
 msgid "Track %d"
-msgstr "トラック %d"
+msgstr "Pjesa %d"
 
 #: src/libaudcore/tuple.cc:873
 msgid "(unknown title)"
-msgstr "(不明なタイトル)"
+msgstr "(titull i panjohur)"
 
 #: src/libaudcore/vfs.cc:79
 msgid "Unknown URI scheme"
-msgstr "不明な URI スキーマ"
+msgstr "Skemë URI e panjohur"
 
 #: src/libaudcore/vfs_local.cc:86 src/libaudcore/vfs_local.cc:330
 #: src/libaudcore/vfs_local.cc:386
 msgid "Invalid file name"
-msgstr "無効なファイル名"
+msgstr "Emër i pavlefshëm kartele"
 
 #: src/libaudcore/vfs_local.cc:134
 msgid "Invalid access mode"
-msgstr "アクセスモードが無効です"
+msgstr "Mënyrë e pavlefshme hyrjeje"
 
 #: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:37
 msgid "Credits"
-msgstr "クレジット"
+msgstr "Falënderime"
 
 #: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:37
 msgid "License"
-msgstr "ライセンス"
+msgstr "Licencë"
 
 #: src/libaudgui/about.cc:72 src/libaudqt/about-qt.cc:64
 msgid "About Audacious"
-msgstr "Audacious について"
+msgstr "Mbi Audacious"
 
 #: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
 #: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
@@ -296,78 +291,78 @@ msgstr "Audacious について"
 #: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:140
 #: src/libaudqt/url-opener-qt.cc:80
 msgid "_Cancel"
-msgstr "キャンセル(_C)"
+msgstr "_Anuloje"
 
 #: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:57
 msgid "_Don’t ask again"
-msgstr "再び表示しない(_D)"
+msgstr "_Mos më pyet sërish"
 
 #: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:64
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr "\"%s\" を完全に削除しますか？"
+msgstr "Doni të hiqet “%s” përgjithmonë?"
 
 #: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:58
 msgid "_Remove"
-msgstr "削除(_R)"
+msgstr "_Hiqe"
 
 #: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:62
 msgid "Remove Playlist"
-msgstr "プレイリストを削除"
+msgstr "Hiqe Luajlistën"
 
 #: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:39
 msgid "What would you like to call this playlist?"
-msgstr "プレイリストの名前を入力して下さい。"
+msgstr "Si do të donit ta quanit këtë luajlistë?"
 
 #: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:40
 msgid "_Rename"
-msgstr "名前を変更(_R)"
+msgstr "_Riemërtojeni"
 
 #: src/libaudgui/confirm.cc:97 src/libaudqt/playlist-management.cc:38
 msgid "Rename Playlist"
-msgstr "プレイリストをリネーム"
+msgstr "Riemërto Luajlistën"
 
 #: src/libaudgui/eq-preset.cc:153
 msgid "Please select one preset to export."
-msgstr ""
+msgstr "Ju lutemi, përzgjidhni një grup paracaktimesh për eksportim."
 
 #: src/libaudgui/eq-preset.cc:256 src/libaudgui/eq-preset.cc:261
 msgid "Preset File ..."
-msgstr "プリセットファイル ..."
+msgstr "Kartelë Paracaktimesh …"
 
 #: src/libaudgui/eq-preset.cc:257 src/libaudgui/eq-preset.cc:262
 msgid "EQF File ..."
-msgstr "EQF ファイル ..."
+msgstr "Kartelë EQF …"
 
 #: src/libaudgui/eq-preset.cc:266 src/libaudqt/eq-preset-qt.cc:337
 #: src/libaudqt/fileopener.cc:64
 msgid "Import"
-msgstr "インポート"
+msgstr "Importo"
 
 #: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:340
 #: src/libaudqt/fileopener.cc:64
 msgid "Export"
-msgstr "エクスポート"
+msgstr "Eksporto"
 
 #: src/libaudgui/eq-preset.cc:282 src/libaudqt/eq-preset-qt.cc:403
 msgid "Equalizer Presets"
-msgstr "イコライザーのプリセット"
+msgstr "Paracaktime Balancuesin"
 
 #: src/libaudgui/eq-preset.cc:304 src/libaudqt/eq-preset-qt.cc:328
 msgid "Save Preset"
-msgstr "プリセットの保存"
+msgstr "Ruaje Paracaktimin"
 
 #: src/libaudgui/eq-preset.cc:326
 msgid "Delete Selected"
-msgstr "プリセットの削除"
+msgstr "Fshi të Përzgjedhurin"
 
 #: src/libaudgui/eq-preset.cc:330
 msgid "Revert Changes"
-msgstr "変更を元に戻す"
+msgstr "Prapëso Ndryshimet"
 
 #: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer-qt.cc:120
 msgid "_Enable"
-msgstr "有効(_E)"
+msgstr "_Aktivizoje"
 
 #: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:123
 msgid "31 Hz"
@@ -411,45 +406,45 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:206
 msgid "Equalizer"
-msgstr "イコライザー"
+msgstr "Balancues"
 
 #: src/libaudgui/equalizer.cc:143 src/libaudqt/equalizer-qt.cc:144
 msgid "Presets ..."
-msgstr "プリセット ..."
+msgstr "Paracaktime …"
 
 #: src/libaudgui/equalizer.cc:147 src/libaudqt/equalizer-qt.cc:143
 msgid "Reset to Zero"
-msgstr "ゼロにリセット"
+msgstr "Riktheje te Zero"
 
 #: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer-qt.cc:129
 msgid "Preamp"
-msgstr "プリアンプ"
+msgstr "Paraamplifikator"
 
 #: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:59
 msgid "Open Files"
-msgstr "ファイルを開く"
+msgstr "Hapni Kartela"
 
 #: src/libaudgui/file-opener.cc:79 src/libaudgui/url-opener.cc:64
 #: src/libaudqt/url-opener-qt.cc:48
 msgid "_Open"
-msgstr "開く(_O)"
+msgstr "_Hape"
 
 #: src/libaudgui/file-opener.cc:81
 msgid "Close _dialog on open"
-msgstr "開いたらダイアログを閉じる(_D)"
+msgstr "Mbylle _dialogun gjatë hapjesh"
 
 #: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:59
 msgid "Add Files"
-msgstr "ファイルの追加"
+msgstr "Shtoni Kartela"
 
 #: src/libaudgui/file-opener.cc:87 src/libaudgui/url-opener.cc:70
 #: src/libaudqt/url-opener-qt.cc:54
 msgid "_Add"
-msgstr "追加(_A)"
+msgstr "_Shtoje"
 
 #: src/libaudgui/file-opener.cc:89
 msgid "Close _dialog on add"
-msgstr "追加したらダイアログを閉じる(_D)"
+msgstr "Mbylle _dialogun gjatë shtimesh"
 
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
@@ -458,259 +453,259 @@ msgstr "追加したらダイアログを閉じる(_D)"
 #: src/libaudqt/infowin-qt.cc:156 src/libaudqt/log-inspector.cc:244
 #: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:646
 msgid "_Close"
-msgstr "閉じる(_C)"
+msgstr "_Mbylle"
 
 #: src/libaudgui/infopopup.cc:187 src/libaudgui/infowin.cc:369
 #: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:94
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:167
 #: src/libaudqt/queue-manager-qt.cc:110
 msgid "Title"
-msgstr "タイトル"
+msgstr "Titull"
 
 #: src/libaudgui/infopopup.cc:188 src/libaudgui/infowin.cc:372
 #: src/libaudgui/prefs-window.cc:101 src/libaudqt/infopopup-qt.cc:96
 #: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:164
 msgid "Artist"
-msgstr "アーティスト"
+msgstr "Artist"
 
 #: src/libaudgui/infopopup.cc:189 src/libaudgui/infowin.cc:375
 #: src/libaudgui/prefs-window.cc:102 src/libaudgui/prefs-window.cc:149
 #: src/libaudqt/infopopup-qt.cc:98 src/libaudqt/info-widget.cc:50
 #: src/libaudqt/prefs-window-qt.cc:165 src/libaudqt/prefs-window-qt.cc:207
 msgid "Album"
-msgstr "アルバム名"
+msgstr "Album"
 
 #: src/libaudgui/infopopup.cc:190 src/libaudgui/infowin.cc:385
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/infopopup-qt.cc:100
 #: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:169
 msgid "Genre"
-msgstr "ジャンル"
+msgstr "Zhanër"
 
 #: src/libaudgui/infopopup.cc:191 src/libaudgui/infowin.cc:388
 #: src/libaudgui/prefs-window.cc:111 src/libaudqt/infopopup-qt.cc:102
 #: src/libaudqt/prefs-window-qt.cc:174
 msgid "Year"
-msgstr "制作年"
+msgstr "Vit"
 
 #: src/libaudgui/infopopup.cc:192 src/libaudgui/prefs-window.cc:148
 #: src/libaudqt/infopopup-qt.cc:104 src/libaudqt/prefs-window-qt.cc:206
 msgid "Track"
-msgstr "トラック"
+msgstr "Pjesë"
 
 #: src/libaudgui/infopopup.cc:193 src/libaudqt/infopopup-qt.cc:106
 #: src/libaudqt/info-widget.cc:63
 msgid "Length"
-msgstr "長さ"
+msgstr "Gjatësi"
 
 #: src/libaudgui/infowin.cc:50
 msgid "Format:"
-msgstr "形式:"
+msgstr "Format:"
 
 #: src/libaudgui/infowin.cc:51
 msgid "Quality:"
-msgstr "音質:"
+msgstr "Cilësi:"
 
 #: src/libaudgui/infowin.cc:52
 msgid "Bitrate:"
-msgstr "ビットレート:"
+msgstr "Bitrate:"
 
 #: src/libaudgui/infowin.cc:86
 msgid "Acid Jazz"
-msgstr "アシッドジャズ"
+msgstr "Acid Jazz"
 
 #: src/libaudgui/infowin.cc:87
 msgid "Acid Rock"
-msgstr "アシッドロック"
+msgstr "Acid Rock"
 
 #: src/libaudgui/infowin.cc:88
 msgid "Ambient"
-msgstr "アンビエント"
+msgstr "Ambient"
 
 #: src/libaudgui/infowin.cc:89
 msgid "Bebop"
-msgstr "ビバップ"
+msgstr "Bebop"
 
 #: src/libaudgui/infowin.cc:90
 msgid "Bluegrass"
-msgstr "ブルーグラス"
+msgstr "Bluegrass"
 
 #: src/libaudgui/infowin.cc:91
 msgid "Blues"
-msgstr "ブルース"
+msgstr "Blues"
 
 #: src/libaudgui/infowin.cc:92
 msgid "Chamber Music"
-msgstr "チェインバーミュージック"
+msgstr "Muzikë Dhome"
 
 #: src/libaudgui/infowin.cc:93
 msgid "Classical"
-msgstr "クラシカル"
+msgstr "Klasike"
 
 #: src/libaudgui/infowin.cc:94
 msgid "Country"
-msgstr "カントリー"
+msgstr "Country"
 
 #: src/libaudgui/infowin.cc:95
 msgid "Death Metal"
-msgstr "デスメタル"
+msgstr "Death Metal"
 
 #: src/libaudgui/infowin.cc:96
 msgid "Disco"
-msgstr "ディスコ"
+msgstr "Disko"
 
 #: src/libaudgui/infowin.cc:97
 msgid "Easy Listening"
-msgstr "イージーリスニング"
+msgstr "Easy Listening"
 
 #: src/libaudgui/infowin.cc:98
 msgid "Folk"
-msgstr "フォーク"
+msgstr "Folk"
 
 #: src/libaudgui/infowin.cc:99
 msgid "Funk"
-msgstr "ファンク"
+msgstr "Funk"
 
 #: src/libaudgui/infowin.cc:100
 msgid "Gangsta Rap"
-msgstr "ギャングスタラップ"
+msgstr "Gangsta Rap"
 
 #: src/libaudgui/infowin.cc:101
 msgid "Gospel"
-msgstr "ゴスペル"
+msgstr "Gospel"
 
 #: src/libaudgui/infowin.cc:102
 msgid "Grunge"
-msgstr "グランジ"
+msgstr "Grunge"
 
 #: src/libaudgui/infowin.cc:103
 msgid "Hard Rock"
-msgstr "ハードロック"
+msgstr "Hard Rock"
 
 #: src/libaudgui/infowin.cc:104
 msgid "Heavy Metal"
-msgstr "ヘヴィメタル"
+msgstr "Heavy Metal"
 
 #: src/libaudgui/infowin.cc:105
 msgid "Hip-hop"
-msgstr "ヒップホップ"
+msgstr "Hip-hop"
 
 #: src/libaudgui/infowin.cc:106
 msgid "House"
-msgstr "ハウス"
+msgstr "House"
 
 #: src/libaudgui/infowin.cc:107
 msgid "Jazz"
-msgstr "ジャズ"
+msgstr "Jazz"
 
 #: src/libaudgui/infowin.cc:108
 msgid "Jungle"
-msgstr "ジャングル"
+msgstr "Jungle"
 
 #: src/libaudgui/infowin.cc:109
 msgid "Metal"
-msgstr "メタル"
+msgstr "Metal"
 
 #: src/libaudgui/infowin.cc:110
 msgid "New Age"
-msgstr "ニューエイジ"
+msgstr "New Age"
 
 #: src/libaudgui/infowin.cc:111
 msgid "New Wave"
-msgstr "ニューウェーブ"
+msgstr "New Wave"
 
 #: src/libaudgui/infowin.cc:112
 msgid "Noise"
-msgstr "ノイズ"
+msgstr "Noise"
 
 #: src/libaudgui/infowin.cc:113
 msgid "Pop"
-msgstr "ポップ"
+msgstr "Pop"
 
 #: src/libaudgui/infowin.cc:114
 msgid "Punk Rock"
-msgstr "パンクロック"
+msgstr "Punk Rock"
 
 #: src/libaudgui/infowin.cc:115
 msgid "Rap"
-msgstr "ラップ"
+msgstr "Rap"
 
 #: src/libaudgui/infowin.cc:116
 msgid "Reggae"
-msgstr "レゲエ"
+msgstr "Reggae"
 
 #: src/libaudgui/infowin.cc:117
 msgid "Rock"
-msgstr "ロック"
+msgstr "Rock"
 
 #: src/libaudgui/infowin.cc:118
 msgid "Rock and Roll"
-msgstr "ロックンロール"
+msgstr "Rock and Roll"
 
 #: src/libaudgui/infowin.cc:119
 msgid "Rhythm and Blues"
-msgstr "R&B"
+msgstr "Rhythm and Blues"
 
 #: src/libaudgui/infowin.cc:120
 msgid "Ska"
-msgstr "スカ"
+msgstr "Ska"
 
 #: src/libaudgui/infowin.cc:121
 msgid "Soul"
-msgstr "ソウル"
+msgstr "Soul"
 
 #: src/libaudgui/infowin.cc:122
 msgid "Swing"
-msgstr "スウィング"
+msgstr "Swing"
 
 #: src/libaudgui/infowin.cc:123
 msgid "Techno"
-msgstr "テクノ"
+msgstr "Techno"
 
 #: src/libaudgui/infowin.cc:124
 msgid "Trip-hop"
-msgstr "トリップホップ"
+msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.cc:227
 msgid "Save successful"
-msgstr "保存が完了しました"
+msgstr "Ruajtje e suksesshme"
 
 #: src/libaudgui/infowin.cc:231
 msgid "Save error"
-msgstr "保存に失敗しました"
+msgstr "Ruajtje me gabim"
 
 #: src/libaudgui/infowin.cc:324 src/libaudgui/prefs-window.cc:86
 #: src/libaudqt/infowin-qt.cc:121 src/libaudqt/prefs-window-qt.cc:159
 msgid "Song Info"
-msgstr "曲の情報"
+msgstr "Të dhëna Kënge"
 
 #: src/libaudgui/infowin.cc:378 src/libaudqt/info-widget.cc:51
 msgid "Album Artist"
-msgstr "アルバムアーティスト"
+msgstr "Artist Albumi"
 
 #: src/libaudgui/infowin.cc:381 src/libaudgui/prefs-window.cc:112
 #: src/libaudqt/info-widget.cc:54 src/libaudqt/prefs-window-qt.cc:175
 msgid "Comment"
-msgstr "コメント"
+msgstr "Koment"
 
 #: src/libaudgui/infowin.cc:391 src/libaudqt/info-widget.cc:52
 msgid "Track Number"
-msgstr "トラック番号"
+msgstr "Numër Pjese"
 
 #: src/libaudgui/infowin.cc:397
 msgid "_Auto-fill empty fields"
-msgstr ""
+msgstr "_Vetëplotëso fusha të zbrazëta"
 
 #: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:184
 msgid "_Save"
-msgstr "保存(_S)"
+msgstr "_Ruaje"
 
 #: src/libaudgui/infowin.cc:417
 msgid "_Previous"
-msgstr ""
+msgstr "Të _mëparshmen"
 
 #: src/libaudgui/infowin.cc:420
 msgid "_Next"
-msgstr "次の曲へ(_N)"
+msgstr "_Pasuesen"
 
 #: src/libaudgui/infowin.cc:469
 #, c-format
@@ -723,299 +718,299 @@ msgstr "N/A"
 
 #: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:314
 msgid "_Jump"
-msgstr "ジャンプ(_J)"
+msgstr "_Kalo"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
-msgstr "指定した時間へジャンプ"
+msgstr "Kalo te Kohë"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
-msgstr "時間を入力してください (分:秒):"
+msgstr "Jepni kohë (minuta:sekonda):"
 
 #: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
 #: src/libaudgui/jump-to-track.cc:305
 msgid "_Queue"
-msgstr "キューに追加(_Q)"
+msgstr "_Radhë"
 
 #: src/libaudgui/jump-to-track.cc:101
 msgid "Un_queue"
-msgstr "キューから外す(_U)"
+msgstr "_Hiqe Nga Radha"
 
 #: src/libaudgui/jump-to-track.cc:240
 msgid "Jump to Song"
-msgstr "指定した曲にジャンプ"
+msgstr "Kalo te Këngë"
 
 #: src/libaudgui/jump-to-track.cc:265
 msgid "Filter: "
-msgstr "フィルター:"
+msgstr "Filtër: "
 
 #: src/libaudgui/jump-to-track.cc:266
 msgid "_Filter:"
-msgstr "フィルター(_F):"
+msgstr "_Filtroji:"
 
 #: src/libaudgui/jump-to-track.cc:298
 msgid "C_lose on jump"
-msgstr "ジャンプしたらダイアログを閉じる(_L)"
+msgstr ""
 
 #: src/libaudgui/playlists.cc:91
 msgid "_Overwrite"
-msgstr "上書き保存(_O)"
+msgstr "_Mbishkruaje"
 
 #: src/libaudgui/playlists.cc:95
 msgid "Confirm Overwrite"
-msgstr "上書きする"
+msgstr "Ripohoni Mbishkrimin"
 
 #: src/libaudgui/playlists.cc:95
 #, c-format
 msgid "Overwrite %s?"
-msgstr "%s を上書きしてもよろしいですか？"
+msgstr "Të mbishkruhet %s?"
 
 #: src/libaudgui/playlists.cc:121
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
 msgstr ""
-"ファイルの拡張子を入力するか、ドロップダウンリストからフォーマットを選んでく"
-"ださい"
+"Ju lutemi, përzgjidhni një zgjatim emri kartele ose përzgjidhni një format "
+"që nga lista hapmbyll."
 
 #: src/libaudgui/playlists.cc:140
 msgid "Select Format by Extension"
-msgstr "拡張子でフォーマットを選択"
+msgstr "Përzgjidhni Format sipas Zgjatimi"
 
 #: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:60
 msgid "Export Playlist"
-msgstr "プレイリストを出力"
+msgstr "Eksporto Luajlistë"
 
 #: src/libaudgui/playlists.cc:168
 msgid "_Export"
-msgstr "エクスポート(_E)"
+msgstr "_Eksportoje"
 
 #: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:60
 msgid "Import Playlist"
-msgstr "プレイリストを読み込み"
+msgstr "Importo Luajlistë"
 
 #: src/libaudgui/playlists.cc:175
 msgid "_Import"
-msgstr "インポート(_I)"
+msgstr "_Importo"
 
 #: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:44
 msgid "_Plugins ..."
-msgstr "プラグイン(_P)"
+msgstr "_Shtojca …"
 
 #: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:61
 #, c-format
 msgid "About %s"
-msgstr "%s について"
+msgstr "Mbi %s"
 
 #: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:126
 #, c-format
 msgid "%s Settings"
-msgstr "%s の設定"
+msgstr "Rregullime për %s"
 
 #: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:138
 msgid "_Set"
-msgstr "設定(_S)"
+msgstr ""
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:726
 #: src/libaudgui/prefs-window.cc:766 src/libaudqt/prefs-window-qt.cc:598
 #: src/libaudqt/prefs-window-qt.cc:601
 msgid "_Settings"
-msgstr "設定(_S)"
+msgstr "_Rregullime"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:740
 #: src/libaudgui/prefs-window.cc:778 src/libaudqt/prefs-window-qt.cc:599
 #: src/libaudqt/prefs-window-qt.cc:602
 msgid "_About"
-msgstr "情報(_A)"
+msgstr "_Mbi"
 
 #: src/libaudgui/prefs-widget.cc:277 src/libaudqt/prefs-widget-qt.cc:234
 msgid "Choose File"
-msgstr "ファイルの選択"
+msgstr "Zgjidhni Kartelë"
 
 #: src/libaudgui/prefs-widget.cc:281 src/libaudqt/prefs-widget-qt.cc:238
 msgid "Choose Folder"
-msgstr "フォルダーの選択"
+msgstr "Zgjidhni Dosje"
 
 #: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window-qt.cc:155
 msgid "Appearance"
-msgstr "外見"
+msgstr "Dukje"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudqt/prefs-window-qt.cc:156
 msgid "Audio"
-msgstr "オーディオ"
+msgstr "Audio"
 
 #: src/libaudgui/prefs-window.cc:84 src/libaudqt/prefs-window-qt.cc:157
 msgid "Network"
-msgstr "ネットワーク"
+msgstr "Rrjet"
 
 #: src/libaudgui/prefs-window.cc:85 src/libaudgui/prefs-window.cc:96
 #: src/libaudqt/prefs-pluginlist-model.cc:43
 #: src/libaudqt/prefs-window-qt.cc:158
 msgid "Playlist"
-msgstr "プレイリスト"
+msgstr "Luajlistë"
 
 #: src/libaudgui/prefs-window.cc:87 src/libaudqt/prefs-window-qt.cc:160
 msgid "Plugins"
-msgstr "プラグイン"
+msgstr "Shtojca"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:161
 msgid "Advanced"
-msgstr "高度"
+msgstr "Të mëtejshme"
 
 #: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "General"
-msgstr "一般"
+msgstr "Të përgjithshme"
 
 #: src/libaudgui/prefs-window.cc:93 src/libaudqt/prefs-pluginlist-model.cc:40
 msgid "Effect"
-msgstr "エフェクト"
+msgstr "Efekt"
 
 #: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Visualization"
-msgstr "視覚化"
+msgstr "Vizualizim"
 
 #: src/libaudgui/prefs-window.cc:95 src/libaudqt/prefs-pluginlist-model.cc:42
 msgid "Input"
-msgstr "インプット"
+msgstr "Hyrje"
 
 #: src/libaudgui/prefs-window.cc:97 src/libaudqt/prefs-pluginlist-model.cc:44
 msgid "Transport"
-msgstr "トランスポート"
+msgstr "Transport"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window-qt.cc:166
 msgid "Album artist"
-msgstr "アルバムアーティスト"
+msgstr "Artist albumi"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window-qt.cc:168
 msgid "Track number"
-msgstr "トラック番号"
+msgstr "Numër pjese"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window-qt.cc:170
 msgid "File name"
-msgstr "ファイル名"
+msgstr "Emër kartele"
 
 #: src/libaudgui/prefs-window.cc:108 src/libaudqt/prefs-window-qt.cc:171
 msgid "File path"
-msgstr "ファイルパス"
+msgstr "Shteg kartele"
 
 #: src/libaudgui/prefs-window.cc:109 src/libaudqt/prefs-window-qt.cc:172
 msgid "Date"
-msgstr "日付"
+msgstr "Datë"
 
 #: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:55
 #: src/libaudqt/prefs-window-qt.cc:173
 msgid "Description"
-msgstr ""
+msgstr "Përshkrim"
 
 #: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:64
 #: src/libaudqt/prefs-window-qt.cc:176
 msgid "Codec"
-msgstr "コーデック"
+msgstr "Kodek"
 
 #: src/libaudgui/prefs-window.cc:114 src/libaudqt/info-widget.cc:65
 #: src/libaudqt/prefs-window-qt.cc:177
 msgid "Quality"
-msgstr "音質"
+msgstr "Cilësi"
 
 #: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window-qt.cc:180
 msgid "None"
-msgstr "なし"
+msgstr "Asnjë"
 
 #: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window-qt.cc:181
 msgid "Arabic"
-msgstr "アラビア語"
+msgstr "Arabe"
 
 #: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:182
 msgid "Baltic"
-msgstr "バルト諸語"
+msgstr "Baltike"
 
 #: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window-qt.cc:183
 msgid "Chinese"
-msgstr "簡体中国語"
+msgstr "Kineze"
 
 #: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window-qt.cc:184
 msgid "Greek"
-msgstr "ギリシア語"
+msgstr "Greke"
 
 #: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window-qt.cc:185
 msgid "Hebrew"
-msgstr "ヘブライ語"
+msgstr "Hebraishte"
 
 #: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window-qt.cc:186
 msgid "Japanese"
-msgstr "日本語"
+msgstr "Japoneze"
 
 #: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window-qt.cc:187
 msgid "Korean"
-msgstr "韓国語"
+msgstr "Koreane"
 
 #: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window-qt.cc:188
 msgid "Polish"
-msgstr "ポーランド語"
+msgstr "Polake"
 
 #: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window-qt.cc:189
 msgid "Russian"
-msgstr "ロシア語"
+msgstr "Ruse"
 
 #: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window-qt.cc:190
 msgid "Taiwanese"
-msgstr "繁体中国語"
+msgstr "Tajvaneze"
 
 #: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window-qt.cc:191
 msgid "Turkish"
-msgstr "トルコ語"
+msgstr "Turke"
 
 #: src/libaudgui/prefs-window.cc:133 src/libaudqt/prefs-window-qt.cc:194
 msgid "Automatic"
-msgstr "自動"
+msgstr "Automatike"
 
 #: src/libaudgui/prefs-window.cc:137 src/libaudqt/prefs-window-qt.cc:195
 msgid "Floating point"
-msgstr "浮動小数点"
+msgstr "Pika lundrues"
 
 #: src/libaudgui/prefs-window.cc:141 src/libaudqt/prefs-window-qt.cc:198
 msgid "As decoded"
-msgstr "デコードしたそのまま"
+msgstr "Siç u shkodua"
 
 #: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:199
 msgid "After applying ReplayGain"
-msgstr "リプレイゲインの適用後"
+msgstr "Pas aplikimi të ReplayGain-it"
 
 #: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:201
 msgid "After applying effects"
-msgstr "エフェクトの適用後"
+msgstr "Pas aplikimi efektesh"
 
 #: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:202
 msgid "After applying equalization"
-msgstr "イコライザーの適用後"
+msgstr "Pas aplikimi balancimi"
 
 #: src/libaudgui/prefs-window.cc:150 src/libaudqt/prefs-window-qt.cc:208
 msgid "Based on shuffle"
-msgstr "シャッフルの設定に合わせる"
+msgstr "Bazuar në përzierje"
 
 #: src/libaudgui/prefs-window.cc:165
 msgid "Restart in Qt mode"
-msgstr ""
+msgstr "Rinise nën mënyrën Qt"
 
 #: src/libaudgui/prefs-window.cc:174
 msgid "Audacious is running in GTK (legacy) mode."
-msgstr ""
+msgstr "Audacious po xhiron nën mënyrën GTK (e dikurshme)."
 
 #: src/libaudgui/prefs-window.cc:178
 msgid "Qt mode is unavailable in this build."
-msgstr ""
+msgstr "Mënyra Qt s’mund të kihet në këtë montim."
 
 #: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:239
 msgid "Interface:"
-msgstr "インターフェイス:"
+msgstr "Ndërfaqe:"
 
 #: src/libaudgui/prefs-window.cc:199 src/libaudqt/prefs-window-qt.cc:247
 msgid "Output plugin:"
-msgstr "出力プラグイン:"
+msgstr "Shtojcë për në dalje:"
 
 #: src/libaudgui/prefs-window.cc:220 src/libaudqt/prefs-window-qt.cc:260
 msgid "Amplify all files:"
-msgstr "すべてのファイルを増幅する:"
+msgstr "Amplifiko krejt kartelat:"
 
 #: src/libaudgui/prefs-window.cc:222 src/libaudgui/prefs-window.cc:225
 #: src/libaudqt/prefs-window-qt.cc:261 src/libaudqt/prefs-window-qt.cc:263
@@ -1024,20 +1019,20 @@ msgstr "dB"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window-qt.cc:262
 msgid "Amplify untagged files:"
-msgstr "タグづけされていないファイルを増幅する:"
+msgstr "Amplifiko kartela të paetiketuara:"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window-qt.cc:266
 msgid "<b>Output Settings</b>"
-msgstr "<b>出力の設定</b>"
+msgstr "<b>Rregullime Për Ç’jepet Në Dalje</b>"
 
 #: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:268
 msgid "Bit depth:"
-msgstr "ビット深度:"
+msgstr "Thellësia e Bitit"
 
 #: src/libaudgui/prefs-window.cc:234 src/libaudgui/prefs-window.cc:279
 #: src/libaudqt/prefs-window-qt.cc:271 src/libaudqt/prefs-window-qt.cc:299
 msgid "Buffer size:"
-msgstr "バッファーサイズ:"
+msgstr "Madhësi shtytëze:"
 
 #: src/libaudgui/prefs-window.cc:236 src/libaudqt/prefs-window-qt.cc:272
 msgid "ms"
@@ -1045,55 +1040,55 @@ msgstr "ms"
 
 #: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window-qt.cc:273
 msgid "Soft clipping"
-msgstr "ソフトクリッピング"
+msgstr "Cungim i butë"
 
 #: src/libaudgui/prefs-window.cc:239 src/libaudqt/prefs-window-qt.cc:274
 msgid "Use software volume control (not recommended)"
-msgstr "ソフトウェアの音量コントロールを使う (非推奨)"
+msgstr "Përdor kontroll volumi nga software-i (nuk rekomandohet)"
 
 #: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window-qt.cc:276
 msgid "<b>Recording Settings</b>"
-msgstr "<b>録音の設定</b>"
+msgstr "<b>Rregullime Incizimi</b>"
 
 #: src/libaudgui/prefs-window.cc:245 src/libaudqt/prefs-window-qt.cc:279
 msgid "Record stream:"
-msgstr "録音するストリーム:"
+msgstr "Incizo rrjedhë:"
 
 #: src/libaudgui/prefs-window.cc:248 src/libaudqt/prefs-window-qt.cc:281
 msgid "<b>ReplayGain</b>"
-msgstr "<b>リプレイゲイン</b>"
+msgstr "<b>ReplayGain</b>"
 
 #: src/libaudgui/prefs-window.cc:249 src/libaudqt/prefs-window-qt.cc:282
 msgid "Enable ReplayGain"
-msgstr "リプレイゲインを有効にする"
+msgstr "Aktivizo ReplayGain"
 
 #: src/libaudgui/prefs-window.cc:251 src/libaudqt/prefs-window-qt.cc:283
 msgid "Mode:"
-msgstr "モード:"
+msgstr "Mënyrë:"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window-qt.cc:285
 msgid "Prevent clipping (recommended)"
-msgstr "クリッピングを防ぐ (非推奨)"
+msgstr "Parandalo cungim (e rekomanduar)"
 
 #: src/libaudgui/prefs-window.cc:263 src/libaudqt/prefs-window-qt.cc:290
 msgid "Proxy hostname:"
-msgstr "プロキシのホスト名:"
+msgstr "Strehëemër ndërmjetësi:"
 
 #: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window-qt.cc:291
 msgid "Proxy port:"
-msgstr "プロキシのポート:"
+msgstr "Portë ndërmjetësi:"
 
 #: src/libaudgui/prefs-window.cc:270 src/libaudqt/prefs-window-qt.cc:294
 msgid "Proxy username:"
-msgstr "プロキシのユーザ名:"
+msgstr "Emër përdoruesi ndërmjetësi:"
 
 #: src/libaudgui/prefs-window.cc:272 src/libaudqt/prefs-window-qt.cc:295
 msgid "Proxy password:"
-msgstr "プロキシのパスワード:"
+msgstr "Fjalëkalim ndërmjetësi:"
 
 #: src/libaudgui/prefs-window.cc:278 src/libaudqt/prefs-window-qt.cc:298
 msgid "<b>Network Settings</b>"
-msgstr "<b>ネットワークの設定</b>"
+msgstr "<b>Rregullime Rrjeti</b>"
 
 #: src/libaudgui/prefs-window.cc:281 src/libaudqt/prefs-window-qt.cc:300
 msgid "KiB"
@@ -1101,313 +1096,313 @@ msgstr "KiB"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window-qt.cc:301
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>プロキシの設定</b>"
+msgstr "<b>Formësim Ndërmjetësi</b>"
 
 #: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window-qt.cc:302
 msgid "Enable proxy usage"
-msgstr "プロキシの使用を有効にする"
+msgstr "Aktivizo përdorim ndërmjetësi"
 
 #: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window-qt.cc:304
 msgid "Use authentication with proxy"
-msgstr "プロキシの認証を行う"
+msgstr "Përdor mirëfilltësim me ndërmjetës"
 
 #: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window-qt.cc:307
 msgid "Use SOCKS proxy"
-msgstr ""
+msgstr "Përdor ndërmjetës SOCKS"
 
 #: src/libaudgui/prefs-window.cc:293 src/libaudqt/prefs-window-qt.cc:308
 msgid "SOCKS v4a"
-msgstr ""
+msgstr "SOCKS v4a"
 
 #: src/libaudgui/prefs-window.cc:297 src/libaudqt/prefs-window-qt.cc:309
 msgid "SOCKS v5"
-msgstr ""
+msgstr "SOCKS v5"
 
 #: src/libaudgui/prefs-window.cc:304 src/libaudqt/prefs-window-qt.cc:312
 msgid "Auto character encoding detector for:"
-msgstr "文字コードの自動検出対象言語:"
+msgstr "Pikasës i automatizuar kodimi shkronjash për:"
 
 #: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:315
 msgid "Fallback character encodings:"
-msgstr "検出失敗時に試行する文字コード:"
+msgstr "Kodime shkronjash rrugëdalje:"
 
 #: src/libaudgui/prefs-window.cc:315 src/libaudqt/prefs-window-qt.cc:322
 msgid "<b>Behavior</b>"
-msgstr "<b>動作</b>"
+msgstr "<b>Sjellje</b>"
 
 #: src/libaudgui/prefs-window.cc:316 src/libaudqt/prefs-window-qt.cc:323
 msgid "Resume playback on startup"
-msgstr "起動時に再生を再開する"
+msgstr "Rimerre luajtjen gjatë nisjes"
 
 #: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:325
 msgid "Pause instead of resuming immediately"
-msgstr "再生せずに一時停止状態で起動"
+msgstr "Pauzë, në vend se të rimerret menjëherë"
 
 #: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window-qt.cc:327
 msgid "Advance when the current song is deleted"
-msgstr "現在の曲が削除された時に次の曲を再生する"
+msgstr "Shko përpara, kur fshihet kënga e atëçastshme"
 
 #: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:329
 msgid "Clear the playlist when opening files"
-msgstr "ファイルを開く時にプレイリストをクリアする"
+msgstr "Spastroje luajlistën, kur hapen kartela"
 
 #: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:331
 msgid "Open files in a temporary playlist"
-msgstr "ファイルを一時プレイリストで開く"
+msgstr "Hapi kartelat në një luajlistë të përkohshme"
 
 #: src/libaudgui/prefs-window.cc:327 src/libaudqt/prefs-window-qt.cc:333
 msgid "<b>Song Display</b>"
-msgstr "<b>曲の表示</b>"
+msgstr "<b>Shfaqje Kënge</b>"
 
 #: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:334
 msgid "Show song numbers"
-msgstr "曲番号の表示"
+msgstr "Shfaq numra këngësh"
 
 #: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:336
 msgid "Show leading zeroes (02:00 vs. 2:00)"
-msgstr "頭の0を表示する (例 02:00)"
+msgstr "Shfaq zero paraprijëse (02:00 vs. 2:00)"
 
 #: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:338
 msgid "Show hours separately (1:30:00 vs. 90:00)"
-msgstr "時分秒表示を使う (例 1:30:00)"
+msgstr "Orët shfaqni ndarazi (1:30:00 vs. 90:00)"
 
 #: src/libaudgui/prefs-window.cc:335 src/libaudqt/prefs-window-qt.cc:341
 msgid "<b>Export</b>"
-msgstr "<b>エクスポート</b>"
+msgstr "<b>Eksporto</b>"
 
 #: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:342
 msgid "Use relative paths when possible"
-msgstr "可能な限り相対パスを使う"
+msgstr "Përdor shtigje relativë, kur mundet"
 
 #: src/libaudgui/prefs-window.cc:341 src/libaudqt/prefs-window-qt.cc:346
 msgid "<b>Album Art</b>"
-msgstr "<b>アルバムアート</b>"
+msgstr "<b>Figurë Albumi</b>"
 
 #: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:348
 msgid "Search for images matching these words (comma-separated):"
-msgstr "次の単語にマッチする画像を検索する (コンマで区切る):"
+msgstr "Kërko për figura me përputhje me këto fjalë (ndarë me presje):"
 
 #: src/libaudgui/prefs-window.cc:344 src/libaudqt/prefs-window-qt.cc:350
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "次の単語にマッチする画像を除外する (コンマで区切る):"
+msgstr "Përjashto figura me përputhje me këto fjalë (ndarë me presje):"
 
 #: src/libaudgui/prefs-window.cc:346 src/libaudqt/prefs-window-qt.cc:352
 msgid "Search for images matching song file name"
-msgstr "曲のファイル名にマッチする画像を検索する"
+msgstr "Kërko për figura që përputhen me emrin e kartelës së këngës"
 
 #: src/libaudgui/prefs-window.cc:348 src/libaudqt/prefs-window-qt.cc:354
 msgid "Search recursively"
-msgstr "再帰的に検索する"
+msgstr "Kërko në mënyrë rekursive"
 
 #: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:355
 msgid "Search depth:"
-msgstr "検索の深さ:"
+msgstr "Thellësi kërkimi:"
 
 #: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window-qt.cc:357
 msgid "<b>Popup Information</b>"
-msgstr "<b>ポップアップ情報</b>"
+msgstr "<b>Të dhëna Flluske</b>"
 
 #: src/libaudgui/prefs-window.cc:355 src/libaudqt/prefs-window-qt.cc:358
 msgid "Show popup information"
-msgstr "ポップアップ情報を表示する"
+msgstr "Shfaq të dhëna flluske"
 
 #: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window-qt.cc:360
 msgid "Popup delay (tenths of a second):"
-msgstr "ポップアップの遅れ (10秒単位):"
+msgstr "Vonesë flluske (të dhjeta të sekondës):"
 
 #: src/libaudgui/prefs-window.cc:361
 msgid "Show time scale for current song"
-msgstr "現在の曲のタイムスケールを表示する"
+msgstr "Shfaq ecuri kohore për këngën e tanishme"
 
 #: src/libaudgui/prefs-window.cc:367 src/libaudqt/prefs-window-qt.cc:364
 msgid "<b>Compatibility</b>"
-msgstr "<b>互換性</b>"
+msgstr "<b>Përputhshmëri</b>"
 
 #: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:365
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "\\ (バックスラッシュ) をフォルダーの区切り文字として解釈する"
+msgstr "Interpretoje \\ (pjerrake për prapa) si kufizues dosjesh"
 
 #: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:368
 msgid "<b>Playlist</b>"
-msgstr "<b>プレイリスト</b>"
+msgstr "<b>Luajlistë</b>"
 
 #: src/libaudgui/prefs-window.cc:372 src/libaudqt/prefs-window-qt.cc:369
 msgid "Add folders recursively"
-msgstr "再帰的にフォルダーを追加する"
+msgstr "Shto dosje në mënyrë rekursive"
 
 #: src/libaudgui/prefs-window.cc:374 src/libaudqt/prefs-window-qt.cc:371
 msgid "Add folders nested within playlist files"
-msgstr "プレイリスト内に入れ子にされたフォルダーを追加する"
+msgstr "Shtoji dosje të gjendura brenda kartelash luajlistash"
 
 #: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:373
 msgid "<b>Metadata</b>"
-msgstr "<b>メタデータ</b>"
+msgstr "<b>Tejtëdhëna</b>"
 
 #: src/libaudgui/prefs-window.cc:377 src/libaudqt/prefs-window-qt.cc:374
 msgid "Guess missing metadata from file path"
-msgstr "メタデータがないときにファイルパスから推定"
+msgstr "Hamendëso prej shteg kartele tejtëdhëna që mungojnë"
 
 #: src/libaudgui/prefs-window.cc:379 src/libaudqt/prefs-window-qt.cc:376
 msgid "Do not load metadata for songs until played"
-msgstr "再生が終わるまで曲のメタデータを読み込まない"
+msgstr "Mos ngarko tejtëdhëna për këngë, para se të luhen"
 
 #: src/libaudgui/prefs-window.cc:381 src/libaudqt/prefs-window-qt.cc:379
 msgid "Probe content of files with no recognized file name extension"
-msgstr "ファイル拡張子が未知のときにはファイル内容を精査する"
+msgstr "Sondo lëndë kartelash me zgjatim të panjohur emri kartelash"
 
 #: src/libaudgui/prefs-window.cc:383 src/libaudqt/prefs-window-qt.cc:381
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>その他</b>"
+msgstr "<b>Të ndryshme</b>"
 
 #: src/libaudgui/prefs-window.cc:384 src/libaudqt/prefs-window-qt.cc:382
 msgid "Step forward/backward by:"
-msgstr ""
+msgstr "Hap përpara/prap me:"
 
 #: src/libaudgui/prefs-window.cc:386 src/libaudqt/prefs-window-qt.cc:383
 msgid "seconds"
-msgstr "秒"
+msgstr "sekonda"
 
 #: src/libaudgui/prefs-window.cc:387 src/libaudqt/prefs-window-qt.cc:384
 msgid "Adjust volume by:"
-msgstr ""
+msgstr "Ndryshoje volumin me:"
 
 #: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:385
 msgid "percent"
-msgstr ""
+msgstr "përqind"
 
 #: src/libaudgui/prefs-window.cc:406 src/libaudqt/prefs-window-qt.cc:402
 msgid "TITLE"
-msgstr "タイトル"
+msgstr "TITULL"
 
 #: src/libaudgui/prefs-window.cc:407 src/libaudqt/prefs-window-qt.cc:403
 msgid "TITLE - ARTIST"
-msgstr "タイトル - アーティスト"
+msgstr "TITULL - ARTIST"
 
 #: src/libaudgui/prefs-window.cc:408 src/libaudqt/prefs-window-qt.cc:404
 msgid "TITLE - ARTIST - ALBUM"
-msgstr "タイトル - アーティスト - アルバム"
+msgstr "TITULL - ARTIST - ALBUM"
 
 #: src/libaudgui/prefs-window.cc:409 src/libaudqt/prefs-window-qt.cc:405
 msgid "ARTIST - TITLE"
-msgstr "アーティスト - タイトル"
+msgstr "ARTIST - TITULL"
 
 #: src/libaudgui/prefs-window.cc:410 src/libaudqt/prefs-window-qt.cc:406
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "アーティスト - アルバム - タイトル"
+msgstr "ARTIST - ALBUM - TITULL"
 
 #: src/libaudgui/prefs-window.cc:411 src/libaudqt/prefs-window-qt.cc:407
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "アーティスト - アルバム - トラック. タイトル"
+msgstr "ARTIST - ALBUM - TITULL PJESE"
 
 #: src/libaudgui/prefs-window.cc:412 src/libaudqt/prefs-window-qt.cc:408
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "アーティスト [ アルバム ] - トラック. タイトル"
+msgstr "ARTIST [ ALBUM ] - TITULL PJESE"
 
 #: src/libaudgui/prefs-window.cc:413 src/libaudqt/prefs-window-qt.cc:409
 msgid "ALBUM - TITLE"
-msgstr "アルバム - タイトル"
+msgstr "ALBUM - TITULL"
 
 #: src/libaudgui/prefs-window.cc:507
 msgid "Category"
-msgstr "カテゴリー"
+msgstr "Kategori"
 
 #: src/libaudgui/prefs-window.cc:571 src/libaudqt/prefs-window-qt.cc:426
 msgid "Custom"
-msgstr "カスタム"
+msgstr "Vetjake"
 
 #: src/libaudgui/prefs-window.cc:589 src/libaudqt/prefs-window-qt.cc:418
 msgid "Title format:"
-msgstr "タイトルの書式:"
+msgstr "Format titulli:"
 
 #: src/libaudgui/prefs-window.cc:593 src/libaudqt/prefs-window-qt.cc:429
 msgid "Custom string:"
-msgstr "カスタム文字列:"
+msgstr "Varg vetjak:"
 
 #: src/libaudgui/prefs-window.cc:792 src/libaudqt/prefs-window-qt.cc:730
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr "%sを使ってオーディオストリームを録音する"
+msgstr "Aktivizo incizim rrjedhe audio me %s"
 
 #: src/libaudgui/prefs-window.cc:801 src/libaudqt/prefs-window-qt.cc:743
 msgid "No audio recording plugin available"
-msgstr "オーディオ録音プラグインを利用できません"
+msgstr "S’ka gati shtojcë incizimi tingujsh"
 
 #: src/libaudgui/prefs-window.cc:861 src/libaudqt/prefs-window-qt.cc:611
 msgid "Audacious Settings"
-msgstr "Audacious の設定"
+msgstr "Rregullime për Audacious"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:172
 #: src/libaudqt/fileopener.cc:77
 msgid "Cancel"
-msgstr "キャンセル"
+msgstr "Anuloje"
 
 #: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:298
 msgid "Save"
-msgstr "保存"
+msgstr "Ruaje"
 
 #: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:261
 msgid "Load"
-msgstr "読み込み"
+msgstr "Ngarkoje"
 
 #: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:257
 msgid "Load Preset File"
-msgstr "プリセットファイルを読込む"
+msgstr "Ngarko Kartelë Paracaktimesh"
 
 #: src/libaudgui/preset-browser.cc:99
 msgid "Load EQF File"
-msgstr "EQF ファイルを読込む"
+msgstr "Ngarko Kartelë EFQ"
 
 #: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:293
 msgid "Save Preset File"
-msgstr "プリセットファイルを保存"
+msgstr "Ruaj Kartelë Paracaktimesh"
 
 #: src/libaudgui/preset-browser.cc:131
 msgid "Save EQF File"
-msgstr "EQF ファイルを保存"
+msgstr "Ruaj Kartelë EQF"
 
 #: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:263
 msgid "Queue Manager"
-msgstr "キューマネージャー"
+msgstr "Përgjegjës Radhe"
 
 #: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:209
 msgid "_Unqueue"
-msgstr "キューからはずす(_U)"
+msgstr "_Hiqe nga radha"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr "処理中 ..."
+msgstr "Po punohet …"
 
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:225
 msgid "Error"
-msgstr "エラー"
+msgstr "Gabim"
 
 #: src/libaudgui/status.cc:90
 msgid "Information"
-msgstr "情報"
+msgstr "Informacion"
 
 #: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:41
 msgid "_Save to history"
-msgstr "履歴に追加 (_S)"
+msgstr "_Ruaje te historiku"
 
 #: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
-msgstr "URL を開く"
+msgstr "Hap URL"
 
 #: src/libaudgui/url-opener.cc:69 src/libaudqt/url-opener-qt.cc:53
 msgid "Add URL"
-msgstr "URL を追加"
+msgstr "Shtoni URL"
 
 #: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:69
 msgid "C_lear history"
-msgstr "履歴を削除 (_L)"
+msgstr "_Spastroje historikun"
 
 #: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"
-msgstr "URL を入力:"
+msgstr "Jepni URL:"
 
 #: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:63
 msgid "Open"
-msgstr "開く"
+msgstr "Hape"
 
 #: src/libaudgui/util.cc:283
 msgid ""
@@ -1415,75 +1410,75 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(追加のメッセージが隠れているかもしれません。)"
+"(Mesazhet e mëtejshëm janë fshehur.)"
 
 #: src/libaudqt/eq-preset-qt.cc:252
 msgid "Preset files (*.preset *.eqf *.q1)"
-msgstr ""
+msgstr "Kartela paracaktimesh (*.preset *.eqf *.q1)"
 
 #: src/libaudqt/eq-preset-qt.cc:345
 msgid "Revert"
-msgstr ""
+msgstr "Riktheje"
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
-msgstr "参照"
+msgstr "Shfletoni"
 
 #: src/libaudqt/fileopener.cc:59
 msgid "Open Folder"
-msgstr "フォルダーを開く"
+msgstr "Hap Dosje"
 
 #: src/libaudqt/fileopener.cc:60
 msgid "Add Folder"
-msgstr "フォルダーを追加"
+msgstr "Shtoni Dosje"
 
 #: src/libaudqt/fileopener.cc:63 src/libaudqt/fileopener.cc:64
 msgid "Add"
-msgstr "追加"
+msgstr "Shtoni"
 
 #: src/libaudqt/font-entry.cc:39
 msgid "Set Font"
-msgstr ""
+msgstr "Caktoni Shkronja"
 
 #: src/libaudqt/info-widget.cc:44
 msgid "<various>"
-msgstr ""
+msgstr "<të ndryshme>"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Metadata"
-msgstr "メタデータ"
+msgstr "Tejtëdhëna"
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Composer"
-msgstr "作曲者"
+msgstr "Kompozitor"
 
 #: src/libaudqt/info-widget.cc:57
 msgid "Performer"
-msgstr "演者"
+msgstr "Ekzekutues"
 
 #: src/libaudqt/info-widget.cc:58
 msgid "Recording Year"
-msgstr "制作年"
+msgstr "Vit Incizimi"
 
 #: src/libaudqt/info-widget.cc:59
 msgid "Recording Date"
-msgstr "制作日"
+msgstr "Datë Incizimi"
 
 #: src/libaudqt/info-widget.cc:62
 msgid "Technical"
-msgstr "技術情報"
+msgstr "Teknike"
 
 #: src/libaudqt/info-widget.cc:66
 msgid "Bitrate"
-msgstr "ビットレート"
+msgstr "Bitrate"
 
 #: src/libaudqt/info-widget.cc:67
 msgid "Channels"
-msgstr ""
+msgstr "Kanale"
 
 #: src/libaudqt/info-widget.cc:68
 msgid "MusicBrainz ID"
-msgstr ""
+msgstr "ID MusicBrainz"
 
 #: src/libaudqt/infowin-qt.cc:157
 msgid "_Revert"
@@ -1491,68 +1486,68 @@ msgstr ""
 
 #: src/libaudqt/infowin-qt.cc:168
 msgid "Error writing tag(s)."
-msgstr ""
+msgstr "Gabim gjatë shkrimi etikete(ash)."
 
 #: src/libaudqt/infowin-qt.cc:190
 msgid "%1 files selected"
-msgstr ""
+msgstr "%1 kartela të përzgjedhura"
 
 #: src/libaudqt/infowin-qt.cc:194
 msgid "_Save %1 files"
-msgstr ""
+msgstr "_Ruaj %1 kartela"
 
 #: src/libaudqt/log-inspector.cc:152
 msgid "Level"
-msgstr "レベル:"
+msgstr "Shkallë"
 
 #: src/libaudqt/log-inspector.cc:154
 msgid "Function"
-msgstr "機能"
+msgstr "Funksion"
 
 #: src/libaudqt/log-inspector.cc:156
 msgid "Message"
-msgstr "メッセージ"
+msgstr "Mesazh"
 
 #: src/libaudqt/log-inspector.cc:211
 msgid "Log Inspector"
-msgstr "ログ検査"
+msgstr "Mbikëqyrës Regjistrash"
 
 #: src/libaudqt/log-inspector.cc:222
 msgid "Debug"
-msgstr "デバッグ"
+msgstr "Diagnostikoje"
 
 #: src/libaudqt/log-inspector.cc:223
 msgid "Info"
-msgstr "情報"
+msgstr "Info"
 
 #: src/libaudqt/log-inspector.cc:224
 msgid "Warning"
-msgstr "警告"
+msgstr "Kujdes"
 
 #: src/libaudqt/log-inspector.cc:236
 msgid "Cl_ear"
-msgstr "クリアー(_E)"
+msgstr "_Spastroje"
 
 #: src/libaudqt/log-inspector.cc:249
 msgid "Log Level:"
-msgstr "ログレベル:"
+msgstr "Shkallë Regjistri:"
 
 #: src/libaudqt/plugin-menu-qt.cc:52
 msgid "Services"
-msgstr "サービス"
+msgstr "Shërbime"
 
 #: src/libaudqt/prefs-window-qt.cc:222
 msgid "Restart in GTK (legacy) mode"
-msgstr ""
+msgstr "Rinisu nën mënyrën GTK (e dikurshme)"
 
 #: src/libaudqt/prefs-window-qt.cc:232
 msgid "Audacious is running in Qt mode."
-msgstr ""
+msgstr "Audacious po xhiron nën mënyrën Qt."
 
 #: src/libaudqt/prefs-window-qt.cc:236
 msgid "GTK (legacy) mode is unavailable in this build."
-msgstr ""
+msgstr "Mënyra GTK (e dikurshme) s’mund të kihet në këtë montim."
 
 #: src/libaudqt/util-qt.cc:112
 msgid "Copy"
-msgstr "コピー"
+msgstr "Kopjoje"
