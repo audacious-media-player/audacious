@@ -121,9 +121,9 @@ static void destroy_cb ()
 
 static GtkWidget * create_window ()
 {
-    const char * const names[AUD_EQ_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
+    const char * const names[AUD_EQ_NBANDS] = {N_("16 Hz"), N_("31 Hz"), N_("63 Hz"),
      N_("125 Hz"), N_("250 Hz"), N_("500 Hz"), N_("1 kHz"), N_("2 kHz"),
-     N_("4 kHz"), N_("8 kHz"), N_("16 kHz")};
+     N_("4 kHz"), N_("8 kHz"), N_("16 kHz"), N_("20 kHz")};
 
     GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) window, _("Equalizer"));
