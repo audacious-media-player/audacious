@@ -44,30 +44,30 @@
 /* These are not the historical WinAmp frequencies, because the IIR filters used
  * here are designed for each frequency to be twice the previous.  Using WinAmp
  * frequencies leads to too much gain in some bands and too little in others. */
-static const float CF[AUD_EQ_NBANDS] = {31.25f, 62.5f, 125,  250,  500,
-                                        1000,   2000,  4000, 8000, 16000};
+static const double CF[AUD_EQ_NBANDS] = {15.625, 31.25, 62.5, 125,  250,  500,
+                                        1000,   2000,  4000, 8000, 16000, 20000};
 
 static aud::mutex mutex;
 static bool active;
 static int channels, rate;
-static float a[AUD_EQ_NBANDS][2]; /* A weights */
-static float b[AUD_EQ_NBANDS][2]; /* B weights */
-static float wqv[AUD_MAX_CHANNELS][AUD_EQ_NBANDS]
+static double a[AUD_EQ_NBANDS][2]; /* A weights */
+static double b[AUD_EQ_NBANDS][2]; /* B weights */
+static double wqv[AUD_MAX_CHANNELS][AUD_EQ_NBANDS]
                 [2]; /* Circular buffer for W data */
-static float gv[AUD_MAX_CHANNELS]
+static double gv[AUD_MAX_CHANNELS]
                [AUD_EQ_NBANDS]; /* Gain factor for each channel and band */
 static int K;                   /* Number of used EQ bands */
 
 /* 2nd order band-pass filter design */
-static void bp2(float * a, float * b, float fc)
+static void bp2(double * a, double * b, double fc)
 {
-    float th = 2 * (float)M_PI * fc;
-    float C = (1 - tanf(th * Q / 2)) / (1 + tanf(th * Q / 2));
+    double th = 2.0 * M_PI * fc;
+    double C = (1 - tan(th * Q / 2.0)) / (1 + tan(th * Q / 2.0));
 
-    a[0] = (1 + C) * cosf(th);
+    a[0] = (1 + C) * cos(th);
     a[1] = -C;
-    b[0] = (1 - C) / 2;
-    b[1] = -1.005f;
+    b[0] = (1 - C) / 2.0;
+    b[1] = -1.005;
 }
 
 void eq_set_format(int new_channels, int new_rate)
@@ -81,12 +81,12 @@ void eq_set_format(int new_channels, int new_rate)
      * than rate/2Q to avoid singularities in the tangent used in bp2() */
     K = AUD_EQ_NBANDS;
 
-    while (K > 0 && CF[K - 1] > (float)rate / (2.005f * Q))
+    while (K > 0 && CF[K - 1] > (double)rate / (2.005 * Q))
         K--;
 
     /* Generate filter taps */
     for (int k = 0; k < K; k++)
-        bp2(a[k], b[k], CF[k] / (float)rate);
+        bp2(a[k], b[k], CF[k] / (double)rate);
 
     /* Reset state */
     memset(wqv[0][0], 0, sizeof wqv);
@@ -95,7 +95,7 @@ void eq_set_format(int new_channels, int new_rate)
 static void eq_set_bands_real(aud::mutex::holder &, double preamp,
                               double * values)
 {
-    float adj[AUD_EQ_NBANDS];
+    double adj[AUD_EQ_NBANDS];
 
     for (int i = 0; i < AUD_EQ_NBANDS; i++)
         adj[i] = preamp + values[i];
@@ -103,7 +103,7 @@ static void eq_set_bands_real(aud::mutex::holder &, double preamp,
     for (int c = 0; c < AUD_MAX_CHANNELS; c++)
     {
         for (int i = 0; i < AUD_EQ_NBANDS; i++)
-            gv[c][i] = powf(10, adj[i] / 20) - 1;
+            gv[c][i] = pow(10.0, adj[i] / 20.0) - 1.0;
     }
 }
 
@@ -116,19 +116,19 @@ void eq_filter(float * data, int samples)
 
     for (int channel = 0; channel < channels; channel++)
     {
-        float * g = gv[channel]; /* Gain factor */
+        double * g = gv[channel]; /* Gain factor */
         float * end = data + samples;
 
         for (float * f = data + channel; f < end; f += channels)
         {
-            float yt = *f; /* Current input sample */
+            double yt = *f; /* Current input sample */
 
             for (int k = 0; k < K; k++)
             {
                 /* Pointer to circular buffer wq */
-                float * wq = wqv[channel][k];
+                double * wq = wqv[channel][k];
                 /* Calculate output from AR part of current filter */
-                float w = yt * b[k][0] + wq[0] * a[k][0] + wq[1] * a[k][1];
+                double w = yt * b[k][0] + wq[0] * a[k][0] + wq[1] * a[k][1];
 
                 /* Calculate output from MA part of current filter */
                 yt += (w + wq[1] * b[k][1]) * g[k];
