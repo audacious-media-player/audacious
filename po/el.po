@@ -5,7 +5,7 @@
 # Translators:
 # gis mapps <gismapps@gmail.com>, 2014
 # Ioannis LM, 2018,2020
-# Ioannis LM, 2018,2020
+# Ioannis LM, 2018,2020-2021
 # Marinos Zak <marinoszak@gmail.com>, 2012
 # Marinos Zak <marinoszak@gmail.com>, 2012
 # Marinos Zak <marinoszak@gmail.com>, 2012
@@ -21,9 +21,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2020-12-27 18:05+0100\n"
-"PO-Revision-Date: 2020-12-07 15:13+0000\n"
-"Last-Translator: 79353a696ad19dc202b261b3067b7640_bec941e\n"
+"POT-Creation-Date: 2021-02-01 19:15+0100\n"
+"PO-Revision-Date: 2021-01-12 15:19+0000\n"
+"Last-Translator: Ioannis LM\n"
 "Language-Team: Greek (http://www.transifex.com/audacious/audacious/language/"
 "el/)\n"
 "Language: el\n"
@@ -95,11 +95,11 @@ msgstr ""
 
 #: src/audacious/main.cc:94
 msgid "Run in GTK mode"
-msgstr "Εκτέλεση σε λειτουργία GTK"
+msgstr "Εκτέλεση σε διεπαφή GTK"
 
 #: src/audacious/main.cc:95
 msgid "Run in Qt mode"
-msgstr "Εκτέλεση σε λειτουργία Qt"
+msgstr "Εκτέλεση σε διεπαφή Qt"
 
 #: src/audacious/main.cc:152
 #, c-format
@@ -123,7 +123,7 @@ msgstr ""
 msgid "Select instance to run/control"
 msgstr "Επιλογή υπόδειξης για εκτέλεση/έλεγχο"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:74
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:92
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -285,7 +285,7 @@ msgstr "Μη έγκυρο όνομα αρχείου"
 
 #: src/libaudcore/vfs_local.cc:134
 msgid "Invalid access mode"
-msgstr "Μη έγκυρη λειτουργία πρόσβασης"
+msgstr "Μη έγκυρη πρόσβαση σε διεπαφή"
 
 #: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:37
 msgid "Credits"
@@ -464,7 +464,7 @@ msgstr "Κλείσιμο του παραθύρου στη π_ροσθήκη"
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:912 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:243
+#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:263
 #: src/libaudqt/infowin-qt.cc:156 src/libaudqt/log-inspector.cc:244
 #: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:646
 msgid "_Close"
@@ -1005,15 +1005,15 @@ msgstr "Με βάση τη τυχαία εναλλαγή"
 
 #: src/libaudgui/prefs-window.cc:165
 msgid "Restart in Qt mode"
-msgstr ""
+msgstr "Επανεκκίνηση σε διεπαφή Qt"
 
 #: src/libaudgui/prefs-window.cc:174
 msgid "Audacious is running in GTK (legacy) mode."
-msgstr ""
+msgstr "Το audacious εκτελείται σε διεπαφή GTK (legacy)."
 
 #: src/libaudgui/prefs-window.cc:178
 msgid "Qt mode is unavailable in this build."
-msgstr ""
+msgstr "Η διεπαφή Qt δεν είναι διαθέσιμη."
 
 #: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:239
 msgid "Interface:"
@@ -1079,7 +1079,7 @@ msgstr "Ενεργοποίηση ReplayGain"
 
 #: src/libaudgui/prefs-window.cc:251 src/libaudqt/prefs-window-qt.cc:283
 msgid "Mode:"
-msgstr "Λειτουργία:"
+msgstr "Διεπαφή:"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window-qt.cc:285
 msgid "Prevent clipping (recommended)"
@@ -1350,6 +1350,7 @@ msgid "Audacious Settings"
 msgstr "Ρυθμίσεις Audacious"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:172
+#: src/libaudqt/fileopener.cc:77
 msgid "Cancel"
 msgstr "Άκυρο"
 
@@ -1435,7 +1436,7 @@ msgstr "Προεπιλεγμένα αρχεία (*.preset *.eqf *.q1)"
 
 #: src/libaudqt/eq-preset-qt.cc:345
 msgid "Revert"
-msgstr ""
+msgstr "Επαναφορά"
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
@@ -1491,7 +1492,7 @@ msgstr "Ρυθμός διαμεταγωγής"
 
 #: src/libaudqt/info-widget.cc:67
 msgid "Channels"
-msgstr ""
+msgstr "Κανάλια"
 
 #: src/libaudqt/info-widget.cc:68
 msgid "MusicBrainz ID"
@@ -1555,15 +1556,15 @@ msgstr "Υπηρεσίες"
 
 #: src/libaudqt/prefs-window-qt.cc:222
 msgid "Restart in GTK (legacy) mode"
-msgstr ""
+msgstr "Επανεκκίνηση σε διεπαφή GTK (legacy)"
 
 #: src/libaudqt/prefs-window-qt.cc:232
 msgid "Audacious is running in Qt mode."
-msgstr ""
+msgstr "Το audacious εκτελείται σε διεπαφή Qt."
 
 #: src/libaudqt/prefs-window-qt.cc:236
 msgid "GTK (legacy) mode is unavailable in this build."
-msgstr ""
+msgstr "Η διεπαφή GTK (legacy) δεν είναι διαθέσιμη."
 
 #: src/libaudqt/util-qt.cc:112
 msgid "Copy"

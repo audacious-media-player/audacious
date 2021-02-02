@@ -20,8 +20,10 @@
 #include <stdlib.h>
 
 #include <QApplication>
+#include <QLibraryInfo>
 #include <QPushButton>
 #include <QScreen>
+#include <QTranslator>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
@@ -50,6 +52,19 @@ static const char * const audqt_defaults[] = {
     nullptr
 };
 /* clang-format on */
+
+static void load_qt_translations()
+{
+    static QTranslator translators[2];
+
+    QLocale locale = QLocale::system();
+    QString dir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+
+    if (translators[0].load(locale, "qt", "_", dir))
+        QApplication::installTranslator(&translators[0]);
+    if (translators[1].load(locale, "qtbase", "_", dir))
+        QApplication::installTranslator(&translators[1]);
+}
 
 EXPORT void init()
 {
@@ -92,6 +107,8 @@ EXPORT void init()
         QMargins(sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
     margins_local.EightPt =
         QMargins(sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
+
+    load_qt_translations();
 
 #ifdef _WIN32
     // On Windows, Qt uses 9 pt in specific places (such as QMenu) but

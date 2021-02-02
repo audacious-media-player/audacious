@@ -10,7 +10,7 @@
 # Federico <federico421@hotmail.it>, 2013
 # Gaetano Ingrasciotta <gaetanoingrasciotta@gmail.com>, 2012
 # Gaetano Ingrasciotta <gaetanoingrasciotta@gmail.com>, 2012
-# eagleman <giacomomargarito@yahoo.it>, 2020
+# eagleman <giacomomargarito@yahoo.it>, 2020-2021
 # Giosuè Sulipano <sulipano.gs@gmail.com>, 2020
 # Giuseppe D. B. <giuped@gmail.com>, 2012
 # Jacopo Lorenzetti <jacopol@cyan.xubiq.com>, 2011, 2012
@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2020-12-27 18:05+0100\n"
-"PO-Revision-Date: 2020-12-07 15:13+0000\n"
-"Last-Translator: Thomas Lange\n"
+"POT-Creation-Date: 2021-02-01 19:15+0100\n"
+"PO-Revision-Date: 2021-02-01 15:44+0000\n"
+"Last-Translator: eagleman <giacomomargarito@yahoo.it>\n"
 "Language-Team: Italian (http://www.transifex.com/audacious/audacious/"
 "language/it/)\n"
 "Language: it\n"
@@ -47,7 +47,7 @@ msgstr "Inizia la riproduzione"
 
 #: src/audacious/main.cc:75
 msgid "Pause playback"
-msgstr "Pausa la riproduzione"
+msgstr "Metti in pausa la riproduzione"
 
 #: src/audacious/main.cc:77
 msgid "Pause if playing, play otherwise"
@@ -79,7 +79,7 @@ msgstr "Visualizza la finestra principale"
 
 #: src/audacious/main.cc:86
 msgid "Display the jump-to-song window"
-msgstr "Mostra la finestra di salto-a-brano"
+msgstr "Mostra la finestra di salto-al-brano"
 
 #: src/audacious/main.cc:88
 msgid "Start without a graphical interface"
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Select instance to run/control"
 msgstr "Seleziona l'istanza da eseguire/controllare"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:74
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:92
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -309,19 +309,19 @@ msgstr "_Non chiedere più"
 #: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:64
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr "Vuoi cancellare permanentemente \"%s\"?"
+msgstr "Vuoi rimuovere definitivamente \"%s\"?"
 
 #: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:58
 msgid "_Remove"
-msgstr "_Cancella"
+msgstr "_Rimuovi"
 
 #: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:62
 msgid "Remove Playlist"
-msgstr "Cancella la playlist"
+msgstr "Elimina Playlist"
 
 #: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:39
 msgid "What would you like to call this playlist?"
-msgstr "Che nome dai a quest playlist?"
+msgstr "Come vuoi chiamare questa playlist?"
 
 #: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:40
 msgid "_Rename"
@@ -333,7 +333,7 @@ msgstr "Rinomina playlist"
 
 #: src/libaudgui/eq-preset.cc:153
 msgid "Please select one preset to export."
-msgstr "Per favore, seleziona un preset da esportare."
+msgstr "Seleziona un preset da esportare."
 
 #: src/libaudgui/eq-preset.cc:256 src/libaudgui/eq-preset.cc:261
 msgid "Preset File ..."
@@ -363,7 +363,7 @@ msgstr "Salva i predefiniti"
 
 #: src/libaudgui/eq-preset.cc:326
 msgid "Delete Selected"
-msgstr "Cancella quanto selezionato"
+msgstr "Elimina quanto selezionato"
 
 #: src/libaudgui/eq-preset.cc:330
 msgid "Revert Changes"
@@ -440,7 +440,7 @@ msgstr "_Apri"
 
 #: src/libaudgui/file-opener.cc:81
 msgid "Close _dialog on open"
-msgstr "Chiudi il _dialogo all'apertura"
+msgstr "Chiudi la _finestra all'apertura"
 
 #: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:59
 msgid "Add Files"
@@ -453,12 +453,12 @@ msgstr "Aggiungi"
 
 #: src/libaudgui/file-opener.cc:89
 msgid "Close _dialog on add"
-msgstr "Chiudi il _dialogo dopo l'aggiunta"
+msgstr "Chiudi la _finestra dopo l'aggiunta"
 
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:912 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:243
+#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:263
 #: src/libaudqt/infowin-qt.cc:156 src/libaudqt/log-inspector.cc:244
 #: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:646
 msgid "_Close"
@@ -997,15 +997,15 @@ msgstr "Basata sula casualità"
 
 #: src/libaudgui/prefs-window.cc:165
 msgid "Restart in Qt mode"
-msgstr ""
+msgstr "Riavvia in modalità Qt"
 
 #: src/libaudgui/prefs-window.cc:174
 msgid "Audacious is running in GTK (legacy) mode."
-msgstr ""
+msgstr "Audacious è in esecuzione in modalità GTK (legacy)"
 
 #: src/libaudgui/prefs-window.cc:178
 msgid "Qt mode is unavailable in this build."
-msgstr ""
+msgstr "La modalità Qt non è disponibile in questa build."
 
 #: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:239
 msgid "Interface:"
@@ -1151,7 +1151,7 @@ msgstr "Avanza quando il brano corrente viene eliminato"
 
 #: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:329
 msgid "Clear the playlist when opening files"
-msgstr "Cancella la playlist quando si aprono i file"
+msgstr "Elimina la playlist quando si aprono i file"
 
 #: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:331
 msgid "Open files in a temporary playlist"
@@ -1183,7 +1183,7 @@ msgstr "Usa i percorsi relativi quando possibile"
 
 #: src/libaudgui/prefs-window.cc:341 src/libaudqt/prefs-window-qt.cc:346
 msgid "<b>Album Art</b>"
-msgstr "Cover Album"
+msgstr "Copertina dell'Album"
 
 #: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:348
 msgid "Search for images matching these words (comma-separated):"
@@ -1340,6 +1340,7 @@ msgid "Audacious Settings"
 msgstr "Impostazioni di audacious"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:172
+#: src/libaudqt/fileopener.cc:77
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -1425,7 +1426,7 @@ msgstr "File Preset (*.preset *.eqf *.q1)"
 
 #: src/libaudqt/eq-preset-qt.cc:345
 msgid "Revert"
-msgstr ""
+msgstr "Inverti"
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
@@ -1481,7 +1482,7 @@ msgstr "Bitrate"
 
 #: src/libaudqt/info-widget.cc:67
 msgid "Channels"
-msgstr ""
+msgstr "Canali"
 
 #: src/libaudqt/info-widget.cc:68
 msgid "MusicBrainz ID"
@@ -1545,15 +1546,15 @@ msgstr "Servizi"
 
 #: src/libaudqt/prefs-window-qt.cc:222
 msgid "Restart in GTK (legacy) mode"
-msgstr ""
+msgstr "Riavvia in modalità GTK (legacy)"
 
 #: src/libaudqt/prefs-window-qt.cc:232
 msgid "Audacious is running in Qt mode."
-msgstr ""
+msgstr "Audacious è in esecuzione in modalità Qt"
 
 #: src/libaudqt/prefs-window-qt.cc:236
 msgid "GTK (legacy) mode is unavailable in this build."
-msgstr ""
+msgstr "La modalità GTK (legacy) non è disponibile in questa build."
 
 #: src/libaudqt/util-qt.cc:112
 msgid "Copy"

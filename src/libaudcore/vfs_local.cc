@@ -398,7 +398,14 @@ Index<String> LocalTransport::read_folder(const char * uri, String & error)
 
     const char * name;
     while ((name = g_dir_read_name(folder)))
+    {
+#ifndef _WIN32
+        // skip hidden files (may need revisiting)
+        if (name[0] == '.')
+            continue;
+#endif
         entries.append(String(filename_to_uri(filename_build({path, name}))));
+    }
 
     g_dir_close(folder);
 

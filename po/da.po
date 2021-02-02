@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Joe Hansen <joedalton2@yahoo.dk>, 2013-2014,2016,2020
+# Joe Hansen <joedalton2@yahoo.dk>, 2013-2014,2016,2020-2021
 # scootergrisen, 2017-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2020-12-27 18:05+0100\n"
-"PO-Revision-Date: 2020-12-07 15:13+0000\n"
-"Last-Translator: Thomas Lange\n"
+"POT-Creation-Date: 2021-02-01 19:15+0100\n"
+"PO-Revision-Date: 2021-01-17 15:01+0000\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish (http://www.transifex.com/audacious/audacious/language/"
 "da/)\n"
 "Language: da\n"
@@ -110,7 +110,7 @@ msgstr ""
 msgid "Select instance to run/control"
 msgstr "Vælg instans til kør/kontrol"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:74
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:92
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -160,11 +160,11 @@ msgstr ""
 
 #: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
-msgstr "Fejl ved åbning af outputstrøm"
+msgstr "Fejl ved åbning af udgangsstrøm"
 
 #: src/libaudcore/output.cc:341
 msgid "Error recording output stream"
-msgstr "Fejl ved optagelse af outputstrøm"
+msgstr "Fejl ved optagelse af udgangsstrøm"
 
 #: src/libaudcore/playback.cc:379
 #, c-format
@@ -447,7 +447,7 @@ msgstr "Luk _dialog ved tilføjelse"
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:912 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:243
+#: src/libaudgui/util.cc:297 src/libaudqt/audqt.cc:263
 #: src/libaudqt/infowin-qt.cc:156 src/libaudqt/log-inspector.cc:244
 #: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:646
 msgid "_Close"
@@ -986,15 +986,15 @@ msgstr "Baseret på bland"
 
 #: src/libaudgui/prefs-window.cc:165
 msgid "Restart in Qt mode"
-msgstr ""
+msgstr "Genstart i Qt-tilstand"
 
 #: src/libaudgui/prefs-window.cc:174
 msgid "Audacious is running in GTK (legacy) mode."
-msgstr ""
+msgstr "Audacious afvikles i GTK-tilstand (forældet)."
 
 #: src/libaudgui/prefs-window.cc:178
 msgid "Qt mode is unavailable in this build."
-msgstr ""
+msgstr "Qt-tilstand er utilgængelig i denne kompilering."
 
 #: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:239
 msgid "Interface:"
@@ -1328,6 +1328,7 @@ msgid "Audacious Settings"
 msgstr "Indstillinger for Audacious"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:172
+#: src/libaudqt/fileopener.cc:77
 msgid "Cancel"
 msgstr "Annuller"
 
@@ -1413,7 +1414,7 @@ msgstr "Forhåndsindstillingsfiler (*.preset *.eqf *.q1)"
 
 #: src/libaudqt/eq-preset-qt.cc:345
 msgid "Revert"
-msgstr ""
+msgstr "Forkast"
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
@@ -1469,7 +1470,7 @@ msgstr "Bithastighed"
 
 #: src/libaudqt/info-widget.cc:67
 msgid "Channels"
-msgstr ""
+msgstr "Kanaler"
 
 #: src/libaudqt/info-widget.cc:68
 msgid "MusicBrainz ID"
@@ -1533,15 +1534,15 @@ msgstr "Tjenester"
 
 #: src/libaudqt/prefs-window-qt.cc:222
 msgid "Restart in GTK (legacy) mode"
-msgstr ""
+msgstr "Genstart i GTK-tilstand (forældet)"
 
 #: src/libaudqt/prefs-window-qt.cc:232
 msgid "Audacious is running in Qt mode."
-msgstr ""
+msgstr "Audacious afvikles i Qt-tilstand."
 
 #: src/libaudqt/prefs-window-qt.cc:236
 msgid "GTK (legacy) mode is unavailable in this build."
-msgstr ""
+msgstr "GTK-tilstand (forældet) er utilgængelig i denne kompilering."
 
 #: src/libaudqt/util-qt.cc:112
 msgid "Copy"

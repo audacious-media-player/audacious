@@ -74,6 +74,7 @@ EXPORT void fileopener_show(FileMode mode)
         dialog->setAttribute(Qt::WA_DeleteOnClose);
         dialog->setFileMode(modes[mode]);
         dialog->setLabelText(QFileDialog::Accept, _(labels[mode]));
+        dialog->setLabelText(QFileDialog::Reject, _("Cancel"));
 
         if (mode == FileMode::ExportPlaylist)
             dialog->setAcceptMode(QFileDialog::AcceptSave);
