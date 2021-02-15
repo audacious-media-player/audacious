@@ -58,7 +58,12 @@ static void load_qt_translations()
     static QTranslator translators[2];
 
     QLocale locale = QLocale::system();
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QString dir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#else
+    QString dir = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+#endif
 
     if (translators[0].load(locale, "qt", "_", dir))
         QApplication::installTranslator(&translators[0]);
