@@ -147,9 +147,9 @@ static bool includeEntry(int index, QString* title , QString * filter) {
         return true;
     // Split the filter into different words, where all sub-words must
     // be contained within the title to keep it in the list
-    QStringList parts = filter->split(" ",  Qt::SkipEmptyParts);
+    QStringList parts = filter->split(" ");
     for (int i = 0; i < parts.size(); i++)
-        if (!title->contains(parts[i], Qt::CaseInsensitive))
+        if (parts[i].length() > 0 && !title->contains(parts[i], Qt::CaseInsensitive))
             return false;
     return true;
 }
