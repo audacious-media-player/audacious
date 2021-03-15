@@ -22,13 +22,13 @@
 #include <QAbstractButton>
 #include <QAbstractListModel>
 #include <QCheckBox>
-#include <QComboBox>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFrame>
 #include <QHeaderView>
 #include <QItemSelectionModel>
 #include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QTreeView>
 #include <QVBoxLayout>
@@ -235,7 +235,7 @@ private:
     static SongsWindow * instance;
     SongListModel m_songListModel;
     QTreeView m_treeview;
-    QComboBox m_comboBoxFilter;
+    QLineEdit m_filterEdit;
     QCheckBox m_closeAfterJump;
 
     SongsWindow();
@@ -253,9 +253,9 @@ private:
             destroy_instance();
     }
 
-    void onComboboxEditTextChanged()
+    void onFilterChanged()
     {
-        QString currentText = m_comboBoxFilter.currentText();
+        QString currentText = m_filterEdit.text();
         m_songListModel.update(m_treeview.selectionModel(), &currentText);
         SongListModel::selectFirstRow(&m_treeview, &m_songListModel);
     }
@@ -289,12 +289,11 @@ SongsWindow::SongsWindow()
     auto hbox_filter = make_hbox(filter_box);
     auto label_filter = new QLabel(_("Filter: "), this);
     hbox_filter->addWidget(label_filter);
-    m_comboBoxFilter.setEditable(true);
-    m_comboBoxFilter.setMinimumContentsLength(50);
-    m_comboBoxFilter.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    hbox_filter->addWidget(&m_comboBoxFilter);
-    QObject::connect(&m_comboBoxFilter, &QComboBox::editTextChanged, [this]() {
-        this->onComboboxEditTextChanged();
+    m_filterEdit.setClearButtonEnabled(true);
+    m_filterEdit.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    hbox_filter->addWidget(&m_filterEdit);
+    QObject::connect(&m_filterEdit, &QLineEdit::textChanged, [this]() {
+        this->onFilterChanged();
     });
     // **** END Filter box ****
 
