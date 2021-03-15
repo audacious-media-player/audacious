@@ -270,7 +270,7 @@ SongsWindow::SongsWindow()
     instance = this;
 
     setAttribute(Qt::WA_DeleteOnClose);
-    setWindowTitle(N_("Jump to Song"));
+    setWindowTitle(_("Jump to Song"));
     setContentsMargins(0, 0, 0, 0);
 
     auto vbox_parent = make_vbox(this);
@@ -287,10 +287,11 @@ SongsWindow::SongsWindow()
     vbox_content->addWidget(filter_box);
 
     auto hbox_filter = make_hbox(filter_box);
-    auto label_filter = new QLabel(_("Filter:"), this);
+    auto label_filter = new QLabel(_("Filter: "), this);
     hbox_filter->addWidget(label_filter);
     m_comboBoxFilter.setEditable(true);
     m_comboBoxFilter.setMinimumContentsLength(50);
+    m_comboBoxFilter.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     hbox_filter->addWidget(&m_comboBoxFilter);
     QObject::connect(&m_comboBoxFilter, &QComboBox::editTextChanged, [this]() {
         this->onComboboxEditTextChanged();
@@ -325,13 +326,16 @@ SongsWindow::SongsWindow()
     auto hbox_footer = make_hbox(footerWidget);
 
     m_closeAfterJump.setChecked(true);
-    m_closeAfterJump.setText(_("Close after Jump"));
+    m_closeAfterJump.setText(translate_str(N_("C_lose on jump")));
     hbox_footer->addWidget(&m_closeAfterJump);
 
     QDialogButtonBox * bbox = new QDialogButtonBox(QDialogButtonBox::Close);
     QPushButton* btn_Queue = bbox->addButton(translate_str(N_("_Queue")), QDialogButtonBox::ApplyRole);
     QPushButton* btn_Jump = bbox->addButton(translate_str(N_("_Jump")), QDialogButtonBox::AcceptRole);
-    bbox->button(QDialogButtonBox::Close)->setText(translate_str(N_("_Close")));
+    QPushButton* btn_Close = bbox->button(QDialogButtonBox::Close);
+    btn_Close->setText(translate_str(N_("_Close")));
+    btn_Close->setIcon(audqt::get_icon("window-close"));
+    btn_Jump->setIcon(audqt::get_icon("go-jump"));
     hbox_footer->addWidget(bbox);
 
     QObject::connect(btn_Queue, &QAbstractButton::clicked, [this]() {
