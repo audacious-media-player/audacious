@@ -161,6 +161,10 @@ void prefswin_hide();
 void prefswin_show_page(int id, bool show = true);
 void prefswin_show_plugin_page(PluginType type);
 
+/* song-window-qt.cc */
+void songwin_show();
+void songwin_hide();
+
 /* log-inspector.cc */
 void log_inspector_show();
 void log_inspector_hide();

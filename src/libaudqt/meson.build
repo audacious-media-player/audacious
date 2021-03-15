@@ -22,6 +22,7 @@ libaudqt_sources = [
   'prefs-window-qt.cc',
   'prefs-pluginlist-model.cc',
   'queue-manager-qt.cc',
+  'song-window-qt.cc',
   'url-opener-qt.cc',
   'util-qt.cc',
   'treeview.cc',
