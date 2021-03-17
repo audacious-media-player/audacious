@@ -120,8 +120,8 @@ EqualizerWindow::EqualizerWindow()
     : m_onoff_checkbox(audqt::translate_str(N_("_Enable")))
 {
     const char * const names[AUD_EQ_NBANDS] = {
-        N_("31 Hz"), N_("63 Hz"), N_("125 Hz"), N_("250 Hz"), N_("500 Hz"),
-        N_("1 kHz"), N_("2 kHz"), N_("4 kHz"),  N_("8 kHz"),  N_("16 kHz")};
+        N_("16 Hz"), N_("31 Hz"), N_("63 Hz"), N_("125 Hz"), N_("250 Hz"), N_("500 Hz"),
+        N_("1 kHz"), N_("2 kHz"), N_("4 kHz"),  N_("8 kHz"),  N_("16 kHz"), N_("20 kHz"),};
 
     auto slider_container = new QWidget(this);
     auto slider_layout = audqt::make_hbox(slider_container, audqt::sizes.TwoPt);

@@ -25,8 +25,8 @@
 
 class VFSFile;
 
-#define AUD_EQ_NBANDS 10
-#define AUD_EQ_MAX_GAIN 12
+#define AUD_EQ_NBANDS 12
+#define AUD_EQ_MAX_GAIN 20
 
 struct EqualizerPreset
 {
