@@ -41,6 +41,7 @@ struct Variable
     String text;
     int integer;
     Tuple::Field field;
+    int maxlen = 0;
 
     bool set(const char * name, bool literal);
     bool exists(const Tuple & tuple) const;
@@ -72,6 +73,8 @@ typedef TupleCompiler::Node Node;
 
 bool Variable::set(const char * name, bool literal)
 {
+    maxlen = 0;
+
     if (g_ascii_isdigit(name[0]))
     {
         type = Integer;
@@ -85,7 +88,26 @@ bool Variable::set(const char * name, bool literal)
     else
     {
         type = Field;
-        field = Tuple::field_by_name(name);
+        field = Tuple::Invalid;
+
+        const char *delim = strchr(name, '#');
+        if (delim == nullptr)
+        {
+            field = Tuple::field_by_name(name);
+        }
+        else
+        {
+            StringBuf actual_name(0);
+            actual_name.insert(-1, name, delim - name);
+            field = Tuple::field_by_name(actual_name);
+
+            // if it's invalid length, just fall back to zero
+            maxlen = atoi(delim + 1);
+            if (maxlen < 0)
+            {
+                maxlen = 0;
+            }
+        }
 
         if (field < 0)
         {
@@ -120,7 +142,46 @@ Tuple::ValueType Variable::get(const Tuple & tuple, String & tmps,
         switch (tuple.get_value_type(field))
         {
         case Tuple::String:
-            tmps = tuple.get_str(field);
+            if (maxlen == 0)
+            {
+                tmps = tuple.get_str(field);
+            }
+            else
+            {
+                String temp_string = tuple.get_str(field);
+
+                int string_chars_len = utf8_str_chars_len(temp_string);
+                if (string_chars_len >= 0)
+                {
+                    if (string_chars_len <= maxlen)
+                    {
+                        tmps = temp_string;
+                    }
+                    else
+                    {
+                        int string_bytes_len = utf8_str_bytes_len(temp_string, maxlen);
+                        if (string_bytes_len >= 0)
+                        {
+                            StringBuf temp_buf(0);
+                            temp_buf.insert(-1, temp_string, string_bytes_len);
+                            temp_buf.insert(-1, "...", -1);
+
+                            tmps = String(temp_buf);
+                        }
+                        else
+                        {
+                            // error, fallback to using full string
+                            tmps = temp_string;
+                        }
+                    }
+                }
+                else
+                {
+                    // error, fallback to using full string
+                    tmps = temp_string;
+                }
+            }
+
             return Tuple::String;
 
         case Tuple::Int:
@@ -185,7 +246,7 @@ static StringBuf get_item(const char *& str, char endch, bool & literal)
     }
     else
     {
-        while (g_ascii_isalnum(*s) || *s == '-')
+        while (g_ascii_isalnum(*s) || *s == '-' || *s == '#')
         {
             if (set == stop)
                 throw std::bad_alloc();

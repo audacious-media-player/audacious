@@ -188,6 +188,103 @@ EXPORT StringBuf str_to_utf8(StringBuf && str)
     return str.settle();
 }
 
+static int utf8_get_char_byte(const char * string, int bytes)
+{
+    int checklen = -1;
+
+    if ((string[0] & 0x80) == 0x00)
+    {
+        checklen = 1;
+    }
+    else if ((string[0] & 0xE0) == 0xC0)
+    {
+        checklen = 2;
+    }
+    else if ((string[0] & 0xF0) == 0xE0)
+    {
+        checklen = 3;
+    }
+    else if ((string[0] & 0xF8) == 0xF0)
+    {
+        checklen = 4;
+    }
+    else if ((string[0] & 0xFC) == 0xF8)
+    {
+        checklen = 5;
+    }
+    else if ((string[0] & 0xFE) == 0xFC)
+    {
+        checklen = 6;
+    }
+    else
+    {
+        return -1;
+    }
+
+    if (bytes < checklen)
+    {
+        return -1;
+    }
+
+    for (int i = 1; i < checklen; ++i)
+    {
+        if ((string[i] & 0xC0) != 0x80)
+        {
+            return -1;
+        }
+    }
+
+    return checklen;
+}
+
+EXPORT int utf8_str_bytes_len(const char * string, int chars)
+{
+    int total_bytes_len = strlen(string);
+    int result = 0;
+    int current_chars = 0;
+
+    while ((result < total_bytes_len) && ((chars == -1) || (current_chars < chars)))
+    {
+        int count = utf8_get_char_byte(string + result, total_bytes_len - result);
+        if (count < 0)
+        {
+            AUDWARN("Encountered invalid utf-8 sequence at string %s\n", string);
+            return -1;
+        }
+
+        result += count;
+        ++current_chars;
+    }
+
+    return result;
+}
+
+EXPORT int utf8_str_chars_len(const char * string, int bytes)
+{
+    int result = 0;
+    int processed_bytes = 0;
+
+    if (bytes < 0)
+    {
+        bytes = strlen(string);
+    }
+
+    while (processed_bytes < bytes)
+    {
+        int count = utf8_get_char_byte(string + processed_bytes, bytes - processed_bytes);
+        if (count < 0)
+        {
+            AUDWARN("Encountered invalid utf-8 sequence at string %s\n", string);
+            return -1;
+        }
+
+        processed_bytes += count;
+        ++result;
+    }
+
+    return result;
+}
+
 static void chardet_update(void * = nullptr, void * = nullptr)
 {
     String region = aud_get_str("chardet_detector");

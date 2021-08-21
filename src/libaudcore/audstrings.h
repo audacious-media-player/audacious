@@ -124,6 +124,9 @@ StringBuf int_array_to_str(const int * array, int count);
 bool str_to_double_array(const char * string, double * array, int count);
 StringBuf double_array_to_str(const double * array, int count);
 
+int utf8_str_bytes_len(const char * string, int chars = -1);
+int utf8_str_chars_len(const char * string, int bytes = -1);
+
 /* Requires: aud_init() */
 StringBuf str_format_time(int64_t milliseconds);
 
