@@ -18,6 +18,7 @@
  */
 
 #include "treeview.h"
+#include "libaudqt.h"
 
 #include <QApplication>
 #include <QKeyEvent>
@@ -44,9 +45,7 @@ class TreeViewStyleOverrides : public QProxyStyle
 public:
     TreeViewStyleOverrides()
     {
-        // detect and respond to application-wide style change
-        connect(qApp->style(), &QObject::destroyed, this,
-                &TreeViewStyleOverrides::resetBaseStyle);
+        setup_proxy_style(this);
     }
 
     int styleHint(StyleHint hint, const QStyleOption * option = nullptr,
@@ -76,14 +75,6 @@ public:
         }
 
         QProxyStyle::drawPrimitive(element, option, painter, widget);
-    }
-
-private:
-    void resetBaseStyle()
-    {
-        setBaseStyle(nullptr);
-        connect(qApp->style(), &QObject::destroyed, this,
-                &TreeViewStyleOverrides::resetBaseStyle);
     }
 };
 

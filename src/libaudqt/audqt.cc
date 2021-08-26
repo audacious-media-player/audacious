@@ -21,8 +21,10 @@
 
 #include <QApplication>
 #include <QLibraryInfo>
+#include <QProxyStyle>
 #include <QPushButton>
 #include <QScreen>
+#include <QStyleFactory>
 #include <QTranslator>
 #include <QVBoxLayout>
 
@@ -114,6 +116,8 @@ EXPORT void init()
         QMargins(sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
 
     load_qt_translations();
+    if (!strcmp(aud_get_str("audqt", "theme"), "dark"))
+        enable_dark_theme();
 
 #ifdef _WIN32
     // On Windows, Qt uses 9 pt in specific places (such as QMenu) but
@@ -213,6 +217,19 @@ EXPORT QVBoxLayout * make_vbox(QWidget * parent, int spacing)
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(spacing);
     return layout;
+}
+
+EXPORT void setup_proxy_style(QProxyStyle * style)
+{
+    // set the correct base style ("fusion" or native)
+    if (!strcmp(aud_get_str("audqt", "theme"), "dark"))
+        style->setBaseStyle(QStyleFactory::create("fusion"));
+    else
+        style->setBaseStyle(nullptr);
+
+    // detect and respond to application-wide style change
+    QObject::connect(qApp->style(), &QObject::destroyed, style,
+                     [style]() { setup_proxy_style(style); });
 }
 
 EXPORT void enable_layout(QLayout * layout, bool enabled)

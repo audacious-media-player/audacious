@@ -17,6 +17,8 @@
     <file alias="dialog-information.svg">../../images/dialog-information.svg</file>
     <file alias="dialog-question.svg">../../images/dialog-question.svg</file>
     <file alias="dialog-warning.svg">../../images/dialog-warning.svg</file>
+    <file alias="dock-close.svg">../../images/dock-close.svg</file>
+    <file alias="dock-undock.svg">../../images/dock-undock.svg</file>
     <file alias="document-new.svg">../../images/document-new.svg</file>
     <file alias="document-open-recent.svg">../../images/document-open-recent.svg</file>
     <file alias="document-open.svg">../../images/document-open.svg</file>

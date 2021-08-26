@@ -51,6 +51,7 @@
 
 #include "libguess/libguess.h"
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
 #include "prefs-pluginlist-model.h"
 
@@ -71,6 +72,14 @@ public:
     {
         if (instance)
             delete instance;
+    }
+
+    static void theme_changed()
+    {
+        if (!strcmp(aud_get_str("audqt", "theme"), "dark"))
+            enable_dark_theme();
+        else
+            disable_dark_theme();
     }
 
     static ArrayRef<ComboItem> get_output_combo()
@@ -176,6 +185,9 @@ static const TitleFieldTag title_field_tags[] = {
     {N_("Codec"), "${codec}"},
     {N_("Quality"), "${quality}"}};
 
+static const ComboItem theme_elements[] = {ComboItem(N_("Native"), ""),
+                                           ComboItem(N_("Dark"), "dark")};
+
 static const ComboItem chardet_detector_presets[] = {
     ComboItem(N_("None"), ""),
     ComboItem(N_("Arabic"), GUESS_REGION_AR),
@@ -239,7 +251,11 @@ static const PreferencesWidget appearance_page_widgets[] = {
     WidgetCombo(N_("Interface:"),
                 WidgetInt(iface_combo_selected, iface_combo_changed),
                 {0, iface_combo_fill}),
-    WidgetSeparator({true}), WidgetCustomQt(iface_create_prefs_box)};
+    WidgetCombo(N_("Theme:"),
+                WidgetString("audqt", "theme", PrefsWindow::theme_changed),
+                {theme_elements}),
+    WidgetSeparator({true}),
+    WidgetCustomQt(iface_create_prefs_box)};
 
 static void output_bit_depth_changed();
 
@@ -632,7 +648,7 @@ PrefsWindow::PrefsWindow()
     child_vbox->addWidget(s_category_notebook);
 
     bool headless = aud_get_headless_mode();
-    if(!headless)
+    if (!headless)
         create_category(s_category_notebook, appearance_page_widgets);
 
     create_category(s_category_notebook, audio_page_widgets);

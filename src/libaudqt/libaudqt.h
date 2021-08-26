@@ -32,6 +32,7 @@ class QIcon;
 class QLayout;
 class QLineEdit;
 class QPixmap;
+class QProxyStyle;
 class QToolButton;
 class QVBoxLayout;
 class QWidget;
@@ -119,6 +120,7 @@ QColor vis_bar_color(const QColor & hue, int bar, int n_bars);
 
 QHBoxLayout * make_hbox(QWidget * parent, int spacing = sizes.FourPt);
 QVBoxLayout * make_vbox(QWidget * parent, int spacing = sizes.FourPt);
+void setup_proxy_style(QProxyStyle * style);
 
 void enable_layout(QLayout * layout, bool enabled);
 void clear_layout(QLayout * layout);

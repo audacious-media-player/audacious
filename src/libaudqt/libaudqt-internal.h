@@ -29,6 +29,10 @@ class QString;
 namespace audqt
 {
 
+/* dark-theme.cc */
+void enable_dark_theme();
+void disable_dark_theme();
+
 /* dock.cc */
 void dock_show_simple(const char * id, const char * name, QWidget * create());
 void dock_hide_simple(const char * id);
