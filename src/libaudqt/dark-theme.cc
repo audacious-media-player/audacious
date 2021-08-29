@@ -20,6 +20,7 @@
  * the use of this software.
  */
 
+#include "libaudqt.h"
 #include "libaudqt-internal.h"
 
 #include <QApplication>
@@ -78,8 +79,8 @@ static const char * dark_css =
     "\n"
     "QDockWidget\n"
     "{\n"
-    "  titlebar-close-icon: url(\":/dock-close.svg\");\n"
-    "  titlebar-normal-icon: url(\":/dock-undock.svg\");\n"
+    "  titlebar-close-icon: url(\":/dark/dock-close.svg\");\n"
+    "  titlebar-normal-icon: url(\":/dark/dock-undock.svg\");\n"
     "}\n";
 
 class DarkStyle : public QProxyStyle
@@ -87,10 +88,22 @@ class DarkStyle : public QProxyStyle
 public:
     DarkStyle() : QProxyStyle("fusion") {}
 
+    QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption * option,
+                       const QWidget * widget) const override;
+
     void polish(QApplication * app) override { QProxyStyle::polish(app); };
     void polish(QWidget * widget) override { QProxyStyle::polish(widget); }
     void polish(QPalette & palette) override;
 };
+
+QIcon DarkStyle::standardIcon(StandardPixmap standardIcon, const QStyleOption * option,
+                              const QWidget *widget) const
+{
+    if (standardIcon == StandardPixmap::SP_DialogCloseButton)
+        return get_icon("window-close");
+
+    return QProxyStyle::standardIcon(standardIcon, option, widget);
+}
 
 void DarkStyle::polish(QPalette & palette)
 {

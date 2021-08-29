@@ -158,7 +158,11 @@ EXPORT void cleanup()
 
 EXPORT QIcon get_icon(const char * name)
 {
-    auto icon = QIcon::fromTheme(name);
+    QIcon icon;
+    if (!strcmp(aud_get_str("audqt", "theme"), "dark"))
+        icon = QIcon(QString(":/dark/") + name + ".svg");
+    else
+        icon = QIcon::fromTheme(name);
 
     if (icon.isNull())
         icon = QIcon(QString(":/") + name + ".svg");
