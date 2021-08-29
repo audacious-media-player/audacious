@@ -51,6 +51,9 @@ static const char * const audqt_defaults[] = {
     "eq_presets_visible", "FALSE",
     "equalizer_visible", "FALSE",
     "queue_manager_visible", "FALSE",
+#ifdef _WIN32
+    "icon_theme", "flat",
+#endif
     nullptr
 };
 /* clang-format on */
@@ -158,11 +161,17 @@ EXPORT void cleanup()
 
 EXPORT QIcon get_icon(const char * name)
 {
+    String theme = aud_get_str("audqt", "icon_theme");
     QIcon icon;
-    if (!strcmp(aud_get_str("audqt", "theme"), "dark"))
-        icon = QIcon(QString(":/dark/") + name + ".svg");
-    else
+
+    if (!theme[0]) // native
         icon = QIcon::fromTheme(name);
+    else if (!strcmp(theme, "dark"))
+    {
+        auto path = QString(":/dark/") + name + ".svg";
+        if (QFile::exists(path))
+            icon = QIcon(path);
+    }
 
     if (icon.isNull())
         icon = QIcon(QString(":/") + name + ".svg");

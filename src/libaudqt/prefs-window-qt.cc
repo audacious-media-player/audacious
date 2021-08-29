@@ -188,6 +188,13 @@ static const TitleFieldTag title_field_tags[] = {
 static const ComboItem theme_elements[] = {ComboItem(N_("Native"), ""),
                                            ComboItem(N_("Dark"), "dark")};
 
+static const ComboItem icon_theme_elements[] = {
+#ifndef _WIN32
+    ComboItem(N_("Native"), ""),
+#endif
+    ComboItem(N_("Flat"), "flat"),
+    ComboItem(N_("Flat (dark)"), "dark")};
+
 static const ComboItem chardet_detector_presets[] = {
     ComboItem(N_("None"), ""),
     ComboItem(N_("Arabic"), GUESS_REGION_AR),
@@ -254,6 +261,8 @@ static const PreferencesWidget appearance_page_widgets[] = {
     WidgetCombo(N_("Theme:"),
                 WidgetString("audqt", "theme", PrefsWindow::theme_changed),
                 {theme_elements}),
+    WidgetCombo(N_("Icon theme (requires restart):"),
+                WidgetString("audqt", "icon_theme"), {icon_theme_elements}),
     WidgetSeparator({true}),
     WidgetCustomQt(iface_create_prefs_box)};
 
