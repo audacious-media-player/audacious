@@ -3,6 +3,7 @@ libaudqt_sources = [
   'art-qt.cc',
   'audqt.cc',
   'colorbutton.cc',
+  'dark-theme.cc',
   'dock.cc',
   'eq-preset-qt.cc',
   'equalizer-qt.cc',
