@@ -52,7 +52,8 @@ static const char * const audqt_defaults[] = {
     "equalizer_visible", "FALSE",
     "queue_manager_visible", "FALSE",
 #ifdef _WIN32
-    "icon_theme", "flat",
+    "theme", "dark",
+    "icon_theme", "dark",
 #endif
     nullptr
 };
