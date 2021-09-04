@@ -320,6 +320,26 @@ static void test_tuple_formats()
     test_tuple_format("x${(empty)?artist:Empty}", tuple, "x");
     test_tuple_format("x${(empty)?album:Empty}", tuple, "xEmpty");
     test_tuple_format("x${(empty)?\"Literal\":Empty}", tuple, "Song Title");
+
+    /* string truncation tests */
+    tuple.set_str(Tuple::Artist, "Artist Name");
+    test_tuple_format("${artist}", tuple, "Artist Name");
+    test_tuple_format("${artist#6}", tuple, "Artist...");
+    test_tuple_format("${artist#10}", tuple, "Artist Nam...");
+    test_tuple_format("${artist#11}", tuple, "Artist Name");
+    test_tuple_format("${artist#12}", tuple, "Artist Name");
+    test_tuple_format("${artist#-1}", tuple, "Artist Name");
+    test_tuple_format("${artist#abc}", tuple, "Artist Name");
+
+    /* string truncation with utf-8 strings */
+    tuple.set_str(Tuple::Artist, "Русское название");
+    test_tuple_format("${artist}", tuple, "Русское название");
+    test_tuple_format("${artist#7}", tuple, "Русское...");
+    test_tuple_format("${artist#15}", tuple, "Русское названи...");
+    test_tuple_format("${artist#16}", tuple, "Русское название");
+    test_tuple_format("${artist#17}", tuple, "Русское название");
+    test_tuple_format("${artist#-1}", tuple, "Русское название");
+    test_tuple_format("${artist#abc}", tuple, "Русское название");
 }
 
 static void test_ringbuf()

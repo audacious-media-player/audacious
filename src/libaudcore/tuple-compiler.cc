@@ -41,6 +41,7 @@ struct Variable
     String text;
     int integer;
     Tuple::Field field;
+    int maxlen = 0;
 
     bool set(const char * name, bool literal);
     bool exists(const Tuple & tuple) const;
@@ -85,13 +86,17 @@ bool Variable::set(const char * name, bool literal)
     else
     {
         type = Field;
-        field = Tuple::field_by_name(name);
+        const char * c = strchr(name, '#');
+        field = Tuple::field_by_name(c ? str_copy(name, c - name) : name);
 
         if (field < 0)
         {
             AUDWARN("Invalid variable '%s'.\n", name);
             return false;
         }
+
+        // if length is invalid, default to zero (unlimited)
+        maxlen = c ? aud::max(0, atoi(c + 1)) : 0;
     }
 
     return true;
@@ -121,6 +126,15 @@ Tuple::ValueType Variable::get(const Tuple & tuple, String & tmps,
         {
         case Tuple::String:
             tmps = tuple.get_str(field);
+
+            if (maxlen > 0 && g_utf8_strlen(tmps, -1) > maxlen)
+            {
+                char * end = g_utf8_offset_to_pointer(tmps, maxlen);
+                StringBuf buf = str_copy(tmps, end - tmps);
+                buf.insert(-1, "...");
+                tmps = String(buf);
+            }
+
             return Tuple::String;
 
         case Tuple::Int:
@@ -185,7 +199,7 @@ static StringBuf get_item(const char *& str, char endch, bool & literal)
     }
     else
     {
-        while (g_ascii_isalnum(*s) || *s == '-')
+        while (g_ascii_isalnum(*s) || *s == '-' || *s == '#')
         {
             if (set == stop)
                 throw std::bad_alloc();
