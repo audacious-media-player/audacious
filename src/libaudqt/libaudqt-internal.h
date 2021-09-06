@@ -29,6 +29,9 @@ class QString;
 namespace audqt
 {
 
+/* audqt.cc */
+void set_icon_theme();
+
 /* dark-theme.cc */
 void enable_dark_theme();
 void disable_dark_theme();

@@ -53,7 +53,7 @@ static const char * const audqt_defaults[] = {
     "queue_manager_visible", "FALSE",
 #ifdef _WIN32
     "theme", "dark",
-    "icon_theme", "dark",
+    "icon_theme", "audacious-flat-dark",
 #endif
     nullptr
 };
@@ -75,6 +75,12 @@ static void load_qt_translations()
         QApplication::installTranslator(&translators[0]);
     if (translators[1].load(locale, "qtbase", "_", dir))
         QApplication::installTranslator(&translators[1]);
+}
+
+void set_icon_theme(void)
+{
+    QIcon::setThemeName((QString)aud_get_str("audqt", "icon_theme"));
+    qApp->setWindowIcon(QIcon::fromTheme("audacious"));
 }
 
 EXPORT void init()
@@ -101,9 +107,6 @@ EXPORT void init()
 #endif
 
     qapp->setApplicationName(_("Audacious"));
-    if (qapp->windowIcon().isNull())
-        qapp->setWindowIcon(audqt::get_icon(app_name));
-
     qapp->setQuitOnLastWindowClosed(false);
 
     sizes_local.OneInch =
@@ -120,6 +123,8 @@ EXPORT void init()
         QMargins(sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
 
     load_qt_translations();
+    set_icon_theme();
+
     if (!strcmp(aud_get_str("audqt", "theme"), "dark"))
         enable_dark_theme();
 
@@ -162,22 +167,7 @@ EXPORT void cleanup()
 
 EXPORT QIcon get_icon(const char * name)
 {
-    String theme = aud_get_str("audqt", "icon_theme");
-    QIcon icon;
-
-    if (!theme[0]) // native
-        icon = QIcon::fromTheme(name);
-    else if (!strcmp(theme, "dark"))
-    {
-        auto path = QString(":/dark/") + name + ".svg";
-        if (QFile::exists(path))
-            icon = QIcon(path);
-    }
-
-    if (icon.isNull())
-        icon = QIcon(QString(":/") + name + ".svg");
-
-    return icon;
+    return QIcon::fromTheme(name);
 }
 
 EXPORT QGradientStops dark_bg_gradient(const QColor & base)

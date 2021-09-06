@@ -1,0 +1,10 @@
+[Icon Theme]
+Name=audacious-flat
+Comment=Built-in flat icon theme
+Directories=scalable
+
+[scalable]
+Size=256
+Type=Scalable
+MinSize=8
+MaxSize=512

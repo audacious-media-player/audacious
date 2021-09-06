@@ -358,8 +358,8 @@ SongsWindow::SongsWindow()
     QPushButton* btn_Jump = bbox->addButton(translate_str(N_("_Jump")), QDialogButtonBox::AcceptRole);
     QPushButton* btn_Close = bbox->button(QDialogButtonBox::Close);
     btn_Close->setText(translate_str(N_("_Close")));
-    btn_Close->setIcon(audqt::get_icon("window-close"));
-    btn_Jump->setIcon(audqt::get_icon("go-jump"));
+    btn_Close->setIcon(QIcon::fromTheme("window-close"));
+    btn_Jump->setIcon(QIcon::fromTheme("go-jump"));
     hbox_footer->addWidget(bbox);
 
     QObject::connect(&m_queueAndUnqueueButton, &QAbstractButton::clicked, [this]() {

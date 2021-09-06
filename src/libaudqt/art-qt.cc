@@ -65,7 +65,7 @@ EXPORT QPixmap art_request(const char * filename, unsigned int w,
         return art_scale(img, w, h, want_hidpi);
 
     unsigned size = to_native_dpi(48);
-    return get_icon("audio-x-generic")
+    return QIcon::fromTheme("audio-x-generic")
         .pixmap(aud::min(w, size), aud::min(h, size));
 }
 

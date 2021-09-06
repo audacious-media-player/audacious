@@ -1,0 +1,11 @@
+[Icon Theme]
+Name=audacious-flat-dark
+Comment=Built-in flat icon theme (dark variant)
+Directories=scalable
+Inherits=audacious-flat
+
+[scalable]
+Size=256
+Type=Scalable
+MinSize=8
+MaxSize=512
