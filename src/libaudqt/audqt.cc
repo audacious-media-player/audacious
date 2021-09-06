@@ -80,6 +80,9 @@ static void load_qt_translations()
 void set_icon_theme(void)
 {
     QIcon::setThemeName((QString)aud_get_str("audqt", "icon_theme"));
+    if (QIcon::themeName().isEmpty())
+        QIcon::setThemeName("audacious-flat");
+
     qApp->setWindowIcon(QIcon::fromTheme("audacious"));
 }
 
