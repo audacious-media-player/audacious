@@ -267,10 +267,10 @@ static const PreferencesWidget appearance_page_widgets[] = {
                 WidgetInt(iface_combo_selected, iface_combo_changed),
                 {0, iface_combo_fill}),
     WidgetCombo(N_("Theme:"), WidgetString("audqt", "theme", theme_changed),
-                {theme_elements}),
+                {{theme_elements}}),
     WidgetCombo(N_("Icon theme:"),
                 WidgetString("audqt", "icon_theme", icon_theme_changed),
-                {icon_theme_elements}),
+                {{icon_theme_elements}}),
     WidgetSeparator({true}),
     WidgetCustomQt(iface_create_prefs_box)};
 
