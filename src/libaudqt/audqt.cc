@@ -80,8 +80,30 @@ static void load_qt_translations()
 void set_icon_theme(void)
 {
     QIcon::setThemeName((QString)aud_get_str("audqt", "icon_theme"));
-    if (QIcon::themeName().isEmpty())
-        QIcon::setThemeName("audacious-flat");
+
+    // make sure we have a valid icon theme
+    auto isValid = [](QString theme) {
+        return !theme.isEmpty() && theme != "hicolor";
+    };
+
+    if (!isValid(QIcon::themeName()))
+    {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        QString fallback = QIcon::fallbackThemeName();
+        if (isValid(fallback))
+            QIcon::setThemeName(fallback);
+        else
+#endif
+            QIcon::setThemeName("audacious-flat");
+    }
+
+    // add fallback icons just to be sure
+#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
+    auto paths = QIcon::fallbackSearchPaths();
+    auto path = ":/icons/audacious-flat/scalable";
+    if (!paths.contains(path))
+        QIcon::setFallbackSearchPaths(paths << path);
+#endif
 
     qApp->setWindowIcon(QIcon::fromTheme("audacious"));
 }
