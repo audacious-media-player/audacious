@@ -76,16 +76,21 @@ EXPORT void fileopener_show(FileMode mode)
         dialog->setLabelText(QFileDialog::Accept, _(labels[mode]));
         dialog->setLabelText(QFileDialog::Reject, _("Cancel"));
 
+        auto playlist = Playlist::active_playlist();
+
         if (mode == FileMode::ExportPlaylist)
+        {
             dialog->setAcceptMode(QFileDialog::AcceptSave);
+            String filename = playlist.get_filename();
+            if (filename)
+                dialog->selectUrl(QString(filename));
+        }
 
         QObject::connect(dialog.data(), &QFileDialog::directoryEntered,
                          [](const QString & path) {
                              aud_set_str("audgui", "filesel_path",
                                          path.toUtf8().constData());
                          });
-
-        auto playlist = Playlist::active_playlist();
 
         QObject::connect(
             dialog.data(), &QFileDialog::accepted, [dialog, mode, playlist]() {
