@@ -48,6 +48,7 @@ LOCALES = ar.po \
 	  ta.po \
 	  tr.po \
 	  uk.po \
+	  uz.po \
 	  zh_CN.po \
 	  zh_TW.po
 
