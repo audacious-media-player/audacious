@@ -54,6 +54,7 @@ void plugin_registry_save();
 void plugin_registry_cleanup();
 
 void plugin_register(const char * path, int timestamp);
+int plugin_get_priority(PluginHandle * plugin);
 PluginEnabled plugin_get_enabled(PluginHandle * plugin);
 void plugin_set_enabled(PluginHandle * plugin, PluginEnabled enabled);
 void plugin_set_failed(PluginHandle * plugin);
