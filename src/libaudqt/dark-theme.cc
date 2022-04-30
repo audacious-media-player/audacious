@@ -116,6 +116,9 @@ void DarkStyle::polish(QPalette & palette)
     palette.setColor(QPalette::AlternateBase,   QColor(0x28, 0x28, 0x28));
     palette.setColor(QPalette::ToolTipBase,     QColor(0x1d, 0x2c, 0x3f));
     palette.setColor(QPalette::ToolTipText,     QColor(0xf0, 0xf0, 0xf0));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+    palette.setColor(QPalette::PlaceholderText, QColor(0x80, 0x80, 0x80));
+#endif
 
     // disabled colors (where different from normal)
     palette.setColor(QPalette::Disabled, QPalette::WindowText,    QColor(0x80, 0x80, 0x80));
