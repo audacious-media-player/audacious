@@ -73,6 +73,8 @@ EXPORT void fileopener_show(FileMode mode)
 
         dialog->setAttribute(Qt::WA_DeleteOnClose);
         dialog->setFileMode(modes[mode]);
+        if (modes[mode] == QFileDialog::FileMode::Directory)
+            dialog->setOption(QFileDialog::ShowDirsOnly);
         dialog->setLabelText(QFileDialog::Accept, _(labels[mode]));
         dialog->setLabelText(QFileDialog::Reject, _("Cancel"));
 
