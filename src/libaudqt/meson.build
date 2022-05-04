@@ -43,11 +43,7 @@ libaudqt_headers = [
 ]
 
 
-if get_option('qt6')
-  images_src = qt6.preprocess(qresources: 'images.qrc')
-else
-  images_src = qt5.preprocess(qresources: 'images.qrc')
-endif
+images_src = qt.preprocess(qresources: 'images.qrc')
 
 
 install_headers(libaudqt_headers, subdir: 'libaudqt')

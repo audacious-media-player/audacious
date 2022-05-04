@@ -11,7 +11,6 @@ project('audacious', 'c', 'cpp',
 copyright = 'Copyright (C) 2001-2022 Audacious developers and others'
 
 
-qt5 = import('qt5')
 gnome = import('gnome')
 
 
@@ -24,7 +23,7 @@ thread_dep = dependency('threads', required: true)
 if get_option('qt')
   if get_option('qt6')
     if meson.version().version_compare('>= 0.57')
-      qt6 = import('qt6')
+      qt = import('qt6')
     else
       error('Qt 6 is only supported since Meson 0.57.')
     endif
@@ -32,6 +31,7 @@ if get_option('qt')
     qt_req = '>= 6.0'
     qt_dep = dependency('qt6', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
   else
+    qt = import('qt5')
     qt_req = '>= 5.2'
     qt_dep = dependency('qt5', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
   endif
