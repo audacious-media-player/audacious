@@ -40,7 +40,7 @@ static bool has_front_cover_extension(const char * name)
         return false;
 
     return !strcmp_nocase(ext, ".jpg") || !strcmp_nocase(ext, ".jpeg") ||
-           !strcmp_nocase(ext, ".png");
+           !strcmp_nocase(ext, ".png") || !strcmp_nocase(ext, ".webp");
 }
 
 static bool cover_name_filter(const char * name, const Index<String> & keywords,
