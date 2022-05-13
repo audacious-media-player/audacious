@@ -466,7 +466,7 @@ static void infowin_show (Playlist list, int entry, const String & filename,
     codec_values[CODEC_QUALITY] = tuple.get_str (Tuple::Quality);
 
     if (tuple.get_value_type (Tuple::Bitrate) == Tuple::Int)
-        codec_values[CODEC_BITRATE] = String (str_printf (_("%d kb/s"),
+        codec_values[CODEC_BITRATE] = String (str_printf (_("%d kbit/s"),
          tuple.get_int (Tuple::Bitrate)));
 
     for (int row = 0; row < CODEC_ITEMS; row ++)
