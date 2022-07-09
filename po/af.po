@@ -1,123 +1,113 @@
-# Slovenian translation for Audacious
+# Afrikaans translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Arnold Marko <arnold.marko@gmail.com>, 2021
-# kv1dr <poznic.davor@gmail.com>, 2011
-# lippgreen, 2013
-# lippgreen, 2013
-# Nejc Bertoncelj, 2020
-# Nejc Bertoncelj, 2020
-# Nejc Bertoncelj <nejc@bertoncelj.eu.org>, 2020-2021
-# Nejc Bertoncelj <nejc@bertoncelj.eu.org>, 2020-2021, 2022
-# kv1dr <poznic.davor@gmail.com>, 2011
-# Tadej Borovšak <tadeboro@gmail.com>, 2012
+# Reynier West, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2022-07-09 23:07+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Tadej Borovšak <tadeboro@gmail.com>, 2012\n"
-"Language-Team: Slovenian (http://www.transifex.com/audacious/audacious/"
-"language/sl/)\n"
-"Language: sl\n"
+"Last-Translator: Reynier West, 2022\n"
+"Language-Team: Afrikaans (http://www.transifex.com/audacious/audacious/"
+"language/af/)\n"
+"Language: af\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/audacious/main.cc:72
 msgid "Show command-line help"
-msgstr "Show command-line help"
+msgstr "Wys bevel-lyn hulp"
 
 #: src/audacious/main.cc:73
 msgid "Show version"
-msgstr "Show version"
+msgstr "Wys weergawe"
 
 #: src/audacious/main.cc:74
 msgid "Start playback"
-msgstr "Start playback"
+msgstr "Begin terugspeel"
 
 #: src/audacious/main.cc:75
 msgid "Pause playback"
-msgstr "Pause playback"
+msgstr "Pouseer terugspeel"
 
 #: src/audacious/main.cc:77
 msgid "Pause if playing, play otherwise"
-msgstr "Pause if playing, play otherwise"
+msgstr "Pouseer as reeds speel, speel andersins"
 
 #: src/audacious/main.cc:78
 msgid "Stop playback"
-msgstr "Stop playback"
+msgstr "Stop terugspeel"
 
 #: src/audacious/main.cc:79
 msgid "Skip to previous song"
-msgstr "Skip to previous song"
+msgstr "Slaan oor na vorige lied"
 
 #: src/audacious/main.cc:80
 msgid "Skip to next song"
-msgstr "Skip to next song"
+msgstr "Slaan oor na volgende lied"
 
 #: src/audacious/main.cc:81
 msgid "Add files to the playlist"
-msgstr "Add files to the playlist"
+msgstr "Voeg lêers by snitlys"
 
 #: src/audacious/main.cc:83
 msgid "Add files to a temporary playlist"
-msgstr "Add files to a temporary playlist"
+msgstr "Voeg lêers by 'n tydelike snitlys"
 
 #: src/audacious/main.cc:84
 msgid "Display the main window"
-msgstr "Display the main window"
+msgstr "Wys die hoofvenster"
 
 #: src/audacious/main.cc:86
 msgid "Display the jump-to-song window"
-msgstr "Display the jump-to-song window"
+msgstr "Wys die spring-tot-lied venster"
 
 #: src/audacious/main.cc:88
 msgid "Start without a graphical interface"
-msgstr "Start without a graphical interface"
+msgstr "Begin sonder 'n grafiese koppelvlak"
 
 #: src/audacious/main.cc:90
 msgid "Quit on playback stop"
-msgstr "Quit on playback stop"
+msgstr "Verlaat sodra terugspeel stop"
 
 #: src/audacious/main.cc:92
 msgid "Print debugging messages (may be used twice)"
-msgstr "Print debugging messages (may be used twice)"
+msgstr "Druk ontfouter boodskappe (mag twee keer gebruik word)"
 
 #: src/audacious/main.cc:94
 msgid "Run in GTK mode"
-msgstr "Run in GTK mode"
+msgstr "Hardloop in GTK modus"
 
 #: src/audacious/main.cc:95
 msgid "Run in Qt mode"
-msgstr "Run in Qt mode"
+msgstr "Hardloop in Qt modus"
 
 #: src/audacious/main.cc:152
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr "Unknown option: %s\n"
+msgstr "Onbekende opsie: %s\n"
 
 #: src/audacious/main.cc:174
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr "Unknown option: -%c\n"
+msgstr "Onbekende opsie: -%c\n"
 
 #: src/audacious/main.cc:204
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
-"Usage: audacious [OPTION] ... [FILE] ...\n"
+"Gebruik: audacious [OPTION]...[FILE]...\n"
 "\n"
 
 #: src/audacious/main.cc:206
 msgid "Select instance to run/control"
-msgstr "Select instance to run/control"
+msgstr "Kies instansie om te hardloop/beheer"
 
 #: src/audacious/main.cc:391 src/libaudqt/audqt.cc:134
 msgid "Audacious"
@@ -127,10 +117,8 @@ msgstr "Audacious"
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d najdena datoteka"
-msgstr[1] "%d najdeni datoteki"
-msgstr[2] "%d najdene datoteke"
-msgstr[3] "%d najdenih datotek"
+msgstr[0] "%dlêer gevind"
+msgstr[1] "%dlêers gevind"
 
 #: src/libaudcore/adder.cc:320 src/libaudcore/adder.cc:404
 #, c-format
@@ -138,44 +126,44 @@ msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
-"Napaka pri branju datoteke %s:\n"
+"Kon nie %s lees nie:\n"
 "%s"
 
 #: src/libaudcore/adder.cc:456
 msgid "No files found."
-msgstr "Ni najdenih datotek."
+msgstr "Geen lêers gevind nie."
 
 #: src/libaudcore/adder.cc:478 src/libaudcore/playlist.cc:81
 msgid "New Playlist"
-msgstr "Nov seznam predvajanja"
+msgstr "Nuwe Snitlys"
 
 #: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:526
 msgid "Standard input"
-msgstr "Standardni vhod"
+msgstr "Standaard insette"
 
 #: src/libaudcore/audstrings.cc:666
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Glasbeni CD, skladba %s"
+msgstr "Oudio CD, snit %s"
 
 #: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:502
 msgid "(character encoding error)"
-msgstr "(napaka pri enkodiranju znaka)"
+msgstr "(karakter koderings fout)"
 
 #: src/libaudcore/drct.cc:96
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
 msgstr ""
-"Pretočno snemanje mora biti nastavljeno v Nastavitvah zvoka, preden ga lahko "
-"uporabite."
+"Stroomopname moet in oudio-instellings opgestel word voordat dit gebruik kan "
+"word."
 
 #: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
-msgstr "Napaka pri odpiranju izhodnega pretoka"
+msgstr "Kon nie uitset stroom oopmaak nie"
 
 #: src/libaudcore/output.cc:341
 msgid "Error recording output stream"
-msgstr "Napaka pri snemanju izhodnega pretoka"
+msgstr "Kon nie uitset stroom opneem nie"
 
 #: src/libaudcore/playback.cc:379
 #, c-format
@@ -183,16 +171,16 @@ msgid ""
 "Error playing %s:\n"
 "%s"
 msgstr ""
-"Napaka ob predvajanju %s:\n"
+"Kon nie %s speel nie:\n"
 "%s"
 
 #: src/libaudcore/playback.cc:510
 msgid "Invalid audio format"
-msgstr "Neveljaven format zvočne datoteke"
+msgstr "Ongeldige oudio formaat"
 
 #: src/libaudcore/playlist.cc:82
 msgid "Now Playing"
-msgstr "Predvaja se"
+msgstr "Speel nou"
 
 #: src/libaudcore/playlist-files.cc:73 src/libaudcore/playlist-files.cc:153
 #: src/libaudgui/infowin.cc:509 src/libaudqt/infowin-qt.cc:246
@@ -201,52 +189,52 @@ msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
-"Napaka pri odpiranju %s:\n"
+"Fout tydens oopmaak van %s:\n"
 "%s"
 
 #: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:282
 #, c-format
 msgid "Error loading %s."
-msgstr "Napaka pri nalaganju %s."
+msgstr "Kon nie %s laai nie."
 
 #: src/libaudcore/playlist-files.cc:89
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr "Napaka pri nalaganju %s: končnica imena datoteke ni podprta."
+msgstr "Kan nie %s laai nie: onondersteunde lêer naam uitbreiding."
 
 #: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:317
 #, c-format
 msgid "Error saving %s."
-msgstr "Napaka pri shranjevanju %s."
+msgstr "Kon nie %s stoor nie."
 
 #: src/libaudcore/playlist-files.cc:167
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr "Napaka pri shranjevanju %s: končnica imena datoteke ni podprta."
+msgstr "Kan nie %s stoor nie: onondersteunde lêer naam uitbreiding."
 
 #: src/libaudcore/probe.cc:54
 msgid "Error loading plugin"
-msgstr "Napaka pri nalaganju vtičnika."
+msgstr "Kon nie inprop laai nie"
 
 #: src/libaudcore/probe.cc:173
 msgid "Seek error"
-msgstr "Napaka pri iskanju"
+msgstr "Soek fout"
 
 #: src/libaudcore/probe.cc:181
 msgid ""
 "The file format could not be determined. The format may be unsupported, or a "
 "necessary plugin may not be installed/enabled."
 msgstr ""
-"Napaka pri ugotavljanju datotečnega formata. Ali je nepodprt, ali pa "
-"ustrezen vtičnik ni nameščen/omogočen."
+"Die lêerformaat kon nie bepaal word nie. Die formaat word dalk nie "
+"ondersteun nie, of 'n nodige inprop is dalk nie geïnstalleer/geaktiveer nie."
 
 #: src/libaudcore/probe.cc:212
 msgid ""
 "The file could not be decoded. It may be invalid, corrupt, or in an "
 "unsupported format."
 msgstr ""
-"Napaka pri dekodiranju datoteke. Lahko je neveljavna, okvarjena ali v "
-"nepodprtem formatu."
+"Die lêer kon nie gedekodeer word nie. Dit kan ongeldig, korrup of in 'n nie-"
+"ondersteunde formaat wees."
 
 #: src/libaudcore/tuple.cc:560
 msgid "Mono"
@@ -260,48 +248,46 @@ msgstr "Stereo"
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "%d kanal"
-msgstr[1] "%d kanala"
-msgstr[2] "%d kanali"
-msgstr[3] "%d kanalov"
+msgstr[0] "%d kanaal"
+msgstr[1] "%d kanale"
 
 #: src/libaudcore/tuple.cc:783
 msgid "Audio CD"
-msgstr "Glasbeni CD"
+msgstr "Oudio-CD"
 
 #: src/libaudcore/tuple.cc:867
 #, c-format
 msgid "Track %d"
-msgstr "Skladba %d"
+msgstr "Snit %d"
 
 #: src/libaudcore/tuple.cc:873
 msgid "(unknown title)"
-msgstr "(neznan naslov)"
+msgstr "(onbekende titel)"
 
 #: src/libaudcore/vfs.cc:79
 msgid "Unknown URI scheme"
-msgstr "Neznana shema URI"
+msgstr "Onbekende URI skema"
 
 #: src/libaudcore/vfs_local.cc:86 src/libaudcore/vfs_local.cc:330
 #: src/libaudcore/vfs_local.cc:386
 msgid "Invalid file name"
-msgstr "Neveljavno ime datoteke"
+msgstr "Ongeldige lêer naam"
 
 #: src/libaudcore/vfs_local.cc:134
 msgid "Invalid access mode"
-msgstr "Neveljaven način dostopa"
+msgstr "Ongeldige toegangs modus"
 
 #: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:37
 msgid "Credits"
-msgstr "Zasluge"
+msgstr "Erkennings"
 
 #: src/libaudgui/about.cc:36 src/libaudqt/about-qt.cc:37
 msgid "License"
-msgstr "Licenca"
+msgstr "Lisensie"
 
 #: src/libaudgui/about.cc:72 src/libaudqt/about-qt.cc:64
 msgid "About Audacious"
-msgstr "O programu Audacious"
+msgstr "Aangaande Audacious"
 
 #: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
 #: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
@@ -310,78 +296,78 @@ msgstr "O programu Audacious"
 #: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:140
 #: src/libaudqt/url-opener-qt.cc:80
 msgid "_Cancel"
-msgstr "_Prekliči"
+msgstr "_Kanselleer"
 
 #: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:57
 msgid "_Don’t ask again"
-msgstr "_Ne vprašaj več"
+msgstr "Moenie weer vra nie"
 
 #: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:64
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr "Želite trajno odstraniti datoteko \"%s\"?"
+msgstr "Wil jy “%s” permanent verwyder?"
 
 #: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:58
 msgid "_Remove"
-msgstr "Ods_trani"
+msgstr "_Verwyder"
 
 #: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:62
 msgid "Remove Playlist"
-msgstr "Odstrani seznam predvajanja"
+msgstr "Verwyder Snitlys"
 
 #: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:39
 msgid "What would you like to call this playlist?"
-msgstr "Kako želite poimenovati seznam predvajanja?"
+msgstr "Wat wil jy hierdie snitlys noem?"
 
 #: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:40
 msgid "_Rename"
-msgstr "P_reimenuj"
+msgstr "Hernoem"
 
 #: src/libaudgui/confirm.cc:97 src/libaudqt/playlist-management.cc:38
 msgid "Rename Playlist"
-msgstr "Preimenuj seznam predvajanja"
+msgstr "Hernoem Snitlys"
 
 #: src/libaudgui/eq-preset.cc:153
 msgid "Please select one preset to export."
-msgstr "Izberite predlogo za izvoz."
+msgstr "Kies asseblief een vooraf-instelling om uit te voer."
 
 #: src/libaudgui/eq-preset.cc:256 src/libaudgui/eq-preset.cc:261
 msgid "Preset File ..."
-msgstr "Datoteka s predlogami"
+msgstr "Vooraf-ingestelde lêer ..."
 
 #: src/libaudgui/eq-preset.cc:257 src/libaudgui/eq-preset.cc:262
 msgid "EQF File ..."
-msgstr "Datoteka EQF"
+msgstr "EQF Lêer ..."
 
 #: src/libaudgui/eq-preset.cc:266 src/libaudqt/eq-preset-qt.cc:337
 #: src/libaudqt/fileopener.cc:64
 msgid "Import"
-msgstr "Uvozi"
+msgstr "Invoer"
 
 #: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:340
 #: src/libaudqt/fileopener.cc:64
 msgid "Export"
-msgstr "Izvozi"
+msgstr "Uitvoer"
 
 #: src/libaudgui/eq-preset.cc:282 src/libaudqt/eq-preset-qt.cc:403
 msgid "Equalizer Presets"
-msgstr "Predloge izenačevalnika"
+msgstr "Gelykmaker Voorinstellings"
 
 #: src/libaudgui/eq-preset.cc:304 src/libaudqt/eq-preset-qt.cc:328
 msgid "Save Preset"
-msgstr "Shrani predlogo"
+msgstr "Stoor Voorinstelling"
 
 #: src/libaudgui/eq-preset.cc:326
 msgid "Delete Selected"
-msgstr "Izbriši izbrano"
+msgstr "Skrap Seleksie"
 
 #: src/libaudgui/eq-preset.cc:330
 msgid "Revert Changes"
-msgstr "Povrni spremembe"
+msgstr "Stel Veranderinge Terug"
 
 #: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer-qt.cc:120
 msgid "_Enable"
-msgstr "O_mogoči"
+msgstr "Aktiveer"
 
 #: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer-qt.cc:123
 msgid "31 Hz"
@@ -425,45 +411,45 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.cc:129 src/libaudqt/equalizer-qt.cc:206
 msgid "Equalizer"
-msgstr "Izenačevalnik"
+msgstr "Gelykmaker"
 
 #: src/libaudgui/equalizer.cc:143 src/libaudqt/equalizer-qt.cc:144
 msgid "Presets ..."
-msgstr "Predloge"
+msgstr "Voorinstellings ..."
 
 #: src/libaudgui/equalizer.cc:147 src/libaudqt/equalizer-qt.cc:143
 msgid "Reset to Zero"
-msgstr "Ponastavi"
+msgstr "Stel terug na nul"
 
 #: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer-qt.cc:129
 msgid "Preamp"
-msgstr "Predojačevalnik"
+msgstr "Voorversterker"
 
 #: src/libaudgui/file-opener.cc:78 src/libaudqt/fileopener.cc:59
 msgid "Open Files"
-msgstr "Odpri datoteke"
+msgstr "Maak Lêers Oop"
 
 #: src/libaudgui/file-opener.cc:79 src/libaudgui/url-opener.cc:64
 #: src/libaudqt/url-opener-qt.cc:48
 msgid "_Open"
-msgstr "_Odpri"
+msgstr "_Oop"
 
 #: src/libaudgui/file-opener.cc:81
 msgid "Close _dialog on open"
-msgstr "Zapri o_brazec ob odpiranju"
+msgstr "Maak _dialoog toe op oop maak"
 
 #: src/libaudgui/file-opener.cc:86 src/libaudqt/fileopener.cc:59
 msgid "Add Files"
-msgstr "Dodaj datoteke"
+msgstr "Voeg Lêers By"
 
 #: src/libaudgui/file-opener.cc:87 src/libaudgui/url-opener.cc:70
 #: src/libaudqt/url-opener-qt.cc:54
 msgid "_Add"
-msgstr "_Dodaj"
+msgstr "Voeg by"
 
 #: src/libaudgui/file-opener.cc:89
 msgid "Close _dialog on add"
-msgstr "Zapri o_brazec ob dodajanju"
+msgstr "Maak _dialoog toe op byvoeg"
 
 #: src/libaudgui/file-opener.cc:128 src/libaudgui/infowin.cc:414
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
@@ -473,20 +459,20 @@ msgstr "Zapri o_brazec ob dodajanju"
 #: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:679
 #: src/libaudqt/song-window-qt.cc:360
 msgid "_Close"
-msgstr "_Zapri"
+msgstr "_Toe"
 
 #: src/libaudgui/infopopup.cc:187 src/libaudgui/infowin.cc:369
 #: src/libaudgui/prefs-window.cc:104 src/libaudqt/infopopup-qt.cc:94
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:169
 #: src/libaudqt/queue-manager-qt.cc:110
 msgid "Title"
-msgstr "Naslov"
+msgstr "Titel"
 
 #: src/libaudgui/infopopup.cc:188 src/libaudgui/infowin.cc:372
 #: src/libaudgui/prefs-window.cc:101 src/libaudqt/infopopup-qt.cc:96
 #: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:166
 msgid "Artist"
-msgstr "Izvajalec"
+msgstr "Kunstenaar"
 
 #: src/libaudgui/infopopup.cc:189 src/libaudgui/infowin.cc:375
 #: src/libaudgui/prefs-window.cc:102 src/libaudgui/prefs-window.cc:149
@@ -499,35 +485,35 @@ msgstr "Album"
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/infopopup-qt.cc:100
 #: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:171
 msgid "Genre"
-msgstr "Zvrst"
+msgstr "Genre"
 
 #: src/libaudgui/infopopup.cc:191 src/libaudgui/infowin.cc:388
 #: src/libaudgui/prefs-window.cc:111 src/libaudqt/infopopup-qt.cc:102
 #: src/libaudqt/prefs-window-qt.cc:176
 msgid "Year"
-msgstr "Leto"
+msgstr "Jaar"
 
 #: src/libaudgui/infopopup.cc:192 src/libaudgui/prefs-window.cc:148
 #: src/libaudqt/infopopup-qt.cc:104 src/libaudqt/prefs-window-qt.cc:208
 msgid "Track"
-msgstr "Skladba"
+msgstr "Snit"
 
 #: src/libaudgui/infopopup.cc:193 src/libaudqt/infopopup-qt.cc:106
 #: src/libaudqt/info-widget.cc:63
 msgid "Length"
-msgstr "Dolžina"
+msgstr "Lengte"
 
 #: src/libaudgui/infowin.cc:50
 msgid "Format:"
-msgstr "Format:"
+msgstr "Formaat:"
 
 #: src/libaudgui/infowin.cc:51
 msgid "Quality:"
-msgstr "Kakovost:"
+msgstr "Kwaliteit:"
 
 #: src/libaudgui/infowin.cc:52
 msgid "Bitrate:"
-msgstr "Bitna hitrost:"
+msgstr "Bistempo:"
 
 #: src/libaudgui/infowin.cc:86
 msgid "Acid Jazz"
@@ -559,7 +545,7 @@ msgstr "Chamber Music"
 
 #: src/libaudgui/infowin.cc:93
 msgid "Classical"
-msgstr "Classical"
+msgstr "Klassieke"
 
 #: src/libaudgui/infowin.cc:94
 msgid "Country"
@@ -575,11 +561,11 @@ msgstr "Disco"
 
 #: src/libaudgui/infowin.cc:97
 msgid "Easy Listening"
-msgstr "Easy Listening"
+msgstr "Gemaklike Luister"
 
 #: src/libaudgui/infowin.cc:98
 msgid "Folk"
-msgstr "Folk"
+msgstr "Volk"
 
 #: src/libaudgui/infowin.cc:99
 msgid "Funk"
@@ -627,7 +613,7 @@ msgstr "Metal"
 
 #: src/libaudgui/infowin.cc:110
 msgid "New Age"
-msgstr "New Age"
+msgstr "Nuwe Era"
 
 #: src/libaudgui/infowin.cc:111
 msgid "New Wave"
@@ -687,231 +673,232 @@ msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.cc:227
 msgid "Save successful"
-msgstr "Shranjevanje uspešno"
+msgstr "Stoor suksesvol"
 
 #: src/libaudgui/infowin.cc:231
 msgid "Save error"
-msgstr "Napaka pri shranjevanju"
+msgstr "Stoor fout"
 
 #: src/libaudgui/infowin.cc:324 src/libaudgui/prefs-window.cc:86
 #: src/libaudqt/infowin-qt.cc:121 src/libaudqt/prefs-window-qt.cc:161
 msgid "Song Info"
-msgstr "Podatki o skladbi"
+msgstr "Lied Info"
 
 #: src/libaudgui/infowin.cc:378 src/libaudqt/info-widget.cc:51
 msgid "Album Artist"
-msgstr "Izvajalec albuma"
+msgstr "Album Kunstenaar"
 
 #: src/libaudgui/infowin.cc:381 src/libaudgui/prefs-window.cc:112
 #: src/libaudqt/info-widget.cc:54 src/libaudqt/prefs-window-qt.cc:177
 msgid "Comment"
-msgstr "Komentar"
+msgstr "Kommentaar"
 
 #: src/libaudgui/infowin.cc:391 src/libaudqt/info-widget.cc:52
 msgid "Track Number"
-msgstr "Številka skladbe"
+msgstr "Snit Nommer"
 
 #: src/libaudgui/infowin.cc:397
 msgid "_Auto-fill empty fields"
-msgstr "S_amodejno dopolni prazna polja"
+msgstr "Vul leë velde outomaties in"
 
 #: src/libaudgui/infowin.cc:411 src/libaudqt/infowin-qt.cc:184
 msgid "_Save"
-msgstr "S_hrani"
+msgstr "_Stoor"
 
 #: src/libaudgui/infowin.cc:417
 msgid "_Previous"
-msgstr "P_rejšnja"
+msgstr "Vorige"
 
 #: src/libaudgui/infowin.cc:420
 msgid "_Next"
-msgstr "Nasledn_ja"
+msgstr "Volgende"
 
 #: src/libaudgui/infowin.cc:469
 #, c-format
 msgid "%d kbit/s"
-msgstr "%d kbit/s"
+msgstr ""
 
 #: src/libaudgui/infowin.cc:474
 msgid "N/A"
-msgstr "ni na voljo"
+msgstr "NVT"
 
 #: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:314
 #: src/libaudqt/song-window-qt.cc:358
 msgid "_Jump"
-msgstr "S_kok"
+msgstr "Spring"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
-msgstr "Skoči na čas"
+msgstr "Spring na Tyd"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
-msgstr "Vnesite čas (minute:sekunde):"
+msgstr "Voer tyd in (minute:sekondes):"
 
 #: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
 #: src/libaudgui/jump-to-track.cc:305 src/libaudqt/song-window-qt.cc:281
 #: src/libaudqt/song-window-qt.cc:357
 msgid "_Queue"
-msgstr "_Dodaj v vrsto"
+msgstr "Tou"
 
 #: src/libaudgui/jump-to-track.cc:101 src/libaudqt/song-window-qt.cc:281
 msgid "Un_queue"
-msgstr "_Odstrani iz vrste"
+msgstr "Onttou"
 
 #: src/libaudgui/jump-to-track.cc:240 src/libaudqt/song-window-qt.cc:294
 msgid "Jump to Song"
-msgstr "Skoči na skladbo"
+msgstr "Spring na Lied"
 
 #: src/libaudgui/jump-to-track.cc:265 src/libaudqt/song-window-qt.cc:311
 msgid "Filter: "
-msgstr "Filter:"
+msgstr "Filtreer:"
 
 #: src/libaudgui/jump-to-track.cc:266
 msgid "_Filter:"
-msgstr "_Filter:"
+msgstr "_Filtreer:"
 
 #: src/libaudgui/jump-to-track.cc:298 src/libaudqt/song-window-qt.cc:352
 msgid "C_lose on jump"
-msgstr "Zapri ob _skoku"
+msgstr "Maak toe op Spring"
 
 #: src/libaudgui/playlists.cc:91
 msgid "_Overwrite"
-msgstr "Pr_epiši"
+msgstr "_Oorskryf"
 
 #: src/libaudgui/playlists.cc:95
 msgid "Confirm Overwrite"
-msgstr "Potrdi prepisovanje"
+msgstr "Bevestig Oorskryf"
 
 #: src/libaudgui/playlists.cc:95
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Prepišem %s?"
+msgstr "Oorskryf %s?"
 
 #: src/libaudgui/playlists.cc:121
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
-msgstr "Vnesite končnico datoteke ali izberite format datoteke s seznama."
+msgstr ""
+"Tik asseblief 'n lêer naam uitbreiding of kies 'n formaat uit die aftreklys."
 
 #: src/libaudgui/playlists.cc:140
 msgid "Select Format by Extension"
-msgstr "Izberi format prek končnice"
+msgstr "Kies Formaat volgens uitbreiding"
 
 #: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:60
 msgid "Export Playlist"
-msgstr "Izvozi seznam predvajanja"
+msgstr "Voer Snitlys Uit"
 
 #: src/libaudgui/playlists.cc:168
 msgid "_Export"
-msgstr "_Izvozi"
+msgstr "Voer Uit"
 
 #: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:60
 msgid "Import Playlist"
-msgstr "Uvozi seznam predvajanja"
+msgstr "Voer Snitlys In"
 
 #: src/libaudgui/playlists.cc:175
 msgid "_Import"
-msgstr "_Uvozi"
+msgstr "Voer In"
 
 #: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:44
 msgid "_Plugins ..."
-msgstr "_Vtičniki"
+msgstr "Inproppe ..."
 
 #: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:61
 #, c-format
 msgid "About %s"
-msgstr "O vtičniku %s"
+msgstr "Aangaande %s"
 
 #: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:126
 #, c-format
 msgid "%s Settings"
-msgstr "Nastavitve za %s"
+msgstr "%s Stellings"
 
 #: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:138
 msgid "_Set"
-msgstr "_Nastavi"
+msgstr "_Stel"
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:726
 #: src/libaudgui/prefs-window.cc:766 src/libaudqt/prefs-window-qt.cc:631
 #: src/libaudqt/prefs-window-qt.cc:634
 msgid "_Settings"
-msgstr "N_astavitve"
+msgstr "_Stellings"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:740
 #: src/libaudgui/prefs-window.cc:778 src/libaudqt/prefs-window-qt.cc:632
 #: src/libaudqt/prefs-window-qt.cc:635
 msgid "_About"
-msgstr "_O vtičniku"
+msgstr "_Aangaande"
 
 #: src/libaudgui/prefs-widget.cc:277 src/libaudqt/prefs-widget-qt.cc:234
 msgid "Choose File"
-msgstr "Izberi datoteko"
+msgstr "Kies Lêer"
 
 #: src/libaudgui/prefs-widget.cc:281 src/libaudqt/prefs-widget-qt.cc:238
 msgid "Choose Folder"
-msgstr "Izberite mapo"
+msgstr "Kies Omslag"
 
 #: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window-qt.cc:157
 msgid "Appearance"
-msgstr "Videz"
+msgstr "Voorkoms"
 
 #: src/libaudgui/prefs-window.cc:83 src/libaudqt/prefs-window-qt.cc:158
 msgid "Audio"
-msgstr "Zvok"
+msgstr "Oudio"
 
 #: src/libaudgui/prefs-window.cc:84 src/libaudqt/prefs-window-qt.cc:159
 msgid "Network"
-msgstr "Omrežje"
+msgstr "Netwerk"
 
 #: src/libaudgui/prefs-window.cc:85 src/libaudgui/prefs-window.cc:96
 #: src/libaudqt/prefs-pluginlist-model.cc:43
 #: src/libaudqt/prefs-window-qt.cc:160
 msgid "Playlist"
-msgstr "Seznam predvajanja"
+msgstr "Snitlys"
 
 #: src/libaudgui/prefs-window.cc:87 src/libaudqt/prefs-window-qt.cc:162
 msgid "Plugins"
-msgstr "Vtičniki"
+msgstr "Inproppe"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:163
 msgid "Advanced"
-msgstr "Napredno"
+msgstr "Gevorderd"
 
 #: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-pluginlist-model.cc:39
 msgid "General"
-msgstr "Splošni"
+msgstr "Algemeen"
 
 #: src/libaudgui/prefs-window.cc:93 src/libaudqt/prefs-pluginlist-model.cc:40
 msgid "Effect"
-msgstr "Učinki"
+msgstr "Effek"
 
 #: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-pluginlist-model.cc:41
 msgid "Visualization"
-msgstr "Vizualizacija"
+msgstr "Visualisering"
 
 #: src/libaudgui/prefs-window.cc:95 src/libaudqt/prefs-pluginlist-model.cc:42
 msgid "Input"
-msgstr "Vhodni formati"
+msgstr "Inset"
 
 #: src/libaudgui/prefs-window.cc:97 src/libaudqt/prefs-pluginlist-model.cc:44
 msgid "Transport"
-msgstr "Pretok"
+msgstr "Vervoer"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window-qt.cc:168
 msgid "Album artist"
-msgstr "Izvajalec albuma"
+msgstr "Album kunstenaar"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window-qt.cc:170
 msgid "Track number"
-msgstr "Skladba"
+msgstr "Snit nommer"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window-qt.cc:172
 msgid "File name"
-msgstr "Ime datoteke"
+msgstr "Lêer naam"
 
 #: src/libaudgui/prefs-window.cc:108 src/libaudqt/prefs-window-qt.cc:173
 msgid "File path"
-msgstr "Pot do datoteke"
+msgstr "Lêer pad"
 
 #: src/libaudgui/prefs-window.cc:109 src/libaudqt/prefs-window-qt.cc:174
 msgid "Date"
@@ -920,7 +907,7 @@ msgstr "Datum"
 #: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:55
 #: src/libaudqt/prefs-window-qt.cc:175
 msgid "Description"
-msgstr "Opis"
+msgstr "Beskrywing"
 
 #: src/libaudgui/prefs-window.cc:113 src/libaudqt/info-widget.cc:64
 #: src/libaudqt/prefs-window-qt.cc:178
@@ -930,107 +917,107 @@ msgstr "Kodek"
 #: src/libaudgui/prefs-window.cc:114 src/libaudqt/info-widget.cc:65
 #: src/libaudqt/prefs-window-qt.cc:179
 msgid "Quality"
-msgstr "Kakovost"
+msgstr "Kwaliteit"
 
 #: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window-qt.cc:182
 msgid "None"
-msgstr "brez"
+msgstr "Geen"
 
 #: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window-qt.cc:183
 msgid "Arabic"
-msgstr "arabsko"
+msgstr "Arabies"
 
 #: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:184
 msgid "Baltic"
-msgstr "baltsko"
+msgstr "Oossee"
 
 #: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window-qt.cc:185
 msgid "Chinese"
-msgstr "kitajsko"
+msgstr "Sjinees"
 
 #: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window-qt.cc:186
 msgid "Greek"
-msgstr "grško"
+msgstr "Grieks"
 
 #: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window-qt.cc:187
 msgid "Hebrew"
-msgstr "hebrejsko"
+msgstr "Hebreeus"
 
 #: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window-qt.cc:188
 msgid "Japanese"
-msgstr "japonsko"
+msgstr "Japannese"
 
 #: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window-qt.cc:189
 msgid "Korean"
-msgstr "korejsko"
+msgstr "Koreaans"
 
 #: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window-qt.cc:190
 msgid "Polish"
-msgstr "poljsko"
+msgstr "Pools"
 
 #: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window-qt.cc:191
 msgid "Russian"
-msgstr "rusko"
+msgstr "Russies"
 
 #: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window-qt.cc:192
 msgid "Taiwanese"
-msgstr "tajvansko"
+msgstr "Taiwannees"
 
 #: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window-qt.cc:193
 msgid "Turkish"
-msgstr "turško"
+msgstr "Turks"
 
 #: src/libaudgui/prefs-window.cc:133 src/libaudqt/prefs-window-qt.cc:196
 msgid "Automatic"
-msgstr "Samodejna"
+msgstr "Outomatiese"
 
 #: src/libaudgui/prefs-window.cc:137 src/libaudqt/prefs-window-qt.cc:197
 msgid "Floating point"
-msgstr "Plavajoča vejica"
+msgstr "Drywende punt"
 
 #: src/libaudgui/prefs-window.cc:141 src/libaudqt/prefs-window-qt.cc:200
 msgid "As decoded"
-msgstr "Kot dekodirano"
+msgstr "Soos gedekodeer"
 
 #: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:201
 msgid "After applying ReplayGain"
-msgstr "Po uveljavitvi funkcije ReplayGain"
+msgstr "Na die toepassing van ReplayGain"
 
 #: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:203
 msgid "After applying effects"
-msgstr "Po uveljavitvi učinkov"
+msgstr "Na die toepassing van effekte"
 
 #: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:204
 msgid "After applying equalization"
-msgstr "Po uveljavitvi izenačevanja"
+msgstr "Na die toepassing van gelykmaking"
 
 #: src/libaudgui/prefs-window.cc:150 src/libaudqt/prefs-window-qt.cc:210
 msgid "Based on shuffle"
-msgstr "Glede na mešanje"
+msgstr "Gebaseer op skoffel"
 
 #: src/libaudgui/prefs-window.cc:165
 msgid "Restart in Qt mode"
-msgstr "Ponoven zagon v Qt načinu"
+msgstr "Herbegin in Qt-modus"
 
 #: src/libaudgui/prefs-window.cc:174
 msgid "Audacious is running in GTK (legacy) mode."
-msgstr "Audacious je zagnan v starem GTK načinu"
+msgstr "Audacious hardloop in GTK (erflating) modus."
 
 #: src/libaudgui/prefs-window.cc:178
 msgid "Qt mode is unavailable in this build."
-msgstr "Qt način v tej izgradnji programa ni na voljo."
+msgstr "Qt-modus is onbeskikbaar in hierdie weergawe."
 
 #: src/libaudgui/prefs-window.cc:180 src/libaudqt/prefs-window-qt.cc:266
 msgid "Interface:"
-msgstr "Vmesnik:"
+msgstr "Koppelvlak:"
 
 #: src/libaudgui/prefs-window.cc:199 src/libaudqt/prefs-window-qt.cc:280
 msgid "Output plugin:"
-msgstr "Izhodni vtičnik:"
+msgstr "Uitset inprop:"
 
 #: src/libaudgui/prefs-window.cc:220 src/libaudqt/prefs-window-qt.cc:293
 msgid "Amplify all files:"
-msgstr "Ojačaj vse datoteke:"
+msgstr "Versterk alle lêers:"
 
 #: src/libaudgui/prefs-window.cc:222 src/libaudgui/prefs-window.cc:225
 #: src/libaudqt/prefs-window-qt.cc:294 src/libaudqt/prefs-window-qt.cc:296
@@ -1039,20 +1026,20 @@ msgstr "dB"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window-qt.cc:295
 msgid "Amplify untagged files:"
-msgstr "Ojačaj neoznačene datoteke:"
+msgstr "Versterk ongemerkte lêers:"
 
 #: src/libaudgui/prefs-window.cc:229 src/libaudqt/prefs-window-qt.cc:299
 msgid "<b>Output Settings</b>"
-msgstr "<b>Nastavitve izhoda</b>"
+msgstr "<b>Uitset Stellings</b>"
 
 #: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:301
 msgid "Bit depth:"
-msgstr "Bitna globina:"
+msgstr "Bis diepte:"
 
 #: src/libaudgui/prefs-window.cc:234 src/libaudgui/prefs-window.cc:279
 #: src/libaudqt/prefs-window-qt.cc:304 src/libaudqt/prefs-window-qt.cc:332
 msgid "Buffer size:"
-msgstr "Velikost medpomnilnika:"
+msgstr "Buffer grootte:"
 
 #: src/libaudgui/prefs-window.cc:236 src/libaudqt/prefs-window-qt.cc:305
 msgid "ms"
@@ -1060,19 +1047,19 @@ msgstr "ms"
 
 #: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window-qt.cc:306
 msgid "Soft clipping"
-msgstr "Blaženje preglasnega zvoka"
+msgstr "Sagte afsny:"
 
 #: src/libaudgui/prefs-window.cc:239 src/libaudqt/prefs-window-qt.cc:307
 msgid "Use software volume control (not recommended)"
-msgstr "Uporabi programsko nastavitev glasnosti (ni priporočeno)"
+msgstr "Gebruik sagteware volume beheer (nie aanbeveel nie)"
 
 #: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window-qt.cc:309
 msgid "<b>Recording Settings</b>"
-msgstr "<b>Nastavitve snemanja</b>"
+msgstr "<b>Opname-instellings</b>"
 
 #: src/libaudgui/prefs-window.cc:245 src/libaudqt/prefs-window-qt.cc:312
 msgid "Record stream:"
-msgstr "Pretočno snemanje:"
+msgstr "Neem stroom op:"
 
 #: src/libaudgui/prefs-window.cc:248 src/libaudqt/prefs-window-qt.cc:314
 msgid "<b>ReplayGain</b>"
@@ -1080,349 +1067,349 @@ msgstr "<b>ReplayGain</b>"
 
 #: src/libaudgui/prefs-window.cc:249 src/libaudqt/prefs-window-qt.cc:315
 msgid "Enable ReplayGain"
-msgstr "Omogoči ReplayGain"
+msgstr "Aktiveer ReplayGain"
 
 #: src/libaudgui/prefs-window.cc:251 src/libaudqt/prefs-window-qt.cc:316
 msgid "Mode:"
-msgstr "Način:"
+msgstr "Modus:"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window-qt.cc:318
 msgid "Prevent clipping (recommended)"
-msgstr "Prepreči rezanje zvoka (priporočeno)"
+msgstr "Voorkom afsny (aanbeveel)"
 
 #: src/libaudgui/prefs-window.cc:263 src/libaudqt/prefs-window-qt.cc:323
 msgid "Proxy hostname:"
-msgstr "Ime posredniškega strežnika:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window-qt.cc:324
 msgid "Proxy port:"
-msgstr "Posrednikova vrata:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:270 src/libaudqt/prefs-window-qt.cc:327
 msgid "Proxy username:"
-msgstr "Posrednikovo uporabniško ime:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:272 src/libaudqt/prefs-window-qt.cc:328
 msgid "Proxy password:"
-msgstr "Posrednikovo geslo:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:278 src/libaudqt/prefs-window-qt.cc:331
 msgid "<b>Network Settings</b>"
-msgstr "<b>Nastavitve omrežja</b>"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:281 src/libaudqt/prefs-window-qt.cc:333
 msgid "KiB"
-msgstr "KiB"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window-qt.cc:334
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Nastavitve posredniškega (proxy) strežnika</b>"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window-qt.cc:335
 msgid "Enable proxy usage"
-msgstr "Omogoči posredniški strežnik"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window-qt.cc:337
 msgid "Use authentication with proxy"
-msgstr "Uporabi avtentikacijo na posredniku"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window-qt.cc:340
 msgid "Use SOCKS proxy"
-msgstr "Uporabi posrednik SOCKS"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:293 src/libaudqt/prefs-window-qt.cc:341
 msgid "SOCKS v4a"
-msgstr "SOCKS v4a"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:297 src/libaudqt/prefs-window-qt.cc:342
 msgid "SOCKS v5"
-msgstr "SOCKS v5"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:304 src/libaudqt/prefs-window-qt.cc:345
 msgid "Auto character encoding detector for:"
-msgstr "Samodejno zaznavanje enkodiranja znakov za:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:307 src/libaudqt/prefs-window-qt.cc:348
 msgid "Fallback character encodings:"
-msgstr "Zasilno enkodiranje znakov:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:315 src/libaudqt/prefs-window-qt.cc:355
 msgid "<b>Behavior</b>"
-msgstr "<b>Obnašanje</b>"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:316 src/libaudqt/prefs-window-qt.cc:356
 msgid "Resume playback on startup"
-msgstr "Nadaljuj predvajanje ob zagonu"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:358
 msgid "Pause instead of resuming immediately"
-msgstr "Premor namesto takojšnjega predvajanja"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window-qt.cc:360
 msgid "Advance when the current song is deleted"
-msgstr "Ob izbrisu trenutne skladbe se pomakni naprej"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:362
 msgid "Clear the playlist when opening files"
-msgstr "Počisti seznam predvajanja ob odpiranju datotek"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:364
 msgid "Open files in a temporary playlist"
-msgstr "Odpri datoteke v začasnem seznamu predvajanja"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:327 src/libaudqt/prefs-window-qt.cc:366
 msgid "<b>Song Display</b>"
-msgstr "<b>Prikaz skladbe</b>"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:367
 msgid "Show song numbers"
-msgstr "Prikaži številko skladbe v naslovu okna"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:369
 msgid "Show leading zeroes (02:00 vs. 2:00)"
-msgstr "Prikaži vodilne ničle (02:00 namesto 2:00)"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:371
 msgid "Show hours separately (1:30:00 vs. 90:00)"
-msgstr "Prikaži ure (1:30:00 namesto 90:00)"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:335 src/libaudqt/prefs-window-qt.cc:374
 msgid "<b>Export</b>"
-msgstr "<b>Izvoz</b>"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:375
 msgid "Use relative paths when possible"
-msgstr "Uporabi relativne poti, če lahko"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:341 src/libaudqt/prefs-window-qt.cc:379
 msgid "<b>Album Art</b>"
-msgstr "<b>Naslovnica albuma</b>"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:381
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Išči slike, ki ustrezajo besedam (ločenim z vejico):"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:344 src/libaudqt/prefs-window-qt.cc:383
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Izključi slike, ki ustrezajo besedam (ločenim z vejico):"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:346 src/libaudqt/prefs-window-qt.cc:385
 msgid "Search for images matching song file name"
-msgstr "Išči slike, ki ustrezajo imenu skladbe"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:348 src/libaudqt/prefs-window-qt.cc:387
 msgid "Search recursively"
-msgstr "Išči rekurzivno"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:388
 msgid "Search depth:"
-msgstr "Globina iskanja:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window-qt.cc:390
 msgid "<b>Popup Information</b>"
-msgstr "<b>Pojavno okno s podatki o skladbi</b>"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:355 src/libaudqt/prefs-window-qt.cc:391
 msgid "Show popup information"
-msgstr "Prikaži podatke, če je miška pridržana nad imenom skladbe"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window-qt.cc:393
 msgid "Popup delay (tenths of a second):"
-msgstr "Trajanje pojavnega okna (desetine sekunde):"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:361
 msgid "Show time scale for current song"
-msgstr "Prikaži časovnico za trenutno skladbo"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:367 src/libaudqt/prefs-window-qt.cc:397
 msgid "<b>Compatibility</b>"
-msgstr "<b>Združljivost</b>"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:398
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Znak \\ (vzvratna poševnica) obravnavaj kot ločilnik map"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:401
 msgid "<b>Playlist</b>"
-msgstr "<b>Seznam predvajanja</b>"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:372 src/libaudqt/prefs-window-qt.cc:402
 msgid "Add folders recursively"
-msgstr "Mape dodaj rekurzivno"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:374 src/libaudqt/prefs-window-qt.cc:404
 msgid "Add folders nested within playlist files"
-msgstr "Dodaj mape, navedene v seznamih predvajanj"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:406
 msgid "<b>Metadata</b>"
-msgstr "<b>Metapodatki</b>"
+msgstr "<b>Metadata</b>"
 
 #: src/libaudgui/prefs-window.cc:377 src/libaudqt/prefs-window-qt.cc:407
 msgid "Guess missing metadata from file path"
-msgstr "Ugani manjkajoče metapodatke iz datotečne poti"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:379 src/libaudqt/prefs-window-qt.cc:409
 msgid "Do not load metadata for songs until played"
-msgstr "Ne naloži metapodatkov za skladbe, dokler se ne predvajajo"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:381 src/libaudqt/prefs-window-qt.cc:412
 msgid "Probe content of files with no recognized file name extension"
-msgstr "Zaznaj vsebino datotek z neznano datotečno končnico"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:383 src/libaudqt/prefs-window-qt.cc:414
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>Razno</b>"
+msgstr "<b>Allerlei</b>"
 
 #: src/libaudgui/prefs-window.cc:384 src/libaudqt/prefs-window-qt.cc:415
 msgid "Step forward/backward by:"
-msgstr "Preskakuj naprej/nazaj za:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:386 src/libaudqt/prefs-window-qt.cc:416
 msgid "seconds"
-msgstr "sekund"
+msgstr "sekondes"
 
 #: src/libaudgui/prefs-window.cc:387 src/libaudqt/prefs-window-qt.cc:417
 msgid "Adjust volume by:"
-msgstr "Prestavi glasnost za:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:418
 msgid "percent"
-msgstr "%"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:406 src/libaudqt/prefs-window-qt.cc:435
 msgid "TITLE"
-msgstr "NASLOV"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:407 src/libaudqt/prefs-window-qt.cc:436
 msgid "TITLE - ARTIST"
-msgstr "NASLOV - IZVAJALEC"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:408 src/libaudqt/prefs-window-qt.cc:437
 msgid "TITLE - ARTIST - ALBUM"
-msgstr "NASLOV - IZVAJALEC - ALBUM"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:409 src/libaudqt/prefs-window-qt.cc:438
 msgid "ARTIST - TITLE"
-msgstr "IZVAJALEC - NASLOV"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:410 src/libaudqt/prefs-window-qt.cc:439
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "IZVAJALEC - ALBUM - NASLOV"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:411 src/libaudqt/prefs-window-qt.cc:440
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "IZVAJALEC - ALBUM - NASLOV"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:412 src/libaudqt/prefs-window-qt.cc:441
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "IZVAJALEC [ALBUM] - NASLOV"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:413 src/libaudqt/prefs-window-qt.cc:442
 msgid "ALBUM - TITLE"
-msgstr "ALBUM - NASLOV"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:507
 msgid "Category"
-msgstr "Kategorija"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:571 src/libaudqt/prefs-window-qt.cc:459
 msgid "Custom"
-msgstr "Po meri"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:589 src/libaudqt/prefs-window-qt.cc:451
 msgid "Title format:"
-msgstr "Oblika naslova:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:593 src/libaudqt/prefs-window-qt.cc:462
 msgid "Custom string:"
-msgstr "Niz po meri:"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:792 src/libaudqt/prefs-window-qt.cc:763
 #, c-format
 msgid "Enable audio stream recording with %s"
-msgstr "Omogoči pretok zvoka s/z %s"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:801 src/libaudqt/prefs-window-qt.cc:776
 msgid "No audio recording plugin available"
-msgstr "Vtičniki za snemanje zvoka niso na voljo"
+msgstr ""
 
 #: src/libaudgui/prefs-window.cc:861 src/libaudqt/prefs-window-qt.cc:644
 msgid "Audacious Settings"
-msgstr "Nastavitve za Audacious"
+msgstr ""
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:172
 #: src/libaudqt/fileopener.cc:79
 msgid "Cancel"
-msgstr "Prekliči"
+msgstr "Kanselleer"
 
 #: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:298
 msgid "Save"
-msgstr "Shrani"
+msgstr ""
 
 #: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:261
 msgid "Load"
-msgstr "Naloži"
+msgstr ""
 
 #: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:257
 msgid "Load Preset File"
-msgstr "Naloži datoteko s predlogo"
+msgstr ""
 
 #: src/libaudgui/preset-browser.cc:99
 msgid "Load EQF File"
-msgstr "Naloži datoteko EQF"
+msgstr ""
 
 #: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:293
 msgid "Save Preset File"
-msgstr "Shrani datoteko s predlogo"
+msgstr ""
 
 #: src/libaudgui/preset-browser.cc:131
 msgid "Save EQF File"
-msgstr "Shrani datoteko EQF"
+msgstr ""
 
 #: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:263
 msgid "Queue Manager"
-msgstr "Upravljalnik vrste"
+msgstr ""
 
 #: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:209
 msgid "_Unqueue"
-msgstr "O_dstrani iz vrste"
+msgstr ""
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr "Nalagam..."
+msgstr "In Werking ..."
 
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:225
 msgid "Error"
-msgstr "Error"
+msgstr "Fout"
 
 #: src/libaudgui/status.cc:90
 msgid "Information"
-msgstr "Podatki"
+msgstr "Informasie"
 
 #: src/libaudgui/url-opener.cc:55 src/libaudqt/url-opener-qt.cc:41
 msgid "_Save to history"
-msgstr "_Shrani v zgodovino"
+msgstr ""
 
 #: src/libaudgui/url-opener.cc:63 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
-msgstr "Odpri URL"
+msgstr ""
 
 #: src/libaudgui/url-opener.cc:69 src/libaudqt/url-opener-qt.cc:53
 msgid "Add URL"
-msgstr "Dodaj URL"
+msgstr ""
 
 #: src/libaudgui/url-opener.cc:92 src/libaudqt/url-opener-qt.cc:69
 msgid "C_lear history"
-msgstr "I_zbriši zgodovino"
+msgstr ""
 
 #: src/libaudgui/url-opener.cc:104 src/libaudqt/url-opener-qt.cc:62
 msgid "Enter URL:"
-msgstr "Vnesite naslov URL:"
+msgstr ""
 
 #: src/libaudgui/util.cc:172 src/libaudqt/fileopener.cc:63
 msgid "Open"
-msgstr "Odpri"
+msgstr ""
 
 #: src/libaudgui/util.cc:283
 msgid ""
@@ -1430,168 +1417,168 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(nadaljnja sporočila so bila skrita)"
+"(Verdere boodskappe is versteek.)"
 
 #: src/libaudqt/eq-preset-qt.cc:252
 msgid "Preset files (*.preset *.eqf *.q1)"
-msgstr "Datoteke s predlogo (*.preset *.eqf *.q1)"
+msgstr ""
 
 #: src/libaudqt/eq-preset-qt.cc:345
 msgid "Revert"
-msgstr "Povrni"
+msgstr ""
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
-msgstr "Brskaj"
+msgstr ""
 
 #: src/libaudqt/fileopener.cc:59
 msgid "Open Folder"
-msgstr "Odpri mapo"
+msgstr ""
 
 #: src/libaudqt/fileopener.cc:60
 msgid "Add Folder"
-msgstr "Dodaj mapo"
+msgstr ""
 
 #: src/libaudqt/fileopener.cc:63 src/libaudqt/fileopener.cc:64
 msgid "Add"
-msgstr "Dodaj"
+msgstr ""
 
 #: src/libaudqt/font-entry.cc:39
 msgid "Set Font"
-msgstr "Nastavi pisavo"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:44
 msgid "<various>"
-msgstr "<various>"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Metadata"
-msgstr "Metapodatki"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Composer"
-msgstr "Skladatelj"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:57
 msgid "Performer"
-msgstr "Izvajalec"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:58
 msgid "Recording Year"
-msgstr "Leto snemanja"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:59
 msgid "Recording Date"
-msgstr "Datum snemanja"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:62
 msgid "Technical"
-msgstr "Tehnični podatki"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:66
 msgid "Bitrate"
-msgstr "Bitna hitrost"
+msgstr "Bistempo"
 
 #: src/libaudqt/info-widget.cc:67
 msgid "Channels"
-msgstr "Št. kanalov"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:68
 msgid "MusicBrainz ID"
-msgstr "MusicBrainz ID"
+msgstr ""
 
 #: src/libaudqt/infowin-qt.cc:157
 msgid "_Revert"
-msgstr "Pov_rni"
+msgstr ""
 
 #: src/libaudqt/infowin-qt.cc:168
 msgid "Error writing tag(s)."
-msgstr "Napaka pri pisanju oznak."
+msgstr ""
 
 #: src/libaudqt/infowin-qt.cc:190
 msgid "%1 files selected"
-msgstr "Izbranih toliko datotek: %1"
+msgstr ""
 
 #: src/libaudqt/infowin-qt.cc:194
 msgid "_Save %1 files"
-msgstr "_Shrani toliko datotek: %1"
+msgstr ""
 
 #: src/libaudqt/log-inspector.cc:152
 msgid "Level"
-msgstr "Nivo"
+msgstr ""
 
 #: src/libaudqt/log-inspector.cc:154
 msgid "Function"
-msgstr "Funkcija"
+msgstr ""
 
 #: src/libaudqt/log-inspector.cc:156
 msgid "Message"
-msgstr "Sporočilo"
+msgstr ""
 
 #: src/libaudqt/log-inspector.cc:211
 msgid "Log Inspector"
-msgstr "Pregledovalnik zapisnika"
+msgstr ""
 
 #: src/libaudqt/log-inspector.cc:222
 msgid "Debug"
-msgstr "Debug"
+msgstr ""
 
 #: src/libaudqt/log-inspector.cc:223
 msgid "Info"
-msgstr "Info"
+msgstr ""
 
 #: src/libaudqt/log-inspector.cc:224
 msgid "Warning"
-msgstr "Warning"
+msgstr ""
 
 #: src/libaudqt/log-inspector.cc:236
 msgid "Cl_ear"
-msgstr "Poč_isti"
+msgstr ""
 
 #: src/libaudqt/log-inspector.cc:249
 msgid "Log Level:"
-msgstr "Izbor sporočil:"
+msgstr ""
 
 #: src/libaudqt/plugin-menu-qt.cc:52
 msgid "Services"
-msgstr "Storitve"
+msgstr "Dienste"
 
 #: src/libaudqt/prefs-window-qt.cc:224
 msgid "Restart in GTK (legacy) mode"
-msgstr "Ponovno zaženi v starem GTK načinu"
+msgstr ""
 
 #: src/libaudqt/prefs-window-qt.cc:233 src/libaudqt/prefs-window-qt.cc:246
 msgid "Native"
-msgstr "lastna"
+msgstr ""
 
 #: src/libaudqt/prefs-window-qt.cc:234
 msgid "Dark"
-msgstr "temna"
+msgstr ""
 
 #: src/libaudqt/prefs-window-qt.cc:248
 msgid "Flat"
-msgstr "ploščata"
+msgstr ""
 
 #: src/libaudqt/prefs-window-qt.cc:249
 msgid "Flat (dark)"
-msgstr "ploščata (temna)"
+msgstr ""
 
 #: src/libaudqt/prefs-window-qt.cc:259
 msgid "Audacious is running in Qt mode."
-msgstr "Audacious je zagnan v Qt načinu."
+msgstr ""
 
 #: src/libaudqt/prefs-window-qt.cc:263
 msgid "GTK (legacy) mode is unavailable in this build."
-msgstr "Stari GTK način v tej izgradnji ni na voljo."
+msgstr ""
 
 #: src/libaudqt/prefs-window-qt.cc:269
 msgid "Theme:"
-msgstr "Tema:"
+msgstr ""
 
 #: src/libaudqt/prefs-window-qt.cc:271
 msgid "Icon theme:"
-msgstr "Tema ikon:"
+msgstr ""
 
 #: src/libaudqt/util-qt.cc:112
 msgid "Copy"
-msgstr "Kopiraj"
+msgstr "Kopie"

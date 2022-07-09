@@ -49,5 +49,6 @@ src/libaudqt/prefs-pluginlist-model.cc
 src/libaudqt/prefs-widget-qt.cc
 src/libaudqt/prefs-window-qt.cc
 src/libaudqt/queue-manager-qt.cc
+src/libaudqt/song-window-qt.cc
 src/libaudqt/url-opener-qt.cc
 src/libaudqt/util-qt.cc
