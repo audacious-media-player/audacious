@@ -242,7 +242,7 @@ static void add_playlist(const char * filename, Playlist::FilterFunc filter,
         return;
 
     if (save_title)
-        result->title = title;
+        result->title = title ? title : String(uri_get_display_base(filename));
 
     for (auto & item : items)
         add_generic(std::move(item), filter, user, result, false, true);

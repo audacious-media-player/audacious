@@ -178,7 +178,9 @@ EXPORT PluginHandle * aud_file_find_decoder(const char * filename, bool fast,
     }
 
     if (error)
-        *error = String(_("File format not recognized"));
+        *error = String(_("The file format could not be determined. The "
+                          "format may be unsupported, or a necessary plugin "
+                          "may not be installed/enabled."));
 
     AUDINFO("No plugins matched.\n");
     return nullptr;
@@ -207,7 +209,8 @@ EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
     }
 
     if (error)
-        *error = String(_("Error reading metadata"));
+        *error = String(_("The file could not be decoded. It may be invalid, "
+                          "corrupt, or in an unsupported format."));
 
     return false;
 }

@@ -19,6 +19,7 @@
  */
 
 #include <QAction>
+#include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDialog>
@@ -51,6 +52,7 @@
 
 #include "libguess/libguess.h"
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
 #include "prefs-pluginlist-model.h"
 
@@ -228,6 +230,31 @@ static ArrayRef<ComboItem> iface_combo_fill();
 static void iface_combo_changed();
 static void * iface_create_prefs_box();
 
+static const ComboItem theme_elements[] = {ComboItem(N_("Native"), ""),
+                                           ComboItem(N_("Dark"), "dark")};
+
+static void theme_changed()
+{
+    if (!strcmp(aud_get_str("audqt", "theme"), "dark"))
+        enable_dark_theme();
+    else
+        disable_dark_theme();
+}
+
+static const ComboItem icon_theme_elements[] = {
+#ifndef _WIN32
+    ComboItem(N_("Native"), ""),
+#endif
+    ComboItem(N_("Flat"), "audacious-flat"),
+    ComboItem(N_("Flat (dark)"), "audacious-flat-dark")};
+
+static void icon_theme_changed()
+{
+    set_icon_theme();
+    for (auto w : qApp->allWidgets())
+        w->update();
+}
+
 static const PreferencesWidget appearance_page_widgets[] = {
     WidgetLabel(N_("Audacious is running in Qt mode.")),
 #ifdef USE_GTK
@@ -239,7 +266,13 @@ static const PreferencesWidget appearance_page_widgets[] = {
     WidgetCombo(N_("Interface:"),
                 WidgetInt(iface_combo_selected, iface_combo_changed),
                 {0, iface_combo_fill}),
-    WidgetSeparator({true}), WidgetCustomQt(iface_create_prefs_box)};
+    WidgetCombo(N_("Theme:"), WidgetString("audqt", "theme", theme_changed),
+                {{theme_elements}}),
+    WidgetCombo(N_("Icon theme:"),
+                WidgetString("audqt", "icon_theme", icon_theme_changed),
+                {{icon_theme_elements}}),
+    WidgetSeparator({true}),
+    WidgetCustomQt(iface_create_prefs_box)};
 
 static void output_bit_depth_changed();
 
@@ -453,7 +486,7 @@ static void * create_titlestring_table()
     /* build menu */
     QPushButton * btn_mnu = new QPushButton(w);
     btn_mnu->setFixedWidth(btn_mnu->sizeHint().height());
-    btn_mnu->setIcon(audqt::get_icon("list-add"));
+    btn_mnu->setIcon(QIcon::fromTheme("list-add"));
     l->addWidget(btn_mnu, 1, 2);
 
     QMenu * mnu_fields = new QMenu(w);
@@ -632,7 +665,7 @@ PrefsWindow::PrefsWindow()
     child_vbox->addWidget(s_category_notebook);
 
     bool headless = aud_get_headless_mode();
-    if(!headless)
+    if (!headless)
         create_category(s_category_notebook, appearance_page_widgets);
 
     create_category(s_category_notebook, audio_page_widgets);
@@ -654,7 +687,7 @@ PrefsWindow::PrefsWindow()
         if (headless && i == CATEGORY_APPEARANCE)
             continue;
 
-        auto a = new QAction(get_icon(categories[i].icon),
+        auto a = new QAction(QIcon::fromTheme(categories[i].icon),
                              translate_str(categories[i].name), toolbar);
 
         toolbar->addAction(a);

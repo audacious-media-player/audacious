@@ -141,7 +141,8 @@ static void start_required(PluginType type)
 
     for (PluginHandle * p : aud_plugin_list(type))
     {
-        if (p == sel)
+        /* do not automatically select lowest-priority plugins */
+        if (p == sel || plugin_get_priority(p) == 10)
             continue;
 
         AUDINFO("Trying to start %s.\n", aud_plugin_get_name(p));

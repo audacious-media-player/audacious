@@ -67,8 +67,8 @@ static QDialog * buildDeleteDialog(Playlist playlist)
     dialog->addButton(remove, QMessageBox::AcceptRole);
     dialog->addButton(cancel, QMessageBox::RejectRole);
 
-    remove->setIcon(audqt::get_icon("edit-delete"));
-    cancel->setIcon(audqt::get_icon("process-stop"));
+    remove->setIcon(QIcon::fromTheme("edit-delete"));
+    cancel->setIcon(QIcon::fromTheme("process-stop"));
 
     QObject::connect(skip_prompt, &QCheckBox::stateChanged, [](int state) {
         aud_set_bool("audgui", "no_confirm_playlist_delete",

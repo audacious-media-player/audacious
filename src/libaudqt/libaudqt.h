@@ -32,6 +32,7 @@ class QIcon;
 class QLayout;
 class QLineEdit;
 class QPixmap;
+class QProxyStyle;
 class QToolButton;
 class QVBoxLayout;
 class QWidget;
@@ -112,13 +113,15 @@ void run() __attribute__((deprecated)); /* use QApplication::exec() */
 void quit() __attribute__((deprecated)); /* use QApplication::quit() */
 void cleanup();
 
-QIcon get_icon(const char * name);
+QIcon get_icon(const char * name)
+    __attribute__((deprecated)); /* use QIcon::fromTheme() */
 
 QGradientStops dark_bg_gradient(const QColor & base);
 QColor vis_bar_color(const QColor & hue, int bar, int n_bars);
 
 QHBoxLayout * make_hbox(QWidget * parent, int spacing = sizes.FourPt);
 QVBoxLayout * make_vbox(QWidget * parent, int spacing = sizes.FourPt);
+void setup_proxy_style(QProxyStyle * style);
 
 void enable_layout(QLayout * layout, bool enabled);
 void clear_layout(QLayout * layout);
@@ -160,6 +163,10 @@ void prefswin_show();
 void prefswin_hide();
 void prefswin_show_page(int id, bool show = true);
 void prefswin_show_plugin_page(PluginType type);
+
+/* song-window-qt.cc */
+void songwin_show();
+void songwin_hide();
 
 /* log-inspector.cc */
 void log_inspector_show();

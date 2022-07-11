@@ -189,7 +189,7 @@ void InfoWindow::fillInfo(Index<PlaylistAddItem> && items,
         m_uri_label.setText(
             translate_str(N_("%1 files selected")).arg(items.len()));
         m_image.setPixmap(
-            get_icon("audio-x-generic").pixmap(to_native_dpi(48)));
+            QIcon::fromTheme("audio-x-generic").pixmap(to_native_dpi(48)));
         m_save_btn->setText(
             translate_str(N_("_Save %1 files")).arg(items.len()));
     }

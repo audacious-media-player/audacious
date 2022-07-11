@@ -1,6 +1,9 @@
 #!/bin/sh
 
 case "$1" in
+af.po)
+    LANGUAGE="Afrikaans"
+    ;;
 ar.po)
     LANGUAGE="Arabic"
     ;;
@@ -147,6 +150,9 @@ tr.po)
     ;;
 uk.po)
     LANGUAGE="Ukrainian"
+    ;;
+uz.po)
+    LANGUAGE="Uzbek"
     ;;
 vi.po)
     LANGUAGE="Vietnamese"

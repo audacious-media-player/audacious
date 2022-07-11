@@ -110,13 +110,13 @@ void VolumeButton::updateDelta()
 void VolumeButton::updateIcon(int val)
 {
     if (val == 0)
-        setIcon(audqt::get_icon("audio-volume-muted"));
+        setIcon(QIcon::fromTheme("audio-volume-muted"));
     else if (val < 34)
-        setIcon(audqt::get_icon("audio-volume-low"));
+        setIcon(QIcon::fromTheme("audio-volume-low"));
     else if (val < 67)
-        setIcon(audqt::get_icon("audio-volume-medium"));
+        setIcon(QIcon::fromTheme("audio-volume-medium"));
     else
-        setIcon(audqt::get_icon("audio-volume-high"));
+        setIcon(QIcon::fromTheme("audio-volume-high"));
 
     setToolTip(QString("%1 %").arg(val));
 }

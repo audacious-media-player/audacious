@@ -1,17 +1,16 @@
 project('audacious', 'c', 'cpp',
-        version: '4.1',
+        version: '4.2',
         meson_version: '>= 0.46',
         default_options: [
           'c_std=gnu99',
-          'cpp_std=gnu++11',
+          'cpp_std=gnu++17',
           'warning_level=1'
         ])
 
 
-copyright = 'Copyright (C) 2001-2021 Audacious developers and others'
+copyright = 'Copyright (C) 2001-2022 Audacious developers and others'
 
 
-qt5 = import('qt5')
 gnome = import('gnome')
 
 
@@ -22,8 +21,20 @@ thread_dep = dependency('threads', required: true)
 
 
 if get_option('qt')
-  qt_req = '>= 5.2'
-  qt_dep = dependency('qt5', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
+  if get_option('qt6')
+    if meson.version().version_compare('>= 0.57')
+      qt = import('qt6')
+    else
+      error('Qt 6 is only supported since Meson 0.57.')
+    endif
+
+    qt_req = '>= 6.0'
+    qt_dep = dependency('qt6', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
+  else
+    qt = import('qt5')
+    qt_req = '>= 5.2'
+    qt_dep = dependency('qt5', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
+  endif
 endif
 
 
@@ -198,7 +209,8 @@ if meson.version().version_compare('>= 0.53')
 
   summary({
     'D-Bus support': get_option('dbus'),
-    'Qt support': get_option('qt'),
+    'Qt 5 support': get_option('qt') and not get_option('qt6'),
+    'Qt 6 support': get_option('qt6'),
     'GTK support': get_option('gtk'),
     'Libarchive support': get_option('libarchive'),
     'Valgrind analysis support': get_option('valgrind'),

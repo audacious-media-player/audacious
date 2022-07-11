@@ -158,14 +158,14 @@ QVariant PluginListModel::data(const QModelIndex & index, int role) const
 
     case AboutColumn:
         if (role == Qt::DecorationRole && enabled && aud_plugin_has_about(p))
-            return audqt::get_icon("dialog-information");
+            return QIcon::fromTheme("dialog-information");
 
         break;
 
     case SettingsColumn:
         if (role == Qt::DecorationRole && enabled &&
             aud_plugin_has_configure(p))
-            return audqt::get_icon("preferences-system");
+            return QIcon::fromTheme("preferences-system");
 
         break;
     }

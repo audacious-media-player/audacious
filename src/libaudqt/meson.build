@@ -3,6 +3,7 @@ libaudqt_sources = [
   'art-qt.cc',
   'audqt.cc',
   'colorbutton.cc',
+  'dark-theme.cc',
   'dock.cc',
   'eq-preset-qt.cc',
   'equalizer-qt.cc',
@@ -22,6 +23,7 @@ libaudqt_sources = [
   'prefs-window-qt.cc',
   'prefs-pluginlist-model.cc',
   'queue-manager-qt.cc',
+  'song-window-qt.cc',
   'url-opener-qt.cc',
   'util-qt.cc',
   'treeview.cc',
@@ -41,7 +43,7 @@ libaudqt_headers = [
 ]
 
 
-images_src = qt5.preprocess(qresources: 'images.qrc')
+images_src = qt.preprocess(qresources: 'images.qrc')
 
 
 install_headers(libaudqt_headers, subdir: 'libaudqt')
@@ -55,6 +57,6 @@ libaudqt_lib = library('audqt',
   dependencies: [qt_dep],
   link_with: [libaudcore_lib],
   soversion: '2',
-  version: '2.3.0',
+  version: '2.4.0',
   install: true
 )

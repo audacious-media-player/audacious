@@ -210,8 +210,8 @@ public:
     {
     }
 
-    /* During probing, plugins with higher priority (10 to 0) are tried first.
-     */
+    /* During probing, plugins with higher priority (10 to 1) are tried first.
+     * Plugins with priority 0 are never automatically selected. */
     const int priority;
 
     /* Whether close_audio() and open_audio() must always be called between

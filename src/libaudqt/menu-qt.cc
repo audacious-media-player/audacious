@@ -75,7 +75,7 @@ MenuAction::MenuAction(const MenuItem & item, const char * domain,
 
 #ifndef Q_OS_MAC
     if (item.text.icon)
-        setIcon(audqt::get_icon(item.text.icon));
+        setIcon(QIcon::fromTheme(item.text.icon));
 #endif
 
     if (item.text.shortcut)

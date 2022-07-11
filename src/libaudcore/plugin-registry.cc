@@ -652,6 +652,11 @@ static void plugin_call_watches(PluginHandle * plugin)
     plugin->watches.remove_if(call_and_check_remove);
 }
 
+int plugin_get_priority(PluginHandle * plugin)
+{
+    return plugin->priority;
+}
+
 PluginEnabled plugin_get_enabled(PluginHandle * plugin)
 {
     return plugin->enabled;
