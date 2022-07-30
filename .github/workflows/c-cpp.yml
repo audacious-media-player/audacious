@@ -20,4 +20,4 @@ jobs:
     - name: make
       run: make -j$(nproc)
     - name: make test
-      run: (cd src/libaudcore/tests && make test)
+      run: (cd src/libaudcore/tests && make -j$(nproc) test && ./test)
