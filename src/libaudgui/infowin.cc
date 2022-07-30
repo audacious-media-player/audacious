@@ -256,18 +256,14 @@ static void infowin_next ()
 
 static void genre_fill (GtkWidget * combo)
 {
-    GList * list = nullptr;
-    GList * node;
+    Index<const char *> list;
+    for (auto genre : genre_table)
+        list.append (_(genre));
 
-    for (const char * genre : genre_table)
-        list = g_list_prepend (list, _(genre));
+    list.sort (g_utf8_collate);
 
-    list = g_list_sort (list, (GCompareFunc) strcmp);
-
-    for (node = list; node != nullptr; node = node->next)
-        gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, (const char *) node->data);
-
-    g_list_free (list);
+    for (auto genre : list)
+        gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, genre);
 }
 
 static void autofill_toggled (GtkToggleButton * toggle)

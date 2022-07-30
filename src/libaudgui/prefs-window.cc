@@ -531,7 +531,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
         GtkTreeIter iter;
         gtk_list_store_append (store, & iter);
         gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_NAME,
-         gettext (category.name), -1);
+         _(category.name), -1);
 
         AudguiPixbuf img (gtk_icon_theme_load_icon (icon_theme,
          category.icon, icon_size, (GtkIconLookupFlags) 0, nullptr));
