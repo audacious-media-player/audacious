@@ -18,19 +18,11 @@
  * the use of this software.
  */
 
-#include <math.h>
-
 #include <QDialog>
 #include <QDialogButtonBox>
-#include <QEvent>
-#include <QHBoxLayout>
-#include <QImage>
 #include <QLabel>
-#include <QPainter>
-#include <QPixmap>
 #include <QPointer>
 #include <QPushButton>
-#include <QTextDocument>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
@@ -47,55 +39,6 @@
 namespace audqt
 {
 
-/* This class remedies some of the deficiencies of QLabel (such as lack
- * of proper wrapping).  It can be expanded and/or made more visible if
- * it turns out to be useful outside InfoWindow. */
-class TextWidget : public QWidget
-{
-public:
-    TextWidget() { m_doc.setDefaultFont(font()); }
-
-    void setText(const QString & text)
-    {
-        m_doc.setPlainText(text);
-        updateGeometry();
-    }
-
-    void setWidth(int width)
-    {
-        m_doc.setTextWidth(width);
-        updateGeometry();
-    }
-
-protected:
-    QSize sizeHint() const override
-    {
-        qreal width = m_doc.idealWidth();
-        qreal height = m_doc.size().height();
-        return QSize(ceil(width), ceil(height));
-    }
-
-    QSize minimumSizeHint() const override { return sizeHint(); }
-
-    void changeEvent(QEvent * event) override
-    {
-        if (event->type() == QEvent::FontChange)
-        {
-            m_doc.setDefaultFont(font());
-            updateGeometry();
-        }
-    }
-
-    void paintEvent(QPaintEvent * event) override
-    {
-        QPainter painter(this);
-        m_doc.drawContents(&painter);
-    }
-
-private:
-    QTextDocument m_doc;
-};
-
 class InfoWindow : public QDialog
 {
 public:
@@ -106,7 +49,7 @@ public:
 private:
     String m_filename;
     QLabel m_image;
-    TextWidget m_uri_label;
+    QLabel m_uri_label;
     InfoWidget m_infowidget;
     QPushButton * m_save_btn;
 
@@ -121,21 +64,15 @@ InfoWindow::InfoWindow(QWidget * parent) : QDialog(parent)
     setWindowTitle(_("Song Info"));
     setContentsMargins(margins.TwoPt);
 
-    m_image.setAlignment(Qt::AlignCenter);
-    m_uri_label.setWidth(2 * audqt::sizes.OneInch);
-    m_uri_label.setContextMenuPolicy(Qt::CustomContextMenu);
-
-    connect(&m_uri_label, &QWidget::customContextMenuRequested,
-            [this](const QPoint & pos) {
-                show_copy_context_menu(this, m_uri_label.mapToGlobal(pos),
-                                       QString(m_filename));
-            });
+    m_uri_label.setFixedWidth(2 * sizes.OneInch);
+    m_uri_label.setIndent(sizes.TwoPt);
+    m_uri_label.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+    m_uri_label.setTextInteractionFlags(Qt::TextSelectableByMouse);
+    m_uri_label.setWordWrap(true);
 
     auto left_vbox = make_vbox(nullptr);
-    left_vbox->addWidget(&m_image);
-    left_vbox->addWidget(&m_uri_label);
-    left_vbox->setStretch(0, 1);
-    left_vbox->setStretch(1, 0);
+    left_vbox->insertWidget(0, &m_image, 1, Qt::AlignCenter);
+    left_vbox->insertWidget(1, &m_uri_label, 1);
 
     auto hbox = make_hbox(nullptr);
     hbox->addLayout(left_vbox);
