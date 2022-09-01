@@ -18,13 +18,8 @@
  * the use of this software.
  */
 
-#include <math.h>
-
 #include <QDialog>
 #include <QDialogButtonBox>
-#include <QEvent>
-#include <QHBoxLayout>
-#include <QImage>
 #include <QLabel>
 #include <QPointer>
 #include <QPushButton>
@@ -69,17 +64,14 @@ InfoWindow::InfoWindow(QWidget * parent) : QDialog(parent)
     setWindowTitle(_("Song Info"));
     setContentsMargins(margins.TwoPt);
 
-    m_image.setAlignment(Qt::AlignCenter);
     m_uri_label.setFixedWidth(2 * audqt::sizes.OneInch);
     m_uri_label.setFrameStyle(QFrame::NoFrame);
     m_uri_label.setReadOnly(true);
     m_uri_label.viewport()->setAutoFillBackground(false);
 
     auto left_vbox = make_vbox(nullptr);
-    left_vbox->addWidget(&m_image);
-    left_vbox->addWidget(&m_uri_label);
-    left_vbox->setStretch(0, 1);
-    left_vbox->setStretch(1, 0);
+    left_vbox->addWidget(&m_image, 1, Qt::AlignCenter);
+    left_vbox->addWidget(&m_uri_label, 1);
 
     auto hbox = make_hbox(nullptr);
     hbox->addLayout(left_vbox);
