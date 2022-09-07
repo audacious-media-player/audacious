@@ -76,6 +76,8 @@ public:
         FormattedTitle,
         Length,
         Comment,
+        Publisher,
+        CatalogNum,
         n_sort_types
     };
 
