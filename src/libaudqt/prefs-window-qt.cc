@@ -141,6 +141,9 @@ struct TitleFieldTag
     const char * tag;
 };
 
+static const char aud_version_string[] =
+ "<small>Audacious " VERSION " (" BUILDSTAMP ")</small>";
+
 enum
 {
     CATEGORY_APPEARANCE = 0,
@@ -675,9 +678,16 @@ PrefsWindow::PrefsWindow()
     create_plugin_category(s_category_notebook);
     create_category(s_category_notebook, advanced_page_widgets);
 
+    auto hbox = make_hbox(nullptr);
+
+    QLabel * version_label = new QLabel(aud_version_string);
+    version_label->setTextFormat(Qt::RichText);
+    hbox->addWidget(version_label);
+
     QDialogButtonBox * bbox = new QDialogButtonBox(QDialogButtonBox::Close);
     bbox->button(QDialogButtonBox::Close)->setText(translate_str(N_("_Close")));
-    child_vbox->addWidget(bbox);
+    hbox->addWidget(bbox);
+    child_vbox->addLayout(hbox);
 
     QObject::connect(bbox, &QDialogButtonBox::rejected, this,
                      &QObject::deleteLater);
