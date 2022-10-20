@@ -8,7 +8,7 @@
   <summary>Lightweight audio player</summary>
   <description>
     <p>
-      Audacious is an open source audio player. Originally a descendant of XMMS,
+      Audacious is an open source audio player. A descendant of XMMS,
       Audacious plays your music how you want it, without stealing away your
       computer’s resources from other tasks.
     </p>
@@ -16,10 +16,10 @@
       Drag and drop folders and individual song files, search for artists and
       albums in your entire music library, or create and edit your own custom
       playlists. Listen to CD’s or stream music from the Internet. Tweak the
-      sound with the graphical equalizer or experiment with LADSPA
-      effects. Enjoy the modern GTK-themed interface or change things up with
+      sound with the graphical equalizer or change the dynamic range with audio
+      effects. Enjoy the modern Qt-themed interface or change things up with
       Winamp Classic skins. Use the plugins included with Audacious to fetch
-      lyrics for your music, to set an alarm in the morning, and more.
+      lyrics for your music, display a VU meter, and more.
     </p>
   </description>
   <url type="homepage">https://audacious-media-player.org</url>
