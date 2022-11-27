@@ -106,6 +106,8 @@ public:
         Description,   /* Track description */
         MusicBrainzID, /* MusicBrainz identifier */
         Channels, /* Track channels count */
+        Publisher,  /* Publisher (label) */
+        CatalogNum, /* Catalog number */
 
         n_fields
     };

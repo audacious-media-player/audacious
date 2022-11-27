@@ -24,7 +24,9 @@
 
 #include <libintl.h>
 
-#define _(String) dgettext(PACKAGE, String)
+// The return value should be treated as const.  Add a cast to
+// catch misuse, and to avoid build failures with !HAVE_GETTEXT.
+#define _(String) ((const char *)dgettext(PACKAGE, String))
 
 #ifdef gettext_noop
 #define N_(String) gettext_noop(String)

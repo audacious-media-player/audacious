@@ -109,7 +109,7 @@ void show_copy_context_menu(QWidget * parent, const QPoint & global_pos,
                             const QString & text_to_copy)
 {
     auto menu = new QMenu(parent);
-    auto action = new QAction(QIcon::fromTheme("edit-copy"), N_("Copy"), menu);
+    auto action = new QAction(QIcon::fromTheme("edit-copy"), _("Copy"), menu);
 
     QObject::connect(action, &QAction::triggered, action, [text_to_copy]() {
         auto data = new QMimeData;

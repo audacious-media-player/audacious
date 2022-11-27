@@ -52,6 +52,7 @@ enum
     ID3_COMMENT,
     ID3_ENCODER,
     ID3_RECORDING_TIME,
+    ID3_PUBLISHER,
     ID3_TXXX,
     ID3_RVA2,
     ID3_APIC,
@@ -73,6 +74,7 @@ static const char * id3_frames[ID3_TAGS_NO] = {
     "COMM",
     "TSSE",
     "TDRC",
+    "TPUB",
     "TXXX",
     "RVA2",
     "APIC"
@@ -595,6 +597,9 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
           case ID3_YEAR:
           case ID3_RECORDING_TIME:
             id3_associate_int (tuple, Tuple::Year, & frame[0], frame.len ());
+            break;
+          case ID3_PUBLISHER:
+            id3_associate_string (tuple, Tuple::Publisher, & frame[0], frame.len ());
             break;
           case ID3_GENRE:
             id3_decode_genre (tuple, & frame[0], frame.len ());

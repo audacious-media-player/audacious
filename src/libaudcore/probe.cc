@@ -93,6 +93,7 @@ EXPORT PluginHandle * aud_file_find_decoder(const char * filename, bool fast,
     StringBuf scheme = uri_get_scheme(filename);
     StringBuf ext = uri_get_extension(filename);
     Index<PluginHandle *> ext_matches;
+    Index<PluginHandle *> mime_matches;
 
     for (PluginHandle * plugin : list)
     {
@@ -139,17 +140,22 @@ EXPORT PluginHandle * aud_file_find_decoder(const char * filename, bool fast,
                 continue;
 
             if (input_plugin_has_key(plugin, InputKey::MIME, mime))
-            {
-                AUDINFO("Matched %s by MIME type %s.\n",
-                        aud_plugin_get_name(plugin), (const char *)mime);
-                return plugin;
-            }
+                mime_matches.append(plugin);
         }
+    }
+
+    if (mime_matches.len() == 1)
+    {
+        AUDINFO("Matched %s by MIME type %s.\n",
+                aud_plugin_get_name(mime_matches[0]), (const char *)mime);
+        return mime_matches[0];
     }
 
     file.set_limit_to_buffer(true);
 
-    for (PluginHandle * plugin : (ext_matches.len() ? ext_matches : list))
+    for (PluginHandle * plugin : (mime_matches.len()  ? mime_matches
+                                  : ext_matches.len() ? ext_matches
+                                                      : list))
     {
         if (!aud_plugin_get_enabled(plugin))
             continue;

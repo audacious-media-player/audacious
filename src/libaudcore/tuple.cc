@@ -148,6 +148,8 @@ static const struct
     {"description", Tuple::String, -1},
     {"musicbrainz-id", Tuple::String, -1},
     {"channels", Tuple::Int, -1},
+    {"publisher", Tuple::String, -1},
+    {"catalog-number", Tuple::String, -1},
 
     /* fallbacks */
     {nullptr, Tuple::String, -1},
@@ -171,6 +173,7 @@ static const FieldDictEntry field_dict[] = {
     {"artist", Tuple::Artist},
     {"audio-file", Tuple::AudioFile},
     {"bitrate", Tuple::Bitrate},
+    {"catalog-number", Tuple::CatalogNum},
     {"channels", Tuple::Channels},
     {"codec", Tuple::Codec},
     {"comment", Tuple::Comment},
@@ -192,6 +195,7 @@ static const FieldDictEntry field_dict[] = {
     {"length", Tuple::Length},
     {"musicbrainz-id", Tuple::MusicBrainzID},
     {"performer", Tuple::Performer},
+    {"publisher", Tuple::Publisher},
     {"quality", Tuple::Quality},
     {"segment-end", Tuple::EndTime},
     {"segment-start", Tuple::StartTime},

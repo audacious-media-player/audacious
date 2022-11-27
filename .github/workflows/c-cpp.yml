@@ -1,0 +1,25 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "master-gtk3" ]
+  pull_request:
+    branches: [ "master-gtk3" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: master-gtk3
+    - name: dependencies
+      run: sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qtbase5-dev
+    - name: autogen.sh
+      run: ./autogen.sh
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make -j$(nproc)
+    - name: make test
+      run: (cd src/libaudcore/tests && make -j$(nproc) test && ./test)

@@ -292,7 +292,9 @@ void id3_decode_txxx (Tuple & tuple, const char * data, int size)
 
     if (key && value)
     {
-        if (! strcmp_nocase (key, "REPLAYGAIN_TRACK_GAIN"))
+        if (! strcmp_nocase (key, "CATALOGNUMBER"))
+            tuple.set_str(Tuple::CatalogNum, value);
+        else if (! strcmp_nocase (key, "REPLAYGAIN_TRACK_GAIN"))
             tuple.set_gain (Tuple::TrackGain, Tuple::GainDivisor, value);
         else if (! strcmp_nocase (key, "REPLAYGAIN_TRACK_PEAK"))
             tuple.set_gain (Tuple::TrackPeak, Tuple::PeakDivisor, value);
