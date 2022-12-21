@@ -608,7 +608,7 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
     g_signal_connect (list, "motion-notify-event", (GCallback) motion_notify_cb, model);
     g_signal_connect (list, "leave-notify-event", (GCallback) leave_notify_cb, model);
 
-    gboolean supports_drag = false;
+    bool supports_drag = false;
 
     if (MODEL_HAS_CB (model, data_type) &&
      (MODEL_HAS_CB (model, get_data) || MODEL_HAS_CB (model, receive_data)))

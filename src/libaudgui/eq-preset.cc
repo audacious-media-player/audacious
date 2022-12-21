@@ -217,14 +217,14 @@ static void revert_changes ()
     gtk_widget_set_sensitive (revert, false);
 }
 
-static void do_save_file (void)
+static void do_save_file ()
 {
     auto preset = find_one_selected ();
     if (preset)
         eq_preset_save_file (* preset);
 }
 
-static void do_save_eqf (void)
+static void do_save_eqf ()
 {
     auto preset = find_one_selected ();
     if (preset)

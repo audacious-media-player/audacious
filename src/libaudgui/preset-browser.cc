@@ -45,7 +45,7 @@ static void browser_response (GtkWidget * dialog, int response, void * data)
     gtk_widget_destroy (dialog);
 }
 
-static void show_preset_browser (const char * title, gboolean save,
+static void show_preset_browser (const char * title, bool save,
  const char * default_filename, PresetAction callback,
  const EqualizerPreset * preset)
 {
