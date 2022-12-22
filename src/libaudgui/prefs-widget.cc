@@ -20,12 +20,14 @@
 #include <string.h>
 #include <gtk/gtk.h>
 
+#define AUD_GLIB_INTEGRATION
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
 
+#include "gtk-compat.h"
 #include "libaudgui-gtk.h"
 
 static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
@@ -66,8 +68,15 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
         break;
 
     case PreferencesWidget::FontButton:
+    {
+#ifdef USE_GTK3
+        CharPtr font_name (gtk_font_chooser_get_font ((GtkFontChooser *) widget));
+        w->cfg.set_string (font_name);
+#else
         w->cfg.set_string (gtk_font_button_get_font_name ((GtkFontButton *) widget));
+#endif
         break;
+    }
 
     case PreferencesWidget::Entry:
         w->cfg.set_string (gtk_entry_get_text ((GtkEntry *) widget));
@@ -127,7 +136,11 @@ static void widget_update (void *, void * widget)
         break;
 
     case PreferencesWidget::FontButton:
+#ifdef USE_GTK3
+        gtk_font_chooser_set_font ((GtkFontChooser *) widget, w->cfg.get_string ());
+#else
         gtk_font_button_set_font_name ((GtkFontButton *) widget, w->cfg.get_string ());
+#endif
         break;
 
     case PreferencesWidget::Entry:
@@ -200,7 +213,12 @@ static void create_label (const PreferencesWidget * widget, GtkWidget * * label,
     * label = gtk_label_new_with_mnemonic (dgettext (domain, widget->label));
     gtk_label_set_use_markup ((GtkLabel *) * label, true);
     gtk_label_set_line_wrap ((GtkLabel *) * label, true);
+
+#ifdef USE_GTK3
+    gtk_widget_set_halign (* label, GTK_ALIGN_START);
+#else
     gtk_misc_set_alignment ((GtkMisc *) * label, 0, 0.5);
+#endif
 }
 
 /* WIDGET_SPIN_BTN */
@@ -212,7 +230,12 @@ static void create_spin_button (const PreferencesWidget * widget,
     if (widget->label)
     {
         * label_pre = gtk_label_new (dgettext (domain, widget->label));
+
+#ifdef USE_GTK3
+        gtk_widget_set_halign (* label_pre, GTK_ALIGN_END);
+#else
         gtk_misc_set_alignment ((GtkMisc *) * label_pre, 1, 0.5);
+#endif
     }
 
     * spin_btn = gtk_spin_button_new_with_range (widget->data.spin_btn.min,
@@ -221,7 +244,12 @@ static void create_spin_button (const PreferencesWidget * widget,
     if (widget->data.spin_btn.right_label)
     {
         * label_past = gtk_label_new (dgettext (domain, widget->data.spin_btn.right_label));
+
+#ifdef USE_GTK3
+        gtk_widget_set_halign (* label_past, GTK_ALIGN_START);
+#else
         gtk_misc_set_alignment ((GtkMisc *) * label_past, 0, 0.5);
+#endif
     }
 
     widget_init (* spin_btn, widget);
@@ -236,10 +264,19 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
     gtk_font_button_set_use_font ((GtkFontButton *) * font_btn, true);
     gtk_font_button_set_use_size ((GtkFontButton *) * font_btn, true);
 
+#ifdef USE_GTK3
+    gtk_widget_set_hexpand (* font_btn, true);
+#endif
+
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
+
+#ifdef USE_GTK3
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
+#else
         gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+#endif
     }
 
     if (widget->data.font_btn.title)
@@ -257,10 +294,19 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
     * entry = gtk_entry_new ();
     gtk_entry_set_visibility ((GtkEntry *) * entry, ! widget->data.entry.password);
 
+#ifdef USE_GTK3
+    gtk_widget_set_hexpand (* entry, true);
+#endif
+
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
+
+#ifdef USE_GTK3
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
+#else
         gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+#endif
     }
 
     widget_init (* entry, widget);
@@ -285,7 +331,12 @@ static void create_file_entry (const PreferencesWidget * widget,
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
+
+#ifdef USE_GTK3
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
+#else
         gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+#endif
     }
 
     widget_init (* entry, widget);
@@ -346,7 +397,12 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
+
+#ifdef USE_GTK3
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
+#else
         gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+#endif
     }
 
     g_object_set_data ((GObject *) * combobox, "combodomain", (void *) domain);
@@ -398,17 +454,26 @@ static void fill_table (GtkWidget * table,
 
         int i = & w - widgets.data;
 
+#ifdef USE_GTK3
+        (void) middle_policy; /* silence compiler warning */
+
+        if (widget_left)
+            gtk_grid_attach ((GtkGrid *) table, widget_left, 0, i, 1, 1);
+        if (widget_middle)
+            gtk_grid_attach ((GtkGrid *) table, widget_middle, 1, i, 1, 1);
+        if (widget_right)
+            gtk_grid_attach ((GtkGrid *) table, widget_right, 2, i, 1, 1);
+#else
         if (widget_left)
             gtk_table_attach ((GtkTable *) table, widget_left, 0, 1, i, i + 1,
              GTK_FILL, GTK_FILL, 0, 0);
-
         if (widget_middle)
             gtk_table_attach ((GtkTable *) table, widget_middle, 1, 2, i, i + 1,
              middle_policy, GTK_FILL, 0, 0);
-
         if (widget_right)
             gtk_table_attach ((GtkTable *) table, widget_right, 2, 3, i, i + 1,
              GTK_FILL, GTK_FILL, 0, 0);
+#endif
     }
 }
 
@@ -433,14 +498,18 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         {
             if (! child_box)
             {
-                child_box = gtk_vbox_new (false, 0);
+                child_box = audgui_vbox_new (0);
                 g_object_set_data ((GObject *) widget, "child", child_box);
 
+#ifdef USE_GTK3
+                gtk_widget_set_margin_start (child_box, 12);
+                gtk_box_pack_start ((GtkBox *) box, child_box, false, false, 0);
+#else
                 GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
                 gtk_box_pack_start ((GtkBox *) box, alignment, false, false, 0);
                 gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 12, 0);
                 gtk_container_add ((GtkContainer *) alignment, child_box);
-
+#endif
                 if (disable_child)
                     gtk_widget_set_sensitive (child_box, false);
             }
@@ -448,10 +517,11 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         else
             child_box = nullptr;
 
+#ifndef USE_GTK3
         GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
         gtk_alignment_set_padding ((GtkAlignment *) alignment, spacing, 0, indent, 0);
         gtk_box_pack_start ((GtkBox *) (child_box ? child_box : box), alignment, false, false, 0);
-
+#endif
         widget = nullptr;
         disable_child = false;
 
@@ -461,6 +531,10 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         if (! w.child)
             radio_btn_group[true] = nullptr;
 
+#ifdef USE_GTK3
+        int pad_left = indent;
+        int pad_top = spacing;
+#endif
         switch (w.type)
         {
             case PreferencesWidget::Button:
@@ -479,8 +553,12 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 if (strstr (w.label, "<b>"))
                 {
                     /* headings get double spacing and no indent */
+#ifdef USE_GTK3
+                    pad_left = 0;
+                    pad_top = 2 * spacing;
+#else
                     gtk_alignment_set_padding ((GtkAlignment *) alignment, 2 * spacing, 0, 0, 0);
-
+#endif
                     /* set indent for items below the heading */
                     indent = 12;
                 }
@@ -490,7 +568,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
                 if (icon)
                 {
-                    widget = gtk_hbox_new (false, 6);
+                    widget = audgui_hbox_new (6);
                     gtk_box_pack_start ((GtkBox *) widget, icon, false, false, 0);
                     gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
                 }
@@ -510,7 +588,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case PreferencesWidget::SpinButton:
             {
-                widget = gtk_hbox_new (false, 6);
+                widget = audgui_hbox_new (6);
 
                 GtkWidget * label_pre = nullptr, * spin_btn = nullptr, * label_past = nullptr;
                 create_spin_button (& w, & label_pre, & spin_btn, & label_past, domain);
@@ -533,7 +611,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case PreferencesWidget::FontButton:
             {
-                widget = gtk_hbox_new (false, 6);
+                widget = audgui_hbox_new (6);
 
                 GtkWidget * font_btn = nullptr;
                 create_font_btn (& w, & label, & font_btn, domain);
@@ -547,9 +625,9 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             }
 
             case PreferencesWidget::Table:
-                widget = gtk_table_new (0, 0, false);
-                gtk_table_set_col_spacings ((GtkTable *) widget, 6);
-                gtk_table_set_row_spacings ((GtkTable *) widget, 6);
+                widget = audgui_grid_new ();
+                audgui_grid_set_column_spacing (widget, 6);
+                audgui_grid_set_row_spacing (widget, 6);
 
                 fill_table (widget, w.data.table.widgets, domain);
 
@@ -558,7 +636,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             case PreferencesWidget::Entry:
             case PreferencesWidget::FileEntry:
             {
-                widget = gtk_hbox_new (false, 6);
+                widget = audgui_hbox_new (6);
 
                 GtkWidget * entry = nullptr;
 
@@ -577,7 +655,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case PreferencesWidget::ComboBox:
             {
-                widget = gtk_hbox_new (false, 6);
+                widget = audgui_hbox_new (6);
 
                 GtkWidget * combo = nullptr;
                 create_cbox (& w, & label, & combo, domain);
@@ -592,9 +670,9 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case PreferencesWidget::Box:
                 if (w.data.box.horizontal)
-                    widget = gtk_hbox_new (false, 6);
+                    widget = audgui_hbox_new (6);
                 else
-                    widget = gtk_vbox_new (false, 0);
+                    widget = audgui_vbox_new (0);
 
                 audgui_create_widgets_with_domain (widget, w.data.box.widgets, domain);
 
@@ -608,13 +686,16 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
 
             case PreferencesWidget::Notebook:
-                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
-
                 widget = gtk_notebook_new ();
 
+#ifdef USE_GTK3
+                pad_top = 0;
+#else
+                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
+#endif
                 for (const NotebookTab & tab : w.data.notebook.tabs)
                 {
-                    GtkWidget * vbox = gtk_vbox_new (false, 0);
+                    GtkWidget * vbox = audgui_vbox_new (0);
                     gtk_container_set_border_width ((GtkContainer *) vbox, 6);
 
                     audgui_create_widgets_with_domain (vbox, tab.widgets, domain);
@@ -626,8 +707,8 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
 
             case PreferencesWidget::Separator:
-                widget = w.data.separator.horizontal ?
-                 gtk_hseparator_new () : gtk_vseparator_new ();
+                widget = audgui_separator_new (w.data.separator.horizontal
+                 ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL);
                 break;
 
             default:
@@ -635,7 +716,15 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         }
 
         if (widget)
+        {
+#ifdef USE_GTK3
+            gtk_widget_set_margin_start (widget, pad_left);
+            gtk_widget_set_margin_top (widget, pad_top);
+            gtk_box_pack_start ((GtkBox *) (child_box ? child_box : box), widget, false, false, 0);
+#else
             gtk_container_add ((GtkContainer *) alignment, widget);
+#endif
+        }
 
         /* wait till after first widget to set item spacing */
         if (gtk_orientable_get_orientation ((GtkOrientable *) box) == GTK_ORIENTATION_VERTICAL)

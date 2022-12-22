@@ -39,8 +39,13 @@ endif
 
 
 if get_option('gtk')
-  gtk_req = '>= 2.24'
-  gtk_dep = dependency('gtk+-2.0', version: gtk_req, required: true)
+  if get_option('gtk3')
+    gtk_req = '>= 3.22'
+    gtk_dep = dependency('gtk+-3.0', version: gtk_req, required: true)
+  else
+    gtk_req = '>= 2.24'
+    gtk_dep = dependency('gtk+-2.0', version: gtk_req, required: true)
+  endif
 endif
 
 
@@ -155,6 +160,9 @@ endif
 
 if get_option('gtk')
   conf.set10('USE_GTK', true)
+  if (get_option('gtk3'))
+    conf.set10('USE_GTK3', true)
+  endif
 endif
 
 
@@ -211,7 +219,8 @@ if meson.version().version_compare('>= 0.53')
     'D-Bus support': get_option('dbus'),
     'Qt 5 support': get_option('qt') and not get_option('qt6'),
     'Qt 6 support': get_option('qt6'),
-    'GTK support': get_option('gtk'),
+    'GTK2 support': get_option('gtk') and not get_option('gtk3'),
+    'GTK3 support': get_option('gtk3'),
     'Libarchive support': get_option('libarchive'),
     'Valgrind analysis support': get_option('valgrind'),
     'Build stamp': get_option('buildstamp'),

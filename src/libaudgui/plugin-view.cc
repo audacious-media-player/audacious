@@ -23,6 +23,7 @@
 #include <libaudcore/plugin.h>
 #include <libaudcore/plugins.h>
 
+#include "gtk-compat.h"
 #include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
@@ -214,7 +215,7 @@ static void button_destroy (GtkWidget * b)
 
 GtkWidget * plugin_view_new (PluginType type)
 {
-    GtkWidget * vbox = gtk_vbox_new (false, 6);
+    GtkWidget * vbox = audgui_vbox_new (6);
     gtk_container_set_border_width ((GtkContainer *) vbox, 6);
 
     GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
@@ -229,7 +230,7 @@ GtkWidget * plugin_view_new (PluginType type)
     g_signal_connect (tree, "realize", (GCallback) list_fill, aud::to_ptr (type));
     g_signal_connect (tree, "destroy", (GCallback) list_destroy, nullptr);
 
-    GtkWidget * hbox = gtk_hbox_new (false, 6);
+    GtkWidget * hbox = audgui_hbox_new (6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);
 
     GtkWidget * config = audgui_button_new (_("_Settings"), "preferences-system", do_config, tree);

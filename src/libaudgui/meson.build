@@ -4,6 +4,7 @@ libaudgui_sources = [
   'eq-preset.cc',
   'equalizer.cc',
   'file-opener.cc',
+  'gtk-compat.cc',
   'infopopup.cc',
   'infowin.cc',
   'init.cc',
@@ -30,6 +31,7 @@ libaudgui_sources = [
 
 
 libaudgui_headers = [
+  'gtk-compat.h',
   'libaudgui.h',
   'libaudgui-gtk.h',
   'list.h',

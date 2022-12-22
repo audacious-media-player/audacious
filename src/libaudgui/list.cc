@@ -23,6 +23,7 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/objects.h>
 
+#include "gtk-compat.h"
 #include "libaudgui-gtk.h"
 #include "list.h"
 
@@ -389,7 +390,7 @@ static void autoscroll (void * widget)
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) widget);
 
-    GtkAdjustment * adj = gtk_tree_view_get_vadjustment ((GtkTreeView *) widget);
+    GtkAdjustment * adj = audgui_tree_view_get_vadjustment ((GtkWidget *) widget);
     g_return_if_fail (adj);
 
     int pos, end;
@@ -406,7 +407,7 @@ static void autoscroll (void * widget)
 
 static void start_autoscroll (ListModel * model, GtkWidget * widget, int speed)
 {
-    GtkAdjustment * adj = gtk_tree_view_get_vadjustment ((GtkTreeView *) widget);
+    GtkAdjustment * adj = audgui_tree_view_get_vadjustment (widget);
     g_return_if_fail (adj);
 
     int pos, end;
