@@ -89,16 +89,44 @@ EXPORT int audgui_get_digit_width (GtkWidget * widget)
 
 EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
 {
+#ifdef USE_GTK3
+    int xwin, ywin;
+    GdkRectangle alloc;
+
+    GdkWindow * window = gtk_widget_get_window (widget);
+    GdkDisplay * display = gdk_window_get_display (window);
+    GdkSeat * seat = gdk_display_get_default_seat (display);
+    GdkDevice * device = gdk_seat_get_pointer (seat);
+
+    gdk_window_get_device_position (window, device, & xwin, & ywin, nullptr);
+    gtk_widget_get_allocation (widget, & alloc);
+
+    * x = xwin - alloc.x;
+    * y = ywin - alloc.y;
+#else
     gtk_widget_get_pointer (widget, x, y);
+#endif
 }
 
 EXPORT void audgui_get_mouse_coords (GdkScreen * screen, int * x, int * y)
 {
+#ifdef USE_GTK3
+    GdkDisplay * display = gdk_screen_get_display (screen);
+    GdkSeat * seat = gdk_display_get_default_seat (display);
+    GdkDevice * device = gdk_seat_get_pointer (seat);
+    gdk_device_get_position (device, nullptr, x, y);
+#else
     gdk_display_get_pointer (gdk_screen_get_display (screen), nullptr, x, y, nullptr);
+#endif
 }
 
 EXPORT void audgui_get_monitor_geometry (GdkScreen * screen, int x, int y, GdkRectangle * geom)
 {
+#ifdef USE_GTK3
+    GdkDisplay * display = gdk_screen_get_display (screen);
+    GdkMonitor * monitor = gdk_display_get_monitor_at_point (display, x, y);
+    gdk_monitor_get_geometry (monitor, geom);
+#else
     int monitors = gdk_screen_get_n_monitors (screen);
 
     for (int i = 0; i < monitors; i ++)
@@ -113,6 +141,7 @@ EXPORT void audgui_get_monitor_geometry (GdkScreen * screen, int x, int y, GdkRe
     geom->y = 0;
     geom->width = gdk_screen_get_width (screen);
     geom->height = gdk_screen_get_height (screen);
+#endif
 }
 
 static gboolean escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)
@@ -231,6 +260,24 @@ static void set_label_wrap (GtkWidget * label, void *)
         gtk_label_set_line_wrap_mode ((GtkLabel *) label, PANGO_WRAP_WORD_CHAR);
 }
 
+#ifdef USE_GTK3
+static const char * icon_for_message_type (GtkMessageType type)
+{
+    switch (type)
+    {
+        case GTK_MESSAGE_INFO: return "dialog-information";
+        case GTK_MESSAGE_WARNING: return "dialog-warning";
+        case GTK_MESSAGE_QUESTION: return "dialog-question";
+        case GTK_MESSAGE_ERROR: return "dialog-error";
+        default: return nullptr;
+    }
+}
+#endif
+
+/* style choices should not be enforced by deprecating API functions */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2)
 {
@@ -240,6 +287,15 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
 
     GtkWidget * box = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
     gtk_container_foreach ((GtkContainer *) box, set_label_wrap, nullptr);
+
+#ifdef USE_GTK3
+    const char * icon = icon_for_message_type (type);
+    if (icon)
+    {
+        GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_DIALOG);
+        gtk_message_dialog_set_image ((GtkMessageDialog *) dialog, image);
+    }
+#endif
 
     if (button2)
     {
@@ -255,6 +311,8 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
 
     return dialog;
 }
+
+#pragma GCC diagnostic pop
 
 EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
 {

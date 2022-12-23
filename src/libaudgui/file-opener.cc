@@ -25,6 +25,7 @@
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 
+#include "gtk-compat.h"
 #include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
@@ -90,15 +91,20 @@ static GtkWidget * create_filebrowser (gboolean open)
         option = "close_dialog_add";
     }
 
+    int vbox_padding = 0;
     int dpi = audgui_get_dpi ();
 
     GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint ((GtkWindow *) window, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_title ((GtkWindow *) window, window_title);
     gtk_window_set_default_size ((GtkWindow *) window, 7 * dpi, 5 * dpi);
-    gtk_container_set_border_width ((GtkContainer *) window, 10);
 
-    GtkWidget * vbox = gtk_vbox_new (false, 0);
+#ifndef USE_GTK3
+    vbox_padding = 3;
+    gtk_container_set_border_width ((GtkContainer *) window, 10);
+#endif
+
+    GtkWidget * vbox = audgui_vbox_new (0);
     gtk_container_add ((GtkContainer *) window, vbox);
 
     GtkWidget * chooser = gtk_file_chooser_widget_new (GTK_FILE_CHOOSER_ACTION_OPEN);
@@ -109,17 +115,21 @@ static GtkWidget * create_filebrowser (gboolean open)
     if (path[0])
         gtk_file_chooser_set_current_folder ((GtkFileChooser *) chooser, path);
 
-    gtk_box_pack_start ((GtkBox *) vbox, chooser, true, true, 3);
+    gtk_box_pack_start ((GtkBox *) vbox, chooser, true, true, vbox_padding);
 
-    GtkWidget * hbox = gtk_hbox_new (false, 0);
-    gtk_box_pack_end ((GtkBox *) vbox, hbox, false, false, 3);
+    GtkWidget * hbox = audgui_hbox_new (0);
+    gtk_box_pack_end ((GtkBox *) vbox, hbox, false, false, vbox_padding);
+
+#ifdef USE_GTK3
+    gtk_container_set_border_width ((GtkContainer *) hbox, 6);
+#endif
 
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (toggle_text);
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool ("audgui", option));
     g_signal_connect (toggle, "toggled", (GCallback) toggled_cb, (void *) option);
     gtk_box_pack_start ((GtkBox *) hbox, toggle, true, true, 0);
 
-    GtkWidget * bbox = gtk_hbutton_box_new ();
+    GtkWidget * bbox = audgui_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_button_box_set_layout ((GtkButtonBox *) bbox, GTK_BUTTONBOX_END);
     gtk_box_set_spacing ((GtkBox *) bbox, 6);
     gtk_box_pack_end ((GtkBox *) hbox, bbox, true, true, 0);

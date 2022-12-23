@@ -23,6 +23,10 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
+/* we still use GtkImageMenuItem until there is a good alternative */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 static GtkWidget * image_menu_item_new (const char * text, const char * icon)
 {
     GtkWidget * widget = gtk_image_menu_item_new_with_mnemonic (text);
@@ -35,6 +39,8 @@ static GtkWidget * image_menu_item_new (const char * text, const char * icon)
 
     return widget;
 }
+
+#pragma GCC diagnostic pop
 
 static void toggled_cb (GtkCheckMenuItem * check, const AudguiMenuItem * item)
 {

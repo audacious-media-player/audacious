@@ -33,6 +33,7 @@
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 
+#include "gtk-compat.h"
 #include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
@@ -135,8 +136,12 @@ static GtkWidget * small_label_new (const char * text)
 
     GtkWidget * label = gtk_label_new (text);
     gtk_label_set_attributes ((GtkLabel *) label, attrs);
-    gtk_misc_set_alignment ((GtkMisc *) label, 0, 0.5);
 
+#ifdef USE_GTK3
+    gtk_widget_set_halign (label, GTK_ALIGN_START);
+#else
+    gtk_misc_set_alignment ((GtkMisc *) label, 0, 0.5);
+#endif
     return label;
 }
 
@@ -303,10 +308,18 @@ static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
 {
     GtkWidget * label = small_label_new (title);
 
+#ifdef USE_GTK3
+    if (y > 0)
+        gtk_widget_set_margin_top (label, 6);
+
+    gtk_grid_attach ((GtkGrid *) grid, label, x, y, span, 1);
+    gtk_grid_attach ((GtkGrid *) grid, entry, x, y + 1, span, 1);
+#else
     gtk_table_attach ((GtkTable *) grid, label, x, x + span, y, y + 1,
      GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach ((GtkTable *) grid, entry, x, x + span, y + 1, y + 2,
      GTK_FILL, GTK_FILL, 0, 0);
+#endif
 
     g_signal_connect (entry, "changed", (GCallback) entry_changed, nullptr);
 }
@@ -321,44 +334,67 @@ static void create_infowin ()
     gtk_window_set_type_hint ((GtkWindow *) infowin,
      GDK_WINDOW_TYPE_HINT_DIALOG);
 
-    GtkWidget * main_grid = gtk_table_new (0, 0, false);
-    gtk_table_set_col_spacings ((GtkTable *) main_grid, 6);
-    gtk_table_set_row_spacings ((GtkTable *) main_grid, 6);
+    GtkWidget * main_grid = audgui_grid_new ();
+    audgui_grid_set_row_spacing (main_grid, 6);
+    audgui_grid_set_column_spacing (main_grid, 6);
     gtk_container_add ((GtkContainer *) infowin, main_grid);
 
     widgets.image = audgui_scaled_image_new (nullptr);
-    gtk_table_attach_defaults ((GtkTable *) main_grid, widgets.image, 0, 1, 0, 1);
 
-    widgets.location = gtk_label_new ("");
+    widgets.location = gtk_label_new (nullptr);
     gtk_widget_set_size_request (widgets.location, 2 * dpi, -1);
     gtk_label_set_line_wrap ((GtkLabel *) widgets.location, true);
     gtk_label_set_line_wrap_mode ((GtkLabel *) widgets.location, PANGO_WRAP_WORD_CHAR);
     gtk_label_set_selectable ((GtkLabel *) widgets.location, true);
-    gtk_table_attach ((GtkTable *) main_grid, widgets.location, 0, 1, 1, 2,
-     GTK_FILL, GTK_FILL, 0, 0);
 
-    GtkWidget * codec_grid = gtk_table_new (0, 0, false);
-    gtk_table_set_row_spacings ((GtkTable *) codec_grid, 2);
-    gtk_table_set_col_spacings ((GtkTable *) codec_grid, 12);
+    GtkWidget * codec_grid = audgui_grid_new ();
+    audgui_grid_set_row_spacing (codec_grid, 2);
+    audgui_grid_set_column_spacing (codec_grid, 12);
+
+    GtkWidget * grid = audgui_grid_new ();
+    audgui_grid_set_row_spacing (grid, 2);
+    audgui_grid_set_column_spacing (grid, 6);
+
+    GtkWidget * bottom_hbox = audgui_hbox_new (6);
+
+#ifdef USE_GTK3
+    gtk_label_set_max_width_chars ((GtkLabel *) widgets.location, 40);
+
+    gtk_widget_set_hexpand (widgets.image, true);
+    gtk_widget_set_vexpand (widgets.image, true);
+
+    gtk_grid_attach ((GtkGrid *) main_grid, widgets.image, 0, 0, 1, 1);
+    gtk_grid_attach ((GtkGrid *) main_grid, widgets.location, 0, 1, 1, 1);
+    gtk_grid_attach ((GtkGrid *) main_grid, codec_grid, 0, 2, 1, 1);
+    gtk_grid_attach ((GtkGrid *) main_grid, grid, 1, 0, 1, 3);
+    gtk_grid_attach ((GtkGrid *) main_grid, bottom_hbox, 0, 3, 2, 1);
+#else
+    gtk_table_attach_defaults ((GtkTable *) main_grid, widgets.image, 0, 1, 0, 1);
+    gtk_table_attach ((GtkTable *) main_grid, widgets.location, 0, 1, 1, 2,
+      GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach ((GtkTable *) main_grid, codec_grid, 0, 1, 2, 3,
+      GTK_FILL, GTK_FILL, 0, 0);
+    gtk_table_attach ((GtkTable *) main_grid, grid, 1, 2, 0, 3,
      GTK_FILL, GTK_FILL, 0, 0);
+    gtk_table_attach ((GtkTable *) main_grid, bottom_hbox, 0, 2, 3, 4,
+     GTK_FILL, GTK_FILL, 0, 0);
+#endif
 
     for (int row = 0; row < CODEC_ITEMS; row ++)
     {
         GtkWidget * label = small_label_new (_(codec_labels[row]));
+        widgets.codec[row] = small_label_new (nullptr);
+
+#ifdef USE_GTK3
+        gtk_grid_attach ((GtkGrid *) codec_grid, label, 0, row, 1, 1);
+        gtk_grid_attach ((GtkGrid *) codec_grid, widgets.codec[row], 1, row, 1, 1);
+#else
         gtk_table_attach ((GtkTable *) codec_grid, label, 0, 1, row, row + 1,
          GTK_FILL, GTK_FILL, 0, 0);
-
-        widgets.codec[row] = small_label_new (nullptr);
         gtk_table_attach ((GtkTable *) codec_grid, widgets.codec[row], 1, 2, row, row + 1,
          GTK_FILL, GTK_FILL, 0, 0);
+#endif
     }
-
-    GtkWidget * grid = gtk_table_new (0, 0, false);
-    gtk_table_set_row_spacings ((GtkTable *) grid, 2);
-    gtk_table_set_col_spacings ((GtkTable *) grid, 6);
-    gtk_table_attach ((GtkTable *) main_grid, grid, 1, 2, 0, 3,
-     GTK_FILL, GTK_FILL, 0, 0);
 
     widgets.title = gtk_entry_new ();
     gtk_widget_set_size_request (widgets.title, 3 * dpi, -1);
@@ -385,10 +421,6 @@ static void create_infowin ()
 
     widgets.track = gtk_entry_new ();
     add_entry (grid, _("Track Number"), widgets.track, 1, 12, 1);
-
-    GtkWidget * bottom_hbox = gtk_hbox_new (false, 6);
-    gtk_table_attach ((GtkTable *) main_grid, bottom_hbox, 0, 2, 3, 4,
-     GTK_FILL, GTK_FILL, 0, 0);
 
     widgets.autofill = gtk_check_button_new_with_mnemonic (_("_Auto-fill empty fields"));
 

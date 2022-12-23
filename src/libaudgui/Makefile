@@ -7,6 +7,7 @@ SRCS = about.cc \
        eq-preset.cc \
        equalizer.cc \
        file-opener.cc \
+       gtk-compat.cc \
        images.c \
        infopopup.cc \
        infowin.cc \
@@ -31,7 +32,8 @@ SRCS = about.cc \
        url-opener.cc \
        util.cc
 
-INCLUDES = libaudgui.h \
+INCLUDES = gtk-compat.h \
+           libaudgui.h \
            libaudgui-gtk.h \
            list.h \
            menu.h

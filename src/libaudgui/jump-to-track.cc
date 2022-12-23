@@ -25,6 +25,7 @@
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 
+#include "gtk-compat.h"
 #include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
@@ -245,7 +246,7 @@ static GtkWidget * create_window ()
     gtk_container_set_border_width ((GtkContainer *) jump_to_track_win, 10);
     gtk_window_set_default_size ((GtkWindow *) jump_to_track_win, 6 * dpi, 5 * dpi);
 
-    GtkWidget * vbox = gtk_vbox_new (false, 6);
+    GtkWidget * vbox = audgui_vbox_new (6);
     gtk_container_add ((GtkContainer *) jump_to_track_win, vbox);
 
     treeview = audgui_list_new (& callbacks, nullptr, 0);
@@ -258,7 +259,7 @@ static GtkWidget * create_window ()
      "changed", (GCallback) selection_changed, nullptr);
     g_signal_connect (treeview, "row-activated", (GCallback) do_jump, nullptr);
 
-    GtkWidget * hbox = gtk_hbox_new (false, 6);
+    GtkWidget * hbox = audgui_hbox_new (6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 3);
 
     /* filter box */
@@ -282,17 +283,22 @@ static GtkWidget * create_window ()
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrollwin, GTK_SHADOW_IN);
     gtk_box_pack_start ((GtkBox *) vbox, scrollwin, true, true, 0);
 
-    GtkWidget * hbox2 = gtk_hbox_new (false, 0);
+    GtkWidget * hbox2 = audgui_hbox_new (0);
     gtk_box_pack_end ((GtkBox *) vbox, hbox2, false, false, 0);
 
-    GtkWidget * bbox = gtk_hbutton_box_new ();
+    GtkWidget * bbox = audgui_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_button_box_set_layout ((GtkButtonBox *) bbox, GTK_BUTTONBOX_END);
     gtk_box_set_spacing ((GtkBox *) bbox, 6);
 
+#ifdef USE_GTK3
+    gtk_widget_set_margin_start (bbox, 6);
+    gtk_box_pack_end ((GtkBox *) hbox2, bbox, true, true, 0);
+#else
     GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 6, 0);
     gtk_container_add ((GtkContainer *) alignment, bbox);
     gtk_box_pack_end ((GtkBox *) hbox2, alignment, true, true, 0);
+#endif
 
     /* close dialog toggle */
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (_("C_lose on jump"));
