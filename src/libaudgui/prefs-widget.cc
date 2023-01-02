@@ -328,6 +328,10 @@ static void create_file_entry (const PreferencesWidget * widget,
         break;
     }
 
+#ifdef USE_GTK3
+    gtk_widget_set_hexpand (* entry, true);
+#endif
+
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
