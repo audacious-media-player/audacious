@@ -1,6 +1,6 @@
 project('libaudcore-tests', 'cpp',
         version: '0.1.0',
-        meson_version: '>= 0.43',
+        meson_version: '>= 0.50',
         default_options: [
           'cpp_std=c++11',
           'warning_level=1'
