@@ -200,7 +200,7 @@ AC_ARG_ENABLE(gtk,
  AS_HELP_STRING(--disable-gtk, [Disable GTK+ support (default=enabled)]),
  USE_GTK=$enableval, USE_GTK=yes)
 
-if test $USE_GTK = yes ; then
+if test $USE_GTK = yes -a $USE_GTK3 = no ; then
     PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.24)
     AC_DEFINE([USE_GTK], [1], [Define if GTK+ support enabled])
 fi
