@@ -1,0 +1,17 @@
+name: 'Install dependencies'
+description: 'Install dependencies based on the runner''s OS and build system'
+author: 'Audacious developers'
+
+inputs:
+  os:
+    description: 'The operating system to use (like ubuntu-22.04)'
+    required: True
+  build-system:
+    description: 'The build system to use (autotools or meson)'
+    required: True
+
+runs:
+  using: "composite"
+  steps:
+    - run: '$GITHUB_ACTION_PATH/install-dependencies.sh "${{ inputs.os }}" "${{ inputs.build-system }}"'
+      shell: bash

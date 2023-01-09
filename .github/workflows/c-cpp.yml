@@ -8,16 +8,41 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        os: ['ubuntu-20.04', 'ubuntu-22.04', 'macos-12']
+        build-system: ['autotools', 'meson']
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+
     steps:
-    - uses: actions/checkout@v3
-    - name: dependencies
-      run: sudo apt-get -qq update && sudo apt-get install libgtk2.0-dev qtbase5-dev
-    - name: autogen.sh
-      run: ./autogen.sh
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make -j$(nproc)
-    - name: make test
-      run: (cd src/libaudcore/tests && make -j$(nproc) test && ./test)
+    - name: Checkout audacious
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      uses: ./.github/actions/install-dependencies
+      with:
+        os: ${{ matrix.os }}
+        build-system: ${{ matrix.build-system }}
+
+    - name: Configure
+      uses: ./.github/actions/run-action
+      with:
+        action: 'configure'
+        os: ${{ matrix.os }}
+        build-system: ${{ matrix.build-system }}
+
+    - name: Build
+      uses: ./.github/actions/run-action
+      with:
+        action: 'build'
+        os: ${{ matrix.os }}
+        build-system: ${{ matrix.build-system }}
+
+    - name: Test
+      if: startsWith(matrix.os, 'ubuntu')
+      uses: ./.github/actions/run-action
+      with:
+        action: 'test'
+        os: ${{ matrix.os }}
+        build-system: ${{ matrix.build-system }}

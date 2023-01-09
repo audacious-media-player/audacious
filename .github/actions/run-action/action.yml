@@ -1,0 +1,20 @@
+name: 'Run action'
+description: 'Run a build action based on the runner''s OS and build system'
+author: 'Audacious developers'
+
+inputs:
+  action:
+    description: 'The build action to run (configure, build or install)'
+    required: True
+  os:
+    description: 'The operating system to use (like ubuntu-22.04)'
+    required: True
+  build-system:
+    description: 'The build system to use (autotools or meson)'
+    required: True
+
+runs:
+  using: "composite"
+  steps:
+    - run: '$GITHUB_ACTION_PATH/run-action.sh "${{ inputs.action }}" "${{ inputs.os }}" "${{ inputs.build-system }}"'
+      shell: bash
