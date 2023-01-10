@@ -56,6 +56,7 @@ enum
     ID3_TXXX,
     ID3_RVA2,
     ID3_APIC,
+    ID3_LYRICS,
     ID3_TAGS_NO
 };
 
@@ -77,7 +78,8 @@ static const char * id3_frames[ID3_TAGS_NO] = {
     "TPUB",
     "TXXX",
     "RVA2",
-    "APIC"
+    "APIC",
+    "USLT"
 };
 
 #pragma pack(push) /* must be byte-aligned */
@@ -493,11 +495,11 @@ static void add_text_frame (int id, const char * text, FrameDict & dict)
     g_free (utf16);
 }
 
-static void add_comment_frame (const char * text, FrameDict & dict)
+static void add_memo_frame (int id, const char * text, FrameDict & dict)
 {
     if (! text)
     {
-        remove_frame (ID3_COMMENT, dict);
+        remove_frame (id, dict);
         return;
     }
 
@@ -507,7 +509,7 @@ static void add_comment_frame (const char * text, FrameDict & dict)
     uint16_t * utf16 = g_utf8_to_utf16 (text, -1, nullptr, & words, nullptr);
     g_return_if_fail (utf16);
 
-    GenericFrame & frame = add_generic_frame (ID3_COMMENT, 10 + 2 * words, dict);
+    GenericFrame & frame = add_generic_frame (id, 10 + 2 * words, dict);
 
     frame[0] = 1;                              /* UTF-16 encoding */
     memcpy (& frame[1], "eng", 3);             /* language */
@@ -605,7 +607,7 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
             id3_decode_genre (tuple, & frame[0], frame.len ());
             break;
           case ID3_COMMENT:
-            id3_decode_comment (tuple, & frame[0], frame.len ());
+            id3_associate_memo (tuple, Tuple::Comment, & frame[0], frame.len ());
             break;
           case ID3_TXXX:
             id3_decode_txxx (tuple, & frame[0], frame.len ());
@@ -616,6 +618,9 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
           case ID3_APIC:
             if (image)
                 * image = id3_decode_apic (& frame[0], frame.len ());
+            break;
+          case ID3_LYRICS:
+            id3_associate_memo (tuple, Tuple::Lyrics, & frame[0], frame.len ());
             break;
           default:
             AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);
@@ -656,13 +661,23 @@ bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
     add_frameFromTupleStr (tuple, Tuple::Album, ID3_ALBUM, dict);
     add_frameFromTupleStr (tuple, Tuple::AlbumArtist, ID3_ALBUM_ARTIST, dict);
     add_frameFromTupleStr (tuple, Tuple::Composer, ID3_COMPOSER, dict);
+    add_frameFromTupleStr (tuple, Tuple::Publisher, ID3_PUBLISHER, dict);
     add_frameFromTupleStr (tuple, Tuple::Copyright, ID3_COPYRIGHT, dict);
     add_frameFromTupleInt (tuple, Tuple::Year, ID3_YEAR, dict);
     add_frameFromTupleInt (tuple, Tuple::Track, ID3_TRACKNR, dict);
     add_frameFromTupleStr (tuple, Tuple::Genre, ID3_GENRE, dict);
 
     String comment = tuple.get_str (Tuple::Comment);
-    add_comment_frame (comment, dict);
+    if (comment && comment[0])
+    {
+        add_memo_frame(ID3_COMMENT, comment, dict);
+    }
+
+    String lyrics = tuple.get_str (Tuple::Lyrics);
+    if (lyrics && lyrics[0])
+    {
+        add_memo_frame (ID3_LYRICS, lyrics, dict);
+    }
 
     /* location and size of non-tag data */
     int64_t mp3_offset = offset ? 0 : header_size + data_size + footer_size;

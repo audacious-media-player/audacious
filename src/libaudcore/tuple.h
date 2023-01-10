@@ -108,6 +108,7 @@ public:
         Channels, /* Track channels count */
         Publisher,  /* Publisher (label) */
         CatalogNum, /* Catalog number */
+        Lyrics,  /* Lyrics from id3 tags. */
 
         n_fields
     };
