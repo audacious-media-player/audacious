@@ -45,9 +45,11 @@ enum
     ID3_GENRE,
     ID3_COMMENT,
     ID3_ENCODER,
+    ID3_PUBLISHER,
     ID3_TXX,
     ID3_RVA,
     ID3_PIC,
+    ID3_LYRICS,
     ID3_TAGS_NO
 };
 
@@ -65,9 +67,11 @@ static const char * id3_frames[ID3_TAGS_NO] = {
     "TCO",
     "COM",
     "TSS",
+    "TPB",
     "TXX",
     "RVA",
-    "PIC"
+    "PIC",
+    "LYR"
 };
 
 #pragma pack(push) /* must be byte-aligned */
@@ -105,7 +109,7 @@ static bool validate_header (ID3v22Header * header)
 
     header->size = unsyncsafe32 (FROM_BE32 (header->size));
 
-    AUDDBG ("Found ID3v2 header:\n");
+    AUDDBG ("Found ID3v2.2 header:\n");
     AUDDBG (" magic = %.3s\n", header->magic);
     AUDDBG (" version = %d\n", (int) header->version);
     AUDDBG (" revision = %d\n", (int) header->revision);
@@ -231,7 +235,7 @@ bool ID3v22TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
 
         if (! read_frame (handle, data_size - pos, version, syncsafe, & frame_size, frame))
         {
-            AUDDBG("read_frame failed at pos %i\n", pos);
+            AUDDBG ("read_frame failed at pos %i\n", pos);
             break;
         }
 
@@ -270,8 +274,11 @@ bool ID3v22TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
           case ID3_GENRE:
             id3_decode_genre (tuple, & frame[0], frame.len ());
             break;
+          case ID3_PUBLISHER:
+            id3_associate_string (tuple, Tuple::Publisher, & frame[0], frame.len ());
+            break;
           case ID3_COMMENT:
-            id3_decode_comment (tuple, & frame[0], frame.len ());
+            id3_associate_memo (tuple, Tuple::Comment, & frame[0], frame.len ());
             break;
           case ID3_RVA:
             id3_decode_rva (tuple, & frame[0], frame.len ());
@@ -279,6 +286,9 @@ bool ID3v22TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
           case ID3_PIC:
             if (image)
                 * image = id3_decode_pic (& frame[0], frame.len ());
+            break;
+          case ID3_LYRICS:
+            id3_associate_memo (tuple, Tuple::Lyrics, & frame[0], frame.len ());
             break;
           default:
             AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);

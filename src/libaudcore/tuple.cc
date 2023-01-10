@@ -150,6 +150,7 @@ static const struct
     {"channels", Tuple::Int, -1},
     {"publisher", Tuple::String, -1},
     {"catalog-number", Tuple::String, -1},
+    {"lyrics", Tuple::String, -1},
 
     /* fallbacks */
     {nullptr, Tuple::String, -1},
@@ -193,6 +194,7 @@ static const FieldDictEntry field_dict[] = {
     {"gain-track-peak", Tuple::TrackPeak},
     {"genre", Tuple::Genre},
     {"length", Tuple::Length},
+    {"lyrics", Tuple::Lyrics},
     {"musicbrainz-id", Tuple::MusicBrainzID},
     {"performer", Tuple::Performer},
     {"publisher", Tuple::Publisher},
