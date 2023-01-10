@@ -37,9 +37,6 @@
 
 static void infopopup_move_to_mouse (GtkWidget * infopopup);
 
-static const GdkColor gray = {0, 40960, 40960, 40960};
-static const GdkColor white = {0, 65535, 65535, 65535};
-
 static struct {
     GtkWidget * title_header, * title_label;
     GtkWidget * artist_header, * artist_label;
@@ -113,6 +110,9 @@ static void infopopup_realized (GtkWidget * widget)
 }
 
 #ifndef USE_GTK3
+static const GdkColor gray = {0, 40960, 40960, 40960};
+static const GdkColor white = {0, 65535, 65535, 65535};
+
 static gboolean infopopup_draw_bg (GtkWidget * widget)
 {
     GtkAllocation alloc;
