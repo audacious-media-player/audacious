@@ -1,6 +1,6 @@
 #
 #  Copyright (c) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016,
-#                2017, 2018, 2020
+#                2017, 2018, 2020, 2021, 2022
 #    Jonathan Schleifer <js@nil.im>
 #
 #  https://fossil.nil.im/buildsys
@@ -56,6 +56,7 @@ LIB_LDFLAGS = @LIB_LDFLAGS@
 LIB_LDFLAGS_INSTALL_NAME = @LIB_LDFLAGS_INSTALL_NAME@
 LIB_PREFIX = @LIB_PREFIX@
 LIB_SUFFIX = @LIB_SUFFIX@
+LINK_LIB = @LINK_LIB@
 AMIGA_LIB_CFLAGS = @AMIGA_LIB_CFLAGS@
 AMIGA_LIB_LDFLAGS = @AMIGA_LIB_LDFLAGS@
 PLUGIN_CFLAGS = @PLUGIN_CFLAGS@
@@ -80,7 +81,7 @@ MSGFMT = @MSGFMT@
 JAVAC = @JAVAC@
 JAVACFLAGS = @JAVACFLAGS@
 JAR = @JAR@
-WINDRES = @WINDRES@
+RC = @RC@
 BUILD_AND_HOST_ARE_DARWIN = @BUILD_AND_HOST_ARE_DARWIN@
 prefix = @prefix@
 exec_prefix = @exec_prefix@
@@ -149,7 +150,8 @@ ${SUBDIRS} ${SUBDIRS_AFTER}:
 
 depend: pre-depend
 	: >.deps
-	for i in ${DEPS}; do \
+	for i in "" ${DEPS}; do \
+		test x"$$i" = x"" && continue; \
 		echo "-include \$${.CURDIR}/$$i" >>.deps; \
 	done
 
@@ -183,7 +185,7 @@ ${JARFILE}: ${EXT_DEPS} ${JAR_MANIFEST} ${OBJS} ${OBJS_EXTRA}
 ${SHARED_LIB} ${SHARED_LIB_NOINST}: ${EXT_DEPS} ${LIB_OBJS} ${LIB_OBJS_EXTRA}
 	${LINK_STATUS}
 	out="$@"; \
-	if ${LD} -o $@ ${LIB_OBJS} ${LIB_OBJS_EXTRA} ${LIB_LDFLAGS} ${LIB_LDFLAGS_INSTALL_NAME} ${LDFLAGS} ${LIBS}; then \
+	if ${LD} -o $@ ${LIB_OBJS} ${LIB_OBJS_EXTRA} ${LIB_LDFLAGS} ${LIB_LDFLAGS_INSTALL_NAME} ${LDFLAGS} ${LIBS} ${LINK_LIB}; then \
 		${LINK_OK}; \
 	else \
 		${LINK_FAILED}; \
@@ -210,7 +212,7 @@ copy-headers-into-framework:
 	if test x"${includesubdir}" = x"${COPY_HEADERS_IF_SUBDIR}"; then \
 		for i in "" ${INCLUDES}; do \
 			test x"$$i" = x"" && continue; \
-			${MKDIR_P} ${COPY_HEADERS_DESTINATION} || exit $$?; \
+			${MKDIR_P} $$(dirname ${COPY_HEADERS_DESTINATION}/$$i) || exit $$?; \
 			${INSTALL} -m 644 $$i ${COPY_HEADERS_DESTINATION}/$$i || exit $$?; \
 		done \
 	fi
@@ -249,12 +251,12 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS} ${OBJS_EXTRA}
 		ars=""; \
 		for i in ${OBJS} ${OBJS_EXTRA}; do \
 			case $$i in \
-				*.a) \
-					ars="$$ars $$i" \
-					;; \
-				*.o) \
-					objs="$$objs $$i" \
-					;; \
+			*.a) \
+				ars="$$ars $$i" \
+				;; \
+			*.o) \
+				objs="$$objs $$i" \
+				;; \
 			esac \
 		done; \
 		for i in $$ars; do \
@@ -296,12 +298,12 @@ ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST}: ${EXT_DEPS} ${LIB_OBJS} ${LIB_OBJS_E
 		ars=""; \
 		for i in ${LIB_OBJS} ${LIB_OBJS_EXTRA}; do \
 			case $$i in \
-				*.a) \
-					ars="$$ars $$i" \
-					;; \
-				*.o) \
-					objs="$$objs $$i" \
-					;; \
+			*.a) \
+				ars="$$ars $$i" \
+				;; \
+			*.o) \
+				objs="$$objs $$i" \
+				;; \
 			esac \
 		done; \
 		for i in $$ars; do \
@@ -335,12 +337,12 @@ ${STATIC_AMIGA_LIB} ${STATIC_AMIGA_LIB_NOINST}: ${EXT_DEPS} ${AMIGA_LIB_OBJS} ${
 	ars=""; \
 	for i in ${AMIGA_LIB_OBJS} ${AMIGA_LIB_OBJS_EXTRA}; do \
 		case $$i in \
-			*.a) \
-				ars="$$ars $$i" \
-				;; \
-			*.o) \
-				objs="$$objs $$i" \
-				;; \
+		*.a) \
+			ars="$$ars $$i" \
+			;; \
+		*.o) \
+			objs="$$objs $$i" \
+			;; \
 		esac \
 	done; \
 	for i in $$ars; do \
@@ -577,7 +579,7 @@ locales: ${MO_FILES}
 	${COMPILE_STATUS}
 	in="$<"; \
 	out="$@"; \
-	if ${WINDRES} -J rc -O coff -o $@ $<; then \
+	if ${RC} ${RCFLAGS} -J rc -O coff -o $@ $<; then \
 		${COMPILE_OK}; \
 	else \
 		${COMPILE_FAILED}; \
@@ -731,7 +733,7 @@ install: install-extra
 		for i in "" ${INCLUDES}; do \
 			test x"$$i" = x"" && continue; \
 			${INSTALL_STATUS}; \
-			if ${MKDIR_P} ${DESTDIR}${includedir}/${includesubdir} && ${INSTALL} -m 644 $$i ${DESTDIR}${includedir}/${includesubdir}/$$i; then \
+			if ${MKDIR_P} $$(dirname ${DESTDIR}${includedir}/${includesubdir}/$$i) && ${INSTALL} -m 644 $$i ${DESTDIR}${includedir}/${includesubdir}/$$i; then \
 				${INSTALL_OK}; \
 			else \
 				${INSTALL_FAILED}; \
@@ -771,7 +773,7 @@ uninstall: uninstall-extra
 
 	for i in "" ${SHARED_LIB}; do \
 		test x"$$i" = x"" && continue; \
-		if test -f ${DESTDIR}${libdir}/$$i; then \
+		if test -f ${DESTDIR}${libdir}/$$i -o -f ${DESTDIR}${bindir}/$$i; then \
 			if : @UNINSTALL_LIB@; then \
 				${DELETE_OK}; \
 			else \
@@ -886,7 +888,7 @@ clean:
 
 	: >.deps
 
-	for i in "" ${DEPS} ${OBJS} ${OBJS_EXTRA} ${LIB_OBJS} ${LIB_OBJS_EXTRA} ${AMIGA_LIB_OBJS} ${AMIGA_LIB_OBJS_EXTRA} ${PLUGIN_OBJS} ${PROG} ${PROG_NOINST} ${SHARED_LIB} ${SHARED_LIB_NOINST} ${AMIGA_LIB} ${AMIGA_LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST} ${STATIC_AMIGA_LIB} ${STATIC_AMIGA_LIB_NOINST} ${FRAMEWORK} ${PLUGIN} ${PLUGIN_NOINST} ${CLEAN_LIB} ${MO_FILES} ${CLEAN}; do \
+	for i in "" ${DEPS} ${OBJS} ${OBJS_EXTRA} ${LIB_OBJS} ${LIB_OBJS_EXTRA} ${AMIGA_LIB_OBJS} ${AMIGA_LIB_OBJS_START} ${AMIGA_LIB_OBJS_EXTRA} ${PLUGIN_OBJS} ${PROG} ${PROG_NOINST} ${SHARED_LIB} ${SHARED_LIB_NOINST} ${AMIGA_LIB} ${AMIGA_LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST} ${STATIC_AMIGA_LIB} ${STATIC_AMIGA_LIB_NOINST} ${FRAMEWORK} ${PLUGIN} ${PLUGIN_NOINST} ${CLEAN_LIB} ${MO_FILES} ${CLEAN}; do \
 		test x"$$i" = x"" && continue; \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
