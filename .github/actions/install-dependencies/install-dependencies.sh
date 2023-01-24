@@ -4,6 +4,7 @@
 #
 # ubuntu-20.04:      Qt 5 + GTK2
 # ubuntu-22.04:      Qt 5 + GTK3
+# Windows:           Qt 5 + GTK2
 # macOS (Autotools): Qt 5 - GTK
 # macOS (Meson):     Qt 6 - GTK
 
@@ -38,6 +39,12 @@ case "$os" in
     else
       brew install qt@5 automake
     fi
+    ;;
+
+  windows*)
+    # - Nothing to do here -
+    # Packages are installed with the MSYS2 setup in the action.yml file
+    # and by making use of 'paccache'.
     ;;
 
   *)

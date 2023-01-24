@@ -14,4 +14,14 @@ runs:
   using: "composite"
   steps:
     - run: '$GITHUB_ACTION_PATH/install-dependencies.sh "${{ inputs.os }}" "${{ inputs.build-system }}"'
+      if: (!startsWith(inputs.os, 'windows'))
       shell: bash
+
+    - uses: msys2/setup-msys2@v2
+      if: startsWith(inputs.os, 'windows')
+      with:
+        msystem: MINGW32
+        update: true
+        install: >-
+          mingw-w64-i686-autotools mingw-w64-i686-gcc mingw-w64-i686-gtk2
+          mingw-w64-i686-meson mingw-w64-i686-pkg-config mingw-w64-i686-qt5-base

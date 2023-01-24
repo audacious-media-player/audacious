@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: ['ubuntu-20.04', 'ubuntu-22.04', 'macos-12']
+        os: ['ubuntu-20.04', 'ubuntu-22.04', 'macos-12', 'windows-2022']
         build-system: ['autotools', 'meson']
       fail-fast: false
     runs-on: ${{ matrix.os }}
@@ -46,45 +46,3 @@ jobs:
         action: 'test'
         os: ${{ matrix.os }}
         build-system: ${{ matrix.build-system }}
-
-  msys2:
-    strategy:
-      matrix:
-        os: ['windows-2022']
-        build-system: ['autotools', 'meson']
-      fail-fast: false
-    runs-on: ${{ matrix.os }}
-
-    defaults:
-      run:
-        shell: msys2 {0}
-
-    steps:
-    - name: Checkout audacious
-      uses: actions/checkout@v3
-
-    - name: Set up MSYS2
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW32
-        update: true
-        install: >-
-          mingw-w64-i686-autotools mingw-w64-i686-gcc mingw-w64-i686-glib2
-          mingw-w64-i686-gtk2 mingw-w64-i686-meson mingw-w64-i686-pkg-config
-          mingw-w64-i686-qt5-base
-
-    - name: Configure
-      run: |
-        if [ "${{ matrix.build-system }}" = 'meson' ]; then
-          meson setup build
-        else
-          ./autogen.sh && ./configure
-        fi
-
-    - name: Build
-      run: |
-        if [ "${{ matrix.build-system }}" = 'meson' ]; then
-          meson compile -C build
-        else
-          make -j$(nproc)
-        fi

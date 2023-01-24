@@ -4,6 +4,7 @@
 #
 # ubuntu-20.04:      Qt 5 + GTK2
 # ubuntu-22.04:      Qt 5 + GTK3
+# Windows:           Qt 5 + GTK2
 # macOS (Autotools): Qt 5 - GTK
 # macOS (Meson):     Qt 6 - GTK
 
@@ -16,6 +17,10 @@ if [ -z "$action" ] || [ -z "$os" ] || [ -z "$build_system" ]; then
   exit 1
 fi
 
+if [[ "$os" != windows* ]]; then
+  _sudo='sudo'
+fi
+
 if [ -d 'audacious' ]; then
   cd audacious
 fi
@@ -23,7 +28,7 @@ fi
 case "$action" in
   configure)
     case "$os" in
-      ubuntu-20.04)
+      ubuntu-20.04 | windows*)
         if [ "$build_system" = 'meson' ]; then
           meson setup build
         else
@@ -79,9 +84,9 @@ case "$action" in
 
   install)
     if [ "$build_system" = 'meson' ]; then
-      sudo meson install -C build
+      $_sudo meson install -C build
     else
-      sudo make install
+      $_sudo make install
     fi
     ;;
 
