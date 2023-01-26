@@ -17,6 +17,11 @@ if get_option('dbus')
 endif
 
 
+if have_windows
+  audacious_sources += import('windows').compile_resources('audacious.rc')
+endif
+
+
 audacious_exe = executable('audacious',
   audacious_sources,
   include_directories: audacious_incs,
