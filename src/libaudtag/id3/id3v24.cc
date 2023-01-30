@@ -668,16 +668,10 @@ bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
     add_frameFromTupleStr (tuple, Tuple::Genre, ID3_GENRE, dict);
 
     String comment = tuple.get_str (Tuple::Comment);
-    if (comment && comment[0])
-    {
-        add_memo_frame(ID3_COMMENT, comment, dict);
-    }
+    add_memo_frame (ID3_COMMENT, comment, dict);
 
     String lyrics = tuple.get_str (Tuple::Lyrics);
-    if (lyrics && lyrics[0])
-    {
-        add_memo_frame (ID3_LYRICS, lyrics, dict);
-    }
+    add_memo_frame (ID3_LYRICS, lyrics, dict);
 
     /* location and size of non-tag data */
     int64_t mp3_offset = offset ? 0 : header_size + data_size + footer_size;
