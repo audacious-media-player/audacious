@@ -57,7 +57,7 @@ static void export_playlist(Playlist playlist, const char * filename,
 {
     if (uri_get_extension(filename))
         export_playlist(playlist, filename);
-    else if (default_ext)
+    else if (default_ext && default_ext[0])
         export_playlist(playlist, str_concat({filename, ".", default_ext}));
     else
         aud_ui_show_error(_("Please type a filename extension or select a "
