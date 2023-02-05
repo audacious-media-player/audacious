@@ -14,6 +14,7 @@ ffmpeg-5.1.2.tar.xz:
 
 ffmpeg: ffmpeg-5.1.2.tar.xz
 	tar xf ffmpeg-5.1.2.tar.xz
+	cd ffmpeg-5.1.2 && patch -p1 < ../patches/ffmpeg-hwcontext_vulkan.c.diff
 	cd ffmpeg-5.1.2 && ./configure --prefix=$(LIB_PREFIX) --enable-shared --disable-yasm --cpu=i686
 	cd ffmpeg-5.1.2 && $(MAKE) && $(MAKE) install
 
