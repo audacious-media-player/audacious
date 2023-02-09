@@ -44,19 +44,3 @@ adplug: adplug-2.3.3.tar.bz2
 	tar xf adplug-2.3.3.tar.bz2
 	cd adplug-2.3.3 && ./configure --prefix=$(LIB_PREFIX)
 	cd adplug-2.3.3 && $(MAKE) && $(MAKE) install
-
-libsidplayfp-2.4.2.tar.gz:
-	wget https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/2.4/libsidplayfp-2.4.2.tar.gz
-
-libsidplayfp: libsidplayfp-2.4.2.tar.gz
-	tar xf libsidplayfp-2.4.2.tar.gz
-	cd libsidplayfp-2.4.2 && ./configure --prefix=$(LIB_PREFIX)
-	cd libsidplayfp-2.4.2 && $(MAKE) && $(MAKE) install
-
-libopenmpt-0.6.8+release.autotools.tar.gz:
-	wget https://lib.openmpt.org/files/libopenmpt/src/libopenmpt-0.6.8+release.autotools.tar.gz
-
-libopenmpt: libopenmpt-0.6.8+release.autotools.tar.gz
-	tar xf libopenmpt-0.6.8+release.autotools.tar.gz
-	cd libopenmpt-0.6.8+release.autotools && ./configure --prefix=$(LIB_PREFIX) --without-portaudiocpp --disable-openmpt123
-	cd libopenmpt-0.6.8+release.autotools && $(MAKE) && $(MAKE) install

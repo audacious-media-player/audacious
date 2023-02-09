@@ -10,7 +10,7 @@
 <h2>Notes for Building Audacious on Windows</h2>
 
 <p><em>John Lindgren<br>
-December 19, 2020</em></p>
+February 09, 2023</em></p>
 
 <p>A Makefile and several patch files should accompany this document.</p>
 
@@ -39,6 +39,7 @@ pacman -S mingw-w64-i686-flac mingw-w64-i686-libvorbis mingw-w64-i686-libcdio-pa
 pacman -S mingw-w64-i686-fluidsynth mingw-w64-i686-mpg123 mingw-w64-i686-faad2<br>
 pacman -S mingw-w64-i686-wavpack mingw-w64-i686-libmodplug mingw-w64-i686-libbs2b<br>
 pacman -S mingw-w64-i686-libsamplerate mingw-w64-i686-libsoxr mingw-w64-i686-neon<br>
+pacman -S mingw-w64-i686-libsidplayfp mingw-w64-i686-libopenmpt<br>
 pacman -S mingw-w64-i686-libcue mingw-w64-i686-lame mingw-w64-i686-opusfile</tt></p></blockquote>
 
 <h3>Install GTK+</h3>
@@ -47,7 +48,7 @@ pacman -S mingw-w64-i686-libcue mingw-w64-i686-lame mingw-w64-i686-opusfile</tt>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd &lt;PATH TO THIS DOCUMENT&gt;<br>
-make -j4 gtk</tt></p></blockquote>
+make -j$(nproc) gtk</tt></p></blockquote>
 
 <p><i>It may be necessary to run the MinGW shell with administrative privileges
 for GTK+ to build successfully.</i></p>
@@ -56,12 +57,10 @@ for GTK+ to build successfully.</i></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd &lt;PATH TO THIS DOCUMENT&gt;<br>
-make -j4 ffmpeg<br>
-make -j4 libmms<br>
-make -j4 libbinio<br>
-make -j4 adplug<br>
-make -j4 libsidplayfp<br>
-make -j4 libopenmpt</tt></p></blockquote>
+make -j$(nproc) ffmpeg<br>
+make -j$(nproc) libmms<br>
+make -j$(nproc) libbinio<br>
+make -j$(nproc) adplug</tt></p></blockquote>
 
 <h3>Install Audacious</h3>
 
@@ -71,7 +70,7 @@ make -j4 libopenmpt</tt></p></blockquote>
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/audacious<br>
 ./configure --prefix=/C/aud<br>
-make<br>
+make -j$(nproc)<br>
 make install</tt></p></blockquote>
 
 <h3>Install Audacious Plugins</h3>
@@ -82,7 +81,7 @@ make install</tt></p></blockquote>
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/audacious-plugins<br>
 ./configure --prefix=/C/aud<br>
-make<br>
+make -j$(nproc)<br>
 make install</tt></p></blockquote>
 
 </body>
