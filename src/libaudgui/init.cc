@@ -186,8 +186,10 @@ static void load_fallback_icon (const char * icon, int size)
 
     if (pixbuf)
     {
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
         gtk_icon_theme_add_builtin_icon (icon, size, pixbuf);
         g_object_unref (pixbuf);
+G_GNUC_END_IGNORE_DEPRECATIONS
     }
 }
 
