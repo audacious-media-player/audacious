@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2015 Audacious developers -->
+<!-- Copyright 2015-2023 Audacious developers -->
 <component type="desktop">
   <id>audacious.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
@@ -24,6 +24,7 @@
   </description>
   <url type="homepage">https://audacious-media-player.org</url>
   <releases>
+    <release date="2023-03-05" version="4.3"></release>
     <release date="2022-07-09" version="4.2"></release>
     <release date="2021-02-01" version="4.1"></release>
     <release date="2020-07-10" version="4.0.5"></release>
@@ -40,7 +41,8 @@
     <release date="2016-09-22" version="3.8"></release>
   </releases>
   <screenshots>
-    <screenshot type="default">https://audacious-media-player.org/images/gtk-interface.png</screenshot>
+    <screenshot type="default">https://audacious-media-player.org/images/qt-interface.png</screenshot>
+    <screenshot>https://audacious-media-player.org/images/gtk-interface.png</screenshot>
     <screenshot>https://audacious-media-player.org/images/winamp-interface.png</screenshot>
     <screenshot>https://audacious-media-player.org/images/settings-window.png</screenshot>
   </screenshots>
