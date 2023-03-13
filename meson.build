@@ -55,6 +55,7 @@ endif
 
 
 have_darwin = host_machine.system() == 'darwin'
+have_freebsd = host_machine.system() == 'freebsd'
 have_windows = host_machine.system() == 'windows'
 
 
@@ -120,7 +121,7 @@ endif
 if (cxx.has_header('libintl.h'))
   add_project_arguments('-DHAVE_GETTEXT', language: ['c', 'cpp'])
 
-  if have_darwin or have_windows
+  if have_darwin or have_freebsd or have_windows
     add_project_link_arguments('-lintl', language: ['c', 'cpp'])
   endif
 endif
