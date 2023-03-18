@@ -175,80 +175,86 @@ static bool validate_header (ID3v24Header * header, bool is_footer)
     return true;
 }
 
-static bool read_header (VFSFile & handle, int * version, bool *
- syncsafe, int64_t * offset, int * header_size, int * data_size, int *
- footer_size)
+struct HeaderInfo {
+    int64_t offset = 0;
+    int header_size = 0;
+    int data_size = 0;
+    int footer_size = 0;
+    int version = 0;
+    bool syncsafe = false;
+    bool valid = false;
+};
+
+static HeaderInfo read_header (VFSFile & handle)
 {
+    HeaderInfo info;
     ID3v24Header header, footer;
 
     if (handle.fseek (0, VFS_SEEK_SET))
-        return false;
+        return info;
 
     if (handle.fread (& header, 1, sizeof (ID3v24Header)) != sizeof (ID3v24Header))
-        return false;
+        return info;
 
     if (validate_header (& header, false))
     {
-        * offset = 0;
-        * version = header.version;
-        * header_size = sizeof (ID3v24Header);
-        * data_size = header.size;
+        info.version = header.version;
+        info.header_size = sizeof (ID3v24Header);
+        info.data_size = header.size;
 
         if (header.flags & ID3_HEADER_HAS_FOOTER)
         {
             if (handle.fseek (header.size, VFS_SEEK_CUR))
-                return false;
+                return info;
 
             if (handle.fread (& footer, 1, sizeof (ID3v24Header)) != sizeof (ID3v24Header))
-                return false;
+                return info;
 
             if (! validate_header (& footer, true))
-                return false;
+                return info;
 
             if (handle.fseek (sizeof (ID3v24Header), VFS_SEEK_SET))
-                return false;
+                return info;
 
-            * footer_size = sizeof (ID3v24Header);
+            info.footer_size = sizeof (ID3v24Header);
         }
-        else
-            * footer_size = 0;
     }
     else
     {
         int64_t end = handle.fsize ();
 
         if (end < 0)
-            return false;
+            return info;
 
         if (handle.fseek (end - sizeof (ID3v24Header), VFS_SEEK_SET))
-            return false;
+            return info;
 
         if (handle.fread (& footer, 1, sizeof (ID3v24Header)) != sizeof (ID3v24Header))
-            return false;
+            return info;
 
         if (! validate_header (& footer, true))
-            return false;
+            return info;
 
-        * offset = end - 2 * sizeof (ID3v24Header) - footer.size;
-        * version = footer.version;
-        * header_size = sizeof (ID3v24Header);
-        * data_size = footer.size;
-        * footer_size = sizeof (ID3v24Header);
+        info.offset = end - 2 * sizeof (ID3v24Header) - footer.size;
+        info.version = footer.version;
+        info.header_size = sizeof (ID3v24Header);
+        info.data_size = footer.size;
+        info.footer_size = sizeof (ID3v24Header);
 
-        if (handle.fseek (* offset, VFS_SEEK_SET))
-            return false;
+        if (handle.fseek (info.offset, VFS_SEEK_SET))
+            return info;
 
         if (handle.fread (& header, 1, sizeof (ID3v24Header)) != sizeof
          (ID3v24Header))
-            return false;
+            return info;
 
         if (! validate_header (& header, false))
-            return false;
+            return info;
     }
 
     // this flag indicates tag-level unsynchronisation in ID3v2.3
     // ID3v2.4 uses frame-level unsynchronisation, rendering this flag meaningless
-    * syncsafe = (* version == 3) && (header.flags & ID3_HEADER_SYNCSAFE);
+    info.syncsafe = (info.version == 3) && (header.flags & ID3_HEADER_SYNCSAFE);
 
     if (header.flags & ID3_HEADER_HAS_EXTENDED_HEADER)
     {
@@ -257,25 +263,26 @@ static bool read_header (VFSFile & handle, int * version, bool *
         if (header.version == 3)
         {
             if (! skip_extended_header_3 (handle, & extended_size))
-                return false;
+                return info;
         }
         else if (header.version == 4)
         {
             if (! skip_extended_header_4 (handle, & extended_size))
-                return false;
+                return info;
         }
 
-        if (extended_size > * data_size)
-            return false;
+        if (extended_size > info.data_size)
+            return info;
 
-        * header_size += extended_size;
-        * data_size -= extended_size;
+        info.header_size += extended_size;
+        info.data_size -= extended_size;
     }
 
-    AUDDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
-     "%d.\n", (int) * offset, * header_size, * data_size, * footer_size);
+    AUDDBG ("Offset = %d, header size = %d, data size = %d, footer size = %d.\n",
+     (int) info.offset, info.header_size, info.data_size, info.footer_size);
 
-    return true;
+    info.valid = true;
+    return info;
 }
 
 static void unsyncsafe (Index<char> & data)
@@ -547,30 +554,22 @@ static void add_frameFromTupleInt (const Tuple & tuple, Tuple::Field field,
 
 bool ID3v24TagModule::can_handle_file (VFSFile & handle)
 {
-    int version, header_size, data_size, footer_size;
-    bool syncsafe;
-    int64_t offset;
-
-    return read_header (handle, & version, & syncsafe, & offset, & header_size,
-     & data_size, & footer_size);
+    auto info = read_header (handle);
+    return info.valid;
 }
 
 bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * image)
 {
-    int version, header_size, data_size, footer_size;
-    bool syncsafe;
-    int64_t offset;
-
-    if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
-     & data_size, & footer_size))
+    auto info = read_header (handle);
+    if (! info.valid)
         return false;
 
-    Index<char> data = read_tag_data (handle, data_size, syncsafe);
+    auto data = read_tag_data (handle, info.data_size, info.syncsafe);
     FrameList rva_frames;
 
     for (const char * pos = data.begin (); pos < data.end (); )
     {
-        auto frame = read_frame (pos, data.end () - pos, version);
+        auto frame = read_frame (pos, data.end () - pos, info.version);
         if (! frame.size)
             break;
 
@@ -651,18 +650,12 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
 
 bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
 {
-    int version = 3;
-    int header_size, data_size, footer_size;
-    bool syncsafe;
-    int64_t offset;
-
     //read all frames into generic frames;
     FrameDict dict;
 
-    if (read_header (f, & version, & syncsafe, & offset, & header_size, & data_size, & footer_size))
-        read_all_frames (read_tag_data (f, data_size, syncsafe), version, dict);
-    else
-        offset = header_size = data_size = footer_size = 0;
+    auto info = read_header (f);
+    if (info.valid)
+        read_all_frames (read_tag_data (f, info.data_size, info.syncsafe), info.version, dict);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
     add_frameFromTupleStr (tuple, Tuple::Title, ID3_TITLE, dict);
@@ -683,19 +676,25 @@ bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
     add_memo_frame (ID3_LYRICS, lyrics, dict);
 
     /* location and size of non-tag data */
-    int64_t mp3_offset = offset ? 0 : header_size + data_size + footer_size;
-    int64_t mp3_size = offset ? offset : -1;
+    int64_t mp3_offset = 0;
+    int64_t mp3_size = -1;
+
+    if (info.valid && ! info.offset)  /* existing tag at start */
+        mp3_offset = info.header_size + info.data_size + info.footer_size;
+    if (info.valid && info.offset)    /* existing tag at end */
+        mp3_size = info.offset;
 
     auto temp = VFSFile::tmpfile ();
     if (! temp)
         return false;
 
     /* write empty header (will be overwritten later) */
+    int version = info.valid ? info.version : 3;
     if (! write_header (temp, version, 0))
         return false;
 
     /* write tag data */
-    data_size = write_all_frames (temp, dict, version);
+    int data_size = write_all_frames (temp, dict, version);
 
     /* copy non-tag data */
     if (f.fseek (mp3_offset, VFS_SEEK_SET) < 0 || ! temp.copy_from (f, mp3_size))
