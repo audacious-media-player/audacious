@@ -430,16 +430,36 @@ static bool write_frame (VFSFile & file, const GenericFrame & frame, int version
 static int write_all_frames (VFSFile & file, FrameDict & dict, int version)
 {
     int written_size = 0;
+    Index<const FrameList *> lists;
+    const FrameList * apic_list = nullptr;
 
-    dict.iterate ([&] (const String & key, FrameList & list)
+    dict.iterate ([&] (const String & key, const FrameList & list) {
+        if (list.len ()) {
+            if (strcmp (key, id3_frames[ID3_APIC]))
+                lists.append (& list);
+            else
+                apic_list = & list;
+        }
+    });
+
+    // write frames in key order
+    lists.sort ([] (const FrameList * a, const FrameList * b) {
+        return strcmp ((* a)[0].key, (* b)[0].key);
+    });
+
+    // put APIC frames last
+    if (apic_list)
+        lists.append (apic_list);
+
+    for (const FrameList * list : lists)
     {
-        for (const GenericFrame & frame : list)
+        for (const GenericFrame & frame : * list)
         {
             int size;
             if (write_frame (file, frame, version, & size))
                 written_size += size;
         }
-    });
+    }
 
     AUDDBG ("Total frame bytes written = %d.\n", written_size);
     return written_size;
