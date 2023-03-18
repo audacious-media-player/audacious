@@ -313,26 +313,37 @@ static Index<char> read_tag_data (VFSFile & handle, int size, bool syncsafe)
     return data;
 }
 
-static bool read_frame (const char * data, int max_size, int version,
- int * frame_size, GenericFrame & frame)
+struct ReadFrameRet : public GenericFrame {
+    int size = 0; /* including header */
+    bool valid = false;
+};
+
+static ReadFrameRet read_frame (const char * data, int max_size, int version)
 {
+    ReadFrameRet frame;
     ID3v24FrameHeader header;
     unsigned skip = 0;
 
     if ((max_size -= sizeof (ID3v24FrameHeader)) < 0)
-        return false;
+        return frame;
 
     memcpy (& header, data, sizeof (ID3v24FrameHeader));
     data += sizeof (ID3v24FrameHeader);
 
     if (! header.key[0]) /* padding */
-        return false;
+        return frame;
 
     header.size = (version == 3) ? FROM_BE32 (header.size) : unsyncsafe32 (FROM_BE32 (header.size));
     header.flags = FROM_BE16 (header.flags);
 
-    if (header.size > (unsigned) max_size || header.size == 0)
-        return false;
+    if (header.size > (unsigned) max_size)
+        return frame;
+
+    // set frame size here so we can continue past empty/invalid frames
+    frame.size = sizeof (ID3v24FrameHeader) + header.size;
+
+    if (! header.size)
+        return frame;
 
     AUDDBG ("Found frame:\n");
     AUDDBG (" key = %.4s\n", header.key);
@@ -342,7 +353,7 @@ static bool read_frame (const char * data, int max_size, int version,
     if (header.flags & (ID3_FRAME_COMPRESSED | ID3_FRAME_ENCRYPTED))
     {
         AUDDBG ("Hit compressed/encrypted frame %.4s.\n", header.key);
-        return false;
+        return frame;
     }
 
     if (header.flags & ID3_FRAME_HAS_GROUP)
@@ -351,32 +362,30 @@ static bool read_frame (const char * data, int max_size, int version,
         skip += 4;
 
     if (skip >= header.size)
-        return false;
-
-    * frame_size = sizeof (ID3v24FrameHeader) + header.size;
+        return frame;
 
     frame.key = String (str_copy (header.key, 4));
-    frame.clear ();
     frame.insert (data + skip, 0, header.size - skip);
 
     if (header.flags & ID3_FRAME_SYNCSAFE)
         unsyncsafe (frame);
 
     AUDDBG ("Data size = %d.\n", frame.len ());
-    return true;
+    frame.valid = true;
+    return frame;
 }
 
 static void read_all_frames (const Index<char> & data, int version, FrameDict & dict)
 {
     for (const char * pos = data.begin (); pos < data.end (); )
     {
-        int frame_size;
-        GenericFrame frame;
-
-        if (! read_frame (pos, data.end () - pos, version, & frame_size, frame))
+        auto frame = read_frame (pos, data.end () - pos, version);
+        if (! frame.size)
             break;
 
-        pos += frame_size;
+        pos += frame.size;
+        if (! frame.valid)
+            continue;
 
         FrameList * list = dict.lookup (frame.key);
         if (! list)
@@ -561,11 +570,13 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
 
     for (const char * pos = data.begin (); pos < data.end (); )
     {
-        int frame_size;
-        GenericFrame frame;
-
-        if (! read_frame (pos, data.end () - pos, version, & frame_size, frame))
+        auto frame = read_frame (pos, data.end () - pos, version);
+        if (! frame.size)
             break;
+
+        pos += frame.size;
+        if (! frame.valid)
+            continue;
 
         switch (get_frame_id (frame.key))
         {
@@ -626,8 +637,6 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
             AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);
             break;
         }
-
-        pos += frame_size;
     }
 
     /* only decode RVA2 frames if Replay Gain was not found in TXXX frames */
