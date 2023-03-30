@@ -62,6 +62,7 @@ private:
 InfoWindow::InfoWindow(QWidget * parent) : QDialog(parent)
 {
     setWindowTitle(_("Song Info"));
+    setWindowRole("song-info");
     setContentsMargins(margins.TwoPt);
 
     m_uri_label.setFixedWidth(2 * audqt::sizes.OneInch);

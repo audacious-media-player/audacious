@@ -34,6 +34,7 @@ ColorButton::ColorButton(QWidget * parent) : QPushButton(parent)
         {
             dialog = new QColorDialog(m_color, this);
             dialog->setAttribute(Qt::WA_DeleteOnClose);
+            dialog->setWindowRole("color-dialog");
             connect(dialog, &QColorDialog::colorSelected, this,
                     &ColorButton::setColor);
         }

@@ -173,6 +173,7 @@ static GtkWidget * create_queue_manager ()
 
     GtkWidget * qm_win = gtk_dialog_new ();
     gtk_window_set_title ((GtkWindow *) qm_win, _("Queue Manager"));
+    gtk_window_set_role ((GtkWindow *) qm_win, "queue-manager");
     gtk_window_set_default_size ((GtkWindow *) qm_win, 3 * dpi, 2 * dpi);
 
     GtkWidget * vbox = gtk_dialog_get_content_area ((GtkDialog *) qm_win);

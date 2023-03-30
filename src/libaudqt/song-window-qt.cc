@@ -292,6 +292,7 @@ SongsWindow::SongsWindow()
 
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(_("Jump to Song"));
+    setWindowRole("jump-to-song");
     setContentsMargins(0, 0, 0, 0);
 
     auto vbox_parent = make_vbox(this);

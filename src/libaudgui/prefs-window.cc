@@ -885,6 +885,7 @@ static void create_prefs_window ()
     gtk_window_set_type_hint ((GtkWindow *) prefswin, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_container_set_border_width ((GtkContainer *) prefswin, 12);
     gtk_window_set_title ((GtkWindow *) prefswin, _("Audacious Settings"));
+    gtk_window_set_role ((GtkWindow *) prefswin, "settings");
 
     GtkWidget * vbox = audgui_vbox_new (0);
     gtk_container_add ((GtkContainer *) prefswin, vbox);

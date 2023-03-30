@@ -154,6 +154,7 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
 
     GtkWidget * window = gtk_dialog_new ();
     gtk_window_set_title ((GtkWindow *) window, str_printf (_("%s Settings"), name));
+    gtk_window_set_role ((GtkWindow *) window, "plugin-settings");
 
     if (p->apply)
     {
