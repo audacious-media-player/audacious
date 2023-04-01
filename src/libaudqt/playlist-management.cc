@@ -66,6 +66,7 @@ static QDialog * buildDeleteDialog(Playlist playlist)
     dialog->setCheckBox(skip_prompt);
     dialog->addButton(remove, QMessageBox::AcceptRole);
     dialog->addButton(cancel, QMessageBox::RejectRole);
+    dialog->setDefaultButton(remove);
 
     remove->setIcon(QIcon::fromTheme("edit-delete"));
     cancel->setIcon(QIcon::fromTheme("process-stop"));
