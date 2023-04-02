@@ -75,9 +75,8 @@ static QStringList get_format_filters()
         for (const char * ext : format.exts)
             extensions.append(QString("*.%1").arg(ext));
 
-        filters.append(QString("%1 (%2)")
-                           .arg(static_cast<const char *>(format.name))
-                           .arg(extensions.join(' ')));
+        filters.append(QString("%1 (%2)").arg(
+            static_cast<const char *>(format.name), extensions.join(' ')));
     }
 
     return filters;
@@ -90,7 +89,7 @@ static QString get_extension_from_filter(QString filter)
      * "Audacious Playlists (*.audpl)" -> audpl
      * "M3U Playlists (*.m3u *.m3u8)"  -> m3u
      */
-    QRegularExpression regex(".*\\(\\*\\.(\\S*).*\\)$");
+    static QRegularExpression regex(".*\\(\\*\\.(\\S*).*\\)$");
     return regex.match(filter).captured(1);
 }
 
