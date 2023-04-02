@@ -61,7 +61,7 @@ QFileDialog * FileEntry::create_dialog()
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->setFileMode(m_file_mode);
     dialog->setAcceptMode(m_accept_mode);
-    dialog->setWindowRole("filedialog");
+    dialog->setWindowRole("file-dialog");
 
     String uri = file_entry_get_uri(this);
     if (uri)

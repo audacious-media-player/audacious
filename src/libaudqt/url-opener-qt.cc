@@ -57,7 +57,7 @@ static QDialog * buildUrlDialog(bool open)
 
     auto dialog = new QDialog;
     dialog->setWindowTitle(title);
-    dialog->setWindowRole("history");
+    dialog->setWindowRole("url-dialog");
     dialog->setContentsMargins(margins.EightPt);
 
     auto label = new QLabel(_("Enter URL:"), dialog);

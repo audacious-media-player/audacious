@@ -260,7 +260,7 @@ static void show_import_dialog(QWidget * parent, PresetView * view,
     dialog->setFileMode(QFileDialog::ExistingFile);
     dialog->setLabelText(QFileDialog::Accept, _("Load"));
     dialog->setNameFilter(_(name_filter));
-    dialog->setWindowRole("filedialog");
+    dialog->setWindowRole("file-dialog");
 
     auto do_import = [dialog, view, revert_btn]() {
         auto urls = dialog->selectedUrls();
@@ -298,7 +298,7 @@ static void show_export_dialog(QWidget * parent, const EqualizerPreset & preset)
     dialog->setFileMode(QFileDialog::AnyFile);
     dialog->setLabelText(QFileDialog::Accept, _("Save"));
     dialog->setNameFilter(_(name_filter));
-    dialog->setWindowRole("filedialog");
+    dialog->setWindowRole("file-dialog");
 
     /* TODO: replace other illegal characters on Win32 */
     auto safe =
