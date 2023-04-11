@@ -117,8 +117,13 @@ else
 endif
 
 
+if cxx.has_function('sigwait')
+  conf.set10('HAVE_SIGWAIT', true)
+endif
+
+
 # XXX - why do we have to define this manually?
-if (cxx.has_header('libintl.h'))
+if cxx.has_header('libintl.h')
   add_project_arguments('-DHAVE_GETTEXT', language: ['c', 'cpp'])
 
   if have_darwin or have_freebsd or have_windows

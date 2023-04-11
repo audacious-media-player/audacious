@@ -9,10 +9,7 @@
 #define PACKAGE_VERSION VERSION
 #define ICONV_CONST
 
-/* sigwait() should be available on all UNIX-like systems (not Windows) */
-#ifndef _WIN32
-#define HAVE_SIGWAIT 1
-#endif
+#mesondefine HAVE_SIGWAIT
 
 #mesondefine INSTALL_BINDIR
 #mesondefine INSTALL_DATADIR
