@@ -9,8 +9,10 @@
 #define PACKAGE_VERSION VERSION
 #define ICONV_CONST
 
-/* let's assume any meson-supported system has sigwait() */
+/* sigwait() should be available on all UNIX-like systems (not Windows) */
+#ifndef _WIN32
 #define HAVE_SIGWAIT 1
+#endif
 
 #mesondefine INSTALL_BINDIR
 #mesondefine INSTALL_DATADIR
