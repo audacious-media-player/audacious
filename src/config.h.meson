@@ -9,6 +9,9 @@
 #define PACKAGE_VERSION VERSION
 #define ICONV_CONST
 
+/* let's assume any meson-supported system has sigwait() */
+#define HAVE_SIGWAIT 1
+
 #mesondefine INSTALL_BINDIR
 #mesondefine INSTALL_DATADIR
 #mesondefine INSTALL_PLUGINDIR
