@@ -124,6 +124,7 @@ EXPORT void plugin_prefs(PluginHandle * ph)
         name = dgettext(header->info.domain, name);
 
     cw->root->setWindowTitle((const char *)str_printf(_("%s Settings"), name));
+    cw->root->setWindowRole("plugin-settings");
 
     auto vbox = make_vbox(cw->root, sizes.TwoPt);
     prefs_populate(vbox, p->widgets, header->info.domain);

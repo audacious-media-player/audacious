@@ -239,6 +239,7 @@ static GtkWidget * create_window ()
     gtk_window_set_type_hint ((GtkWindow *) jump_to_track_win, GDK_WINDOW_TYPE_HINT_DIALOG);
 
     gtk_window_set_title ((GtkWindow *) jump_to_track_win, _("Jump to Song"));
+    gtk_window_set_role ((GtkWindow *) jump_to_track_win, "jump-to-song");
 
     g_signal_connect (jump_to_track_win, "key_press_event", (GCallback) keypress_cb, nullptr);
     g_signal_connect (jump_to_track_win, "destroy", (GCallback) destroy_cb, nullptr);

@@ -121,6 +121,7 @@ EXPORT void fileopener_show(FileMode mode)
             dialog->setOption(QFileDialog::ShowDirsOnly);
         dialog->setLabelText(QFileDialog::Accept, _(labels[mode]));
         dialog->setLabelText(QFileDialog::Reject, _("Cancel"));
+        dialog->setWindowRole("file-dialog");
 
         auto playlist = Playlist::active_playlist();
 

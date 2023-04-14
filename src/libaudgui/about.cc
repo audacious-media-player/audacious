@@ -71,6 +71,7 @@ static GtkWidget * create_about_window ()
 
     GtkWidget * about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) about_window, _("About Audacious"));
+    gtk_window_set_role ((GtkWindow *) about_window, "about");
     gtk_window_set_resizable ((GtkWindow *) about_window, false);
     gtk_container_set_border_width ((GtkContainer *) about_window, 3);
 

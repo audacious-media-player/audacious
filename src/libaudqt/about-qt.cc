@@ -62,6 +62,7 @@ static QDialog * buildAboutWindow()
 
     auto window = new QDialog;
     window->setWindowTitle(_("About Audacious"));
+    window->setWindowRole("about");
 
     auto logo = new QLabel(window);
     int logo_size = audqt::to_native_dpi(400);
