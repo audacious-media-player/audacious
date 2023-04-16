@@ -114,10 +114,14 @@ if get_option('libarchive')
 endif
 
 
-if cc.has_function('iconv')
-  iconv_dep = []
+if meson.version().version_compare('>= 0.60')
+  iconv_dep = dependency('iconv', required: true)
 else
-  iconv_dep = cc.find_library('iconv', required: true)
+  if cxx.has_function('iconv', prefix: '#include <iconv.h>')
+    iconv_dep = dependency('', required: false)
+  else
+    iconv_dep = cxx.find_library('iconv', required: true)
+  endif
 endif
 
 libaudcore_deps += [iconv_dep]
