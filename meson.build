@@ -55,7 +55,6 @@ endif
 
 
 have_darwin = host_machine.system() == 'darwin'
-have_freebsd = host_machine.system() == 'freebsd'
 have_windows = host_machine.system() == 'windows'
 
 
@@ -122,13 +121,21 @@ if cxx.has_function('sigwait')
 endif
 
 
-# XXX - why do we have to define this manually?
-if cxx.has_header('libintl.h')
-  add_project_arguments('-DHAVE_GETTEXT', language: ['c', 'cpp'])
-
-  if have_darwin or have_freebsd or have_windows
-    add_project_link_arguments('-lintl', language: ['c', 'cpp'])
+if meson.version().version_compare('>= 0.59')
+  intl_dep = dependency('intl', required: false)
+  intl_found = intl_dep.found()
+else
+  if cxx.has_function('ngettext', prefix: '#include <libintl.h>')
+    intl_dep = dependency('', required: false)
+    intl_found = true
+  else
+    intl_dep = cxx.find_library('intl', required: false)
+    intl_found = intl_dep.found()
   endif
+endif
+
+if intl_found
+  conf.set10('HAVE_GETTEXT', true)
 endif
 
 
@@ -198,7 +205,7 @@ pkg = import('pkgconfig')
 # https://github.com/mesonbuild/meson/issues/5836,
 # use libaudcore_lib as base dependency here.
 pkg.generate(
-  libraries: ['-L${libdir} -laudcore'],
+  libraries: ['-L${libdir} -laudcore', intl_dep],
   variables: [
     'plugin_dir=${libdir}/audacious',
 

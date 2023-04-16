@@ -97,7 +97,7 @@ audio_h = configure_file(input: 'audio.h.in',
   install_dir: join_paths(get_option('includedir'), 'libaudcore'))
 
 
-libaudcore_deps = [glib_dep, gmodule_dep]
+libaudcore_deps = [glib_dep, gmodule_dep, intl_dep]
 
 if get_option('qt')
   libaudcore_deps += [qt_dep]
