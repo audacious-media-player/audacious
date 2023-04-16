@@ -9,6 +9,7 @@
 #define PACKAGE_VERSION VERSION
 #define ICONV_CONST
 
+#mesondefine HAVE_GETTEXT
 #mesondefine HAVE_SIGWAIT
 
 #mesondefine INSTALL_BINDIR
