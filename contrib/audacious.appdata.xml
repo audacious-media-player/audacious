@@ -24,6 +24,7 @@
   </description>
   <url type="homepage">https://audacious-media-player.org</url>
   <releases>
+    <release date="2023-04-29" version="4.3.1"></release>
     <release date="2023-03-05" version="4.3"></release>
     <release date="2022-07-09" version="4.2"></release>
     <release date="2021-02-01" version="4.1"></release>
