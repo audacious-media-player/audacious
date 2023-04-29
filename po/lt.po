@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2023-03-05 14:30+0100\n"
+"POT-Creation-Date: 2023-04-29 21:56+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
 "Last-Translator: Tadas Masiulionis, 2022-2023\n"
 "Language-Team: Lithuanian (http://www.transifex.com/audacious/audacious/"
@@ -192,7 +192,7 @@ msgid "Now Playing"
 msgstr "Dabar grojama"
 
 #: src/libaudcore/playlist-files.cc:73 src/libaudcore/playlist-files.cc:153
-#: src/libaudgui/infowin.cc:537 src/libaudqt/infowin-qt.cc:182
+#: src/libaudgui/infowin.cc:538 src/libaudqt/infowin-qt.cc:183
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -201,7 +201,7 @@ msgstr ""
 "Klaida atveriant %s:\n"
 "%s"
 
-#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:282
+#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:283
 #, c-format
 msgid "Error loading %s."
 msgstr "Klaida įkeliant %s."
@@ -211,7 +211,7 @@ msgstr "Klaida įkeliant %s."
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "Neįmanoma įkelti %s: nepalaikomas rinkmenos pavadinimo plėtinys."
 
-#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:317
+#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:319
 #, c-format
 msgid "Error saving %s."
 msgstr "Klaida išsaugant %s."
@@ -302,35 +302,35 @@ msgstr "Apie Audacious"
 
 #: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
 #: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
-#: src/libaudgui/plugin-prefs.cc:161 src/libaudgui/url-opener.cc:102
-#: src/libaudqt/playlist-management.cc:41
-#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:140
-#: src/libaudqt/url-opener-qt.cc:80
+#: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:102
+#: src/libaudqt/playlist-management.cc:42
+#: src/libaudqt/playlist-management.cc:60 src/libaudqt/prefs-plugin.cc:141
+#: src/libaudqt/url-opener-qt.cc:81
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
-#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:57
+#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:58
 msgid "_Don’t ask again"
 msgstr "_Daugiau nebeklausti"
 
-#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:64
+#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:66
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
 msgstr "Ar tikrai norite visam laikui pašalinti „%s“?"
 
-#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:58
+#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:59
 msgid "_Remove"
 msgstr "_Pašalinti"
 
-#: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:62
+#: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:63
 msgid "Remove Playlist"
 msgstr "Pašalinti grojaraštį"
 
-#: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:39
+#: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:40
 msgid "What would you like to call this playlist?"
 msgstr "Kaip pavadinsite šį grojaraštį?"
 
-#: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:40
+#: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:41
 msgid "_Rename"
 msgstr "_Pervadinti"
 
@@ -350,29 +350,29 @@ msgstr "Paruošta rinkmena..."
 msgid "EQF File ..."
 msgstr "EQF rinkmena..."
 
-#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:337
-#: src/libaudqt/fileopener.cc:109
+#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:339
+#: src/libaudqt/fileopener.cc:108
 msgid "Import"
 msgstr "Importuoti"
 
-#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:340
-#: src/libaudqt/fileopener.cc:109
+#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:342
+#: src/libaudqt/fileopener.cc:108
 msgid "Export"
 msgstr "Eksportuoti"
 
-#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:403
+#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:405
 msgid "Equalizer Presets"
 msgstr "Vienodintuvo ruošiniai"
 
-#: src/libaudgui/eq-preset.cc:305 src/libaudqt/eq-preset-qt.cc:328
+#: src/libaudgui/eq-preset.cc:306 src/libaudqt/eq-preset-qt.cc:330
 msgid "Save Preset"
 msgstr "Išsaugoti ruošinius"
 
-#: src/libaudgui/eq-preset.cc:327
+#: src/libaudgui/eq-preset.cc:328
 msgid "Delete Selected"
 msgstr "Ištrinti pasirinktus"
 
-#: src/libaudgui/eq-preset.cc:331
+#: src/libaudgui/eq-preset.cc:332
 msgid "Revert Changes"
 msgstr "Grąžinti pakeitimus"
 
@@ -424,19 +424,19 @@ msgstr "16 kHz"
 msgid "Equalizer"
 msgstr "Vienotintuvas"
 
-#: src/libaudgui/equalizer.cc:147 src/libaudqt/equalizer-qt.cc:144
+#: src/libaudgui/equalizer.cc:148 src/libaudqt/equalizer-qt.cc:144
 msgid "Presets ..."
 msgstr "Ruošiniai..."
 
-#: src/libaudgui/equalizer.cc:151 src/libaudqt/equalizer-qt.cc:143
+#: src/libaudgui/equalizer.cc:152 src/libaudqt/equalizer-qt.cc:143
 msgid "Reset to Zero"
 msgstr "Atstatyti nulį"
 
-#: src/libaudgui/equalizer.cc:158 src/libaudqt/equalizer-qt.cc:129
+#: src/libaudgui/equalizer.cc:159 src/libaudqt/equalizer-qt.cc:129
 msgid "Preamp"
 msgstr "Preamp"
 
-#: src/libaudgui/file-opener.cc:79 src/libaudqt/fileopener.cc:104
+#: src/libaudgui/file-opener.cc:79 src/libaudqt/fileopener.cc:103
 msgid "Open Files"
 msgstr "Atverti rinkmenas"
 
@@ -449,7 +449,7 @@ msgstr "_Atverti"
 msgid "Close _dialog on open"
 msgstr "Atvėrus, užverti _langą"
 
-#: src/libaudgui/file-opener.cc:87 src/libaudqt/fileopener.cc:104
+#: src/libaudgui/file-opener.cc:87 src/libaudqt/fileopener.cc:103
 msgid "Add Files"
 msgstr "Pridėti rinkmenas"
 
@@ -462,54 +462,54 @@ msgstr "_Pridėti"
 msgid "Close _dialog on add"
 msgstr "Pridėjus, užverti _langą"
 
-#: src/libaudgui/file-opener.cc:138 src/libaudgui/infowin.cc:442
-#: src/libaudgui/jump-to-track.cc:315 src/libaudgui/plugin-prefs.cc:167
-#: src/libaudgui/prefs-window.cc:938 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:355 src/libaudqt/audqt.cc:314
-#: src/libaudqt/infowin-qt.cc:92 src/libaudqt/log-inspector.cc:244
-#: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:688
-#: src/libaudqt/song-window-qt.cc:360
+#: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
+#: src/libaudgui/jump-to-track.cc:316 src/libaudgui/plugin-prefs.cc:168
+#: src/libaudgui/prefs-window.cc:939 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:356 src/libaudqt/audqt.cc:314
+#: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
+#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:689
+#: src/libaudqt/song-window-qt.cc:361
 msgid "_Close"
 msgstr "_Užverti"
 
-#: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:401
+#: src/libaudgui/infopopup.cc:201 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:94
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
 #: src/libaudqt/queue-manager-qt.cc:110
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: src/libaudgui/infopopup.cc:201 src/libaudgui/infowin.cc:404
+#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:405
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/infopopup-qt.cc:96
 #: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:169
 msgid "Artist"
 msgstr "Atlikėjas"
 
-#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:407
+#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:408
 #: src/libaudgui/prefs-window.cc:103 src/libaudgui/prefs-window.cc:150
 #: src/libaudqt/infopopup-qt.cc:98 src/libaudqt/info-widget.cc:50
 #: src/libaudqt/prefs-window-qt.cc:170 src/libaudqt/prefs-window-qt.cc:212
 msgid "Album"
 msgstr "Albumas"
 
-#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:417
+#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:418
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/infopopup-qt.cc:100
 #: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:174
 msgid "Genre"
 msgstr "Žanras"
 
-#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:420
+#: src/libaudgui/infopopup.cc:205 src/libaudgui/infowin.cc:421
 #: src/libaudgui/prefs-window.cc:112 src/libaudqt/infopopup-qt.cc:102
 #: src/libaudqt/prefs-window-qt.cc:179
 msgid "Year"
 msgstr "Metai"
 
-#: src/libaudgui/infopopup.cc:205 src/libaudgui/prefs-window.cc:149
+#: src/libaudgui/infopopup.cc:206 src/libaudgui/prefs-window.cc:149
 #: src/libaudqt/infopopup-qt.cc:104 src/libaudqt/prefs-window-qt.cc:211
 msgid "Track"
 msgstr "Takelis"
 
-#: src/libaudgui/infopopup.cc:206 src/libaudqt/infopopup-qt.cc:106
+#: src/libaudgui/infopopup.cc:207 src/libaudqt/infopopup-qt.cc:106
 #: src/libaudqt/info-widget.cc:65
 msgid "Length"
 msgstr "Trukmė"
@@ -695,46 +695,46 @@ msgstr "Įrašymo klaida"
 msgid "Song Info"
 msgstr "Dainos informacija"
 
-#: src/libaudgui/infowin.cc:410 src/libaudqt/info-widget.cc:51
+#: src/libaudgui/infowin.cc:411 src/libaudqt/info-widget.cc:51
 msgid "Album Artist"
 msgstr "Albumo atlikėjas"
 
-#: src/libaudgui/infowin.cc:413 src/libaudgui/prefs-window.cc:113
+#: src/libaudgui/infowin.cc:414 src/libaudgui/prefs-window.cc:113
 #: src/libaudqt/info-widget.cc:54 src/libaudqt/prefs-window-qt.cc:180
 msgid "Comment"
 msgstr "Komentaras"
 
-#: src/libaudgui/infowin.cc:423 src/libaudqt/info-widget.cc:52
+#: src/libaudgui/infowin.cc:424 src/libaudqt/info-widget.cc:52
 msgid "Track Number"
 msgstr "Dainos numeris"
 
-#: src/libaudgui/infowin.cc:425
+#: src/libaudgui/infowin.cc:426
 msgid "_Auto-fill empty fields"
 msgstr "_Autoužpildymas tuščių laukelių"
 
-#: src/libaudgui/infowin.cc:439 src/libaudqt/infowin-qt.cc:120
+#: src/libaudgui/infowin.cc:440 src/libaudqt/infowin-qt.cc:121
 msgid "_Save"
 msgstr "_Išsaugoti"
 
-#: src/libaudgui/infowin.cc:445
+#: src/libaudgui/infowin.cc:446
 msgid "_Previous"
 msgstr "_Ankstesnis"
 
-#: src/libaudgui/infowin.cc:448
+#: src/libaudgui/infowin.cc:449
 msgid "_Next"
 msgstr "_Sekantis"
 
-#: src/libaudgui/infowin.cc:497
+#: src/libaudgui/infowin.cc:498
 #, c-format
 msgid "%d kbit/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.cc:502
+#: src/libaudgui/infowin.cc:503
 msgid "N/A"
 msgstr "N/A"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:320
-#: src/libaudqt/song-window-qt.cc:358
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:321
+#: src/libaudqt/song-window-qt.cc:359
 msgid "_Jump"
 msgstr "_Šokti "
 
@@ -747,8 +747,8 @@ msgid "Enter time (minutes:seconds):"
 msgstr "Įvesti laiką (minutės:sekundės):"
 
 #: src/libaudgui/jump-to-track.cc:96 src/libaudgui/jump-to-track.cc:104
-#: src/libaudgui/jump-to-track.cc:311 src/libaudqt/song-window-qt.cc:281
-#: src/libaudqt/song-window-qt.cc:357
+#: src/libaudgui/jump-to-track.cc:312 src/libaudqt/song-window-qt.cc:281
+#: src/libaudqt/song-window-qt.cc:358
 msgid "_Queue"
 msgstr "_Į eilę"
 
@@ -760,15 +760,15 @@ msgstr "Iš _eilės"
 msgid "Jump to Song"
 msgstr "Peršokti į dainą"
 
-#: src/libaudgui/jump-to-track.cc:266 src/libaudqt/song-window-qt.cc:311
+#: src/libaudgui/jump-to-track.cc:267 src/libaudqt/song-window-qt.cc:312
 msgid "Filter: "
 msgstr "Filtruoti:"
 
-#: src/libaudgui/jump-to-track.cc:267
+#: src/libaudgui/jump-to-track.cc:268
 msgid "_Filter:"
 msgstr "_Filtruoti:"
 
-#: src/libaudgui/jump-to-track.cc:304 src/libaudqt/song-window-qt.cc:352
+#: src/libaudgui/jump-to-track.cc:305 src/libaudqt/song-window-qt.cc:353
 msgid "C_lose on jump"
 msgstr "Užverti peršokus"
 
@@ -796,7 +796,7 @@ msgstr ""
 msgid "Select Format by Extension"
 msgstr "Pasirinkti formatą pagal plėtinį"
 
-#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:105
+#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:104
 msgid "Export Playlist"
 msgstr "Iškelti grojaraštį"
 
@@ -804,7 +804,7 @@ msgstr "Iškelti grojaraštį"
 msgid "_Export"
 msgstr "_Iškelti"
 
-#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:105
+#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:104
 msgid "Import Playlist"
 msgstr "Įkelti grojaraštį"
 
@@ -826,7 +826,7 @@ msgstr "Apie %s"
 msgid "%s Settings"
 msgstr "%s nustatymai"
 
-#: src/libaudgui/plugin-prefs.cc:160 src/libaudqt/prefs-plugin.cc:138
+#: src/libaudgui/plugin-prefs.cc:161 src/libaudqt/prefs-plugin.cc:139
 msgid "_Set"
 msgstr "_Nustatyti"
 
@@ -1339,12 +1339,12 @@ msgstr "Pavadinimo formatas:"
 msgid "Custom string:"
 msgstr "Pasirinktinė eilutė:"
 
-#: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:773
+#: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:774
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Leisti garso srauto įrašymą %s"
 
-#: src/libaudgui/prefs-window.cc:826 src/libaudqt/prefs-window-qt.cc:786
+#: src/libaudgui/prefs-window.cc:826 src/libaudqt/prefs-window-qt.cc:787
 msgid "No audio recording plugin available"
 msgstr "Nėra garso įrašymo įskiepio"
 
@@ -1353,11 +1353,11 @@ msgid "Audacious Settings"
 msgstr "Audacious nustatymai"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:201
-#: src/libaudqt/fileopener.cc:124
+#: src/libaudqt/fileopener.cc:123
 msgid "Cancel"
 msgstr "Atsisakyti"
 
-#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:298
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:299
 msgid "Save"
 msgstr "Išsaugoti"
 
@@ -1373,7 +1373,7 @@ msgstr "Įkelto ruošinio rinkmeną"
 msgid "Load EQF File"
 msgstr "Įkelti EQF rinkmeną"
 
-#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:293
+#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:294
 msgid "Save Preset File"
 msgstr "Išsaugoti ruošinio rinkmeną"
 
@@ -1381,11 +1381,11 @@ msgstr "Išsaugoti ruošinio rinkmeną"
 msgid "Save EQF File"
 msgstr "Išsaugoti EQF rinkmeną"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:263
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:264
 msgid "Queue Manager"
 msgstr "Eilės redaktorius"
 
-#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:209
+#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:210
 msgid "_Unqueue"
 msgstr "_Iš eilės"
 
@@ -1393,11 +1393,11 @@ msgstr "_Iš eilės"
 msgid "Working ..."
 msgstr "Veikia..."
 
-#: src/libaudgui/status.cc:86 src/libaudqt/log-inspector.cc:225
+#: src/libaudgui/status.cc:87 src/libaudqt/log-inspector.cc:226
 msgid "Error"
 msgstr "Klaida"
 
-#: src/libaudgui/status.cc:91
+#: src/libaudgui/status.cc:92
 msgid "Information"
 msgstr "Informacija"
 
@@ -1413,19 +1413,19 @@ msgstr "Atverti URL"
 msgid "Add URL"
 msgstr "Pridėti URL"
 
-#: src/libaudgui/url-opener.cc:93 src/libaudqt/url-opener-qt.cc:69
+#: src/libaudgui/url-opener.cc:93 src/libaudqt/url-opener-qt.cc:70
 msgid "C_lear history"
 msgstr "_Išvalyti istoriją"
 
-#: src/libaudgui/url-opener.cc:105 src/libaudqt/url-opener-qt.cc:62
+#: src/libaudgui/url-opener.cc:105 src/libaudqt/url-opener-qt.cc:63
 msgid "Enter URL:"
 msgstr "Įveskite URL:"
 
-#: src/libaudgui/util.cc:201 src/libaudqt/fileopener.cc:108
+#: src/libaudgui/util.cc:201 src/libaudqt/fileopener.cc:107
 msgid "Open"
 msgstr "Atverti"
 
-#: src/libaudgui/util.cc:341
+#: src/libaudgui/util.cc:342
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1437,7 +1437,7 @@ msgstr ""
 msgid "Preset files (*.preset *.eqf *.q1)"
 msgstr "Paruoštos rinkmenos (*.preset *.eqf *.q1)"
 
-#: src/libaudqt/eq-preset-qt.cc:345
+#: src/libaudqt/eq-preset-qt.cc:347
 msgid "Revert"
 msgstr "Grąžinti"
 
@@ -1445,15 +1445,15 @@ msgstr "Grąžinti"
 msgid "Browse"
 msgstr "Naršyti"
 
-#: src/libaudqt/fileopener.cc:104
+#: src/libaudqt/fileopener.cc:103
 msgid "Open Folder"
 msgstr "Atverti aplanką"
 
-#: src/libaudqt/fileopener.cc:105
+#: src/libaudqt/fileopener.cc:104
 msgid "Add Folder"
 msgstr "Pridėti aplanką"
 
-#: src/libaudqt/fileopener.cc:108 src/libaudqt/fileopener.cc:109
+#: src/libaudqt/fileopener.cc:107 src/libaudqt/fileopener.cc:108
 msgid "Add"
 msgstr "Pridėti"
 
@@ -1509,19 +1509,19 @@ msgstr "Kanalai"
 msgid "MusicBrainz ID"
 msgstr "MusicBrainz nr."
 
-#: src/libaudqt/infowin-qt.cc:93
+#: src/libaudqt/infowin-qt.cc:94
 msgid "_Revert"
 msgstr "_Grąžinti"
 
-#: src/libaudqt/infowin-qt.cc:104
+#: src/libaudqt/infowin-qt.cc:105
 msgid "Error writing tag(s)."
 msgstr "Klaida rašant žymę (-es)"
 
-#: src/libaudqt/infowin-qt.cc:126
+#: src/libaudqt/infowin-qt.cc:127
 msgid "%1 files selected"
 msgstr "%1 pasirinkta rinkmenų"
 
-#: src/libaudqt/infowin-qt.cc:130
+#: src/libaudqt/infowin-qt.cc:131
 msgid "_Save %1 files"
 msgstr "_Išsaugoti %1 rinkmenų"
 
@@ -1541,23 +1541,23 @@ msgstr "Žinutė"
 msgid "Log Inspector"
 msgstr "Žurnalo inspektavimas"
 
-#: src/libaudqt/log-inspector.cc:222
+#: src/libaudqt/log-inspector.cc:223
 msgid "Debug"
 msgstr "Derinimas"
 
-#: src/libaudqt/log-inspector.cc:223
+#: src/libaudqt/log-inspector.cc:224
 msgid "Info"
 msgstr "Info"
 
-#: src/libaudqt/log-inspector.cc:224
+#: src/libaudqt/log-inspector.cc:225
 msgid "Warning"
 msgstr "Įspėjimas"
 
-#: src/libaudqt/log-inspector.cc:236
+#: src/libaudqt/log-inspector.cc:237
 msgid "Cl_ear"
 msgstr "Iš_valyti"
 
-#: src/libaudqt/log-inspector.cc:249
+#: src/libaudqt/log-inspector.cc:250
 msgid "Log Level:"
 msgstr "Žurnalo lygis:"
 

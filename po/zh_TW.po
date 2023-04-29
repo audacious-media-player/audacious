@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2023-03-05 14:30+0100\n"
+"POT-Creation-Date: 2023-04-29 21:56+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
 "Last-Translator: 盧瑞元 <rueiyuan.lu@gmail.com>, 2020\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/audacious/"
@@ -184,7 +184,7 @@ msgid "Now Playing"
 msgstr "正在播放"
 
 #: src/libaudcore/playlist-files.cc:73 src/libaudcore/playlist-files.cc:153
-#: src/libaudgui/infowin.cc:537 src/libaudqt/infowin-qt.cc:182
+#: src/libaudgui/infowin.cc:538 src/libaudqt/infowin-qt.cc:183
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -193,7 +193,7 @@ msgstr ""
 "開啟 %s 時發生錯誤：\n"
 "%s"
 
-#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:282
+#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:283
 #, c-format
 msgid "Error loading %s."
 msgstr "載入 %s 時發生錯誤。"
@@ -203,7 +203,7 @@ msgstr "載入 %s 時發生錯誤。"
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "無法載入 %s：不支援該副檔名。"
 
-#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:317
+#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:319
 #, c-format
 msgid "Error saving %s."
 msgstr "儲存 %s 時發生錯誤。"
@@ -287,35 +287,35 @@ msgstr "關於 Audacious"
 
 #: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
 #: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
-#: src/libaudgui/plugin-prefs.cc:161 src/libaudgui/url-opener.cc:102
-#: src/libaudqt/playlist-management.cc:41
-#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:140
-#: src/libaudqt/url-opener-qt.cc:80
+#: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:102
+#: src/libaudqt/playlist-management.cc:42
+#: src/libaudqt/playlist-management.cc:60 src/libaudqt/prefs-plugin.cc:141
+#: src/libaudqt/url-opener-qt.cc:81
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:57
+#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:58
 msgid "_Don’t ask again"
 msgstr "不再詢問(_D)"
 
-#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:64
+#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:66
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
 msgstr "您確定要永久地移除「%s」？"
 
-#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:58
+#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:59
 msgid "_Remove"
 msgstr "移除(_R)"
 
-#: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:62
+#: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:63
 msgid "Remove Playlist"
 msgstr "移除播放清單"
 
-#: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:39
+#: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:40
 msgid "What would you like to call this playlist?"
 msgstr "您希望怎麼命名這份播放清單？"
 
-#: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:40
+#: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:41
 msgid "_Rename"
 msgstr "重新命名(_R)"
 
@@ -335,29 +335,29 @@ msgstr "預設集檔案 ..."
 msgid "EQF File ..."
 msgstr "EQF 檔案 ..."
 
-#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:337
-#: src/libaudqt/fileopener.cc:109
+#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:339
+#: src/libaudqt/fileopener.cc:108
 msgid "Import"
 msgstr "匯入"
 
-#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:340
-#: src/libaudqt/fileopener.cc:109
+#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:342
+#: src/libaudqt/fileopener.cc:108
 msgid "Export"
 msgstr "匯出"
 
-#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:403
+#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:405
 msgid "Equalizer Presets"
 msgstr "等化器預設集"
 
-#: src/libaudgui/eq-preset.cc:305 src/libaudqt/eq-preset-qt.cc:328
+#: src/libaudgui/eq-preset.cc:306 src/libaudqt/eq-preset-qt.cc:330
 msgid "Save Preset"
 msgstr "儲存預設集"
 
-#: src/libaudgui/eq-preset.cc:327
+#: src/libaudgui/eq-preset.cc:328
 msgid "Delete Selected"
 msgstr "刪除選擇的項目"
 
-#: src/libaudgui/eq-preset.cc:331
+#: src/libaudgui/eq-preset.cc:332
 msgid "Revert Changes"
 msgstr "取消變更"
 
@@ -409,19 +409,19 @@ msgstr "16 kHz"
 msgid "Equalizer"
 msgstr "等化器"
 
-#: src/libaudgui/equalizer.cc:147 src/libaudqt/equalizer-qt.cc:144
+#: src/libaudgui/equalizer.cc:148 src/libaudqt/equalizer-qt.cc:144
 msgid "Presets ..."
 msgstr "預設集 ..."
 
-#: src/libaudgui/equalizer.cc:151 src/libaudqt/equalizer-qt.cc:143
+#: src/libaudgui/equalizer.cc:152 src/libaudqt/equalizer-qt.cc:143
 msgid "Reset to Zero"
 msgstr "重設為零"
 
-#: src/libaudgui/equalizer.cc:158 src/libaudqt/equalizer-qt.cc:129
+#: src/libaudgui/equalizer.cc:159 src/libaudqt/equalizer-qt.cc:129
 msgid "Preamp"
 msgstr "前置放大"
 
-#: src/libaudgui/file-opener.cc:79 src/libaudqt/fileopener.cc:104
+#: src/libaudgui/file-opener.cc:79 src/libaudqt/fileopener.cc:103
 msgid "Open Files"
 msgstr "開啟檔案"
 
@@ -434,7 +434,7 @@ msgstr "開啟(_O)"
 msgid "Close _dialog on open"
 msgstr "開啟後關閉對話視窗(_D)"
 
-#: src/libaudgui/file-opener.cc:87 src/libaudqt/fileopener.cc:104
+#: src/libaudgui/file-opener.cc:87 src/libaudqt/fileopener.cc:103
 msgid "Add Files"
 msgstr "加入檔案"
 
@@ -447,54 +447,54 @@ msgstr "加入(_A)"
 msgid "Close _dialog on add"
 msgstr "加入後關閉對話視窗(_D)"
 
-#: src/libaudgui/file-opener.cc:138 src/libaudgui/infowin.cc:442
-#: src/libaudgui/jump-to-track.cc:315 src/libaudgui/plugin-prefs.cc:167
-#: src/libaudgui/prefs-window.cc:938 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:355 src/libaudqt/audqt.cc:314
-#: src/libaudqt/infowin-qt.cc:92 src/libaudqt/log-inspector.cc:244
-#: src/libaudqt/prefs-plugin.cc:151 src/libaudqt/prefs-window-qt.cc:688
-#: src/libaudqt/song-window-qt.cc:360
+#: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
+#: src/libaudgui/jump-to-track.cc:316 src/libaudgui/plugin-prefs.cc:168
+#: src/libaudgui/prefs-window.cc:939 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:356 src/libaudqt/audqt.cc:314
+#: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
+#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:689
+#: src/libaudqt/song-window-qt.cc:361
 msgid "_Close"
 msgstr "關閉(_C)"
 
-#: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:401
+#: src/libaudgui/infopopup.cc:201 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:94
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
 #: src/libaudqt/queue-manager-qt.cc:110
 msgid "Title"
 msgstr "標題"
 
-#: src/libaudgui/infopopup.cc:201 src/libaudgui/infowin.cc:404
+#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:405
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/infopopup-qt.cc:96
 #: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:169
 msgid "Artist"
 msgstr "藝人"
 
-#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:407
+#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:408
 #: src/libaudgui/prefs-window.cc:103 src/libaudgui/prefs-window.cc:150
 #: src/libaudqt/infopopup-qt.cc:98 src/libaudqt/info-widget.cc:50
 #: src/libaudqt/prefs-window-qt.cc:170 src/libaudqt/prefs-window-qt.cc:212
 msgid "Album"
 msgstr "專輯"
 
-#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:417
+#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:418
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/infopopup-qt.cc:100
 #: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:174
 msgid "Genre"
 msgstr "類型"
 
-#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:420
+#: src/libaudgui/infopopup.cc:205 src/libaudgui/infowin.cc:421
 #: src/libaudgui/prefs-window.cc:112 src/libaudqt/infopopup-qt.cc:102
 #: src/libaudqt/prefs-window-qt.cc:179
 msgid "Year"
 msgstr "年份"
 
-#: src/libaudgui/infopopup.cc:205 src/libaudgui/prefs-window.cc:149
+#: src/libaudgui/infopopup.cc:206 src/libaudgui/prefs-window.cc:149
 #: src/libaudqt/infopopup-qt.cc:104 src/libaudqt/prefs-window-qt.cc:211
 msgid "Track"
 msgstr "音軌"
 
-#: src/libaudgui/infopopup.cc:206 src/libaudqt/infopopup-qt.cc:106
+#: src/libaudgui/infopopup.cc:207 src/libaudqt/infopopup-qt.cc:106
 #: src/libaudqt/info-widget.cc:65
 msgid "Length"
 msgstr "長度"
@@ -680,46 +680,46 @@ msgstr "儲存失敗"
 msgid "Song Info"
 msgstr "歌曲資訊"
 
-#: src/libaudgui/infowin.cc:410 src/libaudqt/info-widget.cc:51
+#: src/libaudgui/infowin.cc:411 src/libaudqt/info-widget.cc:51
 msgid "Album Artist"
 msgstr "專輯藝人"
 
-#: src/libaudgui/infowin.cc:413 src/libaudgui/prefs-window.cc:113
+#: src/libaudgui/infowin.cc:414 src/libaudgui/prefs-window.cc:113
 #: src/libaudqt/info-widget.cc:54 src/libaudqt/prefs-window-qt.cc:180
 msgid "Comment"
 msgstr "備註"
 
-#: src/libaudgui/infowin.cc:423 src/libaudqt/info-widget.cc:52
+#: src/libaudgui/infowin.cc:424 src/libaudqt/info-widget.cc:52
 msgid "Track Number"
 msgstr "音軌編號"
 
-#: src/libaudgui/infowin.cc:425
+#: src/libaudgui/infowin.cc:426
 msgid "_Auto-fill empty fields"
 msgstr ""
 
-#: src/libaudgui/infowin.cc:439 src/libaudqt/infowin-qt.cc:120
+#: src/libaudgui/infowin.cc:440 src/libaudqt/infowin-qt.cc:121
 msgid "_Save"
 msgstr "儲存(_S)"
 
-#: src/libaudgui/infowin.cc:445
+#: src/libaudgui/infowin.cc:446
 msgid "_Previous"
 msgstr ""
 
-#: src/libaudgui/infowin.cc:448
+#: src/libaudgui/infowin.cc:449
 msgid "_Next"
 msgstr "下一個(_N)"
 
-#: src/libaudgui/infowin.cc:497
+#: src/libaudgui/infowin.cc:498
 #, c-format
 msgid "%d kbit/s"
 msgstr ""
 
-#: src/libaudgui/infowin.cc:502
+#: src/libaudgui/infowin.cc:503
 msgid "N/A"
 msgstr "無"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:320
-#: src/libaudqt/song-window-qt.cc:358
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:321
+#: src/libaudqt/song-window-qt.cc:359
 msgid "_Jump"
 msgstr "跳轉(_J)"
 
@@ -732,8 +732,8 @@ msgid "Enter time (minutes:seconds):"
 msgstr "請輸入時間 (分:秒)："
 
 #: src/libaudgui/jump-to-track.cc:96 src/libaudgui/jump-to-track.cc:104
-#: src/libaudgui/jump-to-track.cc:311 src/libaudqt/song-window-qt.cc:281
-#: src/libaudqt/song-window-qt.cc:357
+#: src/libaudgui/jump-to-track.cc:312 src/libaudqt/song-window-qt.cc:281
+#: src/libaudqt/song-window-qt.cc:358
 msgid "_Queue"
 msgstr "排入佇列(_Q)"
 
@@ -745,15 +745,15 @@ msgstr "移出佇列(_Q)"
 msgid "Jump to Song"
 msgstr "跳轉到指定歌曲"
 
-#: src/libaudgui/jump-to-track.cc:266 src/libaudqt/song-window-qt.cc:311
+#: src/libaudgui/jump-to-track.cc:267 src/libaudqt/song-window-qt.cc:312
 msgid "Filter: "
 msgstr "過濾器："
 
-#: src/libaudgui/jump-to-track.cc:267
+#: src/libaudgui/jump-to-track.cc:268
 msgid "_Filter:"
 msgstr "過濾器(_F)："
 
-#: src/libaudgui/jump-to-track.cc:304 src/libaudqt/song-window-qt.cc:352
+#: src/libaudgui/jump-to-track.cc:305 src/libaudqt/song-window-qt.cc:353
 msgid "C_lose on jump"
 msgstr "切換後關閉(_C)"
 
@@ -779,7 +779,7 @@ msgstr "請輸入副檔名或者從下拉式清單中選擇檔案格式。"
 msgid "Select Format by Extension"
 msgstr "依副檔名選擇對應的格式"
 
-#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:105
+#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:104
 msgid "Export Playlist"
 msgstr "匯出播放清單"
 
@@ -787,7 +787,7 @@ msgstr "匯出播放清單"
 msgid "_Export"
 msgstr "匯出(_E)"
 
-#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:105
+#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:104
 msgid "Import Playlist"
 msgstr "匯入播放清單"
 
@@ -809,7 +809,7 @@ msgstr "關於 %s"
 msgid "%s Settings"
 msgstr "%s 設定"
 
-#: src/libaudgui/plugin-prefs.cc:160 src/libaudqt/prefs-plugin.cc:138
+#: src/libaudgui/plugin-prefs.cc:161 src/libaudqt/prefs-plugin.cc:139
 msgid "_Set"
 msgstr "套用(_S)"
 
@@ -1320,12 +1320,12 @@ msgstr "標題格式："
 msgid "Custom string:"
 msgstr "自訂字串："
 
-#: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:773
+#: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:774
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "啟用%s進行音訊串流錄製"
 
-#: src/libaudgui/prefs-window.cc:826 src/libaudqt/prefs-window-qt.cc:786
+#: src/libaudgui/prefs-window.cc:826 src/libaudqt/prefs-window-qt.cc:787
 msgid "No audio recording plugin available"
 msgstr "找不到可用的錄音外掛"
 
@@ -1334,11 +1334,11 @@ msgid "Audacious Settings"
 msgstr "Audacious 設定"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:201
-#: src/libaudqt/fileopener.cc:124
+#: src/libaudqt/fileopener.cc:123
 msgid "Cancel"
 msgstr "取消"
 
-#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:298
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:299
 msgid "Save"
 msgstr "儲存"
 
@@ -1354,7 +1354,7 @@ msgstr "載入預設集檔案"
 msgid "Load EQF File"
 msgstr "載入 EQF 檔案"
 
-#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:293
+#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:294
 msgid "Save Preset File"
 msgstr "儲存預設集到檔案"
 
@@ -1362,11 +1362,11 @@ msgstr "儲存預設集到檔案"
 msgid "Save EQF File"
 msgstr "儲存 EQF 檔"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:263
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:264
 msgid "Queue Manager"
 msgstr "佇列管理"
 
-#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager-qt.cc:209
+#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:210
 msgid "_Unqueue"
 msgstr "移出佇列(_U)"
 
@@ -1374,11 +1374,11 @@ msgstr "移出佇列(_U)"
 msgid "Working ..."
 msgstr "處理中 ..."
 
-#: src/libaudgui/status.cc:86 src/libaudqt/log-inspector.cc:225
+#: src/libaudgui/status.cc:87 src/libaudqt/log-inspector.cc:226
 msgid "Error"
 msgstr "錯誤"
 
-#: src/libaudgui/status.cc:91
+#: src/libaudgui/status.cc:92
 msgid "Information"
 msgstr "資訊"
 
@@ -1394,19 +1394,19 @@ msgstr "開啟網址"
 msgid "Add URL"
 msgstr "加入網址"
 
-#: src/libaudgui/url-opener.cc:93 src/libaudqt/url-opener-qt.cc:69
+#: src/libaudgui/url-opener.cc:93 src/libaudqt/url-opener-qt.cc:70
 msgid "C_lear history"
 msgstr "清除歷史紀錄(_L)"
 
-#: src/libaudgui/url-opener.cc:105 src/libaudqt/url-opener-qt.cc:62
+#: src/libaudgui/url-opener.cc:105 src/libaudqt/url-opener-qt.cc:63
 msgid "Enter URL:"
 msgstr "請輸入網址："
 
-#: src/libaudgui/util.cc:201 src/libaudqt/fileopener.cc:108
+#: src/libaudgui/util.cc:201 src/libaudqt/fileopener.cc:107
 msgid "Open"
 msgstr "開啟"
 
-#: src/libaudgui/util.cc:341
+#: src/libaudgui/util.cc:342
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1418,7 +1418,7 @@ msgstr ""
 msgid "Preset files (*.preset *.eqf *.q1)"
 msgstr ""
 
-#: src/libaudqt/eq-preset-qt.cc:345
+#: src/libaudqt/eq-preset-qt.cc:347
 msgid "Revert"
 msgstr ""
 
@@ -1426,15 +1426,15 @@ msgstr ""
 msgid "Browse"
 msgstr "瀏覽"
 
-#: src/libaudqt/fileopener.cc:104
+#: src/libaudqt/fileopener.cc:103
 msgid "Open Folder"
 msgstr "開啟資料夾"
 
-#: src/libaudqt/fileopener.cc:105
+#: src/libaudqt/fileopener.cc:104
 msgid "Add Folder"
 msgstr "加入資料夾"
 
-#: src/libaudqt/fileopener.cc:108 src/libaudqt/fileopener.cc:109
+#: src/libaudqt/fileopener.cc:107 src/libaudqt/fileopener.cc:108
 msgid "Add"
 msgstr "加入"
 
@@ -1490,19 +1490,19 @@ msgstr ""
 msgid "MusicBrainz ID"
 msgstr "MusicBrainz ID"
 
-#: src/libaudqt/infowin-qt.cc:93
+#: src/libaudqt/infowin-qt.cc:94
 msgid "_Revert"
 msgstr ""
 
-#: src/libaudqt/infowin-qt.cc:104
+#: src/libaudqt/infowin-qt.cc:105
 msgid "Error writing tag(s)."
 msgstr "寫入標籤時發生錯誤。"
 
-#: src/libaudqt/infowin-qt.cc:126
+#: src/libaudqt/infowin-qt.cc:127
 msgid "%1 files selected"
 msgstr "選擇了 %1 個檔案"
 
-#: src/libaudqt/infowin-qt.cc:130
+#: src/libaudqt/infowin-qt.cc:131
 msgid "_Save %1 files"
 msgstr "儲存 %1 個檔案(_S)"
 
@@ -1522,23 +1522,23 @@ msgstr "訊息"
 msgid "Log Inspector"
 msgstr "記錄監控"
 
-#: src/libaudqt/log-inspector.cc:222
+#: src/libaudqt/log-inspector.cc:223
 msgid "Debug"
 msgstr "除錯"
 
-#: src/libaudqt/log-inspector.cc:223
+#: src/libaudqt/log-inspector.cc:224
 msgid "Info"
 msgstr "資訊"
 
-#: src/libaudqt/log-inspector.cc:224
+#: src/libaudqt/log-inspector.cc:225
 msgid "Warning"
 msgstr "警告"
 
-#: src/libaudqt/log-inspector.cc:236
+#: src/libaudqt/log-inspector.cc:237
 msgid "Cl_ear"
 msgstr "清除(_E)"
 
-#: src/libaudqt/log-inspector.cc:249
+#: src/libaudqt/log-inspector.cc:250
 msgid "Log Level:"
 msgstr "記錄等級："
 
