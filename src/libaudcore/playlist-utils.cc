@@ -129,6 +129,11 @@ static int tuple_compare_catalog_number(const Tuple & a, const Tuple & b)
 {
     return tuple_compare_string(a, b, Tuple::CatalogNum);
 }
+static int tuple_compare_disc(const Tuple & a, const Tuple & b)
+{
+    return tuple_compare_int(a, b, Tuple::Disc);
+}
+
 
 static const Playlist::StringCompareFunc filename_comparisons[] = {
     filename_compare_path,     // path
@@ -144,7 +149,8 @@ static const Playlist::StringCompareFunc filename_comparisons[] = {
     nullptr,                   // length
     nullptr,                   // comment
     nullptr,                   // publisher
-    nullptr                    // catalog number
+    nullptr,                   // catalog number
+    nullptr                    // disc number
 };
 
 static const Playlist::TupleCompareFunc tuple_comparisons[] = {
@@ -161,7 +167,8 @@ static const Playlist::TupleCompareFunc tuple_comparisons[] = {
     tuple_compare_length,
     tuple_compare_comment,
     tuple_compare_publisher,
-    tuple_compare_catalog_number};
+    tuple_compare_catalog_number,
+    tuple_compare_disc};
 
 static_assert(aud::n_elems(filename_comparisons) == Playlist::n_sort_types &&
                   aud::n_elems(tuple_comparisons) == Playlist::n_sort_types,

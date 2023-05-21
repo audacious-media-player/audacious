@@ -50,6 +50,7 @@ enum
     ID3_RVA,
     ID3_PIC,
     ID3_LYRICS,
+    ID3_DISC,
     ID3_TAGS_NO
 };
 
@@ -71,7 +72,8 @@ static const char * id3_frames[ID3_TAGS_NO] = {
     "TXX",
     "RVA",
     "PIC",
-    "LYR"
+    "LYR",
+    "TPA",
 };
 
 #pragma pack(push) /* must be byte-aligned */
@@ -289,6 +291,9 @@ bool ID3v22TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
             break;
           case ID3_LYRICS:
             id3_associate_memo (tuple, Tuple::Lyrics, & frame[0], frame.len ());
+            break;
+          case ID3_DISC:
+            id3_associate_int (tuple, Tuple::Disc, & frame[0], frame.len ());
             break;
           default:
             AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);

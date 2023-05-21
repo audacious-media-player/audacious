@@ -57,6 +57,7 @@ enum
     ID3_RVA2,
     ID3_APIC,
     ID3_LYRICS,
+    ID3_DISCNR,
     ID3_TAGS_NO
 };
 
@@ -79,7 +80,8 @@ static const char * id3_frames[ID3_TAGS_NO] = {
     "TXXX",
     "RVA2",
     "APIC",
-    "USLT"
+    "USLT",
+    "TPOS"
 };
 
 #pragma pack(push) /* must be byte-aligned */
@@ -652,6 +654,9 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
           case ID3_LYRICS:
             id3_associate_memo (tuple, Tuple::Lyrics, & frame[0], frame.len ());
             break;
+          case ID3_DISCNR:
+            id3_associate_int (tuple, Tuple::Disc, & frame[0], frame.len ());
+            break;
           default:
             AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);
             break;
@@ -688,6 +693,7 @@ bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
     add_frameFromTupleInt (tuple, Tuple::Year, ID3_YEAR, dict);
     add_frameFromTupleInt (tuple, Tuple::Track, ID3_TRACKNR, dict);
     add_frameFromTupleStr (tuple, Tuple::Genre, ID3_GENRE, dict);
+    add_frameFromTupleInt (tuple, Tuple::Disc, ID3_DISCNR, dict);
 
     String comment = tuple.get_str (Tuple::Comment);
     add_memo_frame (ID3_COMMENT, comment, dict);

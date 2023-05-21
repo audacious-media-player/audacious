@@ -78,6 +78,7 @@ public:
         Comment,
         Publisher,
         CatalogNum,
+        Disc,
         n_sort_types
     };
 

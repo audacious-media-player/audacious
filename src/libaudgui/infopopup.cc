@@ -45,6 +45,7 @@ static struct {
     GtkWidget * year_header, * year_label;
     GtkWidget * track_header, * track_label;
     GtkWidget * length_header, * length_label;
+    GtkWidget * disc_header, * disc_label;
     GtkWidget * image;
     GtkWidget * progress;
 } widgets;
@@ -205,6 +206,8 @@ static GtkWidget * infopopup_create ()
     infopopup_add_category (grid, 4, _("Year"), & widgets.year_header, & widgets.year_label);
     infopopup_add_category (grid, 5, _("Track"), & widgets.track_header, & widgets.track_label);
     infopopup_add_category (grid, 6, _("Length"), & widgets.length_header, & widgets.length_label);
+    infopopup_add_category (grid, 7, _("Disc"), & widgets.disc_header, & widgets.disc_label);
+
 
     /* track progress */
     widgets.progress = gtk_progress_bar_new ();
@@ -268,6 +271,10 @@ static void infopopup_set_fields (const Tuple & tuple)
 
     value = tuple.get_int (Tuple::Track);
     infopopup_set_field (widgets.track_header, widgets.track_label,
+     (value > 0) ? (const char *) int_to_str (value) : nullptr);
+
+    value = tuple.get_int (Tuple::Disc);
+    infopopup_set_field (widgets.disc_header, widgets.disc_label,
      (value > 0) ? (const char *) int_to_str (value) : nullptr);
 }
 

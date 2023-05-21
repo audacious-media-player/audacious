@@ -265,6 +265,7 @@ static void test_tuple_formats()
     test_tuple_format("x${?title:Field Exists}", tuple, "xField Exists");
     test_tuple_format("x${?artist:Field Exists}", tuple, "x");
     test_tuple_format("x${?artist}", tuple, "Song Title");
+    test_tuple_format("x${?disc-number:Field Exists}", tuple, "x");
 
     /* equality tests */
     test_tuple_format("x${=}", tuple, "Song Title");
@@ -320,6 +321,7 @@ static void test_tuple_formats()
     test_tuple_format("x${(empty)?artist:Empty}", tuple, "x");
     test_tuple_format("x${(empty)?album:Empty}", tuple, "xEmpty");
     test_tuple_format("x${(empty)?\"Literal\":Empty}", tuple, "Song Title");
+    test_tuple_format("x${(empty)?disc-number:Empty}", tuple, "xEmpty");
 
     /* string truncation tests */
     tuple.set_str(Tuple::Artist, "Artist Name");

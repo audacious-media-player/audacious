@@ -62,6 +62,7 @@ static struct {
     GtkWidget * comment;
     GtkWidget * year;
     GtkWidget * track;
+    GtkWidget * disc;
     GtkWidget * genre;
     GtkWidget * image;
     GtkWidget * codec[3];
@@ -226,6 +227,7 @@ static void infowin_update_tuple ()
      gtk_bin_get_child ((GtkBin *) widgets.genre));
     set_field_int_from_entry (current_tuple, Tuple::Year, widgets.year);
     set_field_int_from_entry (current_tuple, Tuple::Track, widgets.track);
+    set_field_int_from_entry (current_tuple, Tuple::Disc, widgets.disc);
 
     if (aud_file_write_tuple (current_file, current_decoder, current_tuple))
     {
@@ -423,6 +425,9 @@ static void create_infowin ()
     widgets.track = gtk_entry_new ();
     add_entry (grid, _("Track Number"), widgets.track, 1, 12, 1);
 
+    widgets.disc = gtk_entry_new ();
+    add_entry (grid, _("Disc Number"), widgets.disc, 1, 12, 1);
+
     widgets.autofill = gtk_check_button_new_with_mnemonic (_("_Auto-fill empty fields"));
 
     gtk_toggle_button_set_active ((GtkToggleButton *) widgets.autofill,
@@ -488,6 +493,7 @@ static void infowin_show (Playlist list, int entry, const String & filename,
 
     set_entry_int_from_field (widgets.year, tuple, Tuple::Year, writable, clear, changed);
     set_entry_int_from_field (widgets.track, tuple, Tuple::Track, writable, clear, changed);
+    set_entry_int_from_field (widgets.disc, tuple, Tuple::Disc, writable, clear, changed);
 
     String codec_values[CODEC_ITEMS];
 
