@@ -21,6 +21,7 @@
 
 #include <QIcon>
 #include <QMenu>
+#include <QMouseEvent>
 #include <QSlider>
 #include <QToolButton>
 #include <QVBoxLayout>
@@ -39,6 +40,10 @@ class VolumeButton : public QToolButton
 public:
     VolumeButton(QWidget * parent = nullptr);
 
+protected:
+    void mousePressEvent(QMouseEvent * e) override;
+    void wheelEvent(QWheelEvent * e) override;
+
 private:
     void updateDelta();
     void updateIcon(int val);
@@ -46,13 +51,12 @@ private:
     void setVolume(int val);
     void setUpButton(QToolButton * button, int dir);
 
-    void wheelEvent(QWheelEvent * e);
-
     QMenu m_menu;
     QWidgetAction m_action;
     QWidget m_container;
     QToolButton m_buttons[2];
     QSlider m_slider;
+    int m_old_volume = 0;
     int m_scroll_delta = 0;
 
     HookReceiver<VolumeButton> update_hook{"set volume_delta", this,
@@ -152,6 +156,24 @@ void VolumeButton::setUpButton(QToolButton * button, int dir)
     connect(button, &QAbstractButton::clicked, [this, dir]() {
         m_slider.setValue(m_slider.value() + dir * aud_get_int("volume_delta"));
     });
+}
+
+void VolumeButton::mousePressEvent(QMouseEvent * e)
+{
+    /* (un)mute with middle mouse button */
+    if (e->button() == Qt::MiddleButton)
+    {
+        int current_volume = aud_drct_get_volume_main();
+        if (current_volume)
+        {
+            m_old_volume = current_volume;
+            aud_drct_set_volume_main(0);
+        }
+        else
+            aud_drct_set_volume_main(m_old_volume);
+    }
+
+    QToolButton::mousePressEvent(e);
 }
 
 void VolumeButton::wheelEvent(QWheelEvent * e)
