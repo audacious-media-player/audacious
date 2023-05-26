@@ -2,6 +2,7 @@
 <!-- Copyright 2015-2023 Audacious developers -->
 <component type="desktop">
   <id>audacious.desktop</id>
+  <launchable type="desktop-id">audacious.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>BSD-2-Clause</project_license>
   <name>Audacious</name>
@@ -23,6 +24,7 @@
     </p>
   </description>
   <url type="homepage">https://audacious-media-player.org</url>
+  <url type="bugtracker">https://redmine.audacious-media-player.org/projects/audacious/issues</url>
   <releases>
     <release date="2023-04-29" version="4.3.1"></release>
     <release date="2023-03-05" version="4.3"></release>
@@ -42,10 +44,22 @@
     <release date="2016-09-22" version="3.8"></release>
   </releases>
   <screenshots>
-    <screenshot type="default">https://audacious-media-player.org/images/qt-interface.png</screenshot>
-    <screenshot>https://audacious-media-player.org/images/gtk-interface.png</screenshot>
-    <screenshot>https://audacious-media-player.org/images/winamp-interface.png</screenshot>
-    <screenshot>https://audacious-media-player.org/images/settings-window.png</screenshot>
+    <screenshot type="default">
+      <caption>Qt interface</caption>
+      <image>https://audacious-media-player.org/images/qt-interface.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>GTK interface</caption>
+      <image>https://audacious-media-player.org/images/gtk-interface.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Winamp interface</caption>
+      <image>https://audacious-media-player.org/images/winamp-interface.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Settings window</caption>
+      <image>https://audacious-media-player.org/images/settings-window.png</image>
+    </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
 </component>
