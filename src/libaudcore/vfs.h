@@ -51,6 +51,7 @@ enum VFSReadOptions
 
 enum VFSSeekType
 {
+    VFS_SEEK_INVALID = -1,
     VFS_SEEK_SET = 0,
     VFS_SEEK_CUR = 1,
     VFS_SEEK_END = 2
@@ -75,7 +76,7 @@ constexpr VFSSeekType to_vfs_seek_type(int whence)
                ? VFS_SEEK_SET
                : (whence == SEEK_CUR)
                      ? VFS_SEEK_CUR
-                     : (whence == SEEK_END) ? VFS_SEEK_END : (VFSSeekType)-1;
+                     : (whence == SEEK_END) ? VFS_SEEK_END : VFS_SEEK_INVALID;
 }
 
 #endif // WANT_VFS_STDIO_COMPAT
