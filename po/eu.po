@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2023-05-21 15:29+0100\n"
+"POT-Creation-Date: 2023-04-29 21:56+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
 "Last-Translator: Muitze Zulaika <muitzezulaika@gmail.com>, 2021\n"
 "Language-Team: Basque (http://www.transifex.com/audacious/audacious/language/"
@@ -144,7 +144,7 @@ msgstr "Ez da fitxategirik aurkitu."
 msgid "New Playlist"
 msgstr "Erreprodukzio-zerrenda berria"
 
-#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:534
+#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:532
 msgid "Standard input"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgstr ""
 msgid "Audio CD, track %s"
 msgstr "Audio CDa, %s pista"
 
-#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:510
+#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:508
 msgid "(character encoding error)"
 msgstr "(errorea karaktere-kodetzean)"
 
@@ -188,7 +188,7 @@ msgid "Now Playing"
 msgstr "Orain erreproduzitzen"
 
 #: src/libaudcore/playlist-files.cc:73 src/libaudcore/playlist-files.cc:153
-#: src/libaudgui/infowin.cc:544 src/libaudqt/infowin-qt.cc:183
+#: src/libaudgui/infowin.cc:538 src/libaudqt/infowin-qt.cc:183
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -237,31 +237,31 @@ msgid ""
 "unsupported format."
 msgstr ""
 
-#: src/libaudcore/tuple.cc:568
+#: src/libaudcore/tuple.cc:566
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.cc:570
+#: src/libaudcore/tuple.cc:568
 msgid "Stereo"
 msgstr "Estereo"
 
-#: src/libaudcore/tuple.cc:573
+#: src/libaudcore/tuple.cc:571
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d kanala"
 msgstr[1] "%d kanalak"
 
-#: src/libaudcore/tuple.cc:791
+#: src/libaudcore/tuple.cc:789
 msgid "Audio CD"
 msgstr "Audio CDa"
 
-#: src/libaudcore/tuple.cc:875
+#: src/libaudcore/tuple.cc:873
 #, c-format
 msgid "Track %d"
 msgstr "Pista %d"
 
-#: src/libaudcore/tuple.cc:881
+#: src/libaudcore/tuple.cc:879
 msgid "(unknown title)"
 msgstr "(izenburu ezezaguna)"
 
@@ -452,62 +452,57 @@ msgstr "_Gehitu"
 msgid "Close _dialog on add"
 msgstr "Itxi elkarrizketa-koadroa fitxategia gehitu ondoren"
 
-#: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:448
+#: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
 #: src/libaudgui/jump-to-track.cc:316 src/libaudgui/plugin-prefs.cc:168
-#: src/libaudgui/prefs-window.cc:944 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/prefs-window.cc:939 src/libaudgui/queue-manager.cc:195
 #: src/libaudgui/util.cc:356 src/libaudqt/audqt.cc:314
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
-#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:696
+#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:689
 #: src/libaudqt/song-window-qt.cc:361
 msgid "_Close"
 msgstr "_Itxi"
 
-#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:404
-#: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
+#: src/libaudgui/infopopup.cc:201 src/libaudgui/infowin.cc:402
+#: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:94
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
 #: src/libaudqt/queue-manager-qt.cc:110
 msgid "Title"
 msgstr "Titulua"
 
-#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:407
-#: src/libaudgui/prefs-window.cc:102 src/libaudqt/infopopup-qt.cc:97
+#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:405
+#: src/libaudgui/prefs-window.cc:102 src/libaudqt/infopopup-qt.cc:96
 #: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:169
 msgid "Artist"
 msgstr "Artista"
 
-#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:410
-#: src/libaudgui/prefs-window.cc:103 src/libaudgui/prefs-window.cc:151
-#: src/libaudqt/infopopup-qt.cc:99 src/libaudqt/info-widget.cc:50
-#: src/libaudqt/prefs-window-qt.cc:170 src/libaudqt/prefs-window-qt.cc:213
+#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:408
+#: src/libaudgui/prefs-window.cc:103 src/libaudgui/prefs-window.cc:150
+#: src/libaudqt/infopopup-qt.cc:98 src/libaudqt/info-widget.cc:50
+#: src/libaudqt/prefs-window-qt.cc:170 src/libaudqt/prefs-window-qt.cc:212
 msgid "Album"
 msgstr "Diskoa"
 
-#: src/libaudgui/infopopup.cc:205 src/libaudgui/infowin.cc:420
-#: src/libaudgui/prefs-window.cc:107 src/libaudqt/infopopup-qt.cc:101
+#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:418
+#: src/libaudgui/prefs-window.cc:107 src/libaudqt/infopopup-qt.cc:100
 #: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:174
 msgid "Genre"
 msgstr "Generoa"
 
-#: src/libaudgui/infopopup.cc:206 src/libaudgui/infowin.cc:423
-#: src/libaudgui/prefs-window.cc:112 src/libaudqt/infopopup-qt.cc:103
+#: src/libaudgui/infopopup.cc:205 src/libaudgui/infowin.cc:421
+#: src/libaudgui/prefs-window.cc:112 src/libaudqt/infopopup-qt.cc:102
 #: src/libaudqt/prefs-window-qt.cc:179
 msgid "Year"
 msgstr "Urtea"
 
-#: src/libaudgui/infopopup.cc:207 src/libaudgui/prefs-window.cc:150
-#: src/libaudqt/infopopup-qt.cc:105 src/libaudqt/prefs-window-qt.cc:212
+#: src/libaudgui/infopopup.cc:206 src/libaudgui/prefs-window.cc:149
+#: src/libaudqt/infopopup-qt.cc:104 src/libaudqt/prefs-window-qt.cc:211
 msgid "Track"
 msgstr "Pista"
 
-#: src/libaudgui/infopopup.cc:208 src/libaudqt/infopopup-qt.cc:109
-#: src/libaudqt/info-widget.cc:66
+#: src/libaudgui/infopopup.cc:207 src/libaudqt/infopopup-qt.cc:106
+#: src/libaudqt/info-widget.cc:65
 msgid "Length"
 msgstr "Iraupena"
-
-#: src/libaudgui/infopopup.cc:209 src/libaudqt/infopopup-qt.cc:107
-#, fuzzy
-msgid "Disc"
-msgstr "Disko"
 
 #: src/libaudgui/infowin.cc:51
 msgid "Format:"
@@ -521,215 +516,210 @@ msgstr "Kalitatea:"
 msgid "Bitrate:"
 msgstr "Bit-tasa:"
 
-#: src/libaudgui/infowin.cc:88
+#: src/libaudgui/infowin.cc:87
 msgid "Acid Jazz"
 msgstr "Jazz azidoa"
 
-#: src/libaudgui/infowin.cc:89
+#: src/libaudgui/infowin.cc:88
 msgid "Acid Rock"
 msgstr "Acid Rock"
 
-#: src/libaudgui/infowin.cc:90
+#: src/libaudgui/infowin.cc:89
 msgid "Ambient"
 msgstr "Giroko musika"
 
-#: src/libaudgui/infowin.cc:91
+#: src/libaudgui/infowin.cc:90
 msgid "Bebop"
 msgstr "Bebop"
 
-#: src/libaudgui/infowin.cc:92
+#: src/libaudgui/infowin.cc:91
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.cc:93
+#: src/libaudgui/infowin.cc:92
 msgid "Blues"
 msgstr "Blues-a"
 
-#: src/libaudgui/infowin.cc:94
+#: src/libaudgui/infowin.cc:93
 msgid "Chamber Music"
 msgstr "Ganbera-musika"
 
-#: src/libaudgui/infowin.cc:95
+#: src/libaudgui/infowin.cc:94
 msgid "Classical"
 msgstr "Klasikoa"
 
-#: src/libaudgui/infowin.cc:96
+#: src/libaudgui/infowin.cc:95
 msgid "Country"
 msgstr "Country"
 
-#: src/libaudgui/infowin.cc:97
+#: src/libaudgui/infowin.cc:96
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: src/libaudgui/infowin.cc:98
+#: src/libaudgui/infowin.cc:97
 msgid "Disco"
 msgstr "Disko"
 
-#: src/libaudgui/infowin.cc:99
+#: src/libaudgui/infowin.cc:98
 msgid "Easy Listening"
 msgstr "Entzuteko erraza"
 
-#: src/libaudgui/infowin.cc:100
+#: src/libaudgui/infowin.cc:99
 msgid "Folk"
 msgstr "Folka"
 
-#: src/libaudgui/infowin.cc:101
+#: src/libaudgui/infowin.cc:100
 msgid "Funk"
 msgstr "Funk-a"
 
-#: src/libaudgui/infowin.cc:102
+#: src/libaudgui/infowin.cc:101
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.cc:103
+#: src/libaudgui/infowin.cc:102
 msgid "Gospel"
 msgstr "Gospel-a"
 
-#: src/libaudgui/infowin.cc:104
+#: src/libaudgui/infowin.cc:103
 msgid "Grunge"
 msgstr "Grunge-a"
 
-#: src/libaudgui/infowin.cc:105
+#: src/libaudgui/infowin.cc:104
 msgid "Hard Rock"
 msgstr "Rock gogorra"
 
-#: src/libaudgui/infowin.cc:106
+#: src/libaudgui/infowin.cc:105
 msgid "Heavy Metal"
 msgstr "Heavy Metal-a"
 
-#: src/libaudgui/infowin.cc:107
+#: src/libaudgui/infowin.cc:106
 msgid "Hip-hop"
 msgstr "Hip-Hop-a"
 
-#: src/libaudgui/infowin.cc:108
+#: src/libaudgui/infowin.cc:107
 msgid "House"
 msgstr "House"
 
-#: src/libaudgui/infowin.cc:109
+#: src/libaudgui/infowin.cc:108
 msgid "Jazz"
 msgstr "Jazza"
 
-#: src/libaudgui/infowin.cc:110
+#: src/libaudgui/infowin.cc:109
 msgid "Jungle"
 msgstr "Jungle-a"
 
-#: src/libaudgui/infowin.cc:111
+#: src/libaudgui/infowin.cc:110
 msgid "Metal"
 msgstr "Metala"
 
-#: src/libaudgui/infowin.cc:112
+#: src/libaudgui/infowin.cc:111
 msgid "New Age"
 msgstr "New Age"
 
-#: src/libaudgui/infowin.cc:113
+#: src/libaudgui/infowin.cc:112
 msgid "New Wave"
 msgstr "New Wave"
 
-#: src/libaudgui/infowin.cc:114
+#: src/libaudgui/infowin.cc:113
 msgid "Noise"
 msgstr "Zarata"
 
-#: src/libaudgui/infowin.cc:115
+#: src/libaudgui/infowin.cc:114
 msgid "Pop"
 msgstr "Pop-a"
 
-#: src/libaudgui/infowin.cc:116
+#: src/libaudgui/infowin.cc:115
 msgid "Punk Rock"
 msgstr "Punk Rock-a"
 
-#: src/libaudgui/infowin.cc:117
+#: src/libaudgui/infowin.cc:116
 msgid "Rap"
 msgstr "Rap-a"
 
-#: src/libaudgui/infowin.cc:118
+#: src/libaudgui/infowin.cc:117
 msgid "Reggae"
 msgstr "Reggae"
 
-#: src/libaudgui/infowin.cc:119
+#: src/libaudgui/infowin.cc:118
 msgid "Rock"
 msgstr "Rocka"
 
-#: src/libaudgui/infowin.cc:120
+#: src/libaudgui/infowin.cc:119
 msgid "Rock and Roll"
 msgstr "Rock & Roll-a"
 
-#: src/libaudgui/infowin.cc:121
+#: src/libaudgui/infowin.cc:120
 msgid "Rhythm and Blues"
 msgstr "Rhythm and Blues"
 
-#: src/libaudgui/infowin.cc:122
+#: src/libaudgui/infowin.cc:121
 msgid "Ska"
 msgstr "Ska"
 
-#: src/libaudgui/infowin.cc:123
+#: src/libaudgui/infowin.cc:122
 msgid "Soul"
 msgstr "Soul-a"
 
-#: src/libaudgui/infowin.cc:124
+#: src/libaudgui/infowin.cc:123
 msgid "Swing"
 msgstr "Swing-a"
 
-#: src/libaudgui/infowin.cc:125
+#: src/libaudgui/infowin.cc:124
 msgid "Techno"
 msgstr "Teknoa"
 
-#: src/libaudgui/infowin.cc:126
+#: src/libaudgui/infowin.cc:125
 msgid "Trip-hop"
 msgstr "Trip-Hop-a"
 
-#: src/libaudgui/infowin.cc:234
+#: src/libaudgui/infowin.cc:232
 msgid "Save successful"
 msgstr "Arrakastaz gordea"
 
-#: src/libaudgui/infowin.cc:238
+#: src/libaudgui/infowin.cc:236
 msgid "Save error"
 msgstr "Errorea gordetzean"
 
-#: src/libaudgui/infowin.cc:335 src/libaudgui/prefs-window.cc:87
+#: src/libaudgui/infowin.cc:333 src/libaudgui/prefs-window.cc:87
 #: src/libaudqt/infowin-qt.cc:64 src/libaudqt/prefs-window-qt.cc:164
 msgid "Song Info"
 msgstr "Kantu informazioa"
 
-#: src/libaudgui/infowin.cc:413 src/libaudqt/info-widget.cc:51
+#: src/libaudgui/infowin.cc:411 src/libaudqt/info-widget.cc:51
 msgid "Album Artist"
 msgstr "Albumeko artista"
 
-#: src/libaudgui/infowin.cc:416 src/libaudgui/prefs-window.cc:113
+#: src/libaudgui/infowin.cc:414 src/libaudgui/prefs-window.cc:113
 #: src/libaudqt/info-widget.cc:54 src/libaudqt/prefs-window-qt.cc:180
 msgid "Comment"
 msgstr "Iruzkina"
 
-#: src/libaudgui/infowin.cc:426 src/libaudqt/info-widget.cc:52
+#: src/libaudgui/infowin.cc:424 src/libaudqt/info-widget.cc:52
 msgid "Track Number"
 msgstr "Pista-zenbakia"
 
-#: src/libaudgui/infowin.cc:429 src/libaudqt/info-widget.cc:62
-#, fuzzy
-msgid "Disc Number"
-msgstr "Pista-zenbakia"
-
-#: src/libaudgui/infowin.cc:431
+#: src/libaudgui/infowin.cc:426
 msgid "_Auto-fill empty fields"
 msgstr "_Automatikoki bete eremu hutsak"
 
-#: src/libaudgui/infowin.cc:445 src/libaudqt/infowin-qt.cc:121
+#: src/libaudgui/infowin.cc:440 src/libaudqt/infowin-qt.cc:121
 msgid "_Save"
 msgstr "_Gorde"
 
-#: src/libaudgui/infowin.cc:451
+#: src/libaudgui/infowin.cc:446
 msgid "_Previous"
 msgstr "_Aurrekoa"
 
-#: src/libaudgui/infowin.cc:454
+#: src/libaudgui/infowin.cc:449
 msgid "_Next"
 msgstr "_Hurrengoa"
 
-#: src/libaudgui/infowin.cc:504
+#: src/libaudgui/infowin.cc:498
 #, c-format
 msgid "%d kbit/s"
 msgstr ""
 
-#: src/libaudgui/infowin.cc:509
+#: src/libaudgui/infowin.cc:503
 msgid "N/A"
 msgstr "Hutsik"
 
@@ -830,15 +820,15 @@ msgstr "%s Ezarpenak"
 msgid "_Set"
 msgstr ""
 
-#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:756
-#: src/libaudgui/prefs-window.cc:796 src/libaudqt/prefs-window-qt.cc:641
-#: src/libaudqt/prefs-window-qt.cc:644
+#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:751
+#: src/libaudgui/prefs-window.cc:791 src/libaudqt/prefs-window-qt.cc:634
+#: src/libaudqt/prefs-window-qt.cc:637
 msgid "_Settings"
 msgstr "_Ezarpenak"
 
-#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:770
-#: src/libaudgui/prefs-window.cc:808 src/libaudqt/prefs-window-qt.cc:642
-#: src/libaudqt/prefs-window-qt.cc:645
+#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:765
+#: src/libaudgui/prefs-window.cc:803 src/libaudqt/prefs-window-qt.cc:635
+#: src/libaudqt/prefs-window-qt.cc:638
 msgid "_About"
 msgstr ""
 
@@ -921,448 +911,433 @@ msgstr "Data"
 msgid "Description"
 msgstr "Deskribapen"
 
-#: src/libaudgui/prefs-window.cc:114 src/libaudqt/info-widget.cc:67
+#: src/libaudgui/prefs-window.cc:114 src/libaudqt/info-widget.cc:66
 #: src/libaudqt/prefs-window-qt.cc:181
 msgid "Codec"
 msgstr "Kodeka"
 
-#: src/libaudgui/prefs-window.cc:115 src/libaudqt/info-widget.cc:68
+#: src/libaudgui/prefs-window.cc:115 src/libaudqt/info-widget.cc:67
 #: src/libaudqt/prefs-window-qt.cc:182
 msgid "Quality"
 msgstr "Kalitatea"
 
-#: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window-qt.cc:183
-#, fuzzy
-msgid "Disc number"
-msgstr "Pista-zenbakia"
-
-#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:186
+#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window-qt.cc:185
 msgid "None"
 msgstr "Bat ere ez"
 
-#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window-qt.cc:187
+#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:186
 msgid "Arabic"
 msgstr "Arabiarra"
 
-#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window-qt.cc:188
+#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window-qt.cc:187
 msgid "Baltic"
 msgstr "Baltikoa"
 
-#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window-qt.cc:189
+#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window-qt.cc:188
 msgid "Chinese"
 msgstr "Txinatarra"
 
-#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window-qt.cc:190
+#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window-qt.cc:189
 msgid "Greek"
 msgstr "Grekoa"
 
-#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window-qt.cc:191
+#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window-qt.cc:190
 msgid "Hebrew"
 msgstr "Hebrearra"
 
-#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window-qt.cc:192
+#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window-qt.cc:191
 msgid "Japanese"
 msgstr "Japoniarra"
 
-#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window-qt.cc:193
+#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window-qt.cc:192
 msgid "Korean"
 msgstr "Korearra"
 
-#: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window-qt.cc:194
+#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window-qt.cc:193
 msgid "Polish"
 msgstr "Poloniera"
 
-#: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window-qt.cc:195
+#: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window-qt.cc:194
 msgid "Russian"
 msgstr "Errusiarra"
 
-#: src/libaudgui/prefs-window.cc:130 src/libaudqt/prefs-window-qt.cc:196
+#: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window-qt.cc:195
 msgid "Taiwanese"
 msgstr "Taiwanera"
 
-#: src/libaudgui/prefs-window.cc:131 src/libaudqt/prefs-window-qt.cc:197
+#: src/libaudgui/prefs-window.cc:130 src/libaudqt/prefs-window-qt.cc:196
 msgid "Turkish"
 msgstr "Turkiarra"
 
-#: src/libaudgui/prefs-window.cc:135 src/libaudqt/prefs-window-qt.cc:200
+#: src/libaudgui/prefs-window.cc:134 src/libaudqt/prefs-window-qt.cc:199
 msgid "Automatic"
 msgstr "Automatikoa"
 
-#: src/libaudgui/prefs-window.cc:139 src/libaudqt/prefs-window-qt.cc:201
+#: src/libaudgui/prefs-window.cc:138 src/libaudqt/prefs-window-qt.cc:200
 msgid "Floating point"
 msgstr "Koma mugikorra"
 
-#: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:204
+#: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:203
 msgid "As decoded"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:205
+#: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:204
 msgid "After applying ReplayGain"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:145 src/libaudqt/prefs-window-qt.cc:207
+#: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:206
 msgid "After applying effects"
 msgstr "Efektuak aplikatu ondoren"
 
-#: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window-qt.cc:208
+#: src/libaudgui/prefs-window.cc:145 src/libaudqt/prefs-window-qt.cc:207
 msgid "After applying equalization"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:152 src/libaudqt/prefs-window-qt.cc:214
+#: src/libaudgui/prefs-window.cc:151 src/libaudqt/prefs-window-qt.cc:213
 msgid "Based on shuffle"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:167
+#: src/libaudgui/prefs-window.cc:166
 msgid "Restart in Qt mode"
 msgstr "Berrabiarazi Qt moduan"
 
-#: src/libaudgui/prefs-window.cc:176
+#: src/libaudgui/prefs-window.cc:175
 msgid "Audacious is running in GTK (legacy) mode."
 msgstr "Audacious GTK moduan ari da"
 
-#: src/libaudgui/prefs-window.cc:180
+#: src/libaudgui/prefs-window.cc:179
 msgid "Qt mode is unavailable in this build."
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:182 src/libaudqt/prefs-window-qt.cc:270
+#: src/libaudgui/prefs-window.cc:181 src/libaudqt/prefs-window-qt.cc:269
 msgid "Interface:"
 msgstr "Interfazea:"
 
-#: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window-qt.cc:284
+#: src/libaudgui/prefs-window.cc:200 src/libaudqt/prefs-window-qt.cc:283
 msgid "Output plugin:"
 msgstr "Irteera plugin-a:"
 
-#: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window-qt.cc:297
+#: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window-qt.cc:296
 msgid "Amplify all files:"
 msgstr "Anplifikatu fitxategi guztiak:"
 
-#: src/libaudgui/prefs-window.cc:224 src/libaudgui/prefs-window.cc:227
-#: src/libaudqt/prefs-window-qt.cc:298 src/libaudqt/prefs-window-qt.cc:300
+#: src/libaudgui/prefs-window.cc:223 src/libaudgui/prefs-window.cc:226
+#: src/libaudqt/prefs-window-qt.cc:297 src/libaudqt/prefs-window-qt.cc:299
 msgid "dB"
 msgstr "dB"
 
-#: src/libaudgui/prefs-window.cc:225 src/libaudqt/prefs-window-qt.cc:299
+#: src/libaudgui/prefs-window.cc:224 src/libaudqt/prefs-window-qt.cc:298
 msgid "Amplify untagged files:"
 msgstr "Anplifikatu etiketa gabeko fitxategiak:"
 
-#: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:303
+#: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:302
 msgid "<b>Output Settings</b>"
 msgstr "<b>Irteera ezarpenak</b>"
 
-#: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window-qt.cc:305
+#: src/libaudgui/prefs-window.cc:232 src/libaudqt/prefs-window-qt.cc:304
 msgid "Bit depth:"
 msgstr "Bit sakonera:"
 
-#: src/libaudgui/prefs-window.cc:236 src/libaudgui/prefs-window.cc:281
-#: src/libaudqt/prefs-window-qt.cc:308 src/libaudqt/prefs-window-qt.cc:336
+#: src/libaudgui/prefs-window.cc:235 src/libaudgui/prefs-window.cc:280
+#: src/libaudqt/prefs-window-qt.cc:307 src/libaudqt/prefs-window-qt.cc:335
 msgid "Buffer size:"
 msgstr "Bufferraren tamaina:"
 
-#: src/libaudgui/prefs-window.cc:238 src/libaudqt/prefs-window-qt.cc:309
+#: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window-qt.cc:308
 msgid "ms"
 msgstr "ms"
 
-#: src/libaudgui/prefs-window.cc:239 src/libaudqt/prefs-window-qt.cc:310
+#: src/libaudgui/prefs-window.cc:238 src/libaudqt/prefs-window-qt.cc:309
 msgid "Soft clipping"
 msgstr "Muxarrakin xuabea"
 
-#: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window-qt.cc:311
+#: src/libaudgui/prefs-window.cc:240 src/libaudqt/prefs-window-qt.cc:310
 msgid "Use software volume control (not recommended)"
 msgstr "Softwarearen bolumen kontrola erabili (ez gomendagarria)"
 
-#: src/libaudgui/prefs-window.cc:243 src/libaudqt/prefs-window-qt.cc:313
+#: src/libaudgui/prefs-window.cc:242 src/libaudqt/prefs-window-qt.cc:312
 msgid "<b>Recording Settings</b>"
 msgstr "<b>Grabazioaren ezarpenak</b>"
 
-#: src/libaudgui/prefs-window.cc:247 src/libaudqt/prefs-window-qt.cc:316
+#: src/libaudgui/prefs-window.cc:246 src/libaudqt/prefs-window-qt.cc:315
 msgid "Record stream:"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:250 src/libaudqt/prefs-window-qt.cc:318
+#: src/libaudgui/prefs-window.cc:249 src/libaudqt/prefs-window-qt.cc:317
 msgid "<b>ReplayGain</b>"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:251 src/libaudqt/prefs-window-qt.cc:319
+#: src/libaudgui/prefs-window.cc:250 src/libaudqt/prefs-window-qt.cc:318
 msgid "Enable ReplayGain"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window-qt.cc:320
+#: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window-qt.cc:319
 msgid "Mode:"
 msgstr "Modua:"
 
-#: src/libaudgui/prefs-window.cc:257 src/libaudqt/prefs-window-qt.cc:322
+#: src/libaudgui/prefs-window.cc:256 src/libaudqt/prefs-window-qt.cc:321
 msgid "Prevent clipping (recommended)"
 msgstr "Ekidin muxarrakina (gomendatua)"
 
-#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window-qt.cc:327
+#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window-qt.cc:326
 msgid "Proxy hostname:"
 msgstr "Proxy-aren ostalari-izena:"
 
-#: src/libaudgui/prefs-window.cc:267 src/libaudqt/prefs-window-qt.cc:328
+#: src/libaudgui/prefs-window.cc:266 src/libaudqt/prefs-window-qt.cc:327
 msgid "Proxy port:"
 msgstr "Proxy-aren ataka:"
 
-#: src/libaudgui/prefs-window.cc:272 src/libaudqt/prefs-window-qt.cc:331
+#: src/libaudgui/prefs-window.cc:271 src/libaudqt/prefs-window-qt.cc:330
 msgid "Proxy username:"
 msgstr "Proxy-aren erabiltzaile-izena:"
 
-#: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window-qt.cc:332
+#: src/libaudgui/prefs-window.cc:273 src/libaudqt/prefs-window-qt.cc:331
 msgid "Proxy password:"
 msgstr "Proxy-aren pasahitza:"
 
-#: src/libaudgui/prefs-window.cc:280 src/libaudqt/prefs-window-qt.cc:335
+#: src/libaudgui/prefs-window.cc:279 src/libaudqt/prefs-window-qt.cc:334
 msgid "<b>Network Settings</b>"
 msgstr "<b>Sare Ezarpenak</b>"
 
-#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window-qt.cc:337
+#: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window-qt.cc:336
 msgid "KiB"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:284 src/libaudqt/prefs-window-qt.cc:338
+#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window-qt.cc:337
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Proxy-aren konfigurazioa</b>"
 
-#: src/libaudgui/prefs-window.cc:285 src/libaudqt/prefs-window-qt.cc:339
+#: src/libaudgui/prefs-window.cc:284 src/libaudqt/prefs-window-qt.cc:338
 msgid "Enable proxy usage"
 msgstr "Gaitu proxy-a erabiltzea"
 
-#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window-qt.cc:341
+#: src/libaudgui/prefs-window.cc:288 src/libaudqt/prefs-window-qt.cc:340
 msgid "Use authentication with proxy"
 msgstr "Erabili autentifikazioa proxy-arekin"
 
-#: src/libaudgui/prefs-window.cc:293 src/libaudqt/prefs-window-qt.cc:344
+#: src/libaudgui/prefs-window.cc:292 src/libaudqt/prefs-window-qt.cc:343
 msgid "Use SOCKS proxy"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:295 src/libaudqt/prefs-window-qt.cc:345
+#: src/libaudgui/prefs-window.cc:294 src/libaudqt/prefs-window-qt.cc:344
 msgid "SOCKS v4a"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:299 src/libaudqt/prefs-window-qt.cc:346
+#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window-qt.cc:345
 msgid "SOCKS v5"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:306 src/libaudqt/prefs-window-qt.cc:349
+#: src/libaudgui/prefs-window.cc:305 src/libaudqt/prefs-window-qt.cc:348
 msgid "Auto character encoding detector for:"
 msgstr "Karaktere-kodeketaren detekzio automatikoa:"
 
-#: src/libaudgui/prefs-window.cc:309 src/libaudqt/prefs-window-qt.cc:352
+#: src/libaudgui/prefs-window.cc:308 src/libaudqt/prefs-window-qt.cc:351
 msgid "Fallback character encodings:"
 msgstr "Karaktere-kodeketa:"
 
-#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:359
+#: src/libaudgui/prefs-window.cc:316 src/libaudqt/prefs-window-qt.cc:358
 msgid "<b>Behavior</b>"
 msgstr "<b>Portaera</b>"
 
-#: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:360
+#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:359
 msgid "Resume playback on startup"
 msgstr "Berrabiarazi erreprodukzioa abiaraztean"
 
-#: src/libaudgui/prefs-window.cc:320 src/libaudqt/prefs-window-qt.cc:362
+#: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window-qt.cc:361
 msgid "Pause instead of resuming immediately"
 msgstr "Eten berehala hasi beharrean"
 
-#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:364
+#: src/libaudgui/prefs-window.cc:322 src/libaudqt/prefs-window-qt.cc:363
 msgid "Advance when the current song is deleted"
 msgstr "Aurreratu uneko abestia ezabatzen denean"
 
-#: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:366
+#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window-qt.cc:365
 msgid "Clear the playlist when opening files"
 msgstr "Garbitu erreprodukzio-zerrenda fitxategiak irekitzerakoan"
 
-#: src/libaudgui/prefs-window.cc:327 src/libaudqt/prefs-window-qt.cc:368
+#: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window-qt.cc:367
 msgid "Open files in a temporary playlist"
 msgstr "Gehitu fitxategi berriak aldi baterako erreprodukzio-zerrendari"
 
-#: src/libaudgui/prefs-window.cc:329 src/libaudqt/prefs-window-qt.cc:370
+#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:369
 msgid "<b>Song Display</b>"
 msgstr "<b>Kanten ikuspegia</b>"
 
-#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:371
+#: src/libaudgui/prefs-window.cc:329 src/libaudqt/prefs-window-qt.cc:370
 msgid "Show song numbers"
 msgstr "Abesti zenbakiak erakutsi"
 
-#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:373
+#: src/libaudgui/prefs-window.cc:331 src/libaudqt/prefs-window-qt.cc:372
 msgid "Show leading zeroes (02:00 vs. 2:00)"
 msgstr "Erakutsi zeroak aurretik (02:00 vs. 2:00)"
 
-#: src/libaudgui/prefs-window.cc:334 src/libaudqt/prefs-window-qt.cc:375
+#: src/libaudgui/prefs-window.cc:333 src/libaudqt/prefs-window-qt.cc:374
 msgid "Show hours separately (1:30:00 vs. 90:00)"
 msgstr "Orduak banaka erakutsi (1:30:00 vs. 90:00)"
 
-#: src/libaudgui/prefs-window.cc:337 src/libaudqt/prefs-window-qt.cc:378
+#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:377
 msgid "<b>Export</b>"
 msgstr "<b>Esportatu</b>"
 
-#: src/libaudgui/prefs-window.cc:338 src/libaudqt/prefs-window-qt.cc:379
+#: src/libaudgui/prefs-window.cc:337 src/libaudqt/prefs-window-qt.cc:378
 msgid "Use relative paths when possible"
 msgstr "Bide erlatiboak erabili posible denean"
 
-#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:383
+#: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:382
 msgid "<b>Album Art</b>"
 msgstr "<b>Disko Azala</b>"
 
-#: src/libaudgui/prefs-window.cc:344 src/libaudqt/prefs-window-qt.cc:385
+#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:384
 msgid "Search for images matching these words (comma-separated):"
 msgstr "Bilatu hitz hauekin bat datozen irudiak (koma bidez banatu):"
 
-#: src/libaudgui/prefs-window.cc:346 src/libaudqt/prefs-window-qt.cc:387
+#: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:386
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "Ezikusi hitz hauekin bat datozen irudiak (koma bidez banatu):"
 
-#: src/libaudgui/prefs-window.cc:348 src/libaudqt/prefs-window-qt.cc:389
+#: src/libaudgui/prefs-window.cc:347 src/libaudqt/prefs-window-qt.cc:388
 msgid "Search for images matching song file name"
 msgstr "Bilatu kantuaren fitxategi izenarekin bat datozen irudiak"
 
-#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:391
+#: src/libaudgui/prefs-window.cc:349 src/libaudqt/prefs-window-qt.cc:390
 msgid "Search recursively"
 msgstr "Bilatu errekurtsiboki"
 
-#: src/libaudgui/prefs-window.cc:352 src/libaudqt/prefs-window-qt.cc:392
+#: src/libaudgui/prefs-window.cc:351 src/libaudqt/prefs-window-qt.cc:391
 msgid "Search depth:"
 msgstr "Bilaketa sakonera:"
 
-#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window-qt.cc:394
+#: src/libaudgui/prefs-window.cc:355 src/libaudqt/prefs-window-qt.cc:393
 msgid "<b>Popup Information</b>"
 msgstr "<b>Laster-leihoa</b>"
 
-#: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window-qt.cc:395
+#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window-qt.cc:394
 msgid "Show popup information"
 msgstr "Bistaratu popup informazioa"
 
-#: src/libaudgui/prefs-window.cc:359 src/libaudqt/prefs-window-qt.cc:397
+#: src/libaudgui/prefs-window.cc:358 src/libaudqt/prefs-window-qt.cc:396
 msgid "Popup delay (tenths of a second):"
 msgstr "Popup atzeratzea (segundu hamarrenak)"
 
-#: src/libaudgui/prefs-window.cc:363
+#: src/libaudgui/prefs-window.cc:362
 msgid "Show time scale for current song"
 msgstr "Bistaratu oraingo kantuaren denbora eskala"
 
-#: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:401
+#: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:400
 msgid "<b>Compatibility</b>"
 msgstr "<b>Bateragarritasuna</b>"
 
-#: src/libaudgui/prefs-window.cc:370 src/libaudqt/prefs-window-qt.cc:402
+#: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:401
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr ""
 "\\ (aderantzizkatutako diagonala) karpeta mugatzaile bezala interpretatu"
 
-#: src/libaudgui/prefs-window.cc:373 src/libaudqt/prefs-window-qt.cc:405
+#: src/libaudgui/prefs-window.cc:372 src/libaudqt/prefs-window-qt.cc:404
 msgid "<b>Playlist</b>"
 msgstr "<b>Erreprodukzio-zerrenda</b>"
 
-#: src/libaudgui/prefs-window.cc:374 src/libaudqt/prefs-window-qt.cc:406
+#: src/libaudgui/prefs-window.cc:373 src/libaudqt/prefs-window-qt.cc:405
 msgid "Add folders recursively"
 msgstr "Gehitu karpetak errekurtsiboki"
 
-#: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:408
+#: src/libaudgui/prefs-window.cc:375 src/libaudqt/prefs-window-qt.cc:407
 msgid "Add folders nested within playlist files"
 msgstr "Gehitu habiaratutako karpetak playlist fitxategietan"
 
-#: src/libaudgui/prefs-window.cc:378 src/libaudqt/prefs-window-qt.cc:410
+#: src/libaudgui/prefs-window.cc:377 src/libaudqt/prefs-window-qt.cc:409
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadatuak</b>"
 
-#: src/libaudgui/prefs-window.cc:379 src/libaudqt/prefs-window-qt.cc:411
+#: src/libaudgui/prefs-window.cc:378 src/libaudqt/prefs-window-qt.cc:410
 msgid "Guess missing metadata from file path"
 msgstr "Asmatu fitxategiaren bideko metadatu galduak"
 
-#: src/libaudgui/prefs-window.cc:381 src/libaudqt/prefs-window-qt.cc:413
+#: src/libaudgui/prefs-window.cc:380 src/libaudqt/prefs-window-qt.cc:412
 msgid "Do not load metadata for songs until played"
 msgstr "Ez kargatu kantuen metadatuak jo arte"
 
-#: src/libaudgui/prefs-window.cc:383 src/libaudqt/prefs-window-qt.cc:416
+#: src/libaudgui/prefs-window.cc:382 src/libaudqt/prefs-window-qt.cc:415
 msgid "Probe content of files with no recognized file name extension"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:385 src/libaudqt/prefs-window-qt.cc:418
+#: src/libaudgui/prefs-window.cc:384 src/libaudqt/prefs-window-qt.cc:417
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Hainbat</b>"
 
-#: src/libaudgui/prefs-window.cc:386 src/libaudqt/prefs-window-qt.cc:419
+#: src/libaudgui/prefs-window.cc:385 src/libaudqt/prefs-window-qt.cc:418
 msgid "Step forward/backward by:"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:420
+#: src/libaudgui/prefs-window.cc:387 src/libaudqt/prefs-window-qt.cc:419
 msgid "seconds"
 msgstr "segundo"
 
-#: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:421
+#: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:420
 msgid "Adjust volume by:"
 msgstr "Bolumena honen arabera doitu:"
 
-#: src/libaudgui/prefs-window.cc:391 src/libaudqt/prefs-window-qt.cc:422
+#: src/libaudgui/prefs-window.cc:390 src/libaudqt/prefs-window-qt.cc:421
 msgid "percent"
 msgstr "ehuneko"
 
-#: src/libaudgui/prefs-window.cc:410 src/libaudqt/prefs-window-qt.cc:443
+#: src/libaudgui/prefs-window.cc:407 src/libaudqt/prefs-window-qt.cc:438
 msgid "TITLE"
 msgstr "TITULUA"
 
-#: src/libaudgui/prefs-window.cc:411 src/libaudqt/prefs-window-qt.cc:444
+#: src/libaudgui/prefs-window.cc:408 src/libaudqt/prefs-window-qt.cc:439
 msgid "TITLE - ARTIST"
 msgstr "IZENBURU - ARTISTA"
 
-#: src/libaudgui/prefs-window.cc:412 src/libaudqt/prefs-window-qt.cc:445
+#: src/libaudgui/prefs-window.cc:409 src/libaudqt/prefs-window-qt.cc:440
 msgid "TITLE - ARTIST - ALBUM"
 msgstr "IZENBURU - ARTISTA - DISKOA"
 
-#: src/libaudgui/prefs-window.cc:413 src/libaudqt/prefs-window-qt.cc:446
+#: src/libaudgui/prefs-window.cc:410 src/libaudqt/prefs-window-qt.cc:441
 msgid "ARTIST - TITLE"
 msgstr "ARTISTA - TITULUA"
 
-#: src/libaudgui/prefs-window.cc:414 src/libaudqt/prefs-window-qt.cc:447
+#: src/libaudgui/prefs-window.cc:411 src/libaudqt/prefs-window-qt.cc:442
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTISTA - DISKOA - TITULUA"
 
-#: src/libaudgui/prefs-window.cc:415 src/libaudqt/prefs-window-qt.cc:448
+#: src/libaudgui/prefs-window.cc:412 src/libaudqt/prefs-window-qt.cc:443
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTISTA - DISKOA - PISTA. TITULUA"
 
-#: src/libaudgui/prefs-window.cc:416 src/libaudqt/prefs-window-qt.cc:449
+#: src/libaudgui/prefs-window.cc:413 src/libaudqt/prefs-window-qt.cc:444
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARTISTA - [DISKOA] - PISTA. TITULUA"
 
-#: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
-#, fuzzy
-msgid "ARTIST - ALBUM - DISC.TRACK. TITLE"
-msgstr "ARTISTA - DISKOA - PISTA. TITULUA"
-
-#: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
-#, fuzzy
-msgid "ARTIST [ ALBUM ] - DISC.TRACK. TITLE"
-msgstr "ARTISTA - [DISKOA] - PISTA. TITULUA"
-
-#: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
+#: src/libaudgui/prefs-window.cc:414 src/libaudqt/prefs-window-qt.cc:445
 msgid "ALBUM - TITLE"
 msgstr "ALBUMA - TITULUA"
 
-#: src/libaudgui/prefs-window.cc:517
+#: src/libaudgui/prefs-window.cc:512
 msgid "Category"
 msgstr "Kategoria"
 
-#: src/libaudgui/prefs-window.cc:581 src/libaudqt/prefs-window-qt.cc:469
+#: src/libaudgui/prefs-window.cc:576 src/libaudqt/prefs-window-qt.cc:462
 msgid "Custom"
 msgstr "Pertsonalizatua"
 
-#: src/libaudgui/prefs-window.cc:599 src/libaudqt/prefs-window-qt.cc:461
+#: src/libaudgui/prefs-window.cc:594 src/libaudqt/prefs-window-qt.cc:454
 msgid "Title format:"
 msgstr "Tituluaren formatua:"
 
-#: src/libaudgui/prefs-window.cc:600 src/libaudqt/prefs-window-qt.cc:472
+#: src/libaudgui/prefs-window.cc:595 src/libaudqt/prefs-window-qt.cc:465
 msgid "Custom string:"
 msgstr "Kate pertsonalizatua:"
 
-#: src/libaudgui/prefs-window.cc:822 src/libaudqt/prefs-window-qt.cc:781
+#: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:774
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Gaitu %s audio-fluxuaren grabazioa"
 
-#: src/libaudgui/prefs-window.cc:831 src/libaudqt/prefs-window-qt.cc:794
+#: src/libaudgui/prefs-window.cc:826 src/libaudqt/prefs-window-qt.cc:787
 msgid "No audio recording plugin available"
 msgstr "Ez dago audio-grabazioko pluginik erabilgarri"
 
-#: src/libaudgui/prefs-window.cc:892 src/libaudqt/prefs-window-qt.cc:654
+#: src/libaudgui/prefs-window.cc:887 src/libaudqt/prefs-window-qt.cc:647
 msgid "Audacious Settings"
 msgstr "Audacious-en Ezarpenak"
 
@@ -1507,19 +1482,19 @@ msgstr ""
 msgid "Catalog Number"
 msgstr ""
 
-#: src/libaudqt/info-widget.cc:65
+#: src/libaudqt/info-widget.cc:64
 msgid "Technical"
 msgstr "Tekniko"
 
-#: src/libaudqt/info-widget.cc:69
+#: src/libaudqt/info-widget.cc:68
 msgid "Bitrate"
 msgstr "Bit-tasa:"
 
-#: src/libaudqt/info-widget.cc:70
+#: src/libaudqt/info-widget.cc:69
 msgid "Channels"
 msgstr "Kanalak"
 
-#: src/libaudqt/info-widget.cc:71
+#: src/libaudqt/info-widget.cc:70
 msgid "MusicBrainz ID"
 msgstr ""
 
@@ -1579,39 +1554,39 @@ msgstr "Erregistro maila:"
 msgid "Services"
 msgstr "Zerbitzuak"
 
-#: src/libaudqt/prefs-window-qt.cc:228
+#: src/libaudqt/prefs-window-qt.cc:227
 msgid "Restart in GTK (legacy) mode"
 msgstr ""
 
-#: src/libaudqt/prefs-window-qt.cc:237 src/libaudqt/prefs-window-qt.cc:250
+#: src/libaudqt/prefs-window-qt.cc:236 src/libaudqt/prefs-window-qt.cc:249
 msgid "Native"
 msgstr ""
 
-#: src/libaudqt/prefs-window-qt.cc:238
+#: src/libaudqt/prefs-window-qt.cc:237
 msgid "Dark"
 msgstr ""
 
-#: src/libaudqt/prefs-window-qt.cc:252
+#: src/libaudqt/prefs-window-qt.cc:251
 msgid "Flat"
 msgstr ""
 
-#: src/libaudqt/prefs-window-qt.cc:253
+#: src/libaudqt/prefs-window-qt.cc:252
 msgid "Flat (dark)"
 msgstr ""
 
-#: src/libaudqt/prefs-window-qt.cc:263
+#: src/libaudqt/prefs-window-qt.cc:262
 msgid "Audacious is running in Qt mode."
 msgstr "Audacious QT moduan ari da."
 
-#: src/libaudqt/prefs-window-qt.cc:267
+#: src/libaudqt/prefs-window-qt.cc:266
 msgid "GTK (legacy) mode is unavailable in this build."
 msgstr ""
 
-#: src/libaudqt/prefs-window-qt.cc:273
+#: src/libaudqt/prefs-window-qt.cc:272
 msgid "Theme:"
 msgstr ""
 
-#: src/libaudqt/prefs-window-qt.cc:275
+#: src/libaudqt/prefs-window-qt.cc:274
 msgid "Icon theme:"
 msgstr ""
 

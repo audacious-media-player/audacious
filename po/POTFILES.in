@@ -16,7 +16,6 @@ src/libaudgui/confirm.cc
 src/libaudgui/eq-preset.cc
 src/libaudgui/equalizer.cc
 src/libaudgui/file-opener.cc
-src/libaudgui/images.c
 src/libaudgui/infopopup.cc
 src/libaudgui/infowin.cc
 src/libaudgui/jump-to-time.cc
