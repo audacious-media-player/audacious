@@ -87,6 +87,7 @@ void InfoPopup::add_fields(const Tuple & tuple)
 
     int year = tuple.get_int(Tuple::Year);
     int track = tuple.get_int(Tuple::Track);
+    int disc = tuple.get_int(Tuple::Disc);
     int length = tuple.get_int(Tuple::Length);
     int row = 0;
 
@@ -102,6 +103,8 @@ void InfoPopup::add_fields(const Tuple & tuple)
         add_field(row++, _("Year"), int_to_str(year));
     if (track > 0)
         add_field(row++, _("Track"), int_to_str(track));
+    if (disc > 0)
+        add_field(row++, _("Disc"), int_to_str(disc));
     if (length > 0)
         add_field(row++, _("Length"), str_format_time(length));
 

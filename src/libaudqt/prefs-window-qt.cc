@@ -179,7 +179,8 @@ static const TitleFieldTag title_field_tags[] = {
     {N_("Year"), "${year}"},
     {N_("Comment"), "${comment}"},
     {N_("Codec"), "${codec}"},
-    {N_("Quality"), "${quality}"}};
+    {N_("Quality"), "${quality}"},
+    {N_("Disc number"), "${disc-number}"}};
 
 static const ComboItem chardet_detector_presets[] = {
     ComboItem(N_("None"), ""),
@@ -420,7 +421,7 @@ static const PreferencesWidget advanced_page_widgets[] = {
     WidgetSpin(N_("Adjust volume by:"), WidgetInt(0, "volume_delta"),
                {1, 25, 1, N_("percent")})};
 
-#define TITLESTRING_NPRESETS 8
+#define TITLESTRING_NPRESETS 10
 
 static const char * const titlestring_presets[TITLESTRING_NPRESETS] = {
     "${title}",
@@ -432,6 +433,10 @@ static const char * const titlestring_presets[TITLESTRING_NPRESETS] = {
     "}${?track-number:${track-number}. }${title}",
     "${?artist:${artist} }${?album:[ ${album} ] }${?artist:- "
     "}${?track-number:${track-number}. }${title}",
+    "${?artist:${artist} - }${?album:${album} - "
+    "}${?disc-number:${disc-number}. }${?track-number:${track-number}. }${title}",
+    "${?artist:${artist} }${?album:[ ${album} ] }${?artist:- "
+    "}${?disc-number:${disc-number}. }${?track-number:${track-number}. }${title}",
     "${?album:${album} - }${title}"};
 
 static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
@@ -442,6 +447,8 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
     N_("ARTIST - ALBUM - TITLE"),
     N_("ARTIST - ALBUM - TRACK. TITLE"),
     N_("ARTIST [ ALBUM ] - TRACK. TITLE"),
+    N_("ARTIST - ALBUM - DISC.TRACK. TITLE"),
+    N_("ARTIST [ ALBUM ] - DISC.TRACK. TITLE"),
     N_("ALBUM - TITLE")};
 
 static void * create_titlestring_table()

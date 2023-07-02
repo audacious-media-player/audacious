@@ -109,6 +109,7 @@ public:
         Publisher,     /* Publisher (label) */
         CatalogNum,    /* Catalog number */
         Lyrics,        /* Lyrics from id3 tags. */
+        Disc,          /* Disc number from id3 tags. */
 
         n_fields
     };
