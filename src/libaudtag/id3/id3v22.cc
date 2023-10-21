@@ -286,7 +286,9 @@ bool ID3v22TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
             id3_decode_rva (tuple, & frame[0], frame.len ());
             break;
           case ID3_PIC:
-            if (image)
+            /* we can return only one image, so once we have found a
+             * valid one, don't read any more PIC frames */
+            if (image && !image->len())
                 * image = id3_decode_pic (& frame[0], frame.len ());
             break;
           case ID3_LYRICS:

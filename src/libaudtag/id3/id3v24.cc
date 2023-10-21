@@ -648,7 +648,9 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * i
             rva_frames.append (std::move (frame));
             break;
           case ID3_APIC:
-            if (image)
+            /* we can return only one image, so once we have found a
+             * valid one, don't read any more APIC frames */
+            if (image && !image->len())
                 * image = id3_decode_apic (& frame[0], frame.len ());
             break;
           case ID3_LYRICS:
