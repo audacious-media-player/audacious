@@ -139,6 +139,13 @@ static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
         return true;
     }
 
+    if (event->keyval == GDK_KEY_Return && (event->state & GDK_SHIFT_MASK))
+    {
+        /* Let Shift+Enter act as another shortcut for the Queue button */
+        gtk_widget_activate (queue_button);
+        return true;
+    }
+
     return false;
 }
 
