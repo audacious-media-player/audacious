@@ -27,6 +27,7 @@
 #include <QFrame>
 #include <QHeaderView>
 #include <QItemSelectionModel>
+#include <QKeyEvent>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
@@ -245,6 +246,9 @@ public:
             delete instance;
     }
 
+protected:
+    void keyPressEvent(QKeyEvent * event) override;
+
 private:
     static SongsWindow * instance;
     SongListModel m_songListModel;
@@ -376,6 +380,17 @@ SongsWindow::SongsWindow()
     // **** END Bottom button bar ****
 
     resize(500, 500);
+}
+
+void SongsWindow::keyPressEvent(QKeyEvent * event)
+{
+    if (event->key() == Qt::Key_Return && event->modifiers() == Qt::ShiftModifier)
+    {
+        // Let Shift+Enter act as another shortcut for the Queue button
+        this->m_queueAndUnqueueButton.animateClick();
+    }
+
+    QDialog::keyPressEvent(event);
 }
 
 EXPORT void songwin_show()
