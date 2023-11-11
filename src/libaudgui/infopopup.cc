@@ -215,9 +215,9 @@ static GtkWidget * infopopup_create ()
 #ifdef USE_GTK3
     gtk_widget_set_margin_top (widgets.progress, 6);
     gtk_progress_bar_set_show_text ((GtkProgressBar *) widgets.progress, true);
-    gtk_grid_attach ((GtkGrid *) grid, widgets.progress, 0, 7, 2, 1);
+    gtk_grid_attach ((GtkGrid *) grid, widgets.progress, 0, 8, 2, 1);
 #else
-    gtk_table_set_row_spacing ((GtkTable *) grid, 6, 4);
+    gtk_table_set_row_spacing ((GtkTable *) grid, 7, 4);
     gtk_table_attach ((GtkTable *) grid, widgets.progress, 0, 2, 7, 8,
      GTK_FILL, GTK_FILL, 0, 0);
 
