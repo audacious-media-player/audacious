@@ -479,6 +479,16 @@ static void test_ringbuf()
     ring.discard(5);
     assert(ring.len() == 5);
 
+    ring.fill_with("fill");
+
+    assert(ring.size() == 10);
+    assert(ring.len() == 10);
+    assert(ring.linear() == 10);
+    assert(ring.space() == 0);
+
+    for (int i = 0; i < 10; i++)
+        assert(ring[i] == String("fill"));
+
     ring.discard();
     assert(ring.len() == 0);
 

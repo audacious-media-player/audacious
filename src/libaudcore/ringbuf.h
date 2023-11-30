@@ -169,6 +169,15 @@ public:
         return val;
     }
 
+    template<class... Args>
+    void fill_with(Args &&... args)
+    {
+        discard();
+        add(raw(size()));
+        for (int i = 0; i < len(); i++)
+            aud::construct<T>::make(at(raw(i)), std::forward<Args>(args)...);
+    }
+
 private:
     static constexpr int raw(int len) { return len * sizeof(T); }
     static constexpr int cooked(int len) { return len / sizeof(T); }
