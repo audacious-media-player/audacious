@@ -360,7 +360,7 @@ static void test_ringbuf()
     for (int i = 0; i < 5; i++)
     {
         assert(ring.head() == nums[i]);
-        ring.pop();
+        assert(ring.pop() == nums[i]);
     }
 
     for (int i = 7; i < 10; i++)
@@ -400,13 +400,13 @@ static void test_ringbuf()
     for (int i = 0; i < 5; i++)
     {
         assert(ring.head() == nums[5 + i]);
-        ring.pop();
+        assert(ring.pop() == nums[5 + i]);
     }
 
     for (int i = 0; i < 5; i++)
     {
         assert(ring.head() == nums[4 - i]);
-        ring.pop();
+        assert(ring.pop() == nums[4 - i]);
     }
 
     ring.copy_in(&nums[5], 5);
@@ -415,13 +415,13 @@ static void test_ringbuf()
     for (int i = 0; i < 5; i++)
     {
         assert(ring.head() == nums[5 + i]);
-        ring.pop();
+        assert(ring.pop() == nums[5 + i]);
     }
 
     for (int i = 0; i < 5; i++)
     {
         assert(ring.head() == nums[i]);
-        ring.pop();
+        assert(ring.pop() == nums[i]);
     }
 
     ring.move_in(nums, 10);

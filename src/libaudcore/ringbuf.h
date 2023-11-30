@@ -158,10 +158,12 @@ public:
 
     T & head() { return *(T *)at(raw(0)); }
 
-    void pop()
+    T pop()
     {
+        T val = std::move(head());
         head().~T();
         remove(raw(1));
+        return val;
     }
 
 private:
