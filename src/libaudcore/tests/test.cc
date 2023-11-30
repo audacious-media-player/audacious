@@ -355,7 +355,10 @@ static void test_ringbuf()
     ring.alloc(7);
 
     for (int i = 0; i < 7; i++)
+    {
         assert(ring.push(nums[i]) == nums[i]);
+        assert(ring.nth_from_last(0) == nums[i]);
+    }
 
     for (int i = 0; i < 5; i++)
     {
@@ -364,7 +367,10 @@ static void test_ringbuf()
     }
 
     for (int i = 7; i < 10; i++)
+    {
         assert(ring.push(nums[i]) == nums[i]);
+        assert(ring.nth_from_last(0) == nums[i]);
+    }
 
     assert(ring.size() == 7);
     assert(ring.len() == 5);
@@ -374,7 +380,10 @@ static void test_ringbuf()
     ring.alloc(5);
 
     for (int i = 0; i < 5; i++)
+    {
         assert(ring[i] == nums[5 + i]);
+        assert(ring.nth_from_last(i) == nums[9 - i]);
+    }
 
     assert(ring.size() == 5);
     assert(ring.len() == 5);

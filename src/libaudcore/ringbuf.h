@@ -119,6 +119,9 @@ public:
         return *(const T *)RingBufBase::at(raw(i));
     }
 
+    /* zero-based: nth_from_last(0) is the last element */
+    T & nth_from_last(int i) { return (*this)[len() - 1 - i]; }
+
     void alloc(int size) { RingBufBase::alloc(raw(size)); }
     void destroy() { RingBufBase::destroy(aud::erase_func<T>()); }
 
