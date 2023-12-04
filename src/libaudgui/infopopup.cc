@@ -37,6 +37,9 @@
 
 static void infopopup_move_to_mouse (GtkWidget * infopopup);
 
+static const char * gray = "#a0a0a0";
+static const char * white = "#ffffff";
+
 static struct {
     GtkWidget * title_header, * title_label;
     GtkWidget * artist_header, * artist_label;
@@ -110,28 +113,40 @@ static void infopopup_realized (GtkWidget * widget)
     infopopup_move_to_mouse (widget);
 }
 
-#ifndef USE_GTK3
-static const GdkColor gray = {0, 40960, 40960, 40960};
-static const GdkColor white = {0, 65535, 65535, 65535};
-
+#ifdef USE_GTK3
+static gboolean infopopup_draw_bg (GtkWidget * widget, cairo_t * cr)
+{
+#else
 static gboolean infopopup_draw_bg (GtkWidget * widget)
 {
+    cairo_t * cr = gdk_cairo_create (gtk_widget_get_window (widget));
+#endif
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+    auto & c = (gtk_widget_get_style (widget))->base[GTK_STATE_NORMAL];
+G_GNUC_END_IGNORE_DEPRECATIONS
+
     GtkAllocation alloc;
     gtk_widget_get_allocation (widget, & alloc);
 
-    cairo_t * cr = gdk_cairo_create (gtk_widget_get_window (widget));
-    auto & c = (gtk_widget_get_style (widget))->base[GTK_STATE_NORMAL];
     cairo_pattern_t * gradient = audgui_dark_bg_gradient (c, alloc.height);
-
     cairo_set_source (cr, gradient);
     cairo_rectangle (cr, 0, 0, alloc.width, alloc.height);
     cairo_fill (cr);
-
     cairo_pattern_destroy (gradient);
+#ifndef USE_GTK3
     cairo_destroy (cr);
+#endif
     return false;
 }
-#endif
+
+static void infopopup_set_markup (GtkWidget * label,
+ const char * text, const char * color, bool italic)
+{
+    CharPtr markup (g_markup_printf_escaped (
+     italic ? "<span color=\"%s\" style=\"italic\">%s</span>"
+            : "<span color=\"%s\">%s</span>", color, text));
+    gtk_label_set_markup ((GtkLabel *) label, markup);
+}
 
 static void infopopup_add_category (GtkWidget * grid, int position,
  const char * text, GtkWidget * * header, GtkWidget * * label)
@@ -139,8 +154,7 @@ static void infopopup_add_category (GtkWidget * grid, int position,
     * header = gtk_label_new (nullptr);
     * label = gtk_label_new (nullptr);
 
-    CharPtr markup (g_markup_printf_escaped ("<span style=\"italic\">%s</span>", text));
-    gtk_label_set_markup ((GtkLabel *) * header, markup);
+    infopopup_set_markup (* header, text, gray, true);
 
 #ifdef USE_GTK3
     gtk_widget_set_halign (* header, GTK_ALIGN_END);
@@ -151,9 +165,6 @@ static void infopopup_add_category (GtkWidget * grid, int position,
 #else
     gtk_misc_set_alignment ((GtkMisc *) * header, 1, 0.5);
     gtk_misc_set_alignment ((GtkMisc *) * label, 0, 0.5);
-
-    gtk_widget_modify_fg (* header, GTK_STATE_NORMAL, & gray);
-    gtk_widget_modify_fg (* label, GTK_STATE_NORMAL, & white);
 
     gtk_table_attach ((GtkTable *) grid, * header, 0, 1, position, position + 1,
      GTK_FILL, GTK_FILL, 0, 0);
@@ -219,11 +230,12 @@ static GtkWidget * infopopup_create ()
     gtk_table_set_row_spacing ((GtkTable *) grid, 7, 4);
     gtk_table_attach ((GtkTable *) grid, widgets.progress, 0, 2, 7, 8,
      GTK_FILL, GTK_FILL, 0, 0);
+#endif
 
     /* override background drawing */
     gtk_widget_set_app_paintable (infopopup, true);
+
     g_signal_connect (infopopup, AUDGUI_DRAW_SIGNAL, (GCallback) infopopup_draw_bg, nullptr);
-#endif
     g_signal_connect (infopopup, "realize", (GCallback) infopopup_realized, nullptr);
 
     /* do not show the track progress */
@@ -236,7 +248,7 @@ static void infopopup_set_field (GtkWidget * header, GtkWidget * label, const ch
 {
     if (text)
     {
-        gtk_label_set_text ((GtkLabel *) label, text);
+        infopopup_set_markup (label, text, white, false);
         gtk_widget_show (header);
         gtk_widget_show (label);
     }
