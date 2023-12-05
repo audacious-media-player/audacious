@@ -28,8 +28,10 @@
 #include <QWheelEvent>
 #include <QWidgetAction>
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
 namespace audqt
@@ -122,7 +124,7 @@ void VolumeButton::updateIcon(int val)
     else
         setIcon(QIcon::fromTheme("audio-volume-high"));
 
-    setToolTip(QString("%1 %").arg(val));
+    setToolTip(QString(str_printf(_("%d%%"), val)));
 }
 
 void VolumeButton::updateVolume()
