@@ -57,6 +57,18 @@ public:
 
         return styleHint;
     }
+
+    void drawPrimitive(PrimitiveElement element,
+                       const QStyleOption * option,
+                       QPainter * painter,
+                       const QWidget * widget) const override
+    {
+        /* hide dotted rectangle when slider is focussed */
+        if (element == QStyle::PE_FrameFocusRect)
+            return;
+
+        QProxyStyle::drawPrimitive(element, option, painter, widget);
+    }
 };
 
 class VolumeButton : public QToolButton
