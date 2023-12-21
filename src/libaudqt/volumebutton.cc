@@ -22,6 +22,7 @@
 #include <QIcon>
 #include <QMenu>
 #include <QMouseEvent>
+#include <QProxyStyle>
 #include <QSlider>
 #include <QToolButton>
 #include <QVBoxLayout>
@@ -36,6 +37,27 @@
 
 namespace audqt
 {
+
+class VolumeSliderStyle : public QProxyStyle
+{
+public:
+    VolumeSliderStyle()
+    {
+        audqt::setup_proxy_style(this);
+    }
+
+    int styleHint(QStyle::StyleHint hint, const QStyleOption * option = nullptr,
+                  const QWidget * widget = nullptr,
+                  QStyleHintReturn * returnData = nullptr) const override
+    {
+        int styleHint = QProxyStyle::styleHint(hint, option, widget, returnData);
+
+        if (hint == QStyle::SH_Slider_AbsoluteSetButtons)
+            styleHint |= Qt::LeftButton;
+
+        return styleHint;
+    }
+};
 
 class VolumeButton : public QToolButton
 {
@@ -71,6 +93,10 @@ private:
 VolumeButton::VolumeButton(QWidget * parent)
     : QToolButton(parent), m_action(this), m_slider(Qt::Vertical)
 {
+    auto style = new VolumeSliderStyle;
+    style->setParent(this);
+
+    m_slider.setStyle(style);
     m_slider.setMinimumHeight(audqt::sizes.OneInch);
     m_slider.setRange(0, 100);
 
