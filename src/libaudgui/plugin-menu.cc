@@ -37,7 +37,7 @@ static void configure_plugins ()
 }
 
 static const AudguiMenuItem main_items[] = {
-    MenuCommand (N_("_Plugins ..."), 0, 0, (GdkModifierType) 0, configure_plugins),
+    MenuCommand (N_("_Plugins ..."), "preferences-system", 0, (GdkModifierType) 0, configure_plugins),
     MenuSep ()
 };
 
