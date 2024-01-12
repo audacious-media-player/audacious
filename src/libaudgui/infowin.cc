@@ -516,7 +516,7 @@ static void infowin_show (Playlist list, int entry, const String & filename,
 EXPORT void audgui_infowin_show (Playlist playlist, int entry)
 {
     String filename = playlist.entry_filename (entry);
-    g_return_if_fail (filename != nullptr);
+    g_return_if_fail (filename);
 
     String error;
     PluginHandle * decoder = playlist.entry_decoder (entry, Playlist::Wait, & error);
