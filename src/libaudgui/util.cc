@@ -254,10 +254,13 @@ EXPORT void audgui_file_entry_set_uri (GtkWidget * entry, const char * uri)
     gtk_editable_set_position ((GtkEditable *) entry, -1);
 }
 
-static void set_label_wrap (GtkWidget * label, void *)
+static void set_label_properties (GtkWidget * label, void *)
 {
     if (GTK_IS_LABEL (label))
+    {
+        gtk_label_set_selectable ((GtkLabel *) label, true);
         gtk_label_set_line_wrap_mode ((GtkLabel *) label, PANGO_WRAP_WORD_CHAR);
+    }
 }
 
 #ifdef USE_GTK3
@@ -287,7 +290,7 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
     gtk_window_set_role ((GtkWindow *) dialog, "message");
 
     GtkWidget * box = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
-    gtk_container_foreach ((GtkContainer *) box, set_label_wrap, nullptr);
+    gtk_container_foreach ((GtkContainer *) box, set_label_properties, nullptr);
 
 #ifdef USE_GTK3
     const char * icon = icon_for_message_type (type);
