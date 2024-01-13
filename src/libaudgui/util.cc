@@ -277,10 +277,6 @@ static const char * icon_for_message_type (GtkMessageType type)
 }
 #endif
 
-/* style choices should not be enforced by deprecating API functions */
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2)
 {
@@ -295,12 +291,14 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
      GINT_TO_POINTER (label_selectable));
 
 #ifdef USE_GTK3
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     const char * icon = icon_for_message_type (type);
     if (icon)
     {
         GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_DIALOG);
         gtk_message_dialog_set_image ((GtkMessageDialog *) dialog, image);
     }
+G_GNUC_END_IGNORE_DEPRECATIONS
 #endif
 
     if (button2)
@@ -317,8 +315,6 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
 
     return dialog;
 }
-
-#pragma GCC diagnostic pop
 
 EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
 {
