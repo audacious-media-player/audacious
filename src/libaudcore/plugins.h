@@ -57,6 +57,7 @@ const void * aud_plugin_get_header(PluginHandle * plugin);
 PluginHandle * aud_plugin_by_header(const void * header);
 
 const Index<PluginHandle *> & aud_plugin_list(PluginType type);
+const Index<PluginHandle *> & aud_plugin_list_sorted(PluginType type);
 
 const char * aud_plugin_get_name(PluginHandle * plugin);
 bool aud_plugin_has_about(PluginHandle * plugin);

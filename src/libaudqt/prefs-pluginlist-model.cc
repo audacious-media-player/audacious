@@ -72,7 +72,7 @@ QModelIndex PluginListModel::index(int row, int column,
     if (cat < 0 || cat >= n_categories)
         return QModelIndex();
 
-    auto & list = aud_plugin_list(categories[cat].type);
+    auto & list = aud_plugin_list_sorted(categories[cat].type);
     if (row < 0 || row >= list.len())
         return QModelIndex();
 

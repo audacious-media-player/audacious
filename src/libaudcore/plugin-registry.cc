@@ -103,6 +103,7 @@ static constexpr aud::array<InputKey, const char *> input_key_names = {
 
 static aud::array<PluginType, Index<PluginHandle *>> plugins;
 static aud::array<PluginType, Index<PluginHandle *>> compatible;
+static aud::array<PluginType, Index<PluginHandle *>> sorted; /* by name */
 static aud::mutex mutex;
 static bool modified = false;
 
@@ -208,6 +209,9 @@ void plugin_registry_cleanup()
     }
 
     for (auto & list : compatible)
+        list.clear();
+
+    for (auto & list : sorted)
         list.clear();
 }
 
@@ -442,8 +446,14 @@ void plugin_registry_prune()
     {
         plugins[type].remove_if(check_not_found);
         plugins[type].sort(plugin_compare);
+
         compatible[type].insert(plugins[type].begin(), 0, plugins[type].len());
         compatible[type].remove_if(check_incompatible);
+
+        sorted[type].insert(compatible[type].begin(), 0, compatible[type].len());
+        sorted[type].sort([](PluginHandle * a, PluginHandle * b) {
+            return str_compare(aud_plugin_get_name(a), aud_plugin_get_name(b));
+        });
     }
 }
 
@@ -621,6 +631,11 @@ EXPORT PluginHandle * aud_plugin_by_header(const void * header)
 EXPORT const Index<PluginHandle *> & aud_plugin_list(PluginType type)
 {
     return compatible[type];
+}
+
+EXPORT const Index<PluginHandle *> & aud_plugin_list_sorted(PluginType type)
+{
+    return sorted[type];
 }
 
 EXPORT const char * aud_plugin_get_name(PluginHandle * plugin)
