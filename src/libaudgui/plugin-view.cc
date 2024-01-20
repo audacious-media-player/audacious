@@ -132,7 +132,7 @@ static void list_fill (GtkTreeView * tree, void * type)
     gtk_tree_view_column_pack_start (col, rend, false);
     gtk_tree_view_column_set_attributes (col, rend, "text", PVIEW_COL_NAME, nullptr);
 
-    for (PluginHandle * plugin : aud_plugin_list (aud::from_ptr<PluginType> (type)))
+    for (PluginHandle * plugin : aud_plugin_list_sorted (aud::from_ptr<PluginType> (type)))
         add_to_list (model, plugin);
 }
 
