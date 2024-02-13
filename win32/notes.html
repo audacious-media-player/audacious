@@ -34,13 +34,14 @@ export LIBRARY_PATH=/C/libs/lib</tt></p></blockquote>
 pacman -S autoconf automake git libtool make patch pkg-config<br>
 pacman -S mingw-w64-i686-gcc mingw-w64-i686-gettext mingw-w64-i686-libxml2<br>
 pacman -S mingw-w64-i686-atk mingw-w64-i686-cairo mingw-w64-i686-pango<br>
-pacman -S mingw-w64-i686-gdk-pixbuf2 mingw-w64-i686-librsvg mingw-w64-i686-qt5<br>
+pacman -S mingw-w64-i686-gdk-pixbuf2 mingw-w64-i686-librsvg mingw-w64-i686-qt5-base<br>
+pacman -S mingw-w64-i686-qt5-imageformats mingw-w64-i686-qt5-multimedia mingw-w64-i686-qt5-svg<br>
 pacman -S mingw-w64-i686-flac mingw-w64-i686-libvorbis mingw-w64-i686-libcdio-paranoia<br>
 pacman -S mingw-w64-i686-fluidsynth mingw-w64-i686-mpg123 mingw-w64-i686-faad2<br>
 pacman -S mingw-w64-i686-wavpack mingw-w64-i686-libmodplug mingw-w64-i686-libbs2b<br>
 pacman -S mingw-w64-i686-libsamplerate mingw-w64-i686-libsoxr mingw-w64-i686-neon<br>
-pacman -S mingw-w64-i686-libsidplayfp mingw-w64-i686-libopenmpt<br>
-pacman -S mingw-w64-i686-libcue mingw-w64-i686-lame mingw-w64-i686-opusfile</tt></p></blockquote>
+pacman -S mingw-w64-i686-libcue mingw-w64-i686-lame mingw-w64-i686-opusfile<br>
+pacman -S mingw-w64-i686-libopenmpt</tt></p></blockquote>
 
 <h3>Install GTK+</h3>
 
@@ -60,7 +61,8 @@ for GTK+ to build successfully.</i></p>
 make -j$(nproc) ffmpeg<br>
 make -j$(nproc) libmms<br>
 make -j$(nproc) libbinio<br>
-make -j$(nproc) adplug</tt></p></blockquote>
+make -j$(nproc) adplug<br>
+make -j$(nproc) libsidplayfp</tt></p></blockquote>
 
 <h3>Install Audacious</h3>
 

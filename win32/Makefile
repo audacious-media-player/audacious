@@ -9,14 +9,13 @@ gtk: gtk+-2.24.33.tar.xz
 	cd gtk+-2.24.33 && CFLAGS="-O2 -fcommon" ./configure --prefix=$(LIB_PREFIX)
 	cd gtk+-2.24.33 && $(MAKE) && $(MAKE) install
 
-ffmpeg-5.1.2.tar.xz:
-	wget https://ffmpeg.org/releases/ffmpeg-5.1.2.tar.xz
+ffmpeg-6.1.1.tar.xz:
+	wget https://ffmpeg.org/releases/ffmpeg-6.1.1.tar.xz
 
-ffmpeg: ffmpeg-5.1.2.tar.xz
-	tar xf ffmpeg-5.1.2.tar.xz
-	cd ffmpeg-5.1.2 && patch -p1 < ../patches/ffmpeg-hwcontext_vulkan.c.diff
-	cd ffmpeg-5.1.2 && ./configure --prefix=$(LIB_PREFIX) --enable-shared --disable-yasm --cpu=i686
-	cd ffmpeg-5.1.2 && $(MAKE) && $(MAKE) install
+ffmpeg: ffmpeg-6.1.1.tar.xz
+	tar xf ffmpeg-6.1.1.tar.xz
+	cd ffmpeg-6.1.1 && ./configure --prefix=$(LIB_PREFIX) --enable-shared --disable-yasm --cpu=i686
+	cd ffmpeg-6.1.1 && $(MAKE) && $(MAKE) install
 
 libmms-0.6.4.tar.gz:
 	wget https://sourceforge.net/projects/libmms/files/libmms/0.6.4/libmms-0.6.4.tar.gz
@@ -44,3 +43,11 @@ adplug: adplug-2.3.3.tar.bz2
 	tar xf adplug-2.3.3.tar.bz2
 	cd adplug-2.3.3 && ./configure --prefix=$(LIB_PREFIX)
 	cd adplug-2.3.3 && $(MAKE) && $(MAKE) install
+
+libsidplayfp-2.6.0.tar.gz:
+	wget https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/2.6/libsidplayfp-2.6.0.tar.gz
+
+libsidplayfp: libsidplayfp-2.6.0.tar.gz
+	tar xf libsidplayfp-2.6.0.tar.gz
+	cd libsidplayfp-2.6.0 && ./configure --prefix=$(LIB_PREFIX)
+	cd libsidplayfp-2.6.0 && $(MAKE) && $(MAKE) install
