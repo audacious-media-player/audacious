@@ -43,47 +43,48 @@ and license of each project can be found on the Internet.
     Project          Website
     -------          -------
 
-    MinGW            http://mingw.org
-    GNU libc         http://www.gnu.org/software/libc
-    GNU libstdc++    http://gcc.gnu.org/libstdc++
-    GNU gettext      http://www.gnu.org/software/gettext
-    GNU libiconv     http://www.gnu.org/software/libiconv
-    zlib             http://zlib.net
-    libpng           http://libpng.org/pub/png
-    libjpeg-turbo    http://libjpeg-turbo.org/
-    libffi           http://sourceware.org/libffi
-    GLib             http://developer.gnome.org/glib
-    Pixman           http://pixman.org
-    Cairo            http://cairographics.org
-    Pango            http://www.pango.org
-    GDK-Pixbuf       http://developer.gnome.org/gdk-pixbuf
-    ATK              http://developer.gnome.org/atk
-    GTK+             http://www.gtk.org
-    Qt               http://www.qt.io
-    libguess         http://atheme.org/projects/libguess.html
-    libxml2          http://xmlsoft.org
-    mpg123           http://mpg123.de
-    FAAD2            http://www.audiocoding.com/faad2.html
-    libsndfile       http://mega-nerd.com/libsndfile
-    bs2b             http://bs2b.sourceforge.net
-    GNU libcdio      http://www.gnu.org/software/libcdio
-    libcddb          http://libcddb.sourceforge.net
-    libcue           http://github.com/lipnitsk/libcue
-    LAME             http://lame.sourceforge.net
-    libflac          http://xiph.org/flac
-    libogg           http://xiph.org/ogg
-    libvorbis        http://xiph.org/vorbis
-    neon             http://webdav.org/neon
-    libsamplerate    http://mega-nerd.com/SRC
-    WavPack          http://wavpack.com
-    FFmpeg           http://ffmpeg.org
-    ModPlug          http://modplug-xmms.sourceforge.net
-    AdPlug           http://adplug.github.io
-    libmms           http://libmms.sourceforge.net
-    sidplayfp        http://sidplay-residfp.sourceforge.net
-    FluidSynth       http://fluidsynth.org
-    OpenMPT          http://openmpt.org
-    Opus             http://www.opus-codec.org
+    MSYS2            https://www.msys2.org
+    GNU libc         https://www.gnu.org/software/libc
+    GNU libstdc++    https://gcc.gnu.org
+    GNU gettext      https://www.gnu.org/software/gettext
+    GNU libiconv     https://www.gnu.org/software/libiconv
+    zlib             https://zlib.net
+    libpng           http://libpng.org/pub/png/libpng.html
+    libjpeg-turbo    https://libjpeg-turbo.org
+    libffi           https://sourceware.org/libffi
+    GLib             https://docs.gtk.org/glib
+    JSON-GLib        https://wiki.gnome.org/Projects/JsonGlib
+    Pixman           https://pixman.org
+    Cairo            https://cairographics.org
+    Pango            https://pango.gnome.org
+    GDK-Pixbuf       https://wiki.gnome.org/Projects/GdkPixbuf
+    ATK              https://docs.gtk.org/atk
+    GTK              https://gtk.org
+    Qt               https://www.qt.io
+    libguess         https://github.com/kaniini/libguess
+    libxml2          https://gitlab.gnome.org/GNOME/libxml2
+    mpg123           https://mpg123.de
+    FAAD2            https://github.com/knik0/faad2
+    libsndfile       https://libsndfile.github.io/libsndfile
+    bs2b             https://bs2b.sourceforge.net
+    GNU libcdio      https://www.gnu.org/software/libcdio
+    libcddb          https://libcddb.sourceforge.net
+    libcue           https://github.com/lipnitsk/libcue
+    LAME             https://lame.sourceforge.io
+    libflac          https://xiph.org/flac
+    libogg           https://xiph.org/ogg
+    libvorbis        https://xiph.org/vorbis
+    neon             https://notroj.github.io/neon
+    libsamplerate    https://libsndfile.github.io/libsamplerate
+    WavPack          https://wavpack.com
+    FFmpeg           https://ffmpeg.org
+    ModPlug          https://modplug-xmms.sourceforge.net
+    AdPlug           https://adplug.github.io
+    libmms           https://sourceforge.net/projects/libmms
+    sidplayfp        https://sourceforge.net/projects/sidplay-residfp
+    FluidSynth       https://www.fluidsynth.org
+    OpenMPT          https://openmpt.org
+    Opus             https://opus-codec.org
 
 If you are an author of one of these projects and do not wish your software
 included with Audacious in binary form, please contact us via the support forum:
