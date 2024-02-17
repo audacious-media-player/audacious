@@ -225,7 +225,7 @@ static void iface_restart_in_gtk_mode()
 }
 
 static const PreferencesWidget iface_restart_widgets[] = {
-    WidgetButton(N_("Restart in GTK (legacy) mode"),
+    WidgetButton(N_("Restart in GTK mode"),
                  {iface_restart_in_gtk_mode}),
 };
 #endif
@@ -264,7 +264,7 @@ static const PreferencesWidget appearance_page_widgets[] = {
 #ifdef USE_GTK
     WidgetBox({{iface_restart_widgets}, true}, WIDGET_CHILD),
 #else
-    WidgetLabel(N_("GTK (legacy) mode is unavailable in this build."),
+    WidgetLabel(N_("GTK mode is unavailable in this build."),
                 WIDGET_CHILD),
 #endif
     WidgetCombo(N_("Interface:"),
