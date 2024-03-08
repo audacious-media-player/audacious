@@ -88,9 +88,22 @@ class DarkStyle : public QProxyStyle
 public:
     DarkStyle() : QProxyStyle("fusion") {}
 
-    void polish(QApplication * app) override { QProxyStyle::polish(app); };
+    void polish(QApplication * app) override { QProxyStyle::polish(app); }
     void polish(QWidget * widget) override { QProxyStyle::polish(widget); }
     void polish(QPalette & palette) override;
+
+    /* Qt 6.3+ no longer uses the theme icon "window-close" for tabs,
+     * but instead forces a built-in icon. Override it back. */
+#if QT_VERSION >= QT_VERSION_CHECK(6, 3, 0)
+    QIcon standardIcon(StandardPixmap standardIcon,
+                       const QStyleOption * option = nullptr,
+                       const QWidget * widget = nullptr) const override
+    {
+        if (standardIcon == QStyle::SP_TabCloseButton)
+            return QIcon::fromTheme("window-close");
+        return QProxyStyle::standardIcon(standardIcon, option, widget);
+    }
+#endif
 };
 
 void DarkStyle::polish(QPalette & palette)
