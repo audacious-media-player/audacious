@@ -2,8 +2,8 @@ option('dbus', type: 'boolean', value: true,
        description: 'Whether DBus support is enabled')
 option('qt', type: 'boolean', value: true,
        description: 'Whether Qt support is enabled')
-option('qt6', type: 'boolean', value: false,
-       description: 'Whether Qt 6 support is enabled')
+option('qt5', type: 'boolean', value: false,
+       description: 'Whether Qt 5 support is enabled')
 option('gtk', type: 'boolean', value: true,
        description: 'Whether GTK support is enabled')
 option('gtk3', type: 'boolean', value: false,

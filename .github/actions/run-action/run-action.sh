@@ -4,7 +4,7 @@
 #
 # ubuntu-20.04:      Qt 5 + GTK2
 # ubuntu-22.04:      Qt 5 + GTK3
-# Windows:           Qt 5 + GTK2
+# Windows:           Qt 6 + GTK2
 # macOS (Autotools): Qt 5 - GTK
 # macOS (Meson):     Qt 6 - GTK
 
@@ -28,9 +28,9 @@ fi
 case "$action" in
   configure)
     case "$os" in
-      ubuntu-20.04 | windows*)
+      ubuntu-20.04)
         if [ "$build_system" = 'meson' ]; then
-          meson setup build
+          meson setup build -D qt5=true
         else
           ./autogen.sh && ./configure
         fi
@@ -38,7 +38,7 @@ case "$action" in
 
       ubuntu*)
         if [ "$build_system" = 'meson' ]; then
-          meson setup build -D gtk3=true
+          meson setup build -D qt5=true -D gtk3=true
         else
           ./autogen.sh && ./configure --enable-gtk3
         fi
@@ -46,11 +46,19 @@ case "$action" in
 
       macos*)
         if [ "$build_system" = 'meson' ]; then
-          meson setup build -D qt6=true -D gtk=false
+          meson setup build -D gtk=false
         else
           export PATH="/usr/local/opt/qt@5/bin:$PATH"
           export PKG_CONFIG_PATH="/usr/local/opt/qt@5/lib/pkgconfig:$PKG_CONFIG_PATH"
           ./autogen.sh && ./configure --disable-gtk
+        fi
+        ;;
+
+      windows*)
+        if [ "$build_system" = 'meson' ]; then
+          meson setup build
+        else
+          ./autogen.sh && ./configure
         fi
         ;;
 
