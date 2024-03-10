@@ -21,7 +21,11 @@ thread_dep = dependency('threads', required: true)
 
 
 if get_option('qt')
-  if get_option('qt6')
+  if get_option('qt5')
+    qt = import('qt5')
+    qt_req = '>= 5.2'
+    qt_dep = dependency('qt5', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
+  else
     if meson.version().version_compare('>= 0.57')
       qt = import('qt6')
     else
@@ -30,10 +34,6 @@ if get_option('qt')
 
     qt_req = '>= 6.0'
     qt_dep = dependency('qt6', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
-  else
-    qt = import('qt5')
-    qt_req = '>= 5.2'
-    qt_dep = dependency('qt5', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
   endif
 endif
 
@@ -231,8 +231,8 @@ if meson.version().version_compare('>= 0.53')
 
   summary({
     'D-Bus support': get_option('dbus'),
-    'Qt 5 support': get_option('qt') and not get_option('qt6'),
-    'Qt 6 support': get_option('qt6'),
+    'Qt 5 support': get_option('qt5'),
+    'Qt 6 support': get_option('qt') and not get_option('qt5'),
     'GTK2 support': get_option('gtk') and not get_option('gtk3'),
     'GTK3 support': get_option('gtk3'),
     'Libarchive support': get_option('libarchive'),
