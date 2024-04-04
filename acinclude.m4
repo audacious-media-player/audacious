@@ -229,7 +229,11 @@ AC_ARG_ENABLE(qt,
  AS_HELP_STRING(--disable-qt, [Disable Qt support (default=enabled)]),
  USE_QT=$enableval, USE_QT=yes)
 
-if test $USE_QT = yes ; then
+AC_ARG_ENABLE(qt5,
+ AS_HELP_STRING(--enable-qt5, [Use Qt 5 instead of Qt 6 (default=disabled)]),
+ USE_QT5=$enableval, USE_QT5=no)
+
+if test $USE_QT5 = yes ; then
     PKG_CHECK_MODULES([QTCORE], [Qt5Core >= 5.2])
     PKG_CHECK_VAR([QTBINPATH], [Qt5Core >= 5.2], [host_bins])
     PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets >= 5.2])
@@ -238,9 +242,15 @@ if test $USE_QT = yes ; then
     # needed if Qt was built with -reduce-relocations
     QTCORE_CFLAGS="$QTCORE_CFLAGS -fPIC"
     QT_CFLAGS="$QT_CFLAGS -fPIC"
+elif test $USE_QT = yes ; then
+    PKG_CHECK_MODULES([QTCORE], [Qt6Core >= 6.0])
+    PKG_CHECK_VAR([QTBINPATH], [Qt6Core >= 6.0], [libexecdir])
+    PKG_CHECK_MODULES([QT], [Qt6Core Qt6Gui Qt6Widgets >= 6.0])
+    AC_DEFINE([USE_QT], [1], [Define if Qt support enabled])
 fi
 
 AC_SUBST(USE_QT)
+AC_SUBST(USE_QT5)
 AC_SUBST(QT_CFLAGS)
 AC_SUBST(QT_LIBS)
 AC_SUBST(QTBINPATH)
