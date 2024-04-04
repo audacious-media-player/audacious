@@ -32,7 +32,7 @@ case "$action" in
         if [ "$build_system" = 'meson' ]; then
           meson setup build -D qt5=true
         else
-          ./autogen.sh && ./configure
+          ./autogen.sh && ./configure --enable-qt5
         fi
         ;;
 
@@ -40,7 +40,7 @@ case "$action" in
         if [ "$build_system" = 'meson' ]; then
           meson setup build -D qt5=true -D gtk3=true
         else
-          ./autogen.sh && ./configure --enable-gtk3
+          ./autogen.sh && ./configure --enable-qt5 --enable-gtk3
         fi
         ;;
 
@@ -50,7 +50,7 @@ case "$action" in
         else
           export PATH="/usr/local/opt/qt@5/bin:$PATH"
           export PKG_CONFIG_PATH="/usr/local/opt/qt@5/lib/pkgconfig:$PKG_CONFIG_PATH"
-          ./autogen.sh && ./configure --disable-gtk
+          ./autogen.sh && ./configure --enable-qt5 --disable-gtk
         fi
         ;;
 
