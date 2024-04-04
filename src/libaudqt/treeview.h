@@ -39,12 +39,6 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent * event) override;
-
-    // deprecated, use QTreeView::mouseDoubleClickEvent() instead
-    void mouseDoubleClickEvent(QMouseEvent * event) override;
-
-    // deprecated, connect to QTreeView::activated() instead
-    virtual void activate(const QModelIndex & index);
 };
 
 } // namespace audqt

@@ -109,12 +109,7 @@ static inline int to_portable_dpi(int x)
 }
 
 void init();
-void run() __attribute__((deprecated)); /* use QApplication::exec() */
-void quit() __attribute__((deprecated)); /* use QApplication::quit() */
 void cleanup();
-
-QIcon get_icon(const char * name)
-    __attribute__((deprecated)); /* use QIcon::fromTheme() */
 
 QGradientStops dark_bg_gradient(const QColor & base);
 QColor vis_bar_color(const QColor & hue, int bar, int n_bars);

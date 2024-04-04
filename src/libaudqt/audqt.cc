@@ -169,10 +169,6 @@ EXPORT void init()
     log_init();
 }
 
-EXPORT void run() { qApp->exec(); }
-
-EXPORT void quit() { qApp->quit(); }
-
 EXPORT void cleanup()
 {
     if (--init_count)
@@ -188,11 +184,6 @@ EXPORT void cleanup()
     log_cleanup();
 
     delete qApp;
-}
-
-EXPORT QIcon get_icon(const char * name)
-{
-    return QIcon::fromTheme(name);
 }
 
 EXPORT QGradientStops dark_bg_gradient(const QColor & base)
