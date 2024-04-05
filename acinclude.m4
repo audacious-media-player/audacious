@@ -136,7 +136,6 @@ dnl MinGW-specific flags
 dnl ====================
 if test $HAVE_MSWINDOWS = yes ; then
     AC_DEFINE([__USE_MINGW_ANSI_STDIO], [1], "Use GNU-style printf")
-    CFLAGS="$CFLAGS -march=i686"
 fi
 
 dnl Byte order

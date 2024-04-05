@@ -14,7 +14,7 @@ ffmpeg-6.1.1.tar.xz:
 
 ffmpeg: ffmpeg-6.1.1.tar.xz
 	tar xf ffmpeg-6.1.1.tar.xz
-	cd ffmpeg-6.1.1 && ./configure --prefix=$(LIB_PREFIX) --enable-shared --disable-yasm --cpu=i686
+	cd ffmpeg-6.1.1 && ./configure --prefix=$(LIB_PREFIX) --enable-shared --cpu=x86-64 --disable-vulkan --disable-x86asm
 	cd ffmpeg-6.1.1 && $(MAKE) && $(MAKE) install
 
 libmms-0.6.4.tar.gz:
