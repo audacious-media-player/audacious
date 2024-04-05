@@ -115,6 +115,11 @@ EXPORT void init()
 
     aud_config_set_defaults("audqt", audqt_defaults);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0) && defined(_WIN32)
+    QApplication::setHighDpiScaleFactorRoundingPolicy(
+        Qt::HighDpiScaleFactorRoundingPolicy::Floor);
+#endif
+
     static char app_name[] = "audacious";
     static int dummy_argc = 1;
     static char * dummy_argv[] = {app_name, nullptr};
