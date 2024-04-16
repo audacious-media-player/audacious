@@ -246,9 +246,9 @@ EXPORT QVBoxLayout * make_vbox(QWidget * parent, int spacing)
 
 EXPORT void setup_proxy_style(QProxyStyle * style)
 {
-    // set the correct base style ("fusion" or native)
+    // set the correct base style (dark or native)
     if (!strcmp(aud_get_str("audqt", "theme"), "dark"))
-        style->setBaseStyle(QStyleFactory::create("fusion"));
+        style->setBaseStyle(create_dark_style());
     else
         style->setBaseStyle(nullptr);
 

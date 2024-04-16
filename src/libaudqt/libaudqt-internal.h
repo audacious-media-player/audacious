@@ -25,6 +25,7 @@
 class QPoint;
 class QScreen;
 class QString;
+class QStyle;
 
 namespace audqt
 {
@@ -33,6 +34,7 @@ namespace audqt
 void set_icon_theme();
 
 /* dark-theme.cc */
+QStyle *create_dark_style();
 void enable_dark_theme();
 void disable_dark_theme();
 
