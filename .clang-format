@@ -1,7 +1,18 @@
 BasedOnStyle: LLVM
 IndentWidth: 4
 AccessModifierOffset: -4
-BreakBeforeBraces: Allman
+# basically BreakBeforeBraces: Allman but don't break lambdas
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: true
+  AfterUnion: true
+  BeforeElse: true
 PointerAlignment: Middle
 SpaceAfterTemplateKeyword: false
 AlwaysBreakTemplateDeclarations: Yes
