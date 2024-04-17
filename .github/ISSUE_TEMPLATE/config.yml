@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Audacious Community Support
+    url: https://github.com/orgs/audacious-media-player/discussions
+    about: Please post here for help, general feedback, or ideas.
+  - name: Redmine Migration Status
+    url: https://github.com/orgs/audacious-media-player/discussions/125
+    about: See the current status of our bug tracker migration.
