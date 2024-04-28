@@ -104,7 +104,7 @@ void get_handlers_list (int argc, char * * argv)
     audtool_report ("");
     audtool_report ("Commands may be prefixed with '--' (GNU-style long options) or not, your choice.");
     audtool_report ("Show/hide and enable/disable commands take an optional 'on' or 'off' argument.");
-    audtool_report ("Report bugs to https://redmine.audacious-media-player.org/projects/audacious");
+    audtool_report ("Report bugs to https://github.com/audacious-media-player/audacious/issues");
 }
 
 void get_version (int argc, char * * argv)

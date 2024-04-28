@@ -365,7 +365,7 @@ Commands may be prefixed with `--' (GNU-style long options) or not, your choice.
 .SH BUGS
 
 There are no known bugs in audtool at this time; if you find any please report
-them at \fIhttps://redmine.audacious-media-player.org/projects/audacious\fR.
+them at \fIhttps://github.com/audacious-media-player/audacious/issues\fR.
 
 .SH AUTHORS
 

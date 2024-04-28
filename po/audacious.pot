@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
+"Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/issues\n"
 "POT-Creation-Date: 2023-04-29 21:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
