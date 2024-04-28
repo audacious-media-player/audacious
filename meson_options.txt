@@ -1,5 +1,5 @@
 option('dbus', type: 'boolean', value: true,
-       description: 'Whether DBus support is enabled')
+       description: 'Whether D-Bus support is enabled')
 option('qt', type: 'boolean', value: true,
        description: 'Whether Qt support is enabled')
 option('qt5', type: 'boolean', value: false,
@@ -7,7 +7,7 @@ option('qt5', type: 'boolean', value: false,
 option('gtk', type: 'boolean', value: true,
        description: 'Whether GTK support is enabled')
 option('gtk3', type: 'boolean', value: false,
-       description: 'Whether GTK3 support is enabled')
+       description: 'Whether GTK 3 support is enabled')
 option('libarchive', type: 'boolean', value: false,
        description: 'Whether libarchive support is enabled')
 option('buildstamp', type: 'string', value: 'unknown build',
