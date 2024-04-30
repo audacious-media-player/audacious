@@ -160,7 +160,7 @@ public:
 
     /* utility functions */
 
-    /* reads the entire file into memory (limited to 16 MB) */
+    /* reads the entire file into memory (limited to 256 MiB) */
     Index<char> read_all();
 
     /* reads data from another open file and appends it to this one */
