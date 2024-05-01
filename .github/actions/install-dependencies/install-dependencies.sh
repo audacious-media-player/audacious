@@ -2,9 +2,9 @@
 
 # --- Dependency configuration ---
 #
-# ubuntu-20.04:      Qt 5 + GTK2
-# ubuntu-22.04:      Qt 5 + GTK3
-# Windows:           Qt 6 + GTK2
+# ubuntu-20.04:      Qt 5 + GTK 2
+# ubuntu-22.04:      Qt 5 + GTK 3
+# Windows:           Qt 6 + GTK 2
 # macOS (Autotools): Qt 5 - GTK
 # macOS (Meson):     Qt 6 - GTK
 

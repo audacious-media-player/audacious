@@ -172,39 +172,36 @@ dnl Check for POSIX threads
 dnl =======================
 AC_SEARCH_LIBS([pthread_create], [pthread])
 
-dnl Check for GTK+ and pals
-dnl =======================
+dnl Check for GTK and pals
+dnl ======================
 
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.32)
 PKG_CHECK_MODULES(GMODULE, gmodule-2.0 >= 2.32)
 
 AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_32], [target GLib 2.32])
 
-dnl GTK+ support
-dnl =============
-
-AC_ARG_ENABLE(gtk3,
- AS_HELP_STRING(--enable-gtk3, [Use GTK3 instead of GTK2 (default=disabled)]),
- USE_GTK3=$enableval, USE_GTK3=no)
-
-if test $USE_GTK3 = yes ; then
-    PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.22)
-    AC_DEFINE(USE_GTK, 1, [Define if GTK+ support enabled])
-    AC_DEFINE(USE_GTK3, 1, [Define if GTK3+ support enabled])
-fi
-
-AC_SUBST(USE_GTK3)
+dnl GTK support
+dnl ===========
 
 AC_ARG_ENABLE(gtk,
- AS_HELP_STRING(--disable-gtk, [Disable GTK+ support (default=enabled)]),
+ AS_HELP_STRING(--disable-gtk, [Disable GTK support (default=enabled)]),
  USE_GTK=$enableval, USE_GTK=yes)
 
-if test $USE_GTK = yes -a $USE_GTK3 = no ; then
+AC_ARG_ENABLE(gtk2,
+ AS_HELP_STRING(--enable-gtk2, [Use GTK 2 instead of GTK 3 (default=disabled)]),
+ USE_GTK2=$enableval, USE_GTK2=no)
+
+if test $USE_GTK2 = yes ; then
     PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.24)
-    AC_DEFINE([USE_GTK], [1], [Define if GTK+ support enabled])
+    AC_DEFINE([USE_GTK], [1], [Define if GTK support enabled])
+elif test $USE_GTK = yes ; then
+    PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.22)
+    AC_DEFINE(USE_GTK, 1, [Define if GTK support enabled])
+    AC_DEFINE(USE_GTK3, 1, [Define if GTK 3 support enabled])
 fi
 
 AC_SUBST(USE_GTK)
+AC_SUBST(USE_GTK3)
 
 if test $HAVE_MSWINDOWS = yes ; then
     PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32)

@@ -2,9 +2,9 @@
 
 # --- Build configuration ---
 #
-# ubuntu-20.04:      Qt 5 + GTK2
-# ubuntu-22.04:      Qt 5 + GTK3
-# Windows:           Qt 6 + GTK2
+# ubuntu-20.04:      Qt 5 + GTK 2
+# ubuntu-22.04:      Qt 5 + GTK 3
+# Windows:           Qt 6 + GTK 2
 # macOS (Autotools): Qt 5 - GTK
 # macOS (Meson):     Qt 6 - GTK
 
@@ -30,17 +30,17 @@ case "$action" in
     case "$os" in
       ubuntu-20.04)
         if [ "$build_system" = 'meson' ]; then
-          meson setup build -D qt5=true
+          meson setup build -D qt5=true -D gtk2=true
         else
-          ./autogen.sh && ./configure --enable-qt5
+          ./autogen.sh && ./configure --enable-qt5 --enable-gtk2
         fi
         ;;
 
       ubuntu*)
         if [ "$build_system" = 'meson' ]; then
-          meson setup build -D qt5=true -D gtk3=true
+          meson setup build -D qt5=true
         else
-          ./autogen.sh && ./configure --enable-qt5 --enable-gtk3
+          ./autogen.sh && ./configure --enable-qt5
         fi
         ;;
 
@@ -56,9 +56,9 @@ case "$action" in
 
       windows*)
         if [ "$build_system" = 'meson' ]; then
-          meson setup build
+          meson setup build -D gtk2=true
         else
-          ./autogen.sh && ./configure
+          ./autogen.sh && ./configure --enable-gtk2
         fi
         ;;
 

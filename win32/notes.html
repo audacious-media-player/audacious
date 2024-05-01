@@ -43,16 +43,16 @@ pacman -S mingw-w64-x86_64-libsamplerate mingw-w64-x86_64-libsoxr mingw-w64-x86_
 pacman -S mingw-w64-x86_64-libcue mingw-w64-x86_64-lame mingw-w64-x86_64-opusfile<br>
 pacman -S mingw-w64-x86_64-libopenmpt mingw-w64-x86_64-json-glib</tt></p></blockquote>
 
-<h3>Install GTK+</h3>
+<h3>Install GTK</h3>
 
-<p>The Makefile accompanying this document automates the process of building GTK+ from source.</p>
+<p>The Makefile accompanying this document automates the process of building GTK from source.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd &lt;PATH TO THIS DOCUMENT&gt;<br>
 make -j$(nproc) gtk</tt></p></blockquote>
 
 <p><i>It may be necessary to run the MinGW shell with administrative privileges
-for GTK+ to build successfully.</i></p>
+for GTK to build successfully.</i></p>
 
 <h3>Install additional libraries</h3>
 
@@ -71,7 +71,7 @@ make -j$(nproc) libsidplayfp</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/audacious<br>
-./configure --prefix=/C/aud<br>
+./configure --prefix=/C/aud --enable-gtk2<br>
 make -j$(nproc)<br>
 make install</tt></p></blockquote>
 
@@ -82,7 +82,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/audacious-plugins<br>
-./configure --prefix=/C/aud<br>
+./configure --prefix=/C/aud --enable-gtk2<br>
 make -j$(nproc)<br>
 make install</tt></p></blockquote>
 
