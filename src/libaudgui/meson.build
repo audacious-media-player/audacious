@@ -54,7 +54,7 @@ libaudgui_lib = library('audgui',
   include_directories: [src_inc],
   dependencies: [gtk_dep, intl_dep],
   link_with: [libaudcore_lib],
-  soversion: '5',
-  version: '5.2.0',
+  soversion: '6',
+  version: '6.0.0',
   install: true
 )

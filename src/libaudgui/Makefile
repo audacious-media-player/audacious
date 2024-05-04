@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audgui${LIB_SUFFIX}
-LIB_MAJOR = 5
-LIB_MINOR = 2
+LIB_MAJOR = 6
+LIB_MINOR = 0
 
 SRCS = about.cc \
        confirm.cc \
