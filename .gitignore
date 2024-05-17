@@ -3,7 +3,6 @@ autom4te.cache
 buildsys.mk
 config.h
 config.h.in
-config.log
 config.status
 configure
 extra.mk
@@ -24,15 +23,17 @@ src/libaudqt/images.cc
 win32/audacious.nsi
 win32/override/README.txt
 .deps
+.DS_Store
 *.a
+*.dep
 *.diff
 *.dll
-*.dep
 *.dylib
 *.exe
 *.gcda
 *.gcno
 *.gcov
+*.log
 *.mo
 *.moc
 *.o
