@@ -2,13 +2,16 @@ project('libaudcore-tests', 'cpp',
         version: '0.1.0',
         meson_version: '>= 0.50',
         default_options: [
-          'cpp_std=c++11',
+          'cpp_std=c++17',
           'warning_level=1'
         ])
 
 glib_dep = dependency('glib-2.0', version: '>= 2.32')
-qt_dep = dependency('qt5', version: '>= 5.2', modules: ['Core'])
 thread_dep = dependency('threads')
+qt_dep = dependency('qt6', version: '>= 6.0', modules: ['Core'], required: false)
+if not qt_dep.found()
+  qt_dep = dependency('qt5', version: '>= 5.2', modules: ['Core'])
+endif
 
 
 test_sources = [

@@ -20,15 +20,19 @@ SRCS = ../audio.cc \
        test.cc \
        test-mainloop.cc
 
+QT_DEP = Qt6Core
+ifneq ($(shell pkg-config --exists ${QT_DEP} && echo 1),1)
+	QT_DEP = Qt5Core
+endif
+
 FLAGS = -I.. -I../.. -DEXPORT= -DPACKAGE=\"audacious\" -DICONV_CONST= \
         $(shell pkg-config --cflags --libs glib-2.0) \
-        -std=c++11 -Wall -g -O0 -fno-elide-constructors \
+        $(shell pkg-config --cflags --libs ${QT_DEP}) \
+        -std=c++17 -Wall -g -O0 -fno-elide-constructors \
         -fprofile-arcs -ftest-coverage -pthread
 
 test: ${SRCS}
-	g++ ${SRCS} ${FLAGS} -DUSE_QT -fPIC \
-	$(shell pkg-config --cflags --libs Qt5Core) \
-	-o test
+	g++ ${SRCS} ${FLAGS} -DUSE_QT -fPIC -o test
 
 cov: all
 	rm -f *.gcda
