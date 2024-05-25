@@ -4,6 +4,7 @@
 #
 # ubuntu-20.04:      Qt 5 + GTK 2
 # ubuntu-22.04:      Qt 5 + GTK 3
+# ubuntu-24.04:      Qt 6 + GTK 3
 # Windows:           Qt 6 + GTK 2
 # macOS (Autotools): Qt 5 - GTK
 # macOS (Meson):     Qt 6 - GTK
@@ -25,11 +26,19 @@ case "$os" in
     fi
     ;;
 
-  ubuntu*)
+  ubuntu-22.04)
     if [ "$build_system" = 'meson' ]; then
       sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qtbase5-dev gettext meson
     else
       sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qtbase5-dev gettext
+    fi
+    ;;
+
+  ubuntu*)
+    if [ "$build_system" = 'meson' ]; then
+      sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qt6-base-dev gettext meson
+    else
+      sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qt6-base-dev gettext
     fi
     ;;
 

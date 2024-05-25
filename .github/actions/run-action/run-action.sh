@@ -4,6 +4,7 @@
 #
 # ubuntu-20.04:      Qt 5 + GTK 2
 # ubuntu-22.04:      Qt 5 + GTK 3
+# ubuntu-24.04:      Qt 6 + GTK 3
 # Windows:           Qt 6 + GTK 2
 # macOS (Autotools): Qt 5 - GTK
 # macOS (Meson):     Qt 6 - GTK
@@ -36,11 +37,19 @@ case "$action" in
         fi
         ;;
 
-      ubuntu*)
+      ubuntu-22.04)
         if [ "$build_system" = 'meson' ]; then
           meson setup build -D qt5=true
         else
           ./autogen.sh && ./configure --enable-qt5
+        fi
+        ;;
+
+      ubuntu*)
+        if [ "$build_system" = 'meson' ]; then
+          meson setup build
+        else
+          ./autogen.sh && ./configure
         fi
         ;;
 
