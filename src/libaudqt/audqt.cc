@@ -120,6 +120,14 @@ EXPORT void init()
         Qt::HighDpiScaleFactorRoundingPolicy::Floor);
 #endif
 
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    // Use X11/XWayland by default, but allow to overwrite it.
+    // Especially the Winamp interface is not usable yet on Wayland
+    // due to limitations regarding application-side window positioning.
+    if (!qEnvironmentVariableIsSet("QT_QPA_PLATFORM"))
+        qputenv("QT_QPA_PLATFORM", "xcb");
+#endif
+
     static char app_name[] = "audacious";
     static int dummy_argc = 1;
     static char * dummy_argv[] = {app_name, nullptr};
