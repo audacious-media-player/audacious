@@ -344,6 +344,13 @@ EXPORT void audgui_init ()
     if (init_count ++)
         return;
 
+#if defined(GDK_WINDOWING_WAYLAND) && defined(GDK_WINDOWING_X11)
+    // Use X11/XWayland by default, but allow to overwrite it.
+    // Especially the Winamp interface is not usable yet on Wayland
+    // due to limitations regarding application-side window positioning.
+    g_setenv ("GDK_BACKEND", "x11", false);
+#endif
+
     static char app_name[] = "audacious";
     static char * app_args[] = {app_name, nullptr};
 
