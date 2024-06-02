@@ -94,6 +94,9 @@ bool iface_plugin_set_current(PluginHandle * plugin);
 
 void interface_run();
 
+/* mainloop.cc */
+void mainloop_cleanup();
+
 /* playback.cc */
 /* do not call these; use aud_drct_play/stop() instead */
 void playback_play(int seek_time, bool pause);

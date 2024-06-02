@@ -364,6 +364,10 @@ EXPORT void aud_cleanup()
     scanner_cleanup();
     record_cleanup();
 
+    /* In Qt mode, this deletes the QApplication. This must be done
+     * after shutting down any GUI plugins but before unloading plugin
+     * modules (which will indirectly unload Qt shared libraries). */
+    mainloop_cleanup();
     stop_plugins_one();
 
     art_cleanup();

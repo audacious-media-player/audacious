@@ -114,6 +114,12 @@ EXPORT void init()
         return;
 
     aud_config_set_defaults("audqt", audqt_defaults);
+    log_init();
+
+    // The QApplication instance is created only once and is not deleted
+    // by audqt::cleanup(). If it already exists, we are done here.
+    if (qApp)
+        return;
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0) && defined(_WIN32)
     QApplication::setHighDpiScaleFactorRoundingPolicy(
@@ -178,8 +184,6 @@ EXPORT void init()
     QApplication::setFont(QApplication::font("QSmallFont"), "QTreeView");
     QApplication::setFont(QApplication::font("QTipLabel"), "QStatusBar");
 #endif
-
-    log_init();
 }
 
 EXPORT void cleanup()
@@ -196,7 +200,9 @@ EXPORT void cleanup()
 
     log_cleanup();
 
-    delete qApp;
+    // We do not delete the QApplication here due to issues that arise
+    // if it is deleted and then re-created. Instead, it is deleted
+    // later during shutdown; see mainloop_cleanup() in libaudcore.
 }
 
 EXPORT QGradientStops dark_bg_gradient(const QColor & base)
