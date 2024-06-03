@@ -188,7 +188,7 @@ static void infopopup_destroyed ()
     infopopup_queued = nullptr;
 }
 
-static GtkWidget * infopopup_create ()
+static GtkWidget * infopopup_create (GtkWindow * parent)
 {
     int dpi = audgui_get_dpi ();
 
@@ -197,6 +197,9 @@ static GtkWidget * infopopup_create ()
     gtk_window_set_decorated ((GtkWindow *) infopopup, false);
     gtk_window_set_role ((GtkWindow *) infopopup, "infopopup");
     gtk_container_set_border_width ((GtkContainer *) infopopup, 4);
+
+    if (parent)
+        gtk_window_set_transient_for ((GtkWindow *) infopopup, parent);
 
     GtkWidget * hbox = audgui_hbox_new (6);
     gtk_container_add ((GtkContainer *) infopopup, hbox);
@@ -314,13 +317,13 @@ static void infopopup_move_to_mouse (GtkWidget * infopopup)
     gtk_window_move ((GtkWindow *) infopopup, x, y);
 }
 
-static void infopopup_show (const char * filename, const Tuple & tuple)
+static void infopopup_show (GtkWindow * parent, const char * filename, const Tuple & tuple)
 {
     audgui_infopopup_hide ();
 
     current_file = String (filename);
 
-    GtkWidget * infopopup = infopopup_create ();
+    GtkWidget * infopopup = infopopup_create (parent);
     infopopup_set_fields (tuple);
 
     hook_associate ("art ready", (HookFunction) infopopup_art_ready, nullptr);
@@ -340,16 +343,21 @@ static void infopopup_show (const char * filename, const Tuple & tuple)
         infopopup_queued = infopopup;
 }
 
-EXPORT void audgui_infopopup_show (Playlist playlist, int entry)
+EXPORT void audgui_infopopup_show (GtkWindow * parent, Playlist playlist, int entry)
 {
     String filename = playlist.entry_filename (entry);
     Tuple tuple = playlist.entry_tuple (entry);
 
     if (filename && tuple.valid ())
-        infopopup_show (filename, tuple);
+        infopopup_show (parent, filename, tuple);
 }
 
-EXPORT void audgui_infopopup_show_current ()
+EXPORT void audgui_infopopup_show (Playlist playlist, int entry)
+{
+    audgui_infopopup_show (nullptr, playlist, entry);
+}
+
+EXPORT void audgui_infopopup_show_current (GtkWindow * parent)
 {
     auto playlist = Playlist::playing_playlist ();
     if (playlist == Playlist ())
@@ -359,7 +367,12 @@ EXPORT void audgui_infopopup_show_current ()
     if (position < 0)
         return;
 
-    audgui_infopopup_show (playlist, position);
+    audgui_infopopup_show (parent, playlist, position);
+}
+
+EXPORT void audgui_infopopup_show_current ()
+{
+    audgui_infopopup_show_current (nullptr);
 }
 
 EXPORT void audgui_infopopup_hide ()
