@@ -232,7 +232,7 @@ AC_ARG_ENABLE(qt5,
 if test $USE_QT5 = yes ; then
     PKG_CHECK_MODULES([QTCORE], [Qt5Core >= 5.2])
     PKG_CHECK_VAR([QTBINPATH], [Qt5Core >= 5.2], [host_bins])
-    PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets >= 5.2])
+    PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets Qt5Svg >= 5.2])
     AC_DEFINE([USE_QT], [1], [Define if Qt support enabled])
 
     # needed if Qt was built with -reduce-relocations
@@ -241,7 +241,7 @@ if test $USE_QT5 = yes ; then
 elif test $USE_QT = yes ; then
     PKG_CHECK_MODULES([QTCORE], [Qt6Core >= 6.0])
     PKG_CHECK_VAR([QTBINPATH], [Qt6Core >= 6.0], [libexecdir])
-    PKG_CHECK_MODULES([QT], [Qt6Core Qt6Gui Qt6Widgets >= 6.0])
+    PKG_CHECK_MODULES([QT], [Qt6Core Qt6Gui Qt6Widgets Qt6Svg >= 6.0])
     AC_DEFINE([USE_QT], [1], [Define if Qt support enabled])
 fi
 

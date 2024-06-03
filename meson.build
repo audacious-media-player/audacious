@@ -24,7 +24,7 @@ if get_option('qt')
   if get_option('qt5')
     qt = import('qt5')
     qt_req = '>= 5.2'
-    qt_dep = dependency('qt5', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
+    qt_dep = dependency('qt5', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui', 'Svg'])
   else
     if meson.version().version_compare('>= 0.57')
       qt = import('qt6')
@@ -33,7 +33,7 @@ if get_option('qt')
     endif
 
     qt_req = '>= 6.0'
-    qt_dep = dependency('qt6', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui'])
+    qt_dep = dependency('qt6', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui', 'Svg'])
   endif
 endif
 
