@@ -26,8 +26,7 @@ ifneq ($(shell pkg-config --exists ${QT_DEP} && echo 1),1)
 endif
 
 FLAGS = -I.. -I../.. -DEXPORT= -DPACKAGE=\"audacious\" -DICONV_CONST= \
-        $(shell pkg-config --cflags --libs glib-2.0) \
-        $(shell pkg-config --cflags --libs ${QT_DEP}) \
+        $(shell pkg-config --cflags --libs glib-2.0 ${QT_DEP}) \
         -std=c++17 -Wall -g -O0 -fno-elide-constructors \
         -fprofile-arcs -ftest-coverage -pthread
 
