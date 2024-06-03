@@ -45,7 +45,9 @@ void audgui_import_eq_presets (const Index<EqualizerPreset> & presets);
 void audgui_show_equalizer_window ();
 void audgui_hide_equalizer_window ();
 
-/* infopopup.c */
+/* infopopup.c
+ * libaudgui-gtk.h contains additional function overloads to allow
+ * passing a GtkWindow parent. Use those functions if possible. */
 void audgui_infopopup_show (Playlist playlist, int entry);
 void audgui_infopopup_show_current ();
 void audgui_infopopup_hide ();
