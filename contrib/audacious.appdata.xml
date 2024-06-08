@@ -6,6 +6,9 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>BSD-2-Clause</project_license>
   <name>Audacious</name>
+  <developer id="org.atheme.audacious">
+    <name>Audacious developers</name>
+  </developer>
   <summary>Lightweight audio player</summary>
   <description>
     <p>
