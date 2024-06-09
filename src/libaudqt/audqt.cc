@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include <stdlib.h>
-
 #include <QApplication>
 #include <QLibraryInfo>
 #include <QProxyStyle>
@@ -130,8 +128,12 @@ EXPORT void init()
     // Use X11/XWayland by default, but allow to overwrite it.
     // Especially the Winamp interface is not usable yet on Wayland
     // due to limitations regarding application-side window positioning.
-    if (!qEnvironmentVariableIsSet("QT_QPA_PLATFORM"))
+    auto platform = qEnvironmentVariable("QT_QPA_PLATFORM");
+    if (platform.isEmpty() && qEnvironmentVariableIsSet("DISPLAY"))
         qputenv("QT_QPA_PLATFORM", "xcb");
+    else if (platform != "xcb")
+        AUDWARN("X11/XWayland was not detected. This is unsupported, "
+                "please do not report bugs.");
 #endif
 
     static char app_name[] = "audacious";

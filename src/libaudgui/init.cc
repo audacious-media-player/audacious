@@ -348,7 +348,12 @@ EXPORT void audgui_init ()
     // Use X11/XWayland by default, but allow to overwrite it.
     // Especially the Winamp interface is not usable yet on Wayland
     // due to limitations regarding application-side window positioning.
-    g_setenv ("GDK_BACKEND", "x11", false);
+    auto backend = g_getenv ("GDK_BACKEND");
+    if (! backend && g_getenv ("DISPLAY"))
+        g_setenv ("GDK_BACKEND", "x11", false);
+    else if (g_strcmp0 (backend, "x11"))
+        AUDWARN ("X11/XWayland was not detected. This is unsupported, "
+                 "please do not report bugs.");
 #endif
 
     static char app_name[] = "audacious";
