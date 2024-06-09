@@ -353,7 +353,7 @@ EXPORT void audgui_init ()
         g_setenv ("GDK_BACKEND", "x11", false);
     else if (g_strcmp0 (backend, "x11"))
         AUDWARN ("X11/XWayland was not detected. This is unsupported, "
-                 "please do not report bugs.");
+                 "please do not report bugs.\n");
 #endif
 
     static char app_name[] = "audacious";

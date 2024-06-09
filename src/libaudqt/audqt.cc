@@ -133,7 +133,7 @@ EXPORT void init()
         qputenv("QT_QPA_PLATFORM", "xcb");
     else if (platform != "xcb")
         AUDWARN("X11/XWayland was not detected. This is unsupported, "
-                "please do not report bugs.");
+                "please do not report bugs.\n");
 #endif
 
     static char app_name[] = "audacious";
