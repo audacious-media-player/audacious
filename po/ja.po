@@ -20,11 +20,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
-"Report-Msgid-Bugs-To: https://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2023-04-29 21:56+0200\n"
+"Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
+"issues\n"
+"POT-Creation-Date: 2024-06-12 21:09+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
 "Last-Translator: msksk <kimamanisag@live.jp>, 2022\n"
-"Language-Team: Japanese (http://www.transifex.com/audacious/audacious/"
+"Language-Team: Japanese (http://app.transifex.com/audacious/audacious/"
 "language/ja/)\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -122,7 +123,7 @@ msgstr ""
 msgid "Select instance to run/control"
 msgstr "コントロールするインスタンスを選択してください"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:134
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:155
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -149,7 +150,7 @@ msgstr "ファイルが見つかりません。"
 msgid "New Playlist"
 msgstr "新規プレイリスト"
 
-#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:532
+#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:534
 msgid "Standard input"
 msgstr "標準入力"
 
@@ -158,7 +159,7 @@ msgstr "標準入力"
 msgid "Audio CD, track %s"
 msgstr "オーディオ CD、トラック %s"
 
-#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:508
+#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:510
 msgid "(character encoding error)"
 msgstr "(文字のエンコーディングエラー)"
 
@@ -246,30 +247,30 @@ msgstr ""
 "ファイルをデコードできませんでした。ファイルが破損しているか、対応していない"
 "可能性があります。"
 
-#: src/libaudcore/tuple.cc:566
+#: src/libaudcore/tuple.cc:568
 msgid "Mono"
 msgstr "モノラル"
 
-#: src/libaudcore/tuple.cc:568
+#: src/libaudcore/tuple.cc:570
 msgid "Stereo"
 msgstr "ステレオ"
 
-#: src/libaudcore/tuple.cc:571
+#: src/libaudcore/tuple.cc:573
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d チャンネル"
 
-#: src/libaudcore/tuple.cc:789
+#: src/libaudcore/tuple.cc:791
 msgid "Audio CD"
 msgstr "オーディオ CD"
 
-#: src/libaudcore/tuple.cc:873
+#: src/libaudcore/tuple.cc:875
 #, c-format
 msgid "Track %d"
 msgstr "トラック %d"
 
-#: src/libaudcore/tuple.cc:879
+#: src/libaudcore/tuple.cc:881
 msgid "(unknown title)"
 msgstr "(不明なタイトル)"
 
@@ -461,54 +462,58 @@ msgid "Close _dialog on add"
 msgstr "追加したらダイアログを閉じる(_D)"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
-#: src/libaudgui/jump-to-track.cc:316 src/libaudgui/plugin-prefs.cc:168
-#: src/libaudgui/prefs-window.cc:939 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:356 src/libaudqt/audqt.cc:314
+#: src/libaudgui/jump-to-track.cc:323 src/libaudgui/plugin-prefs.cc:168
+#: src/libaudgui/prefs-window.cc:944 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:357 src/libaudqt/audqt.cc:326
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
-#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:689
-#: src/libaudqt/song-window-qt.cc:361
+#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:696
+#: src/libaudqt/song-window-qt.cc:365
 msgid "_Close"
 msgstr "閉じる(_C)"
 
-#: src/libaudgui/infopopup.cc:201 src/libaudgui/infowin.cc:402
-#: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:94
+#: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:402
+#: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
 #: src/libaudqt/queue-manager-qt.cc:110
 msgid "Title"
 msgstr "タイトル"
 
-#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:405
-#: src/libaudgui/prefs-window.cc:102 src/libaudqt/infopopup-qt.cc:96
+#: src/libaudgui/infopopup.cc:217 src/libaudgui/infowin.cc:405
+#: src/libaudgui/prefs-window.cc:102 src/libaudqt/infopopup-qt.cc:97
 #: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:169
 msgid "Artist"
 msgstr "アーティスト"
 
-#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:408
-#: src/libaudgui/prefs-window.cc:103 src/libaudgui/prefs-window.cc:150
-#: src/libaudqt/infopopup-qt.cc:98 src/libaudqt/info-widget.cc:50
-#: src/libaudqt/prefs-window-qt.cc:170 src/libaudqt/prefs-window-qt.cc:212
+#: src/libaudgui/infopopup.cc:218 src/libaudgui/infowin.cc:408
+#: src/libaudgui/prefs-window.cc:103 src/libaudgui/prefs-window.cc:151
+#: src/libaudqt/infopopup-qt.cc:99 src/libaudqt/info-widget.cc:50
+#: src/libaudqt/prefs-window-qt.cc:170 src/libaudqt/prefs-window-qt.cc:213
 msgid "Album"
 msgstr "アルバム名"
 
-#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:418
-#: src/libaudgui/prefs-window.cc:107 src/libaudqt/infopopup-qt.cc:100
+#: src/libaudgui/infopopup.cc:219 src/libaudgui/infowin.cc:418
+#: src/libaudgui/prefs-window.cc:107 src/libaudqt/infopopup-qt.cc:101
 #: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:174
 msgid "Genre"
 msgstr "ジャンル"
 
-#: src/libaudgui/infopopup.cc:205 src/libaudgui/infowin.cc:421
-#: src/libaudgui/prefs-window.cc:112 src/libaudqt/infopopup-qt.cc:102
+#: src/libaudgui/infopopup.cc:220 src/libaudgui/infowin.cc:421
+#: src/libaudgui/prefs-window.cc:112 src/libaudqt/infopopup-qt.cc:103
 #: src/libaudqt/prefs-window-qt.cc:179
 msgid "Year"
 msgstr "制作年"
 
-#: src/libaudgui/infopopup.cc:206 src/libaudgui/prefs-window.cc:149
-#: src/libaudqt/infopopup-qt.cc:104 src/libaudqt/prefs-window-qt.cc:211
+#: src/libaudgui/infopopup.cc:221 src/libaudgui/prefs-window.cc:150
+#: src/libaudqt/infopopup-qt.cc:105 src/libaudqt/prefs-window-qt.cc:212
 msgid "Track"
 msgstr "トラック"
 
-#: src/libaudgui/infopopup.cc:207 src/libaudqt/infopopup-qt.cc:106
-#: src/libaudqt/info-widget.cc:65
+#: src/libaudgui/infopopup.cc:222 src/libaudqt/infopopup-qt.cc:107
+msgid "Disc"
+msgstr ""
+
+#: src/libaudgui/infopopup.cc:223 src/libaudqt/infopopup-qt.cc:109
+#: src/libaudqt/info-widget.cc:66
 msgid "Length"
 msgstr "長さ"
 
@@ -731,8 +736,8 @@ msgstr ""
 msgid "N/A"
 msgstr "N/A"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:321
-#: src/libaudqt/song-window-qt.cc:359
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:328
+#: src/libaudqt/song-window-qt.cc:363
 msgid "_Jump"
 msgstr "ジャンプ(_J)"
 
@@ -745,28 +750,28 @@ msgid "Enter time (minutes:seconds):"
 msgstr "時間を入力してください (分:秒):"
 
 #: src/libaudgui/jump-to-track.cc:96 src/libaudgui/jump-to-track.cc:104
-#: src/libaudgui/jump-to-track.cc:312 src/libaudqt/song-window-qt.cc:281
-#: src/libaudqt/song-window-qt.cc:358
+#: src/libaudgui/jump-to-track.cc:319 src/libaudqt/song-window-qt.cc:285
+#: src/libaudqt/song-window-qt.cc:362
 msgid "_Queue"
 msgstr "キューに追加(_Q)"
 
-#: src/libaudgui/jump-to-track.cc:102 src/libaudqt/song-window-qt.cc:281
+#: src/libaudgui/jump-to-track.cc:102 src/libaudqt/song-window-qt.cc:285
 msgid "Un_queue"
 msgstr "キューから外す(_U)"
 
-#: src/libaudgui/jump-to-track.cc:241 src/libaudqt/song-window-qt.cc:294
+#: src/libaudgui/jump-to-track.cc:248 src/libaudqt/song-window-qt.cc:298
 msgid "Jump to Song"
 msgstr "指定した曲にジャンプ"
 
-#: src/libaudgui/jump-to-track.cc:267 src/libaudqt/song-window-qt.cc:312
+#: src/libaudgui/jump-to-track.cc:274 src/libaudqt/song-window-qt.cc:316
 msgid "Filter: "
 msgstr "フィルター:"
 
-#: src/libaudgui/jump-to-track.cc:268
+#: src/libaudgui/jump-to-track.cc:275
 msgid "_Filter:"
 msgstr "フィルター(_F):"
 
-#: src/libaudgui/jump-to-track.cc:305 src/libaudqt/song-window-qt.cc:353
+#: src/libaudgui/jump-to-track.cc:312 src/libaudqt/song-window-qt.cc:357
 msgid "C_lose on jump"
 msgstr "ジャンプしたらダイアログを閉じる(_L)"
 
@@ -828,15 +833,15 @@ msgstr "%s の設定"
 msgid "_Set"
 msgstr "設定(_S)"
 
-#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:751
-#: src/libaudgui/prefs-window.cc:791 src/libaudqt/prefs-window-qt.cc:634
-#: src/libaudqt/prefs-window-qt.cc:637
+#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:756
+#: src/libaudgui/prefs-window.cc:796 src/libaudqt/prefs-window-qt.cc:641
+#: src/libaudqt/prefs-window-qt.cc:644
 msgid "_Settings"
 msgstr "設定(_S)"
 
-#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:765
-#: src/libaudgui/prefs-window.cc:803 src/libaudqt/prefs-window-qt.cc:635
-#: src/libaudqt/prefs-window-qt.cc:638
+#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:770
+#: src/libaudgui/prefs-window.cc:808 src/libaudqt/prefs-window-qt.cc:642
+#: src/libaudqt/prefs-window-qt.cc:645
 msgid "_About"
 msgstr "情報(_A)"
 
@@ -919,432 +924,444 @@ msgstr "日付"
 msgid "Description"
 msgstr "説明    "
 
-#: src/libaudgui/prefs-window.cc:114 src/libaudqt/info-widget.cc:66
+#: src/libaudgui/prefs-window.cc:114 src/libaudqt/info-widget.cc:67
 #: src/libaudqt/prefs-window-qt.cc:181
 msgid "Codec"
 msgstr "コーデック"
 
-#: src/libaudgui/prefs-window.cc:115 src/libaudqt/info-widget.cc:67
+#: src/libaudgui/prefs-window.cc:115 src/libaudqt/info-widget.cc:68
 #: src/libaudqt/prefs-window-qt.cc:182
 msgid "Quality"
 msgstr "音質"
 
-#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window-qt.cc:185
+#: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window-qt.cc:183
+msgid "Disc number"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:186
 msgid "None"
 msgstr "なし"
 
-#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:186
+#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window-qt.cc:187
 msgid "Arabic"
 msgstr "アラビア語"
 
-#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window-qt.cc:187
+#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window-qt.cc:188
 msgid "Baltic"
 msgstr "バルト諸語"
 
-#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window-qt.cc:188
+#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window-qt.cc:189
 msgid "Chinese"
 msgstr "簡体中国語"
 
-#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window-qt.cc:189
+#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window-qt.cc:190
 msgid "Greek"
 msgstr "ギリシア語"
 
-#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window-qt.cc:190
+#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window-qt.cc:191
 msgid "Hebrew"
 msgstr "ヘブライ語"
 
-#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window-qt.cc:191
+#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window-qt.cc:192
 msgid "Japanese"
 msgstr "日本語"
 
-#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window-qt.cc:192
+#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window-qt.cc:193
 msgid "Korean"
 msgstr "韓国語"
 
-#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window-qt.cc:193
+#: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window-qt.cc:194
 msgid "Polish"
 msgstr "ポーランド語"
 
-#: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window-qt.cc:194
+#: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window-qt.cc:195
 msgid "Russian"
 msgstr "ロシア語"
 
-#: src/libaudgui/prefs-window.cc:129 src/libaudqt/prefs-window-qt.cc:195
+#: src/libaudgui/prefs-window.cc:130 src/libaudqt/prefs-window-qt.cc:196
 msgid "Taiwanese"
 msgstr "繁体中国語"
 
-#: src/libaudgui/prefs-window.cc:130 src/libaudqt/prefs-window-qt.cc:196
+#: src/libaudgui/prefs-window.cc:131 src/libaudqt/prefs-window-qt.cc:197
 msgid "Turkish"
 msgstr "トルコ語"
 
-#: src/libaudgui/prefs-window.cc:134 src/libaudqt/prefs-window-qt.cc:199
+#: src/libaudgui/prefs-window.cc:135 src/libaudqt/prefs-window-qt.cc:200
 msgid "Automatic"
 msgstr "自動"
 
-#: src/libaudgui/prefs-window.cc:138 src/libaudqt/prefs-window-qt.cc:200
+#: src/libaudgui/prefs-window.cc:139 src/libaudqt/prefs-window-qt.cc:201
 msgid "Floating point"
 msgstr "浮動小数点"
 
-#: src/libaudgui/prefs-window.cc:142 src/libaudqt/prefs-window-qt.cc:203
+#: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:204
 msgid "As decoded"
 msgstr "デコードしたそのまま"
 
-#: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:204
+#: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:205
 msgid "After applying ReplayGain"
 msgstr "リプレイゲインの適用後"
 
-#: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:206
+#: src/libaudgui/prefs-window.cc:145 src/libaudqt/prefs-window-qt.cc:207
 msgid "After applying effects"
 msgstr "エフェクトの適用後"
 
-#: src/libaudgui/prefs-window.cc:145 src/libaudqt/prefs-window-qt.cc:207
+#: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window-qt.cc:208
 msgid "After applying equalization"
 msgstr "イコライザーの適用後"
 
-#: src/libaudgui/prefs-window.cc:151 src/libaudqt/prefs-window-qt.cc:213
+#: src/libaudgui/prefs-window.cc:152 src/libaudqt/prefs-window-qt.cc:214
 msgid "Based on shuffle"
 msgstr "シャッフルの設定に合わせる"
 
-#: src/libaudgui/prefs-window.cc:166
+#: src/libaudgui/prefs-window.cc:167
 msgid "Restart in Qt mode"
 msgstr "Qt モードで再起動"
 
-#: src/libaudgui/prefs-window.cc:175
-msgid "Audacious is running in GTK (legacy) mode."
-msgstr "Audacious は GTK （古い）モード で動作しています。"
+#: src/libaudgui/prefs-window.cc:176
+msgid "Audacious is running in GTK mode."
+msgstr ""
 
-#: src/libaudgui/prefs-window.cc:179
+#: src/libaudgui/prefs-window.cc:180
 msgid "Qt mode is unavailable in this build."
 msgstr "このビルドでは Qt モードが利用できません。"
 
-#: src/libaudgui/prefs-window.cc:181 src/libaudqt/prefs-window-qt.cc:269
+#: src/libaudgui/prefs-window.cc:182 src/libaudqt/prefs-window-qt.cc:270
 msgid "Interface:"
 msgstr "インターフェイス:"
 
-#: src/libaudgui/prefs-window.cc:200 src/libaudqt/prefs-window-qt.cc:283
+#: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window-qt.cc:284
 msgid "Output plugin:"
 msgstr "出力プラグイン:"
 
-#: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window-qt.cc:296
+#: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window-qt.cc:297
 msgid "Amplify all files:"
 msgstr "すべてのファイルを増幅する:"
 
-#: src/libaudgui/prefs-window.cc:223 src/libaudgui/prefs-window.cc:226
-#: src/libaudqt/prefs-window-qt.cc:297 src/libaudqt/prefs-window-qt.cc:299
+#: src/libaudgui/prefs-window.cc:224 src/libaudgui/prefs-window.cc:227
+#: src/libaudqt/prefs-window-qt.cc:298 src/libaudqt/prefs-window-qt.cc:300
 msgid "dB"
 msgstr "dB"
 
-#: src/libaudgui/prefs-window.cc:224 src/libaudqt/prefs-window-qt.cc:298
+#: src/libaudgui/prefs-window.cc:225 src/libaudqt/prefs-window-qt.cc:299
 msgid "Amplify untagged files:"
 msgstr "タグづけされていないファイルを増幅する:"
 
-#: src/libaudgui/prefs-window.cc:230 src/libaudqt/prefs-window-qt.cc:302
+#: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:303
 msgid "<b>Output Settings</b>"
 msgstr "<b>出力の設定</b>"
 
-#: src/libaudgui/prefs-window.cc:232 src/libaudqt/prefs-window-qt.cc:304
+#: src/libaudgui/prefs-window.cc:233 src/libaudqt/prefs-window-qt.cc:305
 msgid "Bit depth:"
 msgstr "ビット深度:"
 
-#: src/libaudgui/prefs-window.cc:235 src/libaudgui/prefs-window.cc:280
-#: src/libaudqt/prefs-window-qt.cc:307 src/libaudqt/prefs-window-qt.cc:335
+#: src/libaudgui/prefs-window.cc:236 src/libaudgui/prefs-window.cc:281
+#: src/libaudqt/prefs-window-qt.cc:308 src/libaudqt/prefs-window-qt.cc:336
 msgid "Buffer size:"
 msgstr "バッファーサイズ:"
 
-#: src/libaudgui/prefs-window.cc:237 src/libaudqt/prefs-window-qt.cc:308
+#: src/libaudgui/prefs-window.cc:238 src/libaudqt/prefs-window-qt.cc:309
 msgid "ms"
 msgstr "ms"
 
-#: src/libaudgui/prefs-window.cc:238 src/libaudqt/prefs-window-qt.cc:309
+#: src/libaudgui/prefs-window.cc:239 src/libaudqt/prefs-window-qt.cc:310
 msgid "Soft clipping"
 msgstr "ソフトクリッピング"
 
-#: src/libaudgui/prefs-window.cc:240 src/libaudqt/prefs-window-qt.cc:310
+#: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window-qt.cc:311
 msgid "Use software volume control (not recommended)"
 msgstr "ソフトウェアの音量コントロールを使う (非推奨)"
 
-#: src/libaudgui/prefs-window.cc:242 src/libaudqt/prefs-window-qt.cc:312
+#: src/libaudgui/prefs-window.cc:243 src/libaudqt/prefs-window-qt.cc:313
 msgid "<b>Recording Settings</b>"
 msgstr "<b>録音の設定</b>"
 
-#: src/libaudgui/prefs-window.cc:246 src/libaudqt/prefs-window-qt.cc:315
+#: src/libaudgui/prefs-window.cc:247 src/libaudqt/prefs-window-qt.cc:316
 msgid "Record stream:"
 msgstr "録音するストリーム:"
 
-#: src/libaudgui/prefs-window.cc:249 src/libaudqt/prefs-window-qt.cc:317
+#: src/libaudgui/prefs-window.cc:250 src/libaudqt/prefs-window-qt.cc:318
 msgid "<b>ReplayGain</b>"
 msgstr "<b>リプレイゲイン</b>"
 
-#: src/libaudgui/prefs-window.cc:250 src/libaudqt/prefs-window-qt.cc:318
+#: src/libaudgui/prefs-window.cc:251 src/libaudqt/prefs-window-qt.cc:319
 msgid "Enable ReplayGain"
 msgstr "リプレイゲインを有効にする"
 
-#: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window-qt.cc:319
+#: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window-qt.cc:320
 msgid "Mode:"
 msgstr "モード:"
 
-#: src/libaudgui/prefs-window.cc:256 src/libaudqt/prefs-window-qt.cc:321
+#: src/libaudgui/prefs-window.cc:257 src/libaudqt/prefs-window-qt.cc:322
 msgid "Prevent clipping (recommended)"
 msgstr "クリッピングを防ぐ (非推奨)"
 
-#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window-qt.cc:326
+#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window-qt.cc:327
 msgid "Proxy hostname:"
 msgstr "プロキシのホスト名:"
 
-#: src/libaudgui/prefs-window.cc:266 src/libaudqt/prefs-window-qt.cc:327
+#: src/libaudgui/prefs-window.cc:267 src/libaudqt/prefs-window-qt.cc:328
 msgid "Proxy port:"
 msgstr "プロキシのポート:"
 
-#: src/libaudgui/prefs-window.cc:271 src/libaudqt/prefs-window-qt.cc:330
+#: src/libaudgui/prefs-window.cc:272 src/libaudqt/prefs-window-qt.cc:331
 msgid "Proxy username:"
 msgstr "プロキシのユーザ名:"
 
-#: src/libaudgui/prefs-window.cc:273 src/libaudqt/prefs-window-qt.cc:331
+#: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window-qt.cc:332
 msgid "Proxy password:"
 msgstr "プロキシのパスワード:"
 
-#: src/libaudgui/prefs-window.cc:279 src/libaudqt/prefs-window-qt.cc:334
+#: src/libaudgui/prefs-window.cc:280 src/libaudqt/prefs-window-qt.cc:335
 msgid "<b>Network Settings</b>"
 msgstr "<b>ネットワークの設定</b>"
 
-#: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window-qt.cc:336
+#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window-qt.cc:337
 msgid "KiB"
 msgstr "KiB"
 
-#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window-qt.cc:337
+#: src/libaudgui/prefs-window.cc:284 src/libaudqt/prefs-window-qt.cc:338
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>プロキシの設定</b>"
 
-#: src/libaudgui/prefs-window.cc:284 src/libaudqt/prefs-window-qt.cc:338
+#: src/libaudgui/prefs-window.cc:285 src/libaudqt/prefs-window-qt.cc:339
 msgid "Enable proxy usage"
 msgstr "プロキシの使用を有効にする"
 
-#: src/libaudgui/prefs-window.cc:288 src/libaudqt/prefs-window-qt.cc:340
+#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window-qt.cc:341
 msgid "Use authentication with proxy"
 msgstr "プロキシの認証を行う"
 
-#: src/libaudgui/prefs-window.cc:292 src/libaudqt/prefs-window-qt.cc:343
+#: src/libaudgui/prefs-window.cc:293 src/libaudqt/prefs-window-qt.cc:344
 msgid "Use SOCKS proxy"
 msgstr "SOCKS プロキシを使用"
 
-#: src/libaudgui/prefs-window.cc:294 src/libaudqt/prefs-window-qt.cc:344
+#: src/libaudgui/prefs-window.cc:295 src/libaudqt/prefs-window-qt.cc:345
 msgid "SOCKS v4a"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window-qt.cc:345
+#: src/libaudgui/prefs-window.cc:299 src/libaudqt/prefs-window-qt.cc:346
 msgid "SOCKS v5"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:305 src/libaudqt/prefs-window-qt.cc:348
+#: src/libaudgui/prefs-window.cc:306 src/libaudqt/prefs-window-qt.cc:349
 msgid "Auto character encoding detector for:"
 msgstr "文字コードの自動検出対象言語:"
 
-#: src/libaudgui/prefs-window.cc:308 src/libaudqt/prefs-window-qt.cc:351
+#: src/libaudgui/prefs-window.cc:309 src/libaudqt/prefs-window-qt.cc:352
 msgid "Fallback character encodings:"
 msgstr "検出失敗時に試行する文字コード:"
 
-#: src/libaudgui/prefs-window.cc:316 src/libaudqt/prefs-window-qt.cc:358
+#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:359
 msgid "<b>Behavior</b>"
 msgstr "<b>動作</b>"
 
-#: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:359
+#: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:360
 msgid "Resume playback on startup"
 msgstr "起動時に再生を再開する"
 
-#: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window-qt.cc:361
+#: src/libaudgui/prefs-window.cc:320 src/libaudqt/prefs-window-qt.cc:362
 msgid "Pause instead of resuming immediately"
 msgstr "再生せずに一時停止状態で起動"
 
-#: src/libaudgui/prefs-window.cc:322 src/libaudqt/prefs-window-qt.cc:363
+#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:364
 msgid "Advance when the current song is deleted"
 msgstr "現在の曲が削除された時に次の曲を再生する"
 
-#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window-qt.cc:365
+#: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:366
 msgid "Clear the playlist when opening files"
 msgstr "ファイルを開く時にプレイリストをクリアする"
 
-#: src/libaudgui/prefs-window.cc:326 src/libaudqt/prefs-window-qt.cc:367
+#: src/libaudgui/prefs-window.cc:327 src/libaudqt/prefs-window-qt.cc:368
 msgid "Open files in a temporary playlist"
 msgstr "ファイルを一時プレイリストで開く"
 
-#: src/libaudgui/prefs-window.cc:328 src/libaudqt/prefs-window-qt.cc:369
+#: src/libaudgui/prefs-window.cc:329 src/libaudqt/prefs-window-qt.cc:370
 msgid "<b>Song Display</b>"
 msgstr "<b>曲の表示</b>"
 
-#: src/libaudgui/prefs-window.cc:329 src/libaudqt/prefs-window-qt.cc:370
+#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:371
 msgid "Show song numbers"
 msgstr "曲番号の表示"
 
-#: src/libaudgui/prefs-window.cc:331 src/libaudqt/prefs-window-qt.cc:372
+#: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:373
 msgid "Show leading zeroes (02:00 vs. 2:00)"
 msgstr "頭の0を表示する (例 02:00)"
 
-#: src/libaudgui/prefs-window.cc:333 src/libaudqt/prefs-window-qt.cc:374
+#: src/libaudgui/prefs-window.cc:334 src/libaudqt/prefs-window-qt.cc:375
 msgid "Show hours separately (1:30:00 vs. 90:00)"
 msgstr "時分秒表示を使う (例 1:30:00)"
 
-#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:377
+#: src/libaudgui/prefs-window.cc:337 src/libaudqt/prefs-window-qt.cc:378
 msgid "<b>Export</b>"
 msgstr "<b>エクスポート</b>"
 
-#: src/libaudgui/prefs-window.cc:337 src/libaudqt/prefs-window-qt.cc:378
+#: src/libaudgui/prefs-window.cc:338 src/libaudqt/prefs-window-qt.cc:379
 msgid "Use relative paths when possible"
 msgstr "可能な限り相対パスを使う"
 
-#: src/libaudgui/prefs-window.cc:342 src/libaudqt/prefs-window-qt.cc:382
+#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:383
 msgid "<b>Album Art</b>"
 msgstr "<b>アルバムアート</b>"
 
-#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:384
+#: src/libaudgui/prefs-window.cc:344 src/libaudqt/prefs-window-qt.cc:385
 msgid "Search for images matching these words (comma-separated):"
 msgstr "次の単語にマッチする画像を検索する (コンマで区切る):"
 
-#: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:386
+#: src/libaudgui/prefs-window.cc:346 src/libaudqt/prefs-window-qt.cc:387
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "次の単語にマッチする画像を除外する (コンマで区切る):"
 
-#: src/libaudgui/prefs-window.cc:347 src/libaudqt/prefs-window-qt.cc:388
+#: src/libaudgui/prefs-window.cc:348 src/libaudqt/prefs-window-qt.cc:389
 msgid "Search for images matching song file name"
 msgstr "曲のファイル名にマッチする画像を検索する"
 
-#: src/libaudgui/prefs-window.cc:349 src/libaudqt/prefs-window-qt.cc:390
+#: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:391
 msgid "Search recursively"
 msgstr "再帰的に検索する"
 
-#: src/libaudgui/prefs-window.cc:351 src/libaudqt/prefs-window-qt.cc:391
+#: src/libaudgui/prefs-window.cc:352 src/libaudqt/prefs-window-qt.cc:392
 msgid "Search depth:"
 msgstr "検索の深さ:"
 
-#: src/libaudgui/prefs-window.cc:355 src/libaudqt/prefs-window-qt.cc:393
+#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window-qt.cc:394
 msgid "<b>Popup Information</b>"
 msgstr "<b>ポップアップ情報</b>"
 
-#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window-qt.cc:394
+#: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window-qt.cc:395
 msgid "Show popup information"
 msgstr "ポップアップ情報を表示する"
 
-#: src/libaudgui/prefs-window.cc:358 src/libaudqt/prefs-window-qt.cc:396
+#: src/libaudgui/prefs-window.cc:359 src/libaudqt/prefs-window-qt.cc:397
 msgid "Popup delay (tenths of a second):"
 msgstr "ポップアップの遅れ (10秒単位):"
 
-#: src/libaudgui/prefs-window.cc:362
+#: src/libaudgui/prefs-window.cc:363
 msgid "Show time scale for current song"
 msgstr "現在の曲のタイムスケールを表示する"
 
-#: src/libaudgui/prefs-window.cc:368 src/libaudqt/prefs-window-qt.cc:400
+#: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:401
 msgid "<b>Compatibility</b>"
 msgstr "<b>互換性</b>"
 
-#: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:401
+#: src/libaudgui/prefs-window.cc:370 src/libaudqt/prefs-window-qt.cc:402
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr "\\ (バックスラッシュ) をフォルダーの区切り文字として解釈する"
 
-#: src/libaudgui/prefs-window.cc:372 src/libaudqt/prefs-window-qt.cc:404
+#: src/libaudgui/prefs-window.cc:373 src/libaudqt/prefs-window-qt.cc:405
 msgid "<b>Playlist</b>"
 msgstr "<b>プレイリスト</b>"
 
-#: src/libaudgui/prefs-window.cc:373 src/libaudqt/prefs-window-qt.cc:405
+#: src/libaudgui/prefs-window.cc:374 src/libaudqt/prefs-window-qt.cc:406
 msgid "Add folders recursively"
 msgstr "再帰的にフォルダーを追加する"
 
-#: src/libaudgui/prefs-window.cc:375 src/libaudqt/prefs-window-qt.cc:407
+#: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:408
 msgid "Add folders nested within playlist files"
 msgstr "プレイリスト内に入れ子にされたフォルダーを追加する"
 
-#: src/libaudgui/prefs-window.cc:377 src/libaudqt/prefs-window-qt.cc:409
+#: src/libaudgui/prefs-window.cc:378 src/libaudqt/prefs-window-qt.cc:410
 msgid "<b>Metadata</b>"
 msgstr "<b>メタデータ</b>"
 
-#: src/libaudgui/prefs-window.cc:378 src/libaudqt/prefs-window-qt.cc:410
+#: src/libaudgui/prefs-window.cc:379 src/libaudqt/prefs-window-qt.cc:411
 msgid "Guess missing metadata from file path"
 msgstr "メタデータがないときにファイルパスから推定"
 
-#: src/libaudgui/prefs-window.cc:380 src/libaudqt/prefs-window-qt.cc:412
+#: src/libaudgui/prefs-window.cc:381 src/libaudqt/prefs-window-qt.cc:413
 msgid "Do not load metadata for songs until played"
 msgstr "再生が終わるまで曲のメタデータを読み込まない"
 
-#: src/libaudgui/prefs-window.cc:382 src/libaudqt/prefs-window-qt.cc:415
+#: src/libaudgui/prefs-window.cc:383 src/libaudqt/prefs-window-qt.cc:416
 msgid "Probe content of files with no recognized file name extension"
 msgstr "ファイル拡張子が未知のときにはファイル内容を精査する"
 
-#: src/libaudgui/prefs-window.cc:384 src/libaudqt/prefs-window-qt.cc:417
+#: src/libaudgui/prefs-window.cc:385 src/libaudqt/prefs-window-qt.cc:418
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>その他</b>"
 
-#: src/libaudgui/prefs-window.cc:385 src/libaudqt/prefs-window-qt.cc:418
+#: src/libaudgui/prefs-window.cc:386 src/libaudqt/prefs-window-qt.cc:419
 msgid "Step forward/backward by:"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:387 src/libaudqt/prefs-window-qt.cc:419
+#: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:420
 msgid "seconds"
 msgstr "秒"
 
-#: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:420
+#: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:421
 msgid "Adjust volume by:"
 msgstr ""
 
-#: src/libaudgui/prefs-window.cc:390 src/libaudqt/prefs-window-qt.cc:421
+#: src/libaudgui/prefs-window.cc:391 src/libaudqt/prefs-window-qt.cc:422
 msgid "percent"
 msgstr "パーセント"
 
-#: src/libaudgui/prefs-window.cc:407 src/libaudqt/prefs-window-qt.cc:438
+#: src/libaudgui/prefs-window.cc:410 src/libaudqt/prefs-window-qt.cc:443
 msgid "TITLE"
 msgstr "タイトル"
 
-#: src/libaudgui/prefs-window.cc:408 src/libaudqt/prefs-window-qt.cc:439
+#: src/libaudgui/prefs-window.cc:411 src/libaudqt/prefs-window-qt.cc:444
 msgid "TITLE - ARTIST"
 msgstr "タイトル - アーティスト"
 
-#: src/libaudgui/prefs-window.cc:409 src/libaudqt/prefs-window-qt.cc:440
+#: src/libaudgui/prefs-window.cc:412 src/libaudqt/prefs-window-qt.cc:445
 msgid "TITLE - ARTIST - ALBUM"
 msgstr "タイトル - アーティスト - アルバム"
 
-#: src/libaudgui/prefs-window.cc:410 src/libaudqt/prefs-window-qt.cc:441
+#: src/libaudgui/prefs-window.cc:413 src/libaudqt/prefs-window-qt.cc:446
 msgid "ARTIST - TITLE"
 msgstr "アーティスト - タイトル"
 
-#: src/libaudgui/prefs-window.cc:411 src/libaudqt/prefs-window-qt.cc:442
+#: src/libaudgui/prefs-window.cc:414 src/libaudqt/prefs-window-qt.cc:447
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "アーティスト - アルバム - タイトル"
 
-#: src/libaudgui/prefs-window.cc:412 src/libaudqt/prefs-window-qt.cc:443
+#: src/libaudgui/prefs-window.cc:415 src/libaudqt/prefs-window-qt.cc:448
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "アーティスト - アルバム - トラック. タイトル"
 
-#: src/libaudgui/prefs-window.cc:413 src/libaudqt/prefs-window-qt.cc:444
+#: src/libaudgui/prefs-window.cc:416 src/libaudqt/prefs-window-qt.cc:449
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "アーティスト [ アルバム ] - トラック. タイトル"
 
-#: src/libaudgui/prefs-window.cc:414 src/libaudqt/prefs-window-qt.cc:445
+#: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
+msgid "ARTIST - ALBUM - DISC.TRACK. TITLE"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
+msgid "ARTIST [ ALBUM ] - DISC.TRACK. TITLE"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
 msgid "ALBUM - TITLE"
 msgstr "アルバム - タイトル"
 
-#: src/libaudgui/prefs-window.cc:512
+#: src/libaudgui/prefs-window.cc:517
 msgid "Category"
 msgstr "カテゴリー"
 
-#: src/libaudgui/prefs-window.cc:576 src/libaudqt/prefs-window-qt.cc:462
+#: src/libaudgui/prefs-window.cc:581 src/libaudqt/prefs-window-qt.cc:469
 msgid "Custom"
 msgstr "カスタム"
 
-#: src/libaudgui/prefs-window.cc:594 src/libaudqt/prefs-window-qt.cc:454
+#: src/libaudgui/prefs-window.cc:599 src/libaudqt/prefs-window-qt.cc:461
 msgid "Title format:"
 msgstr "タイトルの書式:"
 
-#: src/libaudgui/prefs-window.cc:595 src/libaudqt/prefs-window-qt.cc:465
+#: src/libaudgui/prefs-window.cc:600 src/libaudqt/prefs-window-qt.cc:472
 msgid "Custom string:"
 msgstr "カスタム文字列:"
 
-#: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:774
+#: src/libaudgui/prefs-window.cc:822 src/libaudqt/prefs-window-qt.cc:781
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "%sを使ってオーディオストリームを録音する"
 
-#: src/libaudgui/prefs-window.cc:826 src/libaudqt/prefs-window-qt.cc:787
+#: src/libaudgui/prefs-window.cc:831 src/libaudqt/prefs-window-qt.cc:794
 msgid "No audio recording plugin available"
 msgstr "オーディオ録音プラグインを利用できません"
 
-#: src/libaudgui/prefs-window.cc:887 src/libaudqt/prefs-window-qt.cc:647
+#: src/libaudgui/prefs-window.cc:892 src/libaudqt/prefs-window-qt.cc:654
 msgid "Audacious Settings"
 msgstr "Audacious の設定"
 
@@ -1421,7 +1438,7 @@ msgstr "URL を入力:"
 msgid "Open"
 msgstr "開く"
 
-#: src/libaudgui/util.cc:342
+#: src/libaudgui/util.cc:343
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1489,19 +1506,23 @@ msgstr ""
 msgid "Catalog Number"
 msgstr ""
 
-#: src/libaudqt/info-widget.cc:64
+#: src/libaudqt/info-widget.cc:62
+msgid "Disc Number"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:65
 msgid "Technical"
 msgstr "技術情報"
 
-#: src/libaudqt/info-widget.cc:68
+#: src/libaudqt/info-widget.cc:69
 msgid "Bitrate"
 msgstr "ビットレート"
 
-#: src/libaudqt/info-widget.cc:69
+#: src/libaudqt/info-widget.cc:70
 msgid "Channels"
 msgstr "チャンネル"
 
-#: src/libaudqt/info-widget.cc:70
+#: src/libaudqt/info-widget.cc:71
 msgid "MusicBrainz ID"
 msgstr "MusicBrainz ID"
 
@@ -1561,42 +1582,47 @@ msgstr "ログレベル:"
 msgid "Services"
 msgstr "サービス"
 
-#: src/libaudqt/prefs-window-qt.cc:227
-msgid "Restart in GTK (legacy) mode"
-msgstr "GTK（古い） モードで再起動"
+#: src/libaudqt/prefs-window-qt.cc:228
+msgid "Restart in GTK mode"
+msgstr ""
 
-#: src/libaudqt/prefs-window-qt.cc:236 src/libaudqt/prefs-window-qt.cc:249
+#: src/libaudqt/prefs-window-qt.cc:237 src/libaudqt/prefs-window-qt.cc:250
 msgid "Native"
 msgstr "ネイティブ"
 
-#: src/libaudqt/prefs-window-qt.cc:237
+#: src/libaudqt/prefs-window-qt.cc:238
 msgid "Dark"
 msgstr "ダーク"
 
-#: src/libaudqt/prefs-window-qt.cc:251
+#: src/libaudqt/prefs-window-qt.cc:252
 msgid "Flat"
 msgstr "フラット"
 
-#: src/libaudqt/prefs-window-qt.cc:252
+#: src/libaudqt/prefs-window-qt.cc:253
 msgid "Flat (dark)"
 msgstr "フラット（ダーク）"
 
-#: src/libaudqt/prefs-window-qt.cc:262
+#: src/libaudqt/prefs-window-qt.cc:263
 msgid "Audacious is running in Qt mode."
 msgstr "Audacious は Qt モードで動作しています。"
 
-#: src/libaudqt/prefs-window-qt.cc:266
-msgid "GTK (legacy) mode is unavailable in this build."
-msgstr "このビルドでは GTK（古い）モードが利用できません。"
+#: src/libaudqt/prefs-window-qt.cc:267
+msgid "GTK mode is unavailable in this build."
+msgstr ""
 
-#: src/libaudqt/prefs-window-qt.cc:272
+#: src/libaudqt/prefs-window-qt.cc:273
 msgid "Theme:"
 msgstr "テーマ:"
 
-#: src/libaudqt/prefs-window-qt.cc:274
+#: src/libaudqt/prefs-window-qt.cc:275
 msgid "Icon theme:"
 msgstr "アイコンテーマ:"
 
 #: src/libaudqt/util-qt.cc:112
 msgid "Copy"
 msgstr "コピー"
+
+#: src/libaudqt/volumebutton.cc:165
+#, c-format
+msgid "%d%%"
+msgstr ""
