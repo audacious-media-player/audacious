@@ -195,7 +195,7 @@ if test $USE_GTK2 = yes ; then
     PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.24)
     AC_DEFINE([USE_GTK], [1], [Define if GTK support enabled])
 elif test $USE_GTK = yes ; then
-    PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.22)
+    PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.18)
     AC_DEFINE(USE_GTK, 1, [Define if GTK support enabled])
     AC_DEFINE(USE_GTK3, 1, [Define if GTK 3 support enabled])
 fi
