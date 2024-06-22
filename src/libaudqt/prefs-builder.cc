@@ -20,6 +20,8 @@
 #include "libaudqt.h"
 #include "prefs-widget.h"
 
+#include <assert.h>
+
 #include <QButtonGroup>
 #include <QFrame>
 #include <QLayout>
@@ -34,6 +36,8 @@ namespace audqt
 void prefs_populate(QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets,
                     const char * domain)
 {
+    assert(layout);
+
     /* layout prior to header label */
     QBoxLayout * orig_layout = layout;
 
