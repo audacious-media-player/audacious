@@ -487,16 +487,16 @@ static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
 {
     g_signal_stop_emission_by_name (widget, "drag-drop");
 
-    gboolean success = true;
     int row = audgui_list_row_at_point_rounded (widget, x, y);
 
     if (model->dragging && MODEL_HAS_CB (model, shift_rows))
     {
         /* dragging within same list */
-        if (model->clicked_row >= 0 && model->clicked_row < model->rows)
+        gboolean valid = (model->clicked_row >= 0 && model->clicked_row < model->rows);
+        if (valid)
             model->cbs->shift_rows (model->user, model->clicked_row, row);
-        else
-            success = false;
+
+        gtk_drag_finish (context, valid, false, time);
     }
     else if (MODEL_HAS_CB (model, data_type) && MODEL_HAS_CB (model, receive_data))
     {
@@ -504,11 +504,14 @@ static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
         model->receive_row = row;
         gtk_drag_get_data (widget, context, gdk_atom_intern
          (model->cbs->data_type, false), time);
+        /* gtk_drag_finish() is called from drag_data_received() */
     }
     else
-        success = false;
+    {
+        /* invalid */
+        gtk_drag_finish (context, false, false, time);
+    }
 
-    gtk_drag_finish (context, success, false, time);
     gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, nullptr, (GtkTreeViewDropPosition) 0);
     stop_autoscroll (model, widget);
     return true;
@@ -524,10 +527,12 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, in
 
     auto data = (const char *) gtk_selection_data_get_data (sel);
     int length = gtk_selection_data_get_length (sel);
+    gboolean valid = (data && length);
 
-    if (data && length)
+    if (valid)
         model->cbs->receive_data (model->user, model->receive_row, data, length);
 
+    gtk_drag_finish (context, valid, false, time);
     model->receive_row = -1;
 }
 
