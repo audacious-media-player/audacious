@@ -10,7 +10,7 @@
 <h2>Notes for Building Audacious on Windows</h2>
 
 <p><em>John Lindgren<br>
-February 09, 2023</em></p>
+August 14, 2024</em></p>
 
 <p>A Makefile and several patch files should accompany this document.</p>
 
@@ -28,20 +28,20 @@ export C_INCLUDE_PATH=/C/libs/include<br>
 export CPLUS_INCLUDE_PATH=/C/libs/include<br>
 export LIBRARY_PATH=/C/libs/lib</tt></p></blockquote>
 
-<p>In the MinGW shell (MSYS2 MinGW 64-bit, <b>not</b> MSYS2 MSYS):</p>
+<p>In the MinGW shell (MSYS2 UCRT64, <b>not</b> MSYS2 MSYS):</p>
 
 <blockquote><p><tt>pacman -Syu<br>
 pacman -S autoconf automake git libtool make patch pkg-config<br>
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-gettext mingw-w64-x86_64-libxml2<br>
-pacman -S mingw-w64-x86_64-atk mingw-w64-x86_64-cairo mingw-w64-x86_64-pango<br>
-pacman -S mingw-w64-x86_64-gdk-pixbuf2 mingw-w64-x86_64-librsvg mingw-w64-x86_64-qt6-base<br>
-pacman -S mingw-w64-x86_64-qt6-imageformats mingw-w64-x86_64-qt6-svg mingw-w64-x86_64-qt6-translations<br>
-pacman -S mingw-w64-x86_64-flac mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libcdio-paranoia<br>
-pacman -S mingw-w64-x86_64-fluidsynth mingw-w64-x86_64-mpg123 mingw-w64-x86_64-faad2<br>
-pacman -S mingw-w64-x86_64-wavpack mingw-w64-x86_64-libmodplug mingw-w64-x86_64-libbs2b<br>
-pacman -S mingw-w64-x86_64-libsamplerate mingw-w64-x86_64-libsoxr mingw-w64-x86_64-neon<br>
-pacman -S mingw-w64-x86_64-libcue mingw-w64-x86_64-lame mingw-w64-x86_64-opusfile<br>
-pacman -S mingw-w64-x86_64-libopenmpt mingw-w64-x86_64-json-glib</tt></p></blockquote>
+pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gettext mingw-w64-ucrt-x86_64-libxml2<br>
+pacman -S mingw-w64-ucrt-x86_64-atk mingw-w64-ucrt-x86_64-cairo mingw-w64-ucrt-x86_64-pango<br>
+pacman -S mingw-w64-ucrt-x86_64-gdk-pixbuf2 mingw-w64-ucrt-x86_64-librsvg mingw-w64-ucrt-x86_64-qt6-base<br>
+pacman -S mingw-w64-ucrt-x86_64-qt6-imageformats mingw-w64-ucrt-x86_64-qt6-svg mingw-w64-ucrt-x86_64-qt6-translations<br>
+pacman -S mingw-w64-ucrt-x86_64-flac mingw-w64-ucrt-x86_64-libvorbis mingw-w64-ucrt-x86_64-libcdio-paranoia<br>
+pacman -S mingw-w64-ucrt-x86_64-fluidsynth mingw-w64-ucrt-x86_64-mpg123 mingw-w64-ucrt-x86_64-faad2<br>
+pacman -S mingw-w64-ucrt-x86_64-wavpack mingw-w64-ucrt-x86_64-libmodplug mingw-w64-ucrt-x86_64-libbs2b<br>
+pacman -S mingw-w64-ucrt-x86_64-libsamplerate mingw-w64-ucrt-x86_64-libsoxr mingw-w64-ucrt-x86_64-neon<br>
+pacman -S mingw-w64-ucrt-x86_64-libcue mingw-w64-ucrt-x86_64-lame mingw-w64-ucrt-x86_64-opusfile<br>
+pacman -S mingw-w64-ucrt-x86_64-libopenmpt mingw-w64-ucrt-x86_64-json-glib</tt></p></blockquote>
 
 <h3>Install GTK</h3>
 
