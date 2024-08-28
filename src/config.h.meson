@@ -5,6 +5,7 @@
 #mesondefine EXPORT
 #mesondefine PLUGIN_SUFFIX
 #mesondefine VALGRIND_FRIENDLY
+#mesondefine WORDS_BIGENDIAN
 
 #define PACKAGE_VERSION VERSION
 #define ICONV_CONST
