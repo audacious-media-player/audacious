@@ -38,5 +38,7 @@ win32/override/README.txt
 *.moc
 *.o
 *.patch
+*.sha256sum
 *.so
+*.tar.bz2
 *~
