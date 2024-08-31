@@ -25,3 +25,6 @@ rm -rf .github .gitignore aclocal.m4 autom4te.cache
 echo "Building $RELEASENAME.tar.bz2 ..."
 cd .. || exit 1
 tar cfj $RELEASENAME.tar.bz2 $RELEASENAME || exit 1
+
+echo "Calculating checksum ..."
+sha256sum $RELEASENAME.tar.bz2 > $RELEASENAME.sha256sum || exit 1
