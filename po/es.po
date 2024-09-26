@@ -33,7 +33,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2024-06-12 21:09+0200\n"
+"POT-Creation-Date: 2024-09-26 21:46+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
 "Last-Translator: Toni Estévez <toni.estevez@gmail.com>, 2019-2020,2022\n"
 "Language-Team: Spanish (http://app.transifex.com/audacious/audacious/"
@@ -482,8 +482,8 @@ msgstr "Cerrar el _diálogo al añadir"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
 #: src/libaudgui/jump-to-track.cc:323 src/libaudgui/plugin-prefs.cc:168
-#: src/libaudgui/prefs-window.cc:944 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:357 src/libaudqt/audqt.cc:326
+#: src/libaudgui/prefs-window.cc:947 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:365 src/libaudqt/audqt.cc:326
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
 #: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:696
 #: src/libaudqt/song-window-qt.cc:365
@@ -852,14 +852,14 @@ msgstr "Ajustes de %s"
 msgid "_Set"
 msgstr "_Aplicar"
 
-#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:756
-#: src/libaudgui/prefs-window.cc:796 src/libaudqt/prefs-window-qt.cc:641
+#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:759
+#: src/libaudgui/prefs-window.cc:799 src/libaudqt/prefs-window-qt.cc:641
 #: src/libaudqt/prefs-window-qt.cc:644
 msgid "_Settings"
 msgstr "Ajuste_s"
 
-#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:770
-#: src/libaudgui/prefs-window.cc:808 src/libaudqt/prefs-window-qt.cc:642
+#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:773
+#: src/libaudgui/prefs-window.cc:811 src/libaudqt/prefs-window-qt.cc:642
 #: src/libaudqt/prefs-window-qt.cc:645
 msgid "_About"
 msgstr "_Acerca de"
@@ -1376,20 +1376,20 @@ msgstr "Formato del título:"
 msgid "Custom string:"
 msgstr "Cadena personalizada:"
 
-#: src/libaudgui/prefs-window.cc:822 src/libaudqt/prefs-window-qt.cc:781
+#: src/libaudgui/prefs-window.cc:825 src/libaudqt/prefs-window-qt.cc:781
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Activar la grabación de la transmisión de audio con %s"
 
-#: src/libaudgui/prefs-window.cc:831 src/libaudqt/prefs-window-qt.cc:794
+#: src/libaudgui/prefs-window.cc:834 src/libaudqt/prefs-window-qt.cc:794
 msgid "No audio recording plugin available"
 msgstr "No hay disponible ningún complemento de grabación de audio"
 
-#: src/libaudgui/prefs-window.cc:892 src/libaudqt/prefs-window-qt.cc:654
+#: src/libaudgui/prefs-window.cc:895 src/libaudqt/prefs-window-qt.cc:654
 msgid "Audacious Settings"
 msgstr "Ajustes de Audacious"
 
-#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:201
+#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:209
 #: src/libaudqt/fileopener.cc:123
 msgid "Cancel"
 msgstr "Cancelar"
@@ -1458,11 +1458,11 @@ msgstr "_Borrar el historial"
 msgid "Enter URL:"
 msgstr "Introducir el URL:"
 
-#: src/libaudgui/util.cc:201 src/libaudqt/fileopener.cc:107
+#: src/libaudgui/util.cc:209 src/libaudqt/fileopener.cc:107
 msgid "Open"
 msgstr "Abrir"
 
-#: src/libaudgui/util.cc:343
+#: src/libaudgui/util.cc:351
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

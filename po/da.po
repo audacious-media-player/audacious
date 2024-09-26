@@ -4,15 +4,16 @@
 #
 # Translators:
 # Joe Hansen <joedalton2@yahoo.dk>, 2013-2014,2016,2020-2021
+# Kim Johannsen, 2024
 # scootergrisen, 2017-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2024-06-12 21:09+0200\n"
+"POT-Creation-Date: 2024-09-26 21:46+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>, 2013-2014,2016,2020-2021\n"
+"Last-Translator: Kim Johannsen, 2024\n"
 "Language-Team: Danish (http://app.transifex.com/audacious/audacious/language/"
 "da/)\n"
 "Language: da\n"
@@ -227,12 +228,16 @@ msgid ""
 "The file format could not be determined. The format may be unsupported, or a "
 "necessary plugin may not be installed/enabled."
 msgstr ""
+"Filformatet kunne ikke bestemmes. Formatet kan være uunderstøttet eller en "
+"nødvendig udvidelse er muligvis ikke installeret eller aktiveret."
 
 #: src/libaudcore/probe.cc:218
 msgid ""
 "The file could not be decoded. It may be invalid, corrupt, or in an "
 "unsupported format."
 msgstr ""
+"Filen kunne ikke afkodes. Den kan være invalid, korrupt eller i et "
+"uunderstøttet format."
 
 #: src/libaudcore/tuple.cc:568
 msgid "Mono"
@@ -451,8 +456,8 @@ msgstr "Luk _dialog ved tilføjelse"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
 #: src/libaudgui/jump-to-track.cc:323 src/libaudgui/plugin-prefs.cc:168
-#: src/libaudgui/prefs-window.cc:944 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:357 src/libaudqt/audqt.cc:326
+#: src/libaudgui/prefs-window.cc:947 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:365 src/libaudqt/audqt.cc:326
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
 #: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:696
 #: src/libaudqt/song-window-qt.cc:365
@@ -498,7 +503,7 @@ msgstr "Spor"
 
 #: src/libaudgui/infopopup.cc:222 src/libaudqt/infopopup-qt.cc:107
 msgid "Disc"
-msgstr ""
+msgstr "Plade"
 
 #: src/libaudgui/infopopup.cc:223 src/libaudqt/infopopup-qt.cc:109
 #: src/libaudqt/info-widget.cc:66
@@ -718,7 +723,7 @@ msgstr "_Næste"
 #: src/libaudgui/infowin.cc:498
 #, c-format
 msgid "%d kbit/s"
-msgstr ""
+msgstr "%d kbit/s"
 
 #: src/libaudgui/infowin.cc:503
 msgid "N/A"
@@ -819,14 +824,14 @@ msgstr "Indstillinger for %s"
 msgid "_Set"
 msgstr "_Angiv"
 
-#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:756
-#: src/libaudgui/prefs-window.cc:796 src/libaudqt/prefs-window-qt.cc:641
+#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:759
+#: src/libaudgui/prefs-window.cc:799 src/libaudqt/prefs-window-qt.cc:641
 #: src/libaudqt/prefs-window-qt.cc:644
 msgid "_Settings"
 msgstr "_Indstillinger"
 
-#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:770
-#: src/libaudgui/prefs-window.cc:808 src/libaudqt/prefs-window-qt.cc:642
+#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:773
+#: src/libaudgui/prefs-window.cc:811 src/libaudqt/prefs-window-qt.cc:642
 #: src/libaudqt/prefs-window-qt.cc:645
 msgid "_About"
 msgstr "_Om"
@@ -922,7 +927,7 @@ msgstr "Kvalitet"
 
 #: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window-qt.cc:183
 msgid "Disc number"
-msgstr ""
+msgstr "Plade nr."
 
 #: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:186
 msgid "None"
@@ -1006,7 +1011,7 @@ msgstr "Genstart i Qt-tilstand"
 
 #: src/libaudgui/prefs-window.cc:176
 msgid "Audacious is running in GTK mode."
-msgstr ""
+msgstr "Audacious kører i GTK-tilstand."
 
 #: src/libaudgui/prefs-window.cc:180
 msgid "Qt mode is unavailable in this build."
@@ -1312,11 +1317,11 @@ msgstr "KUNSTNER [ ALBUM ] - SPOR. TITEL"
 
 #: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
 msgid "ARTIST - ALBUM - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "ARTIST - ALBUM - PLADE.SPOR. TITEL"
 
 #: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
 msgid "ARTIST [ ALBUM ] - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "ARTIST [ ALBUM ] - PLADE.SPOR. TITEL"
 
 #: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
 msgid "ALBUM - TITLE"
@@ -1338,20 +1343,20 @@ msgstr "Titelformat:"
 msgid "Custom string:"
 msgstr "Tilpasset streng:"
 
-#: src/libaudgui/prefs-window.cc:822 src/libaudqt/prefs-window-qt.cc:781
+#: src/libaudgui/prefs-window.cc:825 src/libaudqt/prefs-window-qt.cc:781
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Aktivér optagelse af lydstrøm med %s"
 
-#: src/libaudgui/prefs-window.cc:831 src/libaudqt/prefs-window-qt.cc:794
+#: src/libaudgui/prefs-window.cc:834 src/libaudqt/prefs-window-qt.cc:794
 msgid "No audio recording plugin available"
 msgstr "Intet udvidelsesmodul til lydoptagelse er tilgængeligt"
 
-#: src/libaudgui/prefs-window.cc:892 src/libaudqt/prefs-window-qt.cc:654
+#: src/libaudgui/prefs-window.cc:895 src/libaudqt/prefs-window-qt.cc:654
 msgid "Audacious Settings"
 msgstr "Indstillinger for Audacious"
 
-#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:201
+#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:209
 #: src/libaudqt/fileopener.cc:123
 msgid "Cancel"
 msgstr "Annuller"
@@ -1420,11 +1425,11 @@ msgstr "_Ryd historik"
 msgid "Enter URL:"
 msgstr "Indtast URL:"
 
-#: src/libaudgui/util.cc:201 src/libaudqt/fileopener.cc:107
+#: src/libaudgui/util.cc:209 src/libaudqt/fileopener.cc:107
 msgid "Open"
 msgstr "Åbn"
 
-#: src/libaudgui/util.cc:343
+#: src/libaudgui/util.cc:351
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1486,15 +1491,15 @@ msgstr "Optagelsesdato"
 
 #: src/libaudqt/info-widget.cc:60
 msgid "Publisher"
-msgstr ""
+msgstr "Udgiver"
 
 #: src/libaudqt/info-widget.cc:61
 msgid "Catalog Number"
-msgstr ""
+msgstr "Katalog nr."
 
 #: src/libaudqt/info-widget.cc:62
 msgid "Disc Number"
-msgstr ""
+msgstr "Plade nr."
 
 #: src/libaudqt/info-widget.cc:65
 msgid "Technical"
@@ -1518,7 +1523,7 @@ msgstr "_Fortryd"
 
 #: src/libaudqt/infowin-qt.cc:105
 msgid "Error writing tag(s)."
-msgstr "Kunne ikke skrive mærker."
+msgstr "Kunne ikke skrive mærke(r)."
 
 #: src/libaudqt/infowin-qt.cc:127
 msgid "%1 files selected"
@@ -1570,23 +1575,23 @@ msgstr "Tjenester"
 
 #: src/libaudqt/prefs-window-qt.cc:228
 msgid "Restart in GTK mode"
-msgstr ""
+msgstr "Genstart i GTK-tilstand"
 
 #: src/libaudqt/prefs-window-qt.cc:237 src/libaudqt/prefs-window-qt.cc:250
 msgid "Native"
-msgstr ""
+msgstr "Oprindelig"
 
 #: src/libaudqt/prefs-window-qt.cc:238
 msgid "Dark"
-msgstr ""
+msgstr "Mørk"
 
 #: src/libaudqt/prefs-window-qt.cc:252
 msgid "Flat"
-msgstr ""
+msgstr "Flad"
 
 #: src/libaudqt/prefs-window-qt.cc:253
 msgid "Flat (dark)"
-msgstr ""
+msgstr "Flad (mørk)"
 
 #: src/libaudqt/prefs-window-qt.cc:263
 msgid "Audacious is running in Qt mode."
@@ -1594,15 +1599,15 @@ msgstr "Audacious afvikles i Qt-tilstand."
 
 #: src/libaudqt/prefs-window-qt.cc:267
 msgid "GTK mode is unavailable in this build."
-msgstr ""
+msgstr "GTK-tilstand er utilgængelig i dette byg."
 
 #: src/libaudqt/prefs-window-qt.cc:273
 msgid "Theme:"
-msgstr ""
+msgstr "Tema:"
 
 #: src/libaudqt/prefs-window-qt.cc:275
 msgid "Icon theme:"
-msgstr ""
+msgstr "Ikon-tema:"
 
 #: src/libaudqt/util-qt.cc:112
 msgid "Copy"
@@ -1611,4 +1616,4 @@ msgstr "Kopiér"
 #: src/libaudqt/volumebutton.cc:165
 #, c-format
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"

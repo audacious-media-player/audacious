@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Arnold Marko <arnold.marko@gmail.com>, 2021-2023
+# Arnold Marko <arnold.marko@gmail.com>, 2021-2024
 # kv1dr <poznic.davor@gmail.com>, 2011
 # lippgreen, 2013
 # lippgreen, 2013
@@ -18,9 +18,9 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2024-06-12 21:09+0200\n"
+"POT-Creation-Date: 2024-09-26 21:46+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Arnold Marko <arnold.marko@gmail.com>, 2021-2023\n"
+"Last-Translator: Arnold Marko <arnold.marko@gmail.com>, 2021-2024\n"
 "Language-Team: Slovenian (http://app.transifex.com/audacious/audacious/"
 "language/sl/)\n"
 "Language: sl\n"
@@ -468,8 +468,8 @@ msgstr "Zapri o_brazec ob dodajanju"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
 #: src/libaudgui/jump-to-track.cc:323 src/libaudgui/plugin-prefs.cc:168
-#: src/libaudgui/prefs-window.cc:944 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:357 src/libaudqt/audqt.cc:326
+#: src/libaudgui/prefs-window.cc:947 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:365 src/libaudqt/audqt.cc:326
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
 #: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:696
 #: src/libaudqt/song-window-qt.cc:365
@@ -515,7 +515,7 @@ msgstr "Skladba"
 
 #: src/libaudgui/infopopup.cc:222 src/libaudqt/infopopup-qt.cc:107
 msgid "Disc"
-msgstr ""
+msgstr "Disk"
 
 #: src/libaudgui/infopopup.cc:223 src/libaudqt/infopopup-qt.cc:109
 #: src/libaudqt/info-widget.cc:66
@@ -836,14 +836,14 @@ msgstr "Nastavitve za %s"
 msgid "_Set"
 msgstr "_Nastavi"
 
-#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:756
-#: src/libaudgui/prefs-window.cc:796 src/libaudqt/prefs-window-qt.cc:641
+#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:759
+#: src/libaudgui/prefs-window.cc:799 src/libaudqt/prefs-window-qt.cc:641
 #: src/libaudqt/prefs-window-qt.cc:644
 msgid "_Settings"
 msgstr "N_astavitve"
 
-#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:770
-#: src/libaudgui/prefs-window.cc:808 src/libaudqt/prefs-window-qt.cc:642
+#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:773
+#: src/libaudgui/prefs-window.cc:811 src/libaudqt/prefs-window-qt.cc:642
 #: src/libaudqt/prefs-window-qt.cc:645
 msgid "_About"
 msgstr "_O vtičniku"
@@ -939,7 +939,7 @@ msgstr "Kakovost"
 
 #: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window-qt.cc:183
 msgid "Disc number"
-msgstr ""
+msgstr "Številka diska"
 
 #: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:186
 msgid "None"
@@ -1023,7 +1023,7 @@ msgstr "Ponoven zagon v Qt načinu"
 
 #: src/libaudgui/prefs-window.cc:176
 msgid "Audacious is running in GTK mode."
-msgstr ""
+msgstr "Audacious je zagnan v GTK načinu."
 
 #: src/libaudgui/prefs-window.cc:180
 msgid "Qt mode is unavailable in this build."
@@ -1329,11 +1329,11 @@ msgstr "IZVAJALEC [ALBUM] - NASLOV"
 
 #: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
 msgid "ARTIST - ALBUM - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "IZVAJALEC - ALBUM - ZAP.ŠT. NASLOV"
 
 #: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
 msgid "ARTIST [ ALBUM ] - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "IZVAJALEC - [ALBUM] - ZAP.ŠT. NASLOV"
 
 #: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
 msgid "ALBUM - TITLE"
@@ -1355,20 +1355,20 @@ msgstr "Oblika naslova:"
 msgid "Custom string:"
 msgstr "Niz po meri:"
 
-#: src/libaudgui/prefs-window.cc:822 src/libaudqt/prefs-window-qt.cc:781
+#: src/libaudgui/prefs-window.cc:825 src/libaudqt/prefs-window-qt.cc:781
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Omogoči pretok zvoka s/z %s"
 
-#: src/libaudgui/prefs-window.cc:831 src/libaudqt/prefs-window-qt.cc:794
+#: src/libaudgui/prefs-window.cc:834 src/libaudqt/prefs-window-qt.cc:794
 msgid "No audio recording plugin available"
 msgstr "Vtičniki za snemanje zvoka niso na voljo"
 
-#: src/libaudgui/prefs-window.cc:892 src/libaudqt/prefs-window-qt.cc:654
+#: src/libaudgui/prefs-window.cc:895 src/libaudqt/prefs-window-qt.cc:654
 msgid "Audacious Settings"
 msgstr "Nastavitve za Audacious"
 
-#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:201
+#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:209
 #: src/libaudqt/fileopener.cc:123
 msgid "Cancel"
 msgstr "Prekliči"
@@ -1437,11 +1437,11 @@ msgstr "I_zbriši zgodovino"
 msgid "Enter URL:"
 msgstr "Vnesite naslov URL:"
 
-#: src/libaudgui/util.cc:201 src/libaudqt/fileopener.cc:107
+#: src/libaudgui/util.cc:209 src/libaudqt/fileopener.cc:107
 msgid "Open"
 msgstr "Odpri"
 
-#: src/libaudgui/util.cc:343
+#: src/libaudgui/util.cc:351
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1511,7 +1511,7 @@ msgstr "Kataloška številka"
 
 #: src/libaudqt/info-widget.cc:62
 msgid "Disc Number"
-msgstr ""
+msgstr "šTEVILKA DISKA"
 
 #: src/libaudqt/info-widget.cc:65
 msgid "Technical"
@@ -1587,7 +1587,7 @@ msgstr "Storitve"
 
 #: src/libaudqt/prefs-window-qt.cc:228
 msgid "Restart in GTK mode"
-msgstr ""
+msgstr "Ponoven zagon v GTK načinu"
 
 #: src/libaudqt/prefs-window-qt.cc:237 src/libaudqt/prefs-window-qt.cc:250
 msgid "Native"
@@ -1611,7 +1611,7 @@ msgstr "Audacious je zagnan v Qt načinu."
 
 #: src/libaudqt/prefs-window-qt.cc:267
 msgid "GTK mode is unavailable in this build."
-msgstr ""
+msgstr "GTK način v tej izgradnji programa ni na voljo."
 
 #: src/libaudqt/prefs-window-qt.cc:273
 msgid "Theme:"
@@ -1628,4 +1628,4 @@ msgstr "Kopiraj"
 #: src/libaudqt/volumebutton.cc:165
 #, c-format
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
