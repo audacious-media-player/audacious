@@ -6,7 +6,8 @@ gtk+-2.24.33.tar.xz:
 gtk: gtk+-2.24.33.tar.xz
 	tar xf gtk+-2.24.33.tar.xz
 	cd gtk+-2.24.33 && patch gdk/win32/gdkwindow-win32.c ../patches/gdkwindow-win32.c.diff
-	cd gtk+-2.24.33 && CFLAGS="-O2 -fcommon" ./configure --prefix=$(LIB_PREFIX)
+	cd gtk+-2.24.33 && sed -i '/GDK_DISABLE_DEPRECATED/d' modules/engines/ms-windows/Makefile.in
+	cd gtk+-2.24.33 && CFLAGS="-O2 -fcommon -Wno-error=implicit-int -Wno-error=incompatible-pointer-types" ./configure --prefix=$(LIB_PREFIX)
 	cd gtk+-2.24.33 && $(MAKE) && $(MAKE) install
 
 ffmpeg-6.1.1.tar.xz:
