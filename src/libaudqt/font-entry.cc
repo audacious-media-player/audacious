@@ -20,6 +20,8 @@
 
 #include "libaudqt.h"
 
+#include <stdlib.h>
+
 #include <QAction>
 #include <QFontDialog>
 #include <QLineEdit>
@@ -72,11 +74,13 @@ EXPORT QFont qfont_from_string(const char * name)
         if (space)
         {
             const char * attr = space + 1;
-            int num = str_to_int(attr);
+
+            char * endptr;
+            long num = strtol(attr, &endptr, 10);
 
             attr_found = true;
 
-            if (num > 0)
+            if (num > 0 && *endptr == '\0')
                 size = num;
             else if (!strcmp(attr, "Light"))
                 weight = QFont::Light;
