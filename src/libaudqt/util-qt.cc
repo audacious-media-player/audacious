@@ -103,6 +103,7 @@ void PopupWidget::showEvent(QShowEvent *)
         y += 3;
 
     move(x, y);
+    adjustSize();
 }
 
 void show_copy_context_menu(QWidget * parent, const QPoint & global_pos,
