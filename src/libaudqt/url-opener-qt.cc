@@ -110,20 +110,20 @@ static QDialog * buildUrlDialog(bool open)
     QObject::connect(buttonbox, &QDialogButtonBox::rejected, dialog,
                      &QDialog::close);
 
-    QObject::connect(buttonbox, &QDialogButtonBox::accepted,
-                     [dialog, combobox, open]() {
-                         QByteArray url = combobox->currentText().toUtf8();
+    QObject::connect(
+        buttonbox, &QDialogButtonBox::accepted, [dialog, combobox, open]() {
+            QByteArray url = combobox->currentText().trimmed().toUtf8();
 
-                         if (open)
-                             aud_drct_pl_open(url);
-                         else
-                             aud_drct_pl_add(url, -1);
+            if (open)
+                aud_drct_pl_open(url);
+            else
+                aud_drct_pl_add(url, -1);
 
-                         if (aud_get_bool("save_url_history"))
-                             aud_history_add(url);
+            if (aud_get_bool("save_url_history"))
+                aud_history_add(url);
 
-                         dialog->close();
-                     });
+            dialog->close();
+        });
 
     return dialog;
 }
