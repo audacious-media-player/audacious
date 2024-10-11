@@ -1,5 +1,5 @@
 /*
- * colorbutton.h
+ * colorbutton.cc
  * Copyright 2019 Ariadne Conill
  *
  * Redistribution and use in source and binary forms, with or without

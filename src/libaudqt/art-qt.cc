@@ -1,5 +1,5 @@
 /*
- * art.cc
+ * art-qt.cc
  * Copyright 2014 Ariadne Conill
  *
  * Redistribution and use in source and binary forms, with or without

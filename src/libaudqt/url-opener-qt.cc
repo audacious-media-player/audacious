@@ -1,5 +1,5 @@
 /*
- * url-opener.cc
+ * url-opener-qt.cc
  * Copyright 2015 Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without

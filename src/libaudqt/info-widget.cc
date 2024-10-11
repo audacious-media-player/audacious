@@ -1,5 +1,5 @@
 /*
- * info-widget.h
+ * info-widget.cc
  * Copyright 2006-2017 René Bertin, Thomas Lange, John Lindgren,
  *                     Ariadne Conill, Tomasz Moń, and Eugene Zagidullin
  *

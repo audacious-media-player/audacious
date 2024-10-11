@@ -1,5 +1,5 @@
 /*
- * prefs-widget.cc
+ * prefs-widget-qt.cc
  * Copyright 2007-2014 Tomasz Moń, Ariadne Conill, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without

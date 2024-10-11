@@ -1,5 +1,5 @@
 /*
- * infowin.cc
+ * infowin-qt.cc
  * Copyright 2006-2014 Ariadne Conill, Tomasz Moń, Eugene Zagidullin,
  *                     John Lindgren, and Thomas Lange
  *

@@ -1,5 +1,5 @@
 /*
- * prefs-window.cc
+ * prefs-window-qt.cc
  * Copyright 2006-2014 Ariadne Conill, Tomasz Moń, Michael Färber, and
  *                     John Lindgren
  *
