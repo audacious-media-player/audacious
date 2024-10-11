@@ -32,15 +32,18 @@
 static void open_cb (void * entry)
 {
     const char * text = gtk_entry_get_text ((GtkEntry *) entry);
+    char * url = g_strstrip (g_strdup (text));
     gboolean open = GPOINTER_TO_INT (g_object_get_data ((GObject *) entry, "open"));
 
     if (open)
-        aud_drct_pl_open (text);
+        aud_drct_pl_open (url);
     else
-        aud_drct_pl_add (text, -1);
+        aud_drct_pl_add (url, -1);
 
     if (aud_get_bool ("save_url_history"))
-        aud_history_add (text);
+        aud_history_add (url);
+
+    g_free (url);
 }
 
 static void clear_cb (void * combo)
