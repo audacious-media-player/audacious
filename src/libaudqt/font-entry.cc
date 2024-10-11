@@ -80,7 +80,7 @@ EXPORT QFont qfont_from_string(const char * name)
 
             attr_found = true;
 
-            if (num > 0 && *endptr == '\0')
+            if (size == 0 && num > 0 && *endptr == '\0')
                 size = num;
             else if (!strcmp(attr, "Light"))
                 weight = QFont::Light;
