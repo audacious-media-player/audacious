@@ -68,7 +68,11 @@ BooleanWidget::BooleanWidget(const PreferencesWidget * parent,
 {
     update();
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+    QObject::connect(this, &QCheckBox::checkStateChanged, [this](Qt::CheckState state) {
+#else
     QObject::connect(this, &QCheckBox::stateChanged, [this](int state) {
+#endif
         if (m_updating)
             return;
         m_parent->cfg.set_bool(state != Qt::Unchecked);

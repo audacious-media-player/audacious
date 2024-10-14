@@ -162,7 +162,11 @@ EqualizerWindow::EqualizerWindow()
     updatePreamp();
     updateBands();
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+    connect(&m_onoff_checkbox, &QCheckBox::checkStateChanged, [](Qt::CheckState state) {
+#else
     connect(&m_onoff_checkbox, &QCheckBox::stateChanged, [](int state) {
+#endif
         aud_set_bool("equalizer_active", (state == Qt::Checked));
     });
 
