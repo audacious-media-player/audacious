@@ -18,20 +18,19 @@
 # Péter Polonkai <polesz@nedudu.hu>, 2010
 # Péter Polonkai <polesz@nedudu.hu>, 2010-2012,2014-2016
 # Ferenc Szabo <szaboferee@gmail.com>, 2013
+# Tamás Hornos, 2024
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
-"Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
-"issues\n"
-"POT-Creation-Date: 2024-09-26 21:46+0200\n"
+"Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/issues\n"
+"POT-Creation-Date: 2024-04-28 12:35+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Kris Aku, 2024\n"
-"Language-Team: Hungarian (http://app.transifex.com/audacious/audacious/"
-"language/hu/)\n"
-"Language: hu\n"
+"Last-Translator: Tamás Hornos, 2024\n"
+"Language-Team: Hungarian (http://app.transifex.com/audacious/audacious/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/audacious/main.cc:72
@@ -116,15 +115,13 @@ msgstr "Ismeretlen kapcsoló: -%c\n"
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
-msgstr ""
-"Használat: audacious [KAPCSOLÓ] … [FÁJL] …\n"
-"\n"
+msgstr "Használat: audacious [KAPCSOLÓ] … [FÁJL] …\n\n"
 
 #: src/audacious/main.cc:206
 msgid "Select instance to run/control"
 msgstr "Válassza ki a futtatandó/vezérelendő példányt"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:155
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:139
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -140,9 +137,7 @@ msgstr[1] "%d fájl található"
 msgid ""
 "Error reading %s:\n"
 "%s"
-msgstr ""
-"Hiba a(z) %s olvasásakor\n"
-"%s"
+msgstr "Hiba a(z) %s olvasásakor\n%s"
 
 #: src/libaudcore/adder.cc:456
 msgid "No files found."
@@ -168,9 +163,7 @@ msgstr "(karakterkódolási hiba)"
 #: src/libaudcore/drct.cc:96
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
-msgstr ""
-"A hangfolyam felvételét be kell állítani a Hangbeállításokban, mielőtt az "
-"használható lenne."
+msgstr "A hangfolyam felvételét be kell állítani a Hangbeállításokban, mielőtt az használható lenne."
 
 #: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
@@ -185,9 +178,7 @@ msgstr "Hiba a kimeneti folyam rögzítésekor"
 msgid ""
 "Error playing %s:\n"
 "%s"
-msgstr ""
-"Hiba a(z) %s lejátszásakor:\n"
-"%s"
+msgstr "Hiba a(z) %s lejátszásakor:\n%s"
 
 #: src/libaudcore/playback.cc:510
 msgid "Invalid audio format"
@@ -203,9 +194,7 @@ msgstr "Most játszott"
 msgid ""
 "Error opening %s:\n"
 "%s"
-msgstr ""
-"Hiba a(z) %s megnyitáskor:\n"
-"%s"
+msgstr "Hiba a(z) %s megnyitáskor:\n%s"
 
 #: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:283
 #, c-format
@@ -237,19 +226,15 @@ msgstr "Tekerési hiba"
 
 #: src/libaudcore/probe.cc:187
 msgid ""
-"The file format could not be determined. The format may be unsupported, or a "
-"necessary plugin may not be installed/enabled."
-msgstr ""
-"A fájlformátum nem határozható meg. A formátum lehet, hogy nem támogatott, "
-"vagy egy szükséges bővítmény nincs telepítve/engedélyezve."
+"The file format could not be determined. The format may be unsupported, or a"
+" necessary plugin may not be installed/enabled."
+msgstr "A fájlformátum nem határozható meg. A formátum lehet, hogy nem támogatott, vagy egy szükséges bővítmény nincs telepítve/engedélyezve."
 
 #: src/libaudcore/probe.cc:218
 msgid ""
 "The file could not be decoded. It may be invalid, corrupt, or in an "
 "unsupported format."
-msgstr ""
-"A fájl nem dekódolható. Lehet hogy érvénytelen, sérült vagy nem támogatott "
-"formátumú."
+msgstr "A fájl nem dekódolható. Lehet hogy érvénytelen, sérült vagy nem támogatott formátumú."
 
 #: src/libaudcore/tuple.cc:568
 msgid "Mono"
@@ -468,56 +453,56 @@ msgstr "_Párbeszédablak bezárása hozzáadás után"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
 #: src/libaudgui/jump-to-track.cc:323 src/libaudgui/plugin-prefs.cc:168
-#: src/libaudgui/prefs-window.cc:947 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:365 src/libaudqt/audqt.cc:326
+#: src/libaudgui/prefs-window.cc:944 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:357 src/libaudqt/audqt.cc:310
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
 #: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:696
 #: src/libaudqt/song-window-qt.cc:365
 msgid "_Close"
 msgstr "_Bezárás"
 
-#: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:402
+#: src/libaudgui/infopopup.cc:213 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
 #: src/libaudqt/queue-manager-qt.cc:110
 msgid "Title"
 msgstr "Cím"
 
-#: src/libaudgui/infopopup.cc:217 src/libaudgui/infowin.cc:405
+#: src/libaudgui/infopopup.cc:214 src/libaudgui/infowin.cc:405
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/infopopup-qt.cc:97
 #: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:169
 msgid "Artist"
 msgstr "Előadó"
 
-#: src/libaudgui/infopopup.cc:218 src/libaudgui/infowin.cc:408
+#: src/libaudgui/infopopup.cc:215 src/libaudgui/infowin.cc:408
 #: src/libaudgui/prefs-window.cc:103 src/libaudgui/prefs-window.cc:151
 #: src/libaudqt/infopopup-qt.cc:99 src/libaudqt/info-widget.cc:50
 #: src/libaudqt/prefs-window-qt.cc:170 src/libaudqt/prefs-window-qt.cc:213
 msgid "Album"
 msgstr "Album"
 
-#: src/libaudgui/infopopup.cc:219 src/libaudgui/infowin.cc:418
+#: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:418
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/infopopup-qt.cc:101
 #: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:174
 msgid "Genre"
 msgstr "Műfaj"
 
-#: src/libaudgui/infopopup.cc:220 src/libaudgui/infowin.cc:421
+#: src/libaudgui/infopopup.cc:217 src/libaudgui/infowin.cc:421
 #: src/libaudgui/prefs-window.cc:112 src/libaudqt/infopopup-qt.cc:103
 #: src/libaudqt/prefs-window-qt.cc:179
 msgid "Year"
 msgstr "Év"
 
-#: src/libaudgui/infopopup.cc:221 src/libaudgui/prefs-window.cc:150
+#: src/libaudgui/infopopup.cc:218 src/libaudgui/prefs-window.cc:150
 #: src/libaudqt/infopopup-qt.cc:105 src/libaudqt/prefs-window-qt.cc:212
 msgid "Track"
 msgstr "Szám"
 
-#: src/libaudgui/infopopup.cc:222 src/libaudqt/infopopup-qt.cc:107
+#: src/libaudgui/infopopup.cc:219 src/libaudqt/infopopup-qt.cc:107
 msgid "Disc"
 msgstr "Lemez"
 
-#: src/libaudgui/infopopup.cc:223 src/libaudqt/infopopup-qt.cc:109
+#: src/libaudgui/infopopup.cc:220 src/libaudqt/infopopup-qt.cc:109
 #: src/libaudqt/info-widget.cc:66
 msgid "Length"
 msgstr "Hossz"
@@ -796,9 +781,7 @@ msgstr "Felülírja ezt: %s?"
 #: src/libaudgui/playlists.cc:121 src/libaudqt/fileopener.cc:63
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
-msgstr ""
-"Írjon be egy kiterjesztést, vagy válasszon egy formátumot a legördülő "
-"listából."
+msgstr "Írjon be egy kiterjesztést, vagy válasszon egy formátumot a legördülő listából."
 
 #: src/libaudgui/playlists.cc:140 src/libaudqt/fileopener.cc:70
 msgid "Select Format by Extension"
@@ -838,14 +821,14 @@ msgstr "%s beállítások"
 msgid "_Set"
 msgstr "_Beállítás"
 
-#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:759
-#: src/libaudgui/prefs-window.cc:799 src/libaudqt/prefs-window-qt.cc:641
+#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:756
+#: src/libaudgui/prefs-window.cc:796 src/libaudqt/prefs-window-qt.cc:641
 #: src/libaudqt/prefs-window-qt.cc:644
 msgid "_Settings"
 msgstr "_Beállítások"
 
-#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:773
-#: src/libaudgui/prefs-window.cc:811 src/libaudqt/prefs-window-qt.cc:642
+#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:770
+#: src/libaudgui/prefs-window.cc:808 src/libaudqt/prefs-window-qt.cc:642
 #: src/libaudqt/prefs-window-qt.cc:645
 msgid "_About"
 msgstr "_Névjegy"
@@ -1331,11 +1314,11 @@ msgstr "ELŐADÓ [ ALBUM ] - SZÁM. CÍM"
 
 #: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
 msgid "ARTIST - ALBUM - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "ELŐADÓ - ALBUM - LEMEZ.SZÁM. CÍM"
 
 #: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
 msgid "ARTIST [ ALBUM ] - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "ELŐADÓ [ ALBUM ] - LEMEZ.SZÁM. CÍM"
 
 #: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
 msgid "ALBUM - TITLE"
@@ -1357,20 +1340,20 @@ msgstr "Címformátum:"
 msgid "Custom string:"
 msgstr "Egyéni karakterlánc:"
 
-#: src/libaudgui/prefs-window.cc:825 src/libaudqt/prefs-window-qt.cc:781
+#: src/libaudgui/prefs-window.cc:822 src/libaudqt/prefs-window-qt.cc:781
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Hangfolyam felvételének engedélyezése ezzel: %s"
 
-#: src/libaudgui/prefs-window.cc:834 src/libaudqt/prefs-window-qt.cc:794
+#: src/libaudgui/prefs-window.cc:831 src/libaudqt/prefs-window-qt.cc:794
 msgid "No audio recording plugin available"
 msgstr "Nincs elérhető hangrögzítő bővítmény"
 
-#: src/libaudgui/prefs-window.cc:895 src/libaudqt/prefs-window-qt.cc:654
+#: src/libaudgui/prefs-window.cc:892 src/libaudqt/prefs-window-qt.cc:654
 msgid "Audacious Settings"
 msgstr "Audacious beállítások"
 
-#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:209
+#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:201
 #: src/libaudqt/fileopener.cc:123
 msgid "Cancel"
 msgstr "Mégse"
@@ -1439,17 +1422,15 @@ msgstr "_Előzmények törlése"
 msgid "Enter URL:"
 msgstr "URL megadása:"
 
-#: src/libaudgui/util.cc:209 src/libaudqt/fileopener.cc:107
+#: src/libaudgui/util.cc:201 src/libaudqt/fileopener.cc:107
 msgid "Open"
 msgstr "Megnyitás"
 
-#: src/libaudgui/util.cc:351
+#: src/libaudgui/util.cc:343
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(További üzenetek el vannak rejtve.)"
+msgstr "\n(További üzenetek el vannak rejtve.)"
 
 #: src/libaudqt/eq-preset-qt.cc:252
 msgid "Preset files (*.preset *.eqf *.q1)"
