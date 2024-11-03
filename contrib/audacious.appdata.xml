@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2015-2023 Audacious developers -->
+<!-- Copyright 2015-2024 Audacious developers -->
 <component type="desktop">
   <id>audacious.desktop</id>
   <launchable type="desktop-id">audacious.desktop</launchable>
@@ -21,7 +21,7 @@
       albums in your entire music library, or create and edit your own custom
       playlists. Listen to CD’s or stream music from the Internet. Tweak the
       sound with the graphical equalizer or change the dynamic range with audio
-      effects. Enjoy the modern Qt-themed interface or change things up with
+      effects. Enjoy the modern Qt/GTK themed interface or change things up with
       Winamp Classic skins. Use the plugins included with Audacious to fetch
       lyrics for your music, display a VU meter, and more.
     </p>
@@ -30,6 +30,7 @@
   <url type="bugtracker">https://github.com/audacious-media-player/audacious/issues</url>
   <url type="translate">https://transifex.com/audacious/audacious</url>
   <releases>
+    <release date="2024-11-03" version="4.4.2"></release>
     <release date="2024-09-26" version="4.4.1"></release>
     <release date="2024-06-12" version="4.4"></release>
     <release date="2023-04-29" version="4.3.1"></release>
