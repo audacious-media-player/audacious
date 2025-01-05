@@ -345,8 +345,11 @@ EXPORT void aud_config_set_defaults(const char * section,
     while (1)
     {
         const char * name = *entries++;
+        if (!name)
+            break;
+
         const char * value = *entries++;
-        if (!name || !value)
+        if (!value)
             break;
 
         ConfigOp op = {OP_SET_NO_FLAG, section, name, String(value)};
