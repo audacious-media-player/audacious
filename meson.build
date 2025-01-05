@@ -8,7 +8,7 @@ project('audacious', 'c', 'cpp',
         ])
 
 
-copyright = 'Copyright (C) 2001-2024 Audacious developers and others'
+copyright = 'Copyright (C) 2001-2025 Audacious developers and others'
 
 
 gnome = import('gnome')
