@@ -6,8 +6,8 @@
 # ubuntu-22.04:      Qt 5 + GTK 3
 # ubuntu-24.04:      Qt 6 + GTK 3
 # Windows:           Qt 6 + GTK 2
-# macOS (Autotools): Qt 5 - GTK
-# macOS (Meson):     Qt 6 - GTK
+# macOS 13:          Qt 5 - GTK
+# macOS 15:          Qt 6 - GTK
 
 action=$(tr '[:upper:]' '[:lower:]' <<< "$1")
 os=$(tr '[:upper:]' '[:lower:]' <<< "$2")
@@ -53,13 +53,27 @@ case "$action" in
         fi
         ;;
 
+      macos-13)
+        export PATH="/usr/local/opt/qt@5/bin:$PATH"
+        export PKG_CONFIG_PATH="/usr/local/opt/qt@5/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+        if [ "$build_system" = 'meson' ]; then
+          meson setup build -D qt5=true -D gtk=false
+        else
+          ./autogen.sh && ./configure --enable-qt5 --disable-gtk
+        fi
+        ;;
+
       macos*)
+        export PATH="/opt/homebrew/opt/qt@6/bin:$PATH"
+        export PKG_CONFIG_PATH="/opt/homebrew/opt/qt@6/libexec/lib/pkgconfig:$PKG_CONFIG_PATH"
+
         if [ "$build_system" = 'meson' ]; then
           meson setup build -D gtk=false
         else
-          export PATH="/usr/local/opt/qt@5/bin:$PATH"
-          export PKG_CONFIG_PATH="/usr/local/opt/qt@5/lib/pkgconfig:$PKG_CONFIG_PATH"
-          ./autogen.sh && ./configure --enable-qt5 --disable-gtk
+          export LDFLAGS="-L/opt/homebrew/opt/libiconv/lib"
+          export CPPFLAGS="-I/opt/homebrew/opt/libiconv/include"
+          ./autogen.sh && ./configure --disable-gtk
         fi
         ;;
 

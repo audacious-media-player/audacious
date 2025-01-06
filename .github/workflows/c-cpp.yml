@@ -14,9 +14,6 @@ jobs:
              macos-13, macos-15,
              windows-2022]
         build-system: [autotools, meson]
-        exclude:
-          - os: macos-15
-            build-system: autotools
       fail-fast: false
     runs-on: ${{ matrix.os }}
 
