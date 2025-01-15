@@ -46,9 +46,9 @@ static void do_jump(int entry)
     if (entry < 0)
         return;
 
-    auto playlist = Playlist::active_playlist ();
-    playlist.set_position (entry);
-    playlist.start_playback ();
+    auto playlist = Playlist::active_playlist();
+    playlist.set_position(entry);
+    playlist.start_playback();
 }
 
 static void do_queue(int entry)
@@ -56,12 +56,12 @@ static void do_queue(int entry)
     if (entry < 0)
         return;
 
-    auto playlist = Playlist::active_playlist ();
-    int queued = playlist.queue_find_entry (entry);
+    auto playlist = Playlist::active_playlist();
+    int queued = playlist.queue_find_entry(entry);
     if (queued >= 0)
-        playlist.queue_remove (queued);
+        playlist.queue_remove(queued);
     else
-        playlist.queue_insert (-1, entry);
+        playlist.queue_insert(-1, entry);
 }
 
 static bool is_queued(int entry)
@@ -69,8 +69,8 @@ static bool is_queued(int entry)
     if (entry < 0)
         return false;
 
-    auto playlist = Playlist::active_playlist ();
-    int queued = playlist.queue_find_entry (entry);
+    auto playlist = Playlist::active_playlist();
+    int queued = playlist.queue_find_entry(entry);
     return queued >= 0;
 }
 
@@ -90,7 +90,7 @@ public:
         NColumns
     };
 
-    static void selectFirstRow(QTreeView* treeView, SongListModel* treeModel)
+    static void selectFirstRow(QTreeView * treeView, SongListModel * treeModel)
     {
         QModelIndex rootIndex = treeView->rootIndex();
         QModelIndex rootChildIndex = treeModel->index(0, 0, rootIndex);
@@ -143,13 +143,12 @@ QVariant SongListModel::data(const QModelIndex & index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        int entry = index.row();
+        PlaylistEntry entry = m_filteredTuples.value(index.row());
 
-        PlaylistEntry tuple = m_filteredTuples.value(entry);
         if (index.column() == ColumnEntry)
-            return tuple.index;
-        else if (index.column() == ColumnTitle)
-            return tuple.title;
+            return entry.index;
+        if (index.column() == ColumnTitle)
+            return entry.title;
     }
     else if (role == Qt::TextAlignmentRole && index.column() == ColumnEntry)
         return int(Qt::AlignRight | Qt::AlignVCenter);
@@ -157,7 +156,7 @@ QVariant SongListModel::data(const QModelIndex & index, int role) const
     return QVariant();
 }
 
-static bool includeEntry(const QString & title , const QString & filter)
+static bool includeEntry(const QString & title, const QString & filter)
 {
     if (filter.isEmpty())
         return true;
@@ -233,7 +232,6 @@ void SongListModel::selectionChanged(const QItemSelection & selected)
         // Should just be a single entry, but we'll take the last one
         m_selected_row_index = index.row();
 }
-
 
 class SongsWindow : public QDialog
 {
@@ -317,8 +315,7 @@ SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
     auto header = m_treeview.header();
     header->setSectionResizeMode(SongListModel::ColumnEntry,
                                  QHeaderView::Interactive);
-    header->resizeSection(SongListModel::ColumnEntry,
-                          audqt::to_native_dpi(50));
+    header->resizeSection(SongListModel::ColumnEntry, audqt::to_native_dpi(50));
     QObject::connect(m_treeview.selectionModel(), &QItemSelectionModel::selectionChanged,
                      [this](const QItemSelection & selected) {
                          this->m_songListModel.selectionChanged(selected);

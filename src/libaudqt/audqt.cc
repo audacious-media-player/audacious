@@ -76,7 +76,7 @@ static void load_qt_translations()
         QApplication::installTranslator(&translators[1]);
 }
 
-void set_icon_theme(void)
+void set_icon_theme()
 {
     QIcon::setThemeName((QString)aud_get_str("audqt", "icon_theme"));
 
