@@ -1,6 +1,7 @@
 /*
  * song-window-qt.cc
  * Copyright 2021 Steve Storey
+ * Copyright 2025 Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -35,6 +36,7 @@
 #include <QVBoxLayout>
 #include <QVector>
 
+#include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
 
@@ -238,6 +240,11 @@ class SongsWindow : public QDialog
 public:
     SongsWindow(QWidget * parent = nullptr);
 
+    QSize sizeHint() const override
+    {
+        return {5 * sizes.OneInch, 5 * sizes.OneInch};
+    }
+
 protected:
     void keyPressEvent(QKeyEvent * event) override;
 
@@ -248,9 +255,25 @@ private:
     QCheckBox m_closeAfterJump;
     QPushButton m_queueAndUnqueueButton;
 
-    void update()
+    const HookReceiver<SongsWindow, Playlist::UpdateLevel> //
+        update_hook{"playlist update", this, &SongsWindow::updatePlaylist};
+    const HookReceiver<SongsWindow> //
+        activate_hook{"playlist activate", this, &SongsWindow::activatePlaylist};
+
+    void updateModel()
     {
         m_songListModel.update(nullptr);
+    }
+
+    void updatePlaylist(Playlist::UpdateLevel level)
+    {
+        if (level >= Playlist::Metadata)
+            m_songListModel.update(m_filterEdit.text());
+    }
+
+    void activatePlaylist()
+    {
+        updatePlaylist(Playlist::Structure);
     }
 
     void jumpToSelected()
@@ -312,6 +335,7 @@ SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
     m_treeview.setIndentation(0);
     m_treeview.setModel(&m_songListModel);
     m_treeview.setSelectionMode(QAbstractItemView::SingleSelection);
+    m_treeview.setUniformRowHeights(true);
     auto header = m_treeview.header();
     header->setSectionResizeMode(SongListModel::ColumnEntry,
                                  QHeaderView::Interactive);
@@ -325,7 +349,7 @@ SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
         this->jumpToSelected();
     });
 
-    update();
+    updateModel();
     vbox_content->addWidget(&m_treeview);
     // **** END Track list ****
 
@@ -341,8 +365,8 @@ SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
     QDialogButtonBox * bbox = new QDialogButtonBox(QDialogButtonBox::Close);
     bbox->addButton(&m_queueAndUnqueueButton, QDialogButtonBox::ApplyRole);
     m_queueAndUnqueueButton.setText(translate_str(N_("_Queue")));
-    QPushButton* btn_Jump = bbox->addButton(translate_str(N_("_Jump")), QDialogButtonBox::AcceptRole);
-    QPushButton* btn_Close = bbox->button(QDialogButtonBox::Close);
+    QPushButton * btn_Jump = bbox->addButton(translate_str(N_("_Jump")), QDialogButtonBox::AcceptRole);
+    QPushButton * btn_Close = bbox->button(QDialogButtonBox::Close);
     btn_Close->setText(translate_str(N_("_Close")));
     btn_Close->setIcon(QIcon::fromTheme("window-close"));
     btn_Jump->setIcon(QIcon::fromTheme("go-jump"));
@@ -359,8 +383,6 @@ SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
 
     QObject::connect(btn_Close, &QPushButton::clicked, this, &QDialog::close);
     // **** END Bottom button bar ****
-
-    resize(500, 500);
 }
 
 void SongsWindow::keyPressEvent(QKeyEvent * event)
