@@ -271,8 +271,7 @@ static GtkWidget * create_window ()
     gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 3);
 
     /* filter box */
-    GtkWidget * search_label = gtk_label_new (_("Filter: "));
-    gtk_label_set_markup_with_mnemonic ((GtkLabel *) search_label, _("_Filter:"));
+    GtkWidget * search_label = gtk_label_new_with_mnemonic (_("_Filter:"));
     gtk_box_pack_start ((GtkBox *) hbox, search_label, false, false, 0);
 
     filter_entry = gtk_entry_new ();
