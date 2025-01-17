@@ -96,10 +96,12 @@ public:
     {
         QModelIndex rootIndex = treeView->rootIndex();
         QModelIndex rootChildIndex = treeModel->index(0, 0, rootIndex);
+
         if (rootChildIndex.isValid())
         {
-            treeView->selectionModel()->select(rootChildIndex,
-                                               QItemSelectionModel::Rows | QItemSelectionModel::Select);
+            treeView->selectionModel()->select(
+                rootChildIndex, QItemSelectionModel::Rows |
+                                    QItemSelectionModel::ClearAndSelect);
         }
     }
 
@@ -318,7 +320,9 @@ SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
     vbox_content->addWidget(filter_box);
 
     auto hbox_filter = make_hbox(filter_box);
-    auto label_filter = new QLabel(_("Filter: "), this);
+    auto label_filter = new QLabel(translate_str(N_("_Filter:")), this);
+    label_filter->setBuddy(&m_filterEdit);
+
     hbox_filter->addWidget(label_filter);
     m_filterEdit.setClearButtonEnabled(true);
     m_filterEdit.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -390,7 +394,7 @@ void SongsWindow::keyPressEvent(QKeyEvent * event)
     if (event->key() == Qt::Key_Return && event->modifiers() == Qt::ShiftModifier)
     {
         // Let Shift+Enter act as another shortcut for the Queue button
-        this->m_queueAndUnqueueButton.animateClick();
+        m_queueAndUnqueueButton.animateClick();
     }
 
     QDialog::keyPressEvent(event);
