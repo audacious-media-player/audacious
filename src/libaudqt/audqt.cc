@@ -50,6 +50,7 @@ static const char * const audqt_defaults[] = {
     "eq_presets_visible", "FALSE",
     "equalizer_visible", "FALSE",
     "queue_manager_visible", "FALSE",
+    "close_jtf_dialog", "TRUE",
 #ifdef _WIN32
     "theme", "dark",
     "icon_theme", "audacious-flat-dark",
