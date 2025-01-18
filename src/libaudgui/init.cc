@@ -39,8 +39,6 @@ static const char * const audgui_defaults[] = {
     "close_dialog_add", "FALSE",
     "close_dialog_open", "TRUE",
     "close_jtf_dialog", "TRUE",
-    "record", "FALSE",
-    "remember_jtf_entry", "TRUE",
     nullptr
 };
 
