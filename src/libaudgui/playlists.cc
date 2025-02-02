@@ -63,21 +63,22 @@ static void finish_job (void * data)
 {
     ImportExportJob * job = (ImportExportJob *) data;
 
-    Playlist::GetMode mode = Playlist::Wait;
-    if (aud_get_bool ("metadata_on_play"))
-        mode = Playlist::NoWait;
-
-    if (job->list.exists ())
+    if (job->save)
     {
-        job->list.set_filename (job->filename);
-
-        if (job->save)
-            job->list.save_to_file (job->filename, mode);
-        else
+        if (job->list.exists ())
         {
-            job->list.remove_all_entries ();
-            job->list.insert_entry (0, job->filename, Tuple (), false);
+            auto mode = aud_get_bool ("metadata_on_play")
+             ? Playlist::NoWait : Playlist::Wait;
+
+            job->list.set_filename (job->filename);
+            job->list.save_to_file (job->filename, mode);
         }
+    }
+    else
+    {
+        auto list = Playlist::blank_playlist ();
+        list.set_filename (job->filename);
+        list.insert_entry (0, job->filename, Tuple (), false);
     }
 
     gtk_widget_destroy (job->selector);
