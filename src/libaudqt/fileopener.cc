@@ -38,12 +38,14 @@ static aud::array<FileMode, QPointer<QFileDialog>> s_dialogs;
 static void import_playlist(Playlist playlist, const char * filename)
 {
     playlist.set_filename(filename);
-    playlist.remove_all_entries();
     playlist.insert_entry(0, filename, Tuple(), false);
 }
 
 static void export_playlist(Playlist playlist, const char * filename)
 {
+    if (!playlist.exists())
+        return;
+
     Playlist::GetMode mode = Playlist::Wait;
     if (aud_get_bool("metadata_on_play"))
         mode = Playlist::NoWait;
@@ -159,7 +161,10 @@ EXPORT void fileopener_show(FileMode mode)
                     break;
                 case FileMode::ImportPlaylist:
                     if (files.len() == 1)
-                        import_playlist(playlist, files[0].filename);
+                    {
+                        import_playlist(Playlist::blank_playlist(),
+                                        files[0].filename);
+                    }
                     break;
                 case FileMode::ExportPlaylist:
                     if (files.len() == 1)
