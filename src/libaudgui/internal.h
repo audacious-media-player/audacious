@@ -57,6 +57,10 @@ void plugin_prefs_cleanup ();
 /* plugin-view.c */
 GtkWidget * plugin_view_new (PluginType type);
 
+/* settings-portal.c */
+void portal_init ();
+void portal_cleanup ();
+
 /* status.c */
 void status_init ();
 void status_cleanup ();
