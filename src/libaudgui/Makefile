@@ -28,6 +28,7 @@ SRCS = about.cc \
        preset-browser.cc \
        queue-manager.cc \
        scaled-image.cc \
+       settings-portal.cc \
        status.cc \
        urilist.cc \
        url-opener.cc \

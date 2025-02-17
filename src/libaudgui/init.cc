@@ -375,6 +375,10 @@ EXPORT void audgui_init ()
     hook_associate ("playlist set playing", playlist_set_playing_cb, nullptr);
     hook_associate ("playlist position", playlist_position_cb, nullptr);
 
+#if defined(USE_GTK3) && defined(G_OS_UNIX)
+    portal_init ();
+#endif
+
 #ifndef _WIN32
     gtk_window_set_default_icon_name ("audacious");
 #endif
@@ -389,6 +393,10 @@ EXPORT void audgui_cleanup ()
     hook_dissociate ("playlist position", playlist_position_cb);
 
     status_cleanup ();
+
+#if defined(USE_GTK3) && defined(G_OS_UNIX)
+    portal_cleanup ();
+#endif
 
     for (int id = 0; id < AUDGUI_NUM_UNIQUE_WINDOWS; id ++)
         audgui_hide_unique_window (id);
