@@ -142,14 +142,14 @@ public:
      * returns Playlist(). */
     static Playlist playing_playlist();
 
-    /* Returns the number of a "blank" playlist.  The active playlist is
-     * returned if it has the default title and has no entries; otherwise, a new
-     * playlist is added and returned. */
+    /* Returns a "blank" playlist.  The active playlist is returned if it has
+     * the default title and has no entries; otherwise, a new playlist is added
+     * and returned. */
     static Playlist blank_playlist();
 
-    /* Returns the number of the "temporary" playlist (which is no different
-     * from any other playlist except in name).  If the playlist does not exist,
-     * a "blank" playlist is renamed to become the temporary playlist. */
+    /* Returns a "temporary" playlist (which is no different from any other
+     * playlist except in name).  If the playlist does not exist, a "blank"
+     * playlist is renamed to become the temporary playlist. */
     static Playlist temporary_playlist();
 
     /* Discards the metadata stored for all the entries that refer to a
