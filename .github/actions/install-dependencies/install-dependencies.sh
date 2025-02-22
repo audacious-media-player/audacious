@@ -2,8 +2,7 @@
 
 # --- Dependency configuration ---
 #
-# ubuntu-20.04:      Qt 5 + GTK 2
-# ubuntu-22.04:      Qt 5 + GTK 3
+# ubuntu-22.04:      Qt 5 + GTK 2
 # ubuntu-24.04:      Qt 6 + GTK 3
 # Windows:           Qt 6 + GTK 2
 # macOS 13:          Qt 5 - GTK
@@ -18,19 +17,11 @@ if [ -z "$os" ] || [ -z "$build_system" ]; then
 fi
 
 case "$os" in
-  ubuntu-20.04)
+  ubuntu-22.04)
     if [ "$build_system" = 'meson' ]; then
       sudo apt-get -qq update && sudo apt-get install libgtk2.0-dev qtbase5-dev libqt5svg5-dev meson
     else
       sudo apt-get -qq update && sudo apt-get install libgtk2.0-dev qtbase5-dev libqt5svg5-dev
-    fi
-    ;;
-
-  ubuntu-22.04)
-    if [ "$build_system" = 'meson' ]; then
-      sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qtbase5-dev libqt5svg5-dev gettext meson
-    else
-      sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qtbase5-dev libqt5svg5-dev gettext
     fi
     ;;
 

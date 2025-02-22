@@ -2,8 +2,7 @@
 
 # --- Build configuration ---
 #
-# ubuntu-20.04:      Qt 5 + GTK 2
-# ubuntu-22.04:      Qt 5 + GTK 3
+# ubuntu-22.04:      Qt 5 + GTK 2
 # ubuntu-24.04:      Qt 6 + GTK 3
 # Windows:           Qt 6 + GTK 2
 # macOS 13:          Qt 5 - GTK
@@ -29,19 +28,11 @@ fi
 case "$action" in
   configure)
     case "$os" in
-      ubuntu-20.04)
+      ubuntu-22.04)
         if [ "$build_system" = 'meson' ]; then
           meson setup build -D qt5=true -D gtk2=true
         else
           ./autogen.sh && ./configure --enable-qt5 --enable-gtk2
-        fi
-        ;;
-
-      ubuntu-22.04)
-        if [ "$build_system" = 'meson' ]; then
-          meson setup build -D qt5=true
-        else
-          ./autogen.sh && ./configure --enable-qt5
         fi
         ;;
 
@@ -94,7 +85,7 @@ case "$action" in
 
   build)
     if [ "$build_system" = 'meson' ]; then
-      ninja -C build
+      meson compile -C build
     elif [[ "$os" == macos* ]]; then
       make -j$(sysctl -n hw.logicalcpu)
     else
