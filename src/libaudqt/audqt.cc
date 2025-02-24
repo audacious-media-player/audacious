@@ -100,9 +100,20 @@ void set_icon_theme()
     // add fallback icons just to be sure
 #if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
     auto paths = QIcon::fallbackSearchPaths();
-    auto path = ":/icons/audacious-flat/scalable";
-    if (!paths.contains(path))
-        QIcon::setFallbackSearchPaths(paths << path);
+    auto path_light = ":/icons/audacious-flat/scalable";
+    auto path_dark = ":/icons/audacious-flat-dark/scalable";
+    bool use_dark_theme = QIcon::themeName().endsWith("-dark");
+
+    if (use_dark_theme && !paths.contains(path_dark))
+    {
+        paths.removeOne(path_light);
+        QIcon::setFallbackSearchPaths(paths << path_dark);
+    }
+    else if (!use_dark_theme && !paths.contains(path_light))
+    {
+        paths.removeOne(path_dark);
+        QIcon::setFallbackSearchPaths(paths << path_light);
+    }
 #endif
 
     qApp->setWindowIcon(QIcon::fromTheme("audacious"));
