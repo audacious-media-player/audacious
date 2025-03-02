@@ -79,6 +79,14 @@ static void load_qt_translations()
 
 void set_icon_theme()
 {
+    // Make sure that ":/icons" is in the theme search path. In Qt 6 it
+    // is added at startup (see QIconLoader::themeSearchPaths()) but in
+    // some cases gets removed later (see QIconLoader::setThemeName()).
+    // This seems to be a regression since Qt 5.
+    auto themePaths = QIcon::themeSearchPaths();
+    if (!themePaths.contains(":/icons"))
+        QIcon::setThemeSearchPaths(themePaths << ":/icons");
+
     QIcon::setThemeName((QString)aud_get_str("audqt", "icon_theme"));
 
     // make sure we have a valid icon theme
