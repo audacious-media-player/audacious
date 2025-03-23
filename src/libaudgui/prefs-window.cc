@@ -511,7 +511,7 @@ static void on_titlestring_cbox_changed (GtkComboBox * cbox, GtkEntry * entry)
         gtk_entry_set_text (entry, titlestring_presets[preset]);
 }
 
-static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
+static void fill_category_list (GtkTreeView * treeview)
 {
     GtkTreeViewColumn * column = gtk_tree_view_column_new ();
     gtk_tree_view_column_set_title (column, _("Category"));
@@ -520,18 +520,16 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 
     GtkCellRenderer * renderer = gtk_cell_renderer_pixbuf_new ();
     gtk_tree_view_column_pack_start (column, renderer, false);
-    gtk_tree_view_column_set_attributes (column, renderer, "pixbuf", 0, nullptr);
+    gtk_tree_view_column_set_attributes (column, renderer, "icon-name", 0, nullptr);
+    g_object_set (renderer, "stock-size", GTK_ICON_SIZE_DIALOG, nullptr);
 
     renderer = gtk_cell_renderer_text_new ();
     gtk_tree_view_column_pack_start (column, renderer, false);
     gtk_tree_view_column_set_attributes (column, renderer, "text", 1, nullptr);
 
     GtkListStore * store = gtk_list_store_new (CATEGORY_VIEW_N_COLS,
-     GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
+     G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
     gtk_tree_view_set_model (treeview, (GtkTreeModel *) store);
-
-    GtkIconTheme * icon_theme = gtk_icon_theme_get_default ();
-    int icon_size = audgui_to_native_dpi (48);
 
     for (const Category & category : categories)
     {
@@ -541,13 +539,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
         GtkTreeIter iter;
         gtk_list_store_append (store, & iter);
         gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_NAME,
-         _(category.name), -1);
-
-        AudguiPixbuf img (gtk_icon_theme_load_icon (icon_theme,
-         category.icon, icon_size, (GtkIconLookupFlags) 0, nullptr));
-
-        if (img)
-            gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_ICON, img.get (), -1);
+         _(category.name), CATEGORY_VIEW_COL_ICON, category.icon, -1);
     }
 
     g_object_unref (store);
@@ -949,7 +941,7 @@ static void create_prefs_window ()
     gtk_container_add ((GtkContainer *) prefswin_button_box, close);
     gtk_widget_set_can_default (close, true);
 
-    fill_category_list ((GtkTreeView *) category_treeview, (GtkNotebook *) category_notebook);
+    fill_category_list ((GtkTreeView *) category_treeview);
 
     record_update ();
     hook_associate ("enable record", record_update, nullptr);
