@@ -11,7 +11,6 @@
     <file alias="application-exit.svg">../../images/application-exit.svg</file>
     <file alias="applications-graphics.svg">../../images/applications-graphics.svg</file>
     <file alias="applications-internet.svg">../../images/applications-internet.svg</file>
-    <file alias="applications-system.svg">../../images/applications-system.svg</file>
     <file alias="appointment-new.svg">../../images/appointment-new.svg</file>
     <file alias="audacious.svg">../../images/audacious.svg</file>
     <file alias="audio-card.svg">../../images/audio-card.svg</file>
@@ -60,6 +59,7 @@
     <file alias="media-skip-forward.svg">../../images/media-skip-forward.svg</file>
     <file alias="multimedia-volume-control.svg">../../images/multimedia-volume-control.svg</file>
     <file alias="preferences-desktop-font.svg">../../images/preferences-desktop-font.svg</file>
+    <file alias="preferences-other.svg">../../images/preferences-other.svg</file>
     <file alias="preferences-system.svg">../../images/preferences-system.svg</file>
     <file alias="process-stop.svg">../../images/process-stop.svg</file>
     <file alias="system-run.svg">../../images/system-run.svg</file>
@@ -79,7 +79,6 @@
     <file alias="application-exit.svg">../../images/dark/application-exit.svg</file>
     <file alias="applications-graphics.svg">../../images/dark/applications-graphics.svg</file>
     <file alias="applications-internet.svg">../../images/dark/applications-internet.svg</file>
-    <file alias="applications-system.svg">../../images/dark/applications-system.svg</file>
     <file alias="appointment-new.svg">../../images/dark/appointment-new.svg</file>
     <file alias="audio-card.svg">../../images/dark/audio-card.svg</file>
     <file alias="audio-volume-high.svg">../../images/dark/audio-volume-high.svg</file>
@@ -125,6 +124,7 @@
     <file alias="media-skip-forward.svg">../../images/dark/media-skip-forward.svg</file>
     <file alias="multimedia-volume-control.svg">../../images/dark/multimedia-volume-control.svg</file>
     <file alias="preferences-desktop-font.svg">../../images/dark/preferences-desktop-font.svg</file>
+    <file alias="preferences-other.svg">../../images/dark/preferences-other.svg</file>
     <file alias="preferences-system.svg">../../images/dark/preferences-system.svg</file>
     <file alias="process-stop.svg">../../images/dark/process-stop.svg</file>
     <file alias="system-run.svg">../../images/dark/system-run.svg</file>
