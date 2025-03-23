@@ -5,7 +5,6 @@
     <file>application-exit.svg</file>
     <file>applications-graphics.svg</file>
     <file>applications-internet.svg</file>
-    <file>applications-system.svg</file>
     <file>appointment-new.svg</file>
     <file>audacious.svg</file>
     <file>audio-card.svg</file>
@@ -54,6 +53,7 @@
     <file>media-skip-forward.svg</file>
     <file>multimedia-volume-control.svg</file>
     <file>preferences-desktop-font.svg</file>
+    <file>preferences-other.svg</file>
     <file>preferences-system.svg</file>
     <file>process-stop.svg</file>
     <file>system-run.svg</file>

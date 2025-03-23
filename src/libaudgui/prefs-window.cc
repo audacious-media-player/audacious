@@ -81,11 +81,11 @@ enum {
 /* keep this in sync with the list in load_fallback_icons (init.cc) */
 static const Category categories[] = {
     { "applications-graphics", N_("Appearance") },
-    { "audio-volume-medium", N_("Audio") },
+    { "multimedia-volume-control", N_("Audio") },
     { "applications-internet", N_("Network") },
     { "audio-x-generic", N_("Playlist")} ,
     { "dialog-information", N_("Song Info") },
-    { "applications-system", N_("Plugins") },
+    { "preferences-other", N_("Plugins") },
     { "preferences-system", N_("Advanced") }
 };
 

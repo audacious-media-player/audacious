@@ -1,4 +1,5 @@
-These SVG files have been un-optimized to work around the following librsvg bug:
+These SVG files have been optimized with "svgo" (https://github.com/svg/svgo)
+and then un-optimized as shown below to work around the following librsvg bug:
     https://bugzilla.gnome.org/show_bug.cgi?id=620923
 
 Basically, older versions of librsvg can't parse an optimized path like
