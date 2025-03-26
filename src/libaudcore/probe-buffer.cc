@@ -94,6 +94,18 @@ int64_t ProbeBuffer::fwrite(const void * data, int64_t size, int64_t count)
 
 int ProbeBuffer::fseek(int64_t offset, VFSSeekType whence)
 {
+    /* if limited to the buffer, try to translate SEEK_END to an
+     * absolute file position (which must be <= MAXBUF to proceed) */
+    if (m_limited && whence == VFS_SEEK_END)
+    {
+        int64_t file_size = fsize();
+        if (file_size >= 0)
+        {
+            offset += file_size;
+            whence = VFS_SEEK_SET;
+        }
+    }
+
     /* seek within the buffer if possible */
     if (m_at >= 0 && whence != VFS_SEEK_END)
     {
@@ -159,7 +171,16 @@ int ProbeBuffer::ftruncate(int64_t size) { return -1; /* not allowed */ }
 
 int ProbeBuffer::fflush() { return 0; /* no-op */ }
 
-int64_t ProbeBuffer::fsize() { return m_file->fsize(); }
+int64_t ProbeBuffer::fsize()
+{
+    if (!m_file_size_fetched)
+    {
+        m_file_size = m_file->fsize();
+        m_file_size_fetched = true;
+    }
+
+    return m_file_size;
+}
 
 String ProbeBuffer::get_metadata(const char * field)
 {

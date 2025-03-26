@@ -30,8 +30,7 @@
  *
  * Optionally, reads can be restricted to the bufferable area.  In this case,
  * reads will stop short at the end of the bufferable area, and seeks outside
- * the bufferable area (and any type of SEEK_END) will fail.  However, the real
- * file size is still reported.
+ * the bufferable area will fail.  The real file size is still reported.
  */
 
 #include "vfs.h"
@@ -63,8 +62,10 @@ private:
 
     String m_filename;
     SmartPtr<VFSImpl> m_file;
+    int64_t m_file_size = -1;
     char * m_buffer = nullptr;
     int m_filled = 0, m_at = 0;
+    bool m_file_size_fetched = false;
     bool m_limited = false;
 };
 
