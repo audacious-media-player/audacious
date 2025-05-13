@@ -51,7 +51,7 @@ case "$action" in
         if [ "$build_system" = 'meson' ]; then
           meson setup build -D qt5=true -D gtk=false
         else
-          ./autogen.sh && ./configure --enable-qt5 --disable-gtk
+          autoreconf -I "/usr/local/share/gettext/m4" && ./configure --enable-qt5 --disable-gtk
         fi
         ;;
 
@@ -64,7 +64,7 @@ case "$action" in
         else
           export LDFLAGS="-L/opt/homebrew/opt/libiconv/lib"
           export CPPFLAGS="-I/opt/homebrew/opt/libiconv/include"
-          ./autogen.sh && ./configure --disable-gtk
+          autoreconf -I "/opt/homebrew/opt/gettext/share/gettext/m4" && ./configure --disable-gtk
         fi
         ;;
 
