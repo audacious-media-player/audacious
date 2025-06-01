@@ -190,6 +190,20 @@ if get_option('valgrind')
 endif
 
 
+config_h = configure_file(input: 'config.h.meson',
+  output: 'config.h',
+  configuration: conf
+)
+
+config_h_full_path = join_paths(meson.current_build_dir(), 'config.h')
+
+if cc.get_id() in ['gcc', 'clang']
+  add_project_arguments('-include', config_h_full_path, language: ['c', 'cpp'])
+else
+  error('Please implement -include handling for your chosen compiler.')
+endif
+
+
 subdir('src')
 subdir('po')
 subdir('man')
