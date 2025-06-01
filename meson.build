@@ -79,8 +79,13 @@ if cc.get_id() in ['gcc', 'clang']
   check_cflags = common_flags
   check_cxxflags = common_flags + cxx_flags
 
+  config_h_full_path = join_paths(meson.current_build_dir(), 'config.h')
+
   add_project_arguments(cc.get_supported_arguments(check_cflags), language: 'c')
   add_project_arguments(cxx.get_supported_arguments(check_cxxflags), language: 'cpp')
+  add_project_arguments('-include', config_h_full_path, language: ['c', 'cpp'])
+else
+  error('Please implement -include handling for your chosen compiler.')
 endif
 
 
@@ -194,14 +199,6 @@ config_h = configure_file(input: 'config.h.meson',
   output: 'config.h',
   configuration: conf
 )
-
-config_h_full_path = join_paths(meson.current_build_dir(), 'config.h')
-
-if cc.get_id() in ['gcc', 'clang']
-  add_project_arguments('-include', config_h_full_path, language: ['c', 'cpp'])
-else
-  error('Please implement -include handling for your chosen compiler.')
-endif
 
 
 subdir('src')
