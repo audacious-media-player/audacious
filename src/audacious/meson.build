@@ -18,7 +18,10 @@ endif
 
 
 if have_windows
-  audacious_sources += import('windows').compile_resources('audacious.rc')
+  windows = import('windows')
+  audacious_sources += windows.compile_resources('audacious.rc',
+    include_directories: meson.current_build_dir()
+  )
 endif
 
 
