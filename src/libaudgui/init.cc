@@ -274,7 +274,8 @@ static void load_fallback_icons ()
         "media-playlist-shuffle",
         "media-record",
         "media-skip-backward",
-        "media-skip-forward"
+        "media-skip-forward",
+        "no-playlist-advance-symbolic",
     };
 
     static const char * const dialog_icons[] = {
@@ -361,6 +362,9 @@ EXPORT void audgui_init ()
     char * * dummy_argv = app_args;
 
     gtk_init (& dummy_argc, & dummy_argv);
+
+    GtkIconTheme *theme = gtk_icon_theme_get_default ();
+    gtk_icon_theme_add_resource_path (theme, "/org/audacious");
 
     if (! icons_loaded)
     {
