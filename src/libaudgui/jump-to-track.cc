@@ -219,7 +219,6 @@ static void list_get_value (void * user, int row, int column, GValue * value)
     g_return_if_fail (column >= 0 && column < 2);
     g_return_if_fail (row >= 0 && row < search_matches->len ());
 
-    auto playlist = Playlist::active_playlist ();
     int entry = (* search_matches)[row].entry;
 
     switch (column)
@@ -228,6 +227,7 @@ static void list_get_value (void * user, int row, int column, GValue * value)
         g_value_set_int (value, 1 + entry);
         break;
     case 1:
+        auto playlist = Playlist::active_playlist ();
         Tuple tuple = playlist.entry_tuple (entry, Playlist::NoWait);
         g_value_set_string (value, tuple.get_str (Tuple::FormattedTitle));
         break;
