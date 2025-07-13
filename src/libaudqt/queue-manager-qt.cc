@@ -19,14 +19,13 @@
 
 #include "libaudqt-internal.h"
 #include "libaudqt.h"
+#include "treeview.h"
 
 #include <QAbstractListModel>
 #include <QHeaderView>
 #include <QItemSelectionModel>
 #include <QKeyEvent>
-#include <QPointer>
 #include <QPushButton>
-#include <QTreeView>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
@@ -34,13 +33,17 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
 
-/*
- * TODO:
- *     - shifting of selection entries
- */
-
 namespace audqt
 {
+
+static inline QPoint position(QDropEvent * event)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    return event->position().toPoint();
+#else
+    return event->pos();
+#endif
+}
 
 class QueueManagerModel : public QAbstractListModel
 {
@@ -63,6 +66,18 @@ protected:
     }
 
     int columnCount(const QModelIndex &) const override { return NColumns; }
+
+    Qt::DropActions supportedDropActions() const { return Qt::MoveAction; }
+
+    Qt::ItemFlags flags(const QModelIndex & index) const
+    {
+        if (index.isValid())
+            return Qt::ItemIsSelectable | Qt::ItemIsDragEnabled |
+                   Qt::ItemIsEnabled;
+        else
+            return Qt::ItemIsSelectable | Qt::ItemIsDropEnabled |
+                   Qt::ItemIsEnabled;
+    }
 
     QVariant data(const QModelIndex & index, int role) const override;
     QVariant headerData(int section, Qt::Orientation orientation,
@@ -170,76 +185,47 @@ void QueueManagerModel::selectionChanged(const QItemSelection & selected,
         list.select_entry(list.queue_get_entry(index.row()), false);
 }
 
-class QueueManager : public QWidget
+class QueueManagerView : public audqt::TreeView
 {
 public:
-    QueueManager(QWidget * parent = nullptr);
-
-    QSize sizeHint() const override
-    {
-        return {3 * sizes.OneInch, 2 * sizes.OneInch};
-    }
+    QueueManagerView();
+    void removeSelected();
+    void update() { m_model.update(selectionModel()); }
 
 protected:
+    void dropEvent(QDropEvent * event) override;
     void keyPressEvent(QKeyEvent * event) override;
 
 private:
-    QTreeView m_treeview;
-    QPushButton m_btn_unqueue;
     QueueManagerModel m_model;
 
-    void removeSelected();
-    void update() { m_model.update(m_treeview.selectionModel()); }
+    void shiftRows(int before);
 
-    const HookReceiver<QueueManager> //
-        update_hook{"playlist update", this, &QueueManager::update},
-        activate_hook{"playlist activate", this, &QueueManager::update};
+    const HookReceiver<QueueManagerView> //
+        update_hook{"playlist update", this, &QueueManagerView::update},
+        activate_hook{"playlist activate", this, &QueueManagerView::update};
 };
 
-void QueueManager::keyPressEvent(QKeyEvent * event)
+QueueManagerView::QueueManagerView()
 {
-    if (event->key() == Qt::Key_Delete)
-        removeSelected();
+    setAllColumnsShowFocus(true);
+    setDragDropMode(InternalMove);
+    setFrameShape(QFrame::NoFrame);
+    setIndentation(0);
+    setModel(&m_model);
+    setSelectionMode(ExtendedSelection);
 
-    QWidget::keyPressEvent(event);
+    auto hdr = header();
+    hdr->setSectionResizeMode(QueueManagerModel::ColumnEntry,
+                              QHeaderView::Interactive);
+    hdr->resizeSection(QueueManagerModel::ColumnEntry,
+                       audqt::to_native_dpi(50));
+
+    connect(selectionModel(), &QItemSelectionModel::selectionChanged, &m_model,
+            &QueueManagerModel::selectionChanged);
 }
 
-QueueManager::QueueManager(QWidget * parent) : QWidget(parent)
-{
-    setWindowRole("queue-manager");
-    m_btn_unqueue.setText(translate_str(N_("_Unqueue")));
-
-    connect(&m_btn_unqueue, &QAbstractButton::clicked, this,
-            &QueueManager::removeSelected);
-
-    auto hbox = audqt::make_hbox(nullptr);
-    hbox->setContentsMargins(audqt::margins.TwoPt);
-    hbox->addStretch(1);
-    hbox->addWidget(&m_btn_unqueue);
-
-    auto layout = make_vbox(this, 0);
-    layout->addWidget(&m_treeview);
-    layout->addLayout(hbox);
-
-    m_treeview.setAllColumnsShowFocus(true);
-    m_treeview.setFrameShape(QFrame::NoFrame);
-    m_treeview.setIndentation(0);
-    m_treeview.setModel(&m_model);
-    m_treeview.setSelectionMode(QAbstractItemView::ExtendedSelection);
-
-    auto header = m_treeview.header();
-    header->setSectionResizeMode(QueueManagerModel::ColumnEntry,
-                                 QHeaderView::Interactive);
-    header->resizeSection(QueueManagerModel::ColumnEntry,
-                          audqt::to_native_dpi(25));
-
-    update();
-
-    connect(m_treeview.selectionModel(), &QItemSelectionModel::selectionChanged,
-            &m_model, &QueueManagerModel::selectionChanged);
-}
-
-void QueueManager::removeSelected()
+void QueueManagerView::removeSelected()
 {
     auto list = Playlist::active_playlist();
     int count = list.n_queued();
@@ -257,6 +243,100 @@ void QueueManager::removeSelected()
         else
             i++;
     }
+}
+
+void QueueManagerView::dropEvent(QDropEvent * event)
+{
+    if (event->source() != this || event->proposedAction() != Qt::MoveAction)
+        return;
+
+    int from = currentIndex().row();
+    if (from < 0)
+        return;
+
+    int to;
+    switch (dropIndicatorPosition())
+    {
+    case AboveItem:
+        to = indexAt(position(event)).row();
+        break;
+    case BelowItem:
+        to = indexAt(position(event)).row() + 1;
+        break;
+    default:
+        return;
+    }
+
+    shiftRows(to);
+    event->acceptProposedAction();
+}
+
+void QueueManagerView::keyPressEvent(QKeyEvent * event)
+{
+    if (event->key() == Qt::Key_Delete)
+        removeSelected();
+
+    QTreeView::keyPressEvent(event);
+}
+
+void QueueManagerView::shiftRows(int before)
+{
+    Index<int> shift;
+    auto list = Playlist::active_playlist();
+    int count = list.n_queued();
+
+    for (int i = 0; i < count; i++)
+    {
+        int entry = list.queue_get_entry(i);
+
+        if (list.entry_selected(entry))
+        {
+            shift.append(entry);
+
+            if (i < before)
+                before--;
+        }
+    }
+
+    list.queue_remove_selected();
+
+    for (int i = 0; i < shift.len(); i++)
+        list.queue_insert(before + i, shift[i]);
+}
+
+class QueueManager : public QWidget
+{
+public:
+    QueueManager(QWidget * parent = nullptr);
+
+    QSize sizeHint() const override
+    {
+        return {3 * sizes.OneInch, 2 * sizes.OneInch};
+    }
+
+private:
+    QueueManagerView m_view;
+    QPushButton m_btn_unqueue;
+};
+
+QueueManager::QueueManager(QWidget * parent) : QWidget(parent)
+{
+    setWindowRole("queue-manager");
+
+    m_btn_unqueue.setText(translate_str(N_("_Unqueue")));
+    connect(&m_btn_unqueue, &QAbstractButton::clicked, &m_view,
+            &QueueManagerView::removeSelected);
+
+    auto hbox = audqt::make_hbox(nullptr);
+    hbox->setContentsMargins(audqt::margins.TwoPt);
+    hbox->addStretch(1);
+    hbox->addWidget(&m_btn_unqueue);
+
+    auto layout = make_vbox(this, 0);
+    layout->addWidget(&m_view);
+    layout->addLayout(hbox);
+
+    m_view.update();
 }
 
 EXPORT void queue_manager_show()
