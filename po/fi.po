@@ -4,10 +4,10 @@
 #
 # Translators:
 # Elias Julkunen <elias.julkunen@gmail.com>, 2011
-# J. S. Tuomisto <jstuomisto@gmail.com>, 2013
-# Jiri Grönroos <jiri.gronroos@iki.fi>, 2014-2017,2019-2020,2022
-# J. S. Tuomisto <jstuomisto@gmail.com>, 2013
-# J. S. Tuomisto <jstuomisto@gmail.com>, 2013
+# a7748bcad10e5362cde501dd23ae3236_e731813 <24e2b45b257ca9fe69576dec7943da7e_49266>, 2013
+# Jiri Grönroos <jiri.gronroos@iki.fi>, 2014-2017,2019-2020,2022,2025
+# a7748bcad10e5362cde501dd23ae3236_e731813 <24e2b45b257ca9fe69576dec7943da7e_49266>, 2013
+# a7748bcad10e5362cde501dd23ae3236_e731813 <24e2b45b257ca9fe69576dec7943da7e_49266>, 2013
 # Kimmo Kujansuu <mrkujansuu@gmail.com>, 2020,2022-2024
 # Matti Hämäläinen, 2008
 # Pauli Virtanen <pauli.virtanen@hut.fi>, 2004
@@ -17,9 +17,10 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2024-09-26 21:46+0200\n"
+"POT-Creation-Date: 2025-07-14 01:26+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>, 2020,2022-2024\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>, "
+"2014-2017,2019-2020,2022,2025\n"
 "Language-Team: Finnish (http://app.transifex.com/audacious/audacious/"
 "language/fi/)\n"
 "Language: fi\n"
@@ -118,7 +119,7 @@ msgstr ""
 msgid "Select instance to run/control"
 msgstr "Valitse suoritettava/hallittava esiintymä"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:155
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:165
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -153,7 +154,7 @@ msgstr "Vakio sisääntulo"
 #: src/libaudcore/audstrings.cc:666
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Audio CD, kappale %s"
+msgstr "Ääni-CD, kappale %s"
 
 #: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:510
 msgid "(character encoding error)"
@@ -261,7 +262,7 @@ msgstr[1] "%d kanavaa"
 
 #: src/libaudcore/tuple.cc:791
 msgid "Audio CD"
-msgstr "Audio CD"
+msgstr "Ääni-CD"
 
 #: src/libaudcore/tuple.cc:875
 #, c-format
@@ -295,11 +296,11 @@ msgstr "Lisenssi"
 
 #: src/libaudgui/about.cc:73 src/libaudqt/about-qt.cc:64
 msgid "About Audacious"
-msgstr "Audacious tietoja"
+msgstr "Tietoja - Audacious"
 
 #: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
-#: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
-#: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:102
+#: src/libaudgui/playlists.cc:93 src/libaudgui/playlists.cc:190
+#: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:105
 #: src/libaudqt/playlist-management.cc:42
 #: src/libaudqt/playlist-management.cc:60 src/libaudqt/prefs-plugin.cc:141
 #: src/libaudqt/url-opener-qt.cc:81
@@ -345,15 +346,15 @@ msgstr "Esiasetustiedosto..."
 
 #: src/libaudgui/eq-preset.cc:258 src/libaudgui/eq-preset.cc:263
 msgid "EQF File ..."
-msgstr "EQF tiedosto..."
+msgstr "EQF-tiedosto..."
 
 #: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:339
-#: src/libaudqt/fileopener.cc:108
+#: src/libaudqt/fileopener.cc:110
 msgid "Import"
 msgstr "Tuo"
 
 #: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:342
-#: src/libaudqt/fileopener.cc:108
+#: src/libaudqt/fileopener.cc:110
 msgid "Export"
 msgstr "Vie"
 
@@ -417,7 +418,7 @@ msgstr "8 kHz"
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.cc:133 src/libaudqt/equalizer-qt.cc:206
+#: src/libaudgui/equalizer.cc:133 src/libaudqt/equalizer-qt.cc:210
 msgid "Equalizer"
 msgstr "Taajuuskorjain"
 
@@ -433,11 +434,11 @@ msgstr "Palauta nollaksi"
 msgid "Preamp"
 msgstr "Esivahvistus"
 
-#: src/libaudgui/file-opener.cc:79 src/libaudqt/fileopener.cc:103
+#: src/libaudgui/file-opener.cc:79 src/libaudqt/fileopener.cc:105
 msgid "Open Files"
 msgstr "Avaa tiedostoja"
 
-#: src/libaudgui/file-opener.cc:80 src/libaudgui/url-opener.cc:65
+#: src/libaudgui/file-opener.cc:80 src/libaudgui/url-opener.cc:68
 #: src/libaudqt/url-opener-qt.cc:48
 msgid "_Open"
 msgstr "_Avaa"
@@ -446,11 +447,11 @@ msgstr "_Avaa"
 msgid "Close _dialog on open"
 msgstr "S_ulje ikkuna avatessa"
 
-#: src/libaudgui/file-opener.cc:87 src/libaudqt/fileopener.cc:103
+#: src/libaudgui/file-opener.cc:87 src/libaudqt/fileopener.cc:105
 msgid "Add Files"
 msgstr "Lisää tiedostoja"
 
-#: src/libaudgui/file-opener.cc:88 src/libaudgui/url-opener.cc:71
+#: src/libaudgui/file-opener.cc:88 src/libaudgui/url-opener.cc:74
 #: src/libaudqt/url-opener-qt.cc:54
 msgid "_Add"
 msgstr "_Lisää"
@@ -460,19 +461,19 @@ msgid "Close _dialog on add"
 msgstr "Sul_je ikkuna lisättäessä"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
-#: src/libaudgui/jump-to-track.cc:323 src/libaudgui/plugin-prefs.cc:168
-#: src/libaudgui/prefs-window.cc:947 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:365 src/libaudqt/audqt.cc:326
+#: src/libaudgui/jump-to-track.cc:322 src/libaudgui/plugin-prefs.cc:168
+#: src/libaudgui/prefs-window.cc:939 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:365 src/libaudqt/audqt.cc:344
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
 #: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:696
-#: src/libaudqt/song-window-qt.cc:365
+#: src/libaudqt/song-window-qt.cc:376
 msgid "_Close"
 msgstr "_Sulje"
 
 #: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
-#: src/libaudqt/queue-manager-qt.cc:110
+#: src/libaudqt/queue-manager-qt.cc:125
 msgid "Title"
 msgstr "Nimi"
 
@@ -734,8 +735,8 @@ msgstr "%d kbit/s"
 msgid "N/A"
 msgstr "-"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:328
-#: src/libaudqt/song-window-qt.cc:363
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:327
+#: src/libaudqt/song-window-qt.cc:373
 msgid "_Jump"
 msgstr "Sii_rry"
 
@@ -748,66 +749,62 @@ msgid "Enter time (minutes:seconds):"
 msgstr "Syötä aika (minuutit:sekunnit):"
 
 #: src/libaudgui/jump-to-track.cc:96 src/libaudgui/jump-to-track.cc:104
-#: src/libaudgui/jump-to-track.cc:319 src/libaudqt/song-window-qt.cc:285
-#: src/libaudqt/song-window-qt.cc:362
+#: src/libaudgui/jump-to-track.cc:318 src/libaudqt/song-window-qt.cc:290
+#: src/libaudqt/song-window-qt.cc:371
 msgid "_Queue"
 msgstr "_Lisää jonoon"
 
-#: src/libaudgui/jump-to-track.cc:102 src/libaudqt/song-window-qt.cc:285
+#: src/libaudgui/jump-to-track.cc:102 src/libaudqt/song-window-qt.cc:290
 msgid "Un_queue"
 msgstr "_Poista jonosta"
 
-#: src/libaudgui/jump-to-track.cc:248 src/libaudqt/song-window-qt.cc:298
+#: src/libaudgui/jump-to-track.cc:248 src/libaudqt/song-window-qt.cc:305
 msgid "Jump to Song"
 msgstr "Hyppää kappaleeseen"
 
-#: src/libaudgui/jump-to-track.cc:274 src/libaudqt/song-window-qt.cc:316
-msgid "Filter: "
-msgstr "Suodatin: "
-
-#: src/libaudgui/jump-to-track.cc:275
+#: src/libaudgui/jump-to-track.cc:274 src/libaudqt/song-window-qt.cc:322
 msgid "_Filter:"
 msgstr "_Suodatin:"
 
-#: src/libaudgui/jump-to-track.cc:312 src/libaudqt/song-window-qt.cc:357
+#: src/libaudgui/jump-to-track.cc:311 src/libaudqt/song-window-qt.cc:366
 msgid "C_lose on jump"
 msgstr "S_ulje siirryttäessä"
 
-#: src/libaudgui/playlists.cc:91
+#: src/libaudgui/playlists.cc:92
 msgid "_Overwrite"
 msgstr "_Korvaa"
 
-#: src/libaudgui/playlists.cc:95
+#: src/libaudgui/playlists.cc:96
 msgid "Confirm Overwrite"
 msgstr "Vahvista korvaaminen"
 
-#: src/libaudgui/playlists.cc:95
+#: src/libaudgui/playlists.cc:96
 #, c-format
 msgid "Overwrite %s?"
 msgstr "Ylikirjoita %s?"
 
-#: src/libaudgui/playlists.cc:121 src/libaudqt/fileopener.cc:63
+#: src/libaudgui/playlists.cc:122 src/libaudqt/fileopener.cc:65
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
 msgstr "Valitse tiedostonimen pääte tai valitse muoto pudotusvalikosta."
 
-#: src/libaudgui/playlists.cc:140 src/libaudqt/fileopener.cc:70
+#: src/libaudgui/playlists.cc:141 src/libaudqt/fileopener.cc:72
 msgid "Select Format by Extension"
 msgstr "Valitse muoto tiedostopäätteen avulla"
 
-#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:104
+#: src/libaudgui/playlists.cc:168 src/libaudqt/fileopener.cc:106
 msgid "Export Playlist"
 msgstr "Vie soittolista"
 
-#: src/libaudgui/playlists.cc:168
+#: src/libaudgui/playlists.cc:169
 msgid "_Export"
 msgstr "_Vie"
 
-#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:104
+#: src/libaudgui/playlists.cc:175 src/libaudqt/fileopener.cc:106
 msgid "Import Playlist"
 msgstr "Tuo soittolista"
 
-#: src/libaudgui/playlists.cc:175
+#: src/libaudgui/playlists.cc:176
 msgid "_Import"
 msgstr "_Tuo"
 
@@ -829,23 +826,23 @@ msgstr "%s - asetukset"
 msgid "_Set"
 msgstr "_Aseta"
 
-#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:759
-#: src/libaudgui/prefs-window.cc:799 src/libaudqt/prefs-window-qt.cc:641
+#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:751
+#: src/libaudgui/prefs-window.cc:791 src/libaudqt/prefs-window-qt.cc:641
 #: src/libaudqt/prefs-window-qt.cc:644
 msgid "_Settings"
 msgstr "_Asetukset"
 
-#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:773
-#: src/libaudgui/prefs-window.cc:811 src/libaudqt/prefs-window-qt.cc:642
+#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:765
+#: src/libaudgui/prefs-window.cc:803 src/libaudqt/prefs-window-qt.cc:642
 #: src/libaudqt/prefs-window-qt.cc:645
 msgid "_About"
 msgstr "_Tietoja"
 
-#: src/libaudgui/prefs-widget.cc:323 src/libaudqt/prefs-widget-qt.cc:234
+#: src/libaudgui/prefs-widget.cc:323 src/libaudqt/prefs-widget-qt.cc:238
 msgid "Choose File"
 msgstr "Valitse tiedosto"
 
-#: src/libaudgui/prefs-widget.cc:327 src/libaudqt/prefs-widget-qt.cc:238
+#: src/libaudgui/prefs-widget.cc:327 src/libaudqt/prefs-widget-qt.cc:242
 msgid "Choose Folder"
 msgstr "Valitse kansio"
 
@@ -1016,7 +1013,7 @@ msgstr "Käynnistä uudelleen Qt-tilassa"
 
 #: src/libaudgui/prefs-window.cc:176
 msgid "Audacious is running in GTK mode."
-msgstr "Audacious on GTK tilassa."
+msgstr "Audacious on GTK-tilassa."
 
 #: src/libaudgui/prefs-window.cc:180
 msgid "Qt mode is unavailable in this build."
@@ -1150,7 +1147,7 @@ msgstr "Toissijaiset merkistökoodaukset:"
 
 #: src/libaudgui/prefs-window.cc:317 src/libaudqt/prefs-window-qt.cc:359
 msgid "<b>Behavior</b>"
-msgstr "<b>Käytös</b>"
+msgstr "<b>Toiminta</b>"
 
 #: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window-qt.cc:360
 msgid "Resume playback on startup"
@@ -1336,33 +1333,33 @@ msgstr "ALBUMI - NIMI"
 msgid "Category"
 msgstr "Luokka"
 
-#: src/libaudgui/prefs-window.cc:581 src/libaudqt/prefs-window-qt.cc:469
+#: src/libaudgui/prefs-window.cc:573 src/libaudqt/prefs-window-qt.cc:469
 msgid "Custom"
 msgstr "Mukautettu"
 
-#: src/libaudgui/prefs-window.cc:599 src/libaudqt/prefs-window-qt.cc:461
+#: src/libaudgui/prefs-window.cc:591 src/libaudqt/prefs-window-qt.cc:461
 msgid "Title format:"
 msgstr "Nimikkeen muoto:"
 
-#: src/libaudgui/prefs-window.cc:600 src/libaudqt/prefs-window-qt.cc:472
+#: src/libaudgui/prefs-window.cc:592 src/libaudqt/prefs-window-qt.cc:472
 msgid "Custom string:"
 msgstr "Muu merkkijono:"
 
-#: src/libaudgui/prefs-window.cc:825 src/libaudqt/prefs-window-qt.cc:781
+#: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:781
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Käytä suoratoiston tallennusta %s"
 
-#: src/libaudgui/prefs-window.cc:834 src/libaudqt/prefs-window-qt.cc:794
+#: src/libaudgui/prefs-window.cc:826 src/libaudqt/prefs-window-qt.cc:794
 msgid "No audio recording plugin available"
 msgstr "Audio tallennuksen laajennusta ei ole saatavilla"
 
-#: src/libaudgui/prefs-window.cc:895 src/libaudqt/prefs-window-qt.cc:654
+#: src/libaudgui/prefs-window.cc:887 src/libaudqt/prefs-window-qt.cc:654
 msgid "Audacious Settings"
-msgstr "Audacious asetukset"
+msgstr "Audacious-asetukset"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:209
-#: src/libaudqt/fileopener.cc:123
+#: src/libaudqt/fileopener.cc:125
 msgid "Cancel"
 msgstr "Peru"
 
@@ -1380,7 +1377,7 @@ msgstr "Lataa asetustiedosto"
 
 #: src/libaudgui/preset-browser.cc:99
 msgid "Load EQF File"
-msgstr "Lataa EQF tiedosto"
+msgstr "Lataa EQF-tiedosto"
 
 #: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:294
 msgid "Save Preset File"
@@ -1388,13 +1385,13 @@ msgstr "Tallenna asetustiedosto"
 
 #: src/libaudgui/preset-browser.cc:131
 msgid "Save EQF File"
-msgstr "Tallenna EQF tiedosto"
+msgstr "Tallenna EQF-tiedosto"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:264
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:344
 msgid "Queue Manager"
 msgstr "Jononhallinta"
 
-#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:210
+#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:326
 msgid "_Unqueue"
 msgstr "_Poista jonosta"
 
@@ -1410,27 +1407,27 @@ msgstr "Virhe"
 msgid "Information"
 msgstr "Tiedot"
 
-#: src/libaudgui/url-opener.cc:56 src/libaudqt/url-opener-qt.cc:41
+#: src/libaudgui/url-opener.cc:59 src/libaudqt/url-opener-qt.cc:41
 msgid "_Save to history"
 msgstr "_Tallenna historiaan"
 
-#: src/libaudgui/url-opener.cc:64 src/libaudqt/url-opener-qt.cc:47
+#: src/libaudgui/url-opener.cc:67 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
 msgstr "Avaa verkko-osoite"
 
-#: src/libaudgui/url-opener.cc:70 src/libaudqt/url-opener-qt.cc:53
+#: src/libaudgui/url-opener.cc:73 src/libaudqt/url-opener-qt.cc:53
 msgid "Add URL"
 msgstr "Lisää verkko-osoite"
 
-#: src/libaudgui/url-opener.cc:93 src/libaudqt/url-opener-qt.cc:70
+#: src/libaudgui/url-opener.cc:96 src/libaudqt/url-opener-qt.cc:70
 msgid "C_lear history"
 msgstr "T_yhjennä historia"
 
-#: src/libaudgui/url-opener.cc:105 src/libaudqt/url-opener-qt.cc:63
+#: src/libaudgui/url-opener.cc:108 src/libaudqt/url-opener-qt.cc:63
 msgid "Enter URL:"
 msgstr "Anna verkko-osoite:"
 
-#: src/libaudgui/util.cc:209 src/libaudqt/fileopener.cc:107
+#: src/libaudgui/util.cc:209 src/libaudqt/fileopener.cc:109
 msgid "Open"
 msgstr "Avaa"
 
@@ -1444,7 +1441,7 @@ msgstr ""
 
 #: src/libaudqt/eq-preset-qt.cc:252
 msgid "Preset files (*.preset *.eqf *.q1)"
-msgstr "Asetustiedostot (*.preset *.eqf *.q1)"
+msgstr "Esiasetustiedostot (*.preset *.eqf *.q1)"
 
 #: src/libaudqt/eq-preset-qt.cc:347
 msgid "Revert"
@@ -1454,19 +1451,19 @@ msgstr "Palaa"
 msgid "Browse"
 msgstr "Selaa"
 
-#: src/libaudqt/fileopener.cc:103
+#: src/libaudqt/fileopener.cc:105
 msgid "Open Folder"
 msgstr "Avaa kansio"
 
-#: src/libaudqt/fileopener.cc:104
+#: src/libaudqt/fileopener.cc:106
 msgid "Add Folder"
 msgstr "Lisää kansio"
 
-#: src/libaudqt/fileopener.cc:107 src/libaudqt/fileopener.cc:108
+#: src/libaudqt/fileopener.cc:109 src/libaudqt/fileopener.cc:110
 msgid "Add"
 msgstr "Lisää"
 
-#: src/libaudqt/font-entry.cc:39
+#: src/libaudqt/font-entry.cc:41
 msgid "Set Font"
 msgstr "Aseta fontti"
 
@@ -1580,7 +1577,7 @@ msgstr "Palvelut"
 
 #: src/libaudqt/prefs-window-qt.cc:228
 msgid "Restart in GTK mode"
-msgstr "Käynnistä GTK tilaan"
+msgstr "Käynnistä GTK-tilaan"
 
 #: src/libaudqt/prefs-window-qt.cc:237 src/libaudqt/prefs-window-qt.cc:250
 msgid "Native"
@@ -1600,7 +1597,7 @@ msgstr "Tasainen (tumma)"
 
 #: src/libaudqt/prefs-window-qt.cc:263
 msgid "Audacious is running in Qt mode."
-msgstr "Audacious on Qt tilassa."
+msgstr "Audacious on Qt-tilassa."
 
 #: src/libaudqt/prefs-window-qt.cc:267
 msgid "GTK mode is unavailable in this build."
@@ -1614,7 +1611,7 @@ msgstr "Teema:"
 msgid "Icon theme:"
 msgstr "Kuvaketeema:"
 
-#: src/libaudqt/util-qt.cc:112
+#: src/libaudqt/util-qt.cc:113
 msgid "Copy"
 msgstr "Kopioi"
 

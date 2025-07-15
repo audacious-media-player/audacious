@@ -4,11 +4,13 @@
 #
 # Translators:
 # pan93412 <pan93412@gmail.com>, 2019
+# pan93412 <pan93412@gmail.com>, 2019
 # Ruei-Yuan Lu <RueiYuan.Lu@gmail.com>, 2011
 # whhone <whhone@gmail.com>, 2013
 # whhone <whhone@gmail.com>, 2013
 # whhone <whhone@gmail.com>, 2013
 # Woodman Tuen <wmtuen@gmail.com>, 2024
+# 盧瑞元（R. Y. Lu） <rueiyuan.lu@gmail.com>, 2020
 # 盧瑞元（R. Y. Lu） <rueiyuan.lu@gmail.com>, 2020
 # 盧瑞元（R. Y. Lu） <rueiyuan.lu@gmail.com>, 2016-2017,2019
 msgid ""
@@ -16,9 +18,9 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2024-09-26 21:46+0200\n"
+"POT-Creation-Date: 2025-07-14 01:26+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Woodman Tuen <wmtuen@gmail.com>, 2024\n"
+"Last-Translator: 盧瑞元（R. Y. Lu） <rueiyuan.lu@gmail.com>, 2020\n"
 "Language-Team: Chinese (Taiwan) (http://app.transifex.com/audacious/"
 "audacious/language/zh_TW/)\n"
 "Language: zh_TW\n"
@@ -115,7 +117,7 @@ msgstr "使用方式：audacious [選項] ... [檔案] ...\n"
 msgid "Select instance to run/control"
 msgstr "選擇要執行或控制的播放器"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:155
+#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:165
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -227,13 +229,13 @@ msgstr "搜尋發生錯誤"
 msgid ""
 "The file format could not be determined. The format may be unsupported, or a "
 "necessary plugin may not be installed/enabled."
-msgstr ""
+msgstr "無法確定檔案格式。該格式可能不受支援，或未安裝/啟用必要的外掛程式。"
 
 #: src/libaudcore/probe.cc:218
 msgid ""
 "The file could not be decoded. It may be invalid, corrupt, or in an "
 "unsupported format."
-msgstr ""
+msgstr "檔案無法解碼。它可能無效、損壞或格式不支援。"
 
 #: src/libaudcore/tuple.cc:568
 msgid "Mono"
@@ -288,8 +290,8 @@ msgid "About Audacious"
 msgstr "關於 Audacious"
 
 #: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
-#: src/libaudgui/playlists.cc:92 src/libaudgui/playlists.cc:189
-#: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:102
+#: src/libaudgui/playlists.cc:93 src/libaudgui/playlists.cc:190
+#: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:105
 #: src/libaudqt/playlist-management.cc:42
 #: src/libaudqt/playlist-management.cc:60 src/libaudqt/prefs-plugin.cc:141
 #: src/libaudqt/url-opener-qt.cc:81
@@ -327,7 +329,7 @@ msgstr "重新命名播放清單"
 
 #: src/libaudgui/eq-preset.cc:154
 msgid "Please select one preset to export."
-msgstr ""
+msgstr "請選擇一個要匯出的預設。"
 
 #: src/libaudgui/eq-preset.cc:257 src/libaudgui/eq-preset.cc:262
 msgid "Preset File ..."
@@ -338,12 +340,12 @@ msgid "EQF File ..."
 msgstr "EQF 檔案 ..."
 
 #: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:339
-#: src/libaudqt/fileopener.cc:108
+#: src/libaudqt/fileopener.cc:110
 msgid "Import"
 msgstr "匯入"
 
 #: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:342
-#: src/libaudqt/fileopener.cc:108
+#: src/libaudqt/fileopener.cc:110
 msgid "Export"
 msgstr "匯出"
 
@@ -407,7 +409,7 @@ msgstr "8 kHz"
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.cc:133 src/libaudqt/equalizer-qt.cc:206
+#: src/libaudgui/equalizer.cc:133 src/libaudqt/equalizer-qt.cc:210
 msgid "Equalizer"
 msgstr "等化器"
 
@@ -423,11 +425,11 @@ msgstr "重設為零"
 msgid "Preamp"
 msgstr "前置放大"
 
-#: src/libaudgui/file-opener.cc:79 src/libaudqt/fileopener.cc:103
+#: src/libaudgui/file-opener.cc:79 src/libaudqt/fileopener.cc:105
 msgid "Open Files"
 msgstr "開啟檔案"
 
-#: src/libaudgui/file-opener.cc:80 src/libaudgui/url-opener.cc:65
+#: src/libaudgui/file-opener.cc:80 src/libaudgui/url-opener.cc:68
 #: src/libaudqt/url-opener-qt.cc:48
 msgid "_Open"
 msgstr "開啟(_O)"
@@ -436,11 +438,11 @@ msgstr "開啟(_O)"
 msgid "Close _dialog on open"
 msgstr "開啟後關閉對話視窗(_D)"
 
-#: src/libaudgui/file-opener.cc:87 src/libaudqt/fileopener.cc:103
+#: src/libaudgui/file-opener.cc:87 src/libaudqt/fileopener.cc:105
 msgid "Add Files"
 msgstr "加入檔案"
 
-#: src/libaudgui/file-opener.cc:88 src/libaudgui/url-opener.cc:71
+#: src/libaudgui/file-opener.cc:88 src/libaudgui/url-opener.cc:74
 #: src/libaudqt/url-opener-qt.cc:54
 msgid "_Add"
 msgstr "加入(_A)"
@@ -450,19 +452,19 @@ msgid "Close _dialog on add"
 msgstr "加入後關閉對話視窗(_D)"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
-#: src/libaudgui/jump-to-track.cc:323 src/libaudgui/plugin-prefs.cc:168
-#: src/libaudgui/prefs-window.cc:947 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:365 src/libaudqt/audqt.cc:326
+#: src/libaudgui/jump-to-track.cc:322 src/libaudgui/plugin-prefs.cc:168
+#: src/libaudgui/prefs-window.cc:939 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:365 src/libaudqt/audqt.cc:344
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
 #: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:696
-#: src/libaudqt/song-window-qt.cc:365
+#: src/libaudqt/song-window-qt.cc:376
 msgid "_Close"
 msgstr "關閉(_C)"
 
 #: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
-#: src/libaudqt/queue-manager-qt.cc:110
+#: src/libaudqt/queue-manager-qt.cc:125
 msgid "Title"
 msgstr "標題"
 
@@ -498,7 +500,7 @@ msgstr "音軌"
 
 #: src/libaudgui/infopopup.cc:222 src/libaudqt/infopopup-qt.cc:107
 msgid "Disc"
-msgstr ""
+msgstr "光碟 {row.props.disc_nr}"
 
 #: src/libaudgui/infopopup.cc:223 src/libaudqt/infopopup-qt.cc:109
 #: src/libaudqt/info-widget.cc:66
@@ -701,7 +703,7 @@ msgstr "音軌編號"
 
 #: src/libaudgui/infowin.cc:426
 msgid "_Auto-fill empty fields"
-msgstr ""
+msgstr "自動填寫空白欄位(_A)"
 
 #: src/libaudgui/infowin.cc:440 src/libaudqt/infowin-qt.cc:121
 msgid "_Save"
@@ -709,23 +711,23 @@ msgstr "儲存(_S)"
 
 #: src/libaudgui/infowin.cc:446
 msgid "_Previous"
-msgstr ""
+msgstr "上一首(_P)"
 
 #: src/libaudgui/infowin.cc:449
 msgid "_Next"
-msgstr "下一個(_N)"
+msgstr "下一首(_N)"
 
 #: src/libaudgui/infowin.cc:498
 #, c-format
 msgid "%d kbit/s"
-msgstr ""
+msgstr "%d 千位元/秒"
 
 #: src/libaudgui/infowin.cc:503
 msgid "N/A"
 msgstr "無"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:328
-#: src/libaudqt/song-window-qt.cc:363
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:327
+#: src/libaudqt/song-window-qt.cc:373
 msgid "_Jump"
 msgstr "跳轉(_J)"
 
@@ -738,66 +740,62 @@ msgid "Enter time (minutes:seconds):"
 msgstr "請輸入時間 (分:秒)："
 
 #: src/libaudgui/jump-to-track.cc:96 src/libaudgui/jump-to-track.cc:104
-#: src/libaudgui/jump-to-track.cc:319 src/libaudqt/song-window-qt.cc:285
-#: src/libaudqt/song-window-qt.cc:362
+#: src/libaudgui/jump-to-track.cc:318 src/libaudqt/song-window-qt.cc:290
+#: src/libaudqt/song-window-qt.cc:371
 msgid "_Queue"
 msgstr "排入佇列(_Q)"
 
-#: src/libaudgui/jump-to-track.cc:102 src/libaudqt/song-window-qt.cc:285
+#: src/libaudgui/jump-to-track.cc:102 src/libaudqt/song-window-qt.cc:290
 msgid "Un_queue"
 msgstr "移出佇列(_Q)"
 
-#: src/libaudgui/jump-to-track.cc:248 src/libaudqt/song-window-qt.cc:298
+#: src/libaudgui/jump-to-track.cc:248 src/libaudqt/song-window-qt.cc:305
 msgid "Jump to Song"
 msgstr "跳轉到指定歌曲"
 
-#: src/libaudgui/jump-to-track.cc:274 src/libaudqt/song-window-qt.cc:316
-msgid "Filter: "
-msgstr "過濾器："
-
-#: src/libaudgui/jump-to-track.cc:275
+#: src/libaudgui/jump-to-track.cc:274 src/libaudqt/song-window-qt.cc:322
 msgid "_Filter:"
 msgstr "過濾器(_F)："
 
-#: src/libaudgui/jump-to-track.cc:312 src/libaudqt/song-window-qt.cc:357
+#: src/libaudgui/jump-to-track.cc:311 src/libaudqt/song-window-qt.cc:366
 msgid "C_lose on jump"
 msgstr "切換後關閉(_C)"
 
-#: src/libaudgui/playlists.cc:91
+#: src/libaudgui/playlists.cc:92
 msgid "_Overwrite"
 msgstr "覆寫(_O)"
 
-#: src/libaudgui/playlists.cc:95
+#: src/libaudgui/playlists.cc:96
 msgid "Confirm Overwrite"
 msgstr "確認是否覆寫"
 
-#: src/libaudgui/playlists.cc:95
+#: src/libaudgui/playlists.cc:96
 #, c-format
 msgid "Overwrite %s?"
 msgstr "覆寫 %s？"
 
-#: src/libaudgui/playlists.cc:121 src/libaudqt/fileopener.cc:63
+#: src/libaudgui/playlists.cc:122 src/libaudqt/fileopener.cc:65
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
 msgstr "請輸入副檔名或者從下拉式清單中選擇檔案格式。"
 
-#: src/libaudgui/playlists.cc:140 src/libaudqt/fileopener.cc:70
+#: src/libaudgui/playlists.cc:141 src/libaudqt/fileopener.cc:72
 msgid "Select Format by Extension"
 msgstr "依副檔名選擇對應的格式"
 
-#: src/libaudgui/playlists.cc:167 src/libaudqt/fileopener.cc:104
+#: src/libaudgui/playlists.cc:168 src/libaudqt/fileopener.cc:106
 msgid "Export Playlist"
 msgstr "匯出播放清單"
 
-#: src/libaudgui/playlists.cc:168
+#: src/libaudgui/playlists.cc:169
 msgid "_Export"
 msgstr "匯出(_E)"
 
-#: src/libaudgui/playlists.cc:174 src/libaudqt/fileopener.cc:104
+#: src/libaudgui/playlists.cc:175 src/libaudqt/fileopener.cc:106
 msgid "Import Playlist"
 msgstr "匯入播放清單"
 
-#: src/libaudgui/playlists.cc:175
+#: src/libaudgui/playlists.cc:176
 msgid "_Import"
 msgstr "匯入(_I)"
 
@@ -819,23 +817,23 @@ msgstr "%s 設定"
 msgid "_Set"
 msgstr "套用(_S)"
 
-#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:759
-#: src/libaudgui/prefs-window.cc:799 src/libaudqt/prefs-window-qt.cc:641
+#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:751
+#: src/libaudgui/prefs-window.cc:791 src/libaudqt/prefs-window-qt.cc:641
 #: src/libaudqt/prefs-window-qt.cc:644
 msgid "_Settings"
 msgstr "設定(_S)"
 
-#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:773
-#: src/libaudgui/prefs-window.cc:811 src/libaudqt/prefs-window-qt.cc:642
+#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:765
+#: src/libaudgui/prefs-window.cc:803 src/libaudqt/prefs-window-qt.cc:642
 #: src/libaudqt/prefs-window-qt.cc:645
 msgid "_About"
 msgstr "關於(_A)"
 
-#: src/libaudgui/prefs-widget.cc:323 src/libaudqt/prefs-widget-qt.cc:234
+#: src/libaudgui/prefs-widget.cc:323 src/libaudqt/prefs-widget-qt.cc:238
 msgid "Choose File"
 msgstr "選擇檔案"
 
-#: src/libaudgui/prefs-widget.cc:327 src/libaudqt/prefs-widget-qt.cc:238
+#: src/libaudgui/prefs-widget.cc:327 src/libaudqt/prefs-widget-qt.cc:242
 msgid "Choose Folder"
 msgstr "選擇資料夾"
 
@@ -922,7 +920,7 @@ msgstr "品質"
 
 #: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window-qt.cc:183
 msgid "Disc number"
-msgstr ""
+msgstr "光碟編號"
 
 #: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:186
 msgid "None"
@@ -1006,11 +1004,11 @@ msgstr "以 Qt 模式重新啟動"
 
 #: src/libaudgui/prefs-window.cc:176
 msgid "Audacious is running in GTK mode."
-msgstr ""
+msgstr "Audacious 在 GTK 模式下運行。"
 
 #: src/libaudgui/prefs-window.cc:180
 msgid "Qt mode is unavailable in this build."
-msgstr ""
+msgstr "此版本中無法使用 Qt 模式。"
 
 #: src/libaudgui/prefs-window.cc:182 src/libaudqt/prefs-window-qt.cc:270
 msgid "Interface:"
@@ -1244,7 +1242,7 @@ msgstr "遞迴新增資料夾"
 
 #: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:408
 msgid "Add folders nested within playlist files"
-msgstr ""
+msgstr "在播放清單檔案中加入巢狀資料夾"
 
 #: src/libaudgui/prefs-window.cc:378 src/libaudqt/prefs-window-qt.cc:410
 msgid "<b>Metadata</b>"
@@ -1312,11 +1310,11 @@ msgstr "藝人 [ 專輯 ] - 音軌. 標題"
 
 #: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
 msgid "ARTIST - ALBUM - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "藝人 - 專輯 - 光碟.曲目. 標題"
 
 #: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
 msgid "ARTIST [ ALBUM ] - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "藝人 [ 專輯 ] - 光碟.曲目. 標題"
 
 #: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
 msgid "ALBUM - TITLE"
@@ -1326,33 +1324,33 @@ msgstr "專輯 - 標題"
 msgid "Category"
 msgstr "目錄"
 
-#: src/libaudgui/prefs-window.cc:581 src/libaudqt/prefs-window-qt.cc:469
+#: src/libaudgui/prefs-window.cc:573 src/libaudqt/prefs-window-qt.cc:469
 msgid "Custom"
 msgstr "自訂"
 
-#: src/libaudgui/prefs-window.cc:599 src/libaudqt/prefs-window-qt.cc:461
+#: src/libaudgui/prefs-window.cc:591 src/libaudqt/prefs-window-qt.cc:461
 msgid "Title format:"
 msgstr "標題格式："
 
-#: src/libaudgui/prefs-window.cc:600 src/libaudqt/prefs-window-qt.cc:472
+#: src/libaudgui/prefs-window.cc:592 src/libaudqt/prefs-window-qt.cc:472
 msgid "Custom string:"
 msgstr "自訂字串："
 
-#: src/libaudgui/prefs-window.cc:825 src/libaudqt/prefs-window-qt.cc:781
+#: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:781
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "啟用%s進行音訊串流錄製"
 
-#: src/libaudgui/prefs-window.cc:834 src/libaudqt/prefs-window-qt.cc:794
+#: src/libaudgui/prefs-window.cc:826 src/libaudqt/prefs-window-qt.cc:794
 msgid "No audio recording plugin available"
 msgstr "找不到可用的錄音外掛"
 
-#: src/libaudgui/prefs-window.cc:895 src/libaudqt/prefs-window-qt.cc:654
+#: src/libaudgui/prefs-window.cc:887 src/libaudqt/prefs-window-qt.cc:654
 msgid "Audacious Settings"
 msgstr "Audacious 設定"
 
 #: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:209
-#: src/libaudqt/fileopener.cc:123
+#: src/libaudqt/fileopener.cc:125
 msgid "Cancel"
 msgstr "取消"
 
@@ -1380,11 +1378,11 @@ msgstr "儲存預設集到檔案"
 msgid "Save EQF File"
 msgstr "儲存 EQF 檔"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:264
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:344
 msgid "Queue Manager"
 msgstr "佇列管理"
 
-#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:210
+#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:326
 msgid "_Unqueue"
 msgstr "移出佇列(_U)"
 
@@ -1400,27 +1398,27 @@ msgstr "錯誤"
 msgid "Information"
 msgstr "資訊"
 
-#: src/libaudgui/url-opener.cc:56 src/libaudqt/url-opener-qt.cc:41
+#: src/libaudgui/url-opener.cc:59 src/libaudqt/url-opener-qt.cc:41
 msgid "_Save to history"
 msgstr "儲存到歷史紀錄(_S)"
 
-#: src/libaudgui/url-opener.cc:64 src/libaudqt/url-opener-qt.cc:47
+#: src/libaudgui/url-opener.cc:67 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
 msgstr "開啟網址"
 
-#: src/libaudgui/url-opener.cc:70 src/libaudqt/url-opener-qt.cc:53
+#: src/libaudgui/url-opener.cc:73 src/libaudqt/url-opener-qt.cc:53
 msgid "Add URL"
 msgstr "加入網址"
 
-#: src/libaudgui/url-opener.cc:93 src/libaudqt/url-opener-qt.cc:70
+#: src/libaudgui/url-opener.cc:96 src/libaudqt/url-opener-qt.cc:70
 msgid "C_lear history"
 msgstr "清除歷史紀錄(_L)"
 
-#: src/libaudgui/url-opener.cc:105 src/libaudqt/url-opener-qt.cc:63
+#: src/libaudgui/url-opener.cc:108 src/libaudqt/url-opener-qt.cc:63
 msgid "Enter URL:"
 msgstr "請輸入網址："
 
-#: src/libaudgui/util.cc:209 src/libaudqt/fileopener.cc:107
+#: src/libaudgui/util.cc:209 src/libaudqt/fileopener.cc:109
 msgid "Open"
 msgstr "開啟"
 
@@ -1434,29 +1432,29 @@ msgstr ""
 
 #: src/libaudqt/eq-preset-qt.cc:252
 msgid "Preset files (*.preset *.eqf *.q1)"
-msgstr ""
+msgstr "預設檔 (*.preset *.eqf *.q1)"
 
 #: src/libaudqt/eq-preset-qt.cc:347
 msgid "Revert"
-msgstr ""
+msgstr "反向"
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
 msgstr "瀏覽"
 
-#: src/libaudqt/fileopener.cc:103
+#: src/libaudqt/fileopener.cc:105
 msgid "Open Folder"
 msgstr "開啟資料夾"
 
-#: src/libaudqt/fileopener.cc:104
+#: src/libaudqt/fileopener.cc:106
 msgid "Add Folder"
 msgstr "加入資料夾"
 
-#: src/libaudqt/fileopener.cc:107 src/libaudqt/fileopener.cc:108
+#: src/libaudqt/fileopener.cc:109 src/libaudqt/fileopener.cc:110
 msgid "Add"
 msgstr "加入"
 
-#: src/libaudqt/font-entry.cc:39
+#: src/libaudqt/font-entry.cc:41
 msgid "Set Font"
 msgstr "設定字型"
 
@@ -1486,15 +1484,15 @@ msgstr "錄製日期"
 
 #: src/libaudqt/info-widget.cc:60
 msgid "Publisher"
-msgstr ""
+msgstr "出版商"
 
 #: src/libaudqt/info-widget.cc:61
 msgid "Catalog Number"
-msgstr ""
+msgstr "目錄編號"
 
 #: src/libaudqt/info-widget.cc:62
 msgid "Disc Number"
-msgstr ""
+msgstr "光碟編號"
 
 #: src/libaudqt/info-widget.cc:65
 msgid "Technical"
@@ -1506,7 +1504,7 @@ msgstr "位元率"
 
 #: src/libaudqt/info-widget.cc:70
 msgid "Channels"
-msgstr ""
+msgstr "聲道"
 
 #: src/libaudqt/info-widget.cc:71
 msgid "MusicBrainz ID"
@@ -1514,7 +1512,7 @@ msgstr "MusicBrainz ID"
 
 #: src/libaudqt/infowin-qt.cc:94
 msgid "_Revert"
-msgstr ""
+msgstr "反向(_R)"
 
 #: src/libaudqt/infowin-qt.cc:105
 msgid "Error writing tag(s)."
@@ -1570,23 +1568,23 @@ msgstr "服務"
 
 #: src/libaudqt/prefs-window-qt.cc:228
 msgid "Restart in GTK mode"
-msgstr ""
+msgstr "以 GTK 模式重新啟動"
 
 #: src/libaudqt/prefs-window-qt.cc:237 src/libaudqt/prefs-window-qt.cc:250
 msgid "Native"
-msgstr ""
+msgstr "原生"
 
 #: src/libaudqt/prefs-window-qt.cc:238
 msgid "Dark"
-msgstr ""
+msgstr "深色"
 
 #: src/libaudqt/prefs-window-qt.cc:252
 msgid "Flat"
-msgstr ""
+msgstr "單調"
 
 #: src/libaudqt/prefs-window-qt.cc:253
 msgid "Flat (dark)"
-msgstr ""
+msgstr "單調 (深色)"
 
 #: src/libaudqt/prefs-window-qt.cc:263
 msgid "Audacious is running in Qt mode."
@@ -1594,17 +1592,17 @@ msgstr "Audacious 正以 Qt 模式下執行。"
 
 #: src/libaudqt/prefs-window-qt.cc:267
 msgid "GTK mode is unavailable in this build."
-msgstr ""
+msgstr "GTK 模式在此版本中不可用。"
 
 #: src/libaudqt/prefs-window-qt.cc:273
 msgid "Theme:"
-msgstr ""
+msgstr "主題："
 
 #: src/libaudqt/prefs-window-qt.cc:275
 msgid "Icon theme:"
-msgstr ""
+msgstr "圖示主題："
 
-#: src/libaudqt/util-qt.cc:112
+#: src/libaudqt/util-qt.cc:113
 msgid "Copy"
 msgstr "複製"
 
