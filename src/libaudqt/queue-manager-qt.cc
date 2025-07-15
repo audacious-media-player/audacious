@@ -67,9 +67,12 @@ protected:
 
     int columnCount(const QModelIndex &) const override { return NColumns; }
 
-    Qt::DropActions supportedDropActions() const { return Qt::MoveAction; }
+    Qt::DropActions supportedDropActions() const override
+    {
+        return Qt::MoveAction;
+    }
 
-    Qt::ItemFlags flags(const QModelIndex & index) const
+    Qt::ItemFlags flags(const QModelIndex & index) const override
     {
         if (index.isValid())
             return Qt::ItemIsSelectable | Qt::ItemIsDragEnabled |
