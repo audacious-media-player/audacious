@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Audacious</string>
 	<key>CFBundleVersion</key>
-	<string>4.1</string>
+	<string>4.5</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
@@ -25,6 +25,6 @@
 	<key>NSHighResolutionMagnifyAllowed</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2001-2021 Audacious developers and others</string>
+	<string>Copyright © 2001-2025 Audacious developers and others</string>
 </dict>
 </plist>
