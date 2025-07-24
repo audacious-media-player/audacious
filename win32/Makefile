@@ -42,13 +42,13 @@ adplug-2.4.tar.bz2:
 
 adplug: adplug-2.4.tar.bz2
 	tar xf adplug-2.4.tar.bz2
-	cd adplug-2.4 && ./configure --prefix=$(LIB_PREFIX)
+	cd adplug-2.4 && ./configure --prefix=$(LIB_PREFIX) --disable-shared
 	cd adplug-2.4 && $(MAKE) && $(MAKE) install
 
-libsidplayfp-2.14.0.tar.gz:
-	wget https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/2.14/libsidplayfp-2.14.0.tar.gz
+libsidplayfp-2.15.0.tar.gz:
+	wget https://github.com/libsidplayfp/libsidplayfp/releases/download/v2.15.0/libsidplayfp-2.15.0.tar.gz
 
-libsidplayfp: libsidplayfp-2.14.0.tar.gz
-	tar xf libsidplayfp-2.14.0.tar.gz
-	cd libsidplayfp-2.14.0 && ./configure --prefix=$(LIB_PREFIX)
-	cd libsidplayfp-2.14.0 && $(MAKE) && $(MAKE) install
+libsidplayfp: libsidplayfp-2.15.0.tar.gz
+	tar xf libsidplayfp-2.15.0.tar.gz
+	cd libsidplayfp-2.15.0 && ./configure --prefix=$(LIB_PREFIX)
+	cd libsidplayfp-2.15.0 && $(MAKE) && $(MAKE) install
