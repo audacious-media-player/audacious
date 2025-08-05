@@ -1351,7 +1351,7 @@ msgstr "Formato do título:"
 
 #: src/libaudgui/prefs-window.cc:592 src/libaudqt/prefs-window-qt.cc:472
 msgid "Custom string:"
-msgstr "Linha personalizada:"
+msgstr "Formato personalizado:"
 
 #: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:781
 #, c-format
