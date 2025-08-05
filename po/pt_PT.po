@@ -13,13 +13,14 @@
 # Sérgio Marques <smarquespt@gmail.com>, 2012-2018
 # Alexandro Casanova <shorterfire@gmail.com>, 2012
 # Valter Vicente <souobadaro@gmail.com>, 2011
+# Bruno Miguel, 2025
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
 "POT-Creation-Date: 2025-07-14 01:26+0200\n"
-"PO-Revision-Date: 2011-10-10 15:11+0000\n"
+"PO-Revision-Date: 2025-08-05 14:05+0100\n"
 "Last-Translator: Eduardo Cardoso, 2023\n"
 "Language-Team: Portuguese (Portugal) (http://app.transifex.com/audacious/"
 "audacious/language/pt_PT/)\n"
@@ -29,6 +30,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
 "1000000 == 0 ? 1 : 2;\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: src/audacious/main.cc:72
 msgid "Show command-line help"
@@ -48,7 +50,7 @@ msgstr "Pausar reprodução"
 
 #: src/audacious/main.cc:77
 msgid "Pause if playing, play otherwise"
-msgstr "Pausar se em reprodução. Caso contrário, reproduzir."
+msgstr "Pausar se em reprodução. Caso contrário, reproduzir"
 
 #: src/audacious/main.cc:78
 msgid "Stop playback"
@@ -60,7 +62,7 @@ msgstr "Ir para a faixa anterior"
 
 #: src/audacious/main.cc:80
 msgid "Skip to next song"
-msgstr "Ir para a próxima faixa"
+msgstr "Ir para a faixa seguinte"
 
 #: src/audacious/main.cc:81
 msgid "Add files to the playlist"
@@ -216,7 +218,7 @@ msgstr "Não foi possível carregar %s: extensão de ficheiro não suportada."
 #: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:319
 #, c-format
 msgid "Error saving %s."
-msgstr "Erro ao gravar %s"
+msgstr "Erro ao gravar %s."
 
 #: src/libaudcore/playlist-files.cc:167
 #, c-format
@@ -237,7 +239,7 @@ msgid ""
 "necessary plugin may not be installed/enabled."
 msgstr ""
 "O formato de ficheiro não pode ser determinado. O formato pode não ser "
-"suportado, ou um plugin necessário pode não estar instalado/ativado."
+"suportado, ou um suplemento necessário pode não estar instalado/ativado."
 
 #: src/libaudcore/probe.cc:218
 msgid ""
@@ -512,7 +514,7 @@ msgstr "Faixa"
 
 #: src/libaudgui/infopopup.cc:222 src/libaudqt/infopopup-qt.cc:107
 msgid "Disc"
-msgstr ""
+msgstr "Disco"
 
 #: src/libaudgui/infopopup.cc:223 src/libaudqt/infopopup-qt.cc:109
 #: src/libaudqt/info-widget.cc:66
@@ -814,7 +816,7 @@ msgstr "_Importar"
 
 #: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:44
 msgid "_Plugins ..."
-msgstr "E_xtras..."
+msgstr "Su_plementos ..."
 
 #: src/libaudgui/plugin-prefs.cc:110 src/libaudqt/prefs-plugin.cc:61
 #, c-format
@@ -870,7 +872,7 @@ msgstr "Lista de reprodução"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:165
 msgid "Plugins"
-msgstr "Extras"
+msgstr "Suplementos"
 
 #: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-window-qt.cc:166
 msgid "Advanced"
@@ -933,7 +935,7 @@ msgstr "Qualidade"
 
 #: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window-qt.cc:183
 msgid "Disc number"
-msgstr ""
+msgstr "Número do disco"
 
 #: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:186
 msgid "None"
@@ -1017,7 +1019,7 @@ msgstr "Reiniciar no modo Qt"
 
 #: src/libaudgui/prefs-window.cc:176
 msgid "Audacious is running in GTK mode."
-msgstr ""
+msgstr "Audacious a executar no modo GTK."
 
 #: src/libaudgui/prefs-window.cc:180
 msgid "Qt mode is unavailable in this build."
@@ -1029,7 +1031,7 @@ msgstr "Interface:"
 
 #: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window-qt.cc:284
 msgid "Output plugin:"
-msgstr "Suplemento de som:"
+msgstr "Suplementos de saída:"
 
 #: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window-qt.cc:297
 msgid "Amplify all files:"
@@ -1321,15 +1323,15 @@ msgstr "Artista - Álbum - Faixa. Título"
 
 #: src/libaudgui/prefs-window.cc:416 src/libaudqt/prefs-window-qt.cc:449
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "Artista [Álbum] - Faixa. Título"
+msgstr "Artista [ Álbum ] - Faixa. Título"
 
 #: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
 msgid "ARTIST - ALBUM - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "Artista - Álbum - Faixa. Título"
 
 #: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
 msgid "ARTIST [ ALBUM ] - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "Artista [ Álbum ] - Faixa. Título"
 
 #: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
 msgid "ALBUM - TITLE"
@@ -1475,7 +1477,7 @@ msgstr "Definir tipo de letra"
 
 #: src/libaudqt/info-widget.cc:44
 msgid "<various>"
-msgstr "<various>"
+msgstr "<vários>"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Metadata"
@@ -1507,7 +1509,7 @@ msgstr "Número de catálogo"
 
 #: src/libaudqt/info-widget.cc:62
 msgid "Disc Number"
-msgstr ""
+msgstr "Número do disco"
 
 #: src/libaudqt/info-widget.cc:65
 msgid "Technical"
@@ -1583,7 +1585,7 @@ msgstr "Serviços"
 
 #: src/libaudqt/prefs-window-qt.cc:228
 msgid "Restart in GTK mode"
-msgstr ""
+msgstr "Reiniciar no modo GTK"
 
 #: src/libaudqt/prefs-window-qt.cc:237 src/libaudqt/prefs-window-qt.cc:250
 msgid "Native"
@@ -1599,7 +1601,7 @@ msgstr "Plano"
 
 #: src/libaudqt/prefs-window-qt.cc:253
 msgid "Flat (dark)"
-msgstr "Plano(escuro)"
+msgstr "Plano (escuro)"
 
 #: src/libaudqt/prefs-window-qt.cc:263
 msgid "Audacious is running in Qt mode."
@@ -1607,7 +1609,7 @@ msgstr "Audacious está a correr em modo Qt."
 
 #: src/libaudqt/prefs-window-qt.cc:267
 msgid "GTK mode is unavailable in this build."
-msgstr ""
+msgstr "Modo GTK não disponível nesta compilação."
 
 #: src/libaudqt/prefs-window-qt.cc:273
 msgid "Theme:"
@@ -1624,4 +1626,4 @@ msgstr "Copiar"
 #: src/libaudqt/volumebutton.cc:165
 #, c-format
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
