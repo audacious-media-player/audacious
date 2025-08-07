@@ -19,6 +19,7 @@
 
 #include "id3-common.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -139,12 +140,7 @@ void id3_decode_genre (Tuple & tuple, const char * data, int size)
     if (! text)
         return;
 
-    if (text[0] == '(')
-        numericgenre = atoi (text + 1);
-    else
-        numericgenre = atoi (text);
-
-    if (numericgenre > 0)
+    if (sscanf (text, "(%d)", & numericgenre) == 1 || sscanf (text, "%d", & numericgenre) == 1)
         tuple.set_str (Tuple::Genre, convert_numericgenre_to_text (numericgenre));
     else
         tuple.set_str (Tuple::Genre, text);
