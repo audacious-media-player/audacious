@@ -28,7 +28,7 @@
   </description>
   <url type="homepage">https://audacious-media-player.org</url>
   <url type="bugtracker">https://github.com/audacious-media-player/audacious/issues</url>
-  <url type="translate">https://transifex.com/audacious/audacious</url>
+  <url type="translate">https://app.transifex.com/audacious</url>
   <releases>
     <release date="2025-07-16" version="4.5"></release>
     <release date="2024-11-03" version="4.4.2"></release>
