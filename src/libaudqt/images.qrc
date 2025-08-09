@@ -58,6 +58,7 @@
     <file alias="media-skip-backward.svg">../../images/media-skip-backward.svg</file>
     <file alias="media-skip-forward.svg">../../images/media-skip-forward.svg</file>
     <file alias="multimedia-volume-control.svg">../../images/multimedia-volume-control.svg</file>
+    <file alias="no-playlist-advance.svg">../../images/no-playlist-advance.svg</file>
     <file alias="preferences-desktop-font.svg">../../images/preferences-desktop-font.svg</file>
     <file alias="preferences-other.svg">../../images/preferences-other.svg</file>
     <file alias="preferences-system.svg">../../images/preferences-system.svg</file>
@@ -123,6 +124,7 @@
     <file alias="media-skip-backward.svg">../../images/dark/media-skip-backward.svg</file>
     <file alias="media-skip-forward.svg">../../images/dark/media-skip-forward.svg</file>
     <file alias="multimedia-volume-control.svg">../../images/dark/multimedia-volume-control.svg</file>
+    <file alias="no-playlist-advance.svg">../../images/dark/no-playlist-advance.svg</file>
     <file alias="preferences-desktop-font.svg">../../images/dark/preferences-desktop-font.svg</file>
     <file alias="preferences-other.svg">../../images/dark/preferences-other.svg</file>
     <file alias="preferences-system.svg">../../images/dark/preferences-system.svg</file>
