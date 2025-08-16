@@ -46,7 +46,8 @@ EXPORT void aud_drct_play()
     else
     {
         auto playlist = Playlist::active_playlist();
-        playlist.set_position(playlist.get_position());
+	if (aud_get_bool("resume_from_start"))
+            playlist.set_position(playlist.get_position());
         playlist.start_playback();
     }
 }
