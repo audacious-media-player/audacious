@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2025-07-14 01:26+0200\n"
+"POT-Creation-Date: 2025-07-16 00:50+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
 "Last-Translator: First Last <xxbxxozo@10mail.org>, 2020\n"
 "Language-Team: Ukrainian (http://app.transifex.com/audacious/audacious/"
@@ -481,7 +481,7 @@ msgstr "_Закрити"
 #: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
-#: src/libaudqt/queue-manager-qt.cc:125
+#: src/libaudqt/queue-manager-qt.cc:128
 msgid "Title"
 msgstr "Назва"
 
@@ -517,7 +517,7 @@ msgstr "Стежка"
 
 #: src/libaudgui/infopopup.cc:222 src/libaudqt/infopopup-qt.cc:107
 msgid "Disc"
-msgstr ""
+msgstr "Диск"
 
 #: src/libaudgui/infopopup.cc:223 src/libaudqt/infopopup-qt.cc:109
 #: src/libaudqt/info-widget.cc:66
@@ -737,7 +737,7 @@ msgstr "_Наступний"
 #: src/libaudgui/infowin.cc:498
 #, c-format
 msgid "%d kbit/s"
-msgstr ""
+msgstr "%d кб/с"
 
 #: src/libaudgui/infowin.cc:503
 msgid "N/A"
@@ -1395,11 +1395,11 @@ msgstr "Зберегти файл налаштувань"
 msgid "Save EQF File"
 msgstr "Зберегти файл налаштувань еквалайзеру"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:344
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:347
 msgid "Queue Manager"
 msgstr "Керування чергою"
 
-#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:326
+#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:329
 msgid "_Unqueue"
 msgstr "_Прибрати з черги"
 
@@ -1501,11 +1501,11 @@ msgstr "Дата запису"
 
 #: src/libaudqt/info-widget.cc:60
 msgid "Publisher"
-msgstr ""
+msgstr "Видавець"
 
 #: src/libaudqt/info-widget.cc:61
 msgid "Catalog Number"
-msgstr ""
+msgstr "Номер у каталозі"
 
 #: src/libaudqt/info-widget.cc:62
 msgid "Disc Number"

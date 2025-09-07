@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2025-07-14 01:26+0200\n"
+"POT-Creation-Date: 2025-07-16 00:50+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
 "Last-Translator: AO <ao@localizationlab.org>, 2019-2022,2024-2025\n"
 "Language-Team: French (http://app.transifex.com/audacious/audacious/language/"
@@ -120,7 +120,7 @@ msgstr ""
 
 #: src/audacious/main.cc:206
 msgid "Select instance to run/control"
-msgstr "Choisir l’instance à exécuter/contrôler"
+msgstr "Choisir l’instance à exécuter, contrôler"
 
 #: src/audacious/main.cc:391 src/libaudqt/audqt.cc:165
 msgid "Audacious"
@@ -483,7 +483,7 @@ msgstr "_Fermer"
 #: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
-#: src/libaudqt/queue-manager-qt.cc:125
+#: src/libaudqt/queue-manager-qt.cc:128
 msgid "Title"
 msgstr "Titre"
 
@@ -705,7 +705,7 @@ msgstr "Erreur d’enregistrement"
 #: src/libaudgui/infowin.cc:333 src/libaudgui/prefs-window.cc:87
 #: src/libaudqt/infowin-qt.cc:64 src/libaudqt/prefs-window-qt.cc:164
 msgid "Song Info"
-msgstr "Renseignements sur la pièce"
+msgstr "Détails de la pièce"
 
 #: src/libaudgui/infowin.cc:411 src/libaudqt/info-widget.cc:51
 msgid "Album Artist"
@@ -1075,7 +1075,7 @@ msgstr "Écrêtage logiciel"
 
 #: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window-qt.cc:311
 msgid "Use software volume control (not recommended)"
-msgstr "Utiliser le contrôle logiciel du volume (non recommandé)"
+msgstr "Contrôle logiciel du volume (non recommandé)"
 
 #: src/libaudgui/prefs-window.cc:243 src/libaudqt/prefs-window-qt.cc:313
 msgid "<b>Recording Settings</b>"
@@ -1131,15 +1131,15 @@ msgstr "<b>Configuration d’un mandataire</b>"
 
 #: src/libaudgui/prefs-window.cc:285 src/libaudqt/prefs-window-qt.cc:339
 msgid "Enable proxy usage"
-msgstr "Activer l’utilisation d’un mandataire"
+msgstr "Utiliser un mandataire"
 
 #: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window-qt.cc:341
 msgid "Use authentication with proxy"
-msgstr "Utiliser l’authentification avec le mandataire"
+msgstr "Authentification du mandataire"
 
 #: src/libaudgui/prefs-window.cc:293 src/libaudqt/prefs-window-qt.cc:344
 msgid "Use SOCKS proxy"
-msgstr "Utiliser un mandataire SOCKS"
+msgstr "Mandataire SOCKS"
 
 #: src/libaudgui/prefs-window.cc:295 src/libaudqt/prefs-window-qt.cc:345
 msgid "SOCKS v4a"
@@ -1203,7 +1203,7 @@ msgstr "<b>Exportation</b>"
 
 #: src/libaudgui/prefs-window.cc:338 src/libaudqt/prefs-window-qt.cc:379
 msgid "Use relative paths when possible"
-msgstr "Utiliser des chemins relatifs si possible"
+msgstr "Chemins relatifs, si possible"
 
 #: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:383
 msgid "<b>Album Art</b>"
@@ -1290,7 +1290,7 @@ msgstr "<b>Divers</b>"
 
 #: src/libaudgui/prefs-window.cc:386 src/libaudqt/prefs-window-qt.cc:419
 msgid "Step forward/backward by:"
-msgstr "Avancer/reculer en :"
+msgstr "Avancer, reculer de :"
 
 #: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:420
 msgid "seconds"
@@ -1298,7 +1298,7 @@ msgstr "secondes"
 
 #: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:421
 msgid "Adjust volume by:"
-msgstr "Régler le volume de :"
+msgstr "Changer le volume de :"
 
 #: src/libaudgui/prefs-window.cc:391 src/libaudqt/prefs-window-qt.cc:422
 msgid "percent"
@@ -1402,17 +1402,17 @@ msgstr "Enregistrer le fichier de préréglage"
 msgid "Save EQF File"
 msgstr "Enregistrer le fichier EQF"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:344
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:347
 msgid "Queue Manager"
 msgstr "Gestionnaire de la file d’attente"
 
-#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:326
+#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:329
 msgid "_Unqueue"
 msgstr "Retirer de la _file d’attente"
 
 #: src/libaudgui/status.cc:37
 msgid "Working ..."
-msgstr "Traitement en cours…"
+msgstr "Traitement…"
 
 #: src/libaudgui/status.cc:87 src/libaudqt/log-inspector.cc:226
 msgid "Error"
@@ -1420,7 +1420,7 @@ msgstr "Erreur"
 
 #: src/libaudgui/status.cc:92
 msgid "Information"
-msgstr "Renseignements"
+msgstr "Détails"
 
 #: src/libaudgui/url-opener.cc:59 src/libaudqt/url-opener-qt.cc:41
 msgid "_Save to history"
@@ -1484,7 +1484,7 @@ msgstr "Définir une police"
 
 #: src/libaudqt/info-widget.cc:44
 msgid "<various>"
-msgstr "<various>"
+msgstr "<divers>"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Metadata"
@@ -1520,7 +1520,7 @@ msgstr "Numéro de disque"
 
 #: src/libaudqt/info-widget.cc:65
 msgid "Technical"
-msgstr "Renseignements techniques"
+msgstr "Détails techniques"
 
 #: src/libaudqt/info-widget.cc:69
 msgid "Bitrate"
@@ -1572,7 +1572,7 @@ msgstr "Débogage"
 
 #: src/libaudqt/log-inspector.cc:224
 msgid "Info"
-msgstr "Renseignements"
+msgstr "Détails"
 
 #: src/libaudqt/log-inspector.cc:225
 msgid "Warning"
@@ -1580,7 +1580,7 @@ msgstr "Avertissement"
 
 #: src/libaudqt/log-inspector.cc:237
 msgid "Cl_ear"
-msgstr "Effac_er"
+msgstr "Vid_er"
 
 #: src/libaudqt/log-inspector.cc:250
 msgid "Log Level:"

@@ -6,6 +6,7 @@
 # Chasye <chasye@gmail.com>, 2010
 # Mingcong Bai <jeffbai@aosc.xyz>, 2014
 # Mingcong Bai <jeffbai@aosc.xyz>, 2014
+# Li Yang, 2025
 # Luke <runningwaterpro@gmail.com>, 2012
 # Michael Jay Tong <michaeljayt@gmail.com>, 2014
 # Mingcong Bai <jeffbai@aosc.xyz>, 2014-2017
@@ -22,9 +23,9 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2025-07-14 01:26+0200\n"
+"POT-Creation-Date: 2025-07-16 00:50+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: 玉堂白鹤 <yjwork@qq.com>, 2021,2024\n"
+"Last-Translator: Li Yang, 2025\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/audacious/audacious/"
 "language/zh_CN/)\n"
 "Language: zh_CN\n"
@@ -142,7 +143,7 @@ msgstr ""
 
 #: src/libaudcore/adder.cc:456
 msgid "No files found."
-msgstr "未找到额外你就。"
+msgstr "未找到文件。"
 
 #: src/libaudcore/adder.cc:478 src/libaudcore/playlist.cc:81
 msgid "New Playlist"
@@ -407,7 +408,7 @@ msgstr "4 kHz"
 
 #: src/libaudgui/equalizer.cc:130 src/libaudqt/equalizer-qt.cc:124
 msgid "8 kHz"
-msgstr "加载"
+msgstr "8 kHz"
 
 #: src/libaudgui/equalizer.cc:130 src/libaudqt/equalizer-qt.cc:124
 msgid "16 kHz"
@@ -468,7 +469,7 @@ msgstr "关闭(_C)"
 #: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
-#: src/libaudqt/queue-manager-qt.cc:125
+#: src/libaudqt/queue-manager-qt.cc:128
 msgid "Title"
 msgstr "标题"
 
@@ -1382,11 +1383,11 @@ msgstr "保存预设文件"
 msgid "Save EQF File"
 msgstr "保存 EQF 文件"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:344
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:347
 msgid "Queue Manager"
 msgstr "队列管理器"
 
-#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:326
+#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:329
 msgid "_Unqueue"
 msgstr "从队列移除 (_U)"
 

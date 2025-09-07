@@ -4,6 +4,7 @@
 #
 # Translators:
 # Alexandro Casanova <shorterfire@gmail.com>, 2012
+# Bruno Miguel, 2025
 # Eduardo Cardoso, 2023
 # Pitxyoki <Pitxyoki@gmail.com>, 2010
 # Miguel Diaz Gonçalves, 2022
@@ -18,9 +19,9 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2025-07-14 01:26+0200\n"
+"POT-Creation-Date: 2025-07-16 00:50+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Eduardo Cardoso, 2023\n"
+"Last-Translator: Bruno Miguel, 2025\n"
 "Language-Team: Portuguese (Portugal) (http://app.transifex.com/audacious/"
 "audacious/language/pt_PT/)\n"
 "Language: pt_PT\n"
@@ -60,7 +61,7 @@ msgstr "Ir para a faixa anterior"
 
 #: src/audacious/main.cc:80
 msgid "Skip to next song"
-msgstr "Ir para a próxima faixa"
+msgstr "Ir para a faixa seguinte"
 
 #: src/audacious/main.cc:81
 msgid "Add files to the playlist"
@@ -76,7 +77,7 @@ msgstr "Mostrar janela principal"
 
 #: src/audacious/main.cc:86
 msgid "Display the jump-to-song window"
-msgstr "Mostrar janela Ir para a faixa"
+msgstr "Mostrar janela de Ir para a faixa"
 
 #: src/audacious/main.cc:88
 msgid "Start without a graphical interface"
@@ -138,7 +139,7 @@ msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
-"Erro na leitura de %s:\n"
+"Erro ao ler %s:\n"
 "%s"
 
 #: src/libaudcore/adder.cc:456
@@ -147,7 +148,7 @@ msgstr "Não existem ficheiros."
 
 #: src/libaudcore/adder.cc:478 src/libaudcore/playlist.cc:81
 msgid "New Playlist"
-msgstr "Nova lista de reprodução"
+msgstr "Nova Lista de Reprodução"
 
 #: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:534
 msgid "Standard input"
@@ -156,7 +157,7 @@ msgstr "Entrada padrão"
 #: src/libaudcore/audstrings.cc:666
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "CD áudio, faixa %s"
+msgstr "CD de Áudio, faixa %s"
 
 #: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:510
 msgid "(character encoding error)"
@@ -166,7 +167,7 @@ msgstr "(erro de codificação de caracteres)"
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
 msgstr ""
-"Tem que configurar a gravação do fluxo nas definições para a poder utilizar."
+"Deve configurar a gravação de fluxo nas Definições para a poder utilizar."
 
 #: src/libaudcore/output.cc:289
 msgid "Error opening output stream"
@@ -187,7 +188,7 @@ msgstr ""
 
 #: src/libaudcore/playback.cc:510
 msgid "Invalid audio format"
-msgstr "Formato áudio inválido"
+msgstr "Formato de áudio inválido"
 
 #: src/libaudcore/playlist.cc:82
 msgid "Now Playing"
@@ -229,7 +230,7 @@ msgstr "Erro ao carregar suplemento"
 
 #: src/libaudcore/probe.cc:179
 msgid "Seek error"
-msgstr "Erro de procura"
+msgstr "Erro de pesquisa"
 
 #: src/libaudcore/probe.cc:187
 msgid ""
@@ -237,15 +238,15 @@ msgid ""
 "necessary plugin may not be installed/enabled."
 msgstr ""
 "O formato de ficheiro não pode ser determinado. O formato pode não ser "
-"suportado, ou um plugin necessário pode não estar instalado/ativado."
+"suportado, ou um suplemento necessário pode não estar instalado/ativado."
 
 #: src/libaudcore/probe.cc:218
 msgid ""
 "The file could not be decoded. It may be invalid, corrupt, or in an "
 "unsupported format."
 msgstr ""
-"O ficheiro não pode ser descodificado. Pode estar inválido, corrupto, ou num "
-"formato de ficheiro não suportado."
+"O ficheiro não pode ser descodificado. Pode ser inválido, corrupto, ou estar "
+"num formato não suportado."
 
 #: src/libaudcore/tuple.cc:568
 msgid "Mono"
@@ -265,7 +266,7 @@ msgstr[2] "%d canais"
 
 #: src/libaudcore/tuple.cc:791
 msgid "Audio CD"
-msgstr "CD áudio"
+msgstr "CD de Áudio"
 
 #: src/libaudcore/tuple.cc:875
 #, c-format
@@ -317,7 +318,7 @@ msgstr "_Não perguntar novamente"
 #: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:66
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr "Pretende eliminar \"%s\" permanentemente?"
+msgstr "Pretende eliminar permanentemente \"%s\"?"
 
 #: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:59
 msgid "_Remove"
@@ -476,7 +477,7 @@ msgstr "Fe_char"
 #: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
 #: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
-#: src/libaudqt/queue-manager-qt.cc:125
+#: src/libaudqt/queue-manager-qt.cc:128
 msgid "Title"
 msgstr "Título"
 
@@ -512,7 +513,7 @@ msgstr "Faixa"
 
 #: src/libaudgui/infopopup.cc:222 src/libaudqt/infopopup-qt.cc:107
 msgid "Disc"
-msgstr ""
+msgstr "Disco"
 
 #: src/libaudgui/infopopup.cc:223 src/libaudqt/infopopup-qt.cc:109
 #: src/libaudqt/info-widget.cc:66
@@ -814,7 +815,7 @@ msgstr "_Importar"
 
 #: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:44
 msgid "_Plugins ..."
-msgstr "E_xtras..."
+msgstr "S_uplementos..."
 
 #: src/libaudgui/plugin-prefs.cc:110 src/libaudqt/prefs-plugin.cc:61
 #, c-format
@@ -870,7 +871,7 @@ msgstr "Lista de reprodução"
 
 #: src/libaudgui/prefs-window.cc:88 src/libaudqt/prefs-window-qt.cc:165
 msgid "Plugins"
-msgstr "Extras"
+msgstr "Suplementos"
 
 #: src/libaudgui/prefs-window.cc:89 src/libaudqt/prefs-window-qt.cc:166
 msgid "Advanced"
@@ -933,7 +934,7 @@ msgstr "Qualidade"
 
 #: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window-qt.cc:183
 msgid "Disc number"
-msgstr ""
+msgstr "Número de disco"
 
 #: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window-qt.cc:186
 msgid "None"
@@ -1017,7 +1018,7 @@ msgstr "Reiniciar no modo Qt"
 
 #: src/libaudgui/prefs-window.cc:176
 msgid "Audacious is running in GTK mode."
-msgstr ""
+msgstr "Audacious está a correr em modo GTK."
 
 #: src/libaudgui/prefs-window.cc:180
 msgid "Qt mode is unavailable in this build."
@@ -1325,11 +1326,11 @@ msgstr "Artista [Álbum] - Faixa. Título"
 
 #: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
 msgid "ARTIST - ALBUM - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "Artista - Álbum - Faixa. Título"
 
 #: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
 msgid "ARTIST [ ALBUM ] - DISC.TRACK. TITLE"
-msgstr ""
+msgstr "Artista [ Álbum ] - Faixa. Título"
 
 #: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
 msgid "ALBUM - TITLE"
@@ -1393,11 +1394,11 @@ msgstr "Guardar ficheiro de pré-ajuste"
 msgid "Save EQF File"
 msgstr "Guardar ficheiro EQF"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:344
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:347
 msgid "Queue Manager"
 msgstr "Gestão de fila de reprodução"
 
-#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:326
+#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:329
 msgid "_Unqueue"
 msgstr "_Remover da fila"
 
@@ -1507,7 +1508,7 @@ msgstr "Número de catálogo"
 
 #: src/libaudqt/info-widget.cc:62
 msgid "Disc Number"
-msgstr ""
+msgstr "Número de Disco"
 
 #: src/libaudqt/info-widget.cc:65
 msgid "Technical"
@@ -1583,7 +1584,7 @@ msgstr "Serviços"
 
 #: src/libaudqt/prefs-window-qt.cc:228
 msgid "Restart in GTK mode"
-msgstr ""
+msgstr "Reiniciar no modo GTK."
 
 #: src/libaudqt/prefs-window-qt.cc:237 src/libaudqt/prefs-window-qt.cc:250
 msgid "Native"
@@ -1607,7 +1608,7 @@ msgstr "Audacious está a correr em modo Qt."
 
 #: src/libaudqt/prefs-window-qt.cc:267
 msgid "GTK mode is unavailable in this build."
-msgstr ""
+msgstr "Modo GTK não disponível nesta compilação."
 
 #: src/libaudqt/prefs-window-qt.cc:273
 msgid "Theme:"
@@ -1624,4 +1625,4 @@ msgstr "Copiar"
 #: src/libaudqt/volumebutton.cc:165
 #, c-format
 msgid "%d%%"
-msgstr ""
+msgstr "%d%%"
