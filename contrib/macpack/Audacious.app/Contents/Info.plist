@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Audacious</string>
 	<key>CFBundleVersion</key>
-	<string>4.5</string>
+	<string>4.5.1</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>

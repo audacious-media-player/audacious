@@ -30,6 +30,7 @@
   <url type="bugtracker">https://github.com/audacious-media-player/audacious/issues</url>
   <url type="translate">https://app.transifex.com/audacious</url>
   <releases>
+    <release date="2025-09-07" version="4.5.1"></release>
     <release date="2025-07-16" version="4.5"></release>
     <release date="2024-11-03" version="4.4.2"></release>
     <release date="2024-09-26" version="4.4.1"></release>
