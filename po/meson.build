@@ -9,7 +9,7 @@ i18n.gettext('audacious',
     '--keyword=N_',
     '--from-code=UTF-8',
     '--msgid-bugs-address="https://github.com/audacious-media-player/audacious/issues"',
-    '--directory=%0%'.format(meson.current_source_dir()),
+    '--directory=@0@'.format(meson.current_source_dir()),
     '--files-from=POTFILES.in'
   ]
 )
