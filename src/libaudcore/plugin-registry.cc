@@ -765,32 +765,42 @@ bool input_plugin_can_write_tuple(PluginHandle * plugin)
     return plugin->writes_tag;
 }
 
-EXPORT Index<const char *> aud_plugin_get_supported_mime_types()
+static Index<const char *> input_plugins_get_supported_formats(InputKey key)
 {
-    Index<const char *> mimes;
+    Index<const char *> result;
 
     for (PluginHandle * p : aud_plugin_list(PluginType::Input))
     {
         if (!aud_plugin_get_enabled(p))
             continue;
 
-        for (auto & k : p->keys[InputKey::MIME])
-            mimes.append((const char *)k);
+        for (auto & k : p->keys[key])
+            result.append((const char *)k);
     }
 
     /* sort and remove duplicates */
     /* lambda needed to avoid -Wnoexcept-type with GCC */
-    mimes.sort([](const char * a, const char * b) { return strcmp(a, b); });
+    result.sort([](const char * a, const char * b) { return strcmp(a, b); });
 
-    int len = mimes.len();
+    int len = result.len();
     for (int i = 0; i + 1 < len; i++)
     {
-        if (!strcmp(mimes[i], mimes[i + 1]))
-            mimes[i] = nullptr;
+        if (!strcmp(result[i], result[i + 1]))
+            result[i] = nullptr;
     }
 
-    mimes.remove_if([](const char * m) { return m == nullptr; });
-    mimes.append(nullptr);
+    result.remove_if([](const char * m) { return m == nullptr; });
+    result.append(nullptr);
 
-    return mimes;
+    return result;
+}
+
+EXPORT Index<const char *> aud_plugin_get_supported_extensions()
+{
+    return input_plugins_get_supported_formats(InputKey::Ext);
+}
+
+EXPORT Index<const char *> aud_plugin_get_supported_mime_types()
+{
+    return input_plugins_get_supported_formats(InputKey::MIME);
 }
