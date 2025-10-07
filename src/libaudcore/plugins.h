@@ -71,6 +71,7 @@ void aud_plugin_add_watch(PluginHandle * plugin, PluginWatchFunc func,
 void aud_plugin_remove_watch(PluginHandle * plugin, PluginWatchFunc func,
                              void * data);
 
+Index<const char *> aud_plugin_get_supported_extensions();
 Index<const char *> aud_plugin_get_supported_mime_types();
 
 #endif
