@@ -304,12 +304,16 @@ EXPORT void aud_init()
 
     if (!mainloop_type_set)
     {
-#ifdef USE_QT
+#if defined(USE_QT) && defined(USE_GTK)
         if (aud_get_bool("use_qt"))
             aud_set_mainloop_type(MainloopType::Qt);
         else
-#endif
             aud_set_mainloop_type(MainloopType::GLib);
+#elif defined(USE_QT)
+        aud_set_mainloop_type(MainloopType::Qt);
+#else
+        aud_set_mainloop_type(MainloopType::GLib);
+#endif
     }
 
     chardet_init();
