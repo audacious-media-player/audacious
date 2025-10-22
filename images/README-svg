@@ -1,4 +1,8 @@
-These SVG files have been optimized with "svgo" (https://github.com/svg/svgo)
+These SVG files are based on the Paper Icon Set with slightly different colors
+(https://github.com/snwh/paper-icon-theme/tree/master/Paper/scalable).
+The light icons use "#555", the dark ones "#ccc" for the "fill" attribute.
+
+They have been optimized with "svgo" (https://github.com/svg/svgo)
 and then un-optimized as shown below to work around the following librsvg bug:
     https://bugzilla.gnome.org/show_bug.cgi?id=620923
 

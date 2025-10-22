@@ -45,6 +45,7 @@
     <file alias="go-previous.svg">../../images/go-previous.svg</file>
     <file alias="go-up.svg">../../images/go-up.svg</file>
     <file alias="help-about.svg">../../images/help-about.svg</file>
+    <file alias="image-x-generic.svg">../../images/image-x-generic.svg</file>
     <file alias="insert-text.svg">../../images/insert-text.svg</file>
     <file alias="list-add.svg">../../images/list-add.svg</file>
     <file alias="list-remove.svg">../../images/list-remove.svg</file>
@@ -110,6 +111,7 @@
     <file alias="go-previous.svg">../../images/dark/go-previous.svg</file>
     <file alias="go-up.svg">../../images/dark/go-up.svg</file>
     <file alias="help-about.svg">../../images/dark/help-about.svg</file>
+    <file alias="image-x-generic.svg">../../images/dark/image-x-generic.svg</file>
     <file alias="insert-text.svg">../../images/dark/insert-text.svg</file>
     <file alias="list-add.svg">../../images/dark/list-add.svg</file>
     <file alias="list-remove.svg">../../images/dark/list-remove.svg</file>
