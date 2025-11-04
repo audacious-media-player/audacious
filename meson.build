@@ -73,7 +73,8 @@ if cc.get_id() in ['gcc', 'clang']
 
   cxx_flags = [
     '-Wno-non-virtual-dtor',
-    '-Woverloaded-virtual'
+    '-Woverloaded-virtual',
+    '-fvisibility-inlines-hidden'
   ]
 
   check_cflags = common_flags

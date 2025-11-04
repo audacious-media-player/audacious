@@ -151,7 +151,7 @@ if test "x$HAVE_MSWINDOWS" = "xyes" ; then
     EXPORT="__declspec(dllexport)"
 elif test "x$GCC" = "xyes" ; then
     CFLAGS="$CFLAGS -fvisibility=hidden"
-    CXXFLAGS="$CXXFLAGS -fvisibility=hidden"
+    CXXFLAGS="$CXXFLAGS -fvisibility=hidden -fvisibility-inlines-hidden"
     EXPORT="__attribute__((visibility(\"default\")))"
 else
     AC_MSG_ERROR([Unknown syntax for EXPORT keyword])
