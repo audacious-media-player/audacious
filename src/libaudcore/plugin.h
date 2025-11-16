@@ -309,7 +309,7 @@ public:
     }
 
     /* Required only for plugins that change the time domain (e.g. a time
-     * stretch) or use read-ahead buffering.  translate_delay() must do two
+     * stretch) or use read-ahead buffering.  adjust_delay() must do two
      * things: first, translate <delay> (which is in milliseconds) from the
      * output time domain back to the input time domain; second, increase
      * <delay> by the size of the read-ahead buffer.  It should return the

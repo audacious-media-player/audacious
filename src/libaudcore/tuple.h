@@ -53,23 +53,30 @@ public:
         Title = 0,   /* Song title */
         Artist,      /* Song artist */
         Album,       /* Album name */
-        AlbumArtist, /* Artist for entire album, if different than song artist
-                      */
+        AlbumArtist, /* Artist for entire album, if different than song artist */
         Comment,     /* Freeform comment */
+        Description, /* Song description */
         Genre,       /* Song's genre */
         Year,        /* Year of production, performance, etc. */
+        Lyrics,      /* Song lyrics */
 
         Composer,  /* Composer, if different than artist */
         Performer, /* Performer, if different than artist */
+        Publisher, /* Publisher */
         Copyright, /* Copyright declaration */
         Date,      /* Date of production, performance, etc. */
 
-        Track,  /* Track number */
-        Length, /* Track length in milliseconds */
+        Track,      /* Track number */
+        Length,     /* Track length in milliseconds */
+        CatalogNum, /* Catalog number */
+        Disc,       /* Disc number */
 
-        Bitrate, /* Bitrate in kilobits (1000 bits)/sec */
-        Codec,   /* Codec name, such as "Ogg Vorbis" */
-        Quality, /* String representing quality, such as "Stereo, 44 kHz" */
+        MusicBrainzID, /* MusicBrainz identifier */
+
+        Bitrate,  /* Bitrate in kilobits (1000 bits)/sec */
+        Channels, /* Track channel count */
+        Codec,    /* Codec name, such as "Ogg Vorbis" */
+        Quality,  /* String representing quality, such as "Stereo, 44 kHz" */
 
         Basename, /* Base filename, not including the folder path */
         Path,     /* Folder path, including the trailing "/" */
@@ -101,15 +108,6 @@ public:
         /* Title formatted for display; input plugins do not need to set this
            field */
         FormattedTitle,
-
-        /* TODO: reorder these at next ABI break! */
-        Description,   /* Track description */
-        MusicBrainzID, /* MusicBrainz identifier */
-        Channels,      /* Track channels count */
-        Publisher,     /* Publisher (label) */
-        CatalogNum,    /* Catalog number */
-        Lyrics,        /* Lyrics from id3 tags. */
-        Disc,          /* Disc number from id3 tags. */
 
         n_fields
     };

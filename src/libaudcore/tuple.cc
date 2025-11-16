@@ -109,18 +109,26 @@ static const struct
     {"album", Tuple::String, FallbackAlbum},
     {"album-artist", Tuple::String, -1},
     {"comment", Tuple::String, -1},
+    {"description", Tuple::String, -1},
     {"genre", Tuple::String, -1},
     {"year", Tuple::Int, -1},
+    {"lyrics", Tuple::String, -1},
 
     {"composer", Tuple::String, -1},
     {"performer", Tuple::String, -1},
+    {"publisher", Tuple::String, -1},
     {"copyright", Tuple::String, -1},
     {"date", Tuple::String, -1},
 
     {"track-number", Tuple::Int, -1},
     {"length", Tuple::Int, -1},
+    {"catalog-number", Tuple::String, -1},
+    {"disc-number", Tuple::Int, -1},
+
+    {"musicbrainz-id", Tuple::String, -1},
 
     {"bitrate", Tuple::Int, -1},
+    {"channels", Tuple::Int, -1},
     {"codec", Tuple::String, -1},
     {"quality", Tuple::String, -1},
 
@@ -144,14 +152,6 @@ static const struct
     {"gain-peak-unit", Tuple::Int, -1},
 
     {"formatted-title", Tuple::String, -1},
-
-    {"description", Tuple::String, -1},
-    {"musicbrainz-id", Tuple::String, -1},
-    {"channels", Tuple::Int, -1},
-    {"publisher", Tuple::String, -1},
-    {"catalog-number", Tuple::String, -1},
-    {"lyrics", Tuple::String, -1},
-    {"disc-number", Tuple::Int, -1},
 
     /* fallbacks */
     {nullptr, Tuple::String, -1},
