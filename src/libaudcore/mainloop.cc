@@ -31,7 +31,7 @@
 
 struct QueuedFuncParams
 {
-    QueuedFunc::Func2 func;
+    QueuedFunc::Func func;
     int interval_ms;
     bool repeat;
 };
@@ -291,39 +291,24 @@ static void start_func(QueuedFunc * queued, const QueuedFuncParams & params)
     func_table.lookup(queued, ptr_hash(queued), s);
 }
 
-EXPORT void QueuedFunc::queue(Func2 func)
+EXPORT void QueuedFunc::queue(Func func)
 {
     start_func(this, {func, 0, false});
     _running = false;
 }
 
-EXPORT void QueuedFunc::queue(Func func, void * data)
-{
-    queue(std::bind(func, data));
-}
-
-EXPORT void QueuedFunc::queue(int delay_ms, Func2 func)
+EXPORT void QueuedFunc::queue(int delay_ms, Func func)
 {
     g_return_if_fail(delay_ms >= 0);
     start_func(this, {func, delay_ms, false});
     _running = false;
 }
 
-EXPORT void QueuedFunc::queue(int delay_ms, Func func, void * data)
-{
-    queue(delay_ms, std::bind(func, data));
-}
-
-EXPORT void QueuedFunc::start(int interval_ms, Func2 func)
+EXPORT void QueuedFunc::start(int interval_ms, Func func)
 {
     g_return_if_fail(interval_ms > 0);
     start_func(this, {func, interval_ms, true});
     _running = true;
-}
-
-EXPORT void QueuedFunc::start(int interval_ms, Func func, void * data)
-{
-    start(interval_ms, std::bind(func, data));
 }
 
 // "stop" logic executed within the hash table lock

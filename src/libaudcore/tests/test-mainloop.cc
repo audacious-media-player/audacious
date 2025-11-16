@@ -31,7 +31,7 @@ static QueuedFunc timer, delayed;
 static int count;
 static std::thread::id main_thread;
 
-static void never_called(void * data)
+static void never_called()
 {
     bool called = true;
     assert(!called);
@@ -69,7 +69,7 @@ static void count_down(void * data)
         // stop the timer
         // queue up an idle call so it's pending at shutdown
         // initiate the shutdown sequence
-        timer.queue(never_called, nullptr);
+        timer.queue(never_called);
         QueuedFunc::inhibit_all();
         mainloop_quit();
     }
@@ -89,10 +89,10 @@ static void worker()
 {
     // queue some more idle calls from a secondary thread
     for (int i = 50; i < 70; i++)
-        counters[i].queue(count_up, (void *)(size_t)(i - 10));
+        counters[i].queue(std::bind(count_up, (void *)(size_t)(i - 10)));
 
     // queue up a delayed call that should only be called once
-    delayed.queue(250, check_count, (void *)(size_t)40);
+    delayed.queue(250, std::bind(check_count, (void *)(size_t)40));
 }
 
 void test_mainloop()
@@ -101,7 +101,7 @@ void test_mainloop()
 
     // queue up a bunch of idle calls
     for (int i = 0; i < 50; i++)
-        counters[i].queue(count_up, (void *)(size_t)(i - 30));
+        counters[i].queue(std::bind(count_up, (void *)(size_t)(i - 30)));
 
     // stop some of them
     for (int i = 10; i < 30; i++)
@@ -109,13 +109,13 @@ void test_mainloop()
 
     // restart some that were stopped and some that weren't
     for (int i = 0; i < 20; i++)
-        counters[i].queue(count_up, (void *)(size_t)(20 + i));
+        counters[i].queue(std::bind(count_up, (void *)(size_t)(20 + i)));
 
     // start a countdown timer at 10 Hz
-    timer.start(100, count_down, &count);
+    timer.start(100, std::bind(count_down, &count));
 
     // queue up a call and then immediately delete the QueuedFunc
-    QueuedFunc().queue(never_called, nullptr);
+    QueuedFunc().queue(never_called);
 
     auto thread = std::thread(worker);
 

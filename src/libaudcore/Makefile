@@ -81,7 +81,6 @@ INCLUDES = archive_reader.h \
            ringbuf.h \
            runtime.h \
            templates.h \
-           tinylock.h \
            threads.h \
            tuple.h \
            visualizer.h \

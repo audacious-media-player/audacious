@@ -26,12 +26,12 @@
 struct QueuedData : public ListNode
 {
     const String filename;
-    const VFSConsumer2 cons_f;
+    const VFSConsumer cons_f;
 
     std::thread thread;
     Index<char> buf;
 
-    QueuedData(const char * filename, VFSConsumer2 cons_f)
+    QueuedData(const char * filename, VFSConsumer cons_f)
         : filename(filename), cons_f(cons_f)
     {
     }
@@ -75,15 +75,8 @@ static void read_worker(QueuedData * data)
 }
 
 EXPORT void vfs_async_file_get_contents(const char * filename,
-                                        VFSConsumer2 cons_f)
+                                        VFSConsumer cons_f)
 {
     auto data = new QueuedData(filename, cons_f);
     data->thread = std::thread(read_worker, data);
-}
-
-EXPORT void vfs_async_file_get_contents(const char * filename,
-                                        VFSConsumer cons_f, void * user)
-{
-    using namespace std::placeholders;
-    vfs_async_file_get_contents(filename, std::bind(cons_f, _1, _2, user));
 }

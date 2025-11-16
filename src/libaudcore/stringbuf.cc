@@ -219,11 +219,6 @@ EXPORT StringBuf::~StringBuf()
     }
 }
 
-EXPORT void StringBuf::steal(StringBuf && other)
-{
-    (*this = std::move(other)).settle();
-}
-
 EXPORT StringBuf && StringBuf::settle()
 {
     if (m_data)
@@ -248,16 +243,6 @@ EXPORT StringBuf && StringBuf::settle()
     }
 
     return std::move(*this);
-}
-
-EXPORT void StringBuf::combine(StringBuf && other)
-{
-    if (!other.m_data)
-        return;
-
-    insert(m_len, other.m_data, other.m_len);
-    other = StringBuf();
-    settle();
 }
 
 EXPORT char * StringBuf::insert(int pos, const char * s, int len)
