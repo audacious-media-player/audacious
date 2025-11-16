@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
-LIB_MAJOR = 5
-LIB_MINOR = 5
+LIB_MAJOR = 6
+LIB_MINOR = 0
 LIB_PATCH = 0
 
 SRCS = adder.cc \
