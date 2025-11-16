@@ -133,8 +133,8 @@ libaudcore_lib = library('audcore',
   include_directories: src_inc,
   dependencies: libaudcore_deps,
   link_with: libguess_lib,
-  version: '5.5.0',
-  soversion: '5',
+  version: '6.0.0',
+  soversion: '6',
   install: true
 )
 
