@@ -175,10 +175,10 @@ AC_SEARCH_LIBS([pthread_create], [pthread])
 dnl Check for GTK and pals
 dnl ======================
 
-PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.32)
-PKG_CHECK_MODULES(GMODULE, gmodule-2.0 >= 2.32)
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.36)
+PKG_CHECK_MODULES(GMODULE, gmodule-2.0 >= 2.36)
 
-AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_32], [target GLib 2.32])
+AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_36], [target GLib 2.36])
 
 dnl GTK support
 dnl ===========
@@ -204,9 +204,9 @@ AC_SUBST(USE_GTK)
 AC_SUBST(USE_GTK3)
 
 if test $HAVE_MSWINDOWS = yes ; then
-    PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32)
+    PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.36)
 else
-    PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32 gio-unix-2.0 >= 2.32)
+    PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.36 gio-unix-2.0 >= 2.36)
 fi
 
 AC_SUBST(GLIB_CFLAGS)

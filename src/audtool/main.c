@@ -224,8 +224,6 @@ int main (int argc, char * * argv)
 
     setlocale (LC_CTYPE, "");
 
-    g_type_init();
-
 #ifdef _WIN32
     g_set_print_handler (print_utf8);
 #endif

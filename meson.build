@@ -14,7 +14,7 @@ copyright = 'Copyright (C) 2001-2025 Audacious developers and others'
 gnome = import('gnome')
 
 
-glib_req = '>= 2.32'
+glib_req = '>= 2.36'
 glib_dep = dependency('glib-2.0', version: glib_req, required: true)
 gmodule_dep = dependency('gmodule-2.0', version: glib_req, required: true)
 thread_dep = dependency('threads', required: true)

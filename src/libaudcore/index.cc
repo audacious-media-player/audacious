@@ -230,7 +230,7 @@ EXPORT void IndexBase::sort(CompareFunc compare, int elemsize, void * userdata)
 #if GLIB_CHECK_VERSION(2, 82, 0)
     g_sort_array(m_data, m_len / elemsize, elemsize, compare, userdata);
 #else
-    // since we require GLib >= 2.32, g_qsort_with_data performs a stable sort
+    // since we require GLib >= 2.36, g_qsort_with_data performs a stable sort
     g_qsort_with_data(m_data, m_len / elemsize, elemsize, compare, userdata);
 #endif
 }

@@ -6,7 +6,7 @@ project('libaudcore-tests', 'cpp',
           'warning_level=1'
         ])
 
-glib_dep = dependency('glib-2.0', version: '>= 2.32')
+glib_dep = dependency('glib-2.0', version: '>= 2.36')
 thread_dep = dependency('threads')
 qt_dep = dependency('qt6', version: '>= 6.0', modules: ['Core'], required: false)
 if not qt_dep.found()

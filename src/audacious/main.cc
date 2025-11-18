@@ -221,8 +221,6 @@ static void do_remote()
     ObjAudacious * obj = nullptr;
     GError * error = nullptr;
 
-    g_type_init();
-
     /* check whether the selected instance is running */
     if (dbus_server_init())
         return;
