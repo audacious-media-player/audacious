@@ -180,7 +180,9 @@ endif
 
 if get_option('gtk')
   conf.set10('USE_GTK', true)
-  if not (get_option('gtk2'))
+  if get_option('gtk2')
+    conf.set('GLIB_VERSION_MIN_REQUIRED', 'GLIB_VERSION_2_32')
+  else
     conf.set10('USE_GTK3', true)
   endif
 endif
