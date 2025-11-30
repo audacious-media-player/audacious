@@ -147,7 +147,15 @@ EXPORT void fileopener_show(FileMode mode)
             dialog.data(), &QFileDialog::accepted, [dialog, mode, playlist]() {
                 Index<PlaylistAddItem> files;
                 for (const QUrl & url : dialog->selectedUrls())
-                    files.append(String(url.toEncoded().constData()));
+                {
+                    QByteArray encoded_url = url.toEncoded();
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 8, 3)
+                    // Escape brackets manually to workaround QTBUG-134073
+                    encoded_url.replace("[", "%5B").replace("]", "%5D");
+#endif
+                    files.append(String(encoded_url.constData()));
+                }
 
                 switch (mode)
                 {
