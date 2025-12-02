@@ -20,7 +20,16 @@
 #include "probe.h"
 #include "internal.h"
 
+#include <cstdio>
 #include <string.h>
+
+#ifdef _WIN32
+#define _USE_64BIT_TIME_T
+#include <windows.h>
+#else
+#include <sys/stat.h>
+#endif
+#include <time.h>
 
 #include "audstrings.h"
 #include "i18n.h"
@@ -192,6 +201,19 @@ EXPORT PluginHandle * aud_file_find_decoder(const char * filename, bool fast,
     return nullptr;
 }
 
+
+#ifdef _WIN32
+static inline time_t filetime_to_time_t(const FILETIME &ft)
+{
+    ULARGE_INTEGER ull;
+    ull.LowPart  = ft.dwLowDateTime;
+    ull.HighPart = ft.dwHighDateTime;
+
+    // Windows epoch (1601) → Unix epoch (1970)
+    return (time_t)((ull.QuadPart - 116444736000000000ULL) / 10000000ULL);
+}
+#endif
+
 EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
                               VFSFile & file, Tuple & tuple,
                               Index<char> * image, String * error)
@@ -210,6 +232,33 @@ EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
     {
         // cleanly replace existing tuple
         new_tuple.set_state(Tuple::Valid);
+
+        // Get file modification/creation times for local files
+        StringBuf real_path = uri_to_filename(filename);
+        if (real_path)
+        {
+            time_t created = 0;
+            time_t modified = 0;
+
+#ifdef _WIN32
+            WIN32_FILE_ATTRIBUTE_DATA data;
+            if (GetFileAttributesExA(path, GetFileExInfoStandard, &data)) {
+                created  = filetime_to_time_t(data.ftCreationTime);
+                modified = filetime_to_time_t(data.ftLastWriteTime);
+            }
+#else
+            struct stat st;
+            if (stat(real_path, &st) == 0) {
+                // Modification time is always available
+                modified = st.st_mtime;
+                created  = st.st_ctime;
+            }
+#endif
+
+            new_tuple.set_dt(Tuple::Created, created);
+            new_tuple.set_dt(Tuple::Modified, modified);
+        }
+
         tuple = std::move(new_tuple);
         return true;
     }

@@ -55,6 +55,33 @@ static int filename_compare_basename(const char * a, const char * b)
     return str_compare_encoded(get_basename(a), get_basename(b));
 }
 
+static int tuple_compare_datetime(const Tuple & a, const Tuple & b,
+                                  Tuple::Field field)
+{
+    // Get the integer timestamps from both tuples
+    time_t time_a = a.get_dt(field);
+    time_t time_b = b.get_dt(field);
+
+    // Handle missing/invalid timestamps
+    // If both are 0 or negative, they're equal
+    if (time_a <= 0 && time_b <= 0)
+        return 0;
+
+    // If only one is invalid, the valid one comes first
+    if (time_a <= 0)
+        return 1;  // b comes before a
+    if (time_b <= 0)
+        return -1; // a comes before b
+
+    // Both are valid, compare them
+    if (time_a < time_b)
+        return -1;
+    if (time_a > time_b)
+        return 1;
+
+    return 0;  // equal
+}
+
 static int tuple_compare_string(const Tuple & a, const Tuple & b,
                                 Tuple::Field field)
 {
@@ -81,6 +108,14 @@ static int tuple_compare_int(const Tuple & a, const Tuple & b,
     return (int_a < int_b) ? -1 : (int_a > int_b);
 }
 
+static int tuple_compare_created(const Tuple & a, const Tuple & b)
+{
+    return tuple_compare_datetime(a, b, Tuple::Created);
+}
+static int tuple_compare_modified(const Tuple & a, const Tuple & b)
+{
+    return tuple_compare_datetime(a, b, Tuple::Modified);
+}
 static int tuple_compare_title(const Tuple & a, const Tuple & b)
 {
     return tuple_compare_string(a, b, Tuple::Title);
@@ -138,6 +173,8 @@ static int tuple_compare_disc(const Tuple & a, const Tuple & b)
 static const Playlist::StringCompareFunc filename_comparisons[] = {
     filename_compare_path,     // path
     filename_compare_basename, // filename
+    nullptr,                   // created
+    nullptr,                   // modified
     nullptr,                   // title
     nullptr,                   // album
     nullptr,                   // artist
@@ -156,6 +193,8 @@ static const Playlist::StringCompareFunc filename_comparisons[] = {
 static const Playlist::TupleCompareFunc tuple_comparisons[] = {
     nullptr, // path
     nullptr, // filename
+    tuple_compare_created,
+    tuple_compare_modified,
     tuple_compare_title,
     tuple_compare_album,
     tuple_compare_artist,
