@@ -70,13 +70,16 @@ static int tuple_compare_string(const Tuple & a, const Tuple & b,
 static int tuple_compare_int(const Tuple & a, const Tuple & b,
                              Tuple::Field field)
 {
-    if (a.get_value_type(field) != Tuple::Int)
-        return (b.get_value_type(field) != Tuple::Int) ? 0 : -1;
-    if (b.get_value_type(field) != Tuple::Int)
+    auto at = a.get_value_type(field);
+    auto bt = a.get_value_type(field);
+
+    if (at != Tuple::Int && at != Tuple::DateTime)
+        return (bt != Tuple::Int && bt != Tuple::DateTime) ? 0 : -1;
+    if (bt != Tuple::Int && bt != Tuple::DateTime)
         return 1;
 
-    int int_a = a.get_int(field);
-    int int_b = b.get_int(field);
+    int64_t int_a = a.get_int64(field);
+    int64_t int_b = b.get_int64(field);
 
     return (int_a < int_b) ? -1 : (int_a > int_b);
 }
@@ -133,6 +136,14 @@ static int tuple_compare_disc(const Tuple & a, const Tuple & b)
 {
     return tuple_compare_int(a, b, Tuple::Disc);
 }
+static int tuple_compare_created(const Tuple & a, const Tuple & b)
+{
+    return tuple_compare_int(a, b, Tuple::FileCreated);
+}
+static int tuple_compare_modified(const Tuple & a, const Tuple & b)
+{
+    return tuple_compare_int(a, b, Tuple::FileModified);
+}
 
 
 static const Playlist::StringCompareFunc filename_comparisons[] = {
@@ -150,7 +161,9 @@ static const Playlist::StringCompareFunc filename_comparisons[] = {
     nullptr,                   // comment
     nullptr,                   // publisher
     nullptr,                   // catalog number
-    nullptr                    // disc number
+    nullptr,                   // disc number
+    nullptr,                   // created
+    nullptr                    // modified
 };
 
 static const Playlist::TupleCompareFunc tuple_comparisons[] = {
@@ -168,7 +181,9 @@ static const Playlist::TupleCompareFunc tuple_comparisons[] = {
     tuple_compare_comment,
     tuple_compare_publisher,
     tuple_compare_catalog_number,
-    tuple_compare_disc};
+    tuple_compare_disc,
+    tuple_compare_created,
+    tuple_compare_modified};
 
 static_assert(aud::n_elems(filename_comparisons) == Playlist::n_sort_types &&
                   aud::n_elems(tuple_comparisons) == Playlist::n_sort_types,

@@ -20,9 +20,9 @@
 
 #include <assert.h>
 #include <math.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include <glib.h> /* for g_utf8_validate */
 
@@ -46,7 +46,7 @@ static_assert(n_private_fields <= 64,
 
 union TupleVal {
     String str;
-    int x;
+    int64_t x;
 
     // dummy constructor and destructor
     TupleVal() {}
@@ -85,6 +85,7 @@ struct TupleData
     TupleVal * lookup(int field, bool add, bool remove);
     void set_int(int field, int x);
     void set_str(int field, const char * str);
+    void set_int64(int field, int64_t x);
     void set_subtunes(short nsubs, const short * subs);
 
     static TupleData * ref(TupleData * tuple);
@@ -153,6 +154,9 @@ static const struct
 
     {"formatted-title", Tuple::String, -1},
 
+    {"file-created", Tuple::DateTime, -1},
+    {"file-modified", Tuple::DateTime, -1},
+
     /* fallbacks */
     {nullptr, Tuple::String, -1},
     {nullptr, Tuple::String, -1},
@@ -184,7 +188,9 @@ static const FieldDictEntry field_dict[] = {
     {"date", Tuple::Date},
     {"description", Tuple::Description},
     {"disc-number", Tuple::Disc},
+    {"file-created", Tuple::FileCreated},
     {"file-ext", Tuple::Suffix},
+    {"file-modified", Tuple::FileModified},
     {"file-name", Tuple::Basename},
     {"file-path", Tuple::Path},
     {"formatted-title", Tuple::FormattedTitle},
@@ -294,6 +300,12 @@ void TupleData::set_str(int field, const char * str)
 {
     TupleVal * val = lookup(field, true, false);
     new (&val->str) String(str);
+}
+
+void TupleData::set_int64(int field, int64_t x)
+{
+    TupleVal * val = lookup(field, true, false);
+    val->x = x;
 }
 
 void TupleData::set_subtunes(short nsubs, const short * subs)
@@ -473,6 +485,14 @@ EXPORT int Tuple::get_int(Field field) const
     return val ? val->x : -1;
 }
 
+EXPORT int64_t Tuple::get_int64(Field field) const
+{
+    assert(is_valid_field(field) && (field_info[field].type == Int || field_info[field].type == DateTime));
+
+    TupleVal * val = data ? data->lookup(field, false, false) : nullptr;
+    return val ? val->x : -1;
+}
+
 EXPORT String Tuple::get_str(Field field) const
 {
     assert(is_valid_field(field) && field_info[field].type == String);
@@ -487,6 +507,14 @@ EXPORT void Tuple::set_int(Field field, int x)
 
     data = TupleData::copy_on_write(data);
     data->set_int(field, x);
+}
+
+EXPORT void Tuple::set_int64(Field field, int64_t x)
+{
+    assert(is_valid_field(field) && (field_info[field].type == Int || field_info[field].type == DateTime));
+
+    data = TupleData::copy_on_write(data);
+    data->set_int64(field, x);
 }
 
 EXPORT void Tuple::set_str(Field field, const char * str)

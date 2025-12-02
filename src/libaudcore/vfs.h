@@ -188,6 +188,10 @@ public:
     /* returns a list of supported URI schemes */
     static Index<const char *> supported_uri_schemes();
 
+    /* Get file modification and creation times (for local files only)
+     * Returns true on success, false if not a local file or error */
+    static bool get_file_timestamps(const char * filename, int64_t * mtime, int64_t * ctime);
+
 private:
     String m_filename, m_error;
     SmartPtr<VFSImpl> m_impl;

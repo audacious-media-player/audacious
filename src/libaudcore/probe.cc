@@ -19,6 +19,7 @@
 
 #include "probe.h"
 #include "internal.h"
+#include "vfs.h"
 
 #include <string.h>
 
@@ -210,6 +211,16 @@ EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
     {
         // cleanly replace existing tuple
         new_tuple.set_state(Tuple::Valid);
+
+        int64_t m = -1, c = -1;
+        if (VFSFile::get_file_timestamps(filename, &m, &c))
+        {
+            if (m > 0)
+                new_tuple.set_int64(Tuple::FileModified, m);
+            if (c > 0)
+                new_tuple.set_int64(Tuple::FileCreated, c);
+        }
+
         tuple = std::move(new_tuple);
         return true;
     }
