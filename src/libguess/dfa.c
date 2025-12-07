@@ -1,5 +1,6 @@
-#include "libguess.h"
 #include "dfa.h"
+
+#include <stddef.h>
 
 boolean
 dfa_alone(guess_dfa *dfa, guess_dfa *order[])

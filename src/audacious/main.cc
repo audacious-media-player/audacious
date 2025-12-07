@@ -43,7 +43,9 @@
 #endif
 
 #include "main.h"
+#ifdef _WIN32
 #include "util.h"
+#endif
 
 static struct
 {

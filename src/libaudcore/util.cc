@@ -22,6 +22,7 @@
 
 #include <errno.h>
 #include <math.h>
+#include <mutex>
 #include <stdint.h>
 #include <string.h>
 #include <unistd.h>
@@ -30,7 +31,6 @@
 
 #include "audstrings.h"
 #include "runtime.h"
-#include "threads.h"
 
 const char * get_home_utf8()
 {

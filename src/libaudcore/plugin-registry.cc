@@ -26,7 +26,6 @@
 
 #include "audstrings.h"
 #include "i18n.h"
-#include "interface.h"
 #include "parse.h"
 #include "plugin.h"
 #include "runtime.h"

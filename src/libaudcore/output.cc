@@ -24,7 +24,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "equalizer.h"
 #include "hook.h"
 #include "i18n.h"
 #include "interface.h"

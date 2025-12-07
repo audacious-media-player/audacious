@@ -23,7 +23,6 @@
 #include <libaudcore/vfs.h>
 
 #include "audtag.h"
-#include "util.h"
 #include "tag_module.h"
 #include "builtin.h"
 

@@ -23,7 +23,6 @@
 #include <stdlib.h>
 
 #include "hook.h"
-#include "interface.h"
 #include "internal.h"
 #include "output.h"
 #include "plugin.h"

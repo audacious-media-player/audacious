@@ -21,9 +21,7 @@
 
 #include <glib.h> /* for GThreadPool */
 
-#include "audstrings.h"
 #include "cue-cache.h"
-#include "i18n.h"
 #include "internal.h"
 #include "plugins.h"
 #include "probe.h"

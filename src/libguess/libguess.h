@@ -38,9 +38,6 @@
 #ifndef _LIBGUESS_H
 #define _LIBGUESS_H	1
 
-#include <stdlib.h>
-#include <string.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

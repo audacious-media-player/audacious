@@ -18,11 +18,6 @@
  * the use of this software.
  */
 
-/*
- * Anders Johansson prefers float *ptr; formatting. Please keep it that way.
- *    - tallica
- */
-
 #include "equalizer.h"
 #include "internal.h"
 

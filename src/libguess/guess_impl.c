@@ -40,7 +40,7 @@
 #include "libguess.h"
 #include "dfa.h"
 
-#include <stdio.h>
+#include <stddef.h>
 
 /* take precedence if scores are same. you can customize the order as: */
 /* ORDER_** &highest, &second, ... &lowest */

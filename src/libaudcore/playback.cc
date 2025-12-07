@@ -48,7 +48,6 @@
 #include "playlist-internal.h"
 #include "plugin.h"
 #include "plugins-internal.h"
-#include "plugins.h"
 #include "runtime.h"
 #include "threads.h"
 

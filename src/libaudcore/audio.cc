@@ -23,7 +23,7 @@
 
 #define WANT_AUD_BSWAP
 #include "audio.h"
-#include "objects.h"
+#include "templates.h"
 
 #define SW_VOLUME_RANGE 40 /* decibels */
 

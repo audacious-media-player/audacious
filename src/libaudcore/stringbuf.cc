@@ -22,10 +22,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <mutex>
 #include <new>
 
 #include "objects.h"
-#include "threads.h"
 
 #ifdef _WIN32
 #include <windows.h>
