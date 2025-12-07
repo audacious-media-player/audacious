@@ -22,6 +22,7 @@ src/libaudgui/images.h
 src/libaudqt/images.cc
 win32/audacious.nsi
 win32/override/README.txt
+.cache/
 .deps
 .DS_Store
 *.a
