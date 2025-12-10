@@ -242,7 +242,7 @@ EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
 
 #ifdef _WIN32
             WIN32_FILE_ATTRIBUTE_DATA data;
-            if (GetFileAttributesExA(path, GetFileExInfoStandard, &data)) {
+            if (GetFileAttributesExA(real_path, GetFileExInfoStandard, &data)) {
                 created  = filetime_to_time_t(data.ftCreationTime);
                 modified = filetime_to_time_t(data.ftLastWriteTime);
             }
