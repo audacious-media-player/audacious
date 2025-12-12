@@ -47,7 +47,7 @@ static_assert(n_private_fields <= 64,
 union TupleVal {
     String str;
     int x;
-    time_t time;
+    int64_t x64;
 
     // dummy constructor and destructor
     TupleVal() {}
@@ -86,7 +86,7 @@ struct TupleData
     TupleVal * lookup(int field, bool add, bool remove);
     void set_int(int field, int x);
     void set_str(int field, const char * str);
-    void set_dt(int field, time_t x);
+    void set_int64(int field, int64_t x);
     void set_subtunes(short nsubs, const short * subs);
 
     static TupleData * ref(TupleData * tuple);
@@ -303,10 +303,10 @@ void TupleData::set_str(int field, const char * str)
     new (&val->str) String(str);
 }
 
-void TupleData::set_dt(int field, time_t x)
+void TupleData::set_int64(int field, time_t x)
 {
     TupleVal * val = lookup(field, true, false);
-    val->time = x;
+    val->x64 = x;
 }
 
 void TupleData::set_subtunes(short nsubs, const short * subs)
@@ -390,8 +390,8 @@ bool TupleData::is_same(const TupleData & other) const
 
             if (field_info[f].type == Tuple::String)
                 same = (a->str == b->str);
-            else if (field_info[f].type == Tuple::DateTime)
-                same = (a->time == b->time);
+            else if (field_info[f].type == Tuple::Int64 || field_info[f].type == Tuple::DateTime)
+                same = (a->x64 == b->x64);
             else
                 same = (a->x == b->x);
 
@@ -488,12 +488,12 @@ EXPORT int Tuple::get_int(Field field) const
     return val ? val->x : -1;
 }
 
-EXPORT time_t Tuple::get_dt(Field field) const
+EXPORT int64_t Tuple::get_int64(Field field) const
 {
-    assert(is_valid_field(field) && field_info[field].type == DateTime);
+    assert(is_valid_field(field) && (field_info[field].type == Int64 || field_info[field].type == DateTime));
 
     TupleVal * val = data ? data->lookup(field, false, false) : nullptr;
-    return val ? val->time : -1;
+    return val ? val->x64 : -1;
 }
 
 EXPORT String Tuple::get_str(Field field) const
@@ -512,12 +512,12 @@ EXPORT void Tuple::set_int(Field field, int x)
     data->set_int(field, x);
 }
 
-EXPORT void Tuple::set_dt(Field field, time_t x)
+EXPORT void Tuple::set_int64(Field field, int64_t x)
 {
-    assert(is_valid_field(field) && field_info[field].type == DateTime);
+    assert(is_valid_field(field) && (field_info[field].type == Int64 || field_info[field].type == DateTime));
 
     data = TupleData::copy_on_write(data);
-    data->set_dt(field, x);
+    data->set_int64(field, x);
 }
 
 

@@ -59,8 +59,8 @@ static int tuple_compare_datetime(const Tuple & a, const Tuple & b,
                                   Tuple::Field field)
 {
     // Get the integer timestamps from both tuples
-    time_t time_a = a.get_dt(field);
-    time_t time_b = b.get_dt(field);
+    int64_t time_a = a.get_int64(field);
+    int64_t time_b = b.get_int64(field);
 
     // Handle missing/invalid timestamps
     // If both are 0 or negative, they're equal

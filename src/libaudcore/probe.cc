@@ -203,14 +203,14 @@ EXPORT PluginHandle * aud_file_find_decoder(const char * filename, bool fast,
 
 
 #ifdef _WIN32
-static inline time_t filetime_to_time_t(const FILETIME &ft)
+static inline time_t filetime_to_int64(const FILETIME &ft)
 {
     ULARGE_INTEGER ull;
     ull.LowPart  = ft.dwLowDateTime;
     ull.HighPart = ft.dwHighDateTime;
 
     // Windows epoch (1601) → Unix epoch (1970)
-    return (time_t)((ull.QuadPart - 116444736000000000ULL) / 10000000ULL);
+    return (int64_t)((ull.QuadPart - 116444736000000000ULL) / 10000000ULL);
 }
 #endif
 
@@ -243,8 +243,8 @@ EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
 #ifdef _WIN32
             WIN32_FILE_ATTRIBUTE_DATA data;
             if (GetFileAttributesExA(real_path, GetFileExInfoStandard, &data)) {
-                created  = filetime_to_time_t(data.ftCreationTime);
-                modified = filetime_to_time_t(data.ftLastWriteTime);
+                created  = filetime_to_int64(data.ftCreationTime);
+                modified = filetime_to_int64(data.ftLastWriteTime);
             }
 #else
             struct stat st;
@@ -255,8 +255,8 @@ EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
             }
 #endif
 
-            new_tuple.set_dt(Tuple::Created, created);
-            new_tuple.set_dt(Tuple::Modified, modified);
+            new_tuple.set_int64(Tuple::Created, created);
+            new_tuple.set_int64(Tuple::Modified, modified);
         }
 
         tuple = std::move(new_tuple);

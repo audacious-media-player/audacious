@@ -27,7 +27,6 @@
 #define LIBAUDCORE_TUPLE_H
 
 #include <stdint.h>
-#include <time.h>
 #include <libaudcore/objects.h>
 
 struct ReplayGainInfo;
@@ -123,6 +122,7 @@ public:
     {
         String,
         Int,
+        Int64,
         DateTime,
         Empty
     };
@@ -168,7 +168,7 @@ public:
     ::String get_str(Field field) const;
 
     /* Returns the datetime value of a field if set, otherwise -1. */
-    time_t get_dt(Field field) const;
+    int64_t get_int64(Field field) const;
 
     /* Sets a field to the integer value <x>. */
     void set_int(Field field, int x);
@@ -179,7 +179,7 @@ public:
     void set_str(Field field, const char * str);
 
     /* Sets a field to the datetime value <x>. */
-    void set_dt(Field field, time_t x);
+    void set_int64(Field field, int64_t x);
 
     /* Clears any value that a field is currently set to. */
     void unset(Field field);

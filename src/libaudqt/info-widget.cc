@@ -106,8 +106,9 @@ static QString tuple_field_to_str(const Tuple & tuple, Tuple::Field field)
         return QString(tuple.get_str(field));
     case Tuple::Int:
         return QString::number(tuple.get_int(field));
+    case Tuple::Int64:
     case Tuple::DateTime:
-        return QString::number(tuple.get_dt(field));
+        return QString::number(tuple.get_int64(field));
     default:
         return QString();
     }
