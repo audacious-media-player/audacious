@@ -303,7 +303,7 @@ void TupleData::set_str(int field, const char * str)
     new (&val->str) String(str);
 }
 
-void TupleData::set_int64(int field, time_t x)
+void TupleData::set_int64(int field, int64_t x)
 {
     TupleVal * val = lookup(field, true, false);
     val->x64 = x;
