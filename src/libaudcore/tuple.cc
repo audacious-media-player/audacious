@@ -344,6 +344,8 @@ TupleData::TupleData(const TupleData & other)
         {
             if (field_info[f].type == Tuple::String)
                 new (&set->str) String(get->str);
+            else if (field_info[f].type == Tuple::Int64 || field_info[f].type == Tuple::DateTime)
+                set->x64 = get->x64;
             else
                 set->x = get->x;
 
@@ -493,7 +495,7 @@ EXPORT int64_t Tuple::get_int64(Field field) const
     assert(is_valid_field(field) && (field_info[field].type == Int64 || field_info[field].type == DateTime));
 
     TupleVal * val = data ? data->lookup(field, false, false) : nullptr;
-    return val ? val->x : -1; // FIXME: TODO: if we use x64 for some reason it accesses junk
+    return val ? val->x64 : -1;
 }
 
 EXPORT String Tuple::get_str(Field field) const
