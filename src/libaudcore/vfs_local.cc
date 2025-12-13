@@ -418,7 +418,7 @@ Index<String> LocalTransport::read_folder(const char * uri, String & error)
 #include <sys/stat.h>
 #include <sys/types.h>
 
-bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * ctime)
+bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
 {
     StringBuf path = uri_to_filename(filename);
     if (!path)
@@ -430,8 +430,8 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
 
     if (mtime)
         *mtime = st.st_mtime;
-    if (ctime)
-        *ctime = st.st_ctime;
+    if (birthtime)
+        *birthtime = st.st_ctime; // on windows ctime is creation time (yeah, confusing)
 
     return true;
 }
@@ -441,13 +441,12 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
 #include <sys/types.h>
 #include <fcntl.h>
 
-#ifdef HAVE_STATX
 #include <linux/stat.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 
 // Use statx on Linux to get creation time
-bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * ctime)
+bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
 {
     StringBuf path = uri_to_filename(filename);
     if (!path)
@@ -459,10 +458,8 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
     {
         if (mtime)
             *mtime = stx.stx_mtime.tv_sec;
-        if (ctime && (stx.stx_mask & STATX_BTIME))
-            *ctime = stx.stx_btime.tv_sec;  // Birth time (creation)
-        else if (ctime)
-            *ctime = stx.stx_ctime.tv_sec;  // Fallback to change time
+        if (birthtime && (stx.stx_mask & STATX_BTIME))
+            *birthtime = stx.stx_btime.tv_sec;  // Birth time (creation)
 
         return true;
     }
@@ -474,38 +471,16 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
 
     if (mtime)
         *mtime = st.st_mtime;
-    if (ctime)
-        *ctime = st.st_ctime;  // Note: This is change time, not creation
 
     return true;
 }
-#else
-// Fallback for older Linux without statx
-bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * ctime)
-{
-    StringBuf path = uri_to_filename(filename);
-    if (!path)
-        return false;
-
-    struct stat st;
-    if (stat(path, &st) != 0)
-        return false;
-
-    if (mtime)
-        *mtime = st.st_mtime;
-    if (ctime)
-        *ctime = st.st_ctime;
-
-    return true;
-}
-#endif
 
 #else
 // Generic POSIX fallback (FreeBSD, macOS, etc.)
 #include <sys/stat.h>
 #include <sys/types.h>
 
-bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * ctime)
+bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
 {
     StringBuf path = uri_to_filename(filename);
     if (!path)
@@ -517,11 +492,9 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
 
     if (mtime)
         *mtime = st.st_mtime;
-    if (ctime)
+    if (birthtime)
 #ifdef __APPLE__
-        *ctime = st.st_birthtime;  // macOS has birth time
-#else
-        *ctime = st.st_ctime;  // Others: change time
+        *birthtime = st.st_birthtime;  // macOS has birth time
 #endif
 
     return true;

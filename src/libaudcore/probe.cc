@@ -211,7 +211,7 @@ EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
     {
         new_tuple.set_state(Tuple::Valid);
 
-        int64_t m = 0, c = 0;
+        int64_t m = -1, c = -1;
         if (VFSFile::get_file_timestamps(filename, &m, &c))
         {
             if (m > 0)
