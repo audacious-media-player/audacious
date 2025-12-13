@@ -1090,6 +1090,7 @@ EXPORT int str_to_int(const char * string)
     return neg ? -val : val;
 }
 
+// TODO: this needs fixing audpl overflows int when saving/load there is a bug somewhere
 EXPORT int64_t str_to_int64(const char * string)
 {
     bool neg = (string[0] == '-');
