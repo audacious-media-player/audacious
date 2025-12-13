@@ -211,13 +211,13 @@ EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
     {
         new_tuple.set_state(Tuple::Valid);
 
-        int64_t mtime = 0, ctime = 0;
-        if (VFSFile::get_file_timestamps(filename, &mtime, &ctime))
+        int64_t m = 0, c = 0;
+        if (VFSFile::get_file_timestamps(filename, &m, &c))
         {
-            if (mtime > 0)
-                new_tuple.set_int64(Tuple::Modified, mtime);
-            if (ctime > 0)
-                new_tuple.set_int64(Tuple::Created, ctime);
+            if (m > 0)
+                new_tuple.set_int64(Tuple::Modified, m);
+            if (c > 0)
+                new_tuple.set_int64(Tuple::Created, c);
         }
 
         tuple = std::move(new_tuple);
