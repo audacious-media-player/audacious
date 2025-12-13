@@ -411,3 +411,92 @@ Index<String> LocalTransport::read_folder(const char * uri, String & error)
 
     return entries;
 }
+
+
+
+#ifdef _WIN32
+#include <sys/stat.h>
+#include <sys/types.h>
+
+bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
+{
+    StringBuf path = uri_to_filename(filename);
+    if (!path)
+        return false;
+
+    struct _stat64 st;
+    if (_stat64(path, &st) != 0)
+        return false;
+
+    if (mtime)
+        *mtime = st.st_mtime;
+    if (birthtime)
+        *birthtime = st.st_ctime; // on windows ctime is creation time (yeah, confusing)
+
+    return true;
+}
+
+#elif defined(__linux__)
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+
+#include <linux/stat.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+
+// Use statx on Linux to get creation time
+bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
+{
+    StringBuf path = uri_to_filename(filename);
+    if (!path)
+        return false;
+
+    struct statx stx;
+    if (syscall(SYS_statx, AT_FDCWD, (const char *)path, 0,
+                STATX_MTIME | STATX_BTIME, &stx) == 0)
+    {
+        if (mtime)
+            *mtime = stx.stx_mtime.tv_sec;
+        if (birthtime && (stx.stx_mask & STATX_BTIME))
+            *birthtime = stx.stx_btime.tv_sec;  // Birth time (creation)
+
+        return true;
+    }
+
+    // Fallback to regular stat
+    struct stat st;
+    if (stat(path, &st) != 0)
+        return false;
+
+    if (mtime)
+        *mtime = st.st_mtime;
+
+    return true;
+}
+
+#else
+// Generic POSIX fallback (FreeBSD, macOS, etc.)
+#include <sys/stat.h>
+#include <sys/types.h>
+
+bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
+{
+    StringBuf path = uri_to_filename(filename);
+    if (!path)
+        return false;
+
+    struct stat st;
+    if (stat(path, &st) != 0)
+        return false;
+
+    if (mtime)
+        *mtime = st.st_mtime;
+    if (birthtime)
+#ifdef __APPLE__
+        *birthtime = st.st_birthtime;  // macOS has birth time
+#endif
+
+    return true;
+}
+#endif

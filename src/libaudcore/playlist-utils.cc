@@ -70,17 +70,28 @@ static int tuple_compare_string(const Tuple & a, const Tuple & b,
 static int tuple_compare_int(const Tuple & a, const Tuple & b,
                              Tuple::Field field)
 {
-    if (a.get_value_type(field) != Tuple::Int)
-        return (b.get_value_type(field) != Tuple::Int) ? 0 : -1;
-    if (b.get_value_type(field) != Tuple::Int)
+    auto at = a.get_value_type(field);
+    auto bt = a.get_value_type(field);
+
+    if (at != Tuple::Int && at != Tuple::Int64 && at != Tuple::DateTime)
+        return (bt != Tuple::Int && bt != Tuple::Int64 && bt != Tuple::DateTime) ? 0 : -1;
+    if (bt != Tuple::Int && bt != Tuple::Int64 && bt != Tuple::DateTime)
         return 1;
 
-    int int_a = a.get_int(field);
-    int int_b = b.get_int(field);
+    int64_t int_a = a.get_int64(field);
+    int64_t int_b = b.get_int64(field);
 
     return (int_a < int_b) ? -1 : (int_a > int_b);
 }
 
+static int tuple_compare_created(const Tuple & a, const Tuple & b)
+{
+    return tuple_compare_int(a, b, Tuple::Created);
+}
+static int tuple_compare_modified(const Tuple & a, const Tuple & b)
+{
+    return tuple_compare_int(a, b, Tuple::Modified);
+}
 static int tuple_compare_title(const Tuple & a, const Tuple & b)
 {
     return tuple_compare_string(a, b, Tuple::Title);
@@ -138,6 +149,8 @@ static int tuple_compare_disc(const Tuple & a, const Tuple & b)
 static const Playlist::StringCompareFunc filename_comparisons[] = {
     filename_compare_path,     // path
     filename_compare_basename, // filename
+    nullptr,                   // created
+    nullptr,                   // modified
     nullptr,                   // title
     nullptr,                   // album
     nullptr,                   // artist
@@ -156,6 +169,8 @@ static const Playlist::StringCompareFunc filename_comparisons[] = {
 static const Playlist::TupleCompareFunc tuple_comparisons[] = {
     nullptr, // path
     nullptr, // filename
+    tuple_compare_created,
+    tuple_compare_modified,
     tuple_compare_title,
     tuple_compare_album,
     tuple_compare_artist,

@@ -68,7 +68,9 @@ static const TupleFieldMap tuple_field_map[] = {
     {N_("Quality"), Tuple::Quality, false},
     {N_("Bitrate"), Tuple::Bitrate, false},
     {N_("Channels"), Tuple::Channels, false},
-    {N_("MusicBrainz ID"), Tuple::MusicBrainzID, false}};
+    {N_("MusicBrainz ID"), Tuple::MusicBrainzID, false},
+    {N_("File Created"), Tuple::Created, false},
+    {N_("File Modified"), Tuple::Modified, false}};
 
 static const TupleFieldMap * to_field_map(const QModelIndex & index)
 {
@@ -104,6 +106,9 @@ static QString tuple_field_to_str(const Tuple & tuple, Tuple::Field field)
         return QString(tuple.get_str(field));
     case Tuple::Int:
         return QString::number(tuple.get_int(field));
+    case Tuple::Int64:
+    case Tuple::DateTime:
+        return QString::number(tuple.get_int64(field));
     default:
         return QString();
     }

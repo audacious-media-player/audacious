@@ -66,6 +66,8 @@ public:
     {
         Path,     // entry's entire URI
         Filename, // base name (no folder path)
+        Created,
+        Modified,
         Title,
         Album,
         Artist,
