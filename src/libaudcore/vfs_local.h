@@ -32,7 +32,7 @@ public:
                           String & error);
     Index<String> read_folder(const char * filename, String & error);
 
-    bool get_file_timestamps(const char * filename, int64_t * mtime, int64_t * ctime);
+    bool get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime);
 
 };
 
