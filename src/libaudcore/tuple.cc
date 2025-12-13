@@ -493,7 +493,7 @@ EXPORT int64_t Tuple::get_int64(Field field) const
     assert(is_valid_field(field) && (field_info[field].type == Int64 || field_info[field].type == DateTime));
 
     TupleVal * val = data ? data->lookup(field, false, false) : nullptr;
-    return val ? val->x64 : -1;
+    return val ? val->x : -1; // FIXME: TODO: if we use x64 for some reason it accesses junk
 }
 
 EXPORT String Tuple::get_str(Field field) const
