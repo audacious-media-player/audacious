@@ -138,8 +138,8 @@ static const struct
     {"file-path", Tuple::String, -1},
     {"file-ext", Tuple::String, -1},
 
-    {"file-modified", Tuple::DateTime, -1},
     {"file-created", Tuple::DateTime, -1},
+    {"file-modified", Tuple::DateTime, -1},
 
     {"audio-file", Tuple::String, -1},
 
