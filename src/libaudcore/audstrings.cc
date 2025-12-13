@@ -1056,7 +1056,7 @@ static uint64_t str_to_uint64(const char * string, const char ** end = nullptr,
     return val;
 }
 
-static int digits_for(unsigned val)
+static int digits_for(uint64_t val)
 {
     int digits = 1;
 
@@ -1069,6 +1069,12 @@ static int digits_for(unsigned val)
 }
 
 static void uint_to_str(unsigned val, char * buf, int digits)
+{
+    for (char * rev = buf + digits; rev > buf; val /= 10)
+        *(--rev) = '0' + val % 10;
+}
+
+static void uint64_to_str(uint64_t val, char * buf, int digits)
 {
     for (char * rev = buf + digits; rev > buf; val /= 10)
         *(--rev) = '0' + val % 10;
@@ -1128,6 +1134,21 @@ EXPORT void str_insert_int(StringBuf & string, int pos, int val)
     uint_to_str(absval, set, digits);
 }
 
+EXPORT void str_insert_int64(StringBuf & string, int pos, int64_t val)
+{
+    bool neg = (val < 0);
+    uint64_t absval = neg ? -val : val;
+
+    int digits = digits_for(absval);
+    int len = (neg ? 1 : 0) + digits;
+    char * set = string.insert(pos, nullptr, len);
+
+    if (neg)
+        *(set++) = '-';
+
+    uint64_to_str(absval, set, digits);
+}
+
 EXPORT void str_insert_double(StringBuf & string, int pos, double val)
 {
     bool neg = (val < 0);
@@ -1174,7 +1195,7 @@ EXPORT StringBuf int_to_str(int val)
 EXPORT StringBuf int64_to_str(int64_t val)
 {
     StringBuf buf;
-    str_insert_int(buf, 0, val);
+    str_insert_int64(buf, 0, val);
     return buf;
 }
 
