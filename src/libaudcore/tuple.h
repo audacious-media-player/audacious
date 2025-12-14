@@ -83,8 +83,8 @@ public:
         Path,     /* Folder path, including the trailing "/" */
         Suffix,   /* Filename extension, not including the "." */
 
-        Created, /* File creation datetime (unix epoch) */
-        Modified, /* File modification datetime (unix epoch) */
+        FileCreated, /* File creation datetime (unix epoch) */
+        FileModified, /* File modification datetime (unix epoch) */
 
         AudioFile, /* URI of audio file, if different from the nominal URI
                     * (e.g. for a cuesheet entry, where the nominal URI

@@ -215,9 +215,9 @@ EXPORT bool aud_file_read_tag(const char * filename, PluginHandle * decoder,
         if (VFSFile::get_file_timestamps(filename, &m, &c))
         {
             if (m > 0)
-                new_tuple.set_int64(Tuple::Modified, m);
+                new_tuple.set_int64(Tuple::FileModified, m);
             if (c > 0)
-                new_tuple.set_int64(Tuple::Created, c);
+                new_tuple.set_int64(Tuple::FileCreated, c);
         }
 
         tuple = std::move(new_tuple);

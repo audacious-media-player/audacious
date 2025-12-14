@@ -69,8 +69,8 @@ static const TupleFieldMap tuple_field_map[] = {
     {N_("Bitrate"), Tuple::Bitrate, false},
     {N_("Channels"), Tuple::Channels, false},
     {N_("MusicBrainz ID"), Tuple::MusicBrainzID, false},
-    {N_("File Created"), Tuple::Created, false},
-    {N_("File Modified"), Tuple::Modified, false}};
+    {N_("File Created"), Tuple::FileCreated, false},
+    {N_("File Modified"), Tuple::FileModified, false}};
 
 static const TupleFieldMap * to_field_map(const QModelIndex & index)
 {

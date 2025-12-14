@@ -86,11 +86,11 @@ static int tuple_compare_int(const Tuple & a, const Tuple & b,
 
 static int tuple_compare_created(const Tuple & a, const Tuple & b)
 {
-    return tuple_compare_int(a, b, Tuple::Created);
+    return tuple_compare_int(a, b, Tuple::FileCreated);
 }
 static int tuple_compare_modified(const Tuple & a, const Tuple & b)
 {
-    return tuple_compare_int(a, b, Tuple::Modified);
+    return tuple_compare_int(a, b, Tuple::FileModified);
 }
 static int tuple_compare_title(const Tuple & a, const Tuple & b)
 {
