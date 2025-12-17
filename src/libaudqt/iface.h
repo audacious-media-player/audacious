@@ -33,26 +33,26 @@ class LIBAUDQT_PUBLIC QtIfacePlugin : public IfacePlugin
 public:
     constexpr QtIfacePlugin(PluginInfo info) : IfacePlugin(info) {}
 
-    void show_about_window() { aboutwindow_show(); }
-    void hide_about_window() { aboutwindow_hide(); }
+    void show_about_window() override { aboutwindow_show(); }
+    void hide_about_window() override { aboutwindow_hide(); }
 
-    void show_filebrowser(bool open)
+    void show_filebrowser(bool open) override
     {
         fileopener_show(open ? FileMode::Open : FileMode::Add);
     }
 
-    void hide_filebrowser() {}
-    void show_jump_to_song() { songwin_show(); }
-    void hide_jump_to_song() { songwin_hide(); }
-    void show_prefs_window() { prefswin_show(); }
-    void hide_prefs_window() { prefswin_hide(); }
+    void hide_filebrowser() override {}
+    void show_jump_to_song() override { songwin_show(); }
+    void hide_jump_to_song() override { songwin_hide(); }
+    void show_prefs_window() override { prefswin_show(); }
+    void hide_prefs_window() override { prefswin_hide(); }
 
     void plugin_menu_add(AudMenuID id, void func(), const char * name,
-                         const char * icon)
+                         const char * icon) override
     {
         menu_add(id, func, name, icon);
     }
-    void plugin_menu_remove(AudMenuID id, void func())
+    void plugin_menu_remove(AudMenuID id, void func()) override
     {
         menu_remove(id, func);
     }

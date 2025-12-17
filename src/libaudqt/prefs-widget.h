@@ -87,7 +87,7 @@ public:
     BooleanWidget(const PreferencesWidget * parent, const char * domain);
 
 private:
-    void update();
+    void update() override;
 };
 
 /* integer widget (spinner) */
@@ -97,7 +97,7 @@ public:
     IntegerWidget(const PreferencesWidget * parent, const char * domain);
 
 private:
-    void update();
+    void update() override;
     QSpinBox * m_spinner;
 };
 
@@ -109,7 +109,7 @@ public:
                       QButtonGroup * btn_group);
 
 private:
-    void update();
+    void update() override;
 };
 
 /* double widget (spinner) */
@@ -119,7 +119,7 @@ public:
     DoubleWidget(const PreferencesWidget * parent, const char * domain);
 
 private:
-    void update();
+    void update() override;
     QDoubleSpinBox * m_spinner;
 };
 
@@ -130,7 +130,7 @@ public:
     StringWidget(const PreferencesWidget * parent, const char * domain);
 
 private:
-    void update();
+    void update() override;
     QLineEdit * m_lineedit;
 };
 
@@ -141,7 +141,7 @@ public:
     FileWidget(const PreferencesWidget * parent, const char * domain);
 
 private:
-    void update();
+    void update() override;
     QLineEdit * m_lineedit;
 };
 
@@ -152,7 +152,7 @@ public:
     FontWidget(const PreferencesWidget * parent, const char * domain);
 
 private:
-    void update();
+    void update() override;
     QLineEdit * m_lineedit;
 };
 
@@ -163,7 +163,7 @@ public:
     ComboBoxWidget(const PreferencesWidget * parent, const char * domain);
 
 private:
-    void update();
+    void update() override;
     QComboBox * m_combobox;
 };
 

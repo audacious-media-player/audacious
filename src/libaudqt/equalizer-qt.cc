@@ -47,19 +47,19 @@ public:
     {
     }
 
-    QSize minimumSizeHint() const
+    QSize minimumSizeHint() const override
     {
         QSize s = QLabel::minimumSizeHint();
         return QSize(s.height(), s.width());
     }
 
-    QSize sizeHint() const
+    QSize sizeHint() const override
     {
         QSize s = QLabel::sizeHint();
         return QSize(s.height(), s.width());
     }
 
-    void paintEvent(QPaintEvent *)
+    void paintEvent(QPaintEvent *) override
     {
         QPainter p(this);
         p.rotate(270);

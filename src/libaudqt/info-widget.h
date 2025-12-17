@@ -38,7 +38,7 @@ class LIBAUDQT_PUBLIC InfoWidget : public QTreeView
 {
 public:
     InfoWidget(QWidget * parent = nullptr);
-    ~InfoWidget();
+    ~InfoWidget() override;
 
     void fillInfo(const char * filename, const Tuple & tuple,
                   PluginHandle * decoder, bool updating_enabled);

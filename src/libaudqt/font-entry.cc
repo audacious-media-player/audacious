@@ -21,6 +21,7 @@
 #include "libaudqt.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <QAction>
 #include <QFontDialog>

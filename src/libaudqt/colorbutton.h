@@ -32,14 +32,14 @@ class LIBAUDQT_PUBLIC ColorButton : public QPushButton
 {
 public:
     ColorButton(QWidget * parent = nullptr);
-    ~ColorButton(){};
+    ~ColorButton() override {};
 
     void setColor(const QColor &);
 
     QColor color() const { return m_color; }
 
 protected:
-    virtual void onColorChanged(){};
+    virtual void onColorChanged() {};
 
 private:
     void paintEvent(QPaintEvent *) override;

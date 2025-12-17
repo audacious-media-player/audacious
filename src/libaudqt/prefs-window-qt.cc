@@ -107,7 +107,7 @@ private:
     static PrefsWindow * instance;
 
     PrefsWindow();
-    ~PrefsWindow() { instance = nullptr; }
+    ~PrefsWindow() override { instance = nullptr; }
 
     Index<ComboItem> output_combo_elements;
     QPushButton *output_config_button, *output_about_button;
