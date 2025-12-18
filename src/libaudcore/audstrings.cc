@@ -1042,7 +1042,21 @@ static unsigned str_to_uint(const char * string, const char ** end = nullptr,
     return val;
 }
 
-static int digits_for(unsigned val)
+static uint64_t str_to_uint64(const char * string, const char ** end = nullptr,
+                              const char * stop = nullptr)
+{
+    uint64_t val = 0;
+
+    for (char c; string != stop && (c = *string) >= '0' && c <= '9'; string++)
+        val = val * 10 + (c - '0');
+
+    if (end)
+        *end = string;
+
+    return val;
+}
+
+static int digits_for(uint64_t val)
 {
     int digits = 1;
 
@@ -1060,6 +1074,12 @@ static void uint_to_str(unsigned val, char * buf, int digits)
         *(--rev) = '0' + val % 10;
 }
 
+static void uint64_to_str(uint64_t val, char * buf, int digits)
+{
+    for (char * rev = buf + digits; rev > buf; val /= 10)
+        *(--rev) = '0' + val % 10;
+}
+
 EXPORT int str_to_int(const char * string)
 {
     bool neg = (string[0] == '-');
@@ -1067,6 +1087,16 @@ EXPORT int str_to_int(const char * string)
         string++;
 
     unsigned val = str_to_uint(string);
+    return neg ? -val : val;
+}
+
+EXPORT int64_t str_to_int64(const char * string)
+{
+    bool neg = (string[0] == '-');
+    if (neg || string[0] == '+')
+        string++;
+
+    uint64_t val = str_to_uint64(string);
     return neg ? -val : val;
 }
 
@@ -1102,6 +1132,21 @@ EXPORT void str_insert_int(StringBuf & string, int pos, int val)
         *(set++) = '-';
 
     uint_to_str(absval, set, digits);
+}
+
+EXPORT void str_insert_int64(StringBuf & string, int pos, int64_t val)
+{
+    bool neg = (val < 0);
+    uint64_t absval = neg ? -val : val;
+
+    int digits = digits_for(absval);
+    int len = (neg ? 1 : 0) + digits;
+    char * set = string.insert(pos, nullptr, len);
+
+    if (neg)
+        *(set++) = '-';
+
+    uint64_to_str(absval, set, digits);
 }
 
 EXPORT void str_insert_double(StringBuf & string, int pos, double val)
@@ -1144,6 +1189,13 @@ EXPORT StringBuf int_to_str(int val)
 {
     StringBuf buf;
     str_insert_int(buf, 0, val);
+    return buf;
+}
+
+EXPORT StringBuf int64_to_str(int64_t val)
+{
+    StringBuf buf;
+    str_insert_int64(buf, 0, val);
     return buf;
 }
 

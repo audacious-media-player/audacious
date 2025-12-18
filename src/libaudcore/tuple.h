@@ -26,6 +26,7 @@
 #ifndef LIBAUDCORE_TUPLE_H
 #define LIBAUDCORE_TUPLE_H
 
+#include <stdint.h>
 #include <libaudcore/objects.h>
 
 struct ReplayGainInfo;
@@ -82,6 +83,9 @@ public:
         Path,     /* Folder path, including the trailing "/" */
         Suffix,   /* Filename extension, not including the "." */
 
+        FileCreated, /* File creation datetime (unix epoch) */
+        FileModified, /* File modification datetime (unix epoch) */
+
         AudioFile, /* URI of audio file, if different from the nominal URI
                     * (e.g. for a cuesheet entry, where the nominal URI
                     * points to the .cue file) */
@@ -118,6 +122,8 @@ public:
     {
         String,
         Int,
+        Int64,
+        DateTime,
         Empty
     };
 
@@ -161,6 +167,9 @@ public:
     /* Returns the string value of a field if set, otherwise null. */
     ::String get_str(Field field) const;
 
+    /* Returns the datetime value of a field if set, otherwise -1. */
+    int64_t get_int64(Field field) const;
+
     /* Sets a field to the integer value <x>. */
     void set_int(Field field, int x);
 
@@ -168,6 +177,9 @@ public:
      * will be converted according to the user's character set detection rules.
      * Equivalent to unset() if <str> is null. */
     void set_str(Field field, const char * str);
+
+    /* Sets a field to the datetime value <x>. */
+    void set_int64(Field field, int64_t x);
 
     /* Clears any value that a field is currently set to. */
     void unset(Field field);
