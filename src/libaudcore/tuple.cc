@@ -492,7 +492,7 @@ EXPORT int Tuple::get_int(Field field) const
 
 EXPORT int64_t Tuple::get_int64(Field field) const
 {
-    assert(is_valid_field(field) && (field_info[field].type == Int64 || field_info[field].type == DateTime));
+    assert(is_valid_field(field) && (field_info[field].type == Int || field_info[field].type == Int64 || field_info[field].type == DateTime));
 
     TupleVal * val = data ? data->lookup(field, false, false) : nullptr;
     return val ? val->x64 : -1;
@@ -516,7 +516,7 @@ EXPORT void Tuple::set_int(Field field, int x)
 
 EXPORT void Tuple::set_int64(Field field, int64_t x)
 {
-    assert(is_valid_field(field) && (field_info[field].type == Int64 || field_info[field].type == DateTime));
+    assert(is_valid_field(field) && (field_info[field].type == Int || field_info[field].type == Int64 || field_info[field].type == DateTime));
 
     data = TupleData::copy_on_write(data);
     data->set_int64(field, x);
