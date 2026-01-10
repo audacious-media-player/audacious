@@ -153,7 +153,11 @@ static void fill_list ()
 {
     g_return_if_fail (treeview && filter_entry);
 
-    search_matches = cache.search (gtk_entry_get_text ((GtkEntry *) filter_entry));
+    const char * text = gtk_entry_get_text ((GtkEntry *) filter_entry);
+    const char * icon_name = text[0] ? "edit-clear" : nullptr;
+    g_object_set (filter_entry, "secondary-icon-name", icon_name, nullptr);
+
+    search_matches = cache.search (text);
 
     audgui_list_delete_rows (treeview, 0, audgui_list_row_count (treeview));
     audgui_list_insert_rows (treeview, 0, search_matches->len ());
@@ -275,8 +279,6 @@ static GtkWidget * create_window ()
     gtk_box_pack_start ((GtkBox *) hbox, search_label, false, false, 0);
 
     filter_entry = gtk_entry_new ();
-    gtk_entry_set_icon_from_icon_name ((GtkEntry *) filter_entry,
-     GTK_ENTRY_ICON_SECONDARY, "edit-clear");
     gtk_label_set_mnemonic_widget ((GtkLabel *) search_label, filter_entry);
     g_signal_connect (filter_entry, "changed", (GCallback) fill_list, nullptr);
     g_signal_connect (filter_entry, "icon-press", (GCallback) filter_icon_cb, nullptr);
