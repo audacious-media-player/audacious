@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2015-2025 Audacious developers -->
+<!-- Copyright 2015-2026 Audacious developers -->
 <component type="desktop">
   <id>audacious.desktop</id>
   <launchable type="desktop-id">audacious.desktop</launchable>
@@ -28,6 +28,7 @@
   </description>
   <url type="homepage">https://audacious-media-player.org</url>
   <url type="bugtracker">https://github.com/audacious-media-player/audacious/issues</url>
+  <url type="vcs-browser">https://github.com/audacious-media-player</url>
   <url type="translate">https://app.transifex.com/audacious</url>
   <releases>
     <release date="2025-09-07" version="4.5.1"></release>
