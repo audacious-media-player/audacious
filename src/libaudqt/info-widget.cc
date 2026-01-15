@@ -68,7 +68,9 @@ static const TupleFieldMap tuple_field_map[] = {
     {N_("Quality"), Tuple::Quality, false},
     {N_("Bitrate"), Tuple::Bitrate, false},
     {N_("Channels"), Tuple::Channels, false},
-    {N_("MusicBrainz ID"), Tuple::MusicBrainzID, false}};
+    {N_("MusicBrainz ID"), Tuple::MusicBrainzID, false},
+    {N_("File Created"), Tuple::FileCreated, false},
+    {N_("File Modified"), Tuple::FileModified, false}};
 
 static const TupleFieldMap * to_field_map(const QModelIndex & index)
 {
@@ -104,6 +106,20 @@ static QString tuple_field_to_str(const Tuple & tuple, Tuple::Field field)
         return QString(tuple.get_str(field));
     case Tuple::Int:
         return QString::number(tuple.get_int(field));
+    case Tuple::Int64:
+        return QString::number(tuple.get_int64(field));
+    case Tuple::DateTime:
+    {
+        int64_t t = tuple.get_int64(field);
+        if (t > 0) {
+            struct tm tm_val;
+            char buf[128];
+            localtime_r(&t, &tm_val);
+            strftime(buf, sizeof(buf), "%c", &tm_val); // "%c" = locale’s default date+time format
+            return QString(buf);
+        }
+        return QString();
+    }
     default:
         return QString();
     }
@@ -116,8 +132,10 @@ static void tuple_field_set_from_str(Tuple & tuple, Tuple::Field field,
         tuple.unset(field);
     else if (Tuple::field_get_type(field) == Tuple::String)
         tuple.set_str(field, str.toUtf8());
-    else
+    else if (Tuple::field_get_type(field) == Tuple::Int)
         tuple.set_int(field, str.toInt());
+    else if (Tuple::field_get_type(field) == Tuple::Int64 || Tuple::field_get_type(field) == Tuple::DateTime)
+        tuple.set_int64(field, str.toLongLong());
 }
 
 static bool tuple_field_is_same(const Tuple & a, const Tuple & b,
@@ -133,6 +151,9 @@ static bool tuple_field_is_same(const Tuple & a, const Tuple & b,
         return (a.get_str(field) == b.get_str(field));
     case Tuple::Int:
         return (a.get_int(field) == b.get_int(field));
+    case Tuple::Int64:
+    case Tuple::DateTime:
+        return (a.get_int64(field) == b.get_int64(field));
     default:
         return true;
     }
@@ -148,6 +169,10 @@ static void tuple_field_copy(Tuple & dest, const Tuple & src,
         break;
     case Tuple::Int:
         dest.set_int(field, src.get_int(field));
+        break;
+    case Tuple::Int64:
+    case Tuple::DateTime:
+        dest.set_int64(field, src.get_int64(field));
         break;
     default:
         dest.unset(field);
