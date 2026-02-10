@@ -78,6 +78,7 @@ void playlist_display (int, char * *);
 void playlist_position (int, char * *);
 void playlist_jump (int, char * *);
 void playlist_add_url_string (int, char * *);
+void playlist_save (int, char * *);
 void playlist_delete (int, char * *);
 void playlist_clear (int, char * *);
 void playlist_repeat_status (int, char * *);

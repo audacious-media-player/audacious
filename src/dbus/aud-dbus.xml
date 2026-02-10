@@ -366,6 +366,12 @@
             <arg type="u" direction="in" name="pos"/>
         </method>
 
+        <!-- Save the playlist to given file path -->
+        <method name="PlaylistSave">
+            <arg type="s" direction="in" name="url"/>
+            <arg type="b" direction="out" name="success"/>
+        </method>
+
         <!-- Clear the playlist -->
         <method name="Clear" />
 

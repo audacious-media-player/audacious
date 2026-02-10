@@ -141,6 +141,36 @@ void playlist_add_url_string (int argc, char * * argv)
     g_free (uri);
 }
 
+void playlist_save (int argc, char * * argv)
+{
+    char * uri;
+    gboolean success = FALSE;
+
+    if (argc < 2)
+    {
+        audtool_whine_args (argv[0], "<url>");
+        exit (1);
+    }
+
+    uri = construct_uri (argv[1]);
+
+    if (! uri)
+        exit (1);
+
+    obj_audacious_call_playlist_save_sync (dbus_proxy, uri, & success, NULL, NULL);
+
+    if (! success)
+    {
+        audtool_report ("Error saving %s:\nMake sure to use a supported "
+                        "file extension and that the respective playlist "
+                        "plugin is enabled.", uri);
+        g_free (uri);
+        exit (1);
+    }
+    else
+        g_free (uri);
+}
+
 void playlist_delete (int argc, char * * argv)
 {
     int pos = check_args_playlist_pos (argc, argv);
