@@ -19,7 +19,6 @@
 
 #include "probe.h"
 #include "internal.h"
-#include "vfs.h"
 
 #include <string.h>
 
@@ -29,6 +28,7 @@
 #include "plugin.h"
 #include "plugins-internal.h"
 #include "runtime.h"
+#include "vfs.h"
 
 bool open_input_file(const char * filename, const char * mode, InputPlugin * ip,
                      VFSFile & file, String * error)

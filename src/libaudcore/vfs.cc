@@ -447,7 +447,8 @@ EXPORT Index<const char *> VFSFile::supported_uri_schemes()
     return schemes;
 }
 
-EXPORT bool VFSFile::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
+EXPORT bool VFSFile::get_file_timestamps(const char * filename, int64_t * mtime,
+                                         int64_t * birthtime)
 {
     // Check if it's a local file
     StringBuf scheme = uri_get_scheme(filename);

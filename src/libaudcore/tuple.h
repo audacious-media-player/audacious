@@ -111,8 +111,8 @@ public:
            field */
         FormattedTitle,
 
-        FileCreated, /* File creation datetime (unix epoch) */
-        FileModified, /* File modification datetime (unix epoch) */
+        FileCreated,  /* File creation datetime (Unix epoch) */
+        FileModified, /* File modification datetime (Unix epoch) */
 
         n_fields
     };
