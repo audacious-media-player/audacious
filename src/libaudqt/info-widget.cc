@@ -132,8 +132,8 @@ static void tuple_field_set_from_str(Tuple & tuple, Tuple::Field field,
         tuple.set_str(field, str.toUtf8());
     else if (Tuple::field_get_type(field) == Tuple::Int)
         tuple.set_int(field, str.toInt());
-    else if (Tuple::field_get_type(field) == Tuple::DateTime) // DateTime is display-only. Do not modify.
-        return;
+    else if (Tuple::field_get_type(field) == Tuple::DateTime)
+        return; // DateTime is display-only. Do not modify.
 }
 
 static bool tuple_field_is_same(const Tuple & a, const Tuple & b,

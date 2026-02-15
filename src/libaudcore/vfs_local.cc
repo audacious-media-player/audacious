@@ -416,7 +416,8 @@ Index<String> LocalTransport::read_folder(const char * uri, String & error)
 #include <sys/stat.h>
 #include <sys/types.h>
 
-bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
+bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
+                                         int64_t * birthtime)
 {
     StringBuf path = uri_to_filename(filename);
     if (!path)
@@ -435,21 +436,22 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
     if (mtime)
         *mtime = st.st_mtime;
     if (birthtime)
-        *birthtime = st.st_ctime; // on windows ctime is creation time (yeah, confusing)
+        *birthtime = st.st_ctime; // on Windows ctime is creation time
 
     return true;
 }
 
 #elif defined(__linux__)
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <fcntl.h>
 
 #include <linux/stat.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 
-bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
+bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
+                                         int64_t * birthtime)
 {
     StringBuf path = uri_to_filename(filename);
     if (!path)
@@ -469,7 +471,7 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
         if (mtime)
             *mtime = stx.stx_mtime.tv_sec;
         if (birthtime && (stx.stx_mask & STATX_BTIME))
-            *birthtime = stx.stx_btime.tv_sec;  // Birth time (creation)
+            *birthtime = stx.stx_btime.tv_sec; // Birth time (creation)
 
         return true;
     }
@@ -490,7 +492,8 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
 #include <sys/stat.h>
 #include <sys/types.h>
 
-bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime, int64_t * birthtime)
+bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
+                                         int64_t * birthtime)
 {
     StringBuf path = uri_to_filename(filename);
     if (!path)
@@ -510,7 +513,7 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
         *mtime = st.st_mtime;
 #ifdef __APPLE__
     if (birthtime)
-        *birthtime = st.st_birthtime;  // macOS has birth time
+        *birthtime = st.st_birthtime; // macOS has birth time
 #endif
 
     return true;

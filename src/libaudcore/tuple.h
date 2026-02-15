@@ -26,8 +26,9 @@
 #ifndef LIBAUDCORE_TUPLE_H
 #define LIBAUDCORE_TUPLE_H
 
-#include <libaudcore/objects.h>
 #include <stdint.h>
+
+#include <libaudcore/objects.h>
 
 struct ReplayGainInfo;
 struct TupleData;

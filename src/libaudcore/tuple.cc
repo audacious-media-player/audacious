@@ -20,9 +20,9 @@
 
 #include <assert.h>
 #include <math.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #include <glib.h> /* for g_utf8_validate */
 
