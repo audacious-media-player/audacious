@@ -79,6 +79,8 @@ public:
         Publisher,
         CatalogNum,
         Disc,
+        FileCreated,
+        FileModified,
         n_sort_types
     };
 
