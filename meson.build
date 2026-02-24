@@ -1,6 +1,6 @@
 project('audacious', 'c', 'cpp',
         version: '4.6-devel',
-        meson_version: '>= 0.46',
+        meson_version: '>= 0.53',
         default_options: [
           'c_std=gnu99',
           'cpp_std=gnu++17',
@@ -235,22 +235,20 @@ pkg.generate(
 )
 
 
-if meson.version().version_compare('>= 0.53')
-  summary({
-    'Prefix': get_option('prefix'),
-    'Bin dir': get_option('bindir'),
-    'Lib dir': get_option('libdir'),
-    'Data dir': get_option('datadir'),
-  }, section: 'Directories')
+summary({
+  'Prefix': get_option('prefix'),
+  'Bin dir': get_option('bindir'),
+  'Lib dir': get_option('libdir'),
+  'Data dir': get_option('datadir'),
+}, section: 'Directories')
 
-  summary({
-    'D-Bus support': get_option('dbus'),
-    'Qt 5 support': get_option('qt5'),
-    'Qt 6 support': get_option('qt') and not get_option('qt5'),
-    'GTK 2 support': get_option('gtk2'),
-    'GTK 3 support': get_option('gtk') and not get_option('gtk2'),
-    'Libarchive support': get_option('libarchive'),
-    'Valgrind analysis support': get_option('valgrind'),
-    'Build stamp': get_option('buildstamp'),
-  }, section: 'Configuration')
-endif
+summary({
+  'D-Bus support': get_option('dbus'),
+  'Qt 5 support': get_option('qt5'),
+  'Qt 6 support': get_option('qt') and not get_option('qt5'),
+  'GTK 2 support': get_option('gtk2'),
+  'GTK 3 support': get_option('gtk') and not get_option('gtk2'),
+  'Libarchive support': get_option('libarchive'),
+  'Valgrind analysis support': get_option('valgrind'),
+  'Build stamp': get_option('buildstamp'),
+}, section: 'Configuration')
