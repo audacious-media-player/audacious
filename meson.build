@@ -23,7 +23,7 @@ thread_dep = dependency('threads', required: true)
 if get_option('qt')
   if get_option('qt5')
     qt = import('qt5')
-    qt_req = '>= 5.2'
+    qt_req = '>= 5.12'
     qt_dep = dependency('qt5', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui', 'Svg'])
   else
     if meson.version().version_compare('>= 0.57')

@@ -96,22 +96,18 @@ void set_icon_theme()
 
     if (!isValid(QIcon::themeName()))
     {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         QString fallback = QIcon::fallbackThemeName();
         if (isValid(fallback))
             QIcon::setThemeName(fallback);
         else
-#endif
             QIcon::setThemeName("audacious-flat");
     }
 
     // add fallback icons just to be sure
-#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
     auto paths = QIcon::fallbackSearchPaths();
     auto path = ":/icons/audacious-flat/scalable";
     if (!paths.contains(path))
         QIcon::setFallbackSearchPaths(paths << path);
-#endif
 
     qApp->setWindowIcon(QIcon::fromTheme("audacious"));
 }
@@ -154,13 +150,9 @@ EXPORT void init()
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     qapp->setAttribute(Qt::AA_UseHighDpiPixmaps);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     qapp->setAttribute(Qt::AA_DisableWindowContextHelpButton);
-#endif // >= 5.10
-#endif // < 6.0
-#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-    qapp->setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles);
 #endif
+    qapp->setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles);
 
     qapp->setApplicationName(_("Audacious"));
     qapp->setQuitOnLastWindowClosed(false);
