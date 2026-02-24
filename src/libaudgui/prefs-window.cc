@@ -477,7 +477,7 @@ static void titlestring_tag_menu_cb (GtkMenuItem * menuitem, void * data)
 
 static void on_titlestring_help_button_clicked (GtkWidget * button, void * menu)
 {
-#if GTK_CHECK_VERSION(3, 22, 0)
+#ifdef USE_GTK3
     gtk_menu_popup_at_widget ((GtkMenu *) menu, button, GDK_GRAVITY_CENTER, GDK_GRAVITY_STATIC, nullptr);
 #else
     gtk_menu_popup ((GtkMenu *) menu, nullptr, nullptr, nullptr, nullptr, 0, GDK_CURRENT_TIME);
@@ -616,6 +616,8 @@ static void * create_titlestring_table ()
     gtk_widget_set_hexpand (titlestring_cbox, true);
     gtk_widget_set_hexpand (titlestring_entry, true);
 
+    gtk_widget_set_focus_on_click (titlestring_help_button, false);
+
     gtk_grid_attach ((GtkGrid *) grid, format_label, 0, 0, 1, 1);
     gtk_grid_attach ((GtkGrid *) grid, custom_label, 0, 1, 1, 1);
     gtk_grid_attach ((GtkGrid *) grid, titlestring_cbox, 1, 0, 1, 1);
@@ -625,6 +627,8 @@ static void * create_titlestring_table ()
     gtk_misc_set_alignment ((GtkMisc *) format_label, 1, 0.5);
     gtk_misc_set_alignment ((GtkMisc *) custom_label, 1, 0.5);
 
+    gtk_button_set_focus_on_click ((GtkButton *) titlestring_help_button, false);
+
     gtk_table_attach ((GtkTable *) grid, format_label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach ((GtkTable *) grid, custom_label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach_defaults ((GtkTable *) grid, titlestring_cbox, 1, 2, 0, 1);
@@ -632,13 +636,6 @@ static void * create_titlestring_table ()
     gtk_table_attach ((GtkTable *) grid, titlestring_help_button, 2, 3, 1, 2,
      GTK_FILL, GTK_FILL, 0, 0);
 #endif
-
-#if GTK_CHECK_VERSION(3, 20, 0)
-    gtk_widget_set_focus_on_click (titlestring_help_button, false);
-#else
-    gtk_button_set_focus_on_click ((GtkButton *) titlestring_help_button, false);
-#endif
-
     return grid;
 }
 

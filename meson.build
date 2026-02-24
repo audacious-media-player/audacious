@@ -43,7 +43,7 @@ if get_option('gtk')
     gtk_req = '>= 2.24'
     gtk_dep = dependency('gtk+-2.0', version: gtk_req, required: true)
   else
-    gtk_req = '>= 3.18'
+    gtk_req = '>= 3.24'
     gtk_dep = dependency('gtk+-3.0', version: gtk_req, required: true)
   endif
 endif

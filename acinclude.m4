@@ -194,7 +194,7 @@ if test $USE_GTK2 = yes ; then
     AC_DEFINE([USE_GTK], [1], [Define if GTK support enabled])
     AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_32], [Target GLib 2.32])
 elif test $USE_GTK = yes ; then
-    PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.18)
+    PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.24)
     AC_DEFINE(USE_GTK, 1, [Define if GTK support enabled])
     AC_DEFINE(USE_GTK3, 1, [Define if GTK 3 support enabled])
 fi
