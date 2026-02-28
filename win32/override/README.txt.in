@@ -53,11 +53,11 @@ and license of each project can be found on the Internet.
     libjpeg-turbo    https://libjpeg-turbo.org
     libffi           https://sourceware.org/libffi
     GLib             https://docs.gtk.org/glib
-    JSON-GLib        https://wiki.gnome.org/Projects/JsonGlib
+    JSON-GLib        https://gnome.pages.gitlab.gnome.org/json-glib
     Pixman           https://pixman.org
     Cairo            https://cairographics.org
-    Pango            https://pango.gnome.org
-    GDK-Pixbuf       https://wiki.gnome.org/Projects/GdkPixbuf
+    Pango            https://www.pango.org
+    GDK-Pixbuf       https://docs.gtk.org/gdk-pixbuf
     ATK              https://docs.gtk.org/atk
     GTK              https://gtk.org
     Qt               https://www.qt.io
@@ -67,7 +67,7 @@ and license of each project can be found on the Internet.
     FAAD2            https://github.com/knik0/faad2
     libsndfile       https://libsndfile.github.io/libsndfile
     bs2b             https://bs2b.sourceforge.net
-    GNU libcdio      https://www.gnu.org/software/libcdio
+    GNU libcdio      https://github.com/libcdio/libcdio
     libcddb          https://libcddb.sourceforge.net
     libcue           https://github.com/lipnitsk/libcue
     LAME             https://lame.sourceforge.io
