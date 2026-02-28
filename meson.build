@@ -208,6 +208,9 @@ subdir('src')
 subdir('po')
 subdir('man')
 subdir('images')
+if have_windows
+  subdir('win32')
+endif
 
 
 install_data('AUTHORS', 'COPYING')
