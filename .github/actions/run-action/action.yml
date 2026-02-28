@@ -7,19 +7,16 @@ inputs:
     description: 'The build action to run (configure, build, test or install)'
     required: True
   os:
-    description: 'The operating system to use (like ubuntu-22.04)'
-    required: True
-  build-system:
-    description: 'The build system to use (autotools or meson)'
+    description: 'The operating system to use (like ubuntu-24.04)'
     required: True
 
 runs:
   using: "composite"
   steps:
-    - run: '$GITHUB_ACTION_PATH/run-action.sh "${{ inputs.action }}" "${{ inputs.os }}" "${{ inputs.build-system }}"'
+    - run: '$GITHUB_ACTION_PATH/run-action.sh "${{ inputs.action }}" "${{ inputs.os }}"'
       if: (!startsWith(inputs.os, 'windows'))
       shell: bash
 
-    - run: '$GITHUB_ACTION_PATH/run-action.sh "${{ inputs.action }}" "${{ inputs.os }}" "${{ inputs.build-system }}"'
+    - run: '$GITHUB_ACTION_PATH/run-action.sh "${{ inputs.action }}" "${{ inputs.os }}"'
       if: startsWith(inputs.os, 'windows')
       shell: msys2 {0}

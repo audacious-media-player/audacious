@@ -9,44 +9,27 @@
 # macOS 26:          Qt 6 - GTK
 
 os=$(tr '[:upper:]' '[:lower:]' <<< "$1")
-build_system=$(tr '[:upper:]' '[:lower:]' <<< "$2")
 
-if [ -z "$os" ] || [ -z "$build_system" ]; then
+if [ -z "$os" ]; then
   echo 'Invalid or missing input parameters'
   exit 1
 fi
 
 case "$os" in
   ubuntu-22.04)
-    if [ "$build_system" = 'meson' ]; then
-      sudo apt-get -qq update && sudo apt-get install libgtk2.0-dev qtbase5-dev libqt5svg5-dev meson
-    else
-      sudo apt-get -qq update && sudo apt-get install libgtk2.0-dev qtbase5-dev libqt5svg5-dev
-    fi
+    sudo apt-get -qq update && sudo apt-get install libgtk2.0-dev qtbase5-dev libqt5svg5-dev meson
     ;;
 
   ubuntu*)
-    if [ "$build_system" = 'meson' ]; then
-      sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qt6-base-dev qt6-svg-dev gettext meson
-    else
-      sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qt6-base-dev qt6-svg-dev gettext
-    fi
+    sudo apt-get -qq update && sudo apt-get install libgtk-3-dev qt6-base-dev qt6-svg-dev gettext meson
     ;;
 
   macos-15*)
-    if [ "$build_system" = 'meson' ]; then
-      brew update -q && brew install qt@5 meson
-    else
-      brew update -q && brew install qt@5 automake libiconv
-    fi
+    brew update -q && brew install qt@5 meson
     ;;
 
   macos*)
-    if [ "$build_system" = 'meson' ]; then
-      brew update -q && brew install qt@6 meson
-    else
-      brew update -q && brew install qt@6 automake libiconv
-    fi
+    brew update -q && brew install qt@6 meson
     ;;
 
   windows*)

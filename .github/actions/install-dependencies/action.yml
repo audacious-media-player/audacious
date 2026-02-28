@@ -4,16 +4,13 @@ author: 'Audacious developers'
 
 inputs:
   os:
-    description: 'The operating system to use (like ubuntu-22.04)'
-    required: True
-  build-system:
-    description: 'The build system to use (autotools or meson)'
+    description: 'The operating system to use (like ubuntu-24.04)'
     required: True
 
 runs:
   using: "composite"
   steps:
-    - run: '$GITHUB_ACTION_PATH/install-dependencies.sh "${{ inputs.os }}" "${{ inputs.build-system }}"'
+    - run: '$GITHUB_ACTION_PATH/install-dependencies.sh "${{ inputs.os }}"'
       if: (!startsWith(inputs.os, 'windows'))
       shell: bash
 
@@ -23,7 +20,6 @@ runs:
         msystem: UCRT64
         update: true
         install: >-
-          mingw-w64-ucrt-x86_64-autotools
           mingw-w64-ucrt-x86_64-gcc
           mingw-w64-ucrt-x86_64-gtk2
           mingw-w64-ucrt-x86_64-meson

@@ -13,33 +13,29 @@ jobs:
         os: [ubuntu-22.04, ubuntu-24.04,
              macos-15-intel, macos-26,
              windows-2022]
-        build-system: [autotools, meson]
       fail-fast: false
     runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout audacious
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     - name: Install dependencies
       uses: ./.github/actions/install-dependencies
       with:
         os: ${{ matrix.os }}
-        build-system: ${{ matrix.build-system }}
 
     - name: Configure
       uses: ./.github/actions/run-action
       with:
         action: 'configure'
         os: ${{ matrix.os }}
-        build-system: ${{ matrix.build-system }}
 
     - name: Build
       uses: ./.github/actions/run-action
       with:
         action: 'build'
         os: ${{ matrix.os }}
-        build-system: ${{ matrix.build-system }}
 
     - name: Test
       if: startsWith(matrix.os, 'ubuntu')
@@ -47,4 +43,3 @@ jobs:
       with:
         action: 'test'
         os: ${{ matrix.os }}
-        build-system: ${{ matrix.build-system }}
