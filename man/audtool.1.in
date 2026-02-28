@@ -221,6 +221,10 @@ Print the ``stop after current song'' option (``on'' or ``off'').
 .TP
 .B --playlist-stop-after-toggle
 Toggle the ``stop after current song'' option.
+.TP
+.B --playlist-save \fIpath\fR
+Save the playlist to the given file path.  The format is determined
+by the file extension.
 
 .SS More playlist commands:
 
