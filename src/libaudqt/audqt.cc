@@ -29,6 +29,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/interface.h>
+#include <libaudcore/plugins.h>
 #include <libaudcore/runtime.h>
 
 #include "libaudqt-internal.h"
@@ -131,15 +132,12 @@ EXPORT void init()
 #endif
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    // Use X11/XWayland by default, but allow to overwrite it.
-    // Especially the Winamp interface is not usable yet on Wayland
-    // due to limitations regarding application-side window positioning.
-    auto platform = qgetenv("QT_QPA_PLATFORM");
-    if (platform.isEmpty() && qEnvironmentVariableIsSet("DISPLAY"))
+    // The Winamp interface is not usable yet on Wayland (and perhaps
+    // may never be) due to protocol limitations regarding application-
+    // side window positioning. Force XWayland if needed and available.
+    PluginHandle * skins = aud_plugin_lookup_basename("skins-qt");
+    if (skins && aud_plugin_get_enabled(skins) && !qgetenv("DISPLAY").isEmpty())
         qputenv("QT_QPA_PLATFORM", "xcb");
-    else if (platform != "xcb")
-        AUDWARN("X11/XWayland was not detected. This is unsupported, "
-                "please do not report bugs.\n");
 #endif
 
     static char app_name[] = "audacious";
