@@ -12,7 +12,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04, ubuntu-24.04,
              macos-15-intel, macos-26,
-             windows-2022]
+             windows-2025]
       fail-fast: false
     runs-on: ${{ matrix.os }}
 
