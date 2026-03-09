@@ -104,9 +104,10 @@ static const char * const core_defaults[] = {
     "folders_in_playlist", "FALSE",
     "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
     "leading_zero", "FALSE",
-    "show_hours", "TRUE",
     "metadata_fallbacks", "TRUE",
     "metadata_on_play", "FALSE",
+    "no_confirm_playlist_delete", "FALSE",
+    "show_hours", "TRUE",
     "show_numbers_in_pl", "FALSE",
     "slow_probe", "FALSE",
     /* clang-format on */
@@ -265,6 +266,14 @@ void config_load()
     {
         aud_set_str("replay_gain_album", "");
         aud_set_int("replay_gain_mode", (int)ReplayGainMode::Album);
+    }
+
+    String no_confirm = aud_get_str("audgui", "no_confirm_playlist_delete");
+    if (no_confirm[0])
+    {
+        aud_set_bool("no_confirm_playlist_delete",
+                     aud_get_bool("audgui", "no_confirm_playlist_delete"));
+        aud_set_str("audgui", "no_confirm_playlist_delete", "");
     }
 
     double step_size = aud_get_double("gtkui", "step_size");

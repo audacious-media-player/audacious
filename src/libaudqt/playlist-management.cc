@@ -78,8 +78,7 @@ static QDialog * buildDeleteDialog(Playlist playlist)
 #else
     QObject::connect(skip_prompt, &QCheckBox::stateChanged, [](int state) {
 #endif
-        aud_set_bool("audgui", "no_confirm_playlist_delete",
-                     (state == Qt::Checked));
+        aud_set_bool("no_confirm_playlist_delete", (state == Qt::Checked));
     });
 
     QObject::connect(remove, &QPushButton::clicked, [dialog, playlist]() {
@@ -99,7 +98,7 @@ EXPORT void playlist_show_rename(Playlist playlist)
 
 EXPORT void playlist_confirm_delete(Playlist playlist)
 {
-    if (aud_get_bool("audgui", "no_confirm_playlist_delete"))
+    if (aud_get_bool("no_confirm_playlist_delete"))
     {
         playlist.remove_playlist();
         return;

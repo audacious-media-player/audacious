@@ -20,10 +20,7 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/drct.h>
-#include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
-#include <libaudcore/interface.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 
@@ -42,7 +39,7 @@ static void show_question_dialog (const char * title, const char * text,
 
 static void no_confirm_cb (GtkToggleButton * toggle, void * config)
 {
-    aud_set_bool ("audgui", (const char *) config, gtk_toggle_button_get_active (toggle));
+    aud_set_bool ((const char *) config, gtk_toggle_button_get_active (toggle));
 }
 
 static void show_confirm_dialog (const char * title, const char * text,
@@ -61,7 +58,7 @@ static void confirm_delete_cb (void * data)
 
 EXPORT void audgui_confirm_playlist_delete (Playlist playlist)
 {
-    if (aud_get_bool ("audgui", "no_confirm_playlist_delete"))
+    if (aud_get_bool ("no_confirm_playlist_delete"))
     {
         playlist.remove_playlist ();
         return;
