@@ -19,6 +19,7 @@
 
 #include "playlist-data.h"
 
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -831,9 +832,20 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after(int ref_pos,
     if (by_album)
     {
         // look for the next entry in the album
-        auto next = entry_at(ref_pos + 1);
-        if (next && same_album(next->tuple, ref_entry->tuple))
-            return {ref_pos + 1, true};
+        auto new_pos = ref_pos + 1;
+        while (1)
+        {
+            auto next = entry_at(new_pos);
+            if (!next || !same_album(next->tuple, ref_entry->tuple))
+                break;
+
+            // the next entry cannot belong to the existing shuffle order,
+            // otherwise we would create a loop into it
+            if (next->shuffle_num == 0)
+                return {new_pos, true};
+
+            new_pos++;
+        }
     }
 
     return NO_POS;
@@ -1074,6 +1086,7 @@ bool PlaylistData::next_album(bool repeat)
         return false;
 
     // find the end of the album
+    auto original_pos = change.new_pos;
     while (1)
     {
         // album shuffle is always on for this function
@@ -1082,6 +1095,10 @@ bool PlaylistData::next_album(bool repeat)
         auto next_entry = entry_at(change.new_pos);
         if (!next_entry || !same_album(entry->tuple, next_entry->tuple))
             break;
+
+        // if we are back where we started,
+        // we're at the beginning of an infinite loop for some reason
+        assert(change.new_pos != original_pos);
 
         skipped.append(change);
     }
