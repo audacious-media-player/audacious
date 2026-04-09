@@ -811,6 +811,7 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_after(int ref_pos,
 
     // the reference entry can be beyond the end of the shuffle list
     // if we are looking ahead multiple entries, as in next_album()
+    // (2026-Apr: not true anymore, but leaving the check anyway)
     if (ref_entry->shuffle_num > 0)
     {
         // look for the next entry in the existing shuffle order
@@ -1066,7 +1067,6 @@ bool PlaylistData::next_album(bool repeat)
 {
     bool shuffle = aud_get_bool("shuffle");
     PosChange change = {position(), false};
-    Index<PosChange> skipped;
     bool repeated = false;
 
     auto entry = entry_at(change.new_pos);
@@ -1083,7 +1083,11 @@ bool PlaylistData::next_album(bool repeat)
         if (!next_entry || !same_album(entry->tuple, next_entry->tuple))
             break;
 
-        skipped.append(change);
+        // add skipped songs to the shuffle list immediately; this is
+        // important to prevent pos_after() from going backward in the
+        // shuffle list, causing an infinite back-and-forth loop
+        if (change.update_shuffle)
+            next_entry->shuffle_num = ++m_last_shuffle_num;
     }
 
     // get one new position if there was nothing after the album
@@ -1096,12 +1100,6 @@ bool PlaylistData::next_album(bool repeat)
 
     if (repeated)
         shuffle_reset();
-    else
-    {
-        // add skipped songs to shuffle list
-        for (auto & skip : skipped)
-            change_position(skip);
-    }
 
     change_position(change);
     queue_position_change();
