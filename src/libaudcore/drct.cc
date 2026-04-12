@@ -217,7 +217,7 @@ EXPORT void aud_drct_pl_prev()
     if (playlist == Playlist())
         playlist = Playlist::active_playlist();
 
-    playlist.prev_song();
+    playlist.prev_song(aud_get_bool("repeat"));
 }
 
 EXPORT void aud_drct_pl_prev_album()
@@ -226,7 +226,7 @@ EXPORT void aud_drct_pl_prev_album()
     if (playlist == Playlist())
         playlist = Playlist::active_playlist();
 
-    playlist.prev_album();
+    playlist.prev_album(aud_get_bool("repeat"));
 }
 
 static void add_list(Index<PlaylistAddItem> && items, int at, bool to_temp,
