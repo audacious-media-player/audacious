@@ -866,12 +866,18 @@ PlaylistData::PosChange PlaylistData::shuffle_pos_random(bool repeat,
     return NO_POS;
 }
 
-int PlaylistData::pos_before(int ref_pos, bool shuffle) const
+int PlaylistData::pos_before(int ref_pos, bool shuffle, bool repeat) const
 {
     if (shuffle)
         return shuffle_pos_before(ref_pos);
 
-    return (ref_pos > 0) ? ref_pos - 1 : -1;
+    if (ref_pos > 0)
+        return ref_pos - 1;
+
+    if (repeat)
+        return m_entries.len() - 1;
+
+    return -1;
 }
 
 PlaylistData::PosChange PlaylistData::pos_after(int ref_pos, bool shuffle,
@@ -1005,10 +1011,10 @@ void PlaylistData::set_position(int entry_num)
     queue_position_change();
 }
 
-bool PlaylistData::prev_song()
+bool PlaylistData::prev_song(bool repeat)
 {
     bool shuffle = aud_get_bool("shuffle");
-    int pos = pos_before(position(), shuffle);
+    int pos = pos_before(position(), shuffle, repeat);
     if (pos < 0)
         return false;
 
@@ -1027,7 +1033,7 @@ bool PlaylistData::next_song(bool repeat)
     return true;
 }
 
-bool PlaylistData::prev_album()
+bool PlaylistData::prev_album(bool repeat)
 {
     bool shuffle = aud_get_bool("shuffle");
     int pos = position();
@@ -1041,7 +1047,7 @@ bool PlaylistData::prev_album()
 
         while (1)
         {
-            auto prev_entry = entry_at(pos_before(pos, shuffle));
+            auto prev_entry = entry_at(pos_before(pos, shuffle, repeat));
             if (!prev_entry || !same_album(entry->tuple, prev_entry->tuple))
                 break;
 
@@ -1053,7 +1059,7 @@ bool PlaylistData::prev_album()
 
         // we're at the start of the current album
         // one more song back puts us in the previous album
-        pos = pos_before(pos, shuffle);
+        pos = pos_before(pos, shuffle, repeat);
         in_prev_album = true;
     }
 

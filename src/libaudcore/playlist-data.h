@@ -100,9 +100,9 @@ public:
 
     void set_position(int entry_num);
 
-    bool prev_song();
+    bool prev_song(bool repeat);
     bool next_song(bool repeat);
-    bool prev_album();
+    bool prev_album(bool repeat);
     bool next_album(bool repeat);
 
     int next_unscanned_entry(int entry_num) const;
@@ -159,7 +159,7 @@ private:
     PosChange shuffle_pos_after(int ref_pos, bool by_album) const;
     PosChange shuffle_pos_random(bool repeat, bool by_album) const;
 
-    int pos_before(int ref_pos, bool shuffle) const;
+    int pos_before(int ref_pos, bool shuffle, bool repeat) const;
     PosChange pos_after(int ref_pos, bool shuffle, bool by_album) const;
     PosChange pos_new(bool repeat, bool shuffle, bool by_album,
                       int hint_pos) const;

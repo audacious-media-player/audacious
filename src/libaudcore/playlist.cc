@@ -657,11 +657,19 @@ EXPORT void Playlist::set_position(int entry_num) const
 }
 EXPORT bool Playlist::prev_song() const
 {
-    SIMPLE_WRAPPER(bool, false, prev_song);
+    SIMPLE_WRAPPER(bool, false, prev_song, false);
+}
+EXPORT bool Playlist::prev_song(bool repeat) const
+{
+    SIMPLE_WRAPPER(bool, false, prev_song, repeat);
 }
 EXPORT bool Playlist::prev_album() const
 {
-    SIMPLE_WRAPPER(bool, false, prev_album);
+    SIMPLE_WRAPPER(bool, false, prev_album, false);
+}
+EXPORT bool Playlist::prev_album(bool repeat) const
+{
+    SIMPLE_WRAPPER(bool, false, prev_album, repeat);
 }
 EXPORT bool Playlist::next_song(bool repeat) const
 {

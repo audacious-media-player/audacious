@@ -253,11 +253,23 @@ public:
      * true on success, false if playlist position was not changed. */
     bool prev_song() const;
 
+    /* Returns the playlist position to the previous entry in playback order.
+     * At the beginning of the playlist, wraps around to the end if <repeat>
+     * is true.  Returns true on success, false if playlist position was not
+     * changed. */
+    bool prev_song(bool repeat) const;
+
     /* Returns the playlist position to the first entry in playback order where
      * the album is not the current album.  Does not support wrapping past the
      * beginning of the playlist.  Returns true on success, false if playlist
      * position was not changed. */
     bool prev_album() const;
+
+    /* Returns the playlist position to the first entry of the previous album
+     * in playback order, taking current shuffle settings into account.  At the
+     * beginning of the playlist, wraps around to the end if <repeat> is true.
+     * Returns true on success, false if playlist position was not changed. */
+    bool prev_album(bool repeat) const;
 
     /* Gets/sets the entry which has keyboard focus (-1 = no entry). */
     int get_focus() const;
