@@ -156,6 +156,7 @@ install_iconpath = join_paths(get_option('datadir'), 'icons')
 install_unscalable_iconpath = join_paths(install_iconpath, 'hicolor', '48x48', 'apps')
 install_scalable_iconpath = join_paths(install_iconpath, 'hicolor', 'scalable', 'apps')
 install_iconfile = join_paths(install_unscalable_iconpath, 'audacious.png')
+install_metainfo_path = join_paths(get_option('datadir'), 'metainfo')
 
 
 conf.set_quoted('INSTALL_BINDIR', join_paths(get_option('prefix'), install_bindir))
@@ -215,6 +216,7 @@ endif
 
 install_data('AUTHORS', 'COPYING')
 install_data('audacious.desktop', install_dir: install_desktoppath)
+install_data('audacious.metainfo.xml', install_dir: install_metainfo_path)
 
 
 pkg = import('pkgconfig')
