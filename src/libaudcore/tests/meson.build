@@ -10,7 +10,7 @@ glib_dep = dependency('glib-2.0', version: '>= 2.36')
 thread_dep = dependency('threads')
 qt_dep = dependency('qt6', version: '>= 6.0', modules: ['Core'], required: false)
 if not qt_dep.found()
-  qt_dep = dependency('qt5', version: '>= 5.2', modules: ['Core'])
+  qt_dep = dependency('qt5', version: '>= 5.12', modules: ['Core'])
 endif
 
 
