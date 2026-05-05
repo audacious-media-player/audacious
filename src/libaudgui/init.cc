@@ -18,12 +18,10 @@
  */
 
 #include <assert.h>
-#include <stdlib.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/playlist.h>
-#include <libaudcore/plugins.h>
 #include <libaudcore/runtime.h>
 
 #include "internal.h"
@@ -343,11 +341,8 @@ EXPORT void audgui_init ()
         return;
 
 #if defined(GDK_WINDOWING_WAYLAND) && defined(GDK_WINDOWING_X11)
-    // The Winamp interface is not usable yet on Wayland (and perhaps
-    // may never be) due to protocol limitations regarding application-
-    // side window positioning. Force XWayland if needed and available.
-    PluginHandle * skins = aud_plugin_lookup_basename ("skins");
-    if (skins && aud_plugin_get_enabled (skins) && g_getenv ("DISPLAY"))
+    // Force Xwayland if requested and potentially available
+    if (aud_get_bool ("use_xwayland") && g_getenv ("DISPLAY"))
         g_setenv ("GDK_BACKEND", "x11", true);
 #endif
 

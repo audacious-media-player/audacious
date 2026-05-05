@@ -29,7 +29,6 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/interface.h>
-#include <libaudcore/plugins.h>
 #include <libaudcore/runtime.h>
 
 #include "libaudqt-internal.h"
@@ -136,11 +135,8 @@ EXPORT void init()
 #endif
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    // The Winamp interface is not usable yet on Wayland (and perhaps
-    // may never be) due to protocol limitations regarding application-
-    // side window positioning. Force XWayland if needed and available.
-    PluginHandle * skins = aud_plugin_lookup_basename("skins-qt");
-    if (skins && aud_plugin_get_enabled(skins) && !qgetenv("DISPLAY").isEmpty())
+    // Force Xwayland if requested and potentially available
+    if (aud_get_bool("use_xwayland") && qEnvironmentVariableIsSet("DISPLAY"))
         qputenv("QT_QPA_PLATFORM", "xcb");
 #endif
 
