@@ -176,6 +176,9 @@ endif
 
 if get_option('qt')
   conf.set10('USE_QT', true)
+  if qt_dep.version().version_compare('<= 6.7')
+    conf.set10('USE_XWAYLAND', true)
+  endif
 endif
 
 

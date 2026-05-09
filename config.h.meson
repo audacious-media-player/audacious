@@ -25,5 +25,6 @@
 #mesondefine USE_GTK
 #mesondefine USE_GTK3
 #mesondefine USE_LIBARCHIVE
+#mesondefine USE_XWAYLAND
 
 #mesondefine GLIB_VERSION_MIN_REQUIRED

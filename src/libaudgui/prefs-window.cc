@@ -369,6 +369,10 @@ static const PreferencesWidget song_info_page_widgets[] = {
 
 static const PreferencesWidget advanced_page_widgets[] = {
     WidgetLabel (N_("<b>Compatibility</b>")),
+#if defined(GDK_WINDOWING_WAYLAND) && defined(GDK_WINDOWING_X11)
+    WidgetCheck (N_("Use Xwayland (requires a restart to take effect)"),
+        WidgetBool (0, "use_xwayland")),
+#endif
     WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
         WidgetBool (0, "convert_backslash")),
     WidgetTable ({{chardet_elements}}),
