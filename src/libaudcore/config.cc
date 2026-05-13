@@ -266,33 +266,34 @@ void config_load()
 
     aud_config_set_defaults(nullptr, core_defaults);
 
-    /* migrate from previous versions */
+    /* Migrate from previous versions
+     * Caution: Use only the aud_set_*_no_notify() functions here.
+     * The event loop may not be initialized yet at this point. */
     if (aud_get_bool("replay_gain_album"))
     {
-        aud_set_str("replay_gain_album", "");
-        aud_set_int("replay_gain_mode", (int)ReplayGainMode::Album);
+        aud_set_str_no_notify(nullptr, "replay_gain_album", "");
+        aud_set_int_no_notify(nullptr, "replay_gain_mode",
+                              (int)ReplayGainMode::Album);
     }
 
-    String no_confirm = aud_get_str("audgui", "no_confirm_playlist_delete");
-    if (no_confirm[0])
+    if (aud_get_bool("audgui", "no_confirm_playlist_delete"))
     {
-        aud_set_bool("no_confirm_playlist_delete",
-                     aud_get_bool("audgui", "no_confirm_playlist_delete"));
-        aud_set_str("audgui", "no_confirm_playlist_delete", "");
+        aud_set_bool_no_notify(nullptr, "no_confirm_playlist_delete", true);
+        aud_set_str_no_notify("audgui", "no_confirm_playlist_delete", "");
     }
 
     double step_size = aud_get_double("gtkui", "step_size");
     if (step_size > 0)
     {
-        aud_set_int("step_size", (int)step_size);
-        aud_set_str("gtkui", "step_size", "");
+        aud_set_int_no_notify(nullptr, "step_size", (int)step_size);
+        aud_set_str_no_notify("gtkui", "step_size", "");
     }
 
     int volume_delta = aud_get_int("statusicon", "volume_delta");
     if (volume_delta > 0)
     {
-        aud_set_int("volume_delta", volume_delta);
-        aud_set_str("statusicon", "volume_delta", "");
+        aud_set_int_no_notify(nullptr, "volume_delta", volume_delta);
+        aud_set_str_no_notify("statusicon", "volume_delta", "");
     }
 }
 
@@ -377,8 +378,8 @@ void config_cleanup()
     s_defaults.clear();
 }
 
-EXPORT void aud_set_str(const char * section, const char * name,
-                        const char * value)
+bool aud_set_str_no_notify(const char * section, const char * name,
+                           const char * value)
 {
     assert(name && value);
 
@@ -387,8 +388,13 @@ EXPORT void aud_set_str(const char * section, const char * name,
     bool is_default = config_op_run(op, s_defaults);
 
     op.type = is_default ? OP_CLEAR : OP_SET;
-    bool changed = config_op_run(op, s_config);
+    return config_op_run(op, s_config);
+}
 
+EXPORT void aud_set_str(const char * section, const char * name,
+                        const char * value)
+{
+    bool changed = aud_set_str_no_notify(section, name, value);
     if (changed && !section)
         event_queue(str_concat({"set ", name}), nullptr);
 }
@@ -404,6 +410,11 @@ EXPORT String aud_get_str(const char * section, const char * name)
         config_op_run(op, s_defaults);
 
     return op.value ? op.value : String("");
+}
+
+void aud_set_bool_no_notify(const char * section, const char * name, bool value)
+{
+    aud_set_str_no_notify(section, name, value ? "TRUE" : "FALSE");
 }
 
 EXPORT void aud_set_bool(const char * section, const char * name, bool value)
@@ -422,6 +433,11 @@ EXPORT void aud_toggle_bool(const char * section, const char * name)
     aud_set_bool(section, name, !aud_get_bool(section, name));
 }
 
+void aud_set_int_no_notify(const char * section, const char * name, int value)
+{
+    aud_set_str_no_notify(section, name, int_to_str(value));
+}
+
 EXPORT void aud_set_int(const char * section, const char * name, int value)
 {
     aud_set_str(section, name, int_to_str(value));
@@ -430,6 +446,12 @@ EXPORT void aud_set_int(const char * section, const char * name, int value)
 EXPORT int aud_get_int(const char * section, const char * name)
 {
     return str_to_int(aud_get_str(section, name));
+}
+
+void aud_set_double_no_notify(const char * section, const char * name,
+                              double value)
+{
+    aud_set_str_no_notify(section, name, double_to_str(value));
 }
 
 EXPORT void aud_set_double(const char * section, const char * name,

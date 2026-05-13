@@ -56,6 +56,13 @@ void config_load();
 void config_save();
 void config_cleanup();
 
+bool aud_set_str_no_notify(const char * section, const char * name,
+                           const char * value);
+void aud_set_bool_no_notify(const char * section, const char * name,
+                            bool value);
+void aud_set_int_no_notify(const char * section, const char * name, int value);
+void aud_set_double_no_notify(const char * section, const char * name,
+                              double value);
 /* drct.cc */
 void record_init();
 void record_cleanup();
