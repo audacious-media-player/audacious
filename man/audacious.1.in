@@ -73,10 +73,6 @@ Print version information and exit.
 .TP
 .B -V, --verbose
 Print debugging output while running (may be used twice for even more output).
-.TP
-.B -N, --new-instance
-Starts a new instance.  The second instance started may be controlled with
-\fBaudtool -2\fR, the third with \fBaudtool -3\fR, etc. (up to 9 instances).
 
 .SH KEYBINDINGS
 .ta 24
