@@ -10,13 +10,13 @@ gtk: gtk+-2.24.33.tar.xz
 	cd gtk+-2.24.33 && CFLAGS="-O2 -fcommon -Wno-error=implicit-int -Wno-error=incompatible-pointer-types" ./configure --prefix=$(LIB_PREFIX)
 	cd gtk+-2.24.33 && $(MAKE) && $(MAKE) install
 
-ffmpeg-7.1.1.tar.xz:
-	wget https://ffmpeg.org/releases/ffmpeg-7.1.1.tar.xz
+ffmpeg-8.1.1.tar.xz:
+	wget https://ffmpeg.org/releases/ffmpeg-8.1.1.tar.xz
 
-ffmpeg: ffmpeg-7.1.1.tar.xz
-	tar xf ffmpeg-7.1.1.tar.xz
-	cd ffmpeg-7.1.1 && ./configure --prefix=$(LIB_PREFIX) --enable-shared --cpu=x86-64 --disable-vulkan --disable-x86asm
-	cd ffmpeg-7.1.1 && $(MAKE) && $(MAKE) install
+ffmpeg: ffmpeg-8.1.1.tar.xz
+	tar xf ffmpeg-8.1.1.tar.xz
+	cd ffmpeg-8.1.1 && ./configure --prefix=$(LIB_PREFIX) --enable-shared --cpu=x86-64 --disable-vulkan --disable-x86asm
+	cd ffmpeg-8.1.1 && $(MAKE) && $(MAKE) install
 
 libmms-0.6.4.tar.gz:
 	wget https://sourceforge.net/projects/libmms/files/libmms/0.6.4/libmms-0.6.4.tar.gz
@@ -44,11 +44,3 @@ adplug: adplug-2.4.tar.bz2
 	tar xf adplug-2.4.tar.bz2
 	cd adplug-2.4 && ./configure --prefix=$(LIB_PREFIX) --disable-shared
 	cd adplug-2.4 && $(MAKE) && $(MAKE) install
-
-libsidplayfp-2.15.0.tar.gz:
-	wget https://github.com/libsidplayfp/libsidplayfp/releases/download/v2.15.0/libsidplayfp-2.15.0.tar.gz
-
-libsidplayfp: libsidplayfp-2.15.0.tar.gz
-	tar xf libsidplayfp-2.15.0.tar.gz
-	cd libsidplayfp-2.15.0 && ./configure --prefix=$(LIB_PREFIX)
-	cd libsidplayfp-2.15.0 && $(MAKE) && $(MAKE) install

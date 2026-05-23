@@ -2,7 +2,11 @@
 
 # Quick-and-dirty script for updating a Windows release folder
 
+set -e
 srcdir=$(dirname "$(readlink -f "$0")")
+
+# this script was written for in-tree build (pre-meson)
+cp -a ${srcdir}/../build/win32/* ${srcdir}/
 
 rm -rf /C/aud-win32/bin/share
 rm -rf /C/aud-win32/share/locale
