@@ -19,15 +19,16 @@
 # natird zoto <dritan86@gmail.com>, 2012
 #       Sang-Jin Hwang <accel@accellinux.org>, 1999
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2012
-# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012-2015,2017
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012-2015,2017,2026
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2025-07-14 01:26+0200\n"
+"POT-Creation-Date: 2026-05-09 21:25+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022-2023,2025\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>, "
+"2012-2015,2017,2026\n"
 "Language-Team: Korean (http://app.transifex.com/audacious/audacious/language/"
 "ko/)\n"
 "Language: ko\n"
@@ -36,85 +37,85 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:74
 msgid "Show command-line help"
 msgstr "명령행 도움말 표시하기"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:75
 msgid "Show version"
 msgstr "버전 표시하기"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:76
 msgid "Start playback"
 msgstr "플레이백 시작하기"
 
-#: src/audacious/main.cc:75
-msgid "Pause playback"
-msgstr "플레이백 일시정지"
+#: src/audacious/main.cc:78
+msgid "Pause playback, resume if already paused"
+msgstr "플레이백 일시정지, 이미 일시정지 했으면 이어듣기"
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:80
 msgid "Pause if playing, play otherwise"
 msgstr "재생하는 경우 일시정지, 그렇지 않으면 재생"
 
-#: src/audacious/main.cc:78
-msgid "Stop playback"
-msgstr "플레이백 중지하기"
-
-#: src/audacious/main.cc:79
-msgid "Skip to previous song"
-msgstr "이전 노래로 건너뛰기"
-
-#: src/audacious/main.cc:80
-msgid "Skip to next song"
-msgstr "다음 노래로 건너뛰기"
-
 #: src/audacious/main.cc:81
+msgid "Stop playback"
+msgstr "플레이백 정지"
+
+#: src/audacious/main.cc:82
+msgid "Skip to previous song"
+msgstr "이전 곡으로 건너뛰기"
+
+#: src/audacious/main.cc:83
+msgid "Skip to next song"
+msgstr "다음 곡으로 건너뛰기"
+
+#: src/audacious/main.cc:84
 msgid "Add files to the playlist"
 msgstr "재생목록에 파일 추가하기"
 
-#: src/audacious/main.cc:83
+#: src/audacious/main.cc:86
 msgid "Add files to a temporary playlist"
 msgstr "임시 재생목록에 파일 추가하기"
 
-#: src/audacious/main.cc:84
+#: src/audacious/main.cc:87
 msgid "Display the main window"
 msgstr "기본 창 화면표시"
 
-#: src/audacious/main.cc:86
+#: src/audacious/main.cc:89
 msgid "Display the jump-to-song window"
-msgstr "노래로 이동 창 화면표시"
+msgstr "곡으로 이동 창 화면 표시"
 
-#: src/audacious/main.cc:88
+#: src/audacious/main.cc:91
 msgid "Start without a graphical interface"
 msgstr "그래픽 인터페이스를 제외하고 시작"
 
-#: src/audacious/main.cc:90
+#: src/audacious/main.cc:93
 msgid "Quit on playback stop"
-msgstr "플레이백 중지 시 종료"
+msgstr "플레이백 정지 시 종료"
 
-#: src/audacious/main.cc:92
+#: src/audacious/main.cc:95
 msgid "Print debugging messages (may be used twice)"
 msgstr "디버깅 메시지 출력(두번 사용할 수 있음)"
 
-#: src/audacious/main.cc:94
+#: src/audacious/main.cc:97
 msgid "Run in GTK mode"
 msgstr "GTK 모드에서 실행"
 
-#: src/audacious/main.cc:95
+#: src/audacious/main.cc:98
 msgid "Run in Qt mode"
 msgstr "Qt 모드로 실행"
 
-#: src/audacious/main.cc:152
+#: src/audacious/main.cc:155
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "알 수 없는 옵션: %s\n"
 
-#: src/audacious/main.cc:174
+#: src/audacious/main.cc:177
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "알 수 없는 옵션: -%c\n"
 
-#: src/audacious/main.cc:204
+#: src/audacious/main.cc:207
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
@@ -122,11 +123,11 @@ msgstr ""
 "사용법: audacious <옵션> ... <파일> ...\n"
 "\n"
 
-#: src/audacious/main.cc:206
+#: src/audacious/main.cc:209
 msgid "Select instance to run/control"
 msgstr "실행/제어할 인스턴스 선택"
 
-#: src/audacious/main.cc:391 src/libaudqt/audqt.cc:165
+#: src/audacious/main.cc:392 src/libaudqt/audqt.cc:151
 msgid "Audacious"
 msgstr "Audacious "
 
@@ -134,7 +135,7 @@ msgstr "Audacious "
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d개 파일을 찾았습니다"
+msgstr[0] "파일 %d개를 찾았습니다"
 
 #: src/libaudcore/adder.cc:320 src/libaudcore/adder.cc:404
 #, c-format
@@ -153,7 +154,7 @@ msgstr "파일이 없습니다."
 msgid "New Playlist"
 msgstr "새 재생목록"
 
-#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:534
+#: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:562
 msgid "Standard input"
 msgstr "표준 입력"
 
@@ -162,7 +163,7 @@ msgstr "표준 입력"
 msgid "Audio CD, track %s"
 msgstr "음악 CD, %s 트랙"
 
-#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:510
+#: src/libaudcore/audstrings.cc:670 src/libaudcore/tuple.cc:538
 msgid "(character encoding error)"
 msgstr "(문자 인코딩 오류)"
 
@@ -171,15 +172,15 @@ msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
 msgstr "스트림 녹음을 사용하려면 오디오 설정에서 설정해야합니다."
 
-#: src/libaudcore/output.cc:289
+#: src/libaudcore/output.cc:288
 msgid "Error opening output stream"
 msgstr "출력 스트림 열기 오류"
 
-#: src/libaudcore/output.cc:341
+#: src/libaudcore/output.cc:340
 msgid "Error recording output stream"
 msgstr "출력 스트림 녹음 오류"
 
-#: src/libaudcore/playback.cc:379
+#: src/libaudcore/playback.cc:378
 #, c-format
 msgid ""
 "Error playing %s:\n"
@@ -188,7 +189,7 @@ msgstr ""
 "%s 재생 오류:\n"
 "%s"
 
-#: src/libaudcore/playback.cc:510
+#: src/libaudcore/playback.cc:509
 msgid "Invalid audio format"
 msgstr "잘못된 오디오 형식"
 
@@ -226,15 +227,15 @@ msgstr "%s 저장하는 중 오류."
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "%s을(를) 저장할 수 없습니다: 지원하지 않는 파일 이름 확장자."
 
-#: src/libaudcore/probe.cc:54
+#: src/libaudcore/probe.cc:55
 msgid "Error loading plugin"
 msgstr "플러그인 불러오는 중 오류"
 
-#: src/libaudcore/probe.cc:179
+#: src/libaudcore/probe.cc:180
 msgid "Seek error"
 msgstr "탐색 오류"
 
-#: src/libaudcore/probe.cc:187
+#: src/libaudcore/probe.cc:188
 msgid ""
 "The file format could not be determined. The format may be unsupported, or a "
 "necessary plugin may not be installed/enabled."
@@ -242,7 +243,7 @@ msgstr ""
 "파일 형식을 확인할 수 없습니다. 형식이 지원되지 않거나 필요한 플러그인이 설"
 "치/활성화되지 않았을 수 있습니다."
 
-#: src/libaudcore/probe.cc:218
+#: src/libaudcore/probe.cc:229
 msgid ""
 "The file could not be decoded. It may be invalid, corrupt, or in an "
 "unsupported format."
@@ -250,30 +251,30 @@ msgstr ""
 "파일을 디코딩할 수 없습니다. 유효하지 않거나 손상되었거나 지원되지 않는 형식"
 "일 수 있습니다."
 
-#: src/libaudcore/tuple.cc:568
+#: src/libaudcore/tuple.cc:596
 msgid "Mono"
 msgstr "모노"
 
-#: src/libaudcore/tuple.cc:570
+#: src/libaudcore/tuple.cc:598
 msgid "Stereo"
 msgstr "스테레오"
 
-#: src/libaudcore/tuple.cc:573
+#: src/libaudcore/tuple.cc:601
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "채널 %d개"
 
-#: src/libaudcore/tuple.cc:791
+#: src/libaudcore/tuple.cc:819
 msgid "Audio CD"
 msgstr "오디오 CD"
 
-#: src/libaudcore/tuple.cc:875
+#: src/libaudcore/tuple.cc:903
 #, c-format
 msgid "Track %d"
 msgstr "%d번 트랙"
 
-#: src/libaudcore/tuple.cc:881
+#: src/libaudcore/tuple.cc:909
 msgid "(unknown title)"
 msgstr "(알 수 없는 제목)"
 
@@ -302,7 +303,7 @@ msgstr "라이선스"
 msgid "About Audacious"
 msgstr "Audacious 정보"
 
-#: src/libaudgui/confirm.cc:36 src/libaudgui/jump-to-time.cc:48
+#: src/libaudgui/confirm.cc:33 src/libaudgui/jump-to-time.cc:48
 #: src/libaudgui/playlists.cc:93 src/libaudgui/playlists.cc:190
 #: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:105
 #: src/libaudqt/playlist-management.cc:42
@@ -311,32 +312,32 @@ msgstr "Audacious 정보"
 msgid "_Cancel"
 msgstr "취소(_C)"
 
-#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:58
+#: src/libaudgui/confirm.cc:48 src/libaudqt/playlist-management.cc:58
 msgid "_Don’t ask again"
 msgstr "다시 묻지 않음(_D)"
 
-#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:66
+#: src/libaudgui/confirm.cc:67 src/libaudqt/playlist-management.cc:66
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
 msgstr "“%s”을(를) 완전히 제거하시겠습니까?"
 
-#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:59
+#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:59
 msgid "_Remove"
 msgstr "제거(_R)"
 
-#: src/libaudgui/confirm.cc:76 src/libaudqt/playlist-management.cc:63
+#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:63
 msgid "Remove Playlist"
 msgstr "재생목록 제거"
 
-#: src/libaudgui/confirm.cc:95 src/libaudqt/playlist-management.cc:40
+#: src/libaudgui/confirm.cc:92 src/libaudqt/playlist-management.cc:40
 msgid "What would you like to call this playlist?"
 msgstr "이 재생목록을 호출하기 위해 무얼 하시겠습니까?"
 
-#: src/libaudgui/confirm.cc:96 src/libaudqt/playlist-management.cc:41
+#: src/libaudgui/confirm.cc:93 src/libaudqt/playlist-management.cc:41
 msgid "_Rename"
 msgstr "이름 바꾸기(_R)"
 
-#: src/libaudgui/confirm.cc:97 src/libaudqt/playlist-management.cc:38
+#: src/libaudgui/confirm.cc:94 src/libaudqt/playlist-management.cc:38
 msgid "Rename Playlist"
 msgstr "재생목록 이름 바꾸기"
 
@@ -380,7 +381,7 @@ msgstr "변경사항 되돌리기"
 
 #: src/libaudgui/equalizer.cc:46 src/libaudqt/equalizer-qt.cc:120
 msgid "_Enable"
-msgstr "활성화(_E)"
+msgstr "활성(_E)"
 
 #: src/libaudgui/equalizer.cc:128 src/libaudqt/equalizer-qt.cc:123
 msgid "31 Hz"
@@ -465,38 +466,38 @@ msgid "Close _dialog on add"
 msgstr "추가할 때 대화상자 닫기(_D)"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
-#: src/libaudgui/jump-to-track.cc:322 src/libaudgui/plugin-prefs.cc:168
-#: src/libaudgui/prefs-window.cc:939 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:365 src/libaudqt/audqt.cc:344
+#: src/libaudgui/jump-to-track.cc:324 src/libaudgui/plugin-prefs.cc:168
+#: src/libaudgui/prefs-window.cc:942 src/libaudgui/queue-manager.cc:195
+#: src/libaudgui/util.cc:355 src/libaudqt/audqt.cc:330
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
-#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:696
+#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:702
 #: src/libaudqt/song-window-qt.cc:376
 msgid "_Close"
 msgstr "닫기(_C)"
 
 #: src/libaudgui/infopopup.cc:216 src/libaudgui/infowin.cc:402
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/infopopup-qt.cc:95
-#: src/libaudqt/info-widget.cc:48 src/libaudqt/prefs-window-qt.cc:172
-#: src/libaudqt/queue-manager-qt.cc:125
+#: src/libaudqt/info-widget.cc:50 src/libaudqt/prefs-window-qt.cc:172
+#: src/libaudqt/queue-manager-qt.cc:128
 msgid "Title"
 msgstr "제목"
 
 #: src/libaudgui/infopopup.cc:217 src/libaudgui/infowin.cc:405
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/infopopup-qt.cc:97
-#: src/libaudqt/info-widget.cc:49 src/libaudqt/prefs-window-qt.cc:169
+#: src/libaudqt/info-widget.cc:51 src/libaudqt/prefs-window-qt.cc:169
 msgid "Artist"
-msgstr "아티스트"
+msgstr "음악가"
 
 #: src/libaudgui/infopopup.cc:218 src/libaudgui/infowin.cc:408
 #: src/libaudgui/prefs-window.cc:103 src/libaudgui/prefs-window.cc:151
-#: src/libaudqt/infopopup-qt.cc:99 src/libaudqt/info-widget.cc:50
+#: src/libaudqt/infopopup-qt.cc:99 src/libaudqt/info-widget.cc:52
 #: src/libaudqt/prefs-window-qt.cc:170 src/libaudqt/prefs-window-qt.cc:213
 msgid "Album"
 msgstr "앨범"
 
 #: src/libaudgui/infopopup.cc:219 src/libaudgui/infowin.cc:418
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/infopopup-qt.cc:101
-#: src/libaudqt/info-widget.cc:53 src/libaudqt/prefs-window-qt.cc:174
+#: src/libaudqt/info-widget.cc:55 src/libaudqt/prefs-window-qt.cc:174
 msgid "Genre"
 msgstr "장르"
 
@@ -516,7 +517,7 @@ msgid "Disc"
 msgstr "디스크"
 
 #: src/libaudgui/infopopup.cc:223 src/libaudqt/infopopup-qt.cc:109
-#: src/libaudqt/info-widget.cc:66
+#: src/libaudqt/info-widget.cc:68
 msgid "Length"
 msgstr "길이"
 
@@ -526,7 +527,7 @@ msgstr "형식:"
 
 #: src/libaudgui/infowin.cc:52
 msgid "Quality:"
-msgstr "품질:"
+msgstr "음질:"
 
 #: src/libaudgui/infowin.cc:53
 msgid "Bitrate:"
@@ -626,7 +627,7 @@ msgstr "정글"
 
 #: src/libaudgui/infowin.cc:110
 msgid "Metal"
-msgstr "메달"
+msgstr "메탈"
 
 #: src/libaudgui/infowin.cc:111
 msgid "New Age"
@@ -690,27 +691,27 @@ msgstr "트리팝"
 
 #: src/libaudgui/infowin.cc:232
 msgid "Save successful"
-msgstr "성공적으로 저장"
+msgstr "저장을 성공했습니다"
 
 #: src/libaudgui/infowin.cc:236
 msgid "Save error"
-msgstr "저장 오류"
+msgstr "저장에 오류가 있습니다"
 
 #: src/libaudgui/infowin.cc:333 src/libaudgui/prefs-window.cc:87
 #: src/libaudqt/infowin-qt.cc:64 src/libaudqt/prefs-window-qt.cc:164
 msgid "Song Info"
-msgstr "노래 정보"
+msgstr "곡 정보"
 
-#: src/libaudgui/infowin.cc:411 src/libaudqt/info-widget.cc:51
+#: src/libaudgui/infowin.cc:411 src/libaudqt/info-widget.cc:53
 msgid "Album Artist"
-msgstr "앨범 아티스트"
+msgstr "앨범 음악가"
 
 #: src/libaudgui/infowin.cc:414 src/libaudgui/prefs-window.cc:113
-#: src/libaudqt/info-widget.cc:54 src/libaudqt/prefs-window-qt.cc:180
+#: src/libaudqt/info-widget.cc:56 src/libaudqt/prefs-window-qt.cc:180
 msgid "Comment"
 msgstr "주석"
 
-#: src/libaudgui/infowin.cc:424 src/libaudqt/info-widget.cc:52
+#: src/libaudgui/infowin.cc:424 src/libaudqt/info-widget.cc:54
 msgid "Track Number"
 msgstr "트랙 번호"
 
@@ -739,38 +740,38 @@ msgstr "%d kbit/s"
 msgid "N/A"
 msgstr "없음"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:327
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:329
 #: src/libaudqt/song-window-qt.cc:373
 msgid "_Jump"
 msgstr "건너뛰기(_J)"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
-msgstr "시간 이동"
+msgstr "지정 시간으로 이동"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "시간 입력(분:초):"
 
 #: src/libaudgui/jump-to-track.cc:96 src/libaudgui/jump-to-track.cc:104
-#: src/libaudgui/jump-to-track.cc:318 src/libaudqt/song-window-qt.cc:290
+#: src/libaudgui/jump-to-track.cc:320 src/libaudqt/song-window-qt.cc:290
 #: src/libaudqt/song-window-qt.cc:371
 msgid "_Queue"
-msgstr "대기열(_Q)"
+msgstr "대기열에 추가(_Q)"
 
 #: src/libaudgui/jump-to-track.cc:102 src/libaudqt/song-window-qt.cc:290
 msgid "Un_queue"
-msgstr "대기열 해제(_Q)"
+msgstr "대기열에서 제거(_Q)"
 
-#: src/libaudgui/jump-to-track.cc:248 src/libaudqt/song-window-qt.cc:305
+#: src/libaudgui/jump-to-track.cc:252 src/libaudqt/song-window-qt.cc:305
 msgid "Jump to Song"
-msgstr "노래 건너뛰기"
+msgstr "곡으로 이동"
 
-#: src/libaudgui/jump-to-track.cc:274 src/libaudqt/song-window-qt.cc:322
+#: src/libaudgui/jump-to-track.cc:278 src/libaudqt/song-window-qt.cc:322
 msgid "_Filter:"
 msgstr "필터(_F):"
 
-#: src/libaudgui/jump-to-track.cc:311 src/libaudqt/song-window-qt.cc:366
+#: src/libaudgui/jump-to-track.cc:313 src/libaudqt/song-window-qt.cc:366
 msgid "C_lose on jump"
 msgstr "건너뛸 때 닫기(_L)"
 
@@ -830,15 +831,15 @@ msgstr "%s 설정"
 msgid "_Set"
 msgstr "설정(_S)"
 
-#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:751
-#: src/libaudgui/prefs-window.cc:791 src/libaudqt/prefs-window-qt.cc:641
-#: src/libaudqt/prefs-window-qt.cc:644
+#: src/libaudgui/plugin-view.cc:236 src/libaudgui/prefs-window.cc:754
+#: src/libaudgui/prefs-window.cc:794 src/libaudqt/prefs-window-qt.cc:647
+#: src/libaudqt/prefs-window-qt.cc:650
 msgid "_Settings"
 msgstr "설정(_S)"
 
-#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:765
-#: src/libaudgui/prefs-window.cc:803 src/libaudqt/prefs-window-qt.cc:642
-#: src/libaudqt/prefs-window-qt.cc:645
+#: src/libaudgui/plugin-view.cc:243 src/libaudgui/prefs-window.cc:768
+#: src/libaudgui/prefs-window.cc:806 src/libaudqt/prefs-window-qt.cc:648
+#: src/libaudqt/prefs-window-qt.cc:651
 msgid "_About"
 msgstr "정보(_A)"
 
@@ -916,17 +917,17 @@ msgstr "파일 경로"
 msgid "Date"
 msgstr "날짜"
 
-#: src/libaudgui/prefs-window.cc:111 src/libaudqt/info-widget.cc:55
+#: src/libaudgui/prefs-window.cc:111 src/libaudqt/info-widget.cc:57
 #: src/libaudqt/prefs-window-qt.cc:178
 msgid "Description"
 msgstr "설명"
 
-#: src/libaudgui/prefs-window.cc:114 src/libaudqt/info-widget.cc:67
+#: src/libaudgui/prefs-window.cc:114 src/libaudqt/info-widget.cc:69
 #: src/libaudqt/prefs-window-qt.cc:181
 msgid "Codec"
 msgstr "코덱"
 
-#: src/libaudgui/prefs-window.cc:115 src/libaudqt/info-widget.cc:68
+#: src/libaudgui/prefs-window.cc:115 src/libaudqt/info-widget.cc:70
 #: src/libaudqt/prefs-window-qt.cc:182
 msgid "Quality"
 msgstr "음질"
@@ -1025,7 +1026,7 @@ msgstr "이 빌드에서는 Qt 모드를 사용할 수 없습니다."
 
 #: src/libaudgui/prefs-window.cc:182 src/libaudqt/prefs-window-qt.cc:270
 msgid "Interface:"
-msgstr "인터페이스"
+msgstr "인터페이스:"
 
 #: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window-qt.cc:284
 msgid "Output plugin:"
@@ -1163,7 +1164,7 @@ msgstr "즉시 다시 시작하는 대신 일시정지"
 
 #: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:364
 msgid "Advance when the current song is deleted"
-msgstr "현재 노래가 삭제되면 다음 노래로 진행"
+msgstr "현재 곡이 삭제되면 다음 곡으로 진행"
 
 #: src/libaudgui/prefs-window.cc:325 src/libaudqt/prefs-window-qt.cc:366
 msgid "Clear the playlist when opening files"
@@ -1174,195 +1175,203 @@ msgid "Open files in a temporary playlist"
 msgstr "임시 재생목록에서 파일 열기"
 
 #: src/libaudgui/prefs-window.cc:329 src/libaudqt/prefs-window-qt.cc:370
-msgid "<b>Song Display</b>"
-msgstr "<b>노래 화면표시</b>"
+msgid "Skip confirmation when removing a playlist"
+msgstr "재생 목록 제거시 확인 과정 건너뛰기"
 
-#: src/libaudgui/prefs-window.cc:330 src/libaudqt/prefs-window-qt.cc:371
-msgid "Show song numbers"
-msgstr "노래 번호 표시하기"
+#: src/libaudgui/prefs-window.cc:331 src/libaudqt/prefs-window-qt.cc:372
+msgid "<b>Song Display</b>"
+msgstr "<b>곡 화면</b>"
 
 #: src/libaudgui/prefs-window.cc:332 src/libaudqt/prefs-window-qt.cc:373
-msgid "Show leading zeroes (02:00 vs. 2:00)"
-msgstr "앞의 0 표시하기 (02:00 / 2:00)"
+msgid "Show song numbers"
+msgstr "곡 번호 표시"
 
 #: src/libaudgui/prefs-window.cc:334 src/libaudqt/prefs-window-qt.cc:375
-msgid "Show hours separately (1:30:00 vs. 90:00)"
-msgstr "시간 단위 개별 표시하기 (1:30:00 / 90:00)"
+msgid "Show leading zeroes (02:00 vs. 2:00)"
+msgstr "앞 부분 0 표시 (02:00 / 2:00)"
 
-#: src/libaudgui/prefs-window.cc:337 src/libaudqt/prefs-window-qt.cc:378
+#: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:377
+msgid "Show hours separately (1:30:00 vs. 90:00)"
+msgstr "시간 단위 개별 표시 (1:30:00 / 90:00)"
+
+#: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window-qt.cc:380
 msgid "<b>Export</b>"
 msgstr "<b>출력</b>"
 
-#: src/libaudgui/prefs-window.cc:338 src/libaudqt/prefs-window-qt.cc:379
+#: src/libaudgui/prefs-window.cc:340 src/libaudqt/prefs-window-qt.cc:381
 msgid "Use relative paths when possible"
-msgstr "가능할경우 상대적 경로를 사용합니다."
+msgstr "가능할 경우 상대적 경로를 사용합니다."
 
-#: src/libaudgui/prefs-window.cc:343 src/libaudqt/prefs-window-qt.cc:383
+#: src/libaudgui/prefs-window.cc:345 src/libaudqt/prefs-window-qt.cc:385
 msgid "<b>Album Art</b>"
 msgstr "<b>앨범 표지</b>"
 
-#: src/libaudgui/prefs-window.cc:344 src/libaudqt/prefs-window-qt.cc:385
-msgid "Search for images matching these words (comma-separated):"
-msgstr "이 단어에 일치하는 그림 검색(콤마로 구분):"
-
 #: src/libaudgui/prefs-window.cc:346 src/libaudqt/prefs-window-qt.cc:387
-msgid "Exclude images matching these words (comma-separated):"
-msgstr "이 단어에 일치하는 그림 제외(콤마로 구분):"
+msgid "Search for images matching these words (comma-separated):"
+msgstr "이 단어에 일치하는 그림 검색(쉼표로 구분):"
 
 #: src/libaudgui/prefs-window.cc:348 src/libaudqt/prefs-window-qt.cc:389
-msgid "Search for images matching song file name"
-msgstr "노래 파일 이름에 일치하는 그림 검색"
+msgid "Exclude images matching these words (comma-separated):"
+msgstr "이 단어에 일치하는 그림 제외(쉼표로 구분):"
 
 #: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:391
+msgid "Search for images matching song file name"
+msgstr "곡 파일 이름에 일치하는 그림 검색"
+
+#: src/libaudgui/prefs-window.cc:352 src/libaudqt/prefs-window-qt.cc:393
 msgid "Search recursively"
 msgstr "재귀 검색"
 
-#: src/libaudgui/prefs-window.cc:352 src/libaudqt/prefs-window-qt.cc:392
+#: src/libaudgui/prefs-window.cc:354 src/libaudqt/prefs-window-qt.cc:394
 msgid "Search depth:"
 msgstr "검색 깊이:"
 
-#: src/libaudgui/prefs-window.cc:356 src/libaudqt/prefs-window-qt.cc:394
+#: src/libaudgui/prefs-window.cc:358 src/libaudqt/prefs-window-qt.cc:396
 msgid "<b>Popup Information</b>"
 msgstr "<b>팝업 정보</b>"
 
-#: src/libaudgui/prefs-window.cc:357 src/libaudqt/prefs-window-qt.cc:395
+#: src/libaudgui/prefs-window.cc:359 src/libaudqt/prefs-window-qt.cc:397
 msgid "Show popup information"
 msgstr "풍선 도움말 정보 표시하기"
 
-#: src/libaudgui/prefs-window.cc:359 src/libaudqt/prefs-window-qt.cc:397
+#: src/libaudgui/prefs-window.cc:361 src/libaudqt/prefs-window-qt.cc:399
 msgid "Popup delay (tenths of a second):"
 msgstr "풍선 도움말 지연시간(10초 단위):"
 
-#: src/libaudgui/prefs-window.cc:363
+#: src/libaudgui/prefs-window.cc:365
 msgid "Show time scale for current song"
 msgstr "현재 곡의 재생시간 표시하기"
 
-#: src/libaudgui/prefs-window.cc:369 src/libaudqt/prefs-window-qt.cc:401
+#: src/libaudgui/prefs-window.cc:371 src/libaudqt/prefs-window-qt.cc:403
 msgid "<b>Compatibility</b>"
 msgstr "<b>호환성</b>"
 
-#: src/libaudgui/prefs-window.cc:370 src/libaudqt/prefs-window-qt.cc:402
+#: src/libaudgui/prefs-window.cc:373 src/libaudqt/prefs-window-qt.cc:405
+msgid "Use Xwayland (requires a restart to take effect)"
+msgstr "Xwayland 사용 (설정대로 동작하려면 재시작 필요)"
+
+#: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:408
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr "\\ (역슬래시)를 폴더 구분자로 해석"
 
-#: src/libaudgui/prefs-window.cc:373 src/libaudqt/prefs-window-qt.cc:405
+#: src/libaudgui/prefs-window.cc:379 src/libaudqt/prefs-window-qt.cc:411
 msgid "<b>Playlist</b>"
 msgstr "<b>재생목록</b>"
 
-#: src/libaudgui/prefs-window.cc:374 src/libaudqt/prefs-window-qt.cc:406
+#: src/libaudgui/prefs-window.cc:380 src/libaudqt/prefs-window-qt.cc:412
 msgid "Add folders recursively"
 msgstr "재귀적으로 폴더 추가하기"
 
-#: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:408
+#: src/libaudgui/prefs-window.cc:382 src/libaudqt/prefs-window-qt.cc:414
 msgid "Add folders nested within playlist files"
 msgstr "재생목록 파일 내에 중첩된 폴더 추가하기"
 
-#: src/libaudgui/prefs-window.cc:378 src/libaudqt/prefs-window-qt.cc:410
+#: src/libaudgui/prefs-window.cc:384 src/libaudqt/prefs-window-qt.cc:416
 msgid "<b>Metadata</b>"
 msgstr "<b>메타데이터</b>"
 
-#: src/libaudgui/prefs-window.cc:379 src/libaudqt/prefs-window-qt.cc:411
+#: src/libaudgui/prefs-window.cc:385 src/libaudqt/prefs-window-qt.cc:417
 msgid "Guess missing metadata from file path"
 msgstr "파일 경로로 빠진 메타데이터 추측"
 
-#: src/libaudgui/prefs-window.cc:381 src/libaudqt/prefs-window-qt.cc:413
+#: src/libaudgui/prefs-window.cc:387 src/libaudqt/prefs-window-qt.cc:419
 msgid "Do not load metadata for songs until played"
-msgstr "재생할 때 노래 메타데이터를 불러오기"
+msgstr "재생하기 전 곡 메타데이터 불러오지 않음"
 
-#: src/libaudgui/prefs-window.cc:383 src/libaudqt/prefs-window-qt.cc:416
+#: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:422
 msgid "Probe content of files with no recognized file name extension"
-msgstr "파일 이름 확장자로 인힉할 수 없는 파일 내용 살펴보기"
+msgstr "파일 이름 확장자로 인식할 수 없는 파일 내용 확인"
 
-#: src/libaudgui/prefs-window.cc:385 src/libaudqt/prefs-window-qt.cc:418
+#: src/libaudgui/prefs-window.cc:391 src/libaudqt/prefs-window-qt.cc:424
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>기타</b>"
 
-#: src/libaudgui/prefs-window.cc:386 src/libaudqt/prefs-window-qt.cc:419
+#: src/libaudgui/prefs-window.cc:392 src/libaudqt/prefs-window-qt.cc:425
 msgid "Step forward/backward by:"
 msgstr "빨리감기/되감기:"
 
-#: src/libaudgui/prefs-window.cc:388 src/libaudqt/prefs-window-qt.cc:420
+#: src/libaudgui/prefs-window.cc:394 src/libaudqt/prefs-window-qt.cc:426
 msgid "seconds"
 msgstr "초"
 
-#: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:421
+#: src/libaudgui/prefs-window.cc:395 src/libaudqt/prefs-window-qt.cc:427
 msgid "Adjust volume by:"
 msgstr "음량 조정:"
 
-#: src/libaudgui/prefs-window.cc:391 src/libaudqt/prefs-window-qt.cc:422
+#: src/libaudgui/prefs-window.cc:397 src/libaudqt/prefs-window-qt.cc:428
 msgid "percent"
 msgstr "백분율"
 
-#: src/libaudgui/prefs-window.cc:410 src/libaudqt/prefs-window-qt.cc:443
+#: src/libaudgui/prefs-window.cc:416 src/libaudqt/prefs-window-qt.cc:449
 msgid "TITLE"
 msgstr "제목"
 
-#: src/libaudgui/prefs-window.cc:411 src/libaudqt/prefs-window-qt.cc:444
+#: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
 msgid "TITLE - ARTIST"
 msgstr "제목 - 아티스트"
 
-#: src/libaudgui/prefs-window.cc:412 src/libaudqt/prefs-window-qt.cc:445
+#: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
 msgid "TITLE - ARTIST - ALBUM"
 msgstr "제목 - 아티스트 - 앨범"
 
-#: src/libaudgui/prefs-window.cc:413 src/libaudqt/prefs-window-qt.cc:446
+#: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
 msgid "ARTIST - TITLE"
 msgstr "아티스트 - 제목"
 
-#: src/libaudgui/prefs-window.cc:414 src/libaudqt/prefs-window-qt.cc:447
+#: src/libaudgui/prefs-window.cc:420 src/libaudqt/prefs-window-qt.cc:453
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "아티스트 - 앨범 - 제목"
 
-#: src/libaudgui/prefs-window.cc:415 src/libaudqt/prefs-window-qt.cc:448
+#: src/libaudgui/prefs-window.cc:421 src/libaudqt/prefs-window-qt.cc:454
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "아티스트 - 앨범 - 트랙. 제목"
 
-#: src/libaudgui/prefs-window.cc:416 src/libaudqt/prefs-window-qt.cc:449
+#: src/libaudgui/prefs-window.cc:422 src/libaudqt/prefs-window-qt.cc:455
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "아티스트 [ 앨범 ] - 트랙. 제목"
 
-#: src/libaudgui/prefs-window.cc:417 src/libaudqt/prefs-window-qt.cc:450
+#: src/libaudgui/prefs-window.cc:423 src/libaudqt/prefs-window-qt.cc:456
 msgid "ARTIST - ALBUM - DISC.TRACK. TITLE"
 msgstr "아티스트 - 앨범 - 디스크.트랙. 제목"
 
-#: src/libaudgui/prefs-window.cc:418 src/libaudqt/prefs-window-qt.cc:451
+#: src/libaudgui/prefs-window.cc:424 src/libaudqt/prefs-window-qt.cc:457
 msgid "ARTIST [ ALBUM ] - DISC.TRACK. TITLE"
 msgstr "아티스트 [ 앨범 ] -  디스크.트랙. 제목"
 
-#: src/libaudgui/prefs-window.cc:419 src/libaudqt/prefs-window-qt.cc:452
+#: src/libaudgui/prefs-window.cc:425 src/libaudqt/prefs-window-qt.cc:458
 msgid "ALBUM - TITLE"
 msgstr "앨범 - 제목"
 
-#: src/libaudgui/prefs-window.cc:517
+#: src/libaudgui/prefs-window.cc:523
 msgid "Category"
 msgstr "범주"
 
-#: src/libaudgui/prefs-window.cc:573 src/libaudqt/prefs-window-qt.cc:469
+#: src/libaudgui/prefs-window.cc:579 src/libaudqt/prefs-window-qt.cc:475
 msgid "Custom"
 msgstr "사용자 정의"
 
-#: src/libaudgui/prefs-window.cc:591 src/libaudqt/prefs-window-qt.cc:461
+#: src/libaudgui/prefs-window.cc:597 src/libaudqt/prefs-window-qt.cc:467
 msgid "Title format:"
 msgstr "제목 형식:"
 
-#: src/libaudgui/prefs-window.cc:592 src/libaudqt/prefs-window-qt.cc:472
+#: src/libaudgui/prefs-window.cc:598 src/libaudqt/prefs-window-qt.cc:478
 msgid "Custom string:"
 msgstr "사용자 정의:"
 
-#: src/libaudgui/prefs-window.cc:817 src/libaudqt/prefs-window-qt.cc:781
+#: src/libaudgui/prefs-window.cc:820 src/libaudqt/prefs-window-qt.cc:787
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "%s 오디오 스트림 녹음 활성화"
 
-#: src/libaudgui/prefs-window.cc:826 src/libaudqt/prefs-window-qt.cc:794
+#: src/libaudgui/prefs-window.cc:829 src/libaudqt/prefs-window-qt.cc:800
 msgid "No audio recording plugin available"
 msgstr "사용할 수 있는 오디오 녹음 플러그인이 없습니다"
 
-#: src/libaudgui/prefs-window.cc:887 src/libaudqt/prefs-window-qt.cc:654
+#: src/libaudgui/prefs-window.cc:890 src/libaudqt/prefs-window-qt.cc:660
 msgid "Audacious Settings"
 msgstr "Audacious 설정"
 
-#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:209
+#: src/libaudgui/preset-browser.cc:53 src/libaudgui/util.cc:199
 #: src/libaudqt/fileopener.cc:125
 msgid "Cancel"
 msgstr "취소"
@@ -1391,13 +1400,13 @@ msgstr "프리셋 파일 저장"
 msgid "Save EQF File"
 msgstr "EQF 파일 저장"
 
-#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:344
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager-qt.cc:347
 msgid "Queue Manager"
 msgstr "대기목록 관리자"
 
-#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:326
+#: src/libaudgui/queue-manager.cc:194 src/libaudqt/queue-manager-qt.cc:329
 msgid "_Unqueue"
-msgstr "큐에서 빼내기(_U)"
+msgstr "대기열에서 제거(_U)"
 
 #: src/libaudgui/status.cc:37
 msgid "Working ..."
@@ -1413,7 +1422,7 @@ msgstr "정보"
 
 #: src/libaudgui/url-opener.cc:59 src/libaudqt/url-opener-qt.cc:41
 msgid "_Save to history"
-msgstr "실행기록 저장하기"
+msgstr "실행기록 저장하기(_S)"
 
 #: src/libaudgui/url-opener.cc:67 src/libaudqt/url-opener-qt.cc:47
 msgid "Open URL"
@@ -1425,23 +1434,23 @@ msgstr "URL 추가하기"
 
 #: src/libaudgui/url-opener.cc:96 src/libaudqt/url-opener-qt.cc:70
 msgid "C_lear history"
-msgstr "실행기록 지우기"
+msgstr "실행기록 지우기(_L)"
 
 #: src/libaudgui/url-opener.cc:108 src/libaudqt/url-opener-qt.cc:63
 msgid "Enter URL:"
 msgstr "URL 입력:"
 
-#: src/libaudgui/util.cc:209 src/libaudqt/fileopener.cc:109
+#: src/libaudgui/util.cc:199 src/libaudqt/fileopener.cc:109
 msgid "Open"
 msgstr "열기"
 
-#: src/libaudgui/util.cc:351
+#: src/libaudgui/util.cc:341
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(이하 메시지는 숨겨져 있습니다.)"
+"(이하 메시지 숨김.)"
 
 #: src/libaudqt/eq-preset-qt.cc:252
 msgid "Preset files (*.preset *.eqf *.q1)"
@@ -1467,61 +1476,69 @@ msgstr "폴더 추가하기"
 msgid "Add"
 msgstr "추가하기"
 
-#: src/libaudqt/font-entry.cc:41
+#: src/libaudqt/font-entry.cc:42
 msgid "Set Font"
 msgstr "글꼴 설정"
 
-#: src/libaudqt/info-widget.cc:44
+#: src/libaudqt/info-widget.cc:46
 msgid "<various>"
 msgstr "<various>"
 
-#: src/libaudqt/info-widget.cc:47
+#: src/libaudqt/info-widget.cc:49
 msgid "Metadata"
 msgstr "메타데이터"
 
-#: src/libaudqt/info-widget.cc:56
+#: src/libaudqt/info-widget.cc:58
 msgid "Composer"
 msgstr "작곡가"
 
-#: src/libaudqt/info-widget.cc:57
+#: src/libaudqt/info-widget.cc:59
 msgid "Performer"
 msgstr "연주자"
 
-#: src/libaudqt/info-widget.cc:58
+#: src/libaudqt/info-widget.cc:60
 msgid "Recording Year"
 msgstr "녹음 연도"
 
-#: src/libaudqt/info-widget.cc:59
+#: src/libaudqt/info-widget.cc:61
 msgid "Recording Date"
 msgstr "녹음 날짜"
 
-#: src/libaudqt/info-widget.cc:60
+#: src/libaudqt/info-widget.cc:62
 msgid "Publisher"
 msgstr "게시자"
 
-#: src/libaudqt/info-widget.cc:61
+#: src/libaudqt/info-widget.cc:63
 msgid "Catalog Number"
 msgstr "범주 번호"
 
-#: src/libaudqt/info-widget.cc:62
+#: src/libaudqt/info-widget.cc:64
 msgid "Disc Number"
 msgstr "디스크 번호"
 
-#: src/libaudqt/info-widget.cc:65
+#: src/libaudqt/info-widget.cc:67
 msgid "Technical"
 msgstr "기술 사항"
 
-#: src/libaudqt/info-widget.cc:69
+#: src/libaudqt/info-widget.cc:71
 msgid "Bitrate"
 msgstr "비트 전송속도"
 
-#: src/libaudqt/info-widget.cc:70
+#: src/libaudqt/info-widget.cc:72
 msgid "Channels"
 msgstr "채널"
 
-#: src/libaudqt/info-widget.cc:71
+#: src/libaudqt/info-widget.cc:73
 msgid "MusicBrainz ID"
 msgstr "MusicBrainz ID"
+
+#: src/libaudqt/info-widget.cc:74
+msgid "File Created"
+msgstr "파일 생성 날짜"
+
+#: src/libaudqt/info-widget.cc:75
+msgid "File Modified"
+msgstr "파일 수정 날짜"
 
 #: src/libaudqt/infowin-qt.cc:94
 msgid "_Revert"
@@ -1533,11 +1550,11 @@ msgstr "태그를 쓰는 동안 오류가 발생했습니다."
 
 #: src/libaudqt/infowin-qt.cc:127
 msgid "%1 files selected"
-msgstr "%1개 파일 선택됨"
+msgstr "파일 %1개 선택함"
 
 #: src/libaudqt/infowin-qt.cc:131
 msgid "_Save %1 files"
-msgstr "%1 파일 저장(_S)"
+msgstr "파일 %1개 저장(_S)"
 
 #: src/libaudqt/log-inspector.cc:152
 msgid "Level"
@@ -1573,7 +1590,7 @@ msgstr "지우기(_E)"
 
 #: src/libaudqt/log-inspector.cc:250
 msgid "Log Level:"
-msgstr "로그 레벨:"
+msgstr "로그 수준:"
 
 #: src/libaudqt/plugin-menu-qt.cc:52
 msgid "Services"
