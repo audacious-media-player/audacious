@@ -35,6 +35,10 @@ if get_option('qt')
     qt_req = '>= 6.0'
     qt_dep = dependency('qt6', version: qt_req, required: true, modules: ['Core', 'Widgets', 'Gui', 'Svg'])
   endif
+else
+  if get_option('qt5')
+    error('Qt 5 support cannot be enabled when Qt support was explicitly disabled.')
+  endif
 endif
 
 
@@ -45,6 +49,10 @@ if get_option('gtk')
   else
     gtk_req = '>= 3.24'
     gtk_dep = dependency('gtk+-3.0', version: gtk_req, required: true)
+  endif
+else
+  if get_option('gtk2')
+    error('GTK 2 support cannot be enabled when GTK support was explicitly disabled.')
   endif
 endif
 
