@@ -32,6 +32,12 @@
 #include "audstrings.h"
 #include "runtime.h"
 
+#ifdef S_IRGRP
+#define DIRMODE (S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
+#else
+#define DIRMODE (S_IRWXU)
+#endif
+
 const char * get_home_utf8()
 {
     static std::once_flag once;
@@ -65,7 +71,14 @@ bool dir_foreach(const char * path, DirForeachFunc func, void * user)
 
 String write_temp_file(const void * data, int64_t len)
 {
-    StringBuf name = filename_build({g_get_user_cache_dir(), PACKAGE, "temp-XXXXXX"});
+    StringBuf dir = filename_build({g_get_user_cache_dir(), PACKAGE});
+    if (g_mkdir_with_parents(dir, DIRMODE) < 0)
+    {
+        AUDERR("Error creating temporary directory: %s\n", strerror(errno));
+        return String();
+    }
+
+    StringBuf name = filename_build({dir, "temp-XXXXXX"});
 
     int handle = g_mkstemp(name);
     if (handle < 0)
