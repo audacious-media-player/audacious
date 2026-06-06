@@ -65,7 +65,7 @@ bool dir_foreach(const char * path, DirForeachFunc func, void * user)
 
 String write_temp_file(const void * data, int64_t len)
 {
-    StringBuf name = filename_build({g_get_tmp_dir(), "audacious-temp-XXXXXX"});
+    StringBuf name = filename_build({g_get_user_cache_dir(), PACKAGE, "temp-XXXXXX"});
 
     int handle = g_mkstemp(name);
     if (handle < 0)
