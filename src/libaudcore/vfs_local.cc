@@ -446,7 +446,6 @@ bool LocalTransport::get_file_timestamps(const char * filename, int64_t * mtime,
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <linux/stat.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 
