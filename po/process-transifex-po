@@ -82,6 +82,9 @@ it.po)
 ja.po)
     LANGUAGE="Japanese"
     ;;
+ka.po)
+    LANGUAGE="Georgian"
+    ;;
 ko.po)
     LANGUAGE="Korean"
     ;;
