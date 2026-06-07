@@ -47,8 +47,8 @@ struct PluginPreferences;
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 48 /* 3.8-devel */
-#define _AUD_PLUGIN_VERSION 48     /* 3.8-devel */
+#define _AUD_PLUGIN_VERSION_MIN 49 /* 4.6.1 */
+#define _AUD_PLUGIN_VERSION 49     /* 4.6.1 */
 
 /* Default priority. */
 #define _AUD_PLUGIN_DEFAULT_PRIO 5

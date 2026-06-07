@@ -21,7 +21,7 @@ libaudtag_lib = library('audtag',
   include_directories: src_inc,
   dependencies: [glib_dep],
   link_with: libaudcore_lib,
-  version: '3.0.0',
-  soversion: 3,
+  version: '4.0.0',
+  soversion: 4,
   install: true
 )
