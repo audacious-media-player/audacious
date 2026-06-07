@@ -162,8 +162,20 @@ void id3_associate_memo (Tuple & tuple, Tuple::Field field, const char * data, i
      Tuple::field_get_name (field), lang, (const char *) type,
      (const char *) value);
 
-    if (type && ! type[0] && value) /* blank type = actual comment */
-        tuple.set_str (field, value);
+    if (! value)
+        return;
+
+    switch (field)
+    {
+        case Tuple::Field::Lyrics: /* type may be set to e.g. "LYRICS" */
+            tuple.set_str (field, value);
+            break;
+
+        default:
+            if (type && ! type[0]) /* blank type = actual comment */
+                tuple.set_str (field, value);
+            break;
+    }
 }
 
 static bool decode_rva_block (const char * * _data, int * _size,
