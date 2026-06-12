@@ -28,7 +28,9 @@ for i in `find -type f` ; do
     fi
 done
 
+echo "Stripping dll's..."
 for i in `find -name *.dll` ; do strip -s $i ; done
+echo "Stripping exe's..."
 for i in `find -name *.exe` ; do strip -s $i ; done
 
 cd /C/msys64/ucrt64/share/qt6/translations
@@ -52,3 +54,5 @@ for i in `find ./share/locale -name audacious-plugins.mo` ; do
     mkdir -p /C/aud-win32/${i%%/audacious-plugins.mo}
     cp $i /C/aud-win32/$i
 done
+
+echo "Success!"
