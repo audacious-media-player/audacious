@@ -9,21 +9,21 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-# URLs and Target Paths - Автоматично определяне на пътищата
+# URLs and Target Paths - Automatically determine paths
 ZIP_URL = "https://distfiles.audacious-media-player.org/audacious-4.6.1-win32.zip"
 
-# Автоматично намиране на работната директория (там където е скрипта)
+# Automatically find the working directory (where the script is located)
 SCRIPT_DIR = Path(__file__).parent.absolute()
 WORK_DIR = SCRIPT_DIR / "Audacius_Install"
 
-# Ако скрипта е в protected директория, използвай Temp
+# If script is in a protected directory, use Temp instead
 try:
     WORK_DIR.mkdir(parents=True, exist_ok=True)
     test_file = WORK_DIR / "test_write.txt"
     test_file.write_text("test")
     test_file.unlink()
 except:
-    # Ако няма права за запис, използвай Temp директорията
+    # If no write permissions, use the Temp directory
     import tempfile
     WORK_DIR = Path(tempfile.gettempdir()) / "Audacius_Install"
     WORK_DIR.mkdir(parents=True, exist_ok=True)
@@ -31,11 +31,11 @@ except:
 TEMP_ZIP = WORK_DIR / "audacious-4.6.1-win32.zip"
 TEMP_EXTRACT = WORK_DIR / "temp_extract"
 
-# Автоматично намиране на Program Files
+# Automatically find Program Files
 PROGRAM_FILES = Path(os.environ.get("ProgramFiles", r"C:\Program Files"))
 INSTALL_DIR = PROGRAM_FILES / "Audacious"
 
-# Автоматично намиране на Desktop
+# Automatically find Desktop
 DESKTOP_DIR = Path(os.environ.get("USERPROFILE")) / "Desktop"
 
 
@@ -95,7 +95,7 @@ def extract_zip(zip_path, extract_path):
 def copy_all_to_install_dir(extract_path, install_dir):
     """Copy all contents from extract_path to install_dir, handling nested directories."""
     
-    # Проверка за администраторски права
+    # Check for administrator privileges
     try:
         print(f"[*] Creating installation directory: {install_dir}...")
         install_dir.mkdir(parents=True, exist_ok=True)
@@ -109,7 +109,7 @@ def copy_all_to_install_dir(extract_path, install_dir):
         print(f"[!] Error: {e}")
         return False
     
-    # След това проверяваме дали има стара инсталация и я премахваме
+    # Then check if there's an old installation and remove it
     if any(install_dir.iterdir()):
         print(f"[*] Removing old installation contents...")
         for item in install_dir.iterdir():
@@ -122,24 +122,24 @@ def copy_all_to_install_dir(extract_path, install_dir):
                 print(f"[!] Could not remove {item.name}: {e}")
                 return False
     
-    # Намираме какво има в извлечената папка
+    # Find what's in the extracted folder
     extracted_items = list(extract_path.iterdir())
     
-    # Проверяваме дали има една основна директория, която съдържа всичко
+    # Check if there's a single main directory that contains everything
     single_dir = None
     if len(extracted_items) == 1 and extracted_items[0].is_dir():
         single_dir = extracted_items[0]
     
     if single_dir:
-        # Копираме съдържанието от единичната директория
+        # Copy contents from the single directory
         print(f"[*] Copying from {single_dir.name} to {install_dir}...")
         source_path = single_dir
     else:
-        # Копираме директно от извлечената папка
+        # Copy directly from the extracted folder
         print(f"[*] Copying directly to {install_dir}...")
         source_path = extract_path
     
-    # Копираме всички елементи
+    # Copy all items
     copied_count = 0
     for item in source_path.iterdir():
         dest_item = install_dir / item.name
@@ -167,7 +167,7 @@ def create_shortcut(target_exe, shortcut_path, working_dir=None):
     if working_dir is None:
         working_dir = target_exe.parent
     
-    # Проверка дали десктоп директорията съществува
+    # Check if desktop directory exists
     if not shortcut_path.parent.exists():
         print(f"[!] Desktop directory not found: {shortcut_path.parent}")
         return False
@@ -218,7 +218,7 @@ def cleanup():
         shutil.rmtree(TEMP_EXTRACT)
         print("  - Removed temporary extraction directory")
     
-    # Изтриваме работната директория ако е празна
+    # Remove the working directory if it's empty
     try:
         if WORK_DIR.exists() and not any(WORK_DIR.iterdir()):
             WORK_DIR.rmdir()
@@ -267,7 +267,7 @@ def main():
     print("  by nu11secur1ty 2026")
     print("=" * 60)
     
-    # Проверка за администраторски права
+    # Check for administrator privileges
     if not check_admin():
         print("[!] WARNING: Not running as Administrator!")
         print("[*] You may need to run this script as Administrator")
