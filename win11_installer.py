@@ -1,5 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # Audacious installer for Windows 11 by nu11secur1ty 2026
+# Universal version - works for any user!
+
 import os
 import shutil
 import subprocess
@@ -7,15 +9,33 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-# URLs and Target Paths
+# URLs and Target Paths - Автоматично определяне на пътищата
 ZIP_URL = "https://distfiles.audacious-media-player.org/audacious-4.6.1-win32.zip"
-WORK_DIR = Path(r"C:\Users\nu11secur1ty-tunnel\Desktop\Audacius")
-WORK_DIR.mkdir(parents=True, exist_ok=True)
+
+# Автоматично намиране на работната директория (там където е скрипта)
+SCRIPT_DIR = Path(__file__).parent.absolute()
+WORK_DIR = SCRIPT_DIR / "Audacius_Install"
+
+# Ако скрипта е в protected директория, използвай Temp
+try:
+    WORK_DIR.mkdir(parents=True, exist_ok=True)
+    test_file = WORK_DIR / "test_write.txt"
+    test_file.write_text("test")
+    test_file.unlink()
+except:
+    # Ако няма права за запис, използвай Temp директорията
+    import tempfile
+    WORK_DIR = Path(tempfile.gettempdir()) / "Audacius_Install"
+    WORK_DIR.mkdir(parents=True, exist_ok=True)
 
 TEMP_ZIP = WORK_DIR / "audacious-4.6.1-win32.zip"
 TEMP_EXTRACT = WORK_DIR / "temp_extract"
+
+# Автоматично намиране на Program Files
 PROGRAM_FILES = Path(os.environ.get("ProgramFiles", r"C:\Program Files"))
 INSTALL_DIR = PROGRAM_FILES / "Audacious"
+
+# Автоматично намиране на Desktop
 DESKTOP_DIR = Path(os.environ.get("USERPROFILE")) / "Desktop"
 
 
@@ -75,13 +95,21 @@ def extract_zip(zip_path, extract_path):
 def copy_all_to_install_dir(extract_path, install_dir):
     """Copy all contents from extract_path to install_dir, handling nested directories."""
     
-    # ПЪРВО създаваме директорията C:\Program Files\Audacious
-    print(f"[*] Creating installation directory: {install_dir}...")
-    install_dir.mkdir(parents=True, exist_ok=True)
-    print(f"[+] Created directory: {install_dir}")
+    # Проверка за администраторски права
+    try:
+        print(f"[*] Creating installation directory: {install_dir}...")
+        install_dir.mkdir(parents=True, exist_ok=True)
+        test_file = install_dir / "test_write.txt"
+        test_file.write_text("test")
+        test_file.unlink()
+        print(f"[+] Created directory: {install_dir}")
+    except Exception as e:
+        print(f"[!] Need administrator privileges to install to {install_dir}")
+        print("[*] Please run this script as Administrator!")
+        print(f"[!] Error: {e}")
+        return False
     
     # След това проверяваме дали има стара инсталация и я премахваме
-    # (но вече директорията съществува, затова изтриваме само съдържанието)
     if any(install_dir.iterdir()):
         print(f"[*] Removing old installation contents...")
         for item in install_dir.iterdir():
@@ -139,6 +167,11 @@ def create_shortcut(target_exe, shortcut_path, working_dir=None):
     if working_dir is None:
         working_dir = target_exe.parent
     
+    # Проверка дали десктоп директорията съществува
+    if not shortcut_path.parent.exists():
+        print(f"[!] Desktop directory not found: {shortcut_path.parent}")
+        return False
+    
     vbs_script = f'''
     Set WshShell = CreateObject("WScript.Shell")
     Set shortcut = WshShell.CreateShortcut("{shortcut_path}")
@@ -184,6 +217,14 @@ def cleanup():
     if TEMP_EXTRACT.exists():
         shutil.rmtree(TEMP_EXTRACT)
         print("  - Removed temporary extraction directory")
+    
+    # Изтриваме работната директория ако е празна
+    try:
+        if WORK_DIR.exists() and not any(WORK_DIR.iterdir()):
+            WORK_DIR.rmdir()
+            print("  - Removed working directory")
+    except:
+        pass
 
 
 def find_audacious_exe(install_dir):
@@ -210,11 +251,33 @@ def find_audacious_exe(install_dir):
     return None
 
 
+def check_admin():
+    """Check if script is running with administrator privileges."""
+    try:
+        import ctypes
+        return ctypes.windll.shell32.IsUserAnAdmin() != 0
+    except:
+        return False
+
+
 def main():
     """Main execution function."""
     print("=" * 60)
     print("  Audacious Media Player - Automated Installer")
+    print("  by nu11secur1ty 2026")
     print("=" * 60)
+    
+    # Проверка за администраторски права
+    if not check_admin():
+        print("[!] WARNING: Not running as Administrator!")
+        print("[*] You may need to run this script as Administrator")
+        print("[*] for successful installation to Program Files.")
+        print()
+    
+    print(f"[*] Working directory: {WORK_DIR}")
+    print(f"[*] Installation directory: {INSTALL_DIR}")
+    print(f"[*] Desktop directory: {DESKTOP_DIR}")
+    print()
     
     # 1. Download the ZIP file
     if not download_file(ZIP_URL, TEMP_ZIP):
@@ -225,8 +288,8 @@ def main():
         return 1
     
     # 3. Copy everything to Program Files
-    # ТУК функцията ПЪРВО създава C:\Program Files\Audacious
     if not copy_all_to_install_dir(TEMP_EXTRACT, INSTALL_DIR):
+        print("[!] Installation failed. Try running as Administrator!")
         return 1
     
     # 4. Find audacious.exe
@@ -250,6 +313,7 @@ def main():
     print(f"[*] Audacious installed to: {INSTALL_DIR}")
     print(f"[*] Shortcut created at: {shortcut_path}")
     print("=" * 60)
+    print("\n[Tip] You can start Audacious from the desktop shortcut!")
     
     return 0
 
