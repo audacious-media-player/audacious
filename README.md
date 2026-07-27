@@ -36,6 +36,12 @@ it also affects ordinary installation methods before reporting it to us.
 See also the [download instructions](https://audacious-media-player.org/download)
 on our website.
 
+### NOW on Win 11 direct installer from zip `source.`
+Now this is easy by using the `win11_installer.py` and running as `administrator`
+```
+python win11_installer.py
+```
+
 ### Building from Source
 
 #### Requirements
