@@ -4,6 +4,7 @@
 #
 # ubuntu-22.04:      Qt 5 + GTK 2
 # ubuntu-24.04:      Qt 6 + GTK 3
+# ubuntu-26.04:      Qt 6 + GTK 3
 # Windows:           Qt 6 + GTK 2
 # macOS 15:          Qt 5 - GTK
 # macOS 26:          Qt 6 - GTK
