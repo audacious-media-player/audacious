@@ -135,7 +135,7 @@ EXPORT PluginHandle * aud_file_find_decoder(const char * filename, bool fast,
 
     if (mime)
     {
-        for (PluginHandle * plugin : (ext_matches.len() ? ext_matches : list))
+        for (PluginHandle * plugin : list)
         {
             if (!aud_plugin_get_enabled(plugin))
                 continue;
