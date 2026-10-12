@@ -324,7 +324,7 @@ private:
 
 QueueManager::QueueManager(QWidget * parent) : QWidget(parent)
 {
-    setWindowRole("queue-manager");
+    set_window_role(this, "queue-manager");
 
     m_btn_unqueue.setText(translate_str(N_("_Unqueue")));
     connect(&m_btn_unqueue, &QAbstractButton::clicked, &m_view,

@@ -30,6 +30,8 @@
 
 #include <libaudqt/libaudqt.h>
 
+#include "libaudqt-internal.h"
+
 namespace audqt
 {
 
@@ -123,7 +125,7 @@ EXPORT void fileopener_show(FileMode mode)
             dialog->setOption(QFileDialog::ShowDirsOnly);
         dialog->setLabelText(QFileDialog::Accept, _(labels[mode]));
         dialog->setLabelText(QFileDialog::Reject, _("Cancel"));
-        dialog->setWindowRole("file-dialog");
+        set_window_role(dialog, "file-dialog");
 
         auto playlist = Playlist::active_playlist();
 

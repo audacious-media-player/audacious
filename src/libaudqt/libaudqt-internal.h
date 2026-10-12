@@ -66,6 +66,8 @@ protected:
 void show_copy_context_menu(QWidget * parent, const QPoint & global_pos,
                             const QString & text_to_copy);
 
+void set_window_role(QWidget * window, const char * role);
+
 } // namespace audqt
 
 #endif // LIBAUDQT_INTERNAL_H

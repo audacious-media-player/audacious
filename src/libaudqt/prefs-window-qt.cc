@@ -658,7 +658,7 @@ PrefsWindow::PrefsWindow()
 
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(_("Audacious Settings"));
-    setWindowRole("settings");
+    set_window_role(this, "settings");
     setContentsMargins(0, 0, 0, 0);
 
     output_config_button->setAutoDefault(false);

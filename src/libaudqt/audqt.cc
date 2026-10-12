@@ -318,6 +318,15 @@ EXPORT void window_bring_to_front(QWidget * window)
     window->activateWindow();
 }
 
+/* the window role must be unique among the windows of a client (ICCCM 5.1);
+ * Qt also uses it as the Wayland session restore ID, where a duplicate is a
+ * fatal protocol error, so append a serial number to the base role */
+void set_window_role(QWidget * window, const char * role)
+{
+    static int serial = 0;
+    window->setWindowRole(QString(role) + '-' + QString::number(++serial));
+}
+
 EXPORT void simple_message(const char * title, const char * text)
 {
     simple_message(title, text, QMessageBox::NoIcon);
@@ -330,7 +339,7 @@ EXPORT void simple_message(const char * title, const char * text,
     msgbox->button(QMessageBox::Close)->setText(translate_str(N_("_Close")));
     msgbox->setAttribute(Qt::WA_DeleteOnClose);
     msgbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    msgbox->setWindowRole("message");
+    set_window_role(msgbox, "message");
     msgbox->show();
 }
 

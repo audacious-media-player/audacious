@@ -30,6 +30,7 @@
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
 
 namespace audqt
@@ -57,7 +58,7 @@ static QDialog * buildUrlDialog(bool open)
 
     auto dialog = new QDialog;
     dialog->setWindowTitle(title);
-    dialog->setWindowRole("url-dialog");
+    set_window_role(dialog, "url-dialog");
     dialog->setContentsMargins(margins.EightPt);
 
     auto label = new QLabel(_("Enter URL:"), dialog);

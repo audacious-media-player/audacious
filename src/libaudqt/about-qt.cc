@@ -29,6 +29,7 @@
 #include <libaudcore/runtime.h>
 #include <libaudcore/vfs.h>
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
 
 static QTabWidget * buildCreditsNotebook(QWidget * parent)
@@ -62,7 +63,7 @@ static QDialog * buildAboutWindow()
 
     auto window = new QDialog;
     window->setWindowTitle(_("About Audacious"));
-    window->setWindowRole("about");
+    audqt::set_window_role(window, "about");
 
     auto logo = new QLabel(window);
     int logo_size = audqt::to_native_dpi(400);

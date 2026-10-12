@@ -18,6 +18,7 @@
  * the use of this software.
  */
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
 
 #include <QAbstractListModel>
@@ -303,7 +304,7 @@ static QPointer<SongsWindow> s_songs_window;
 SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
 {
     setWindowTitle(_("Jump to Song"));
-    setWindowRole("jump-to-song");
+    set_window_role(this, "jump-to-song");
     setContentsMargins(margins.FourPt);
 
     auto vbox_parent = make_vbox(this);
