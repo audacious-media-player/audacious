@@ -21,7 +21,7 @@ endif
 if have_windows
   windows = import('windows')
   audacious_sources += windows.compile_resources('audacious.rc',
-    include_directories: meson.current_build_dir()
+    include_directories: [meson.current_build_dir()]
   )
 
   if meson.version().version_compare('>= 0.56')
@@ -35,6 +35,6 @@ audacious_exe = executable('audacious',
   include_directories: audacious_incs,
   dependencies: audacious_deps,
   link_with: audacious_libs,
-  install: true,
-  kwargs: audacious_kwargs
+  kwargs: audacious_kwargs,
+  install: true
 )
