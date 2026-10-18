@@ -585,13 +585,15 @@ EXPORT void Tuple::set_filename(const char * filename)
 EXPORT void Tuple::set_format(const char * format, int chans, int rate,
                               int brate)
 {
+    StringBuf buf;
+
     if (format)
         set_str(Codec, format);
 
-    StringBuf buf;
-
     if (chans > 0)
     {
+        set_int(Channels, chans);
+
         if (chans == 1)
             buf = str_copy(_("Mono"));
         else if (chans == 2)
@@ -612,9 +614,6 @@ EXPORT void Tuple::set_format(const char * format, int chans, int rate,
 
     if (brate > 0)
         set_int(Bitrate, brate);
-
-    if (chans > 0)
-        set_int(Channels, chans);
 }
 
 EXPORT void Tuple::set_subtunes(short n_subtunes, const short * subtunes)
