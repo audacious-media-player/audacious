@@ -19,4 +19,4 @@ What do you expect to happen instead?
 * Desktop environment
 * Screenshots
 * Sample files
-* Logs (use `LANG=C audacious -V` for English output)
+* Logs (use `LANG=C.UTF-8 audacious -V` for English output)
