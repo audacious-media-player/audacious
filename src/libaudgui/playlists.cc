@@ -160,12 +160,13 @@ static void set_format_filters (GtkWidget * selector)
 
 static void create_selector (ImportExportJob * job, const char * filename, const char * folder)
 {
-    const char * title, * verb, * icon;
+    const char * title, * role, * verb, * icon;
     GtkFileChooserAction action;
 
     if (job->save)
     {
         title = _("Export Playlist");
+        role = "export-playlist";
         verb = _("_Export");
         icon = "document-save";
         action = GTK_FILE_CHOOSER_ACTION_SAVE;
@@ -173,6 +174,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
     else
     {
         title = _("Import Playlist");
+        role = "import-playlist";
         verb = _("_Import");
         icon = "document-open";
         action = GTK_FILE_CHOOSER_ACTION_OPEN;
@@ -180,6 +182,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
 
     job->selector = gtk_file_chooser_dialog_new (title, nullptr, action, nullptr, nullptr);
     gtk_file_chooser_set_local_only ((GtkFileChooser *) job->selector, false);
+    gtk_window_set_role ((GtkWindow *) job->selector, role);
 
     if (filename)
         gtk_file_chooser_set_uri ((GtkFileChooser *) job->selector, filename);

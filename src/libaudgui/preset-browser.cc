@@ -55,6 +55,7 @@ static void show_preset_browser (const char * title, bool save,
      nullptr);
 
     gtk_file_chooser_set_local_only ((GtkFileChooser *) browser, false);
+    gtk_window_set_role ((GtkWindow *) browser, "eq-preset-browser");
 
     if (default_filename)
         gtk_file_chooser_set_current_name ((GtkFileChooser *) browser, default_filename);

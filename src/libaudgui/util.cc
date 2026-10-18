@@ -281,7 +281,6 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
     GtkWidget * dialog = gtk_message_dialog_new (nullptr, (GtkDialogFlags) 0, type,
      GTK_BUTTONS_NONE, "%s", text);
     gtk_window_set_title ((GtkWindow *) dialog, title);
-    gtk_window_set_role ((GtkWindow *) dialog, "message");
 
     bool label_selectable = (type != GTK_MESSAGE_OTHER);
     GtkWidget * box = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
