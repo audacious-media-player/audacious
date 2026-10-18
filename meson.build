@@ -171,9 +171,7 @@ install_localedir = get_option('localedir')
 install_desktoppath = join_paths(get_option('datadir'), 'applications')
 install_desktopfile = join_paths(install_desktoppath, 'audacious.desktop')
 install_iconpath = join_paths(get_option('datadir'), 'icons')
-install_unscalable_iconpath = join_paths(install_iconpath, 'hicolor', '48x48', 'apps')
-install_scalable_iconpath = join_paths(install_iconpath, 'hicolor', 'scalable', 'apps')
-install_iconfile = join_paths(install_unscalable_iconpath, 'audacious.png')
+install_iconfile = join_paths(install_iconpath, 'hicolor', '48x48', 'apps', 'audacious.png')
 install_metainfo_path = join_paths(get_option('datadir'), 'metainfo')
 
 
