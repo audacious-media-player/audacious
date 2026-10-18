@@ -193,7 +193,7 @@ static GtkWidget * infopopup_create (GtkWindow * parent)
     int dpi = audgui_get_dpi ();
 
     GtkWidget * infopopup = gtk_window_new (GTK_WINDOW_POPUP);
-    gtk_window_set_type_hint ((GtkWindow *) infopopup, GDK_WINDOW_TYPE_HINT_TOOLTIP);
+    gtk_window_set_type_hint ((GtkWindow *) infopopup, GDK_WINDOW_TYPE_HINT_POPUP_MENU);
     gtk_window_set_decorated ((GtkWindow *) infopopup, false);
     gtk_window_set_role ((GtkWindow *) infopopup, "infopopup");
     gtk_container_set_border_width ((GtkContainer *) infopopup, 4);
