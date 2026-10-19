@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2026-05-09 21:25+0200\n"
+"POT-Creation-Date: 2026-10-18 22:47+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>, 2026\n"
 "Language-Team: Albanian (http://app.transifex.com/audacious/audacious/"
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Select instance to run/control"
 msgstr "Përzgjidhni instancë për t’u xhiruar/kontrolluar"
 
-#: src/audacious/main.cc:392 src/libaudqt/audqt.cc:151
+#: src/audacious/main.cc:392
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -197,7 +197,7 @@ msgstr ""
 "Gabim gjatë hapjes së %s:\n"
 "%s"
 
-#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:283
+#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:282
 #, c-format
 msgid "Error loading %s."
 msgstr "Gabim në ngarkimin e %s."
@@ -207,7 +207,7 @@ msgstr "Gabim në ngarkimin e %s."
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "S’ngarkohet dot %s: zgjatim emri kartele i pambuluar."
 
-#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:319
+#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:317
 #, c-format
 msgid "Error saving %s."
 msgstr "Gabim në ruajtjen e %s."
@@ -241,31 +241,31 @@ msgstr ""
 "Kartela s’u shkodua dot. Mund të jetë e pavlefshme, e dëmtuar, ose në një "
 "format të pambuluar."
 
-#: src/libaudcore/tuple.cc:596
+#: src/libaudcore/tuple.cc:598
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.cc:598
+#: src/libaudcore/tuple.cc:600
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.cc:601
+#: src/libaudcore/tuple.cc:603
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d kanal"
 msgstr[1] "%d kanale"
 
-#: src/libaudcore/tuple.cc:819
+#: src/libaudcore/tuple.cc:818
 msgid "Audio CD"
 msgstr "CD Audio"
 
-#: src/libaudcore/tuple.cc:903
+#: src/libaudcore/tuple.cc:902
 #, c-format
 msgid "Track %d"
 msgstr "Pjesa %d"
 
-#: src/libaudcore/tuple.cc:909
+#: src/libaudcore/tuple.cc:908
 msgid "(unknown title)"
 msgstr "(titull i panjohur)"
 
@@ -295,36 +295,36 @@ msgid "About Audacious"
 msgstr "Mbi Audacious"
 
 #: src/libaudgui/confirm.cc:33 src/libaudgui/jump-to-time.cc:48
-#: src/libaudgui/playlists.cc:93 src/libaudgui/playlists.cc:190
-#: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:105
-#: src/libaudqt/playlist-management.cc:42
-#: src/libaudqt/playlist-management.cc:60 src/libaudqt/prefs-plugin.cc:141
+#: src/libaudgui/playlists.cc:93 src/libaudgui/playlists.cc:193
+#: src/libaudgui/plugin-prefs.cc:161 src/libaudgui/url-opener.cc:105
+#: src/libaudqt/playlist-management.cc:41
+#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:138
 #: src/libaudqt/url-opener-qt.cc:81
 msgid "_Cancel"
 msgstr "_Anuloje"
 
-#: src/libaudgui/confirm.cc:48 src/libaudqt/playlist-management.cc:58
+#: src/libaudgui/confirm.cc:48 src/libaudqt/playlist-management.cc:57
 msgid "_Don’t ask again"
 msgstr "_Mos më pyet sërish"
 
-#: src/libaudgui/confirm.cc:67 src/libaudqt/playlist-management.cc:66
+#: src/libaudgui/confirm.cc:67 src/libaudqt/playlist-management.cc:64
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
 msgstr "Doni të hiqet “%s” përgjithmonë?"
 
-#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:59
+#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:58
 msgid "_Remove"
 msgstr "_Hiqe"
 
-#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:63
+#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:62
 msgid "Remove Playlist"
 msgstr "Hiqe Luajlistën"
 
-#: src/libaudgui/confirm.cc:92 src/libaudqt/playlist-management.cc:40
+#: src/libaudgui/confirm.cc:92 src/libaudqt/playlist-management.cc:39
 msgid "What would you like to call this playlist?"
 msgstr "Si do të donit ta quanit këtë luajlistë?"
 
-#: src/libaudgui/confirm.cc:93 src/libaudqt/playlist-management.cc:41
+#: src/libaudgui/confirm.cc:93 src/libaudqt/playlist-management.cc:40
 msgid "_Rename"
 msgstr "_Riemërtojeni"
 
@@ -344,21 +344,21 @@ msgstr "Kartelë Paracaktimesh …"
 msgid "EQF File ..."
 msgstr "Kartelë EQF …"
 
-#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:339
+#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:337
 #: src/libaudqt/fileopener.cc:110
 msgid "Import"
 msgstr "Importo"
 
-#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:342
+#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:340
 #: src/libaudqt/fileopener.cc:110
 msgid "Export"
 msgstr "Eksporto"
 
-#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:405
+#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:403
 msgid "Equalizer Presets"
 msgstr "Paracaktime Balancuesi"
 
-#: src/libaudgui/eq-preset.cc:306 src/libaudqt/eq-preset-qt.cc:330
+#: src/libaudgui/eq-preset.cc:306 src/libaudqt/eq-preset-qt.cc:328
 msgid "Save Preset"
 msgstr "Ruaje Paracaktimin"
 
@@ -457,11 +457,11 @@ msgid "Close _dialog on add"
 msgstr "Mbylle _dialogun gjatë shtimesh"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
-#: src/libaudgui/jump-to-track.cc:324 src/libaudgui/plugin-prefs.cc:168
+#: src/libaudgui/jump-to-track.cc:324 src/libaudgui/plugin-prefs.cc:167
 #: src/libaudgui/prefs-window.cc:942 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:355 src/libaudqt/audqt.cc:330
+#: src/libaudgui/util.cc:354 src/libaudqt/audqt.cc:330
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
-#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:702
+#: src/libaudqt/prefs-plugin.cc:149 src/libaudqt/prefs-window-qt.cc:702
 #: src/libaudqt/song-window-qt.cc:376
 msgid "_Close"
 msgstr "_Mbylle"
@@ -794,15 +794,15 @@ msgstr "Përzgjidhni Format sipas Zgjatimi"
 msgid "Export Playlist"
 msgstr "Eksporto Luajlistë"
 
-#: src/libaudgui/playlists.cc:169
+#: src/libaudgui/playlists.cc:170
 msgid "_Export"
 msgstr "_Eksportoje"
 
-#: src/libaudgui/playlists.cc:175 src/libaudqt/fileopener.cc:106
+#: src/libaudgui/playlists.cc:176 src/libaudqt/fileopener.cc:106
 msgid "Import Playlist"
 msgstr "Importo Luajlistë"
 
-#: src/libaudgui/playlists.cc:176
+#: src/libaudgui/playlists.cc:178
 msgid "_Import"
 msgstr "_Importoje"
 
@@ -810,17 +810,17 @@ msgstr "_Importoje"
 msgid "_Plugins ..."
 msgstr "_Shtojca …"
 
-#: src/libaudgui/plugin-prefs.cc:110 src/libaudqt/prefs-plugin.cc:61
+#: src/libaudgui/plugin-prefs.cc:110 src/libaudqt/prefs-plugin.cc:59
 #, c-format
 msgid "About %s"
 msgstr "Mbi %s"
 
-#: src/libaudgui/plugin-prefs.cc:156 src/libaudqt/prefs-plugin.cc:126
+#: src/libaudgui/plugin-prefs.cc:156 src/libaudqt/prefs-plugin.cc:124
 #, c-format
 msgid "%s Settings"
 msgstr "Rregullime për %s"
 
-#: src/libaudgui/plugin-prefs.cc:161 src/libaudqt/prefs-plugin.cc:139
+#: src/libaudgui/plugin-prefs.cc:160 src/libaudqt/prefs-plugin.cc:136
 msgid "_Set"
 msgstr ""
 
@@ -1351,12 +1351,12 @@ msgstr "Format titulli:"
 msgid "Custom string:"
 msgstr "Varg vetjak:"
 
-#: src/libaudgui/prefs-window.cc:820 src/libaudqt/prefs-window-qt.cc:787
+#: src/libaudgui/prefs-window.cc:820 src/libaudqt/prefs-window-qt.cc:789
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Aktivizo incizim rrjedhe audio me %s"
 
-#: src/libaudgui/prefs-window.cc:829 src/libaudqt/prefs-window-qt.cc:800
+#: src/libaudgui/prefs-window.cc:829 src/libaudqt/prefs-window-qt.cc:802
 msgid "No audio recording plugin available"
 msgstr "S’ka gati shtojcë incizimi tingujsh"
 
@@ -1369,7 +1369,7 @@ msgstr "Rregullime për Audacious"
 msgid "Cancel"
 msgstr "Anuloje"
 
-#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:299
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:298
 msgid "Save"
 msgstr "Ruaje"
 
@@ -1377,19 +1377,19 @@ msgstr "Ruaje"
 msgid "Load"
 msgstr "Ngarkoje"
 
-#: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:257
+#: src/libaudgui/preset-browser.cc:86 src/libaudqt/eq-preset-qt.cc:257
 msgid "Load Preset File"
 msgstr "Ngarko Kartelë Paracaktimesh"
 
-#: src/libaudgui/preset-browser.cc:99
+#: src/libaudgui/preset-browser.cc:100
 msgid "Load EQF File"
 msgstr "Ngarko Kartelë EFQ"
 
-#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:294
+#: src/libaudgui/preset-browser.cc:115 src/libaudqt/eq-preset-qt.cc:293
 msgid "Save Preset File"
 msgstr "Ruaj Kartelë Paracaktimesh"
 
-#: src/libaudgui/preset-browser.cc:131
+#: src/libaudgui/preset-browser.cc:132
 msgid "Save EQF File"
 msgstr "Ruaj Kartelë EQF"
 
@@ -1437,7 +1437,7 @@ msgstr "Jepni URL:"
 msgid "Open"
 msgstr "Hape"
 
-#: src/libaudgui/util.cc:341
+#: src/libaudgui/util.cc:340
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1449,7 +1449,7 @@ msgstr ""
 msgid "Preset files (*.preset *.eqf *.q1)"
 msgstr "Kartela paracaktimesh (*.preset *.eqf *.q1)"
 
-#: src/libaudqt/eq-preset-qt.cc:347
+#: src/libaudqt/eq-preset-qt.cc:345
 msgid "Revert"
 msgstr "Riktheje"
 

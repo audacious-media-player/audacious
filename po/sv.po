@@ -6,17 +6,23 @@
 # Anders Jonsson <transifex@norsjovallen.se>, 2018
 # Andreas Rönnquist <andreas@ronnquist.net>, 2015
 # Andreas Rönnquist <andreas@ronnquist.net>, 2015
-# Bo Serrander <bserrander@gmail.com>, 2013
-# Karl Jonatan Nyberg, 2026
+# Andreas Rönnquist <andreas@ronnquist.net>, 2015
+# Bo Serrander <bserrander@gmail.com>, 2013,2016
+# Jonatan Nyberg, 2026
+# Dcnm <trassel@trassel.org>, 2026
 # Fredrik Ismyren <fredrik@ismyren.se>, 2014
 # cb445fb3dfd1fe3c2b9f58ac5638f478, 2015-2016
-# Karl Jonatan Nyberg, 2025
-# Karl Jonatan Nyberg, 2022,2025
+# Henrik Mattsson-Mårn <h@reglage.net>, 2015
+# Jonatan Nyberg, 2025
+# Jonatan Nyberg, 2025-2026
+# Jonatan Nyberg, 2022,2025-2026
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018-2020
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
-# Karl Jonatan Nyberg, 2026
+# Josef Gottlander <josef.gottlander@gmail.com>, 2020
+# Jonatan Nyberg, 2026
+# Kristoffer Grundström <lovaren@gmail.com>, 2016
 # Luna Jernberg <droidbittin@gmail.com>, 2015,2020,2022-2024
-# Luna Jernberg <droidbittin@gmail.com>, 2024
+# Luna Jernberg <droidbittin@gmail.com>, 2014,2024
 # Luna Jernberg <droidbittin@gmail.com>, 2014
 # Martin Persenius <martin@persenius.net>, 2004
 msgid ""
@@ -24,9 +30,9 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2026-05-09 21:25+0200\n"
+"POT-Creation-Date: 2026-10-18 22:47+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Karl Jonatan Nyberg, 2026\n"
+"Last-Translator: Martin Persenius <martin@persenius.net>, 2004\n"
 "Language-Team: Swedish (http://app.transifex.com/audacious/audacious/"
 "language/sv/)\n"
 "Language: sv\n"
@@ -53,11 +59,11 @@ msgstr "Pausa uppspelningen, återuppta om den redan är pausad"
 
 #: src/audacious/main.cc:80
 msgid "Pause if playing, play otherwise"
-msgstr "Pausa om uppspelning pågår, spela annars"
+msgstr "Pausa om uppspelning pågår, spela upp annars"
 
 #: src/audacious/main.cc:81
 msgid "Stop playback"
-msgstr "Stoppa uppspelning"
+msgstr "Stoppa uppspelningen"
 
 #: src/audacious/main.cc:82
 msgid "Skip to previous song"
@@ -69,11 +75,11 @@ msgstr "Hoppa till nästa låt"
 
 #: src/audacious/main.cc:84
 msgid "Add files to the playlist"
-msgstr "Lägg till filer i spellista"
+msgstr "Lägg till filer i spellistan"
 
 #: src/audacious/main.cc:86
 msgid "Add files to a temporary playlist"
-msgstr "Lägg till nya filer i temporär spellista"
+msgstr "Lägg till filer i en tillfällig spellista"
 
 #: src/audacious/main.cc:87
 msgid "Display the main window"
@@ -81,7 +87,7 @@ msgstr "Visa huvudfönstret"
 
 #: src/audacious/main.cc:89
 msgid "Display the jump-to-song window"
-msgstr "Visa fönstret hoppa-till-låt"
+msgstr "Visa fönstret ”Hoppa till låt”"
 
 #: src/audacious/main.cc:91
 msgid "Start without a graphical interface"
@@ -89,7 +95,7 @@ msgstr "Starta utan ett grafiskt gränssnitt"
 
 #: src/audacious/main.cc:93
 msgid "Quit on playback stop"
-msgstr "Avsluta vid uppspelningsstopp"
+msgstr "Avsluta när uppspelningen stoppas"
 
 #: src/audacious/main.cc:95
 msgid "Print debugging messages (may be used twice)"
@@ -118,14 +124,14 @@ msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
-"Användning: audacious [FLAGGA] ... [FIL] ...\n"
+"Användning: audacious [FLAGGA] … [FIL] …\n"
 "\n"
 
 #: src/audacious/main.cc:209
 msgid "Select instance to run/control"
 msgstr "Välj instans att köra/styra"
 
-#: src/audacious/main.cc:392 src/libaudqt/audqt.cc:151
+#: src/audacious/main.cc:392
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -155,7 +161,7 @@ msgstr "Ny spellista"
 
 #: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:562
 msgid "Standard input"
-msgstr "Standardingång"
+msgstr "Standardindata"
 
 #: src/libaudcore/audstrings.cc:666
 #, c-format
@@ -170,16 +176,16 @@ msgstr "(teckenkodningsfel)"
 msgid ""
 "Stream recording must be configured in Audio Settings before it can be used."
 msgstr ""
-"Ströminspelning måste konfigureras i ljudinställningar innan den kan "
-"användas."
+"Inspelning av strömmande ljud måste konfigureras i ljudinställningarna innan "
+"funktionen kan användas."
 
 #: src/libaudcore/output.cc:288
 msgid "Error opening output stream"
-msgstr "Det gick inte att öppna utgångsströmmen"
+msgstr "Det gick inte att öppna utmatningsströmmen"
 
 #: src/libaudcore/output.cc:340
 msgid "Error recording output stream"
-msgstr "Fel vid inspelning av utgångsströmmen"
+msgstr "Det gick inte att spela in utmatningsströmmen"
 
 #: src/libaudcore/playback.cc:378
 #, c-format
@@ -192,7 +198,7 @@ msgstr ""
 
 #: src/libaudcore/playback.cc:509
 msgid "Invalid audio format"
-msgstr "Felaktigt ljudformat"
+msgstr "Ogiltigt ljudformat"
 
 #: src/libaudcore/playlist.cc:82
 msgid "Now Playing"
@@ -208,41 +214,41 @@ msgstr ""
 "Fel vid öppning av %s:\n"
 "%s"
 
-#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:283
+#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:282
 #, c-format
 msgid "Error loading %s."
-msgstr "Fel vid inläsning av %s."
+msgstr "Det gick inte att läsa in %s."
 
 #: src/libaudcore/playlist-files.cc:89
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr "Kan inte läsa in %s: filändelsen stöds ej."
+msgstr "Kan inte läsa in %s: filändelsen stöds inte."
 
-#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:319
+#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:317
 #, c-format
 msgid "Error saving %s."
-msgstr "Fel vid sparande av %s."
+msgstr "Det gick inte att spara %s."
 
 #: src/libaudcore/playlist-files.cc:167
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr "Kan inte spara %s: filändelsen stöds ej."
+msgstr "Kan inte spara %s: filändelsen stöds inte."
 
 #: src/libaudcore/probe.cc:55
 msgid "Error loading plugin"
-msgstr "Fel vid inläsning av insticksmodul"
+msgstr "Det gick inte att läsa in insticksmodulen"
 
 #: src/libaudcore/probe.cc:180
 msgid "Seek error"
-msgstr "Sökfel"
+msgstr "Spolningsfel"
 
 #: src/libaudcore/probe.cc:188
 msgid ""
 "The file format could not be determined. The format may be unsupported, or a "
 "necessary plugin may not be installed/enabled."
 msgstr ""
-"Filformatet kunde inte fastställas. Formatet kanske inte stöds, eller så är "
-"en nödvändig insticksmodul kanske inte installerad/aktiverad."
+"Filformatet kunde inte identifieras. Formatet kanske inte stöds, eller så är "
+"en nödvändig insticksmodul inte installerad eller aktiverad."
 
 #: src/libaudcore/probe.cc:229
 msgid ""
@@ -252,31 +258,31 @@ msgstr ""
 "Filen kunde inte avkodas. Den kan vara ogiltig, skadad eller i ett format "
 "som inte stöds."
 
-#: src/libaudcore/tuple.cc:596
+#: src/libaudcore/tuple.cc:598
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.cc:598
+#: src/libaudcore/tuple.cc:600
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.cc:601
+#: src/libaudcore/tuple.cc:603
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d kanal"
 msgstr[1] "%d kanaler"
 
-#: src/libaudcore/tuple.cc:819
+#: src/libaudcore/tuple.cc:818
 msgid "Audio CD"
 msgstr "Ljud-CD"
 
-#: src/libaudcore/tuple.cc:903
+#: src/libaudcore/tuple.cc:902
 #, c-format
 msgid "Track %d"
 msgstr "Spår %d"
 
-#: src/libaudcore/tuple.cc:909
+#: src/libaudcore/tuple.cc:908
 msgid "(unknown title)"
 msgstr "(okänd titel)"
 
@@ -287,11 +293,11 @@ msgstr "Okänt URI-schema"
 #: src/libaudcore/vfs_local.cc:86 src/libaudcore/vfs_local.cc:330
 #: src/libaudcore/vfs_local.cc:386
 msgid "Invalid file name"
-msgstr "Felaktigt filnamn"
+msgstr "Ogiltigt filnamn"
 
 #: src/libaudcore/vfs_local.cc:134
 msgid "Invalid access mode"
-msgstr "Felaktigt åtkomstläge"
+msgstr "Ogiltigt åtkomstläge"
 
 #: src/libaudgui/about.cc:37 src/libaudqt/about-qt.cc:37
 msgid "Credits"
@@ -306,36 +312,36 @@ msgid "About Audacious"
 msgstr "Om Audacious"
 
 #: src/libaudgui/confirm.cc:33 src/libaudgui/jump-to-time.cc:48
-#: src/libaudgui/playlists.cc:93 src/libaudgui/playlists.cc:190
-#: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:105
-#: src/libaudqt/playlist-management.cc:42
-#: src/libaudqt/playlist-management.cc:60 src/libaudqt/prefs-plugin.cc:141
+#: src/libaudgui/playlists.cc:93 src/libaudgui/playlists.cc:193
+#: src/libaudgui/plugin-prefs.cc:161 src/libaudgui/url-opener.cc:105
+#: src/libaudqt/playlist-management.cc:41
+#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:138
 #: src/libaudqt/url-opener-qt.cc:81
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: src/libaudgui/confirm.cc:48 src/libaudqt/playlist-management.cc:58
+#: src/libaudgui/confirm.cc:48 src/libaudqt/playlist-management.cc:57
 msgid "_Don’t ask again"
 msgstr "_Fråga inte igen"
 
-#: src/libaudgui/confirm.cc:67 src/libaudqt/playlist-management.cc:66
+#: src/libaudgui/confirm.cc:67 src/libaudqt/playlist-management.cc:64
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr "Vill du ta bort \"%s\" permanent?"
+msgstr "Vill du ta bort ”%s” permanent?"
 
-#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:59
+#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:58
 msgid "_Remove"
 msgstr "_Ta bort"
 
-#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:63
+#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:62
 msgid "Remove Playlist"
 msgstr "Ta bort spellista"
 
-#: src/libaudgui/confirm.cc:92 src/libaudqt/playlist-management.cc:40
+#: src/libaudgui/confirm.cc:92 src/libaudqt/playlist-management.cc:39
 msgid "What would you like to call this playlist?"
-msgstr "Vad vill du kalla denna spellista?"
+msgstr "Vad vill du kalla den här spellistan?"
 
-#: src/libaudgui/confirm.cc:93 src/libaudqt/playlist-management.cc:41
+#: src/libaudgui/confirm.cc:93 src/libaudqt/playlist-management.cc:40
 msgid "_Rename"
 msgstr "_Byt namn"
 
@@ -349,27 +355,27 @@ msgstr "Välj en förinställning att exportera."
 
 #: src/libaudgui/eq-preset.cc:257 src/libaudgui/eq-preset.cc:262
 msgid "Preset File ..."
-msgstr "Förinställningsfil ..."
+msgstr "Förinställningsfil …"
 
 #: src/libaudgui/eq-preset.cc:258 src/libaudgui/eq-preset.cc:263
 msgid "EQF File ..."
-msgstr "EQF-fil ..."
+msgstr "EQF-fil …"
 
-#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:339
+#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:337
 #: src/libaudqt/fileopener.cc:110
 msgid "Import"
 msgstr "Importera"
 
-#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:342
+#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:340
 #: src/libaudqt/fileopener.cc:110
 msgid "Export"
 msgstr "Exportera"
 
-#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:405
+#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:403
 msgid "Equalizer Presets"
-msgstr "Förinställningar för frekvenskorrigeraren"
+msgstr "Förinställningar för frekvenskorrigering"
 
-#: src/libaudgui/eq-preset.cc:306 src/libaudqt/eq-preset-qt.cc:330
+#: src/libaudgui/eq-preset.cc:306 src/libaudqt/eq-preset-qt.cc:328
 msgid "Save Preset"
 msgstr "Spara förinställning"
 
@@ -427,11 +433,11 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.cc:133 src/libaudqt/equalizer-qt.cc:210
 msgid "Equalizer"
-msgstr "Frekvenskorrigerare"
+msgstr "Frekvenskorrigering"
 
 #: src/libaudgui/equalizer.cc:148 src/libaudqt/equalizer-qt.cc:144
 msgid "Presets ..."
-msgstr "Förinställningar ..."
+msgstr "Förinställningar …"
 
 #: src/libaudgui/equalizer.cc:152 src/libaudqt/equalizer-qt.cc:143
 msgid "Reset to Zero"
@@ -452,7 +458,7 @@ msgstr "_Öppna"
 
 #: src/libaudgui/file-opener.cc:82
 msgid "Close _dialog on open"
-msgstr "Stäng _dialogfönstret vid öppning"
+msgstr "Stäng _dialogrutan vid öppning"
 
 #: src/libaudgui/file-opener.cc:87 src/libaudqt/fileopener.cc:105
 msgid "Add Files"
@@ -465,14 +471,14 @@ msgstr "_Lägg till"
 
 #: src/libaudgui/file-opener.cc:90
 msgid "Close _dialog on add"
-msgstr "Stäng _dialogfönstret vid tillägg"
+msgstr "Stäng _dialogrutan vid tillägg"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
-#: src/libaudgui/jump-to-track.cc:324 src/libaudgui/plugin-prefs.cc:168
+#: src/libaudgui/jump-to-track.cc:324 src/libaudgui/plugin-prefs.cc:167
 #: src/libaudgui/prefs-window.cc:942 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:355 src/libaudqt/audqt.cc:330
+#: src/libaudgui/util.cc:354 src/libaudqt/audqt.cc:330
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
-#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:702
+#: src/libaudqt/prefs-plugin.cc:149 src/libaudqt/prefs-window-qt.cc:702
 #: src/libaudqt/song-window-qt.cc:376
 msgid "_Close"
 msgstr "_Stäng"
@@ -565,7 +571,7 @@ msgstr "Kammarmusik"
 
 #: src/libaudgui/infowin.cc:94
 msgid "Classical"
-msgstr "Klassisk"
+msgstr "Klassisk musik"
 
 #: src/libaudgui/infowin.cc:95
 msgid "Country"
@@ -585,7 +591,7 @@ msgstr "Lättlyssnat"
 
 #: src/libaudgui/infowin.cc:99
 msgid "Folk"
-msgstr "Folk"
+msgstr "Folkmusik"
 
 #: src/libaudgui/infowin.cc:100
 msgid "Funk"
@@ -641,7 +647,7 @@ msgstr "New wave"
 
 #: src/libaudgui/infowin.cc:113
 msgid "Noise"
-msgstr "Oljud"
+msgstr "Noise"
 
 #: src/libaudgui/infowin.cc:114
 msgid "Pop"
@@ -685,7 +691,7 @@ msgstr "Swing"
 
 #: src/libaudgui/infowin.cc:124
 msgid "Techno"
-msgstr "Tekno"
+msgstr "Techno"
 
 #: src/libaudgui/infowin.cc:125
 msgid "Trip-hop"
@@ -693,7 +699,7 @@ msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.cc:232
 msgid "Save successful"
-msgstr "Sparandet lyckades"
+msgstr "Sparningen lyckades"
 
 #: src/libaudgui/infowin.cc:236
 msgid "Save error"
@@ -740,7 +746,7 @@ msgstr "%d kbit/s"
 
 #: src/libaudgui/infowin.cc:503
 msgid "N/A"
-msgstr "inte tillgänglig"
+msgstr "Ej tillgängligt"
 
 #: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:329
 #: src/libaudqt/song-window-qt.cc:373
@@ -749,7 +755,7 @@ msgstr "_Hoppa"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
-msgstr "Hoppa till tid"
+msgstr "Hoppa till en tidpunkt"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
@@ -759,11 +765,11 @@ msgstr "Ange tid (minuter:sekunder):"
 #: src/libaudgui/jump-to-track.cc:320 src/libaudqt/song-window-qt.cc:290
 #: src/libaudqt/song-window-qt.cc:371
 msgid "_Queue"
-msgstr "_Kö"
+msgstr "Lägg i _kö"
 
 #: src/libaudgui/jump-to-track.cc:102 src/libaudqt/song-window-qt.cc:290
 msgid "Un_queue"
-msgstr "Ta bort från k_ö"
+msgstr "Ta bort från _kön"
 
 #: src/libaudgui/jump-to-track.cc:252 src/libaudqt/song-window-qt.cc:305
 msgid "Jump to Song"
@@ -775,7 +781,7 @@ msgstr "_Filter:"
 
 #: src/libaudgui/jump-to-track.cc:313 src/libaudqt/song-window-qt.cc:366
 msgid "C_lose on jump"
-msgstr "S_täng vid hopp"
+msgstr "S_täng efter hopp"
 
 #: src/libaudgui/playlists.cc:92
 msgid "_Overwrite"
@@ -803,33 +809,33 @@ msgstr "Välj format efter filändelse"
 msgid "Export Playlist"
 msgstr "Exportera spellista"
 
-#: src/libaudgui/playlists.cc:169
+#: src/libaudgui/playlists.cc:170
 msgid "_Export"
 msgstr "_Exportera"
 
-#: src/libaudgui/playlists.cc:175 src/libaudqt/fileopener.cc:106
+#: src/libaudgui/playlists.cc:176 src/libaudqt/fileopener.cc:106
 msgid "Import Playlist"
 msgstr "Importera spellista"
 
-#: src/libaudgui/playlists.cc:176
+#: src/libaudgui/playlists.cc:178
 msgid "_Import"
 msgstr "_Importera"
 
 #: src/libaudgui/plugin-menu.cc:40 src/libaudqt/plugin-menu-qt.cc:44
 msgid "_Plugins ..."
-msgstr "_Insticksmoduler ..."
+msgstr "_Insticksmoduler …"
 
-#: src/libaudgui/plugin-prefs.cc:110 src/libaudqt/prefs-plugin.cc:61
+#: src/libaudgui/plugin-prefs.cc:110 src/libaudqt/prefs-plugin.cc:59
 #, c-format
 msgid "About %s"
 msgstr "Om %s"
 
-#: src/libaudgui/plugin-prefs.cc:156 src/libaudqt/prefs-plugin.cc:126
+#: src/libaudgui/plugin-prefs.cc:156 src/libaudqt/prefs-plugin.cc:124
 #, c-format
 msgid "%s Settings"
-msgstr "%s-inställningar"
+msgstr "Inställningar för %s"
 
-#: src/libaudgui/plugin-prefs.cc:161 src/libaudqt/prefs-plugin.cc:139
+#: src/libaudgui/plugin-prefs.cc:160 src/libaudqt/prefs-plugin.cc:136
 msgid "_Set"
 msgstr "_Ställ in"
 
@@ -893,7 +899,7 @@ msgstr "Visualisering"
 
 #: src/libaudgui/prefs-window.cc:96 src/libaudqt/prefs-pluginlist-model.cc:42
 msgid "Input"
-msgstr "Ingång"
+msgstr "Indata"
 
 #: src/libaudgui/prefs-window.cc:98 src/libaudqt/prefs-pluginlist-model.cc:44
 msgid "Transport"
@@ -996,11 +1002,11 @@ msgstr "Flyttal"
 
 #: src/libaudgui/prefs-window.cc:143 src/libaudqt/prefs-window-qt.cc:204
 msgid "As decoded"
-msgstr "Som avkodat"
+msgstr "Efter avkodning"
 
 #: src/libaudgui/prefs-window.cc:144 src/libaudqt/prefs-window-qt.cc:205
 msgid "After applying ReplayGain"
-msgstr "Efter applicering av ReplayGain"
+msgstr "Efter att ReplayGain har tillämpats"
 
 #: src/libaudgui/prefs-window.cc:145 src/libaudqt/prefs-window-qt.cc:207
 msgid "After applying effects"
@@ -1008,11 +1014,11 @@ msgstr "Efter att effekter har tillämpats"
 
 #: src/libaudgui/prefs-window.cc:146 src/libaudqt/prefs-window-qt.cc:208
 msgid "After applying equalization"
-msgstr "Efter applicering av frekvenskorrigering"
+msgstr "Efter att frekvenskorrigering har tillämpats"
 
 #: src/libaudgui/prefs-window.cc:152 src/libaudqt/prefs-window-qt.cc:214
 msgid "Based on shuffle"
-msgstr "Baserat på blandning"
+msgstr "Enligt blandningsläget"
 
 #: src/libaudgui/prefs-window.cc:167
 msgid "Restart in Qt mode"
@@ -1045,7 +1051,7 @@ msgstr "dB"
 
 #: src/libaudgui/prefs-window.cc:225 src/libaudqt/prefs-window-qt.cc:299
 msgid "Amplify untagged files:"
-msgstr "Förstärk otaggade filer:"
+msgstr "Förstärk filer utan ReplayGain-taggar:"
 
 #: src/libaudgui/prefs-window.cc:231 src/libaudqt/prefs-window-qt.cc:303
 msgid "<b>Output Settings</b>"
@@ -1070,7 +1076,7 @@ msgstr "Mjuk klippning"
 
 #: src/libaudgui/prefs-window.cc:241 src/libaudqt/prefs-window-qt.cc:311
 msgid "Use software volume control (not recommended)"
-msgstr "Använd programvaruvolymkontroll (rekommenderas inte)"
+msgstr "Använd programvarubaserad volymkontroll (rekommenderas inte)"
 
 #: src/libaudgui/prefs-window.cc:243 src/libaudqt/prefs-window-qt.cc:313
 msgid "<b>Recording Settings</b>"
@@ -1146,7 +1152,7 @@ msgstr "SOCKS v5"
 
 #: src/libaudgui/prefs-window.cc:306 src/libaudqt/prefs-window-qt.cc:349
 msgid "Auto character encoding detector for:"
-msgstr "Automatisk teckenkodningsdetektor för:"
+msgstr "Identifiera teckenkodning automatiskt för:"
 
 #: src/libaudgui/prefs-window.cc:309 src/libaudqt/prefs-window-qt.cc:352
 msgid "Fallback character encodings:"
@@ -1162,7 +1168,7 @@ msgstr "Fortsätt uppspelning vid start"
 
 #: src/libaudgui/prefs-window.cc:320 src/libaudqt/prefs-window-qt.cc:362
 msgid "Pause instead of resuming immediately"
-msgstr "Pausa istället för att fortsätta direkt"
+msgstr "Pausa i stället för att fortsätta direkt"
 
 #: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window-qt.cc:364
 msgid "Advance when the current song is deleted"
@@ -1174,7 +1180,7 @@ msgstr "Rensa spellistan när du öppnar filer"
 
 #: src/libaudgui/prefs-window.cc:327 src/libaudqt/prefs-window-qt.cc:368
 msgid "Open files in a temporary playlist"
-msgstr "Öppna filer i en temporär spellista"
+msgstr "Öppna filer i en tillfällig spellista"
 
 #: src/libaudgui/prefs-window.cc:329 src/libaudqt/prefs-window-qt.cc:370
 msgid "Skip confirmation when removing a playlist"
@@ -1190,15 +1196,15 @@ msgstr "Visa låtnummer"
 
 #: src/libaudgui/prefs-window.cc:334 src/libaudqt/prefs-window-qt.cc:375
 msgid "Show leading zeroes (02:00 vs. 2:00)"
-msgstr "Visa inledande nollor (02:00 vs. 2:00)"
+msgstr "Visa inledande nollor (02:00 i stället för 2:00)"
 
 #: src/libaudgui/prefs-window.cc:336 src/libaudqt/prefs-window-qt.cc:377
 msgid "Show hours separately (1:30:00 vs. 90:00)"
-msgstr "Visa timmar separat (1:30:00 vs. 90:00)"
+msgstr "Visa timmar separat (1:30:00 i stället för 90:00)"
 
 #: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window-qt.cc:380
 msgid "<b>Export</b>"
-msgstr "<b>Exportera</b>"
+msgstr "<b>Export</b>"
 
 #: src/libaudgui/prefs-window.cc:340 src/libaudqt/prefs-window-qt.cc:381
 msgid "Use relative paths when possible"
@@ -1218,7 +1224,7 @@ msgstr "Ta inte med bilder som matchar följande ord (kommaseparerade):"
 
 #: src/libaudgui/prefs-window.cc:350 src/libaudqt/prefs-window-qt.cc:391
 msgid "Search for images matching song file name"
-msgstr "Sök efter bilder som matchar låtens filnamn"
+msgstr "Sök efter bilder som matchar låtfilens namn"
 
 #: src/libaudgui/prefs-window.cc:352 src/libaudqt/prefs-window-qt.cc:393
 msgid "Search recursively"
@@ -1254,7 +1260,7 @@ msgstr "Använd Xwayland (kräver omstart för att börja gälla)"
 
 #: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:408
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Tolka \\ (omvänt snedstreck) som en mappavgränsare"
+msgstr "Tolka \\ (bakstreck) som mappavgränsare"
 
 #: src/libaudgui/prefs-window.cc:379 src/libaudqt/prefs-window-qt.cc:411
 msgid "<b>Playlist</b>"
@@ -1266,7 +1272,7 @@ msgstr "Lägg till mappar rekursivt"
 
 #: src/libaudgui/prefs-window.cc:382 src/libaudqt/prefs-window-qt.cc:414
 msgid "Add folders nested within playlist files"
-msgstr "Lägg till mappar som är nästlade i spellistefiler"
+msgstr "Lägg till mappar som anges i spellistefiler"
 
 #: src/libaudgui/prefs-window.cc:384 src/libaudqt/prefs-window-qt.cc:416
 msgid "<b>Metadata</b>"
@@ -1278,19 +1284,19 @@ msgstr "Gissa saknad metadata från filsökväg"
 
 #: src/libaudgui/prefs-window.cc:387 src/libaudqt/prefs-window-qt.cc:419
 msgid "Do not load metadata for songs until played"
-msgstr "Läs inte in låtarnas metadata innan de spelas"
+msgstr "Läs inte in metadata för låtar förrän de spelas"
 
 #: src/libaudgui/prefs-window.cc:389 src/libaudqt/prefs-window-qt.cc:422
 msgid "Probe content of files with no recognized file name extension"
-msgstr "Undersök innehåll i filer med okänd filändelse"
+msgstr "Undersök innehållet i filer utan känd filändelse"
 
 #: src/libaudgui/prefs-window.cc:391 src/libaudqt/prefs-window-qt.cc:424
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>Diverse</b>"
+msgstr "<b>Övrigt</b>"
 
 #: src/libaudgui/prefs-window.cc:392 src/libaudqt/prefs-window-qt.cc:425
 msgid "Step forward/backward by:"
-msgstr "Stega framåt/bakåt med:"
+msgstr "Flytta framåt eller bakåt med:"
 
 #: src/libaudgui/prefs-window.cc:394 src/libaudqt/prefs-window-qt.cc:426
 msgid "seconds"
@@ -1360,12 +1366,12 @@ msgstr "Titelformat:"
 msgid "Custom string:"
 msgstr "Anpassad sträng:"
 
-#: src/libaudgui/prefs-window.cc:820 src/libaudqt/prefs-window-qt.cc:787
+#: src/libaudgui/prefs-window.cc:820 src/libaudqt/prefs-window-qt.cc:789
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Aktivera inspelning av ljudström med %s"
 
-#: src/libaudgui/prefs-window.cc:829 src/libaudqt/prefs-window-qt.cc:800
+#: src/libaudgui/prefs-window.cc:829 src/libaudqt/prefs-window-qt.cc:802
 msgid "No audio recording plugin available"
 msgstr "Ingen insticksmodul för ljudinspelning tillgänglig"
 
@@ -1378,7 +1384,7 @@ msgstr "Audacious-inställningar"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:299
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:298
 msgid "Save"
 msgstr "Spara"
 
@@ -1386,19 +1392,19 @@ msgstr "Spara"
 msgid "Load"
 msgstr "Läs in"
 
-#: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:257
+#: src/libaudgui/preset-browser.cc:86 src/libaudqt/eq-preset-qt.cc:257
 msgid "Load Preset File"
 msgstr "Läs in förinställningsfil"
 
-#: src/libaudgui/preset-browser.cc:99
+#: src/libaudgui/preset-browser.cc:100
 msgid "Load EQF File"
 msgstr "Läs in EQF-fil"
 
-#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:294
+#: src/libaudgui/preset-browser.cc:115 src/libaudqt/eq-preset-qt.cc:293
 msgid "Save Preset File"
 msgstr "Spara förinställningsfil"
 
-#: src/libaudgui/preset-browser.cc:131
+#: src/libaudgui/preset-browser.cc:132
 msgid "Save EQF File"
 msgstr "Spara EQF-fil"
 
@@ -1412,7 +1418,7 @@ msgstr "_Ta bort från kö"
 
 #: src/libaudgui/status.cc:37
 msgid "Working ..."
-msgstr "Arbetar ..."
+msgstr "Arbetar …"
 
 #: src/libaudgui/status.cc:87 src/libaudqt/log-inspector.cc:226
 msgid "Error"
@@ -1446,7 +1452,7 @@ msgstr "Ange URL:"
 msgid "Open"
 msgstr "Öppna"
 
-#: src/libaudgui/util.cc:341
+#: src/libaudgui/util.cc:340
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1458,9 +1464,9 @@ msgstr ""
 msgid "Preset files (*.preset *.eqf *.q1)"
 msgstr "Förinställningsfiler (*.preset *.eqf *.q1)"
 
-#: src/libaudqt/eq-preset-qt.cc:347
+#: src/libaudqt/eq-preset-qt.cc:345
 msgid "Revert"
-msgstr "Återgå"
+msgstr "Ångra ändringar"
 
 #: src/libaudqt/file-entry.cc:40
 msgid "Browse"
@@ -1480,11 +1486,11 @@ msgstr "Lägg till"
 
 #: src/libaudqt/font-entry.cc:42
 msgid "Set Font"
-msgstr "Ställ in teckensnitt"
+msgstr "Ställ in typsnitt"
 
 #: src/libaudqt/info-widget.cc:46
 msgid "<various>"
-msgstr "<various>"
+msgstr "<varierande>"
 
 #: src/libaudqt/info-widget.cc:49
 msgid "Metadata"
@@ -1496,7 +1502,7 @@ msgstr "Kompositör"
 
 #: src/libaudqt/info-widget.cc:59
 msgid "Performer"
-msgstr "Uppträdare"
+msgstr "Medverkande"
 
 #: src/libaudqt/info-widget.cc:60
 msgid "Recording Year"
@@ -1520,7 +1526,7 @@ msgstr "Skivnummer"
 
 #: src/libaudqt/info-widget.cc:67
 msgid "Technical"
-msgstr "Tekniskt"
+msgstr "Teknisk information"
 
 #: src/libaudqt/info-widget.cc:71
 msgid "Bitrate"
@@ -1544,11 +1550,11 @@ msgstr "Fil ändrad"
 
 #: src/libaudqt/infowin-qt.cc:94
 msgid "_Revert"
-msgstr "_Återgå"
+msgstr "_Ångra ändringar"
 
 #: src/libaudqt/infowin-qt.cc:105
 msgid "Error writing tag(s)."
-msgstr "Fel vid skrivning av tagg(ar)."
+msgstr "Fel vid skrivning av taggar."
 
 #: src/libaudqt/infowin-qt.cc:127
 msgid "%1 files selected"
@@ -1572,7 +1578,7 @@ msgstr "Meddelande"
 
 #: src/libaudqt/log-inspector.cc:211
 msgid "Log Inspector"
-msgstr "Logginspekterare"
+msgstr "Logggranskare"
 
 #: src/libaudqt/log-inspector.cc:223
 msgid "Debug"
@@ -1580,7 +1586,7 @@ msgstr "Felsökning"
 
 #: src/libaudqt/log-inspector.cc:224
 msgid "Info"
-msgstr "Info"
+msgstr "Information"
 
 #: src/libaudqt/log-inspector.cc:225
 msgid "Warning"
@@ -1604,7 +1610,7 @@ msgstr "Starta om i GTK-läge"
 
 #: src/libaudqt/prefs-window-qt.cc:237 src/libaudqt/prefs-window-qt.cc:250
 msgid "Native"
-msgstr "Inbyggt"
+msgstr "Systemets standard"
 
 #: src/libaudqt/prefs-window-qt.cc:238
 msgid "Dark"

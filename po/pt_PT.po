@@ -4,8 +4,8 @@
 #
 # Translators:
 # Alexandro Casanova <shorterfire@gmail.com>, 2012
-# Bruno Miguel, 2025
-# Eduardo Cardoso, 2023
+# Bruno Miguel, 2025-2026
+# c31d09888d121e086257f2aee6768998_ef23c6a, 2023
 # Pitxyoki <Pitxyoki@gmail.com>, 2010
 # Miguel Diaz Gonçalves, 2022
 # Pitxyoki <Pitxyoki@gmail.com>, 2010
@@ -19,9 +19,9 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: https://github.com/audacious-media-player/audacious/"
 "issues\n"
-"POT-Creation-Date: 2026-05-09 21:25+0200\n"
+"POT-Creation-Date: 2026-10-18 22:47+0200\n"
 "PO-Revision-Date: 2011-10-10 15:11+0000\n"
-"Last-Translator: Bruno Miguel, 2025\n"
+"Last-Translator: Bruno Miguel, 2025-2026\n"
 "Language-Team: Portuguese (Portugal) (http://app.transifex.com/audacious/"
 "audacious/language/pt_PT/)\n"
 "Language: pt_PT\n"
@@ -45,7 +45,7 @@ msgstr "Iniciar reprodução"
 
 #: src/audacious/main.cc:78
 msgid "Pause playback, resume if already paused"
-msgstr ""
+msgstr "Pausar reprodução; continuar se já estava pausado"
 
 #: src/audacious/main.cc:80
 msgid "Pause if playing, play otherwise"
@@ -121,7 +121,7 @@ msgstr ""
 msgid "Select instance to run/control"
 msgstr "Selecione a instância a executar/controlar"
 
-#: src/audacious/main.cc:392 src/libaudqt/audqt.cc:151
+#: src/audacious/main.cc:392
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -148,7 +148,7 @@ msgstr "Não existem ficheiros."
 
 #: src/libaudcore/adder.cc:478 src/libaudcore/playlist.cc:81
 msgid "New Playlist"
-msgstr "Nova Lista de Reprodução"
+msgstr "Nova lista de reprodução"
 
 #: src/libaudcore/audstrings.cc:664 src/libaudcore/tuple.cc:562
 msgid "Standard input"
@@ -204,7 +204,7 @@ msgstr ""
 "Erro ao abrir %s:\n"
 "%s"
 
-#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:283
+#: src/libaudcore/playlist-files.cc:87 src/libaudqt/eq-preset-qt.cc:282
 #, c-format
 msgid "Error loading %s."
 msgstr "Erro ao carregar %s."
@@ -214,7 +214,7 @@ msgstr "Erro ao carregar %s."
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "Não foi possível carregar %s: extensão de ficheiro não suportada."
 
-#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:319
+#: src/libaudcore/playlist-files.cc:161 src/libaudqt/eq-preset-qt.cc:317
 #, c-format
 msgid "Error saving %s."
 msgstr "Erro ao gravar %s"
@@ -248,15 +248,15 @@ msgstr ""
 "O ficheiro não pode ser descodificado. Pode ser inválido, corrupto, ou estar "
 "num formato não suportado."
 
-#: src/libaudcore/tuple.cc:596
+#: src/libaudcore/tuple.cc:598
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.cc:598
+#: src/libaudcore/tuple.cc:600
 msgid "Stereo"
 msgstr "Estéreo"
 
-#: src/libaudcore/tuple.cc:601
+#: src/libaudcore/tuple.cc:603
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -264,16 +264,16 @@ msgstr[0] "%d canal"
 msgstr[1] "%d canais"
 msgstr[2] "%d canais"
 
-#: src/libaudcore/tuple.cc:819
+#: src/libaudcore/tuple.cc:818
 msgid "Audio CD"
 msgstr "CD de Áudio"
 
-#: src/libaudcore/tuple.cc:903
+#: src/libaudcore/tuple.cc:902
 #, c-format
 msgid "Track %d"
 msgstr "Faixa %d"
 
-#: src/libaudcore/tuple.cc:909
+#: src/libaudcore/tuple.cc:908
 msgid "(unknown title)"
 msgstr "(título desconhecido)"
 
@@ -303,42 +303,42 @@ msgid "About Audacious"
 msgstr "Sobre o Audacious"
 
 #: src/libaudgui/confirm.cc:33 src/libaudgui/jump-to-time.cc:48
-#: src/libaudgui/playlists.cc:93 src/libaudgui/playlists.cc:190
-#: src/libaudgui/plugin-prefs.cc:162 src/libaudgui/url-opener.cc:105
-#: src/libaudqt/playlist-management.cc:42
-#: src/libaudqt/playlist-management.cc:60 src/libaudqt/prefs-plugin.cc:141
+#: src/libaudgui/playlists.cc:93 src/libaudgui/playlists.cc:193
+#: src/libaudgui/plugin-prefs.cc:161 src/libaudgui/url-opener.cc:105
+#: src/libaudqt/playlist-management.cc:41
+#: src/libaudqt/playlist-management.cc:59 src/libaudqt/prefs-plugin.cc:138
 #: src/libaudqt/url-opener-qt.cc:81
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: src/libaudgui/confirm.cc:48 src/libaudqt/playlist-management.cc:58
+#: src/libaudgui/confirm.cc:48 src/libaudqt/playlist-management.cc:57
 msgid "_Don’t ask again"
 msgstr "_Não perguntar novamente"
 
-#: src/libaudgui/confirm.cc:67 src/libaudqt/playlist-management.cc:66
+#: src/libaudgui/confirm.cc:67 src/libaudqt/playlist-management.cc:64
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
 msgstr "Pretende eliminar permanentemente \"%s\"?"
 
-#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:59
+#: src/libaudgui/confirm.cc:70 src/libaudqt/playlist-management.cc:58
 msgid "_Remove"
 msgstr "_Remover"
 
-#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:63
+#: src/libaudgui/confirm.cc:73 src/libaudqt/playlist-management.cc:62
 msgid "Remove Playlist"
 msgstr "Remover lista de reprodução"
 
-#: src/libaudgui/confirm.cc:92 src/libaudqt/playlist-management.cc:40
+#: src/libaudgui/confirm.cc:92 src/libaudqt/playlist-management.cc:39
 msgid "What would you like to call this playlist?"
-msgstr "Gostaria de invocar esta lista de reprodução?"
+msgstr "Que nome gostaria de dar a esta lista de reprodução?"
 
-#: src/libaudgui/confirm.cc:93 src/libaudqt/playlist-management.cc:41
+#: src/libaudgui/confirm.cc:93 src/libaudqt/playlist-management.cc:40
 msgid "_Rename"
-msgstr "Muda_r nome"
+msgstr "_Renomear"
 
 #: src/libaudgui/confirm.cc:94 src/libaudqt/playlist-management.cc:38
 msgid "Rename Playlist"
-msgstr "Mudar nome da lista de reprodução"
+msgstr "Renomear a lista de reprodução"
 
 #: src/libaudgui/eq-preset.cc:154
 msgid "Please select one preset to export."
@@ -352,21 +352,21 @@ msgstr "Ficheiro de pré-ajuste..."
 msgid "EQF File ..."
 msgstr "Ficheiro EQF..."
 
-#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:339
+#: src/libaudgui/eq-preset.cc:267 src/libaudqt/eq-preset-qt.cc:337
 #: src/libaudqt/fileopener.cc:110
 msgid "Import"
 msgstr "Importar"
 
-#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:342
+#: src/libaudgui/eq-preset.cc:268 src/libaudqt/eq-preset-qt.cc:340
 #: src/libaudqt/fileopener.cc:110
 msgid "Export"
 msgstr "Exportar"
 
-#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:405
+#: src/libaudgui/eq-preset.cc:283 src/libaudqt/eq-preset-qt.cc:403
 msgid "Equalizer Presets"
 msgstr "Pré-ajuste de equalizador"
 
-#: src/libaudgui/eq-preset.cc:306 src/libaudqt/eq-preset-qt.cc:330
+#: src/libaudgui/eq-preset.cc:306 src/libaudqt/eq-preset-qt.cc:328
 msgid "Save Preset"
 msgstr "Guardar pré-ajuste"
 
@@ -465,11 +465,11 @@ msgid "Close _dialog on add"
 msgstr "Fechar _diálogo ao Adicionar"
 
 #: src/libaudgui/file-opener.cc:139 src/libaudgui/infowin.cc:443
-#: src/libaudgui/jump-to-track.cc:324 src/libaudgui/plugin-prefs.cc:168
+#: src/libaudgui/jump-to-track.cc:324 src/libaudgui/plugin-prefs.cc:167
 #: src/libaudgui/prefs-window.cc:942 src/libaudgui/queue-manager.cc:195
-#: src/libaudgui/util.cc:355 src/libaudqt/audqt.cc:330
+#: src/libaudgui/util.cc:354 src/libaudqt/audqt.cc:330
 #: src/libaudqt/infowin-qt.cc:93 src/libaudqt/log-inspector.cc:245
-#: src/libaudqt/prefs-plugin.cc:152 src/libaudqt/prefs-window-qt.cc:702
+#: src/libaudqt/prefs-plugin.cc:149 src/libaudqt/prefs-window-qt.cc:702
 #: src/libaudqt/song-window-qt.cc:376
 msgid "_Close"
 msgstr "Fe_char"
@@ -801,15 +801,15 @@ msgstr "Selecionar formato por extensão"
 msgid "Export Playlist"
 msgstr "Exportar lista de reprodução"
 
-#: src/libaudgui/playlists.cc:169
+#: src/libaudgui/playlists.cc:170
 msgid "_Export"
 msgstr "_Exportar"
 
-#: src/libaudgui/playlists.cc:175 src/libaudqt/fileopener.cc:106
+#: src/libaudgui/playlists.cc:176 src/libaudqt/fileopener.cc:106
 msgid "Import Playlist"
 msgstr "Importar lista de reprodução"
 
-#: src/libaudgui/playlists.cc:176
+#: src/libaudgui/playlists.cc:178
 msgid "_Import"
 msgstr "_Importar"
 
@@ -817,17 +817,17 @@ msgstr "_Importar"
 msgid "_Plugins ..."
 msgstr "S_uplementos..."
 
-#: src/libaudgui/plugin-prefs.cc:110 src/libaudqt/prefs-plugin.cc:61
+#: src/libaudgui/plugin-prefs.cc:110 src/libaudqt/prefs-plugin.cc:59
 #, c-format
 msgid "About %s"
 msgstr "Sobre o %s"
 
-#: src/libaudgui/plugin-prefs.cc:156 src/libaudqt/prefs-plugin.cc:126
+#: src/libaudgui/plugin-prefs.cc:156 src/libaudqt/prefs-plugin.cc:124
 #, c-format
 msgid "%s Settings"
 msgstr "Definições de %s"
 
-#: src/libaudgui/plugin-prefs.cc:161 src/libaudqt/prefs-plugin.cc:139
+#: src/libaudgui/plugin-prefs.cc:160 src/libaudqt/prefs-plugin.cc:136
 msgid "_Set"
 msgstr "_Definir"
 
@@ -1176,7 +1176,7 @@ msgstr "Abrir ficheiros numa lista de reprodução temporária"
 
 #: src/libaudgui/prefs-window.cc:329 src/libaudqt/prefs-window-qt.cc:370
 msgid "Skip confirmation when removing a playlist"
-msgstr ""
+msgstr "Saltar confirmação quando apagar uma lista de reprodução"
 
 #: src/libaudgui/prefs-window.cc:331 src/libaudqt/prefs-window-qt.cc:372
 msgid "<b>Song Display</b>"
@@ -1248,7 +1248,7 @@ msgstr "<b>Compatibidade</b>"
 
 #: src/libaudgui/prefs-window.cc:373 src/libaudqt/prefs-window-qt.cc:405
 msgid "Use Xwayland (requires a restart to take effect)"
-msgstr ""
+msgstr "Usar Xwayland (é necessário reiniciar a aplicação)"
 
 #: src/libaudgui/prefs-window.cc:376 src/libaudqt/prefs-window-qt.cc:408
 msgid "Interpret \\ (backward slash) as a folder delimiter"
@@ -1360,12 +1360,12 @@ msgstr "Formato do título:"
 msgid "Custom string:"
 msgstr "Linha personalizada:"
 
-#: src/libaudgui/prefs-window.cc:820 src/libaudqt/prefs-window-qt.cc:787
+#: src/libaudgui/prefs-window.cc:820 src/libaudqt/prefs-window-qt.cc:789
 #, c-format
 msgid "Enable audio stream recording with %s"
 msgstr "Ativar gravação do fluxo áudio com %s"
 
-#: src/libaudgui/prefs-window.cc:829 src/libaudqt/prefs-window-qt.cc:800
+#: src/libaudgui/prefs-window.cc:829 src/libaudqt/prefs-window-qt.cc:802
 msgid "No audio recording plugin available"
 msgstr "Não está disponível um suplemento de gravação"
 
@@ -1378,7 +1378,7 @@ msgstr "Definições do Audacious"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:299
+#: src/libaudgui/preset-browser.cc:54 src/libaudqt/eq-preset-qt.cc:298
 msgid "Save"
 msgstr "Guardar"
 
@@ -1386,19 +1386,19 @@ msgstr "Guardar"
 msgid "Load"
 msgstr "Carregar"
 
-#: src/libaudgui/preset-browser.cc:85 src/libaudqt/eq-preset-qt.cc:257
+#: src/libaudgui/preset-browser.cc:86 src/libaudqt/eq-preset-qt.cc:257
 msgid "Load Preset File"
 msgstr "Carregar ficheiro de pré-ajuste"
 
-#: src/libaudgui/preset-browser.cc:99
+#: src/libaudgui/preset-browser.cc:100
 msgid "Load EQF File"
 msgstr "Carregar ficheiro EQF"
 
-#: src/libaudgui/preset-browser.cc:114 src/libaudqt/eq-preset-qt.cc:294
+#: src/libaudgui/preset-browser.cc:115 src/libaudqt/eq-preset-qt.cc:293
 msgid "Save Preset File"
 msgstr "Guardar ficheiro de pré-ajuste"
 
-#: src/libaudgui/preset-browser.cc:131
+#: src/libaudgui/preset-browser.cc:132
 msgid "Save EQF File"
 msgstr "Guardar ficheiro EQF"
 
@@ -1446,7 +1446,7 @@ msgstr "Indique o URL:"
 msgid "Open"
 msgstr "Abrir"
 
-#: src/libaudgui/util.cc:341
+#: src/libaudgui/util.cc:340
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1458,7 +1458,7 @@ msgstr ""
 msgid "Preset files (*.preset *.eqf *.q1)"
 msgstr "Ficheiros de predefinição (*.preset *.eqf *.q1)"
 
-#: src/libaudqt/eq-preset-qt.cc:347
+#: src/libaudqt/eq-preset-qt.cc:345
 msgid "Revert"
 msgstr "Reverter"
 
@@ -1536,11 +1536,11 @@ msgstr "ID do MusicBrainz"
 
 #: src/libaudqt/info-widget.cc:74
 msgid "File Created"
-msgstr ""
+msgstr "Ficheiro criado"
 
 #: src/libaudqt/info-widget.cc:75
 msgid "File Modified"
-msgstr ""
+msgstr "Ficheiro modificado"
 
 #: src/libaudqt/infowin-qt.cc:94
 msgid "_Revert"
