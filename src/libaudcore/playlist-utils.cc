@@ -61,10 +61,7 @@ static int tuple_compare_string(const Tuple & a, const Tuple & b,
     String string_a = a.get_str(field);
     String string_b = b.get_str(field);
 
-    if (!string_a)
-        return (!string_b) ? 0 : -1;
-
-    return (!string_b) ? 1 : str_compare(string_a, string_b);
+    return str_compare(string_a, string_b);
 }
 
 static int tuple_compare_int(const Tuple & a, const Tuple & b,

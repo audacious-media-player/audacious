@@ -846,9 +846,45 @@ EXPORT StringBuf uri_deconstruct(const char * uri, const char * reference)
     return str_copy(uri);
 }
 
-/* Like strcasecmp, but orders numbers correctly (2 before 10). */
-/* Non-ASCII characters are treated exactly as is. */
-/* Handles nullptr gracefully. */
+static const char * skip_whitespace(const char * p)
+{
+    while (*p)
+    {
+        if ((unsigned char)*p < 0x80)
+        {
+            if (!g_ascii_isspace(*p))
+                break;
+        }
+        else
+        {
+            gunichar c = g_utf8_get_char_validated(p, -1);
+            if (c == (gunichar)-1 || c == (gunichar)-2 || !g_unichar_isspace(c))
+                break;
+        }
+
+        p = g_utf8_next_char(p);
+    }
+
+    return p;
+}
+
+// Collapse internal whitespace to one space and ignore trailing whitespace.
+static unsigned char compare_get_char(const char *& p)
+{
+    const char * next = skip_whitespace(p);
+    if (next != p)
+    {
+        p = next;
+        return *p ? ' ' : 0;
+    }
+
+    return *p ? (unsigned char)*p++ : 0;
+}
+
+/* Like strcasecmp, but orders numbers correctly (2 before 10).
+ * Ignores leading/trailing Unicode whitespace and collapses internal
+ * whitespace. Non-whitespace, non-ASCII characters are treated exactly as is.
+ * Handles nullptr gracefully. */
 
 EXPORT int str_compare(const char * ap, const char * bp)
 {
@@ -857,8 +893,11 @@ EXPORT int str_compare(const char * ap, const char * bp)
     if (!bp)
         return 1;
 
-    unsigned char a = *ap++, b = *bp++;
-    for (; a || b; a = *ap++, b = *bp++)
+    ap = skip_whitespace(ap);
+    bp = skip_whitespace(bp);
+
+    unsigned char a = compare_get_char(ap), b = compare_get_char(bp);
+    for (; a || b; a = compare_get_char(ap), b = compare_get_char(bp))
     {
         if (a > '9' || b > '9' || a < '0' || b < '0')
         {
@@ -896,55 +935,16 @@ EXPORT int str_compare(const char * ap, const char * bp)
 
 EXPORT int str_compare_encoded(const char * ap, const char * bp)
 {
-    if (!ap)
-        return bp ? -1 : 0;
-    if (!bp)
-        return 1;
+    if (!ap || !bp)
+        return str_compare(ap, bp);
 
-    unsigned char a = *ap++, b = *bp++;
-    for (; a || b; a = *ap++, b = *bp++)
-    {
-        if (a == '%' && ap[0] && ap[1])
-        {
-            a = (FROM_HEX(ap[0]) << 4) | FROM_HEX(ap[1]);
-            ap += 2;
-        }
-        if (b == '%' && bp[0] && bp[1])
-        {
-            b = (FROM_HEX(bp[0]) << 4) | FROM_HEX(bp[1]);
-            bp += 2;
-        }
+    StringBuf a, b;
+    if (strchr(ap, '%'))
+        ap = a = str_decode_percent(ap);
+    if (strchr(bp, '%'))
+        bp = b = str_decode_percent(bp);
 
-        if (a > '9' || b > '9' || a < '0' || b < '0')
-        {
-            if (a <= 'Z' && a >= 'A')
-                a += 'a' - 'A';
-            if (b <= 'Z' && b >= 'A')
-                b += 'a' - 'A';
-
-            if (a > b)
-                return 1;
-            if (a < b)
-                return -1;
-        }
-        else
-        {
-            int x = a - '0';
-            for (; (a = *ap) <= '9' && a >= '0'; ap++)
-                x = 10 * x + (a - '0');
-
-            int y = b - '0';
-            for (; (b = *bp) >= '0' && b <= '9'; bp++)
-                y = 10 * y + (b - '0');
-
-            if (x > y)
-                return 1;
-            if (x < y)
-                return -1;
-        }
-    }
-
-    return 0;
+    return str_compare(ap, bp);
 }
 
 EXPORT Index<String> str_list_to_index(const char * list, const char * delims)
