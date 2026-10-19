@@ -401,7 +401,7 @@ static const PreferencesWidget song_info_page_widgets[] = {
 
 static const PreferencesWidget advanced_page_widgets[] = {
     WidgetLabel(N_("<b>Compatibility</b>")),
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_DARWIN)
     WidgetCheck(N_("Use Xwayland (requires a restart to take effect)"),
                 WidgetBool(0, "use_xwayland")),
 #endif

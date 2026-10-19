@@ -77,7 +77,7 @@ static QDialog * buildAboutWindow()
     link_label->setAlignment(Qt::AlignHCenter);
     link_label->setOpenExternalLinks(true);
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_DARWIN
     link_label->setContentsMargins(0, 0, 0, audqt::sizes.EightPt);
 #endif
 

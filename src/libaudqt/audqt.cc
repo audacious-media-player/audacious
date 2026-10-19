@@ -130,7 +130,7 @@ EXPORT void init()
         Qt::HighDpiScaleFactorRoundingPolicy::Floor);
 #endif
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_DARWIN)
     // Force Xwayland if requested and potentially available
     if (aud_get_bool("use_xwayland") && qEnvironmentVariableIsSet("DISPLAY"))
         qputenv("QT_QPA_PLATFORM", "xcb");
@@ -177,13 +177,13 @@ EXPORT void init()
     // to use 9 pt in most places so let's try to do the same.
     QApplication::setFont(QApplication::font("QMenu"));
 #endif
-#ifdef Q_OS_MAC
+#ifdef Q_OS_DARWIN
     // Mac-specific font tweaks
     QApplication::setFont(QApplication::font("QSmallFont"), "QDialog");
     QApplication::setFont(QApplication::font("QSmallFont"), "QTreeView");
     QApplication::setFont(QApplication::font("QTipLabel"), "QStatusBar");
 
-    // Handle MacOS dock activation (AppKit applicationShouldHandleReopen)
+    // Handle macOS dock activation (AppKit applicationShouldHandleReopen)
     QObject::connect(qapp, &QApplication::applicationStateChanged, [](auto state) {
         if (state == Qt::ApplicationState::ApplicationActive)
             aud_ui_show(true);

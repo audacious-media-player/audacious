@@ -73,7 +73,7 @@ MenuAction::MenuAction(const MenuItem & item, const char * domain,
     else if (item.submenu)
         setMenu(item.submenu());
 
-#ifndef Q_OS_MAC
+#ifndef Q_OS_DARWIN
     if (item.text.icon)
         setIcon(QIcon::fromTheme(item.text.icon));
 #endif
@@ -121,7 +121,7 @@ EXPORT QMenu * menu_build(ArrayRef<MenuItem> menu_items, const char * domain,
 EXPORT QMenuBar * menubar_build(ArrayRef<MenuItem> menu_items,
                                 const char * domain, QWidget * parent)
 {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_DARWIN
     QMenuBar * m = new QMenuBar(nullptr);
 #else
     QMenuBar * m = new QMenuBar(parent);
