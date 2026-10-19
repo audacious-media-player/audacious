@@ -1,5 +1,5 @@
 project('audacious', 'c', 'cpp',
-        version: '4.6.1',
+        version: '4.6.2',
         meson_version: '>= 0.53',
         default_options: [
           'c_std=gnu99',
