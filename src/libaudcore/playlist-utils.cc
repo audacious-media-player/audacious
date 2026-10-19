@@ -61,31 +61,6 @@ static int tuple_compare_string(const Tuple & a, const Tuple & b,
     String string_a = a.get_str(field);
     String string_b = b.get_str(field);
 
-    if (!string_a)
-        return (!string_b) ? 0 : -1;
-
-    if (!string_b)
-        return 1;
-
-    if (field == Tuple::Title || field == Tuple::FormattedTitle)
-    {
-        const char * title_a = string_a;
-        const char * title_b = string_b;
-
-        // Leading metadata whitespace should not group numbered titles apart.
-        while (*title_a && g_unichar_isspace(g_utf8_get_char(title_a)))
-            title_a = g_utf8_next_char(title_a);
-        while (*title_b && g_unichar_isspace(g_utf8_get_char(title_b)))
-            title_b = g_utf8_next_char(title_b);
-
-        int result = str_compare(title_a, title_b);
-        if (result)
-            return result;
-
-        // Preserve distinct titles for remove_duplicates(), which shares this
-        // comparator, and give equal normalized titles a deterministic order.
-    }
-
     return str_compare(string_a, string_b);
 }
 

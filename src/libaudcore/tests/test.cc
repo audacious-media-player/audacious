@@ -131,6 +131,94 @@ static void test_case_conversion()
     assert(strstr_nocase_utf8(hi_utf8, "OOoo") == nullptr);
 }
 
+static void test_string_compare()
+{
+    static const struct
+    {
+        const char * a;
+        const char * b;
+        int expected;
+    } cases[] = {
+        {nullptr, nullptr, 0},
+        {nullptr, "", -1},
+        {nullptr, " \t", -1},
+        {"", "", 0},
+        {" \t\r\n\f", "", 0},
+        {"", "a", -1},
+        {"a", "ab", -1},
+        {"Apple", "apple", 0},
+        {"apple", "Banana", -1},
+        {"  281. Episode", "2. Episode", 1},
+        {"\t2. Episode", "10. Episode", -1},
+        {"02", "2", 0},
+        {"2", "20", -1},
+        {"  Song Title \t", "song title", 0},
+        {"Song\t \nTitle", "Song Title", 0},
+        {"SongTitle", "Song Title", 1},
+        {"1 2", "12", -1},
+        {"2  3", "2 10", -1},
+        {"\u00a0\u2003"
+         "2. Episode",
+         "10. Episode", -1},
+        {"Song\u2009\u3000Title\u202f", "Song Title", 0},
+        {"\u00a0\u2003\u3000", "", 0},
+        {"Ä", "ä", -1},       // Non-ASCII case is still significant.
+        {"\xff", "\xff ", 0}, // Invalid UTF-8 remains byte-comparable.
+        {"\xe2\x80", "\xe2\x80 ", 0},
+        {"A\u200bB", "AB", 1} // Zero-width space is not whitespace.
+    };
+
+    for (const auto & c : cases)
+    {
+        int result = str_compare(c.a, c.b);
+        assert((result > 0) - (result < 0) == c.expected);
+        result = str_compare(c.b, c.a);
+        assert((result > 0) - (result < 0) == -c.expected);
+
+        StringBuf a = c.a ? str_encode_percent(c.a) : StringBuf();
+        StringBuf b = c.b ? str_encode_percent(c.b) : StringBuf();
+        result = str_compare_encoded(a, b);
+        assert((result > 0) - (result < 0) == c.expected);
+        result = str_compare_encoded(b, a);
+        assert((result > 0) - (result < 0) == -c.expected);
+    }
+
+    assert(!str_compare_encoded("%20Song%09%20Title%C2%A0", "song title"));
+    assert(!str_compare_encoded("Song%E2%80%89Title", "Song%20Title"));
+    assert(!str_compare_encoded("%32%38%31", "281"));
+    assert(str_compare_encoded("2%38%31", "%32") > 0);
+    assert(str_compare_encoded("%32", "%31%30") < 0);
+    assert(!str_compare_encoded("100%", "100%25"));
+    assert(!str_compare_encoded("100%2", "100%252"));
+
+    // Equal whitespace variants must order identically against every string.
+    static const char * const ordered[][3] = {{nullptr, nullptr, nullptr},
+                                              {"", " \t", "\u2003"},
+                                              {"2", " 02 ",
+                                               "\u00a0"
+                                               "2"},
+                                              {"2 a", "2\tA", " 2\u2003a\n"},
+                                              {"2 b", "2  B", "2\u3000b"},
+                                              {"10", " 10", "10\u2009"},
+                                              {"a", " A ", "\ta"},
+                                              {"a b", " A  B", "a\u00a0b "},
+                                              {"ab", " AB\n", "\u2003ab"}};
+
+    for (int i = 0; i < aud::n_elems(ordered); i++)
+        for (int j = 0; j < aud::n_elems(ordered); j++)
+            for (const char * a : ordered[i])
+                for (const char * b : ordered[j])
+                {
+                    int expected = (i > j) - (i < j);
+                    int result = str_compare(a, b);
+                    assert((result > 0) - (result < 0) == expected);
+                    StringBuf ae = a ? str_encode_percent(a) : StringBuf();
+                    StringBuf be = b ? str_encode_percent(b) : StringBuf();
+                    result = str_compare_encoded(ae, be);
+                    assert((result > 0) - (result < 0) == expected);
+                }
+}
+
 static void test_numeric_conversion()
 {
     static const char * in[] = {
@@ -596,6 +684,7 @@ int main(int argc, const char ** argv)
 
     test_audio_conversion();
     test_case_conversion();
+    test_string_compare();
     test_numeric_conversion();
     test_filename_split();
     test_tuple_formats();
