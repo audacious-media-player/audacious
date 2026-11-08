@@ -777,6 +777,23 @@ static StringBuf extract_domain(const char * start)
     return name;
 }
 
+/* Flatpak exposes granted files as /run/user/<uid>/doc/<id>/.
+ * <id> is not the directory that contains the file. */
+static bool is_document_portal_path(const char * path)
+{
+    if (strncmp(path, "/run/user/", 10))
+        return false;
+
+    const char * p = path + 10;
+    if (!g_ascii_isdigit(*p))
+        return false;
+
+    while (g_ascii_isdigit(*p))
+        p++;
+
+    return !strncmp(p, "/doc/", 5) || !strcmp(p, "/doc");
+}
+
 EXPORT void Tuple::generate_fallbacks()
 {
     if (!data)
@@ -846,6 +863,10 @@ EXPORT void Tuple::generate_fallbacks()
 
             sep = G_DIR_SEPARATOR;
         }
+
+        /* The portal id is not an album name. Leave Album empty. */
+        if (is_document_portal_path(s))
+            return;
 
         StringBuf buf = str_copy(s);
 
