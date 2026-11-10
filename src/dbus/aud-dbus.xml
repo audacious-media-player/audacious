@@ -391,6 +391,14 @@
         <!-- Toggle repeat -->
         <method name="ToggleRepeat" />
 
+        <!-- Query single-song repeat status -->
+        <method name="RepeatOne">
+            <arg type="b" direction="out" name="is_repeat_one"/>
+        </method>
+
+        <!-- Toggle single-song repeat -->
+        <method name="ToggleRepeatOne" />
+
         <!-- Query shuffle status -->
         <method name="Shuffle">
             <arg type="b" direction="out" name="is_shuffle"/>
