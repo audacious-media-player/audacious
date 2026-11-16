@@ -779,10 +779,10 @@ static StringBuf extract_domain(const char * start)
 
 /* Sandboxed apps (Flatpak and Snap) receive granted files through the
  * document portal as /run/user/<uid>/doc/<id>/<name>. <id> is not the
- * directory that contains the file. */
-#ifndef __linux__
- static bool is_document_portal_path(const char * path)
+ * real directory that contains the file. */
+static bool is_document_portal_path(const char * path)
 {
+#ifdef __linux__
     if (!path || strncmp(path, "/run/user/", 10))
         return false;
 
@@ -794,8 +794,10 @@ static StringBuf extract_domain(const char * start)
         p++;
 
     return !strncmp(p, "/doc/", 5) || !strcmp(p, "/doc");
-}
+#else
+    return false;
 #endif
+}
 
 EXPORT void Tuple::generate_fallbacks()
 {
@@ -867,11 +869,10 @@ EXPORT void Tuple::generate_fallbacks()
             sep = G_DIR_SEPARATOR;
         }
 
-#ifndef __linux__
-        /* The portal id is not an album name. Leave Album empty. */
+        // leave artist and album empty for sandboxed applications,
+        // the document portal hides the actual host filesystem path
         if (is_document_portal_path(s))
             return;
-#endif
 
         StringBuf buf = str_copy(s);
 
