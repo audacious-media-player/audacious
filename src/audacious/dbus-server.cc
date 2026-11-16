@@ -639,6 +639,13 @@ static gboolean do_repeat(Obj * obj, Invoc * invoc)
     return true;
 }
 
+static gboolean do_repeat_one(Obj * obj, Invoc * invoc)
+{
+    /* thread-safe */
+    FINISH2(repeat_one, aud_get_bool("repeat_one"));
+    return true;
+}
+
 static gboolean do_reverse(Obj * obj, Invoc * invoc)
 {
     ENTER_MAIN_THREAD()
@@ -984,6 +991,14 @@ static gboolean do_toggle_repeat(Obj * obj, Invoc * invoc)
     return true;
 }
 
+static gboolean do_toggle_repeat_one(Obj * obj, Invoc * invoc)
+{
+    /* thread-safe (*except for bug in aud_toggle_bool) */
+    aud_toggle_bool("repeat_one");
+    FINISH(toggle_repeat_one);
+    return true;
+}
+
 static gboolean do_toggle_shuffle(Obj * obj, Invoc * invoc)
 {
     /* thread-safe (*except for bug in aud_toggle_bool) */
@@ -1073,6 +1088,7 @@ static const struct
     {"handle-recording", (GCallback)do_recording},
     {"handle-record", (GCallback)do_record},
     {"handle-repeat", (GCallback)do_repeat},
+    {"handle-repeat-one", (GCallback)do_repeat_one},
     {"handle-reverse", (GCallback)do_reverse},
     {"handle-reverse-album", (GCallback)do_reverse_album},
     {"handle-seek", (GCallback)do_seek},
@@ -1104,6 +1120,7 @@ static const struct
     {"handle-time", (GCallback)do_time},
     {"handle-toggle-auto-advance", (GCallback)do_toggle_auto_advance},
     {"handle-toggle-repeat", (GCallback)do_toggle_repeat},
+    {"handle-toggle-repeat-one", (GCallback)do_toggle_repeat_one},
     {"handle-toggle-shuffle", (GCallback)do_toggle_shuffle},
     {"handle-toggle-stop-after", (GCallback)do_toggle_stop_after},
     {"handle-version", (GCallback)do_version},

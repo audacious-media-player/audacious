@@ -83,6 +83,8 @@ void playlist_delete (int, char * *);
 void playlist_clear (int, char * *);
 void playlist_repeat_status (int, char * *);
 void playlist_repeat_toggle (int, char * *);
+void playlist_repeat_one_status (int, char * *);
+void playlist_repeat_one_toggle (int, char * *);
 void playlist_shuffle_status (int, char * *);
 void playlist_shuffle_toggle (int, char * *);
 void playlist_stop_after_status (int argc, char * * argv);

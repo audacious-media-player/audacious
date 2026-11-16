@@ -210,6 +210,12 @@ Print the status of playlist repeat (``on'' or ``off'').
 .B --playlist-repeat-toggle
 Toggle playlist repeat.
 .TP
+.B --playlist-repeat-one-status
+Print the status of single-song repeat (``on'' or ``off'').
+.TP
+.B --playlist-repeat-one-toggle
+Toggle single-song repeat.
+.TP
 .B --playlist-shuffle-status
 Print the status of playlist shuffle (``on'' or ``off'').
 .TP

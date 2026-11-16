@@ -88,6 +88,8 @@ const struct commandhandler handlers[] =
     {"playlist-auto-advance-toggle", playlist_auto_advance_toggle, "toggle playlist auto-advance", 0},
     {"playlist-repeat-status", playlist_repeat_status, "query playlist repeat", 0},
     {"playlist-repeat-toggle", playlist_repeat_toggle, "toggle playlist repeat", 0},
+    {"playlist-repeat-one-status", playlist_repeat_one_status, "query single-song repeat", 0},
+    {"playlist-repeat-one-toggle", playlist_repeat_one_toggle, "toggle single-song repeat", 0},
     {"playlist-shuffle-status", playlist_shuffle_status, "query playlist shuffle", 0},
     {"playlist-shuffle-toggle", playlist_shuffle_toggle, "toggle playlist shuffle", 0},
     {"playlist-stop-after-status", playlist_stop_after_status, "query if stopping after current song", 0},
