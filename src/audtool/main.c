@@ -249,9 +249,13 @@ int main (int argc, char * * argv)
     {
         for (i = 0; handlers[i].name != NULL; i++)
         {
-            if ((! g_ascii_strcasecmp (handlers[i].name, argv[j]) ||
-             ! g_ascii_strcasecmp (g_strconcat ("--", handlers[i].name, NULL),
-             argv[j])) && g_ascii_strcasecmp ("<sep>", handlers[i].name))
+            /* accept both "command" and "--command" */
+            const char * name = argv[j];
+            if (g_str_has_prefix (name, "--"))
+                name += 2;
+
+            if (! g_ascii_strcasecmp (handlers[i].name, name) &&
+             g_ascii_strcasecmp ("<sep>", handlers[i].name))
             {
                 int numargs = MIN (handlers[i].args + 1, argc - j);
                 handlers[i].handler (numargs, & argv[j]);
