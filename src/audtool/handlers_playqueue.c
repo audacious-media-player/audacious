@@ -88,6 +88,7 @@ void playqueue_display (int argc, char * * argv)
         char * fmt = g_strdup_printf ("%%4d | %%4d | %%-%ds | %%d:%%.2d", column);
         audtool_report (fmt, qpos + 1, pos + 1, title, length / 60, length % 60);
         g_free (fmt);
+        g_free (title);
     }
 
     audtool_report ("Total length: %d:%.2d", total / 60, total % 60);
