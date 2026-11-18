@@ -171,7 +171,7 @@ void prefs_populate(QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets,
         case PreferencesWidget::RadioButton:
         {
             if (!radio_btn_group[w.child])
-                radio_btn_group[w.child] = new QButtonGroup;
+                radio_btn_group[w.child] = new QButtonGroup(layout);
 
             auto radio_btn =
                 new RadioButtonWidget(&w, domain, radio_btn_group[w.child]);
