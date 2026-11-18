@@ -425,6 +425,10 @@ static void scan_cancel(PlaylistEntry * entry)
         return;
 
     scan_list.remove(item);
+
+    if (item->for_playback && !item->handled_by_playback)
+        delete item->request;
+
     delete (item);
 }
 
