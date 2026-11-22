@@ -102,28 +102,30 @@ static QDialog * buildUrlDialog(bool open)
     }
     combobox->setCurrentIndex(-1);
 
-    QObject::connect(clear_button, &QPushButton::pressed, [combobox]() {
-        combobox->clear();
-        aud_history_clear();
-    });
+    QObject::connect(clear_button, &QPushButton::pressed, clear_button,
+                     [combobox]() {
+                         combobox->clear();
+                         aud_history_clear();
+                     });
 
     QObject::connect(buttonbox, &QDialogButtonBox::rejected, dialog,
                      &QDialog::close);
 
-    QObject::connect(
-        buttonbox, &QDialogButtonBox::accepted, [dialog, combobox, open]() {
-            QByteArray url = combobox->currentText().trimmed().toUtf8();
+    QObject::connect(buttonbox, &QDialogButtonBox::accepted, buttonbox,
+                     [dialog, combobox, open]() {
+                         QByteArray url =
+                             combobox->currentText().trimmed().toUtf8();
 
-            if (open)
-                aud_drct_pl_open(url.constData());
-            else
-                aud_drct_pl_add(url.constData(), -1);
+                         if (open)
+                             aud_drct_pl_open(url.constData());
+                         else
+                             aud_drct_pl_add(url.constData(), -1);
 
-            if (aud_get_bool("save_url_history"))
-                aud_history_add(url.constData());
+                         if (aud_get_bool("save_url_history"))
+                             aud_history_add(url.constData());
 
-            dialog->close();
-        });
+                         dialog->close();
+                     });
 
     return dialog;
 }

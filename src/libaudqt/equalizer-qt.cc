@@ -90,9 +90,10 @@ public:
         layout->addWidget(&slider, 0, Qt::AlignCenter);
         layout->addWidget(value_label, 0, Qt::AlignCenter);
 
-        connect(&slider, &QSlider::valueChanged, [value_label](int value) {
-            value_label->setText(QString::number(value));
-        });
+        connect(&slider, &QSlider::valueChanged, &slider,
+                [value_label](int value) {
+                    value_label->setText(QString::number(value));
+                });
     }
 };
 
@@ -163,24 +164,28 @@ EqualizerWindow::EqualizerWindow()
     updateBands();
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
-    connect(&m_onoff_checkbox, &QCheckBox::checkStateChanged, [](Qt::CheckState state) {
+    connect(&m_onoff_checkbox, &QCheckBox::checkStateChanged, &m_onoff_checkbox, [](Qt::CheckState state) {
 #else
-    connect(&m_onoff_checkbox, &QCheckBox::stateChanged, [](int state) {
+    connect(&m_onoff_checkbox, &QCheckBox::stateChanged, &m_onoff_checkbox,
+            [](int state) {
 #endif
-        aud_set_bool("equalizer_active", (state == Qt::Checked));
+                aud_set_bool("equalizer_active", (state == Qt::Checked));
     });
 
-    connect(zero_button, &QPushButton::clicked,
+    connect(zero_button, &QPushButton::clicked, zero_button,
             []() { aud_eq_apply_preset(EqualizerPreset()); });
 
-    connect(preset_button, &QPushButton::clicked, audqt::eq_presets_show);
+    connect(preset_button, &QPushButton::clicked, preset_button,
+            audqt::eq_presets_show);
 
     connect(&m_preamp_slider->slider, &QSlider::valueChanged,
+            &m_preamp_slider->slider,
             [](int value) { aud_set_int("equalizer_preamp", value); });
 
     for (int i = 0; i < AUD_EQ_NBANDS; i++)
     {
         connect(&m_sliders[i]->slider, &QSlider::valueChanged,
+                &m_sliders[i]->slider,
                 [i](int value) { aud_eq_set_band(i, value); });
     }
 }

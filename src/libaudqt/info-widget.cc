@@ -245,7 +245,7 @@ EXPORT InfoWidget::InfoWidget(QWidget * parent)
     resizeColumnToContents(0);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
-    connect(this, &QWidget::customContextMenuRequested,
+    connect(this, &QWidget::customContextMenuRequested, this,
             [this](const QPoint & pos) {
                 auto index = indexAt(pos);
                 if (index.column() != InfoModel::Col_Value)

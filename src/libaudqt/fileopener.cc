@@ -137,13 +137,14 @@ EXPORT void fileopener_show(FileMode mode)
         }
 
         QObject::connect(dialog.data(), &QFileDialog::directoryEntered,
-                         [](const QString & path) {
+                         dialog.data(), [](const QString & path) {
                              aud_set_str("audgui", "filesel_path",
                                          path.toUtf8().constData());
                          });
 
         QObject::connect(
-            dialog.data(), &QFileDialog::accepted, [dialog, mode, playlist]() {
+            dialog.data(), &QFileDialog::accepted, dialog.data(),
+            [dialog, mode, playlist]() {
                 Index<PlaylistAddItem> files;
                 for (const QUrl & url : dialog->selectedUrls())
                 {

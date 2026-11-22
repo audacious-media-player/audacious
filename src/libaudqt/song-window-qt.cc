@@ -325,9 +325,8 @@ SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
     m_filterEdit.setClearButtonEnabled(true);
     m_filterEdit.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     hbox_filter->addWidget(&m_filterEdit);
-    QObject::connect(&m_filterEdit, &QLineEdit::textChanged, [this]() {
-        this->updateModel();
-    });
+    QObject::connect(&m_filterEdit, &QLineEdit::textChanged, this,
+                     [this]() { this->updateModel(); });
     // **** END Filter box ****
 
     // **** START Track list ****
@@ -343,15 +342,14 @@ SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
                                  QHeaderView::Interactive);
     header->resizeSection(SongListModel::ColumnEntry, audqt::to_native_dpi(50));
     QObject::connect(m_treeview.selectionModel(),
-                     &QItemSelectionModel::selectionChanged,
+                     &QItemSelectionModel::selectionChanged, this,
                      [this](const QItemSelection & selected) {
                          this->m_songListModel.selectionChanged(selected);
                          this->updateQueueButton();
                          this->updateButtonStates();
                      });
-    QObject::connect(&m_treeview, &QAbstractItemView::doubleClicked, [this]() {
-        this->jumpToSelected();
-    });
+    QObject::connect(&m_treeview, &QAbstractItemView::doubleClicked, this,
+                     [this]() { this->jumpToSelected(); });
 
     updateModel();
     vbox_content->addWidget(&m_treeview);
@@ -378,21 +376,23 @@ SongsWindow::SongsWindow(QWidget * parent) : QDialog(parent)
     hbox_footer->addWidget(bbox);
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
-    connect(&m_closeAfterJump, &QCheckBox::checkStateChanged, [](Qt::CheckState state) {
+    connect(&m_closeAfterJump, &QCheckBox::checkStateChanged, &m_closeAfterJump, [](Qt::CheckState state) {
 #else
-    connect(&m_closeAfterJump, &QCheckBox::stateChanged, [](int state) {
+    connect(&m_closeAfterJump, &QCheckBox::stateChanged, &m_closeAfterJump,
+            [](int state) {
 #endif
-        aud_set_bool("audqt", "close_jtf_dialog", (state == Qt::Checked));
+                aud_set_bool("audqt", "close_jtf_dialog",
+                             (state == Qt::Checked));
     });
 
-    QObject::connect(&m_queueAndUnqueueButton, &QPushButton::clicked, [this]() {
-        this->m_songListModel.toggleQueueSelected();
-        this->updateQueueButton();
-    });
+    QObject::connect(&m_queueAndUnqueueButton, &QPushButton::clicked, this,
+                     [this]() {
+                         this->m_songListModel.toggleQueueSelected();
+                         this->updateQueueButton();
+                     });
 
-    QObject::connect(&m_jumpButton, &QPushButton::clicked, [this]() {
-        this->jumpToSelected();
-    });
+    QObject::connect(&m_jumpButton, &QPushButton::clicked, this,
+                     [this]() { this->jumpToSelected(); });
 
     QObject::connect(btn_Close, &QPushButton::clicked, this, &QDialog::close);
     // **** END Bottom button bar ****

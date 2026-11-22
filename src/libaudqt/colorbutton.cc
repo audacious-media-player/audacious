@@ -28,7 +28,7 @@ namespace audqt
 
 ColorButton::ColorButton(QWidget * parent) : QPushButton(parent)
 {
-    connect(this, &QPushButton::clicked, [this]() {
+    connect(this, &QPushButton::clicked, this, [this]() {
         auto dialog = findChild<QColorDialog *>();
         if (!dialog)
         {
