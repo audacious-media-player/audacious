@@ -24,12 +24,44 @@
 
 #include <glib/gstdio.h>
 
+#ifdef USE_QT
+#include <QCollator>
+#endif
+
 #include "audstrings.h"
 #include "hook.h"
 #include "multihash.h"
 #include "runtime.h"
 #include "tuple.h"
 #include "vfs.h"
+
+/* Compares strings according to the collation rules of the system locale,
+ * e.g. Pinyin order for Chinese or Gojuon order for Japanese.  Like
+ * str_compare(), numbers are ordered numerically and case is ignored.
+ * Falls back to str_compare() if built without Qt. */
+static int str_collate(const char * a, const char * b)
+{
+#ifdef USE_QT
+    // QCollator is not thread-safe, so use one instance per thread
+    thread_local QCollator collator = []() {
+        QCollator c;
+        c.setNumericMode(true);
+        c.setCaseSensitivity(Qt::CaseInsensitive);
+        return c;
+    }();
+
+    int diff = collator.compare(QString::fromUtf8(a), QString::fromUtf8(b));
+    if (diff)
+        return diff;
+#endif
+
+    return str_compare(a, b);
+}
+
+static int str_collate_encoded(const char * a, const char * b)
+{
+    return str_collate(str_decode_percent(a), str_decode_percent(b));
+}
 
 static const char * get_basename(const char * filename)
 {
@@ -47,12 +79,12 @@ static int filename_compare_path(const char * a, const char * b)
         return dirlen_a - dirlen_b;
 
     // in all other cases, compare the entire paths
-    return str_compare_encoded(a, b);
+    return str_collate_encoded(a, b);
 }
 
 static int filename_compare_basename(const char * a, const char * b)
 {
-    return str_compare_encoded(get_basename(a), get_basename(b));
+    return str_collate_encoded(get_basename(a), get_basename(b));
 }
 
 static int tuple_compare_string(const Tuple & a, const Tuple & b,
@@ -64,7 +96,7 @@ static int tuple_compare_string(const Tuple & a, const Tuple & b,
     if (!string_a)
         return (!string_b) ? 0 : -1;
 
-    return (!string_b) ? 1 : str_compare(string_a, string_b);
+    return (!string_b) ? 1 : str_collate(string_a, string_b);
 }
 
 static int tuple_compare_int(const Tuple & a, const Tuple & b,
