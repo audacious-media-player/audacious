@@ -193,7 +193,7 @@ void VolumeButton::setUpButton(QToolButton * button, int dir)
     button->setAutoRaise(true);
     button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-    connect(button, &QAbstractButton::clicked, [this, dir]() {
+    connect(button, &QAbstractButton::clicked, this, [this, dir]() {
         m_slider.setValue(m_slider.value() + dir * aud_get_int("volume_delta"));
     });
 }

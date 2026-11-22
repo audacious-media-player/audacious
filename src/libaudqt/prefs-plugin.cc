@@ -112,10 +112,11 @@ EXPORT void plugin_prefs(PluginHandle * ph)
     if (p->init)
         p->init();
 
-    QObject::connect(cw->root.data(), &QObject::destroyed, [p]() {
-        if (p->cleanup)
-            p->cleanup();
-    });
+    QObject::connect(cw->root.data(), &QObject::destroyed, cw->root.data(),
+                     [p]() {
+                         if (p->cleanup)
+                             p->cleanup();
+                     });
 
     const char * name = header->info.name;
     if (header->info.domain)
@@ -137,7 +138,7 @@ EXPORT void plugin_prefs(PluginHandle * ph)
         bbox->button(QDialogButtonBox::Cancel)
             ->setText(translate_str(N_("_Cancel")));
 
-        QObject::connect(bbox, &QDialogButtonBox::accepted, [p, cw]() {
+        QObject::connect(bbox, &QDialogButtonBox::accepted, bbox, [p, cw]() {
             p->apply();
             cw->root->deleteLater();
         });

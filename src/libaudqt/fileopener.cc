@@ -133,17 +133,18 @@ EXPORT void fileopener_show(FileMode mode)
 
             String filename = playlist.get_filename();
             if (filename)
-                dialog->selectUrl(QString(filename));
+                dialog->selectUrl(QUrl(QString(filename)));
         }
 
         QObject::connect(dialog.data(), &QFileDialog::directoryEntered,
-                         [](const QString & path) {
+                         dialog.data(), [](const QString & path) {
                              aud_set_str("audgui", "filesel_path",
                                          path.toUtf8().constData());
                          });
 
         QObject::connect(
-            dialog.data(), &QFileDialog::accepted, [dialog, mode, playlist]() {
+            dialog.data(), &QFileDialog::accepted, dialog.data(),
+            [dialog, mode, playlist]() {
                 Index<PlaylistAddItem> files;
                 for (const QUrl & url : dialog->selectedUrls())
                 {
@@ -179,7 +180,7 @@ EXPORT void fileopener_show(FileMode mode)
                         QString filter = dialog->selectedNameFilter();
                         QString extension = get_extension_from_filter(filter);
                         export_playlist(playlist, files[0].filename,
-                                        extension.toUtf8());
+                                        extension.toUtf8().constData());
                     }
                     break;
                 default:

@@ -230,7 +230,7 @@ LogEntryInspector::LogEntryInspector(QWidget * parent) : QDialog(parent)
     QObject::connect(
         &m_level_combobox,
         static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-        [this](int idx) { setLogLevel((audlog::Level)idx); });
+        this, [this](int idx) { setLogLevel((audlog::Level)idx); });
 
     auto btnbox = new QDialogButtonBox(this);
 
@@ -238,7 +238,7 @@ LogEntryInspector::LogEntryInspector(QWidget * parent) : QDialog(parent)
                                   QDialogButtonBox::ActionRole);
     btn1->setIcon(QIcon::fromTheme("edit-clear-all"));
     btn1->setAutoDefault(false);
-    QObject::connect(btn1, &QPushButton::clicked,
+    QObject::connect(btn1, &QPushButton::clicked, btn1,
                      []() { s_model.get()->cleanup(); });
 
     auto btn2 = btnbox->addButton(QDialogButtonBox::Close);

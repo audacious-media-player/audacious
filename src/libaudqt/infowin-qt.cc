@@ -98,7 +98,7 @@ InfoWindow::InfoWindow(QWidget * parent) : QDialog(parent)
 
     vbox->addWidget(bbox);
 
-    connect(bbox, &QDialogButtonBox::accepted, [this]() {
+    connect(bbox, &QDialogButtonBox::accepted, this, [this]() {
         if (m_infowidget.updateFile())
             deleteLater();
         else

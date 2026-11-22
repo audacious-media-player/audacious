@@ -160,9 +160,10 @@ public:
         setUniformRowHeights(true);
         setModel(new PresetModel(this));
 
-        connect(this, &QTreeView::activated, [this](const QModelIndex & index) {
-            pmodel()->apply_preset(index.row());
-        });
+        connect(this, &QTreeView::activated, this,
+                [this](const QModelIndex & index) {
+                    pmodel()->apply_preset(index.row());
+                });
     }
 
     PresetModel * pmodel() const { return static_cast<PresetModel *>(model()); }
@@ -267,7 +268,7 @@ static void show_import_dialog(QWidget * parent, PresetView * view,
             return;
 
         auto filename = urls[0].toEncoded();
-        auto presets = import_file(filename);
+        auto presets = import_file(filename.constData());
 
         if (presets.len())
         {
@@ -283,7 +284,7 @@ static void show_import_dialog(QWidget * parent, PresetView * view,
         }
     };
 
-    QObject::connect(dialog, &QFileDialog::accepted, do_import);
+    QObject::connect(dialog, &QFileDialog::accepted, dialog, do_import);
 
     window_bring_to_front(dialog);
 }
@@ -303,19 +304,20 @@ static void show_export_dialog(QWidget * parent, const EqualizerPreset & preset)
         QString(preset.name).replace(QLatin1Char('/'), QLatin1Char('_'));
     dialog->selectFile(safe + ".preset");
 
-    QObject::connect(dialog, &QFileDialog::accepted, [dialog, preset]() {
-        auto urls = dialog->selectedUrls();
-        if (urls.size() != 1)
-            return;
+    QObject::connect(
+        dialog, &QFileDialog::accepted, dialog, [dialog, preset]() {
+            auto urls = dialog->selectedUrls();
+            if (urls.size() != 1)
+                return;
 
-        auto filename = urls[0].toEncoded();
+            auto filename = urls[0].toEncoded();
 
-        if (export_file(filename, preset))
-            dialog->deleteLater();
-        else
-            aud_ui_show_error(
-                str_printf(_("Error saving %s."), filename.constData()));
-    });
+            if (export_file(filename.constData(), preset))
+                dialog->deleteLater();
+            else
+                aud_ui_show_error(
+                    str_printf(_("Error saving %s."), filename.constData()));
+        });
 
     window_bring_to_front(dialog);
 }
@@ -360,40 +362,44 @@ static QWidget * create_preset_win()
 
     auto pmodel = view->pmodel();
 
-    QObject::connect(edit, &QLineEdit::textChanged,
+    QObject::connect(edit, &QLineEdit::textChanged, edit,
                      [save_btn](const QString & text) {
                          save_btn->setEnabled(!text.isEmpty());
                      });
 
-    QObject::connect(save_btn, &QPushButton::clicked,
+    QObject::connect(save_btn, &QPushButton::clicked, save_btn,
                      [view, pmodel, edit, revert_btn]() {
-                         auto added = pmodel->add_preset(edit->text().toUtf8());
+                         auto added = pmodel->add_preset(
+                             edit->text().toUtf8().constData());
                          view->setCurrentIndex(added);
                          pmodel->save_all();
                          revert_btn->setDisabled(false);
                      });
 
-    QObject::connect(import_btn, &QPushButton::clicked,
+    QObject::connect(import_btn, &QPushButton::clicked, import_btn,
                      [win, view, revert_btn]() {
                          show_import_dialog(win, view, revert_btn);
                      });
 
-    QObject::connect(export_btn, &QPushButton::clicked, [win, view]() {
-        auto preset = view->preset_for_export();
-        if (preset != nullptr)
-            show_export_dialog(win, *preset);
-    });
+    QObject::connect(export_btn, &QPushButton::clicked, export_btn,
+                     [win, view]() {
+                         auto preset = view->preset_for_export();
+                         if (preset != nullptr)
+                             show_export_dialog(win, *preset);
+                     });
 
-    QObject::connect(pmodel, &PresetModel::rowsRemoved, [pmodel, revert_btn]() {
-        pmodel->save_all();
-        revert_btn->setDisabled(false);
-    });
+    QObject::connect(pmodel, &PresetModel::rowsRemoved, pmodel,
+                     [pmodel, revert_btn]() {
+                         pmodel->save_all();
+                         revert_btn->setDisabled(false);
+                     });
 
-    QObject::connect(revert_btn, &QPushButton::clicked, [pmodel, revert_btn]() {
-        pmodel->revert_all();
-        pmodel->save_all();
-        revert_btn->setDisabled(true);
-    });
+    QObject::connect(revert_btn, &QPushButton::clicked, revert_btn,
+                     [pmodel, revert_btn]() {
+                         pmodel->revert_all();
+                         pmodel->save_all();
+                         revert_btn->setDisabled(true);
+                     });
 
     return win;
 }

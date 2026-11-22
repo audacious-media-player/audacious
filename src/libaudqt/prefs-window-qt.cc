@@ -489,12 +489,12 @@ static void * create_titlestring_table()
             cbox->setCurrentIndex(i);
     }
 
-    QObject::connect(le, &QLineEdit::textChanged, [](const QString & text) {
+    QObject::connect(le, &QLineEdit::textChanged, le, [](const QString & text) {
         aud_set_str("generic_title_format", text.toUtf8().data());
     });
 
     void (QComboBox::*signal)(int) = &QComboBox::currentIndexChanged;
-    QObject::connect(cbox, signal, [le](int idx) {
+    QObject::connect(cbox, signal, cbox, [le](int idx) {
         if (idx < TITLESTRING_NPRESETS)
             le->setText(titlestring_presets[idx]);
     });
@@ -510,10 +510,11 @@ static void * create_titlestring_table()
     for (auto & t : title_field_tags)
     {
         QAction * a = mnu_fields->addAction(_(t.name));
-        QObject::connect(a, &QAction::triggered, [=]() { le->insert(t.tag); });
+        QObject::connect(a, &QAction::triggered, a,
+                         [=]() { le->insert(t.tag); });
     }
 
-    QObject::connect(btn_mnu, &QAbstractButton::clicked, [=]() {
+    QObject::connect(btn_mnu, &QAbstractButton::clicked, btn_mnu, [=]() {
         mnu_fields->popup(btn_mnu->mapToGlobal(QPoint(0, 0)));
     });
 
@@ -622,7 +623,7 @@ static void create_plugin_category(QStackedWidget * parent)
 
     parent->addWidget(s_plugin_view);
 
-    QObject::connect(s_plugin_view, &QAbstractItemView::clicked,
+    QObject::connect(s_plugin_view, &QAbstractItemView::clicked, s_plugin_view,
                      [](const QModelIndex & index) {
                          auto p = s_plugin_model->pluginForIndex(index);
                          if (!p || !aud_plugin_get_enabled(p))
@@ -717,7 +718,7 @@ PrefsWindow::PrefsWindow()
         toolbar->addAction(a);
 
         int j = (headless ? i - 1 : i);
-        connect(a, &QAction::triggered,
+        connect(a, &QAction::triggered, a,
                 [j]() { s_category_notebook->setCurrentIndex(j); });
     }
 
@@ -735,13 +736,13 @@ void PrefsWindow::output_setup()
     output_config_button->setEnabled(aud_plugin_has_configure(p));
     output_about_button->setEnabled(aud_plugin_has_about(p));
 
-    QObject::connect(output_config_button, &QPushButton::clicked, [](bool) {
-        plugin_prefs(aud_plugin_get_current(PluginType::Output));
-    });
+    QObject::connect(
+        output_config_button, &QPushButton::clicked, output_config_button,
+        [](bool) { plugin_prefs(aud_plugin_get_current(PluginType::Output)); });
 
-    QObject::connect(output_about_button, &QPushButton::clicked, [](bool) {
-        plugin_about(aud_plugin_get_current(PluginType::Output));
-    });
+    QObject::connect(
+        output_about_button, &QPushButton::clicked, output_about_button,
+        [](bool) { plugin_about(aud_plugin_get_current(PluginType::Output)); });
 }
 
 void PrefsWindow::output_change()
@@ -765,18 +766,20 @@ void PrefsWindow::output_change()
 
 void PrefsWindow::record_setup()
 {
-    QObject::connect(record_checkbox, &QCheckBox::clicked,
+    QObject::connect(record_checkbox, &QCheckBox::clicked, record_checkbox,
                      [](bool checked) { aud_drct_enable_record(checked); });
 
-    QObject::connect(record_config_button, &QPushButton::clicked, [](bool) {
-        if (aud_drct_get_record_enabled())
-            plugin_prefs(aud_drct_get_record_plugin());
-    });
+    QObject::connect(record_config_button, &QPushButton::clicked,
+                     record_config_button, [](bool) {
+                         if (aud_drct_get_record_enabled())
+                             plugin_prefs(aud_drct_get_record_plugin());
+                     });
 
-    QObject::connect(record_about_button, &QPushButton::clicked, [](bool) {
-        if (aud_drct_get_record_enabled())
-            plugin_about(aud_drct_get_record_plugin());
-    });
+    QObject::connect(record_about_button, &QPushButton::clicked,
+                     record_about_button, [](bool) {
+                         if (aud_drct_get_record_enabled())
+                             plugin_about(aud_drct_get_record_plugin());
+                     });
 }
 
 void PrefsWindow::record_update()

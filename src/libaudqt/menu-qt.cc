@@ -67,7 +67,7 @@ MenuAction::MenuAction(const MenuItem & item, const char * domain,
             m_hook.connect(item.cfg.hook);
     }
     else if (item.func)
-        QObject::connect(this, &QAction::triggered, item.func);
+        QObject::connect(this, &QAction::triggered, this, item.func);
     else if (item.items.len)
         setMenu(menu_build(item.items, domain, parent));
     else if (item.submenu)

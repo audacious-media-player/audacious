@@ -41,9 +41,9 @@ static QDialog * buildRenameDialog(Playlist playlist)
     dialog->setCancelButtonText(translate_str(N_("_Cancel")));
     dialog->setTextValue((const char *)playlist.get_title());
 
-    QObject::connect(dialog, &QInputDialog::textValueSelected,
+    QObject::connect(dialog, &QInputDialog::textValueSelected, dialog,
                      [dialog, playlist](const QString & text) {
-                         playlist.set_title(text.toUtf8());
+                         playlist.set_title(text.toUtf8().constData());
                          dialog->close();
                      });
 
@@ -72,17 +72,19 @@ static QDialog * buildDeleteDialog(Playlist playlist)
     cancel->setIcon(QIcon::fromTheme("process-stop"));
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
-    QObject::connect(skip_prompt, &QCheckBox::checkStateChanged, [](Qt::CheckState state) {
+    QObject::connect(skip_prompt, &QCheckBox::checkStateChanged, skip_prompt, [](Qt::CheckState state) {
 #else
-    QObject::connect(skip_prompt, &QCheckBox::stateChanged, [](int state) {
+    QObject::connect(
+        skip_prompt, &QCheckBox::stateChanged, skip_prompt, [](int state) {
 #endif
-        aud_set_bool("no_confirm_playlist_delete", (state == Qt::Checked));
+            aud_set_bool("no_confirm_playlist_delete", (state == Qt::Checked));
     });
 
-    QObject::connect(remove, &QPushButton::clicked, [dialog, playlist]() {
-        playlist.remove_playlist();
-        dialog->close();
-    });
+    QObject::connect(remove, &QPushButton::clicked, remove,
+                     [dialog, playlist]() {
+                         playlist.remove_playlist();
+                         dialog->close();
+                     });
 
     return dialog;
 }

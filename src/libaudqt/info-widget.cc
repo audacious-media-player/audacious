@@ -129,7 +129,7 @@ static void tuple_field_set_from_str(Tuple & tuple, Tuple::Field field,
     if (str.isEmpty())
         tuple.unset(field);
     else if (Tuple::field_get_type(field) == Tuple::String)
-        tuple.set_str(field, str.toUtf8());
+        tuple.set_str(field, str.toUtf8().constData());
     else if (Tuple::field_get_type(field) == Tuple::Int)
         tuple.set_int(field, str.toInt());
     else if (Tuple::field_get_type(field) == Tuple::DateTime)
@@ -245,7 +245,7 @@ EXPORT InfoWidget::InfoWidget(QWidget * parent)
     resizeColumnToContents(0);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
-    connect(this, &QWidget::customContextMenuRequested,
+    connect(this, &QWidget::customContextMenuRequested, this,
             [this](const QPoint & pos) {
                 auto index = indexAt(pos);
                 if (index.column() != InfoModel::Col_Value)
