@@ -133,7 +133,7 @@ EXPORT void fileopener_show(FileMode mode)
 
             String filename = playlist.get_filename();
             if (filename)
-                dialog->selectUrl(QString(filename));
+                dialog->selectUrl(QUrl(QString(filename)));
         }
 
         QObject::connect(dialog.data(), &QFileDialog::directoryEntered,
