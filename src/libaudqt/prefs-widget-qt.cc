@@ -214,7 +214,8 @@ StringWidget::StringWidget(const PreferencesWidget * parent,
     QObject::connect(m_lineedit, &QLineEdit::textChanged,
                      [this](const QString & value) {
                          if (!m_updating)
-                             m_parent->cfg.set_string(value.toUtf8());
+                             m_parent->cfg.set_string(
+                                 value.toUtf8().constData());
                      });
 }
 
@@ -283,7 +284,8 @@ FontWidget::FontWidget(const PreferencesWidget * parent, const char * domain)
     QObject::connect(m_lineedit, &QLineEdit::textChanged,
                      [this](const QString & value) {
                          if (!m_updating)
-                             m_parent->cfg.set_string(value.toUtf8());
+                             m_parent->cfg.set_string(
+                                 value.toUtf8().constData());
                      });
 }
 
@@ -320,7 +322,7 @@ ComboBoxWidget::ComboBoxWidget(const PreferencesWidget * parent,
             m_parent->cfg.set_int(data.toInt());
             break;
         case WidgetConfig::String:
-            m_parent->cfg.set_string(data.toString().toUtf8());
+            m_parent->cfg.set_string(data.toString().toUtf8().constData());
             break;
         default:
             break;

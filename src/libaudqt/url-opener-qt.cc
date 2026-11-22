@@ -115,12 +115,12 @@ static QDialog * buildUrlDialog(bool open)
             QByteArray url = combobox->currentText().trimmed().toUtf8();
 
             if (open)
-                aud_drct_pl_open(url);
+                aud_drct_pl_open(url.constData());
             else
-                aud_drct_pl_add(url, -1);
+                aud_drct_pl_add(url.constData(), -1);
 
             if (aud_get_bool("save_url_history"))
-                aud_history_add(url);
+                aud_history_add(url.constData());
 
             dialog->close();
         });

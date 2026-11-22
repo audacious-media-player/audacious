@@ -267,7 +267,7 @@ static void show_import_dialog(QWidget * parent, PresetView * view,
             return;
 
         auto filename = urls[0].toEncoded();
-        auto presets = import_file(filename);
+        auto presets = import_file(filename.constData());
 
         if (presets.len())
         {
@@ -310,7 +310,7 @@ static void show_export_dialog(QWidget * parent, const EqualizerPreset & preset)
 
         auto filename = urls[0].toEncoded();
 
-        if (export_file(filename, preset))
+        if (export_file(filename.constData(), preset))
             dialog->deleteLater();
         else
             aud_ui_show_error(
@@ -365,13 +365,13 @@ static QWidget * create_preset_win()
                          save_btn->setEnabled(!text.isEmpty());
                      });
 
-    QObject::connect(save_btn, &QPushButton::clicked,
-                     [view, pmodel, edit, revert_btn]() {
-                         auto added = pmodel->add_preset(edit->text().toUtf8());
-                         view->setCurrentIndex(added);
-                         pmodel->save_all();
-                         revert_btn->setDisabled(false);
-                     });
+    QObject::connect(
+        save_btn, &QPushButton::clicked, [view, pmodel, edit, revert_btn]() {
+            auto added = pmodel->add_preset(edit->text().toUtf8().constData());
+            view->setCurrentIndex(added);
+            pmodel->save_all();
+            revert_btn->setDisabled(false);
+        });
 
     QObject::connect(import_btn, &QPushButton::clicked,
                      [win, view, revert_btn]() {

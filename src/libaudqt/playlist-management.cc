@@ -43,7 +43,7 @@ static QDialog * buildRenameDialog(Playlist playlist)
 
     QObject::connect(dialog, &QInputDialog::textValueSelected,
                      [dialog, playlist](const QString & text) {
-                         playlist.set_title(text.toUtf8());
+                         playlist.set_title(text.toUtf8().constData());
                          dialog->close();
                      });
 

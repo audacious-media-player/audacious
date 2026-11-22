@@ -105,11 +105,11 @@ EXPORT String file_entry_get_uri(QLineEdit * entry)
 
     if (text.isEmpty())
         return String();
-    else if (strstr(text, "://"))
-        return String(text);
+    else if (strstr(text.constData(), "://"))
+        return String(text.constData());
     else
         return String(filename_to_uri(
-            filename_normalize(filename_expand(str_copy(text)))));
+            filename_normalize(filename_expand(str_copy(text.constData())))));
 }
 
 EXPORT void file_entry_set_uri(QLineEdit * entry, const char * uri)

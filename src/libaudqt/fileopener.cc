@@ -179,7 +179,7 @@ EXPORT void fileopener_show(FileMode mode)
                         QString filter = dialog->selectedNameFilter();
                         QString extension = get_extension_from_filter(filter);
                         export_playlist(playlist, files[0].filename,
-                                        extension.toUtf8());
+                                        extension.toUtf8().constData());
                     }
                     break;
                 default:

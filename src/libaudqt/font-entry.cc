@@ -121,7 +121,7 @@ EXPORT QFont qfont_from_string(const char * name)
 
 EXPORT StringBuf qfont_to_string(const QFont & font)
 {
-    StringBuf font_str = str_copy(font.family().toUtf8());
+    StringBuf font_str = str_copy(font.family().toUtf8().constData());
 
     auto weight = font.weight();
     auto style = font.style();
@@ -160,7 +160,7 @@ void FontEntry::show_dialog()
                          });
     }
 
-    m_dialog->setCurrentFont(qfont_from_string(text().toUtf8()));
+    m_dialog->setCurrentFont(qfont_from_string(text().toUtf8().constData()));
     window_bring_to_front(m_dialog);
 }
 
