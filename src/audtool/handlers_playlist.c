@@ -349,6 +349,18 @@ void playlist_repeat_toggle (int argc, char * * argv)
     obj_audacious_call_toggle_repeat_sync (dbus_proxy, NULL, NULL);
 }
 
+void playlist_repeat_one_status (int argc, char * * argv)
+{
+    gboolean repeat_one = FALSE;
+    obj_audacious_call_repeat_one_sync (dbus_proxy, & repeat_one, NULL, NULL);
+    audtool_report (repeat_one ? "on" : "off");
+}
+
+void playlist_repeat_one_toggle (int argc, char * * argv)
+{
+    obj_audacious_call_toggle_repeat_one_sync (dbus_proxy, NULL, NULL);
+}
+
 void playlist_shuffle_status (int argc, char * * argv)
 {
     gboolean shuffle = FALSE;

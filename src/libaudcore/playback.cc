@@ -232,10 +232,10 @@ static void end_cb()
         }
     };
 
-    if (aud_get_bool("no_playlist_advance"))
+    if (aud_get_bool("no_playlist_advance") || aud_get_bool("repeat_one"))
     {
-        // we assume here that repeat is not enabled;
-        // single-song repeats are handled in run_playback()
+        // single-song repeats are handled in run_playback();
+        // this also stops playback for streams that cannot be repeated
         do_stop();
     }
     else if (aud_get_bool("stop_after_current_song"))
@@ -312,9 +312,14 @@ static bool check_playback_repeat()
     if (!is_ready(mh))
         return false;
 
+    // "repeat" + "no_playlist_advance" is the legacy way of requesting a
+    // single-song repeat, so keep honoring it for existing configurations
+    bool repeat_one =
+        aud_get_bool("repeat_one") ||
+        (aud_get_bool("repeat") && aud_get_bool("no_playlist_advance"));
+
     // check whether we need to repeat
-    if (pb_control.repeat_a >= 0 ||
-        (aud_get_bool("repeat") && aud_get_bool("no_playlist_advance")))
+    if (pb_control.repeat_a >= 0 || repeat_one)
     {
         // treat the repeat as a seek (takes effect at open_audio())
         pb_control.seek = pb_control.repeat_a;

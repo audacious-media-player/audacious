@@ -94,6 +94,7 @@ static const char * const core_defaults[] = {
     "album_shuffle", "FALSE",
     "no_playlist_advance", "FALSE",
     "repeat", "FALSE",
+    "repeat_one", "FALSE",
     "shuffle", "FALSE",
     "step_size", "5",
     "stop_after_current_song", "FALSE",
